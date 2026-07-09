@@ -1,0 +1,40 @@
+# ─── macOS ───────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# ─── Windows ─────────────────────────────────────────────
+Thumbs.db
+Thumbs.db:encryptable
+Desktop.ini
+$RECYCLE.BIN/
+
+# ─── Editors / IDEs ──────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-workspace
+
+# ─── Logs & temp ─────────────────────────────────────────
+*.log
+*.tmp
+.cache/
+
+# ─── Node (not used today, but ignore if ever added) ─────
+node_modules/
+npm-debug.log*
+yarn-error.log
+.env
+.env.local
+
+# ─── Claude Code (keep launch.json shared; ignore local) ─
+.claude/settings.local.json
+
+# ─── Local backups / scratch ─────────────────────────────
+*.bak
+bk-*.html

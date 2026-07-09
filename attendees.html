@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Attendees</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="assets/config.js"></script>
+<link rel="stylesheet" href="assets/app.css" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="attendees">
+<div class="flex h-full min-h-screen" data-layout>
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <div class="min-w-0">
+          <h1 class="text-[22px] font-bold tracking-tight">Attendees</h1>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Everyone who has registered for your events.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="btn btn-ghost"><i class="hgi-stroke hgi-download-01 text-[16px]"></i><span class="hidden sm:inline">Export</span></button>
+        <button class="btn btn-primary" data-open="invite-panel"><i class="hgi-stroke hgi-mail-send-01 text-[16px]"></i><span class="hidden sm:inline">Invite</span><span class="sm:hidden">Invite</span></button>
+      </div>
+    </div>
+
+    <!-- stat cards -->
+    <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-user-multiple text-[16px]"></i>Total attendees</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">2,847</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>6,8 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-user-add-01 text-[16px]"></i>New this month</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">214</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>14,2 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-checkmark-badge-01 text-[16px]"></i>Checked-in</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">1,180</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>9,3 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-star text-[16px]"></i>VIPs</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">96</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>5 new</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- toolbar + table -->
+    <section class="card mt-3 p-4">
+      <div class="flex flex-col gap-3 border-b border-hair pb-3 sm:flex-row sm:items-center sm:justify-between">
+        <div class="relative w-full sm:max-w-xs">
+          <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[15px] text-muted"></i>
+          <input type="text" class="input pl-9" placeholder="Search by name or email..." />
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <select class="select w-auto">
+            <option>All tags</option>
+            <option>VIP</option>
+            <option>Speaker</option>
+            <option>Sponsor</option>
+            <option>Student</option>
+          </select>
+          <select class="select w-auto">
+            <option>Sort: Last activity</option>
+            <option>Sort: Name (A–Z)</option>
+            <option>Sort: Most events</option>
+            <option>Sort: Most tickets</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-3 overflow-x-auto">
+        <table class="data-table min-w-[860px]">
+          <thead>
+            <tr>
+              <th>Attendee</th>
+              <th>Phone</th>
+              <th>Events</th>
+              <th>Tickets</th>
+              <th>Tags</th>
+              <th>Last activity</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="text-[13px]">
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="avatar h-8 w-8 text-[11px]">AP</span>
+                  <div class="min-w-0 leading-tight">
+                    <p class="truncate font-medium text-ink">Anong Praditsarn</p>
+                    <p class="truncate text-[11px] text-muted">anong.p@gmail.com</p>
+                  </div>
+                </div>
+              </td>
+              <td class="text-muted tnum">+66 81 234 5678</td>
+              <td class="text-muted tnum">5 events</td>
+              <td class="font-semibold text-ink tnum">7</td>
+              <td><span class="badge badge-purple"><i class="hgi-stroke hgi-star text-[12px]"></i>VIP</span></td>
+              <td class="text-muted tnum">Jul 15, 2026</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="avatar h-8 w-8 text-[11px]">ST</span>
+                  <div class="min-w-0 leading-tight">
+                    <p class="truncate font-medium text-ink">Somchai Tanakit</p>
+                    <p class="truncate text-[11px] text-muted">somchai.t@outlook.com</p>
+                  </div>
+                </div>
+              </td>
+              <td class="text-muted tnum">+66 89 555 1023</td>
+              <td class="text-muted tnum">3 events</td>
+              <td class="font-semibold text-ink tnum">3</td>
+              <td class="text-muted">—</td>
+              <td class="text-muted tnum">Jul 14, 2026</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="avatar h-8 w-8 text-[11px]">PS</span>
+                  <div class="min-w-0 leading-tight">
+                    <p class="truncate font-medium text-ink">Ploy Suwannarat</p>
+                    <p class="truncate text-[11px] text-muted">ploy.suwan@yahoo.com</p>
+                  </div>
+                </div>
+              </td>
+              <td class="text-muted tnum">+66 92 345 6789</td>
+              <td class="text-muted tnum">8 events</td>
+              <td class="font-semibold text-ink tnum">12</td>
+              <td><span class="badge badge-amber"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>Speaker</span></td>
+              <td class="text-muted tnum">Jul 16, 2026</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="avatar h-8 w-8 text-[11px]">JW</span>
+                  <div class="min-w-0 leading-tight">
+                    <p class="truncate font-medium text-ink">James Whitfield</p>
+                    <p class="truncate text-[11px] text-muted">james.whitfield@gmail.com</p>
+                  </div>
+                </div>
+              </td>
+              <td class="text-muted tnum">+1 415 555 0134</td>
+              <td class="text-muted tnum">2 events</td>
+              <td class="font-semibold text-ink tnum">2</td>
+              <td><span class="badge badge-green"><i class="hgi-stroke hgi-sale-tag-01 text-[12px]"></i>Sponsor</span></td>
+              <td class="text-muted tnum">Jul 10, 2026</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="avatar h-8 w-8 text-[11px]">ML</span>
+                  <div class="min-w-0 leading-tight">
+                    <p class="truncate font-medium text-ink">Mei Lin</p>
+                    <p class="truncate text-[11px] text-muted">mei.lin88@gmail.com</p>
+                  </div>
+                </div>
+              </td>
+              <td class="text-muted tnum">+65 8123 4567</td>
+              <td class="text-muted tnum">6 events</td>
+              <td class="font-semibold text-ink tnum">9</td>
+              <td>
+                <div class="flex flex-wrap gap-1">
+                  <span class="badge badge-purple"><i class="hgi-stroke hgi-star text-[12px]"></i>VIP</span>
+                  <span class="badge badge-amber"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>Speaker</span>
+                </div>
+              </td>
+              <td class="text-muted tnum">Jul 17, 2026</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="avatar h-8 w-8 text-[11px]">NC</span>
+                  <div class="min-w-0 leading-tight">
+                    <p class="truncate font-medium text-ink">Natthaphong Charoen</p>
+                    <p class="truncate text-[11px] text-muted">nat.charoen@hotmail.com</p>
+                  </div>
+                </div>
+              </td>
+              <td class="text-muted tnum">+66 84 111 2233</td>
+              <td class="text-muted tnum">1 event</td>
+              <td class="font-semibold text-ink tnum">1</td>
+              <td><span class="badge badge-blue"><i class="hgi-stroke hgi-certificate-01 text-[12px]"></i>Student</span></td>
+              <td class="text-muted tnum">Jul 8, 2026</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="avatar h-8 w-8 text-[11px]">KS</span>
+                  <div class="min-w-0 leading-tight">
+                    <p class="truncate font-medium text-ink">Kanokwan Srisai</p>
+                    <p class="truncate text-[11px] text-muted">kanokwan.s@gmail.com</p>
+                  </div>
+                </div>
+              </td>
+              <td class="text-muted tnum">+66 90 876 5432</td>
+              <td class="text-muted tnum">4 events</td>
+              <td class="font-semibold text-ink tnum">5</td>
+              <td class="text-muted">—</td>
+              <td class="text-muted tnum">Jul 12, 2026</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="avatar h-8 w-8 text-[11px]">DO</span>
+                  <div class="min-w-0 leading-tight">
+                    <p class="truncate font-medium text-ink">David Okafor</p>
+                    <p class="truncate text-[11px] text-muted">d.okafor@corpmail.com</p>
+                  </div>
+                </div>
+              </td>
+              <td class="text-muted tnum">+44 7700 900123</td>
+              <td class="text-muted tnum">3 events</td>
+              <td class="font-semibold text-ink tnum">4</td>
+              <td><span class="badge badge-green"><i class="hgi-stroke hgi-sale-tag-01 text-[12px]"></i>Sponsor</span></td>
+              <td class="text-muted tnum">Jul 9, 2026</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="avatar h-8 w-8 text-[11px]">SB</span>
+                  <div class="min-w-0 leading-tight">
+                    <p class="truncate font-medium text-ink">Suchada Boonmee</p>
+                    <p class="truncate text-[11px] text-muted">suchada.b@gmail.com</p>
+                  </div>
+                </div>
+              </td>
+              <td class="text-muted tnum">+66 86 234 1122</td>
+              <td class="text-muted tnum">7 events</td>
+              <td class="font-semibold text-ink tnum">10</td>
+              <td><span class="badge badge-purple"><i class="hgi-stroke hgi-star text-[12px]"></i>VIP</span></td>
+              <td class="text-muted tnum">Jul 18, 2026</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="avatar h-8 w-8 text-[11px]">WR</span>
+                  <div class="min-w-0 leading-tight">
+                    <p class="truncate font-medium text-ink">Wichai Ratanakosin</p>
+                    <p class="truncate text-[11px] text-muted">wichai.r@gmail.com</p>
+                  </div>
+                </div>
+              </td>
+              <td class="text-muted tnum">+66 95 678 9012</td>
+              <td class="text-muted tnum">2 events</td>
+              <td class="font-semibold text-ink tnum">2</td>
+              <td><span class="badge badge-blue"><i class="hgi-stroke hgi-certificate-01 text-[12px]"></i>Student</span></td>
+              <td class="text-muted tnum">Jul 5, 2026</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-3 flex items-center justify-between text-[12px] text-muted">
+        <p>Showing <span class="font-semibold text-ink">1–10</span> of <span class="font-semibold text-ink tnum">2,847</span> attendees</p>
+        <div class="flex gap-1">
+          <button class="btn-icon" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[15px]"></i></button>
+          <button class="btn-icon"><i class="hgi-stroke hgi-arrow-right-01 text-[15px]"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  </main>
+</div>
+
+<!-- Attendee profile panel -->
+<aside class="panel" id="profile-panel">
+  <header class="flex items-center justify-between border-b border-hair p-4">
+    <h3 class="text-[15px] font-bold tracking-tight">Attendee profile</h3>
+    <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+  </header>
+  <div class="flex-1 space-y-5 overflow-y-auto p-4">
+    <div class="flex items-center gap-3">
+      <span class="avatar h-14 w-14 text-[18px]">AP</span>
+      <div class="min-w-0">
+        <p class="truncate text-[15px] font-bold text-ink">Anong Praditsarn</p>
+        <p class="truncate text-[12px] text-muted">anong.p@gmail.com</p>
+        <div class="mt-1.5 flex flex-wrap gap-1">
+          <span class="badge badge-purple"><i class="hgi-stroke hgi-star text-[12px]"></i>VIP</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card space-y-2 p-3">
+      <div class="flex items-center gap-2 text-[13px]"><i class="hgi-stroke hgi-mail-01 text-[15px] text-muted"></i><span class="text-ink">anong.p@gmail.com</span></div>
+      <div class="flex items-center gap-2 text-[13px]"><i class="hgi-stroke hgi-call text-[15px] text-muted"></i><span class="text-ink tnum">+66 81 234 5678</span></div>
+    </div>
+
+    <div>
+      <h4 class="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted">Registered events</h4>
+      <div class="space-y-2">
+        <div class="flex items-center justify-between rounded-lg border border-hair p-2.5">
+          <div class="min-w-0"><p class="truncate text-[13px] font-semibold text-ink">Tech Summit 2026</p><p class="text-[11px] text-muted">Jul 18, 2026 · BITEC</p></div>
+          <span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Checked-in</span>
+        </div>
+        <div class="flex items-center justify-between rounded-lg border border-hair p-2.5">
+          <div class="min-w-0"><p class="truncate text-[13px] font-semibold text-ink">Bangkok Jazz Night</p><p class="text-[11px] text-muted">Jul 12, 2026 · Sala Daeng</p></div>
+          <span class="badge badge-blue"><i class="hgi-stroke hgi-ticket-01 text-[12px]"></i>Registered</span>
+        </div>
+        <div class="flex items-center justify-between rounded-lg border border-hair p-2.5">
+          <div class="min-w-0"><p class="truncate text-[13px] font-semibold text-ink">Thai Street Food Festival</p><p class="text-[11px] text-muted">Jun 21, 2026 · Lumphini Park</p></div>
+          <span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Checked-in</span>
+        </div>
+        <div class="flex items-center justify-between rounded-lg border border-hair p-2.5">
+          <div class="min-w-0"><p class="truncate text-[13px] font-semibold text-ink">UX Bangkok Meetup</p><p class="text-[11px] text-muted">May 14, 2026 · IconSiam</p></div>
+          <span class="badge badge-gray">Past</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h4 class="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted">Tickets</h4>
+      <div class="space-y-2">
+        <div class="flex items-center justify-between rounded-lg border border-hair p-2.5">
+          <div class="flex min-w-0 items-center gap-2"><i class="hgi-stroke hgi-ticket-star text-[15px] text-muted"></i><p class="truncate text-[13px] text-ink">VIP Pass · Tech Summit 2026</p></div>
+          <span class="text-[13px] font-semibold text-ink tnum">฿1,250</span>
+        </div>
+        <div class="flex items-center justify-between rounded-lg border border-hair p-2.5">
+          <div class="flex min-w-0 items-center gap-2"><i class="hgi-stroke hgi-ticket-01 text-[15px] text-muted"></i><p class="truncate text-[13px] text-ink">General Admission · Bangkok Jazz Night</p></div>
+          <span class="text-[13px] font-semibold text-ink tnum">฿480</span>
+        </div>
+        <div class="flex items-center justify-between rounded-lg border border-hair p-2.5">
+          <div class="flex min-w-0 items-center gap-2"><i class="hgi-stroke hgi-ticket-01 text-[15px] text-muted"></i><p class="truncate text-[13px] text-ink">Early Bird · UX Bangkok Meetup</p></div>
+          <span class="badge badge-green">Free</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h4 class="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted">Activity</h4>
+      <div class="space-y-4 border-l border-line pl-4">
+        <div class="relative">
+          <span class="absolute -left-[21px] top-0.5 h-2.5 w-2.5 rounded-full bg-brand ring-4 ring-brand-soft"></span>
+          <p class="text-[13px] font-medium text-ink">Checked in at Tech Summit 2026</p>
+          <p class="text-[11px] text-muted tnum">Jul 15, 2026 · 10:24</p>
+        </div>
+        <div class="relative">
+          <span class="absolute -left-[21px] top-0.5 h-2.5 w-2.5 rounded-full bg-line"></span>
+          <p class="text-[13px] font-medium text-ink">Registered for Bangkok Jazz Night</p>
+          <p class="text-[11px] text-muted tnum">Jul 9, 2026 · 14:52</p>
+        </div>
+        <div class="relative">
+          <span class="absolute -left-[21px] top-0.5 h-2.5 w-2.5 rounded-full bg-line"></span>
+          <p class="text-[13px] font-medium text-ink">Updated contact details</p>
+          <p class="text-[11px] text-muted tnum">Jun 28, 2026</p>
+        </div>
+        <div class="relative">
+          <span class="absolute -left-[21px] top-0.5 h-2.5 w-2.5 rounded-full bg-line"></span>
+          <p class="text-[13px] font-medium text-ink">Joined Eventa</p>
+          <p class="text-[11px] text-muted tnum">Mar 3, 2026</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="flex gap-2 border-t border-hair p-4">
+    <button class="btn btn-ghost flex-1" data-close><i class="hgi-stroke hgi-mail-01 text-[16px]"></i>Send email</button>
+    <button class="btn btn-primary flex-1" data-close><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i>Edit</button>
+  </footer>
+</aside>
+
+<!-- Invite panel -->
+<aside class="panel" id="invite-panel">
+  <header class="flex items-center justify-between border-b border-hair p-4">
+    <h3 class="text-[15px] font-bold tracking-tight">Invite attendee</h3>
+    <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+  </header>
+  <div class="flex-1 space-y-4 overflow-y-auto p-4">
+    <div>
+      <label class="label">Full name</label>
+      <input type="text" class="input" placeholder="e.g. Somchai Tanakit" />
+    </div>
+    <div>
+      <label class="label">Email address</label>
+      <input type="email" class="input" placeholder="name@example.com" />
+    </div>
+    <div>
+      <label class="label">Event</label>
+      <select class="select">
+        <option>Tech Summit 2026</option>
+        <option>Bangkok Jazz Night</option>
+        <option>Sunrise Yoga Retreat</option>
+        <option>Thai Street Food Festival</option>
+        <option>UX Bangkok Meetup</option>
+      </select>
+    </div>
+    <div>
+      <label class="label">Personal message</label>
+      <textarea class="textarea" placeholder="Add a short note to the invite email..."></textarea>
+      <p class="hint">Optional — shown at the top of the invite email.</p>
+    </div>
+  </div>
+  <footer class="flex gap-2 border-t border-hair p-4">
+    <button class="btn btn-ghost flex-1" data-close>Cancel</button>
+    <button class="btn btn-primary flex-1" data-close><i class="hgi-stroke hgi-mail-send-01 text-[16px]"></i>Send invite</button>
+  </footer>
+</aside>
+
+<script src="assets/shell.js"></script>
+</body>
+</html>

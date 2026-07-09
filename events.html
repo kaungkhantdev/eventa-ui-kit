@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Events</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="assets/config.js"></script>
+<link rel="stylesheet" href="assets/app.css" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="events">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidebar here -->
+
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <div class="min-w-0">
+          <h1 class="text-[22px] font-bold tracking-tight">Events</h1>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Create and manage your events.</p>
+        </div>
+      </div>
+      <div class="flex shrink-0 items-center gap-2">
+        <button class="btn btn-ghost"><i class="hgi-stroke hgi-download-01 text-[16px]"></i><span class="hidden sm:inline">Export</span></button>
+        <a href="event-form.html" class="btn btn-primary"><i class="hgi-stroke hgi-calendar-add-01 text-[16px]"></i><span class="hidden sm:inline">New event</span><span class="sm:hidden">New</span></a>
+      </div>
+    </div>
+
+    <!-- toolbar -->
+    <div class="card flex flex-col gap-3 p-3.5 lg:flex-row lg:items-center">
+      <div class="relative flex-1 lg:max-w-xs">
+        <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[16px] text-muted"></i>
+        <input type="text" placeholder="Search events…" class="input pl-9" />
+      </div>
+      <select class="select w-full lg:w-44">
+        <option>All statuses</option>
+        <option>Draft</option>
+        <option>Published</option>
+        <option>Registration open</option>
+        <option>Closed</option>
+        <option>Completed</option>
+      </select>
+      <select class="select w-full lg:w-44">
+        <option>All categories</option>
+        <option>Conference</option>
+        <option>Workshop</option>
+        <option>Concert</option>
+        <option>Festival</option>
+        <option>Networking</option>
+      </select>
+      <div class="flex items-center justify-between gap-2 lg:ml-auto lg:justify-end">
+        <span class="hidden text-[12px] text-muted sm:inline">6 events</span>
+        <div class="segmented">
+          <button class="active"><i class="hgi-stroke hgi-dashboard-square-01 text-[14px]"></i><span class="ml-1 hidden sm:inline">Grid</span></button>
+          <button><i class="hgi-stroke hgi-more-horizontal text-[14px]"></i><span class="ml-1 hidden sm:inline">List</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- events grid -->
+    <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+
+      <!-- 1 -->
+      <div class="card overflow-hidden">
+        <div class="relative flex h-28 items-start justify-between p-3" style="background:linear-gradient(135deg,#1ba770,#0e6b47)">
+          <span class="badge badge-blue">Registration open</span>
+          <span class="badge bg-white/15 text-white backdrop-blur">Conference</span>
+        </div>
+        <div class="p-4">
+          <p class="font-bold text-ink">Tech Summit 2026</p>
+          <div class="mt-2 space-y-1.5">
+            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Jul 18, 2026 · 09:00</div>
+            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>BITEC, Bangkok</div>
+          </div>
+          <div class="mt-3">
+            <div class="flex items-center justify-between text-[11px] text-muted"><span class="tnum">312 / 400 registered</span><span class="tnum">78%</span></div>
+            <div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:78%"></div></div>
+          </div>
+          <p class="mt-3 text-[13px] font-semibold text-ink tnum">฿18,400 revenue</p>
+          <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
+            <a href="event-detail.html" class="btn btn-ghost btn-sm flex-1">View</a>
+            <a href="event-form.html" class="btn-icon" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></a>
+            <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-horizontal text-[16px]"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="card overflow-hidden">
+        <div class="relative flex h-28 items-start justify-between p-3" style="background:linear-gradient(135deg,#7c3aed,#4c1d95)">
+          <span class="badge badge-purple">Completed</span>
+          <span class="badge bg-white/15 text-white backdrop-blur">Concert</span>
+        </div>
+        <div class="p-4">
+          <p class="font-bold text-ink">Bangkok Jazz Night</p>
+          <div class="mt-2 space-y-1.5">
+            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Jul 12, 2026 · 19:30</div>
+            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>Sala Daeng, Bangkok</div>
+          </div>
+          <div class="mt-3">
+            <div class="flex items-center justify-between text-[11px] text-muted"><span class="tnum">240 / 240 registered</span><span class="tnum">100%</span></div>
+            <div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:100%"></div></div>
+          </div>
+          <p class="mt-3 text-[13px] font-semibold text-ink tnum">฿11,520 revenue</p>
+          <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
+            <a href="event-detail.html" class="btn btn-ghost btn-sm flex-1">View</a>
+            <a href="event-form.html" class="btn-icon" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></a>
+            <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-horizontal text-[16px]"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="card overflow-hidden">
+        <div class="relative flex h-28 items-start justify-between p-3" style="background:linear-gradient(135deg,#34d399,#059669)">
+          <span class="badge badge-blue">Registration open</span>
+          <span class="badge bg-white/15 text-white backdrop-blur">Workshop</span>
+        </div>
+        <div class="p-4">
+          <p class="font-bold text-ink">Sunrise Yoga Retreat</p>
+          <div class="mt-2 space-y-1.5">
+            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Jul 20, 2026 · 06:00</div>
+            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>Lumphini Park, Bangkok</div>
+          </div>
+          <div class="mt-3">
+            <div class="flex items-center justify-between text-[11px] text-muted"><span class="tnum">88 / 100 registered</span><span class="tnum">88%</span></div>
+            <div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:88%"></div></div>
+          </div>
+          <p class="mt-3 text-[13px] font-semibold text-ink tnum"><span class="badge badge-green">Free</span></p>
+          <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
+            <a href="event-detail.html" class="btn btn-ghost btn-sm flex-1">View</a>
+            <a href="event-form.html" class="btn-icon" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></a>
+            <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-horizontal text-[16px]"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="card overflow-hidden">
+        <div class="relative flex h-28 items-start justify-between p-3" style="background:linear-gradient(135deg,#fbbf24,#d97706)">
+          <span class="badge badge-amber">Closed</span>
+          <span class="badge bg-white/15 text-white backdrop-blur">Festival</span>
+        </div>
+        <div class="p-4">
+          <p class="font-bold text-ink">Thai Street Food Festival</p>
+          <div class="mt-2 space-y-1.5">
+            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Aug 2, 2026 · 16:00</div>
+            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>IconSiam, Bangkok</div>
+          </div>
+          <div class="mt-3">
+            <div class="flex items-center justify-between text-[11px] text-muted"><span class="tnum">650 / 650 registered</span><span class="tnum">100%</span></div>
+            <div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:100%"></div></div>
+          </div>
+          <p class="mt-3 text-[13px] font-semibold text-ink tnum">฿9,750 revenue</p>
+          <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
+            <a href="event-detail.html" class="btn btn-ghost btn-sm flex-1">View</a>
+            <a href="event-form.html" class="btn-icon" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></a>
+            <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-horizontal text-[16px]"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="card overflow-hidden">
+        <div class="relative flex h-28 items-start justify-between p-3" style="background:linear-gradient(135deg,#60a5fa,#2563eb)">
+          <span class="badge badge-gray">Draft</span>
+          <span class="badge bg-white/15 text-white backdrop-blur">Networking</span>
+        </div>
+        <div class="p-4">
+          <p class="font-bold text-ink">UX Bangkok Meetup</p>
+          <div class="mt-2 space-y-1.5">
+            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Aug 9, 2026 · 18:30</div>
+            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>WeWork Asok, Bangkok</div>
+          </div>
+          <div class="mt-3">
+            <div class="flex items-center justify-between text-[11px] text-muted"><span class="tnum">0 / 120 registered</span><span class="tnum">0%</span></div>
+            <div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:0%"></div></div>
+          </div>
+          <p class="mt-3 text-[13px] font-semibold text-ink tnum"><span class="badge badge-green">Free</span></p>
+          <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
+            <a href="event-detail.html" class="btn btn-ghost btn-sm flex-1">View</a>
+            <a href="event-form.html" class="btn-icon" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></a>
+            <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-horizontal text-[16px]"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="card overflow-hidden">
+        <div class="relative flex h-28 items-start justify-between p-3" style="background:linear-gradient(135deg,#1ba770,#0e6b47)">
+          <span class="badge badge-green">Published</span>
+          <span class="badge bg-white/15 text-white backdrop-blur">Conference</span>
+        </div>
+        <div class="p-4">
+          <p class="font-bold text-ink">Startup Founders Forum</p>
+          <div class="mt-2 space-y-1.5">
+            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Sep 4, 2026 · 09:30</div>
+            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>True Digital Park, Bangkok</div>
+          </div>
+          <div class="mt-3">
+            <div class="flex items-center justify-between text-[11px] text-muted"><span class="tnum">54 / 300 registered</span><span class="tnum">18%</span></div>
+            <div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:18%"></div></div>
+          </div>
+          <p class="mt-3 text-[13px] font-semibold text-ink tnum">฿4,050 revenue</p>
+          <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
+            <a href="event-detail.html" class="btn btn-ghost btn-sm flex-1">View</a>
+            <a href="event-form.html" class="btn-icon" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></a>
+            <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-horizontal text-[16px]"></i></button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  </main>
+</div>
+
+<script src="assets/shell.js"></script>
+</body>
+</html>

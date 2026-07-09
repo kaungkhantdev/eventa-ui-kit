@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Tickets</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="assets/config.js"></script>
+<link rel="stylesheet" href="assets/app.css" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="tickets">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidebar here -->
+
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <div class="min-w-0">
+          <h1 class="text-[22px] font-bold tracking-tight">Tickets</h1>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Manage ticket types across your events.</p>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary shrink-0" data-open="ticket-panel"><i class="hgi-stroke hgi-add-01 text-[16px]"></i><span class="hidden sm:inline">New ticket type</span><span class="sm:hidden">New</span></button>
+    </div>
+
+    <!-- stat cards -->
+    <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-ticket-01 text-[16px]"></i>Tickets sold</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">4,210</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>6,8 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-wallet-01 text-[16px]"></i>Revenue</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿3.46M</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>14,2 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-coins-01 text-[16px]"></i>Avg price</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿821</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>1,3 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-alert-circle text-[16px]"></i>Sold-out types</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">3</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>+1</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- toolbar -->
+    <div class="card mt-3 flex flex-col gap-2 p-3 sm:flex-row sm:items-center sm:justify-between">
+      <div class="relative w-full sm:max-w-xs">
+        <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[16px] text-muted"></i>
+        <input type="text" class="input pl-9" placeholder="Search ticket types…" />
+      </div>
+      <div class="flex flex-col gap-2 sm:flex-row">
+        <select class="select w-full sm:w-48">
+          <option>All events</option>
+          <option>Tech Summit 2026</option>
+          <option>Bangkok Jazz Night</option>
+          <option>Sunrise Yoga Retreat</option>
+          <option>Thai Street Food Festival</option>
+          <option>UX Bangkok Meetup</option>
+        </select>
+        <select class="select w-full sm:w-40">
+          <option>All statuses</option>
+          <option>On sale</option>
+          <option>Scheduled</option>
+          <option>Paused</option>
+          <option>Sold out</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ticket type cards -->
+    <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+
+      <!-- 1 -->
+      <div class="card flex flex-col gap-3 p-4">
+        <div class="flex items-start justify-between gap-2">
+          <div class="flex min-w-0 items-center gap-3">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-amber-50 text-amber-500 dark:bg-amber-400/15 dark:text-amber-300"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
+            <div class="min-w-0">
+              <p class="truncate text-[14px] font-semibold text-ink">VIP Access</p>
+              <p class="truncate text-[11px] text-muted">Tech Summit 2026</p>
+            </div>
+          </div>
+          <button class="btn-icon shrink-0" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+        </div>
+        <div class="flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿2,900</p>
+          <span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>On sale</span>
+        </div>
+        <div>
+          <div class="mb-1 flex items-center justify-between text-[11px] text-muted"><span class="tnum">210 / 250 sold</span><span class="tnum">84%</span></div>
+          <div class="h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:84%"></div></div>
+        </div>
+        <div class="mt-1 flex items-center gap-2 border-t border-hair pt-3">
+          <button class="btn btn-ghost btn-sm flex-1" data-open="ticket-panel"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit</button>
+          <button class="btn-icon" title="QR code"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i></button>
+          <button class="btn-icon" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="card flex flex-col gap-3 p-4">
+        <div class="flex items-start justify-between gap-2">
+          <div class="flex min-w-0 items-center gap-3">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
+            <div class="min-w-0">
+              <p class="truncate text-[14px] font-semibold text-ink">General Admission</p>
+              <p class="truncate text-[11px] text-muted">Tech Summit 2026</p>
+            </div>
+          </div>
+          <button class="btn-icon shrink-0" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+        </div>
+        <div class="flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿1,250</p>
+          <span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>On sale</span>
+        </div>
+        <div>
+          <div class="mb-1 flex items-center justify-between text-[11px] text-muted"><span class="tnum">640 / 800 sold</span><span class="tnum">80%</span></div>
+          <div class="h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:80%"></div></div>
+        </div>
+        <div class="mt-1 flex items-center gap-2 border-t border-hair pt-3">
+          <button class="btn btn-ghost btn-sm flex-1" data-open="ticket-panel"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit</button>
+          <button class="btn-icon" title="QR code"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i></button>
+          <button class="btn-icon" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="card flex flex-col gap-3 p-4">
+        <div class="flex items-start justify-between gap-2">
+          <div class="flex min-w-0 items-center gap-3">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
+            <div class="min-w-0">
+              <p class="truncate text-[14px] font-semibold text-ink">Early Bird</p>
+              <p class="truncate text-[11px] text-muted">Bangkok Jazz Night</p>
+            </div>
+          </div>
+          <button class="btn-icon shrink-0" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+        </div>
+        <div class="flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿480</p>
+          <span class="badge badge-amber"><i class="hgi-stroke hgi-alert-circle text-[12px]"></i>Sold out</span>
+        </div>
+        <div>
+          <div class="mb-1 flex items-center justify-between text-[11px] text-muted"><span class="tnum">300 / 300 sold</span><span class="tnum">100%</span></div>
+          <div class="h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:100%"></div></div>
+        </div>
+        <div class="mt-1 flex items-center gap-2 border-t border-hair pt-3">
+          <button class="btn btn-ghost btn-sm flex-1" data-open="ticket-panel"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit</button>
+          <button class="btn-icon" title="QR code"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i></button>
+          <button class="btn-icon" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="card flex flex-col gap-3 p-4">
+        <div class="flex items-start justify-between gap-2">
+          <div class="flex min-w-0 items-center gap-3">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-500 dark:bg-blue-500/15 dark:text-blue-300"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
+            <div class="min-w-0">
+              <p class="truncate text-[14px] font-semibold text-ink">Student</p>
+              <p class="truncate text-[11px] text-muted">UX Bangkok Meetup</p>
+            </div>
+          </div>
+          <button class="btn-icon shrink-0" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+        </div>
+        <div class="flex items-end justify-between">
+          <span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Free</span>
+          <span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>On sale</span>
+        </div>
+        <div>
+          <div class="mb-1 flex items-center justify-between text-[11px] text-muted"><span class="tnum">120 / 150 sold</span><span class="tnum">80%</span></div>
+          <div class="h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:80%"></div></div>
+        </div>
+        <div class="mt-1 flex items-center gap-2 border-t border-hair pt-3">
+          <button class="btn btn-ghost btn-sm flex-1" data-open="ticket-panel"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit</button>
+          <button class="btn-icon" title="QR code"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i></button>
+          <button class="btn-icon" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="card flex flex-col gap-3 p-4">
+        <div class="flex items-start justify-between gap-2">
+          <div class="flex min-w-0 items-center gap-3">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-purple-50 text-purple-500 dark:bg-purple-500/15 dark:text-purple-300"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
+            <div class="min-w-0">
+              <p class="truncate text-[14px] font-semibold text-ink">Premium Front Row</p>
+              <p class="truncate text-[11px] text-muted">Bangkok Jazz Night</p>
+            </div>
+          </div>
+          <button class="btn-icon shrink-0" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+        </div>
+        <div class="flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿1,900</p>
+          <span class="badge badge-blue"><i class="hgi-stroke hgi-time-schedule text-[12px]"></i>Scheduled</span>
+        </div>
+        <div>
+          <div class="mb-1 flex items-center justify-between text-[11px] text-muted"><span class="tnum">45 / 60 sold</span><span class="tnum">75%</span></div>
+          <div class="h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:75%"></div></div>
+        </div>
+        <div class="mt-1 flex items-center gap-2 border-t border-hair pt-3">
+          <button class="btn btn-ghost btn-sm flex-1" data-open="ticket-panel"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit</button>
+          <button class="btn-icon" title="QR code"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i></button>
+          <button class="btn-icon" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="card flex flex-col gap-3 p-4">
+        <div class="flex items-start justify-between gap-2">
+          <div class="flex min-w-0 items-center gap-3">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
+            <div class="min-w-0">
+              <p class="truncate text-[14px] font-semibold text-ink">General Admission</p>
+              <p class="truncate text-[11px] text-muted">Thai Street Food Festival</p>
+            </div>
+          </div>
+          <button class="btn-icon shrink-0" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+        </div>
+        <div class="flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿350</p>
+          <span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>On sale</span>
+        </div>
+        <div>
+          <div class="mb-1 flex items-center justify-between text-[11px] text-muted"><span class="tnum">890 / 1,000 sold</span><span class="tnum">89%</span></div>
+          <div class="h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:89%"></div></div>
+        </div>
+        <div class="mt-1 flex items-center gap-2 border-t border-hair pt-3">
+          <button class="btn btn-ghost btn-sm flex-1" data-open="ticket-panel"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit</button>
+          <button class="btn-icon" title="QR code"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i></button>
+          <button class="btn-icon" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="card flex flex-col gap-3 p-4">
+        <div class="flex items-start justify-between gap-2">
+          <div class="flex min-w-0 items-center gap-3">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-amber-50 text-amber-500 dark:bg-amber-400/15 dark:text-amber-300"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
+            <div class="min-w-0">
+              <p class="truncate text-[14px] font-semibold text-ink">Retreat Package</p>
+              <p class="truncate text-[11px] text-muted">Sunrise Yoga Retreat</p>
+            </div>
+          </div>
+          <button class="btn-icon shrink-0" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+        </div>
+        <div class="flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿3,200</p>
+          <span class="badge badge-amber"><i class="hgi-stroke hgi-alert-circle text-[12px]"></i>Sold out</span>
+        </div>
+        <div>
+          <div class="mb-1 flex items-center justify-between text-[11px] text-muted"><span class="tnum">40 / 40 sold</span><span class="tnum">100%</span></div>
+          <div class="h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:100%"></div></div>
+        </div>
+        <div class="mt-1 flex items-center gap-2 border-t border-hair pt-3">
+          <button class="btn btn-ghost btn-sm flex-1" data-open="ticket-panel"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit</button>
+          <button class="btn-icon" title="QR code"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i></button>
+          <button class="btn-icon" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="card flex flex-col gap-3 p-4">
+        <div class="flex items-start justify-between gap-2">
+          <div class="flex min-w-0 items-center gap-3">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gray-100 text-gray-500 dark:bg-white/10 dark:text-gray-300"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
+            <div class="min-w-0">
+              <p class="truncate text-[14px] font-semibold text-ink">Speaker Pass</p>
+              <p class="truncate text-[11px] text-muted">Tech Summit 2026</p>
+            </div>
+          </div>
+          <button class="btn-icon shrink-0" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+        </div>
+        <div class="flex items-end justify-between">
+          <span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Free</span>
+          <span class="badge badge-amber"><i class="hgi-stroke hgi-alert-circle text-[12px]"></i>Sold out</span>
+        </div>
+        <div>
+          <div class="mb-1 flex items-center justify-between text-[11px] text-muted"><span class="tnum">30 / 30 sold</span><span class="tnum">100%</span></div>
+          <div class="h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:100%"></div></div>
+        </div>
+        <div class="mt-1 flex items-center gap-2 border-t border-hair pt-3">
+          <button class="btn btn-ghost btn-sm flex-1" data-open="ticket-panel"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit</button>
+          <button class="btn-icon" title="QR code"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i></button>
+          <button class="btn-icon" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+        </div>
+      </div>
+
+      <!-- 9 -->
+      <div class="card flex flex-col gap-3 p-4">
+        <div class="flex items-start justify-between gap-2">
+          <div class="flex min-w-0 items-center gap-3">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gray-100 text-gray-500 dark:bg-white/10 dark:text-gray-300"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
+            <div class="min-w-0">
+              <p class="truncate text-[14px] font-semibold text-ink">Group Pass (5)</p>
+              <p class="truncate text-[11px] text-muted">UX Bangkok Meetup</p>
+            </div>
+          </div>
+          <button class="btn-icon shrink-0" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+        </div>
+        <div class="flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿1,000</p>
+          <span class="badge badge-gray"><i class="hgi-stroke hgi-time-quarter-pass text-[12px]"></i>Paused</span>
+        </div>
+        <div>
+          <div class="mb-1 flex items-center justify-between text-[11px] text-muted"><span class="tnum">0 / 50 sold</span><span class="tnum">0%</span></div>
+          <div class="h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:0%"></div></div>
+        </div>
+        <div class="mt-1 flex items-center gap-2 border-t border-hair pt-3">
+          <button class="btn btn-ghost btn-sm flex-1" data-open="ticket-panel"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit</button>
+          <button class="btn-icon" title="QR code"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i></button>
+          <button class="btn-icon" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  </main>
+</div>
+
+<!-- New / edit ticket type panel -->
+<aside class="panel" id="ticket-panel">
+  <header class="flex items-center justify-between border-b border-hair p-4">
+    <h3 class="text-[15px] font-bold tracking-tight">New ticket type</h3>
+    <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+  </header>
+  <div class="flex-1 space-y-4 overflow-y-auto p-4">
+    <div>
+      <label class="label">Ticket name</label>
+      <input type="text" class="input" placeholder="e.g. VIP Access" />
+    </div>
+    <div>
+      <label class="label">Event</label>
+      <select class="select">
+        <option>Tech Summit 2026</option>
+        <option>Bangkok Jazz Night</option>
+        <option>Sunrise Yoga Retreat</option>
+        <option>Thai Street Food Festival</option>
+        <option>UX Bangkok Meetup</option>
+      </select>
+    </div>
+    <div>
+      <label class="label">Type</label>
+      <div class="segmented w-full" data-type-toggle>
+        <button type="button" class="active flex-1" data-type="paid">Paid</button>
+        <button type="button" class="flex-1" data-type="free">Free</button>
+      </div>
+    </div>
+    <div id="ticket-price-field">
+      <label class="label">Price (฿)</label>
+      <input type="number" min="0" step="1" class="input" placeholder="1250" />
+    </div>
+    <div>
+      <label class="label">Quantity available</label>
+      <input type="number" min="0" step="1" class="input" placeholder="250" />
+    </div>
+    <div class="grid grid-cols-2 gap-3">
+      <div>
+        <label class="label">Sales start</label>
+        <input type="date" class="input" />
+      </div>
+      <div>
+        <label class="label">Sales end</label>
+        <input type="date" class="input" />
+      </div>
+    </div>
+    <div>
+      <label class="label">Per-order limit</label>
+      <input type="number" min="1" step="1" class="input" placeholder="4" />
+      <p class="hint">Maximum tickets a single order can include.</p>
+    </div>
+    <div>
+      <label class="label">Description</label>
+      <textarea class="textarea" placeholder="What's included with this ticket…"></textarea>
+    </div>
+    <div class="flex items-center justify-between border-t border-hair pt-4">
+      <div>
+        <p class="text-[13px] font-medium text-ink">Transferable</p>
+        <p class="hint mt-0.5">Allow this ticket to be transferred to another attendee</p>
+      </div>
+      <button type="button" class="demo-toggle flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5">
+        <span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span>
+      </button>
+    </div>
+  </div>
+  <footer class="flex gap-2 border-t border-hair p-4">
+    <button class="btn btn-ghost flex-1" data-close>Cancel</button>
+    <button class="btn btn-primary flex-1" data-close>Save ticket type</button>
+  </footer>
+</aside>
+
+<!-- Delete confirm modal -->
+<div class="modal" id="del-modal">
+  <div class="p-5">
+    <div class="grid h-10 w-10 place-items-center rounded-xl bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300"><i class="hgi-stroke hgi-alert-01 text-[18px]"></i></div>
+    <h3 class="mt-3 text-[15px] font-bold tracking-tight">Delete ticket type?</h3>
+    <p class="mt-1 text-[13px] text-muted">This will permanently remove the ticket type. Attendees who already hold this ticket won't be affected.</p>
+    <div class="mt-4 flex gap-2">
+      <button class="btn btn-ghost flex-1" data-close>Cancel</button>
+      <button class="btn btn-danger flex-1" data-close>Delete</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/shell.js"></script>
+<script>
+  // Free / Paid segmented control toggles the price field
+  document.querySelectorAll('[data-type-toggle]').forEach(wrap => {
+    wrap.addEventListener('click', e => {
+      const btn = e.target.closest('button'); if (!btn) return;
+      [...wrap.children].forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const priceField = document.getElementById('ticket-price-field');
+      if (priceField) priceField.classList.toggle('hidden', btn.dataset.type === 'free');
+    });
+  });
+  // Generic demo toggle switches (e.g. Transferable)
+  document.querySelectorAll('.demo-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const on = btn.classList.toggle('bg-brand');
+      btn.classList.toggle('bg-line', !on);
+      const knob = btn.querySelector('span');
+      if (knob) knob.classList.toggle('translate-x-4', on);
+    });
+  });
+</script>
+</body>
+</html>

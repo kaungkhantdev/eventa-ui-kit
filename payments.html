@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Payments</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="assets/config.js"></script>
+<link rel="stylesheet" href="assets/app.css" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="payments">
+<div class="flex h-full min-h-screen" data-layout>
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <div class="min-w-0">
+          <h1 class="text-[22px] font-bold tracking-tight">Payments</h1>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Track ticket revenue and process refunds.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="btn btn-ghost"><i class="hgi-stroke hgi-download-01 text-[16px]"></i><span class="hidden sm:inline">Export</span></button>
+        <button class="btn btn-ghost"><i class="hgi-stroke hgi-refresh text-[16px]"></i><span class="hidden sm:inline">Refresh</span></button>
+      </div>
+    </div>
+
+    <!-- stat tiles -->
+    <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-wallet-01 text-[16px]"></i>Total revenue</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿3.46M</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>9,8 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-checkmark-badge-01 text-[16px]"></i>Paid</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿3.28M</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>11,2 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-clock-01 text-[16px]"></i>Pending</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿86k</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>3,4 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-delivery-return-01 text-[16px]"></i>Refunded</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿94k</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>2,1 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5 col-span-2 sm:col-span-1">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-bank text-[16px]"></i>Net payout</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿3.19M</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>9,1 %</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- toolbar + table -->
+    <section class="card mt-3 p-4">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div class="relative w-full sm:max-w-xs">
+          <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[15px] text-muted"></i>
+          <input id="pay-search" type="text" placeholder="Search transaction or attendee…" class="input pl-9" />
+        </div>
+        <div class="flex flex-col gap-2 sm:flex-row">
+          <select id="pay-method" class="select w-full sm:w-40">
+            <option value="">All methods</option>
+            <option value="Card">Card</option>
+            <option value="PromptPay">PromptPay</option>
+            <option value="Bank transfer">Bank transfer</option>
+          </select>
+          <select id="pay-status" class="select w-full sm:w-36">
+            <option value="">All statuses</option>
+            <option value="Paid">Paid</option>
+            <option value="Pending">Pending</option>
+            <option value="Refunded">Refunded</option>
+            <option value="Failed">Failed</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-4 overflow-x-auto">
+        <table class="data-table min-w-[900px]">
+          <thead>
+            <tr>
+              <th>Transaction</th>
+              <th>Attendee</th>
+              <th>Event</th>
+              <th>Method</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="pay-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+      <p id="pay-empty" class="hidden py-8 text-center text-[13px] text-muted">No transactions match your filters.</p>
+    </section>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  </main>
+
+  <!-- refund confirm modal -->
+  <div class="modal" id="refund-modal">
+    <div class="p-5">
+      <div class="flex items-center gap-3">
+        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300"><i class="hgi-stroke hgi-alert-01 text-[20px]"></i></span>
+        <div class="min-w-0">
+          <h3 class="text-[15px] font-bold tracking-tight">Refund transaction</h3>
+          <p class="truncate text-[12px] text-muted">Transaction <span id="refund-txn" class="font-mono text-ink">#TXN-10492</span></p>
+        </div>
+      </div>
+      <p class="mt-3 text-[13px] text-muted">This will refund <span id="refund-amount" class="font-semibold text-ink tnum">฿1,250</span> to the attendee's original payment method. Their ticket will be cancelled and this action cannot be undone.</p>
+      <div class="mt-4 flex gap-2">
+        <button class="btn btn-ghost flex-1" data-close>Cancel</button>
+        <button id="refund-confirm-btn" class="btn btn-danger flex-1" data-close>Refund ฿1,250</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/shell.js"></script>
+<script>
+  const badgeStatus = {
+    Paid:     { cls: 'badge badge-green', icon: 'hgi-tick-02' },
+    Pending:  { cls: 'badge badge-amber', icon: 'hgi-clock-01' },
+    Refunded: { cls: 'badge badge-gray',  icon: 'hgi-delivery-return-01' },
+    Failed:   { cls: 'badge badge-red',   icon: 'hgi-cancel-01' },
+  };
+  const badgeMethod = {
+    'Card':          { cls: 'badge badge-blue',  icon: 'hgi-credit-card' },
+    'PromptPay':      { cls: 'badge badge-green', icon: 'hgi-qr-code-01' },
+    'Bank transfer':  { cls: 'badge badge-gray',  icon: 'hgi-bank' },
+  };
+  const payments = [
+    { txn: '#TXN-10492', ini: 'AP', name: 'Anong P.',    ev: 'Tech Summit 2026',           method: 'Card',          amt: 1250, st: 'Paid',     date: 'Jul 18, 2026', time: '10:24' },
+    { txn: '#TXN-10491', ini: 'ST', name: 'Somchai T.',  ev: 'Bangkok Jazz Night',         method: 'PromptPay',     amt: 480,  st: 'Paid',     date: 'Jul 18, 2026', time: '10:02' },
+    { txn: '#TXN-10490', ini: 'WI', name: 'Walk-in',     ev: 'Sunrise Yoga Retreat',       method: 'Bank transfer', amt: 890,  st: 'Pending',  date: 'Jul 18, 2026', time: '09:47' },
+    { txn: '#TXN-10489', ini: 'PS', name: 'Ploy S.',     ev: 'Tech Summit 2026',           method: 'Card',          amt: 1250, st: 'Paid',     date: 'Jul 17, 2026', time: '16:12' },
+    { txn: '#TXN-10488', ini: 'JW', name: 'James W.',    ev: 'Bangkok Jazz Night',         method: 'PromptPay',     amt: 480,  st: 'Refunded', date: 'Jul 17, 2026', time: '14:03' },
+    { txn: '#TXN-10487', ini: 'ML', name: 'Mei L.',      ev: 'Thai Street Food Festival',  method: 'Card',          amt: 650,  st: 'Paid',     date: 'Jul 17, 2026', time: '11:45' },
+    { txn: '#TXN-10486', ini: 'KR', name: 'Kittipong R.',ev: 'UX Bangkok Meetup',          method: 'Bank transfer', amt: 320,  st: 'Failed',   date: 'Jul 16, 2026', time: '09:20' },
+    { txn: '#TXN-10485', ini: 'SK', name: 'Suda K.',     ev: 'Tech Summit 2026',           method: 'Card',          amt: 1250, st: 'Paid',     date: 'Jul 16, 2026', time: '08:58' },
+    { txn: '#TXN-10484', ini: 'DC', name: 'David C.',    ev: 'Sunrise Yoga Retreat',       method: 'PromptPay',     amt: 890,  st: 'Paid',     date: 'Jul 15, 2026', time: '19:32' },
+    { txn: '#TXN-10483', ini: 'NW', name: 'Nutcha W.',   ev: 'Bangkok Jazz Night',         method: 'Card',          amt: 480,  st: 'Pending',  date: 'Jul 15, 2026', time: '17:10' },
+  ];
+  function fmtBaht(n) { return '฿' + n.toLocaleString('en-US'); }
+
+  function rowHtml(p) {
+    const s = badgeStatus[p.st], m = badgeMethod[p.method];
+    const refundable = p.st === 'Paid';
+    const refundBtn = refundable
+      ? `<button class="btn-icon" data-open="refund-modal" data-refund data-txn="${p.txn}" data-amount="${fmtBaht(p.amt)}" title="Refund"><i class="hgi-stroke hgi-delivery-return-01 text-[16px]"></i></button>`
+      : `<button class="btn-icon cursor-not-allowed opacity-30" disabled title="Not eligible for refund"><i class="hgi-stroke hgi-delivery-return-01 text-[16px]"></i></button>`;
+    return `
+    <tr>
+      <td><p class="font-mono text-[12.5px] font-semibold text-ink">${p.txn}</p><p class="mt-0.5 text-[11px] text-muted">${p.date}</p></td>
+      <td><div class="flex items-center gap-2"><span class="avatar h-7 w-7 text-[10px]">${p.ini}</span><span class="font-medium text-ink">${p.name}</span></div></td>
+      <td class="text-muted">${p.ev}</td>
+      <td><span class="${m.cls}"><i class="hgi-stroke ${m.icon} text-[12px]"></i>${p.method}</span></td>
+      <td class="font-semibold text-ink tnum">${fmtBaht(p.amt)}</td>
+      <td><span class="${s.cls}"><i class="hgi-stroke ${s.icon} text-[12px]"></i>${p.st}</span></td>
+      <td class="text-muted tnum">${p.time}</td>
+      <td class="text-right">
+        <div class="flex items-center justify-end gap-1">
+          <button class="btn-icon" title="View invoice"><i class="hgi-stroke hgi-invoice-01 text-[16px]"></i></button>
+          ${refundBtn}
+        </div>
+      </td>
+    </tr>`;
+  }
+
+  const tbody = document.getElementById('pay-rows');
+  const empty = document.getElementById('pay-empty');
+  const searchInput = document.getElementById('pay-search');
+  const methodSelect = document.getElementById('pay-method');
+  const statusSelect = document.getElementById('pay-status');
+
+  function renderRows() {
+    const q = searchInput.value.trim().toLowerCase();
+    const method = methodSelect.value;
+    const status = statusSelect.value;
+    const filtered = payments.filter(p => {
+      const matchesQ = !q || p.txn.toLowerCase().includes(q) || p.name.toLowerCase().includes(q);
+      const matchesMethod = !method || p.method === method;
+      const matchesStatus = !status || p.st === status;
+      return matchesQ && matchesMethod && matchesStatus;
+    });
+    tbody.innerHTML = filtered.map(rowHtml).join('');
+    empty.classList.toggle('hidden', filtered.length > 0);
+
+    tbody.querySelectorAll('[data-refund]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('refund-txn').textContent = btn.dataset.txn;
+        document.getElementById('refund-amount').textContent = btn.dataset.amount;
+        document.getElementById('refund-confirm-btn').textContent = 'Refund ' + btn.dataset.amount;
+      });
+    });
+  }
+  [searchInput, methodSelect, statusSelect].forEach(el => el.addEventListener('input', renderRows));
+  renderRows();
+</script>
+</body>
+</html>

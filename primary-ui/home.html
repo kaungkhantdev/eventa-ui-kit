@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Home</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
+        colors: {
+          brand:   { DEFAULT: '#1ba770', dark: '#157e56', soft: 'rgb(var(--brand-soft) / <alpha-value>)' },
+          ink:     'rgb(var(--ink) / <alpha-value>)',
+          muted:   'rgb(var(--muted) / <alpha-value>)',
+          line:    'rgb(var(--line) / <alpha-value>)',
+          canvas:  'rgb(var(--canvas) / <alpha-value>)',
+          surface: 'rgb(var(--surface) / <alpha-value>)',
+          hair:    'rgb(var(--hair) / <alpha-value>)',
+        },
+        boxShadow: { pop: '0 8px 24px rgba(16,24,40,.12)' },
+      },
+    },
+  };
+</script>
+<style>
+  :root {
+    --canvas: 247 248 250; --surface: 255 255 255;
+    --hair: 229 231 235; --line: 238 240 243;
+    --ink: 19 42 34; --muted: 139 147 164; --brand-soft: 230 246 239;
+  }
+  html.dark {
+    --canvas: 13 17 15; --surface: 23 29 26;
+    --hair: 39 47 43; --line: 34 42 38;
+    --ink: 232 237 234; --muted: 143 154 162; --brand-soft: 22 46 36;
+    color-scheme: dark;
+  }
+  html { -webkit-font-smoothing: antialiased; }
+  body { font-feature-settings: 'cv11','ss01'; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: #d7dbe2; border-radius: 8px; }
+  html.dark ::-webkit-scrollbar-thumb { background: #333b36; }
+  .tnum { font-variant-numeric: tabular-nums; }
+  re-icon { flex: none; }
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  /* rail hover tooltip (main-nav labels) */
+  .rail-tip { position:absolute; left:100%; top:50%; transform:translateY(-50%); margin-left:.7rem; white-space:nowrap;
+    border-radius:.4rem; background:#0e0f12; border:1px solid rgba(255,255,255,.12); padding:.25rem .55rem;
+    font-size:12px; font-weight:500; color:#fff; box-shadow:0 6px 20px rgba(0,0,0,.35);
+    opacity:0; pointer-events:none; transition:opacity .14s ease; z-index:60; }
+  .group:hover > .rail-tip { opacity:1; }
+</style>
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased">
+
+<div class="flex h-full min-h-screen">
+
+  <!-- mobile backdrop -->
+  <div id="backdrop" class="fixed inset-0 z-40 hidden bg-black/40 lg:hidden"></div>
+
+  <!-- ============ ICON RAIL (MAIN NAV) — home has no sub-nav panel ============ -->
+  <div id="sidenav" class="fixed inset-y-0 left-0 z-50 flex -translate-x-full transition-transform duration-300 lg:static lg:translate-x-0">
+    <aside id="rail" class="relative z-30 flex w-16 shrink-0 flex-col items-center bg-[#0e0f12] py-4">
+      <div class="group relative flex justify-center">
+        <a href="#" class="grid h-9 w-9 place-items-center rounded-full border border-brand/70 text-brand"><re-icon icon="ticket-star2" size="18" weight="filled"></re-icon></a>
+        <span class="rail-tip">Eventa</span>
+      </div>
+
+      <nav class="mt-5 flex flex-col items-center gap-1.5">
+        <div class="group relative flex justify-center">
+          <a href="#" class="grid h-9 w-9 place-items-center rounded-lg bg-brand-soft text-brand transition"><re-icon icon="home" size="18" weight="filled"></re-icon></a>
+          <span class="rail-tip">Home</span>
+        </div>
+        <div class="group relative flex justify-center">
+          <a href="dashboard.html" class="grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand"><re-icon icon="element-42" size="18"></re-icon></a>
+          <span class="rail-tip">Dashboard</span>
+        </div>
+        <div class="group relative flex justify-center">
+          <a href="dashboard.html#events" class="grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand"><re-icon icon="calendar" size="18"></re-icon></a>
+          <span class="rail-tip">Events</span>
+        </div>
+        <div class="group relative flex justify-center">
+          <a href="dashboard.html#finance" class="grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand"><re-icon icon="wallet" size="18"></re-icon></a>
+          <span class="rail-tip">Finance</span>
+        </div>
+      </nav>
+
+      <div class="mt-auto flex flex-col items-center gap-1.5 pt-4">
+        <div class="group relative flex justify-center">
+          <a href="dashboard.html#management" class="grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand"><re-icon icon="settings" size="18"></re-icon></a>
+          <span class="rail-tip">Management</span>
+        </div>
+        <div class="group relative flex justify-center">
+          <button id="rail-theme" class="grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand"><re-icon icon="moon" size="20"></re-icon></button>
+          <span class="rail-tip">Theme</span>
+        </div>
+        <div class="group relative flex justify-center">
+          <a href="../login.html" class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[11px] font-semibold text-white">HN</a>
+          <span class="rail-tip">Harper Nelson</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ============ MAIN ============ -->
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-5 lg:px-8 lg:py-6">
+
+    <!-- top bar -->
+    <header class="mb-7 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><re-icon icon="menu" size="18"></re-icon></button>
+      <div class="ml-auto flex items-center gap-2.5">
+        <span class="hidden rounded-full border border-hair px-3 py-1.5 text-[12px] font-medium text-muted sm:inline-flex">Trial: 14 days left</span>
+        <span class="hidden items-center gap-1.5 rounded-full border border-hair px-3 py-1.5 text-[12px] font-medium text-muted sm:inline-flex"><re-icon icon="location-2" size="14"></re-icon>Bangkok</span>
+        <button class="flex items-center gap-2 rounded-full border border-hair py-1 pl-1 pr-2.5 transition hover:bg-line" title="Account">
+          <span class="grid h-7 w-7 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[11px] font-semibold text-white">HN</span>
+          <span class="hidden text-[13px] font-semibold text-ink sm:inline">Harper Nelson</span>
+          <re-icon icon="chevron-down" size="15" class="text-muted"></re-icon>
+        </button>
+      </div>
+    </header>
+
+    <!-- hero + stats -->
+    <div class="grid gap-5 lg:grid-cols-2 lg:items-center">
+      <div>
+        <h1 class="text-[30px] font-bold tracking-tight sm:text-[36px]">Hi! <span class="align-middle">👋</span></h1>
+        <p class="mt-1 text-[24px] font-semibold tracking-tight text-muted sm:text-[28px]">Welcome back to Eventa.</p>
+      </div>
+
+      <div class="rounded-2xl bg-gradient-to-br from-brand to-emerald-700 p-5 text-white shadow-pop sm:p-6">
+        <div class="grid grid-cols-3 gap-2 divide-x divide-white/20">
+          <div class="pr-3 sm:pr-4">
+            <p class="text-[26px] font-extrabold tracking-tight tnum sm:text-[30px]">1,500</p>
+            <p class="mt-1.5 flex items-center gap-1.5 text-[12px] font-medium text-white/85"><re-icon icon="calendar" size="15"></re-icon>Total registrations</p>
+          </div>
+          <div class="px-3 sm:px-4">
+            <p class="text-[26px] font-extrabold tracking-tight tnum sm:text-[30px]">฿751,912</p>
+            <p class="mt-1.5 flex items-center gap-1.5 text-[12px] font-medium text-white/85"><re-icon icon="chart-bar" size="15"></re-icon>Total revenue</p>
+          </div>
+          <div class="pl-3 sm:pl-4">
+            <p class="text-[26px] font-extrabold tracking-tight tnum sm:text-[30px]">121</p>
+            <p class="mt-1.5 flex items-center gap-1.5 text-[12px] font-medium text-white/85"><re-icon icon="face-smile" size="15"></re-icon>Total attendees</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- upcoming sessions + tools -->
+    <section class="mt-8">
+      <h2 class="text-[18px] font-bold tracking-tight">Upcoming sessions today</h2>
+
+      <div class="mt-4 grid gap-5 xl:grid-cols-3">
+        <!-- sessions list -->
+        <div class="xl:col-span-2">
+          <p class="text-[13.5px] font-bold tracking-tight text-brand-dark dark:text-brand">Thursday, 9 Jul 2026</p>
+          <div id="sessions" class="mt-3 space-y-3"></div>
+        </div>
+
+        <!-- tools -->
+        <aside class="xl:col-span-1">
+          <div class="rounded-2xl bg-[#14161a] p-5 text-white">
+            <h3 class="text-[15px] font-bold tracking-tight">Management tools</h3>
+            <nav class="mt-3 space-y-0.5">
+              <a href="#" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="store" size="17" class="text-white/55"></re-icon>View public event page</a>
+              <a href="../payments.html" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="receipt" size="17" class="text-white/55"></re-icon>Manage sale transactions</a>
+              <a href="#" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="calendar" size="17" class="text-white/55"></re-icon>Schedule a closed day</a>
+              <a href="#" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="document2" size="17" class="text-white/55"></re-icon>Add a new blog post</a>
+            </nav>
+
+            <h3 class="mt-5 text-[15px] font-bold tracking-tight">Service tools</h3>
+            <nav class="mt-3 space-y-0.5">
+              <a href="../tickets.html" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="tag-price" size="17" class="text-white/55"></re-icon>Add new pricing</a>
+              <a href="../registrations.html" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="eye" size="17" class="text-white/55"></re-icon>Manage registrations</a>
+              <a href="../users.html" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="user-add" size="17" class="text-white/55"></re-icon>Add new staff</a>
+            </nav>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <p class="mt-8 text-center text-[11px] text-muted/70">Eventa · Home · self-contained design source</p>
+  </main>
+</div>
+
+<script>
+  /* ---------- Upcoming sessions ---------- */
+  const sessions = [
+    { time:'11:00 AM', dur:'45 mins', title:'Keynote: The Future of Live Events', host:'Dawn Chaung',  venue:'BITEC · Hall A',        booked:'142/200 registered', left:'58 spots left',  wait:'12', status:'Upcoming', badge:'amber' },
+    { time:'1:30 PM',  dur:'60 mins', title:'Workshop: Ticketing & Payments',      host:'Du Kai Hui',   venue:'Cosy Corner · Room 1',  booked:'40/40 registered',   left:'Fully booked',   wait:'8',  status:'Full',     badge:'red'   },
+    { time:'2:00 PM',  dur:'30 mins', title:'Panel: Building Event Communities',   host:'Somchai Tan',  venue:'Main meeting room',     booked:'0/60 registered',    left:'60 spots left',  wait:'0',  status:'Upcoming', badge:'amber' },
+    { time:'4:00 PM',  dur:'90 mins', title:'Sunset Networking Mixer',             host:'Ploy Srisai',  venue:'Rooftop Garden',        booked:'88/120 registered',  left:'32 spots left',  wait:'0',  status:'Live',     badge:'green' },
+  ];
+  const badgeCls = {
+    amber: 'bg-amber-200 text-amber-800 dark:bg-amber-400/15 dark:text-amber-300',
+    green: 'bg-brand-soft text-brand-dark dark:text-brand',
+    red:   'bg-red-100 text-red-600 dark:bg-red-500/15 dark:text-red-300',
+  };
+  document.getElementById('sessions').innerHTML = sessions.map(s => `
+    <div class="grid grid-cols-2 items-center gap-x-4 gap-y-2.5 rounded-xl border border-hair bg-surface px-4 py-3.5 transition hover:border-brand/40 sm:grid-cols-[100px_1.5fr_1.4fr_1fr_74px_96px]">
+      <div><p class="text-[14px] font-bold tracking-tight text-ink tnum">${s.time}</p><p class="text-[12px] text-muted">${s.dur}</p></div>
+      <div class="min-w-0"><p class="truncate text-[13.5px] font-semibold text-ink">${s.title}</p><p class="truncate text-[12px] text-muted">${s.host}</p></div>
+      <div class="min-w-0"><p class="truncate text-[13px] font-medium text-ink">${s.venue}</p></div>
+      <div><p class="text-[13px] font-semibold text-ink tnum">${s.booked}</p><p class="text-[12px] text-muted">${s.left}</p></div>
+      <div><p class="text-[13px] font-semibold text-ink tnum">${s.wait}</p><p class="text-[11px] text-muted">Waitlist</p></div>
+      <div class="justify-self-start sm:justify-self-end"><span class="whitespace-nowrap rounded-md px-2.5 py-1 text-[12px] font-semibold ${badgeCls[s.badge]}">${s.status}</span></div>
+    </div>`).join('');
+
+  /* ---------- Dark mode ---------- */
+  const THEME_KEY = 'eventa-theme';
+  function applyTheme(dark) {
+    document.documentElement.classList.toggle('dark', dark);
+    const ic = document.querySelector('#rail-theme re-icon');
+    if (ic) ic.setAttribute('icon', dark ? 'sun' : 'moon');
+    try { localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light'); } catch (e) {}
+  }
+  document.getElementById('rail-theme').addEventListener('click', () => applyTheme(!document.documentElement.classList.contains('dark')));
+  applyTheme(document.documentElement.classList.contains('dark'));
+
+  /* ---------- Mobile drawer (rail slides in) ---------- */
+  const sidenav = document.getElementById('sidenav'), backdrop = document.getElementById('backdrop');
+  function openNav() { sidenav.classList.remove('-translate-x-full'); backdrop.classList.remove('hidden'); }
+  function closeNav() { sidenav.classList.add('-translate-x-full'); backdrop.classList.add('hidden'); }
+  document.getElementById('btn-menu').addEventListener('click', openNav);
+  backdrop.addEventListener('click', closeNav);
+  sidenav.addEventListener('click', e => { if (e.target.closest('a[href]:not([href="#"])') && !matchMedia('(min-width: 1024px)').matches) closeNav(); });
+  matchMedia('(min-width: 1024px)').addEventListener('change', e => { if (e.matches) { sidenav.classList.remove('-translate-x-full'); backdrop.classList.add('hidden'); } else sidenav.classList.add('-translate-x-full'); });
+</script>
+</body>
+</html>

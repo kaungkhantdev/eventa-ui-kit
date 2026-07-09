@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Feedback &amp; Surveys</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="assets/config.js"></script>
+<link rel="stylesheet" href="assets/app.css" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="feedback">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidebar here -->
+
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <div class="min-w-0">
+          <h1 class="text-[22px] font-bold tracking-tight">Feedback &amp; Surveys</h1>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Collect and analyze attendee feedback.</p>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary shrink-0" data-open="survey-panel"><i class="hgi-stroke hgi-add-01 text-[16px]"></i><span class="hidden sm:inline">New survey</span><span class="sm:hidden">New</span></button>
+    </div>
+
+    <!-- stat cards -->
+    <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-message-01 text-[16px]"></i>Responses</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">1,204</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>9,4 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-star text-[16px] text-amber-400"></i>Avg rating</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">4.6</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>0,2</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-analytics-up text-[16px]"></i>NPS</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">+62</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>5</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-checkmark-badge-01 text-[16px]"></i>Completion rate</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">84 %</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>1,2 %</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- satisfaction + trend row -->
+    <div class="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-3">
+
+      <section class="card p-4 xl:col-span-1">
+        <h2 class="text-[15px] font-bold tracking-tight">Overall satisfaction</h2>
+        <p class="mt-0.5 text-[12px] text-muted">Across all live surveys</p>
+        <div class="mt-4 flex items-center gap-4">
+          <p class="text-[38px] font-extrabold leading-none tracking-tight tnum">4.6</p>
+          <div>
+            <div class="flex items-center gap-0.5 text-amber-400">
+              <i class="hgi-stroke hgi-star text-[16px]"></i>
+              <i class="hgi-stroke hgi-star text-[16px]"></i>
+              <i class="hgi-stroke hgi-star text-[16px]"></i>
+              <i class="hgi-stroke hgi-star text-[16px]"></i>
+              <i class="hgi-stroke hgi-star text-[16px] text-line"></i>
+            </div>
+            <p class="mt-1 text-[11px] text-muted tnum">1,204 responses</p>
+          </div>
+        </div>
+        <div class="mt-5 space-y-2.5">
+          <div class="flex items-center gap-2.5">
+            <span class="flex w-9 shrink-0 items-center gap-0.5 text-[11px] font-semibold text-muted">5 <i class="hgi-stroke hgi-star text-[11px] text-amber-400"></i></span>
+            <div class="h-1.5 flex-1 rounded-full bg-line"><div class="h-1.5 rounded-full bg-amber-400" style="width:68%"></div></div>
+            <span class="w-8 shrink-0 text-right text-[11px] text-muted tnum">819</span>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <span class="flex w-9 shrink-0 items-center gap-0.5 text-[11px] font-semibold text-muted">4 <i class="hgi-stroke hgi-star text-[11px] text-amber-400"></i></span>
+            <div class="h-1.5 flex-1 rounded-full bg-line"><div class="h-1.5 rounded-full bg-amber-400" style="width:21%"></div></div>
+            <span class="w-8 shrink-0 text-right text-[11px] text-muted tnum">253</span>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <span class="flex w-9 shrink-0 items-center gap-0.5 text-[11px] font-semibold text-muted">3 <i class="hgi-stroke hgi-star text-[11px] text-amber-400"></i></span>
+            <div class="h-1.5 flex-1 rounded-full bg-line"><div class="h-1.5 rounded-full bg-amber-400" style="width:7%"></div></div>
+            <span class="w-8 shrink-0 text-right text-[11px] text-muted tnum">84</span>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <span class="flex w-9 shrink-0 items-center gap-0.5 text-[11px] font-semibold text-muted">2 <i class="hgi-stroke hgi-star text-[11px] text-amber-400"></i></span>
+            <div class="h-1.5 flex-1 rounded-full bg-line"><div class="h-1.5 rounded-full bg-amber-400" style="width:3%"></div></div>
+            <span class="w-8 shrink-0 text-right text-[11px] text-muted tnum">36</span>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <span class="flex w-9 shrink-0 items-center gap-0.5 text-[11px] font-semibold text-muted">1 <i class="hgi-stroke hgi-star text-[11px] text-amber-400"></i></span>
+            <div class="h-1.5 flex-1 rounded-full bg-line"><div class="h-1.5 rounded-full bg-amber-400" style="width:1%"></div></div>
+            <span class="w-8 shrink-0 text-right text-[11px] text-muted tnum">12</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card p-4 xl:col-span-2">
+        <h2 class="text-[15px] font-bold tracking-tight">Response trend</h2>
+        <p class="mt-0.5 text-[12px] text-muted">Responses collected per event</p>
+        <div class="mt-5 space-y-3.5">
+          <div class="flex items-center gap-3">
+            <span class="w-36 shrink-0 truncate text-[12px] text-muted">Tech Summit 2026</span>
+            <div class="h-2.5 flex-1 rounded-full bg-line"><div class="h-2.5 rounded-full bg-brand" style="width:100%"></div></div>
+            <span class="w-10 shrink-0 text-right text-[12px] font-semibold text-ink tnum">412</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="w-36 shrink-0 truncate text-[12px] text-muted">Bangkok Jazz Night</span>
+            <div class="h-2.5 flex-1 rounded-full bg-line"><div class="h-2.5 rounded-full bg-brand" style="width:65%"></div></div>
+            <span class="w-10 shrink-0 text-right text-[12px] font-semibold text-ink tnum">268</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="w-36 shrink-0 truncate text-[12px] text-muted">UX Bangkok Meetup</span>
+            <div class="h-2.5 flex-1 rounded-full bg-line"><div class="h-2.5 rounded-full bg-brand" style="width:42%"></div></div>
+            <span class="w-10 shrink-0 text-right text-[12px] font-semibold text-ink tnum">173</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="w-36 shrink-0 truncate text-[12px] text-muted">Thai Street Food Festival</span>
+            <div class="h-2.5 flex-1 rounded-full bg-line"><div class="h-2.5 rounded-full bg-brand" style="width:49%"></div></div>
+            <span class="w-10 shrink-0 text-right text-[12px] font-semibold text-ink tnum">201</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="w-36 shrink-0 truncate text-[12px] text-muted">Sunrise Yoga Retreat</span>
+            <div class="h-2.5 flex-1 rounded-full bg-line"><div class="h-2.5 rounded-full bg-brand" style="width:47%"></div></div>
+            <span class="w-10 shrink-0 text-right text-[12px] font-semibold text-ink tnum">195</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- surveys table -->
+    <section class="card mt-3 p-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-[15px] font-bold tracking-tight">Surveys</h2>
+        <span class="text-[12px] text-muted">5 surveys</span>
+      </div>
+      <div class="mt-2 overflow-x-auto">
+        <table class="data-table min-w-[720px]">
+          <thead>
+            <tr>
+              <th>Survey</th>
+              <th>Event</th>
+              <th>Responses</th>
+              <th>Avg rating</th>
+              <th>Status</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="text-[13px]">
+            <tr>
+              <td class="font-medium text-ink">Post-event Experience</td>
+              <td class="text-muted">Tech Summit 2026</td>
+              <td class="tnum">412</td>
+              <td><span class="flex items-center gap-1 tnum"><i class="hgi-stroke hgi-star text-[12px] text-amber-400"></i>4.7</span></td>
+              <td><span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Live</span></td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                  <button class="btn-icon" data-open="survey-panel" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-medium text-ink">Speaker Feedback</td>
+              <td class="text-muted">Tech Summit 2026</td>
+              <td class="tnum">156</td>
+              <td><span class="flex items-center gap-1 tnum"><i class="hgi-stroke hgi-star text-[12px] text-amber-400"></i>4.4</span></td>
+              <td><span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Live</span></td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                  <button class="btn-icon" data-open="survey-panel" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-medium text-ink">Jazz Night Vibes</td>
+              <td class="text-muted">Bangkok Jazz Night</td>
+              <td class="tnum">268</td>
+              <td><span class="flex items-center gap-1 tnum"><i class="hgi-stroke hgi-star text-[12px] text-amber-400"></i>4.8</span></td>
+              <td><span class="badge badge-amber"><i class="hgi-stroke hgi-time-quarter-pass text-[12px]"></i>Closed</span></td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                  <button class="btn-icon" data-open="survey-panel" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-medium text-ink">Retreat Wellness Check</td>
+              <td class="text-muted">Sunrise Yoga Retreat</td>
+              <td class="tnum">195</td>
+              <td><span class="flex items-center gap-1 tnum"><i class="hgi-stroke hgi-star text-[12px] text-amber-400"></i>4.9</span></td>
+              <td><span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Live</span></td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                  <button class="btn-icon" data-open="survey-panel" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-medium text-ink">Food Festival Pulse</td>
+              <td class="text-muted">Thai Street Food Festival</td>
+              <td class="tnum text-muted">—</td>
+              <td class="text-muted">—</td>
+              <td><span class="badge badge-gray"><i class="hgi-stroke hgi-note-edit text-[12px]"></i>Draft</span></td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                  <button class="btn-icon" data-open="survey-panel" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- recent responses -->
+    <section class="card mt-3 p-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-[15px] font-bold tracking-tight">Recent responses</h2>
+        <span class="text-[12px] text-muted">Latest 5</span>
+      </div>
+      <div class="mt-2 divide-y divide-line">
+        <div class="flex flex-col gap-2 py-3 sm:flex-row sm:items-start sm:gap-3">
+          <span class="avatar h-8 w-8 shrink-0 text-[11px]">AP</span>
+          <div class="min-w-0 flex-1">
+            <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+              <div class="flex min-w-0 items-center gap-2">
+                <p class="truncate text-[13px] font-semibold text-ink">Anong P.</p>
+                <span class="truncate text-[11px] text-muted">Tech Summit 2026</span>
+              </div>
+              <div class="flex items-center gap-0.5 text-amber-400">
+                <i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px]"></i>
+              </div>
+            </div>
+            <p class="mt-1 text-[13px] italic text-muted">"The speaker lineup was incredible, worth every baht!"</p>
+            <p class="mt-1 text-[11px] text-muted tnum">Jul 18, 2026</p>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2 py-3 sm:flex-row sm:items-start sm:gap-3">
+          <span class="avatar h-8 w-8 shrink-0 text-[11px]">ST</span>
+          <div class="min-w-0 flex-1">
+            <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+              <div class="flex min-w-0 items-center gap-2">
+                <p class="truncate text-[13px] font-semibold text-ink">Somchai T.</p>
+                <span class="truncate text-[11px] text-muted">Bangkok Jazz Night</span>
+              </div>
+              <div class="flex items-center gap-0.5 text-amber-400">
+                <i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px] text-line"></i>
+              </div>
+            </div>
+            <p class="mt-1 text-[13px] italic text-muted">"Great atmosphere, though the queue for drinks got long by the second set."</p>
+            <p class="mt-1 text-[11px] text-muted tnum">Jul 12, 2026</p>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2 py-3 sm:flex-row sm:items-start sm:gap-3">
+          <span class="avatar h-8 w-8 shrink-0 text-[11px]">PS</span>
+          <div class="min-w-0 flex-1">
+            <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+              <div class="flex min-w-0 items-center gap-2">
+                <p class="truncate text-[13px] font-semibold text-ink">Ploy S.</p>
+                <span class="truncate text-[11px] text-muted">Sunrise Yoga Retreat</span>
+              </div>
+              <div class="flex items-center gap-0.5 text-amber-400">
+                <i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px]"></i>
+              </div>
+            </div>
+            <p class="mt-1 text-[13px] italic text-muted">"Best retreat I've been to in Bangkok — loved the sunrise session by Lumphini Park."</p>
+            <p class="mt-1 text-[11px] text-muted tnum">Jul 20, 2026</p>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2 py-3 sm:flex-row sm:items-start sm:gap-3">
+          <span class="avatar h-8 w-8 shrink-0 text-[11px]">JW</span>
+          <div class="min-w-0 flex-1">
+            <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+              <div class="flex min-w-0 items-center gap-2">
+                <p class="truncate text-[13px] font-semibold text-ink">James W.</p>
+                <span class="truncate text-[11px] text-muted">Tech Summit 2026</span>
+              </div>
+              <div class="flex items-center gap-0.5 text-amber-400">
+                <i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px] text-line"></i><i class="hgi-stroke hgi-star text-[13px] text-line"></i>
+              </div>
+            </div>
+            <p class="mt-1 text-[13px] italic text-muted">"Good content overall but the BITEC wifi kept dropping during the workshops."</p>
+            <p class="mt-1 text-[11px] text-muted tnum">Jul 18, 2026</p>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2 py-3 sm:flex-row sm:items-start sm:gap-3">
+          <span class="avatar h-8 w-8 shrink-0 text-[11px]">ML</span>
+          <div class="min-w-0 flex-1">
+            <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+              <div class="flex min-w-0 items-center gap-2">
+                <p class="truncate text-[13px] font-semibold text-ink">Mei L.</p>
+                <span class="truncate text-[11px] text-muted">UX Bangkok Meetup</span>
+              </div>
+              <div class="flex items-center gap-0.5 text-amber-400">
+                <i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px]"></i><i class="hgi-stroke hgi-star text-[13px]"></i>
+              </div>
+            </div>
+            <p class="mt-1 text-[13px] italic text-muted">"Super friendly community — learned a ton from the panel discussion."</p>
+            <p class="mt-1 text-[11px] text-muted tnum">Jul 9, 2026</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  </main>
+</div>
+
+<!-- New survey panel -->
+<aside class="panel" id="survey-panel">
+  <header class="flex items-center justify-between border-b border-hair p-4">
+    <h3 class="text-[15px] font-bold tracking-tight">New survey</h3>
+    <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+  </header>
+  <div class="flex-1 space-y-4 overflow-y-auto p-4">
+    <div>
+      <label class="label">Survey title</label>
+      <input type="text" class="input" placeholder="e.g. Post-event Experience" />
+    </div>
+    <div>
+      <label class="label">Event</label>
+      <select class="select">
+        <option>Tech Summit 2026</option>
+        <option>Bangkok Jazz Night</option>
+        <option>Sunrise Yoga Retreat</option>
+        <option>Thai Street Food Festival</option>
+        <option>UX Bangkok Meetup</option>
+      </select>
+    </div>
+    <div class="border-t border-hair pt-4">
+      <div class="flex items-center justify-between">
+        <label class="label !mb-0">Questions</label>
+      </div>
+      <div id="question-list" class="mt-2 space-y-2">
+        <div class="flex items-center gap-2" data-question-row>
+          <input type="text" class="input flex-1" placeholder="How would you rate the event overall?" />
+          <select class="select w-[8.5rem] shrink-0">
+            <option>Rating</option>
+            <option>Text</option>
+            <option>Multiple choice</option>
+          </select>
+          <button type="button" class="btn-icon shrink-0" data-remove-question title="Remove question"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+        </div>
+        <div class="flex items-center gap-2" data-question-row>
+          <input type="text" class="input flex-1" placeholder="What did you enjoy most?" />
+          <select class="select w-[8.5rem] shrink-0">
+            <option>Text</option>
+            <option>Rating</option>
+            <option>Multiple choice</option>
+          </select>
+          <button type="button" class="btn-icon shrink-0" data-remove-question title="Remove question"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+        </div>
+        <div class="flex items-center gap-2" data-question-row>
+          <input type="text" class="input flex-1" placeholder="How did you hear about this event?" />
+          <select class="select w-[8.5rem] shrink-0">
+            <option>Multiple choice</option>
+            <option>Rating</option>
+            <option>Text</option>
+          </select>
+          <button type="button" class="btn-icon shrink-0" data-remove-question title="Remove question"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+        </div>
+      </div>
+      <button type="button" id="add-question" class="btn btn-ghost btn-sm mt-2"><i class="hgi-stroke hgi-add-01 text-[14px]"></i>Add question</button>
+    </div>
+  </div>
+  <footer class="flex gap-2 border-t border-hair p-4">
+    <button class="btn btn-ghost flex-1" data-close>Cancel</button>
+    <button class="btn btn-primary flex-1" data-close>Save survey</button>
+  </footer>
+</aside>
+
+<script src="assets/shell.js"></script>
+<script>
+  // Question builder: add / remove rows inside the survey panel
+  const questionList = document.getElementById('question-list');
+  document.getElementById('add-question').addEventListener('click', () => {
+    const row = document.createElement('div');
+    row.className = 'flex items-center gap-2';
+    row.setAttribute('data-question-row', '');
+    row.innerHTML = `
+      <input type="text" class="input flex-1" placeholder="New question…" />
+      <select class="select w-[8.5rem] shrink-0">
+        <option>Rating</option>
+        <option>Text</option>
+        <option>Multiple choice</option>
+      </select>
+      <button type="button" class="btn-icon shrink-0" data-remove-question title="Remove question"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>`;
+    questionList.appendChild(row);
+  });
+  questionList.addEventListener('click', e => {
+    const btn = e.target.closest('[data-remove-question]'); if (!btn) return;
+    const row = btn.closest('[data-question-row]');
+    if (questionList.children.length > 1) row.remove();
+  });
+</script>
+</body>
+</html>

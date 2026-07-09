@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Dashboard</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="assets/config.js"></script>
+<link rel="stylesheet" href="assets/app.css" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="dashboard">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidebar here -->
+
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <div class="min-w-0">
+          <h1 class="text-[22px] font-bold tracking-tight">Dashboard</h1>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Welcome back, Harper — here's what's happening with your events.</p>
+        </div>
+      </div>
+      <a href="event-form.html" class="btn btn-primary shrink-0"><i class="hgi-stroke hgi-calendar-add-01 text-[16px]"></i><span class="hidden sm:inline">New event</span><span class="sm:hidden">New</span></a>
+    </div>
+
+    <!-- stat cards -->
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-user-add-01 text-[16px]"></i>Total registrations</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">1,340</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>8,2 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-ticket-01 text-[16px]"></i>Ticket revenue</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿48.29k</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>12,5 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[16px]"></i>Upcoming events</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">12</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>3 new</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-checkmark-badge-01 text-[16px]"></i>Check-in rate</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">87 %</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>1,4 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5 sm:col-span-2 xl:col-span-1">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-seat-selector text-[16px]"></i>Capacity filled</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">78 %</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>4,6 %</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- revenue + donut row -->
+    <div class="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-5">
+      <section class="card p-4 xl:col-span-3">
+        <div class="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h2 class="text-[15px] font-bold tracking-tight">Revenue Overview</h2>
+            <div class="mt-1 flex items-center gap-2">
+              <span id="rev-value" class="text-[24px] font-extrabold tracking-tight tnum">฿48.29k</span>
+              <span id="rev-delta" class="flex items-center gap-0.5 text-[13px] font-semibold text-brand"></span>
+              <span class="text-[12px] text-muted">vs previous period</span>
+            </div>
+          </div>
+          <div id="rev-toggle" class="segmented">
+            <button data-range="week">Week</button>
+            <button data-range="month">Month</button>
+            <button data-range="year" class="active">Year</button>
+          </div>
+        </div>
+        <div id="rev-chart" class="mt-2"></div>
+      </section>
+
+      <section class="card p-4 xl:col-span-2">
+        <h2 class="text-[15px] font-bold tracking-tight">Registrations by Ticket Type</h2>
+        <p class="mt-0.5 text-[12px] text-muted">Share of total registrations</p>
+        <div class="mt-2 flex justify-center">
+          <div class="relative grid h-40 w-40 place-items-center">
+            <svg id="donut" viewBox="0 0 42 42" class="h-full w-full"></svg>
+            <div class="pointer-events-none absolute inset-0 grid place-items-center text-center">
+              <div>
+                <p class="text-[24px] font-bold tracking-tight text-ink tnum leading-none">1,340</p>
+                <p class="mt-1 text-[11px] text-muted">total registrations</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="tk-legend" class="mt-4 space-y-3"></div>
+      </section>
+    </div>
+
+    <!-- selling fast + recent registrations row -->
+    <div class="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-5">
+      <section class="card p-4 xl:col-span-2">
+        <div class="flex items-center justify-between">
+          <h2 class="text-[15px] font-bold tracking-tight">Tickets Selling Fast</h2>
+          <a href="tickets.html" class="text-[12px] font-semibold text-brand hover:underline">Manage</a>
+        </div>
+        <div class="mt-2">
+          <div class="flex items-center gap-3 py-3">
+            <span class="grid h-10 w-10 place-items-center rounded-xl bg-amber-50 text-amber-500 dark:bg-amber-400/15 dark:text-amber-300"><i class="hgi-stroke hgi-mic-01 text-[18px]"></i></span>
+            <div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">Tech Summit 2026</p><p class="text-[11px] text-muted">Jul 18 · BITEC</p></div>
+            <span class="text-[13px] font-semibold text-amber-500">8 left</span>
+          </div>
+          <div class="flex items-center gap-3 border-t border-line py-3">
+            <span class="grid h-10 w-10 place-items-center rounded-xl bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300"><i class="hgi-stroke hgi-ticket-star text-[18px]"></i></span>
+            <div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">Bangkok Jazz Night</p><p class="text-[11px] text-muted">Jul 12 · Sala Daeng</p></div>
+            <span class="text-[13px] font-semibold text-red-500">3 left</span>
+          </div>
+          <div class="flex items-center gap-3 border-t border-line py-3">
+            <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-calendar-03 text-[18px]"></i></span>
+            <div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">Sunrise Yoga Retreat</p><p class="text-[11px] text-muted">Jul 20 · Lumphini</p></div>
+            <span class="text-[13px] font-semibold text-muted">12 left</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card p-4 xl:col-span-3">
+        <div class="flex items-center justify-between">
+          <h2 class="text-[15px] font-bold tracking-tight">Recent Registrations</h2>
+          <a href="registrations.html" class="text-[12px] font-semibold text-brand hover:underline">View all</a>
+        </div>
+        <div class="mt-2 overflow-x-auto">
+          <table class="data-table min-w-[560px]">
+            <thead>
+              <tr><th>Attendee</th><th>Event</th><th>Amount</th><th>Status</th><th class="text-right">Time</th></tr>
+            </thead>
+            <tbody id="reg-rows" class="text-[13px]"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  </main>
+</div>
+
+<script src="assets/shell.js"></script>
+<script>
+  /* ---------- Revenue Overview: smooth area chart ---------- */
+  const datasets = {
+    week:  { labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], values:[3.2,4.1,3.8,5.0,4.6,6.2,7.1], max:8,  value:'฿34.0k',  delta:'6,4 %', up:true },
+    month: { labels:['1','5','10','15','20','25','30'],           values:[9,11,10,13,12,15,17],        max:20, value:'฿41.2k',  delta:'9,1 %', up:true },
+    year:  { labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], values:[28,29,28,30,38,35,34,40,44,43,40,52], max:60, value:'฿48.29k', delta:'12,5 %', up:true },
+  };
+  function smoothPath(pts) {
+    let d = `M ${pts[0][0]} ${pts[0][1]}`;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+      const c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
+      const c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
+      d += ` C ${c1x} ${c1y} ${c2x} ${c2y} ${p2[0]} ${p2[1]}`;
+    }
+    return d;
+  }
+  let currentRange = 'year';
+  function renderChart(key) {
+    const d = datasets[key]; currentRange = key;
+    const dark = document.documentElement.classList.contains('dark');
+    const cGrid = dark ? 'rgba(255,255,255,0.08)' : '#eef0f3', cAxis = dark ? '#8b96a0' : '#8b93a4';
+    const cRing = dark ? '#171d1a' : '#ffffff', cTipBg = dark ? '#e6ebe8' : '#132a22', cTipFg = dark ? '#0e1311' : '#ffffff';
+    const W = 640, H = 280, PL = 44, PR = 14, PT = 24, PB = 36;
+    const plotW = W - PL - PR, plotH = H - PT - PB, n = d.values.length;
+    const xFor = i => PL + (i / (n - 1)) * plotW, yFor = v => PT + (1 - v / d.max) * plotH;
+    const pts = d.values.map((v, i) => [xFor(i), yFor(v)]);
+    const line = smoothPath(pts);
+    const area = `${line} L ${xFor(n - 1)} ${PT + plotH} L ${xFor(0)} ${PT + plotH} Z`;
+    let grid = '';
+    for (let k = 0; k <= 4; k++) {
+      const val = d.max * k / 4, y = yFor(val);
+      grid += `<line x1="${PL}" y1="${y}" x2="${W - PR}" y2="${y}" stroke="${cGrid}" stroke-width="1"/>`;
+      grid += `<text x="${PL - 10}" y="${y + 4}" text-anchor="end" font-size="12" fill="${cAxis}">฿${Math.round(val)}k</text>`;
+    }
+    let xl = '';
+    d.labels.forEach((lb, i) => { xl += `<text x="${xFor(i)}" y="${PT + plotH + 24}" text-anchor="middle" font-size="12" fill="${cAxis}">${lb}</text>`; });
+    const last = pts[n - 1], lv = d.values[n - 1];
+    const tip = `฿${Number.isInteger(lv) ? lv : lv.toFixed(1)}k`;
+    const tw = 56, th = 27;
+    let tx = Math.min(Math.max(last[0] - tw / 2, PL), W - PR - tw);
+    const ty = last[1] - th - 14;
+    document.getElementById('rev-chart').innerHTML = `
+      <svg viewBox="0 0 ${W} ${H}" class="w-full" style="height:auto" font-family="Inter, sans-serif">
+        <defs><linearGradient id="revfill" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#1ba770" stop-opacity="0.28"/><stop offset="100%" stop-color="#1ba770" stop-opacity="0"/>
+        </linearGradient></defs>
+        ${grid}
+        <path d="${area}" fill="url(#revfill)"/>
+        <path d="${line}" fill="none" stroke="#1ba770" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+        ${xl}
+        <line x1="${last[0]}" y1="${PT}" x2="${last[0]}" y2="${PT + plotH}" stroke="#1ba770" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+        <circle cx="${last[0]}" cy="${last[1]}" r="6" fill="#1ba770" stroke="${cRing}" stroke-width="2.5"/>
+        <rect x="${tx}" y="${ty}" width="${tw}" height="${th}" rx="7" fill="${cTipBg}"/>
+        <text x="${tx + tw / 2}" y="${ty + th / 2 + 4}" text-anchor="middle" font-size="13" font-weight="700" fill="${cTipFg}">${tip}</text>
+      </svg>`;
+    document.getElementById('rev-value').textContent = d.value;
+    const dl = document.getElementById('rev-delta');
+    dl.className = 'flex items-center gap-0.5 text-[13px] font-semibold ' + (d.up ? 'text-brand' : 'text-red-500');
+    dl.innerHTML = `<i class="hgi-stroke ${d.up ? 'hgi-arrow-up-right-01' : 'hgi-arrow-down-right-01'} text-[13px]"></i>${d.delta}`;
+  }
+  const toggle = document.getElementById('rev-toggle');
+  toggle.addEventListener('click', e => {
+    const btn = e.target.closest('button'); if (!btn) return;
+    [...toggle.children].forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderChart(btn.dataset.range);
+  });
+  renderChart('year');
+  window.EventaOnThemeChange = () => renderChart(currentRange);
+
+  /* ---------- Registrations by ticket type (donut) ---------- */
+  const tickets = [
+    { name: 'General Admission', pct: 42, regs: 563, c: '#1ba770' },
+    { name: 'VIP',               pct: 24, regs: 322, c: '#4cbd96' },
+    { name: 'Early Bird',        pct: 18, regs: 241, c: '#9fe0cd' },
+    { name: 'Student',           pct: 16, regs: 214, c: '#d1d5db' },
+  ];
+  const R = 15.915, GAP = 2.2, SW = 4.5;
+  let start = 0;
+  document.getElementById('donut').innerHTML = tickets.map(t => {
+    const len = Math.max(t.pct - GAP, 0.4);
+    const arc = `<circle cx="21" cy="21" r="${R}" fill="none" stroke="${t.c}" stroke-width="${SW}" stroke-linecap="round" stroke-dasharray="${len} ${100 - len}" stroke-dashoffset="${25 - start}" />`;
+    start += t.pct; return arc;
+  }).join('');
+  document.getElementById('tk-legend').innerHTML = tickets.map(t => `
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <span class="h-3.5 w-3.5 rounded" style="background:${t.c}"></span>
+        <div class="leading-tight"><p class="text-[13px] font-semibold text-ink">${t.name}</p><p class="text-[11px] text-muted tnum">${t.regs} registrations</p></div>
+      </div>
+      <span class="text-[15px] font-bold tnum">${t.pct}%</span>
+    </div>`).join('');
+
+  /* ---------- Recent registrations table ---------- */
+  const badge = { Paid: 'badge badge-green', Pending: 'badge badge-amber', Refunded: 'badge badge-gray' };
+  const regs = [
+    { in: 'AP', name: 'Anong P.',   ev: 'Tech Summit 2026',    amt: '฿1,250', st: 'Paid',     t: '10:24' },
+    { in: 'ST', name: 'Somchai T.', ev: 'Bangkok Jazz Night',  amt: '฿480',   st: 'Paid',     t: '10:02' },
+    { in: 'WI', name: 'Walk-in',    ev: 'Sunrise Yoga Retreat', amt: '฿890',  st: 'Pending',  t: '09:47' },
+    { in: 'PS', name: 'Ploy S.',    ev: 'Tech Summit 2026',    amt: '฿1,250', st: 'Paid',     t: '09:31' },
+    { in: 'JW', name: 'James W.',   ev: 'Bangkok Jazz Night',  amt: '฿480',   st: 'Refunded', t: '09:15' },
+  ];
+  document.getElementById('reg-rows').innerHTML = regs.map(r => `
+    <tr>
+      <td><div class="flex items-center gap-2"><span class="avatar h-7 w-7 text-[10px]">${r.in}</span><span class="font-medium text-ink">${r.name}</span></div></td>
+      <td class="text-muted">${r.ev}</td>
+      <td class="font-semibold text-ink tnum">${r.amt}</td>
+      <td><span class="${badge[r.st]}">${r.st}</span></td>
+      <td class="text-right text-muted tnum">${r.t}</td>
+    </tr>`).join('');
+</script>
+</body>
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Dashboard</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
+        colors: {
+          brand:   { DEFAULT: '#1ba770', dark: '#157e56', soft: 'rgb(var(--brand-soft) / <alpha-value>)' },
+          ink:     'rgb(var(--ink) / <alpha-value>)',
+          muted:   'rgb(var(--muted) / <alpha-value>)',
+          line:    'rgb(var(--line) / <alpha-value>)',
+          canvas:  'rgb(var(--canvas) / <alpha-value>)',
+          surface: 'rgb(var(--surface) / <alpha-value>)',
+          hair:    'rgb(var(--hair) / <alpha-value>)',
+        },
+        boxShadow: { pop: '0 8px 24px rgba(16,24,40,.12)' },
+      },
+    },
+  };
+</script>
+<style>
+  :root {
+    --canvas: 255 255 255; --surface: 255 255 255;
+    --hair: 229 231 235; --line: 238 240 243;
+    --ink: 19 42 34; --muted: 139 147 164; --brand-soft: 230 246 239;
+  }
+  html.dark {
+    --canvas: 13 17 15; --surface: 23 29 26;
+    --hair: 39 47 43; --line: 34 42 38;
+    --ink: 232 237 234; --muted: 143 154 162; --brand-soft: 22 46 36;
+    color-scheme: dark;
+  }
+  html { -webkit-font-smoothing: antialiased; }
+  body { font-feature-settings: 'cv11','ss01'; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: #d7dbe2; border-radius: 8px; }
+  html.dark ::-webkit-scrollbar-thumb { background: #333b36; }
+  .tnum { font-variant-numeric: tabular-nums; }
+  re-icon { flex: none; }
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  /* rail hover tooltip (main-nav labels) */
+  .rail-tip { position:absolute; left:100%; top:50%; transform:translateY(-50%); margin-left:.7rem; white-space:nowrap;
+    border-radius:.4rem; background:#0e0f12; border:1px solid rgba(255,255,255,.12); padding:.25rem .55rem;
+    font-size:12px; font-weight:500; color:#fff; box-shadow:0 6px 20px rgba(0,0,0,.35);
+    opacity:0; pointer-events:none; transition:opacity .14s ease; z-index:60; }
+  .group:hover > .rail-tip { opacity:1; }
+</style>
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased">
+
+<div class="flex h-full min-h-screen">
+
+  <!-- mobile backdrop -->
+  <div id="backdrop" class="fixed inset-0 z-40 hidden bg-black/40 lg:hidden"></div>
+
+  <!-- ============ DOUBLE SIDEBAR — rail = main nav, panel = module sub-nav ============ -->
+  <div id="sidenav" class="fixed inset-y-0 left-0 z-50 flex -translate-x-full transition-transform duration-300 lg:static lg:translate-x-0">
+
+    <!-- icon rail (MAIN NAV / modules) -->
+    <aside id="rail" class="relative z-30 flex w-16 shrink-0 flex-col items-center bg-[#0e0f12] py-4">
+      <div class="group relative flex justify-center">
+        <a href="#" class="grid h-9 w-9 place-items-center rounded-full border border-brand/70 text-brand"><re-icon icon="ticket-star2" size="18" weight="filled"></re-icon></a>
+        <span class="rail-tip">Eventa</span>
+      </div>
+      <div id="rail-top" class="mt-5 flex flex-col items-center gap-1.5"></div>
+      <div class="mt-auto flex flex-col items-center gap-1.5 pt-4">
+        <div id="rail-bottom" class="flex flex-col items-center gap-1.5"></div>
+        <div class="group relative flex justify-center">
+          <button id="rail-theme" class="grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand"><re-icon icon="moon" size="20"></re-icon></button>
+          <span class="rail-tip">Theme</span>
+        </div>
+        <div class="group relative flex justify-center">
+          <a href="../login.html" class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[11px] font-semibold text-white">HN</a>
+          <span class="rail-tip">Harper Nelson</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- labeled panel (SUB NAV of the active module; hidden for Home) -->
+    <aside id="panel" class="hidden w-64 shrink-0 flex-col border-r border-hair bg-surface">
+      <div class="mt-4 flex h-9 items-center px-4">
+        <h2 id="panel-head" class="text-[17px] font-bold tracking-tight text-ink"></h2>
+      </div>
+      <nav id="panel-nav" class="no-scrollbar mt-2 flex-1 space-y-1.5 overflow-y-auto px-2.5 pb-4"></nav>
+    </aside>
+  </div>
+
+  <!-- ============ MAIN ============ -->
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><re-icon icon="menu" size="18"></re-icon></button>
+        <div class="min-w-0">
+          <h1 class="text-[22px] font-bold tracking-tight">Dashboard</h1>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Welcome back, Harper — here's what's happening with your events.</p>
+        </div>
+      </div>
+      <a href="../event-form.html" class="flex shrink-0 items-center gap-2 rounded-lg bg-brand px-3.5 py-2 text-[13px] font-semibold text-white hover:bg-brand-dark"><re-icon icon="calendar-add" size="16"></re-icon><span class="hidden sm:inline">New event</span><span class="sm:hidden">New</span></a>
+    </div>
+
+    <!-- stat cards -->
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
+      <div class="rounded-2xl border border-hair bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><re-icon icon="user-add" size="16"></re-icon>Total registrations</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">1,340</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><re-icon icon="arrow-up-right2" size="13"></re-icon>8,2 %</span></div>
+      </div>
+      <div class="rounded-2xl border border-hair bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><re-icon icon="ticket" size="16"></re-icon>Ticket revenue</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">฿48.29k</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><re-icon icon="arrow-up-right2" size="13"></re-icon>12,5 %</span></div>
+      </div>
+      <div class="rounded-2xl border border-hair bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><re-icon icon="calendar" size="16"></re-icon>Upcoming events</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">12</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><re-icon icon="arrow-up-right2" size="13"></re-icon>3 new</span></div>
+      </div>
+      <div class="rounded-2xl border border-hair bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><re-icon icon="verified" size="16"></re-icon>Check-in rate</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">87 %</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><re-icon icon="arrow-down-right2" size="13"></re-icon>1,4 %</span></div>
+      </div>
+      <div class="rounded-2xl border border-hair bg-surface p-3.5 sm:col-span-2 xl:col-span-1">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><re-icon icon="chair" size="16"></re-icon>Capacity filled</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">78 %</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><re-icon icon="arrow-up-right2" size="13"></re-icon>4,6 %</span></div>
+      </div>
+    </div>
+
+    <!-- revenue + donut row -->
+    <div class="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-5">
+      <section class="rounded-2xl border border-hair bg-surface p-4 xl:col-span-3">
+        <div class="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h2 class="text-[15px] font-bold tracking-tight">Revenue Overview</h2>
+            <div class="mt-1 flex items-center gap-2">
+              <span id="rev-value" class="text-[24px] font-extrabold tracking-tight tnum">฿48.29k</span>
+              <span id="rev-delta" class="flex items-center gap-0.5 text-[13px] font-semibold text-brand"></span>
+              <span class="text-[12px] text-muted">vs previous period</span>
+            </div>
+          </div>
+          <div id="rev-toggle" class="flex rounded-lg bg-gray-100 p-0.5 text-[12px] font-medium dark:bg-white/5">
+            <button data-range="week" class="rounded-md px-3 py-1.5 text-muted transition">Week</button>
+            <button data-range="month" class="rounded-md px-3 py-1.5 text-muted transition">Month</button>
+            <button data-range="year" class="rounded-md bg-white px-3 py-1.5 text-ink shadow-sm transition dark:bg-white/10">Year</button>
+          </div>
+        </div>
+        <div id="rev-chart" class="mt-2"></div>
+      </section>
+
+      <section class="rounded-2xl border border-hair bg-surface p-4 xl:col-span-2">
+        <h2 class="text-[15px] font-bold tracking-tight">Registrations by Ticket Type</h2>
+        <p class="mt-0.5 text-[12px] text-muted">Share of total registrations</p>
+        <div class="mt-2 flex justify-center">
+          <div class="relative grid h-40 w-40 place-items-center">
+            <svg id="donut" viewBox="0 0 42 42" class="h-full w-full"></svg>
+            <div class="pointer-events-none absolute inset-0 grid place-items-center text-center">
+              <div><p class="text-[24px] font-bold tracking-tight text-ink tnum leading-none">1,340</p><p class="mt-1 text-[11px] text-muted">total registrations</p></div>
+            </div>
+          </div>
+        </div>
+        <div id="tk-legend" class="mt-4 space-y-3"></div>
+      </section>
+    </div>
+
+    <!-- selling fast + recent registrations row -->
+    <div class="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-5">
+      <section class="rounded-2xl border border-hair bg-surface p-4 xl:col-span-2">
+        <div class="flex items-center justify-between">
+          <h2 class="text-[15px] font-bold tracking-tight">Tickets Selling Fast</h2>
+          <a href="../tickets.html" class="text-[12px] font-semibold text-brand hover:underline">Manage</a>
+        </div>
+        <div class="mt-2">
+          <div class="flex items-center gap-3 py-3">
+            <span class="grid h-10 w-10 place-items-center rounded-xl bg-amber-50 text-amber-500 dark:bg-amber-400/15 dark:text-amber-300"><re-icon icon="mic" size="18"></re-icon></span>
+            <div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">Tech Summit 2026</p><p class="text-[11px] text-muted">Jul 18 · BITEC</p></div>
+            <span class="text-[13px] font-semibold text-amber-500">8 left</span>
+          </div>
+          <div class="flex items-center gap-3 border-t border-line py-3">
+            <span class="grid h-10 w-10 place-items-center rounded-xl bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300"><re-icon icon="ticket-star2" size="18"></re-icon></span>
+            <div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">Bangkok Jazz Night</p><p class="text-[11px] text-muted">Jul 12 · Sala Daeng</p></div>
+            <span class="text-[13px] font-semibold text-red-500">3 left</span>
+          </div>
+          <div class="flex items-center gap-3 border-t border-line py-3">
+            <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-soft text-brand"><re-icon icon="calendar" size="18"></re-icon></span>
+            <div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">Sunrise Yoga Retreat</p><p class="text-[11px] text-muted">Jul 20 · Lumphini</p></div>
+            <span class="text-[13px] font-semibold text-muted">12 left</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="rounded-2xl border border-hair bg-surface p-4 xl:col-span-3">
+        <div class="flex items-center justify-between">
+          <h2 class="text-[15px] font-bold tracking-tight">Recent Registrations</h2>
+          <a href="../registrations.html" class="text-[12px] font-semibold text-brand hover:underline">View all</a>
+        </div>
+        <div class="mt-2 overflow-x-auto">
+          <table class="w-full min-w-[560px] text-left">
+            <thead>
+              <tr class="text-[10px] font-semibold uppercase tracking-wider text-muted">
+                <th class="pb-2 pr-3 font-semibold">Attendee</th><th class="pb-2 pr-3 font-semibold">Event</th><th class="pb-2 pr-3 font-semibold">Amount</th><th class="pb-2 pr-3 font-semibold">Status</th><th class="pb-2 text-right font-semibold">Time</th>
+              </tr>
+            </thead>
+            <tbody id="reg-rows" class="text-[13px]"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Double-sidebar layout · self-contained design source</p>
+  </main>
+</div>
+
+<script>
+  /* ============================================================
+     Navigation model
+       • Rail icons = MAIN nav (modules).
+       • The labeled panel shows the active module's SUB nav
+         (grouped, collapsible). The Home module has no sub-nav,
+         so selecting it hides the panel entirely.
+     ============================================================ */
+  const MODULES = [
+    { id:'home', label:'Home', icon:'home', href:'home.html' }, /* link → landing page */
+    { id:'dashboard', label:'Dashboard', icon:'element-42' },    /* current page, no sub-nav */
+    { id:'events', label:'Events', icon:'calendar', groups:[
+      { label:'Schedule', icon:'calendar', items:[
+        { label:'All Events',    href:'../events.html' },
+        { label:'Create Event',  href:'../event-form.html' },
+        { label:'Event Details', href:'../event-detail.html' },
+        { label:'Agenda',        href:'../agenda.html' },
+      ]},
+      { label:'Attendees', icon:'users', items:[
+        { label:'Registrations', href:'../registrations.html' },
+        { label:'Attendees',     href:'../attendees.html' },
+        { label:'Check-in',      href:'../check-in.html' },
+        { label:'Speakers',      href:'../speakers.html' },
+      ]},
+    ]},
+    { id:'finance', label:'Finance', icon:'wallet', groups:[
+      { label:'Transactions', icon:'wallet', items:[
+        { label:'Payments', href:'../payments.html' },
+        { label:'Payouts',  href:'../payouts.html' },
+      ]},
+      { label:'Pricing', icon:'ticket', items:[
+        { label:'Tickets',   href:'../tickets.html' },
+        { label:'Discounts', href:'../discounts.html' },
+      ]},
+    ]},
+    { id:'management', label:'Management', icon:'settings', bottom:true, groups:[
+      { label:'Business', icon:'briefcase', items:[
+        { label:'Reports',       href:'../reports.html' },
+        { label:'Notifications', href:'../notifications.html' },
+        { label:'Feedback',      href:'../feedback.html' },
+        { label:'Settings',      href:'../settings.html' },
+      ]},
+      { label:'Staff', icon:'security-user2', items:[
+        { label:'Users',  href:'../users.html' },
+        { label:'Roles',  href:'#' },
+      ]},
+    ]},
+  ];
+  let activeModule = 'dashboard';
+
+  function railBtn(m) {
+    const on = !m.href && m.id === activeModule;
+    const cls = on
+      ? 'grid h-9 w-9 place-items-center rounded-lg bg-brand-soft text-brand transition'
+      : 'grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand';
+    const inner = `<re-icon icon="${m.icon}" size="18"${on ? ' weight="filled"' : ''}></re-icon>`;
+    const control = m.href
+      ? `<a href="${m.href}" class="${cls}">${inner}</a>`
+      : `<button data-mod="${m.id}" class="${cls}">${inner}</button>`;
+    return `<div class="group relative flex justify-center">${control}<span class="rail-tip">${m.label}</span></div>`;
+  }
+  function renderRail() {
+    document.getElementById('rail-top').innerHTML = MODULES.filter(m => !m.bottom).map(railBtn).join('');
+    document.getElementById('rail-bottom').innerHTML = MODULES.filter(m => m.bottom).map(railBtn).join('');
+  }
+  function wireAccordion() {
+    document.querySelectorAll('#panel-nav [data-acc]').forEach(acc => {
+      const btn = acc.querySelector('[data-acc-toggle]');
+      const body = acc.querySelector('[data-acc-body]');
+      const chev = acc.querySelector('[data-acc-chevron]');
+      btn.onclick = () => {
+        const open = !body.classList.contains('hidden');
+        body.classList.toggle('hidden', open);
+        chev.classList.toggle('rotate-180', !open);
+      };
+    });
+  }
+  function renderPanel() {
+    const m = MODULES.find(x => x.id === activeModule);
+    const panel = document.getElementById('panel');
+    if (!m.groups || !m.groups.length) { panel.classList.add('hidden'); return; }
+    panel.classList.remove('hidden');
+    document.getElementById('panel-head').textContent = m.label;
+    document.getElementById('panel-nav').innerHTML = m.groups.map(g => {
+      const items = g.items.map(it => {
+        const on = !!it.active;
+        const cls = on
+          ? 'block rounded-lg py-1.5 pl-9 pr-2.5 text-[13px] font-semibold bg-brand-soft text-brand'
+          : 'block rounded-lg py-1.5 pl-9 pr-2.5 text-[13px] font-medium text-muted transition hover:bg-brand-soft/60 hover:text-brand';
+        return `<li><a href="${it.href}" class="${cls}">${it.label}</a></li>`;
+      }).join('');
+      return `<div data-acc>
+          <button data-acc-toggle class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-semibold text-ink transition hover:bg-line">
+            <re-icon icon="${g.icon}" size="17"></re-icon>${g.label}
+            <re-icon data-acc-chevron icon="chevron-down" size="15" class="ml-auto rotate-180 text-muted transition-transform duration-200"></re-icon>
+          </button>
+          <ul data-acc-body class="mt-0.5 space-y-0.5">${items}</ul>
+        </div>`;
+    }).join('');
+    wireAccordion();
+  }
+  function selectModule(id) { activeModule = id; renderRail(); renderPanel(); }
+  document.getElementById('rail').addEventListener('click', e => {
+    const b = e.target.closest('[data-mod]'); if (b) { e.preventDefault(); selectModule(b.dataset.mod); }
+  });
+  // open a module directly via hash (e.g. dashboard.html#events from the home page)
+  (function () {
+    const h = location.hash.replace('#', '');
+    if (h && MODULES.some(m => m.id === h && !m.href)) activeModule = h;
+  })();
+  renderRail(); renderPanel();
+
+  /* ---------- Revenue Overview: smooth area chart ---------- */
+  const datasets = {
+    week:  { labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], values:[3.2,4.1,3.8,5.0,4.6,6.2,7.1], max:8,  value:'฿34.0k',  delta:'6,4 %', up:true },
+    month: { labels:['1','5','10','15','20','25','30'],           values:[9,11,10,13,12,15,17],        max:20, value:'฿41.2k',  delta:'9,1 %', up:true },
+    year:  { labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], values:[28,29,28,30,38,35,34,40,44,43,40,52], max:60, value:'฿48.29k', delta:'12,5 %', up:true },
+  };
+  function smoothPath(pts) {
+    let d = `M ${pts[0][0]} ${pts[0][1]}`;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+      const c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
+      const c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
+      d += ` C ${c1x} ${c1y} ${c2x} ${c2y} ${p2[0]} ${p2[1]}`;
+    }
+    return d;
+  }
+  let currentRange = 'year';
+  function renderChart(key) {
+    const d = datasets[key]; currentRange = key;
+    const dark = document.documentElement.classList.contains('dark');
+    const cGrid = dark ? 'rgba(255,255,255,0.08)' : '#eef0f3', cAxis = dark ? '#8b96a0' : '#8b93a4';
+    const cRing = dark ? '#171d1a' : '#ffffff', cTipBg = dark ? '#e6ebe8' : '#132a22', cTipFg = dark ? '#0e1311' : '#ffffff';
+    const W = 640, H = 280, PL = 44, PR = 14, PT = 24, PB = 36;
+    const plotW = W - PL - PR, plotH = H - PT - PB, n = d.values.length;
+    const xFor = i => PL + (i / (n - 1)) * plotW, yFor = v => PT + (1 - v / d.max) * plotH;
+    const pts = d.values.map((v, i) => [xFor(i), yFor(v)]);
+    const line = smoothPath(pts);
+    const area = `${line} L ${xFor(n - 1)} ${PT + plotH} L ${xFor(0)} ${PT + plotH} Z`;
+    let grid = '';
+    for (let k = 0; k <= 4; k++) {
+      const val = d.max * k / 4, y = yFor(val);
+      grid += `<line x1="${PL}" y1="${y}" x2="${W - PR}" y2="${y}" stroke="${cGrid}" stroke-width="1"/>`;
+      grid += `<text x="${PL - 10}" y="${y + 4}" text-anchor="end" font-size="12" fill="${cAxis}">฿${Math.round(val)}k</text>`;
+    }
+    let xl = '';
+    d.labels.forEach((lb, i) => { xl += `<text x="${xFor(i)}" y="${PT + plotH + 24}" text-anchor="middle" font-size="12" fill="${cAxis}">${lb}</text>`; });
+    const last = pts[n - 1], lv = d.values[n - 1];
+    const tip = `฿${Number.isInteger(lv) ? lv : lv.toFixed(1)}k`;
+    const tw = 56, th = 27;
+    let tx = Math.min(Math.max(last[0] - tw / 2, PL), W - PR - tw);
+    const ty = last[1] - th - 14;
+    document.getElementById('rev-chart').innerHTML = `
+      <svg viewBox="0 0 ${W} ${H}" class="w-full" style="height:auto" font-family="Inter, sans-serif">
+        <defs><linearGradient id="revfill" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#1ba770" stop-opacity="0.28"/><stop offset="100%" stop-color="#1ba770" stop-opacity="0"/></linearGradient></defs>
+        ${grid}
+        <path d="${area}" fill="url(#revfill)"/>
+        <path d="${line}" fill="none" stroke="#1ba770" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+        ${xl}
+        <line x1="${last[0]}" y1="${PT}" x2="${last[0]}" y2="${PT + plotH}" stroke="#1ba770" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+        <circle cx="${last[0]}" cy="${last[1]}" r="6" fill="#1ba770" stroke="${cRing}" stroke-width="2.5"/>
+        <rect x="${tx}" y="${ty}" width="${tw}" height="${th}" rx="7" fill="${cTipBg}"/>
+        <text x="${tx + tw / 2}" y="${ty + th / 2 + 4}" text-anchor="middle" font-size="13" font-weight="700" fill="${cTipFg}">${tip}</text>
+      </svg>`;
+    document.getElementById('rev-value').textContent = d.value;
+    const dl = document.getElementById('rev-delta');
+    dl.className = 'flex items-center gap-0.5 text-[13px] font-semibold ' + (d.up ? 'text-brand' : 'text-red-500');
+    dl.innerHTML = `<re-icon icon="${d.up ? 'arrow-up-right2' : 'arrow-down-right2'}" size="13"></re-icon>${d.delta}`;
+  }
+  const toggle = document.getElementById('rev-toggle');
+  toggle.addEventListener('click', e => {
+    const btn = e.target.closest('button'); if (!btn) return;
+    [...toggle.children].forEach(b => b.className = 'rounded-md px-3 py-1.5 text-muted transition');
+    btn.className = 'rounded-md bg-white px-3 py-1.5 text-ink shadow-sm transition dark:bg-white/10';
+    renderChart(btn.dataset.range);
+  });
+  renderChart('year');
+
+  /* ---------- Donut ---------- */
+  const tickets = [
+    { name: 'General Admission', pct: 42, regs: 563, c: '#1ba770' },
+    { name: 'VIP',               pct: 24, regs: 322, c: '#4cbd96' },
+    { name: 'Early Bird',        pct: 18, regs: 241, c: '#9fe0cd' },
+    { name: 'Student',           pct: 16, regs: 214, c: '#d1d5db' },
+  ];
+  const R = 15.915, GAP = 2.2, SW = 4.5;
+  let start = 0;
+  document.getElementById('donut').innerHTML = tickets.map(t => {
+    const len = Math.max(t.pct - GAP, 0.4);
+    const arc = `<circle cx="21" cy="21" r="${R}" fill="none" stroke="${t.c}" stroke-width="${SW}" stroke-linecap="round" stroke-dasharray="${len} ${100 - len}" stroke-dashoffset="${25 - start}" />`;
+    start += t.pct; return arc;
+  }).join('');
+  document.getElementById('tk-legend').innerHTML = tickets.map(t => `
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2.5"><span class="h-3.5 w-3.5 rounded" style="background:${t.c}"></span><div class="leading-tight"><p class="text-[13px] font-semibold text-ink">${t.name}</p><p class="text-[11px] text-muted tnum">${t.regs} registrations</p></div></div>
+      <span class="text-[15px] font-bold tnum">${t.pct}%</span>
+    </div>`).join('');
+
+  /* ---------- Recent registrations table ---------- */
+  const badge = {
+    Paid:     'bg-brand-soft text-brand-dark dark:text-brand',
+    Pending:  'bg-amber-50 text-amber-600 dark:bg-amber-400/15 dark:text-amber-300',
+    Refunded: 'bg-gray-100 text-gray-500 dark:bg-white/10 dark:text-gray-300',
+  };
+  const regs = [
+    { in: 'AP', name: 'Anong P.',   ev: 'Tech Summit 2026',    amt: '฿1,250', st: 'Paid',     t: '10:24' },
+    { in: 'ST', name: 'Somchai T.', ev: 'Bangkok Jazz Night',  amt: '฿480',   st: 'Paid',     t: '10:02' },
+    { in: 'WI', name: 'Walk-in',    ev: 'Sunrise Yoga Retreat', amt: '฿890',  st: 'Pending',  t: '09:47' },
+    { in: 'PS', name: 'Ploy S.',    ev: 'Tech Summit 2026',    amt: '฿1,250', st: 'Paid',     t: '09:31' },
+    { in: 'JW', name: 'James W.',   ev: 'Bangkok Jazz Night',  amt: '฿480',   st: 'Refunded', t: '09:15' },
+  ];
+  document.getElementById('reg-rows').innerHTML = regs.map(r => `
+    <tr class="border-t border-line">
+      <td class="py-2.5 pr-3"><div class="flex items-center gap-2"><span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-soft text-[10px] font-semibold text-brand-dark dark:text-brand">${r.in}</span><span class="font-medium text-ink">${r.name}</span></div></td>
+      <td class="pr-3 text-muted">${r.ev}</td>
+      <td class="pr-3 font-semibold text-ink tnum">${r.amt}</td>
+      <td class="pr-3"><span class="rounded-full px-2 py-0.5 text-[11px] font-medium ${badge[r.st]}">${r.st}</span></td>
+      <td class="text-right text-muted tnum">${r.t}</td>
+    </tr>`).join('');
+
+  /* ---------- Dark mode ---------- */
+  const THEME_KEY = 'eventa-theme';
+  function applyTheme(dark) {
+    document.documentElement.classList.toggle('dark', dark);
+    const ic = document.querySelector('#rail-theme re-icon');
+    if (ic) ic.setAttribute('icon', dark ? 'sun' : 'moon');
+    try { localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light'); } catch (e) {}
+    renderChart(currentRange);
+  }
+  document.getElementById('rail-theme').addEventListener('click', () => applyTheme(!document.documentElement.classList.contains('dark')));
+  applyTheme(document.documentElement.classList.contains('dark'));
+
+  /* ---------- Mobile drawer (the whole double sidebar slides in) ---------- */
+  const sidenav = document.getElementById('sidenav'), backdrop = document.getElementById('backdrop');
+  function openNav() { sidenav.classList.remove('-translate-x-full'); backdrop.classList.remove('hidden'); }
+  function closeNav() { sidenav.classList.add('-translate-x-full'); backdrop.classList.add('hidden'); }
+  document.getElementById('btn-menu').addEventListener('click', openNav);
+  backdrop.addEventListener('click', closeNav);
+  sidenav.addEventListener('click', e => { if (e.target.closest('a[href^="../"], a[href$=".html"]') && !matchMedia('(min-width: 1024px)').matches) closeNav(); });
+  matchMedia('(min-width: 1024px)').addEventListener('change', e => { if (e.matches) { sidenav.classList.remove('-translate-x-full'); backdrop.classList.add('hidden'); } else sidenav.classList.add('-translate-x-full'); });
+</script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Check-in</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="assets/config.js"></script>
+<link rel="stylesheet" href="assets/app.css" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="checkin">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidebar here -->
+
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <div class="min-w-0">
+          <h1 class="text-[22px] font-bold tracking-tight">Check-in</h1>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Scan tickets and track attendance in real time.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <select class="select w-40 sm:w-52" id="event-select">
+          <option>Tech Summit 2026</option>
+          <option>Bangkok Jazz Night</option>
+          <option>Sunrise Yoga Retreat</option>
+          <option>Thai Street Food Festival</option>
+          <option>UX Bangkok Meetup</option>
+        </select>
+        <button class="btn btn-ghost shrink-0" data-open="panel-manual"><i class="hgi-stroke hgi-user-add-01 text-[16px]"></i><span class="hidden sm:inline">Manual check-in</span></button>
+      </div>
+    </div>
+
+    <!-- stat cards -->
+    <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-user-check-01 text-[16px]"></i>Checked in</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">412 / 520</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>6,3 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-checkmark-badge-01 text-[16px]"></i>Check-in rate</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">79%</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>2,1 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-user-group text-[16px]"></i>On-site now</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">388</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>18 new</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-clock-01 text-[16px]"></i>Late check-ins</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">12</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>3</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- scanner + feed row -->
+    <div class="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-3">
+      <section class="card p-5 xl:col-span-2">
+        <h2 class="text-[15px] font-bold tracking-tight">Scan ticket</h2>
+        <p class="mt-0.5 text-[12px] text-muted">Use the camera to scan a ticket QR code, or find an attendee below.</p>
+
+        <div class="mx-auto mt-4 flex aspect-square w-full max-w-xs flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-hair p-6 text-center">
+          <i class="hgi-stroke hgi-qr-code-01 text-[64px] text-muted"></i>
+          <p class="text-[13px] text-muted">Point camera at the ticket QR code</p>
+          <button class="btn btn-primary mt-1"><i class="hgi-stroke hgi-camera-01 text-[16px]"></i>Start camera</button>
+        </div>
+
+        <div class="my-5 flex items-center gap-3">
+          <span class="h-px flex-1 bg-line"></span>
+          <span class="text-[11px] font-semibold uppercase tracking-wide text-muted">or search manually</span>
+          <span class="h-px flex-1 bg-line"></span>
+        </div>
+
+        <div class="relative">
+          <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[16px] text-muted"></i>
+          <input type="text" class="input pl-9" placeholder="Search name, email, or ticket ID" />
+        </div>
+
+        <div id="search-results" class="mt-1">
+          <div class="flex items-center gap-3 border-t border-line py-3 first:border-t-0" data-checkin-row data-name="Anong P." data-initials="AP" data-ticket="General Admission" data-badge="badge-green">
+            <span class="avatar h-9 w-9 shrink-0 text-[11px]">AP</span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[13px] font-semibold text-ink">Anong P.</p>
+              <p class="truncate text-[11px] text-muted">General Admission · anong.p@email.com</p>
+            </div>
+            <button class="btn btn-primary btn-sm shrink-0" data-checkin-btn><i class="hgi-stroke hgi-qr-code text-[14px]"></i>Check in</button>
+          </div>
+          <div class="flex items-center gap-3 border-t border-line py-3 first:border-t-0" data-checkin-row data-name="Somchai T." data-initials="ST" data-ticket="VIP" data-badge="badge-purple">
+            <span class="avatar h-9 w-9 shrink-0 text-[11px]">ST</span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[13px] font-semibold text-ink">Somchai T.</p>
+              <p class="truncate text-[11px] text-muted">VIP · somchai.t@email.com</p>
+            </div>
+            <span class="badge badge-green shrink-0"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Checked in</span>
+          </div>
+          <div class="flex items-center gap-3 border-t border-line py-3 first:border-t-0" data-checkin-row data-name="Wipada S." data-initials="WS" data-ticket="Early Bird" data-badge="badge-blue">
+            <span class="avatar h-9 w-9 shrink-0 text-[11px]">WS</span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[13px] font-semibold text-ink">Wipada S.</p>
+              <p class="truncate text-[11px] text-muted">Early Bird · wipada.s@email.com</p>
+            </div>
+            <button class="btn btn-primary btn-sm shrink-0" data-checkin-btn><i class="hgi-stroke hgi-qr-code text-[14px]"></i>Check in</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card p-4 xl:col-span-1">
+        <div class="flex items-center justify-between">
+          <h2 class="text-[15px] font-bold tracking-tight">Recent check-ins</h2>
+          <span class="flex items-center gap-1 text-[11px] font-medium text-brand"><span class="h-1.5 w-1.5 rounded-full bg-brand"></span>Live</span>
+        </div>
+        <div id="feed" class="mt-2">
+          <div class="flex items-center gap-2.5 border-t border-line py-2.5 first:border-t-0 first:pt-0">
+            <span class="avatar h-8 w-8 shrink-0 text-[10px]">PS</span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[13px] font-semibold text-ink">Ploy S.</p>
+              <span class="badge badge-purple mt-0.5">VIP</span>
+            </div>
+            <span class="shrink-0 text-[11px] tnum text-muted">just now</span>
+          </div>
+          <div class="flex items-center gap-2.5 border-t border-line py-2.5 first:border-t-0 first:pt-0">
+            <span class="avatar h-8 w-8 shrink-0 text-[10px]">JW</span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[13px] font-semibold text-ink">James W.</p>
+              <span class="badge badge-green mt-0.5">General Admission</span>
+            </div>
+            <span class="shrink-0 text-[11px] tnum text-muted">1 min ago</span>
+          </div>
+          <div class="flex items-center gap-2.5 border-t border-line py-2.5 first:border-t-0 first:pt-0">
+            <span class="avatar h-8 w-8 shrink-0 text-[10px]">ML</span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[13px] font-semibold text-ink">Mei L.</p>
+              <span class="badge badge-blue mt-0.5">Early Bird</span>
+            </div>
+            <span class="shrink-0 text-[11px] tnum text-muted">3 min ago</span>
+          </div>
+          <div class="flex items-center gap-2.5 border-t border-line py-2.5 first:border-t-0 first:pt-0">
+            <span class="avatar h-8 w-8 shrink-0 text-[10px]">NK</span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[13px] font-semibold text-ink">Nattapong K.</p>
+              <span class="badge badge-green mt-0.5">General Admission</span>
+            </div>
+            <span class="shrink-0 text-[11px] tnum text-muted">4 min ago</span>
+          </div>
+          <div class="flex items-center gap-2.5 border-t border-line py-2.5 first:border-t-0 first:pt-0">
+            <span class="avatar h-8 w-8 shrink-0 text-[10px]">KR</span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[13px] font-semibold text-ink">Kanya R.</p>
+              <span class="badge badge-gray mt-0.5">Student</span>
+            </div>
+            <span class="shrink-0 text-[11px] tnum text-muted">6 min ago</span>
+          </div>
+          <div class="flex items-center gap-2.5 border-t border-line py-2.5 first:border-t-0 first:pt-0">
+            <span class="avatar h-8 w-8 shrink-0 text-[10px]">DS</span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[13px] font-semibold text-ink">David S.</p>
+              <span class="badge badge-purple mt-0.5">VIP</span>
+            </div>
+            <span class="shrink-0 text-[11px] tnum text-muted">8 min ago</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  </main>
+
+  <!-- manual check-in panel -->
+  <aside class="panel" id="panel-manual">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">Manual check-in</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-4 overflow-y-auto p-4">
+      <div>
+        <label class="label">Attendee name</label>
+        <input class="input" placeholder="e.g. Kanya R." />
+      </div>
+      <div>
+        <label class="label">Email or ticket ID</label>
+        <input class="input" placeholder="kanya.r@email.com or TCK-10432" />
+      </div>
+      <div>
+        <label class="label">Ticket type</label>
+        <select class="select">
+          <option>General Admission</option>
+          <option>VIP</option>
+          <option>Early Bird</option>
+          <option>Student</option>
+        </select>
+      </div>
+      <div>
+        <label class="label">Notes</label>
+        <textarea class="textarea" placeholder="Optional note, e.g. walk-in guest"></textarea>
+        <p class="hint">Visible to check-in staff only.</p>
+      </div>
+    </div>
+    <footer class="flex gap-2 border-t border-hair p-4">
+      <button class="btn btn-ghost flex-1" data-close>Cancel</button>
+      <button class="btn btn-primary flex-1" data-close>Check in</button>
+    </footer>
+  </aside>
+</div>
+
+<script src="assets/shell.js"></script>
+<script>
+  /* ---------- Check-in: search results -> feed ---------- */
+  (function () {
+    var feed = document.getElementById('feed');
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-checkin-btn]');
+      if (!btn) return;
+      var row = btn.closest('[data-checkin-row]');
+      if (!row) return;
+      var name = row.dataset.name, initials = row.dataset.initials, ticket = row.dataset.ticket, badgeClass = row.dataset.badge || 'badge-green';
+
+      var badge = document.createElement('span');
+      badge.className = 'badge badge-green shrink-0';
+      badge.innerHTML = '<i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Checked in';
+      btn.replaceWith(badge);
+
+      if (feed) {
+        var entry = document.createElement('div');
+        entry.className = 'flex items-center gap-2.5 border-t border-line py-2.5 first:border-t-0 first:pt-0';
+        entry.innerHTML =
+          '<span class="avatar h-8 w-8 shrink-0 text-[10px]">' + initials + '</span>' +
+          '<div class="min-w-0 flex-1">' +
+            '<p class="truncate text-[13px] font-semibold text-ink">' + name + '</p>' +
+            '<span class="badge ' + badgeClass + ' mt-0.5">' + ticket + '</span>' +
+          '</div>' +
+          '<span class="shrink-0 text-[11px] tnum text-muted">just now</span>';
+        feed.insertBefore(entry, feed.firstChild);
+      }
+    });
+  })();
+</script>
+</body>
+</html>

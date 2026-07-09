@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Users &amp; Roles</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="assets/config.js"></script>
+<link rel="stylesheet" href="assets/app.css" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="users">
+<div class="flex h-full min-h-screen" data-layout>
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <div class="min-w-0">
+          <h1 class="text-[22px] font-bold tracking-tight">Users &amp; Roles</h1>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Manage who can access your workspace.</p>
+        </div>
+      </div>
+      <button class="btn btn-primary shrink-0" data-open="invite-panel"><i class="hgi-stroke hgi-user-add-01 text-[16px]"></i><span class="hidden sm:inline">Invite user</span><span class="sm:hidden">Invite</span></button>
+    </div>
+
+    <!-- role cards -->
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div class="card p-4">
+        <div class="flex items-start gap-3">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-purple-50 text-purple-600 dark:bg-purple-400/15 dark:text-purple-300"><i class="hgi-stroke hgi-shield-key text-[18px]"></i></span>
+          <div class="min-w-0">
+            <p class="text-[14px] font-bold text-ink">Admin</p>
+            <p class="text-[11px] text-muted tnum">4 members</p>
+          </div>
+        </div>
+        <p class="mt-3 text-[12px] text-muted">Full access to every workspace feature, including billing and security settings.</p>
+        <ul class="mt-3 space-y-1.5">
+          <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>Manage users &amp; roles</li>
+          <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>Manage payments &amp; payouts</li>
+          <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>Configure workspace settings</li>
+        </ul>
+        <button class="btn btn-ghost btn-sm js-edit-role mt-3 w-full" data-open="role-panel" data-role="Admin"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit role</button>
+      </div>
+
+      <div class="card p-4">
+        <div class="flex items-start gap-3">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-shield-user text-[18px]"></i></span>
+          <div class="min-w-0">
+            <p class="text-[14px] font-bold text-ink">Organizer</p>
+            <p class="text-[11px] text-muted tnum">7 members</p>
+          </div>
+        </div>
+        <p class="mt-3 text-[12px] text-muted">Creates and manages events, tickets, discounts and attendee communications.</p>
+        <ul class="mt-3 space-y-1.5">
+          <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>Create &amp; edit events</li>
+          <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>Manage tickets &amp; discounts</li>
+          <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>View registrations &amp; reports</li>
+        </ul>
+        <button class="btn btn-ghost btn-sm js-edit-role mt-3 w-full" data-open="role-panel" data-role="Organizer"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit role</button>
+      </div>
+
+      <div class="card p-4">
+        <div class="flex items-start gap-3">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300"><i class="hgi-stroke hgi-user-check-01 text-[18px]"></i></span>
+          <div class="min-w-0">
+            <p class="text-[14px] font-bold text-ink">Staff</p>
+            <p class="text-[11px] text-muted tnum">12 members</p>
+          </div>
+        </div>
+        <p class="mt-3 text-[12px] text-muted">Handles day-to-day check-in and attendee support at events.</p>
+        <ul class="mt-3 space-y-1.5">
+          <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>Check-in attendees</li>
+          <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>Scan &amp; validate tickets</li>
+          <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>View registrations</li>
+        </ul>
+        <button class="btn btn-ghost btn-sm js-edit-role mt-3 w-full" data-open="role-panel" data-role="Staff"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit role</button>
+      </div>
+
+      <div class="card p-4">
+        <div class="flex items-start gap-3">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gray-100 text-gray-500 dark:bg-white/10 dark:text-gray-400"><i class="hgi-stroke hgi-user-circle text-[18px]"></i></span>
+          <div class="min-w-0">
+            <p class="text-[14px] font-bold text-ink">Attendee</p>
+            <p class="text-[11px] text-muted tnum">2,847 members</p>
+          </div>
+        </div>
+        <p class="mt-3 text-[12px] text-muted">Registered guests with self-service access to their own tickets and profile only.</p>
+        <ul class="mt-3 space-y-1.5">
+          <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>View own tickets</li>
+          <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>Update own profile</li>
+          <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>No workspace admin access</li>
+        </ul>
+        <button class="btn btn-ghost btn-sm js-edit-role mt-3 w-full" data-open="role-panel" data-role="Attendee"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit role</button>
+      </div>
+    </div>
+
+    <!-- users table -->
+    <section class="card mt-3 p-4">
+      <div class="flex flex-col gap-3 border-b border-hair pb-3 sm:flex-row sm:items-center sm:justify-between">
+        <div class="relative w-full sm:max-w-xs">
+          <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[15px] text-muted"></i>
+          <input type="text" class="input pl-9" placeholder="Search by name or email..." />
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <select class="select w-auto">
+            <option>All roles</option>
+            <option>Admin</option>
+            <option>Organizer</option>
+            <option>Staff</option>
+            <option>Attendee</option>
+          </select>
+          <select class="select w-auto">
+            <option>All statuses</option>
+            <option>Active</option>
+            <option>Invited</option>
+            <option>Suspended</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-3 overflow-x-auto">
+        <table class="data-table min-w-[820px]">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Last active</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="text-[13px]">
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="avatar h-8 w-8 text-[11px]">HN</span>
+                  <div class="min-w-0 leading-tight">
+                    <p class="truncate font-medium text-ink">Harper Nelson</p>
+                    <p class="truncate text-[11px] text-muted">harper.nelson@eventa.io</p>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge badge-purple"><i class="hgi-stroke hgi-shield-key text-[12px]"></i>Admin</span></td>
+              <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Active</span></td>
+              <td class="text-muted tnum">Jul 18, 2026</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon js-edit-role" data-open="role-panel" data-role="Admin" title="Edit role"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                  <button class="btn-icon" data-open="del-modal" title="Remove user"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="avatar h-8 w-8 text-[11px]">AP</span>
+                  <div class="min-w-0 leading-tight">
+                    <p class="truncate font-medium text-ink">Anong Praditsarn</p>
+                    <p class="truncate text-[11px] text-muted">anong.p@gmail.com</p>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge badge-green"><i class="hgi-stroke hgi-shield-user text-[12px]"></i>Organizer</span></td>
+              <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Active</span></td>
+              <td class="text-muted tnum">Jul 17, 2026</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon js-edit-role" data-open="role-panel" data-role="Organizer" title="Edit role"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                  <button class="btn-icon" data-open="del-modal" title="Remove user"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="avatar h-8 w-8 text-[11px]">ST</span>
+                  <div class="min-w-0 leading-tight">
+                    <p class="truncate font-medium text-ink">Somchai Tanakit</p>
+                    <p class="truncate text-[11px] text-muted">somchai.t@outlook.com</p>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge badge-green"><i class="hgi-stroke hgi-shield-user text-[12px]"></i>Organizer</span></td>
+              <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Active</span></td>
+              <td class="text-muted tnum">Jul 16, 2026</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon js-edit-role" data-open="role-panel" data-role="Organizer" title="Edit role"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                  <button class="btn-icon" data-open="del-modal" title="Remove user"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="avatar h-8 w-8 text-[11px]">PS</span>
+                  <div class="min-w-0 leading-tight">
+                    <p class="truncate font-medium text-ink">Ploy Suwannarat</p>
+                    <p class="truncate text-[11px] text-muted">ploy.suwan@yahoo.com</p>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge badge-blue"><i class="hgi-stroke hgi-user-check-01 text-[12px]"></i>Staff</span></td>
+              <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Active</span></td>
+              <td class="text-muted tnum">Jul 15, 2026</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon js-edit-role" data-open="role-panel" data-role="Staff" title="Edit role"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                  <button class="btn-icon" data-open="del-modal" title="Remove user"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="avatar h-8 w-8 text-[11px]">JW</span>
+                  <div class="min-w-0 leading-tight">
+                    <p class="truncate font-medium text-ink">James Whitfield</p>
+                    <p class="truncate text-[11px] text-muted">james.whitfield@gmail.com</p>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge badge-blue"><i class="hgi-stroke hgi-user-check-01 text-[12px]"></i>Staff</span></td>
+              <td><span class="badge badge-amber"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Invited</span></td>
+              <td class="text-muted">—</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon js-edit-role" data-open="role-panel" data-role="Staff" title="Edit role"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                  <button class="btn-icon" data-open="del-modal" title="Remove user"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="avatar h-8 w-8 text-[11px]">ML</span>
+                  <div class="min-w-0 leading-tight">
+                    <p class="truncate font-medium text-ink">Mei Lin</p>
+                    <p class="truncate text-[11px] text-muted">mei.lin88@gmail.com</p>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge badge-blue"><i class="hgi-stroke hgi-user-check-01 text-[12px]"></i>Staff</span></td>
+              <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Active</span></td>
+              <td class="text-muted tnum">Jul 12, 2026</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon js-edit-role" data-open="role-panel" data-role="Staff" title="Edit role"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                  <button class="btn-icon" data-open="del-modal" title="Remove user"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="avatar h-8 w-8 text-[11px]">NC</span>
+                  <div class="min-w-0 leading-tight">
+                    <p class="truncate font-medium text-ink">Natthaphong Charoen</p>
+                    <p class="truncate text-[11px] text-muted">nat.charoen@hotmail.com</p>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge badge-gray"><i class="hgi-stroke hgi-user-circle text-[12px]"></i>Attendee</span></td>
+              <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Active</span></td>
+              <td class="text-muted tnum">Jul 5, 2026</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon js-edit-role" data-open="role-panel" data-role="Attendee" title="Edit role"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                  <button class="btn-icon" data-open="del-modal" title="Remove user"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="avatar h-8 w-8 text-[11px]">DO</span>
+                  <div class="min-w-0 leading-tight">
+                    <p class="truncate font-medium text-ink">David Okafor</p>
+                    <p class="truncate text-[11px] text-muted">d.okafor@corpmail.com</p>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge badge-green"><i class="hgi-stroke hgi-shield-user text-[12px]"></i>Organizer</span></td>
+              <td><span class="badge badge-red"><i class="hgi-stroke hgi-cancel-circle text-[12px]"></i>Suspended</span></td>
+              <td class="text-muted tnum">Jun 20, 2026</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button class="btn-icon js-edit-role" data-open="role-panel" data-role="Organizer" title="Edit role"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
+                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                  <button class="btn-icon" data-open="del-modal" title="Remove user"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-3 flex items-center justify-between text-[12px] text-muted">
+        <p>Showing <span class="font-semibold text-ink">1–8</span> of <span class="font-semibold text-ink tnum">23</span> workspace users</p>
+        <div class="flex gap-1">
+          <button class="btn-icon" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[15px]"></i></button>
+          <button class="btn-icon"><i class="hgi-stroke hgi-arrow-right-01 text-[15px]"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  </main>
+</div>
+
+<!-- Invite user panel -->
+<aside class="panel" id="invite-panel">
+  <header class="flex items-center justify-between border-b border-hair p-4">
+    <h3 class="text-[15px] font-bold tracking-tight">Invite user</h3>
+    <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+  </header>
+  <div class="flex-1 space-y-4 overflow-y-auto p-4">
+    <div>
+      <label class="label">Full name</label>
+      <input type="text" class="input" placeholder="e.g. Somchai Tanakit" />
+    </div>
+    <div>
+      <label class="label">Email address</label>
+      <input type="email" class="input" placeholder="name@example.com" />
+    </div>
+    <div>
+      <label class="label">Role</label>
+      <select id="invite-role" class="select">
+        <option>Admin</option>
+        <option selected>Organizer</option>
+        <option>Staff</option>
+        <option>Attendee</option>
+      </select>
+    </div>
+    <div>
+      <p class="label mb-1.5">This role can</p>
+      <ul id="invite-perms-preview" class="space-y-1.5 rounded-lg border border-hair p-3"></ul>
+      <p class="hint">You can fine-tune individual permissions later from Users &amp; Roles.</p>
+    </div>
+  </div>
+  <footer class="flex gap-2 border-t border-hair p-4">
+    <button class="btn btn-ghost flex-1" data-close>Cancel</button>
+    <button class="btn btn-primary flex-1" data-close><i class="hgi-stroke hgi-mail-send-01 text-[16px]"></i>Send invite</button>
+  </footer>
+</aside>
+
+<!-- Edit role & permissions panel -->
+<aside class="panel" id="role-panel">
+  <header class="flex items-center justify-between border-b border-hair p-4">
+    <h3 class="text-[15px] font-bold tracking-tight">Edit role &amp; permissions</h3>
+    <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+  </header>
+  <div class="flex-1 space-y-5 overflow-y-auto p-4">
+    <div>
+      <label class="label">Role name</label>
+      <input id="role-name-input" type="text" class="input" value="Organizer" />
+      <p id="role-desc" class="hint">Creates and manages events, tickets, discounts and attendee communications.</p>
+    </div>
+
+    <div>
+      <h4 class="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted"><i class="hgi-stroke hgi-calendar-03 text-[13px]"></i>Events</h4>
+      <div class="divide-y divide-line rounded-lg border border-hair px-3">
+        <div class="flex items-center justify-between py-2.5">
+          <p class="text-[13px] text-ink">Create &amp; edit events</p>
+          <button class="demo-toggle flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5" data-perm="evCreate"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition-transform"></span></button>
+        </div>
+        <div class="flex items-center justify-between py-2.5">
+          <p class="text-[13px] text-ink">Publish &amp; cancel events</p>
+          <button class="demo-toggle flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5" data-perm="evPublish"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition-transform"></span></button>
+        </div>
+        <div class="flex items-center justify-between py-2.5">
+          <p class="text-[13px] text-ink">Manage speakers &amp; agenda</p>
+          <button class="demo-toggle flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5" data-perm="evSpeakers"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition-transform"></span></button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h4 class="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted"><i class="hgi-stroke hgi-user-add-01 text-[13px]"></i>Registrations</h4>
+      <div class="divide-y divide-line rounded-lg border border-hair px-3">
+        <div class="flex items-center justify-between py-2.5">
+          <p class="text-[13px] text-ink">View registrations &amp; attendees</p>
+          <button class="demo-toggle flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5" data-perm="regView"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition-transform"></span></button>
+        </div>
+        <div class="flex items-center justify-between py-2.5">
+          <p class="text-[13px] text-ink">Check attendees in</p>
+          <button class="demo-toggle flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5" data-perm="regCheckin"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition-transform"></span></button>
+        </div>
+        <div class="flex items-center justify-between py-2.5">
+          <p class="text-[13px] text-ink">Export attendee data</p>
+          <button class="demo-toggle flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5" data-perm="regExport"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition-transform"></span></button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h4 class="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted"><i class="hgi-stroke hgi-wallet-01 text-[13px]"></i>Finance</h4>
+      <div class="divide-y divide-line rounded-lg border border-hair px-3">
+        <div class="flex items-center justify-between py-2.5">
+          <p class="text-[13px] text-ink">View payments &amp; payouts</p>
+          <button class="demo-toggle flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5" data-perm="finView"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition-transform"></span></button>
+        </div>
+        <div class="flex items-center justify-between py-2.5">
+          <p class="text-[13px] text-ink">Issue refunds</p>
+          <button class="demo-toggle flex h-5 w-9 shrink-0 items-center rounded-full bg-line p-0.5" data-perm="finRefund"><span class="h-4 w-4 rounded-full bg-white shadow transition-transform"></span></button>
+        </div>
+        <div class="flex items-center justify-between py-2.5">
+          <p class="text-[13px] text-ink">Manage discounts &amp; pricing</p>
+          <button class="demo-toggle flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5" data-perm="finDiscount"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition-transform"></span></button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h4 class="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted"><i class="hgi-stroke hgi-settings-01 text-[13px]"></i>Settings</h4>
+      <div class="divide-y divide-line rounded-lg border border-hair px-3">
+        <div class="flex items-center justify-between py-2.5">
+          <p class="text-[13px] text-ink">Manage users &amp; roles</p>
+          <button class="demo-toggle flex h-5 w-9 shrink-0 items-center rounded-full bg-line p-0.5" data-perm="setUsers"><span class="h-4 w-4 rounded-full bg-white shadow transition-transform"></span></button>
+        </div>
+        <div class="flex items-center justify-between py-2.5">
+          <p class="text-[13px] text-ink">Edit workspace settings</p>
+          <button class="demo-toggle flex h-5 w-9 shrink-0 items-center rounded-full bg-line p-0.5" data-perm="setSettings"><span class="h-4 w-4 rounded-full bg-white shadow transition-transform"></span></button>
+        </div>
+        <div class="flex items-center justify-between py-2.5">
+          <p class="text-[13px] text-ink">Manage integrations &amp; API keys</p>
+          <button class="demo-toggle flex h-5 w-9 shrink-0 items-center rounded-full bg-line p-0.5" data-perm="setIntegrations"><span class="h-4 w-4 rounded-full bg-white shadow transition-transform"></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="flex gap-2 border-t border-hair p-4">
+    <button class="btn btn-ghost flex-1" data-close>Cancel</button>
+    <button class="btn btn-primary flex-1" data-close>Save changes</button>
+  </footer>
+</aside>
+
+<!-- Remove user confirm modal -->
+<div class="modal" id="del-modal">
+  <div class="p-5">
+    <div class="grid h-10 w-10 place-items-center rounded-xl bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300"><i class="hgi-stroke hgi-alert-01 text-[18px]"></i></div>
+    <h3 class="mt-3 text-[15px] font-bold tracking-tight">Remove user?</h3>
+    <p class="mt-1 text-[13px] text-muted">This immediately revokes their access to this workspace. They can be re-invited at any time.</p>
+    <div class="mt-4 flex gap-2">
+      <button class="btn btn-ghost flex-1" data-close>Cancel</button>
+      <button class="btn btn-danger flex-1" data-close>Remove</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/shell.js"></script>
+<script>
+  /* ---------- Role permission presets ---------- */
+  const ROLE_PERMS = {
+    Admin:     { evCreate:1, evPublish:1, evSpeakers:1, regView:1, regCheckin:1, regExport:1, finView:1, finRefund:1, finDiscount:1, setUsers:1, setSettings:1, setIntegrations:1 },
+    Organizer: { evCreate:1, evPublish:1, evSpeakers:1, regView:1, regCheckin:1, regExport:1, finView:1, finRefund:0, finDiscount:1, setUsers:0, setSettings:0, setIntegrations:0 },
+    Staff:     { evCreate:0, evPublish:0, evSpeakers:0, regView:1, regCheckin:1, regExport:0, finView:0, finRefund:0, finDiscount:0, setUsers:0, setSettings:0, setIntegrations:0 },
+    Attendee:  { evCreate:0, evPublish:0, evSpeakers:0, regView:0, regCheckin:0, regExport:0, finView:0, finRefund:0, finDiscount:0, setUsers:0, setSettings:0, setIntegrations:0 },
+  };
+  const ROLE_DESC = {
+    Admin: 'Full access to every workspace feature, including billing and security settings.',
+    Organizer: 'Creates and manages events, tickets, discounts and attendee communications.',
+    Staff: 'Handles day-to-day check-in and attendee support at events.',
+    Attendee: 'Registered guest with self-service access to their own tickets and profile only.',
+  };
+  const ROLE_BULLETS = {
+    Admin: ['Manage users & roles', 'Manage payments & payouts', 'Configure workspace settings'],
+    Organizer: ['Create & edit events', 'Manage tickets & discounts', 'View registrations & reports'],
+    Staff: ['Check-in attendees', 'Scan & validate tickets', 'View registrations'],
+    Attendee: ['View own tickets', 'Update own profile'],
+  };
+
+  function setToggle(btn, on) {
+    btn.classList.toggle('bg-brand', on);
+    btn.classList.toggle('bg-line', !on);
+    const knob = btn.querySelector('span');
+    if (knob) knob.classList.toggle('translate-x-4', on);
+  }
+
+  function openRolePanel(role) {
+    if (!ROLE_PERMS[role]) return;
+    document.getElementById('role-name-input').value = role;
+    document.getElementById('role-desc').textContent = ROLE_DESC[role];
+    const perms = ROLE_PERMS[role];
+    document.querySelectorAll('#role-panel [data-perm]').forEach(btn => {
+      setToggle(btn, !!perms[btn.dataset.perm]);
+    });
+  }
+  // Attach directly to the buttons (fires before shell.js's document-level
+  // [data-open] handler opens the panel) so the panel is populated first.
+  document.querySelectorAll('.js-edit-role').forEach(btn => {
+    btn.addEventListener('click', () => openRolePanel(btn.dataset.role));
+  });
+
+  /* ---------- Invite panel: live permissions preview ---------- */
+  function renderInvitePreview() {
+    const role = document.getElementById('invite-role').value;
+    const bullets = ROLE_BULLETS[role] || [];
+    document.getElementById('invite-perms-preview').innerHTML = bullets.map(b =>
+      `<li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>${b}</li>`
+    ).join('');
+  }
+  document.getElementById('invite-role').addEventListener('change', renderInvitePreview);
+  renderInvitePreview();
+
+  /* ---------- Generic demo toggle switches ---------- */
+  document.querySelectorAll('.demo-toggle').forEach(btn => {
+    btn.addEventListener('click', () => setToggle(btn, !btn.classList.contains('bg-brand')));
+  });
+</script>
+</body>
+</html>

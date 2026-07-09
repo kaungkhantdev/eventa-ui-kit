@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Notifications</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="assets/config.js"></script>
+<link rel="stylesheet" href="assets/app.css" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="notifications">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidebar here -->
+
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <div class="min-w-0">
+          <h1 class="text-[22px] font-bold tracking-tight">Notifications</h1>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Templates, announcements &amp; delivery log.</p>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary shrink-0" data-open="announce-panel"><i class="hgi-stroke hgi-megaphone-01 text-[16px]"></i><span class="hidden sm:inline">Send announcement</span><span class="sm:hidden">Send</span></button>
+    </div>
+
+    <!-- tabs -->
+    <div data-tabs="#notifTabs" class="flex gap-4 border-b border-hair">
+      <button class="tab tab-active" data-tab="templates">Templates</button>
+      <button class="tab" data-tab="announcements">Announcements</button>
+      <button class="tab" data-tab="log">Log</button>
+    </div>
+
+    <div id="notifTabs" class="mt-4">
+
+      <!-- ============ TEMPLATES ============ -->
+      <div data-tab-panel="templates">
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+
+          <!-- Registration confirmation -->
+          <div class="card flex flex-col gap-3 p-4">
+            <div class="flex items-center gap-3">
+              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-checkmark-badge-01 text-[18px]"></i></span>
+              <p class="text-[14px] font-semibold text-ink">Registration confirmation</p>
+            </div>
+            <p class="text-[12px] text-muted">Sent instantly when a registrant completes checkout for an event.</p>
+            <div class="flex flex-wrap items-center gap-1.5">
+              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
+              <span class="badge badge-green"><i class="hgi-stroke hgi-smart-phone-01 text-[12px]"></i>SMS</span>
+            </div>
+            <div class="mt-1 flex items-center justify-between border-t border-hair pt-3">
+              <div class="flex items-center gap-2">
+                <button type="button" class="demo-toggle flex h-5 w-9 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span></button>
+                <span class="text-[12px] font-medium text-muted">Active</span>
+              </div>
+              <button class="btn btn-ghost btn-sm"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit</button>
+            </div>
+          </div>
+
+          <!-- Payment receipt -->
+          <div class="card flex flex-col gap-3 p-4">
+            <div class="flex items-center gap-3">
+              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-500 dark:bg-blue-500/15 dark:text-blue-300"><i class="hgi-stroke hgi-invoice-01 text-[18px]"></i></span>
+              <p class="text-[14px] font-semibold text-ink">Payment receipt</p>
+            </div>
+            <p class="text-[12px] text-muted">Sent after a successful payment with an itemized ticket breakdown.</p>
+            <div class="flex flex-wrap items-center gap-1.5">
+              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
+            </div>
+            <div class="mt-1 flex items-center justify-between border-t border-hair pt-3">
+              <div class="flex items-center gap-2">
+                <button type="button" class="demo-toggle flex h-5 w-9 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span></button>
+                <span class="text-[12px] font-medium text-muted">Active</span>
+              </div>
+              <button class="btn btn-ghost btn-sm"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit</button>
+            </div>
+          </div>
+
+          <!-- Event reminder (24h) -->
+          <div class="card flex flex-col gap-3 p-4">
+            <div class="flex items-center gap-3">
+              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-amber-50 text-amber-500 dark:bg-amber-400/15 dark:text-amber-300"><i class="hgi-stroke hgi-clock-01 text-[18px]"></i></span>
+              <p class="text-[14px] font-semibold text-ink">Event reminder (24h)</p>
+            </div>
+            <p class="text-[12px] text-muted">Sent 24 hours before an event starts to help reduce no-shows.</p>
+            <div class="flex flex-wrap items-center gap-1.5">
+              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
+              <span class="badge badge-green"><i class="hgi-stroke hgi-smart-phone-01 text-[12px]"></i>SMS</span>
+            </div>
+            <div class="mt-1 flex items-center justify-between border-t border-hair pt-3">
+              <div class="flex items-center gap-2">
+                <button type="button" class="demo-toggle flex h-5 w-9 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span></button>
+                <span class="text-[12px] font-medium text-muted">Active</span>
+              </div>
+              <button class="btn btn-ghost btn-sm"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit</button>
+            </div>
+          </div>
+
+          <!-- Waitlist offer -->
+          <div class="card flex flex-col gap-3 p-4">
+            <div class="flex items-center gap-3">
+              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-purple-50 text-purple-500 dark:bg-purple-500/15 dark:text-purple-300"><i class="hgi-stroke hgi-user-check-01 text-[18px]"></i></span>
+              <p class="text-[14px] font-semibold text-ink">Waitlist offer</p>
+            </div>
+            <p class="text-[12px] text-muted">Sent automatically when a spot opens up for someone on the waitlist.</p>
+            <div class="flex flex-wrap items-center gap-1.5">
+              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
+              <span class="badge badge-green"><i class="hgi-stroke hgi-smart-phone-01 text-[12px]"></i>SMS</span>
+            </div>
+            <div class="mt-1 flex items-center justify-between border-t border-hair pt-3">
+              <div class="flex items-center gap-2">
+                <button type="button" class="demo-toggle flex h-5 w-9 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span></button>
+                <span class="text-[12px] font-medium text-muted">Active</span>
+              </div>
+              <button class="btn btn-ghost btn-sm"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit</button>
+            </div>
+          </div>
+
+          <!-- Cancellation notice -->
+          <div class="card flex flex-col gap-3 p-4">
+            <div class="flex items-center gap-3">
+              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300"><i class="hgi-stroke hgi-cancel-circle text-[18px]"></i></span>
+              <p class="text-[14px] font-semibold text-ink">Cancellation notice</p>
+            </div>
+            <p class="text-[12px] text-muted">Sent when an event is cancelled or a registration is refunded.</p>
+            <div class="flex flex-wrap items-center gap-1.5">
+              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
+            </div>
+            <div class="mt-1 flex items-center justify-between border-t border-hair pt-3">
+              <div class="flex items-center gap-2">
+                <button type="button" class="demo-toggle flex h-5 w-9 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span></button>
+                <span class="text-[12px] font-medium text-muted">Active</span>
+              </div>
+              <button class="btn btn-ghost btn-sm"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit</button>
+            </div>
+          </div>
+
+          <!-- Post-event thank-you -->
+          <div class="card flex flex-col gap-3 p-4">
+            <div class="flex items-center gap-3">
+              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gray-100 text-gray-500 dark:bg-white/10 dark:text-gray-300"><i class="hgi-stroke hgi-star text-[18px]"></i></span>
+              <p class="text-[14px] font-semibold text-ink">Post-event thank-you</p>
+            </div>
+            <p class="text-[12px] text-muted">Sent the day after an event with a short feedback survey link.</p>
+            <div class="flex flex-wrap items-center gap-1.5">
+              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
+            </div>
+            <div class="mt-1 flex items-center justify-between border-t border-hair pt-3">
+              <div class="flex items-center gap-2">
+                <button type="button" class="demo-toggle flex h-5 w-9 items-center rounded-full bg-line p-0.5"><span class="h-4 w-4 rounded-full bg-white shadow"></span></button>
+                <span class="text-[12px] font-medium text-muted">Inactive</span>
+              </div>
+              <button class="btn btn-ghost btn-sm"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ============ ANNOUNCEMENTS ============ -->
+      <div data-tab-panel="announcements" class="hidden">
+        <div class="card p-4">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h2 class="text-[15px] font-bold tracking-tight">Sent announcements</h2>
+              <p class="mt-0.5 text-[12px] text-muted">Broadcast messages sent to registrants, checked-in attendees or your waitlist.</p>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm shrink-0" data-open="announce-panel"><i class="hgi-stroke hgi-megaphone-01 text-[14px]"></i>Send announcement</button>
+          </div>
+        </div>
+
+        <div class="card mt-3 p-4">
+          <div class="flex items-center gap-3 py-3">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-megaphone-01 text-[18px]"></i></span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[13px] font-semibold text-ink">Venue change notice</p>
+              <p class="mt-0.5 truncate text-[11px] text-muted tnum">Tech Summit 2026 · 1,340 recipients · Jul 5, 2026</p>
+            </div>
+            <div class="hidden items-center gap-1.5 sm:flex">
+              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
+              <span class="badge badge-green"><i class="hgi-stroke hgi-smart-phone-01 text-[12px]"></i>SMS</span>
+            </div>
+            <span class="badge badge-green shrink-0"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Sent</span>
+          </div>
+          <div class="flex items-center gap-3 border-t border-line py-3">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-megaphone-01 text-[18px]"></i></span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[13px] font-semibold text-ink">Early bird ends tonight</p>
+              <p class="mt-0.5 truncate text-[11px] text-muted tnum">Bangkok Jazz Night · 860 recipients · Jul 2, 2026</p>
+            </div>
+            <div class="hidden items-center gap-1.5 sm:flex">
+              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
+            </div>
+            <span class="badge badge-green shrink-0"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Sent</span>
+          </div>
+          <div class="flex items-center gap-3 border-t border-line py-3">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-megaphone-01 text-[18px]"></i></span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[13px] font-semibold text-ink">Parking &amp; directions</p>
+              <p class="mt-0.5 truncate text-[11px] text-muted tnum">Sunrise Yoga Retreat · 240 recipients · Jun 28, 2026</p>
+            </div>
+            <div class="hidden items-center gap-1.5 sm:flex">
+              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
+              <span class="badge badge-green"><i class="hgi-stroke hgi-smart-phone-01 text-[12px]"></i>SMS</span>
+            </div>
+            <span class="badge badge-green shrink-0"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Sent</span>
+          </div>
+          <div class="flex items-center gap-3 border-t border-line py-3">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-megaphone-01 text-[18px]"></i></span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[13px] font-semibold text-ink">Schedule update: keynote moved to Hall B</p>
+              <p class="mt-0.5 truncate text-[11px] text-muted tnum">Tech Summit 2026 · 1,340 recipients · Jun 20, 2026</p>
+            </div>
+            <div class="hidden items-center gap-1.5 sm:flex">
+              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
+            </div>
+            <span class="badge badge-green shrink-0"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Sent</span>
+          </div>
+          <div class="flex items-center gap-3 border-t border-line py-3">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-500 dark:bg-blue-500/15 dark:text-blue-300"><i class="hgi-stroke hgi-megaphone-01 text-[18px]"></i></span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[13px] font-semibold text-ink">Reminder: bring your ticket QR code</p>
+              <p class="mt-0.5 truncate text-[11px] text-muted tnum">Thai Street Food Festival · 512 recipients · Jul 15, 2026</p>
+            </div>
+            <div class="hidden items-center gap-1.5 sm:flex">
+              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
+              <span class="badge badge-green"><i class="hgi-stroke hgi-smart-phone-01 text-[12px]"></i>SMS</span>
+            </div>
+            <span class="badge badge-blue shrink-0"><i class="hgi-stroke hgi-time-schedule text-[12px]"></i>Scheduled</span>
+          </div>
+          <div class="flex items-center gap-3 border-t border-line py-3">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-megaphone-01 text-[18px]"></i></span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[13px] font-semibold text-ink">Thank you for attending!</p>
+              <p class="mt-0.5 truncate text-[11px] text-muted tnum">UX Bangkok Meetup · 180 recipients · Jun 10, 2026</p>
+            </div>
+            <div class="hidden items-center gap-1.5 sm:flex">
+              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
+            </div>
+            <span class="badge badge-green shrink-0"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Sent</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ LOG ============ -->
+      <div data-tab-panel="log" class="hidden">
+        <section class="card p-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-[15px] font-bold tracking-tight">Delivery log</h2>
+            <p class="text-[12px] text-muted">Last 10 notifications</p>
+          </div>
+          <div class="mt-2 overflow-x-auto">
+            <table class="data-table min-w-[820px]">
+              <thead>
+                <tr><th>Recipient</th><th>Type</th><th>Channel</th><th>Status</th><th class="text-right">Time</th></tr>
+              </thead>
+              <tbody class="text-[13px]">
+                <tr>
+                  <td><div class="flex items-center gap-2"><span class="avatar h-8 w-8 text-[11px]">AP</span><div class="min-w-0 leading-tight"><p class="font-medium text-ink">Anong P.</p><p class="text-[11px] text-muted">anong.p@gmail.com</p></div></div></td>
+                  <td class="text-muted">Registration confirmation</td>
+                  <td><span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span></td>
+                  <td><span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Delivered</span></td>
+                  <td class="text-right text-muted tnum">Jul 9 · 10:24</td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2"><span class="avatar h-8 w-8 text-[11px]">ST</span><div class="min-w-0 leading-tight"><p class="font-medium text-ink">Somchai T.</p><p class="text-[11px] text-muted">somchai.t@hotmail.com</p></div></div></td>
+                  <td class="text-muted">Payment receipt</td>
+                  <td><span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span></td>
+                  <td><span class="badge badge-purple"><i class="hgi-stroke hgi-eye text-[12px]"></i>Opened</span></td>
+                  <td class="text-right text-muted tnum">Jul 9 · 10:03</td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2"><span class="avatar h-8 w-8 text-[11px]">PS</span><div class="min-w-0 leading-tight"><p class="font-medium text-ink">Ploy S.</p><p class="text-[11px] text-muted">ploy.s@gmail.com</p></div></div></td>
+                  <td class="text-muted">Event reminder (24h)</td>
+                  <td><span class="badge badge-green"><i class="hgi-stroke hgi-smart-phone-01 text-[12px]"></i>SMS</span></td>
+                  <td><span class="badge badge-blue"><i class="hgi-stroke hgi-mail-send-01 text-[12px]"></i>Sent</span></td>
+                  <td class="text-right text-muted tnum">Jul 9 · 09:47</td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2"><span class="avatar h-8 w-8 text-[11px]">JW</span><div class="min-w-0 leading-tight"><p class="font-medium text-ink">James W.</p><p class="text-[11px] text-muted">james.wilson@gmail.com</p></div></div></td>
+                  <td class="text-muted">Cancellation notice</td>
+                  <td><span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span></td>
+                  <td><span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Delivered</span></td>
+                  <td class="text-right text-muted tnum">Jul 8 · 18:12</td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2"><span class="avatar h-8 w-8 text-[11px]">ML</span><div class="min-w-0 leading-tight"><p class="font-medium text-ink">Mei L.</p><p class="text-[11px] text-muted">mei.lin@outlook.com</p></div></div></td>
+                  <td class="text-muted">Waitlist offer</td>
+                  <td><span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span></td>
+                  <td><span class="badge badge-purple"><i class="hgi-stroke hgi-eye text-[12px]"></i>Opened</span></td>
+                  <td class="text-right text-muted tnum">Jul 8 · 16:30</td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2"><span class="avatar h-8 w-8 text-[11px]">NK</span><div class="min-w-0 leading-tight"><p class="font-medium text-ink">Nutcha K.</p><p class="text-[11px] text-muted">nutcha.k@gmail.com</p></div></div></td>
+                  <td class="text-muted">Venue change notice</td>
+                  <td><span class="badge badge-green"><i class="hgi-stroke hgi-smart-phone-01 text-[12px]"></i>SMS</span></td>
+                  <td><span class="badge badge-red"><i class="hgi-stroke hgi-alert-circle text-[12px]"></i>Failed</span></td>
+                  <td class="text-right text-muted tnum">Jul 8 · 14:05</td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2"><span class="avatar h-8 w-8 text-[11px]">DC</span><div class="min-w-0 leading-tight"><p class="font-medium text-ink">David C.</p><p class="text-[11px] text-muted">david.chen@gmail.com</p></div></div></td>
+                  <td class="text-muted">Registration confirmation</td>
+                  <td><span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span></td>
+                  <td><span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Delivered</span></td>
+                  <td class="text-right text-muted tnum">Jul 8 · 11:22</td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2"><span class="avatar h-8 w-8 text-[11px]">KR</span><div class="min-w-0 leading-tight"><p class="font-medium text-ink">Kanya R.</p><p class="text-[11px] text-muted">kanya.r@yahoo.com</p></div></div></td>
+                  <td class="text-muted">Post-event thank-you</td>
+                  <td><span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span></td>
+                  <td><span class="badge badge-blue"><i class="hgi-stroke hgi-mail-send-01 text-[12px]"></i>Sent</span></td>
+                  <td class="text-right text-muted tnum">Jul 7 · 20:15</td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2"><span class="avatar h-8 w-8 text-[11px]">AB</span><div class="min-w-0 leading-tight"><p class="font-medium text-ink">Arthit B.</p><p class="text-[11px] text-muted">arthit.b@gmail.com</p></div></div></td>
+                  <td class="text-muted">Payment receipt</td>
+                  <td><span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span></td>
+                  <td><span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Delivered</span></td>
+                  <td class="text-right text-muted tnum">Jul 7 · 15:48</td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2"><span class="avatar h-8 w-8 text-[11px]">SM</span><div class="min-w-0 leading-tight"><p class="font-medium text-ink">Sofia M.</p><p class="text-[11px] text-muted">sofia.m@gmail.com</p></div></div></td>
+                  <td class="text-muted">Event reminder (24h)</td>
+                  <td><span class="badge badge-green"><i class="hgi-stroke hgi-smart-phone-01 text-[12px]"></i>SMS</span></td>
+                  <td><span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Delivered</span></td>
+                  <td class="text-right text-muted tnum">Jul 7 · 09:10</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+    </div>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  </main>
+</div>
+
+<!-- Send announcement panel -->
+<aside class="panel" id="announce-panel">
+  <header class="flex items-center justify-between border-b border-hair p-4">
+    <h3 class="text-[15px] font-bold tracking-tight">Send announcement</h3>
+    <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+  </header>
+  <div class="flex-1 space-y-4 overflow-y-auto p-4">
+    <div>
+      <label class="label">Event</label>
+      <select class="select">
+        <option>All events</option>
+        <option>Tech Summit 2026</option>
+        <option>Bangkok Jazz Night</option>
+        <option>Sunrise Yoga Retreat</option>
+        <option>Thai Street Food Festival</option>
+        <option>UX Bangkok Meetup</option>
+      </select>
+    </div>
+    <div>
+      <label class="label">Audience</label>
+      <select class="select">
+        <option>All registrants</option>
+        <option>Checked-in attendees</option>
+        <option>Waitlist</option>
+      </select>
+    </div>
+    <div>
+      <label class="label">Channel</label>
+      <div class="flex gap-2">
+        <label class="flex flex-1 cursor-pointer items-center gap-2 rounded-lg border border-hair px-3 py-2 text-[13px] text-ink">
+          <input type="checkbox" class="h-3.5 w-3.5 accent-brand" checked />
+          <i class="hgi-stroke hgi-mail-01 text-[15px] text-muted"></i>Email
+        </label>
+        <label class="flex flex-1 cursor-pointer items-center gap-2 rounded-lg border border-hair px-3 py-2 text-[13px] text-ink">
+          <input type="checkbox" class="h-3.5 w-3.5 accent-brand" checked />
+          <i class="hgi-stroke hgi-smart-phone-01 text-[15px] text-muted"></i>SMS
+        </label>
+      </div>
+    </div>
+    <div>
+      <label class="label">Subject</label>
+      <input type="text" class="input" placeholder="e.g. Venue change for Tech Summit 2026" />
+    </div>
+    <div>
+      <label class="label">Message</label>
+      <textarea class="textarea" placeholder="Write your announcement…" rows="5"></textarea>
+      <p class="hint">Recipients receive this as an email and/or SMS depending on the channels selected above.</p>
+    </div>
+    <div>
+      <label class="label">Delivery</label>
+      <div class="segmented w-full" data-send-toggle>
+        <button type="button" class="active flex-1" data-mode="now">Send now</button>
+        <button type="button" class="flex-1" data-mode="schedule">Schedule</button>
+      </div>
+    </div>
+    <div id="announce-schedule-field" class="hidden">
+      <label class="label">Send date &amp; time</label>
+      <input type="datetime-local" class="input" />
+    </div>
+  </div>
+  <footer class="flex gap-2 border-t border-hair p-4">
+    <button class="btn btn-ghost flex-1" data-close>Cancel</button>
+    <button class="btn btn-primary flex-1" data-close>Send</button>
+  </footer>
+</aside>
+
+<script src="assets/shell.js"></script>
+<script>
+  // Send now / Schedule segmented control toggles the date field
+  document.querySelectorAll('[data-send-toggle]').forEach(wrap => {
+    wrap.addEventListener('click', e => {
+      const btn = e.target.closest('button'); if (!btn) return;
+      [...wrap.children].forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const field = document.getElementById('announce-schedule-field');
+      if (field) field.classList.toggle('hidden', btn.dataset.mode !== 'schedule');
+    });
+  });
+  // Generic demo toggle switches (e.g. template Active/Inactive)
+  document.querySelectorAll('.demo-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const on = btn.classList.toggle('bg-brand');
+      btn.classList.toggle('bg-line', !on);
+      const knob = btn.querySelector('span');
+      if (knob) knob.classList.toggle('translate-x-4', on);
+      const label = btn.parentElement.querySelector('span:last-child');
+      if (label) label.textContent = on ? 'Active' : 'Inactive';
+    });
+  });
+</script>
+</body>
+</html>

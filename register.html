@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Create account</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="assets/config.js"></script>
+<link rel="stylesheet" href="assets/app.css" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased">
+
+  <button id="theme-btn" class="btn-icon fixed right-4 top-4 z-10 border border-hair"><i class="hgi-stroke hgi-moon-02 text-[18px]"></i></button>
+
+  <div class="grid min-h-full place-items-center px-4 py-14 sm:py-20">
+    <div class="w-full max-w-sm">
+
+      <!-- logo + heading -->
+      <div class="mb-7 flex flex-col items-center gap-4 text-center">
+        <a href="index.html" class="flex items-center gap-2">
+          <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand text-white"><i class="hgi-stroke hgi-ticket-star text-[20px]"></i></span>
+          <span class="text-[18px] font-extrabold text-brand-dark">Eventa</span>
+        </a>
+        <div>
+          <h1 class="text-[22px] font-bold tracking-tight">Create your account</h1>
+          <p class="mt-1 text-[13px] text-muted">Start selling tickets and managing registrations in minutes.</p>
+        </div>
+      </div>
+
+      <!-- card -->
+      <div class="card p-6">
+        <form id="register-form" class="space-y-4">
+          <div>
+            <label for="full-name" class="label">Full name</label>
+            <input id="full-name" type="text" autocomplete="name" placeholder="Jordan Lee" class="input" required />
+          </div>
+
+          <div>
+            <label for="email" class="label">Email</label>
+            <input id="email" type="email" autocomplete="email" placeholder="you@example.com" class="input" required />
+          </div>
+
+          <div>
+            <label for="password" class="label">Password</label>
+            <div class="relative mt-1.5">
+              <input id="password" type="password" autocomplete="new-password" placeholder="••••••••" class="input pr-10" required />
+              <button type="button" id="toggle-pw" class="btn-icon absolute right-1 top-1/2 -translate-y-1/2" title="Show password">
+                <i class="hgi-stroke hgi-view text-[16px]"></i>
+              </button>
+            </div>
+            <div class="mt-2 flex items-center gap-2">
+              <div class="flex h-1 flex-1 gap-1">
+                <span id="pw-bar-1" class="h-full flex-1 rounded-full bg-line transition-colors"></span>
+                <span id="pw-bar-2" class="h-full flex-1 rounded-full bg-line transition-colors"></span>
+                <span id="pw-bar-3" class="h-full flex-1 rounded-full bg-line transition-colors"></span>
+              </div>
+              <span id="pw-label" class="text-[11px] font-medium text-muted">Use 8+ characters</span>
+            </div>
+          </div>
+
+          <div>
+            <label for="confirm-password" class="label">Confirm password</label>
+            <div class="relative mt-1.5">
+              <input id="confirm-password" type="password" autocomplete="new-password" placeholder="••••••••" class="input pr-10" required />
+              <button type="button" id="toggle-cpw" class="btn-icon absolute right-1 top-1/2 -translate-y-1/2" title="Show password">
+                <i class="hgi-stroke hgi-view text-[16px]"></i>
+              </button>
+            </div>
+            <p id="cpw-hint" class="hint hidden"></p>
+          </div>
+
+          <label class="flex cursor-pointer items-start gap-2 text-[13px] text-muted">
+            <input id="terms" type="checkbox" class="mt-0.5 h-3.5 w-3.5 shrink-0 rounded border-hair accent-brand" required />
+            I agree to the <a href="#" class="font-semibold text-brand hover:underline">Terms</a> &amp; <a href="#" class="font-semibold text-brand hover:underline">Privacy Policy</a>
+          </label>
+
+          <button type="submit" class="btn btn-primary w-full">Create account</button>
+        </form>
+
+        <div class="my-5 flex items-center gap-3">
+          <div class="h-px flex-1 bg-hair"></div>
+          <span class="text-[11px] font-medium uppercase tracking-wide text-muted">or</span>
+          <div class="h-px flex-1 bg-hair"></div>
+        </div>
+
+        <button type="button" class="btn btn-ghost w-full">
+          <i class="hgi-stroke hgi-global text-[16px]"></i>
+          Sign up with Google
+        </button>
+      </div>
+
+      <p class="mt-6 text-center text-[13px] text-muted">Already have an account? <a href="login.html" class="text-brand font-semibold hover:underline">Sign in</a></p>
+    </div>
+  </div>
+
+  <script>
+    (function(){var b=document.getElementById('theme-btn');function set(d){document.documentElement.classList.toggle('dark',d);try{localStorage.setItem('eventa-theme',d?'dark':'light')}catch(e){}b.querySelector('i').className='hgi-stroke '+(d?'hgi-sun-03':'hgi-moon-02')+' text-[18px]';}set(document.documentElement.classList.contains('dark'));b.addEventListener('click',function(){set(!document.documentElement.classList.contains('dark'));});})();
+
+    (function(){
+      function wireToggle(inputId, btnId){
+        var input = document.getElementById(inputId), btn = document.getElementById(btnId);
+        btn.addEventListener('click', function(){
+          var show = input.type === 'password';
+          input.type = show ? 'text' : 'password';
+          btn.querySelector('i').className = 'hgi-stroke ' + (show ? 'hgi-view-off-slash' : 'hgi-view') + ' text-[16px]';
+          btn.title = show ? 'Hide password' : 'Show password';
+        });
+      }
+      wireToggle('password', 'toggle-pw');
+      wireToggle('confirm-password', 'toggle-cpw');
+    })();
+
+    (function(){
+      var pw = document.getElementById('password');
+      var bars = [document.getElementById('pw-bar-1'), document.getElementById('pw-bar-2'), document.getElementById('pw-bar-3')];
+      var label = document.getElementById('pw-label');
+      var colors = { 1: '#ef4444', 2: '#d97706', 3: '#1ba770' };
+      var texts = { 0: 'Use 8+ characters', 1: 'Weak password', 2: 'Fair password', 3: 'Strong password' };
+      pw.addEventListener('input', function(){
+        var v = pw.value;
+        var score = 0;
+        if (v.length >= 8) score++;
+        if (/[A-Z]/.test(v) && /[0-9]/.test(v)) score++;
+        if (v.length >= 10 && /[^A-Za-z0-9]/.test(v)) score++;
+        if (v.length === 0) score = 0;
+        bars.forEach(function(bar, i){
+          bar.style.background = (i < score) ? colors[score] : '';
+          bar.classList.toggle('bg-line', i >= score);
+        });
+        label.textContent = texts[score];
+        label.style.color = score > 0 ? colors[score] : '';
+      });
+    })();
+
+    (function(){
+      var pw = document.getElementById('password'), cpw = document.getElementById('confirm-password'), hint = document.getElementById('cpw-hint');
+      function check(){
+        if (!cpw.value) { hint.classList.add('hidden'); cpw.style.borderColor = ''; return; }
+        var match = cpw.value === pw.value;
+        hint.textContent = match ? 'Passwords match' : 'Passwords do not match';
+        hint.style.color = match ? '#1ba770' : '#ef4444';
+        hint.classList.remove('hidden');
+      }
+      cpw.addEventListener('input', check);
+      pw.addEventListener('input', check);
+    })();
+
+    document.getElementById('register-form').addEventListener('submit', function(e){ e.preventDefault(); });
+  </script>
+</body>
+</html>

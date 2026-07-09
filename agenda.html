@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Agenda</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="assets/config.js"></script>
+<link rel="stylesheet" href="assets/app.css" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="agenda">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidebar here -->
+
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <div class="min-w-0">
+          <h1 class="text-[22px] font-bold tracking-tight">Agenda</h1>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Build your event schedule.</p>
+        </div>
+      </div>
+      <div class="flex shrink-0 items-center gap-2">
+        <select class="select w-36 sm:w-56">
+          <option>Tech Summit 2026</option>
+          <option>Bangkok Jazz Night</option>
+          <option>Thai Street Food Festival</option>
+          <option>UX Bangkok Meetup</option>
+        </select>
+        <button type="button" class="btn btn-primary shrink-0" data-open="session-panel"><i class="hgi-stroke hgi-add-01 text-[16px]"></i><span class="hidden sm:inline">Add session</span><span class="sm:hidden">Add</span></button>
+      </div>
+    </div>
+
+    <!-- day tabs -->
+    <div class="card p-4">
+      <div data-tabs="#agendaTabs" class="flex gap-4 overflow-x-auto border-b border-hair">
+        <button class="tab tab-active" data-tab="day1">Day 1 · Jul 18</button>
+        <button class="tab" data-tab="day2">Day 2 · Jul 19</button>
+        <button class="tab" data-tab="day3">Day 3 · Jul 20</button>
+      </div>
+
+      <div id="agendaTabs" class="mt-4">
+
+        <!-- ================= DAY 1 ================= -->
+        <div data-tab-panel="day1">
+          <div class="relative">
+            <div class="pointer-events-none absolute left-[70px] top-3 bottom-3 w-px bg-line"></div>
+            <div class="space-y-3">
+
+              <!-- registration -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">08:30</p><p class="text-[11px] text-muted tnum">30 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-line ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-gray"><i class="hgi-stroke hgi-time-quarter-pass text-[12px]"></i>Break</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-muted">Doors Open &amp; Registration</p>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Main Lobby</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- keynote -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">09:00</p><p class="text-[11px] text-muted tnum">45 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-purple"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>Keynote</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Opening Keynote: Building Tomorrow's Events</p>
+                        <div class="mt-2 flex flex-wrap items-center gap-3">
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">SK</span><span class="text-[12px] font-medium text-ink">Somsak K.</span></span>
+                        </div>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- talk -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">09:45</p><p class="text-[11px] text-muted tnum">45 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-blue"><i class="hgi-stroke hgi-message-01 text-[12px]"></i>Talk</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Scaling Ticketing Infrastructure at 10x Growth</p>
+                        <div class="mt-2 flex flex-wrap items-center gap-3">
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">JW</span><span class="text-[12px] font-medium text-ink">James W.</span></span>
+                        </div>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- coffee break -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">10:30</p><p class="text-[11px] text-muted tnum">20 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-line ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-gray"><i class="hgi-stroke hgi-time-quarter-pass text-[12px]"></i>Break</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-muted">Coffee Break</p>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Foyer</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- workshop -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">10:50</p><p class="text-[11px] text-muted tnum">75 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-green"><i class="hgi-stroke hgi-note-edit text-[12px]"></i>Workshop</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Designing Seamless Check-in Flows</p>
+                        <div class="mt-2 flex flex-wrap items-center gap-3">
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">PS</span><span class="text-[12px] font-medium text-ink">Ploy S.</span></span>
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">ML</span><span class="text-[12px] font-medium text-ink">Mei L.</span></span>
+                        </div>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall B</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- lunch -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">12:05</p><p class="text-[11px] text-muted tnum">60 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-line ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-gray"><i class="hgi-stroke hgi-time-quarter-pass text-[12px]"></i>Break</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-muted">Lunch</p>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Garden Terrace</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- panel -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">13:05</p><p class="text-[11px] text-muted tnum">45 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-amber"><i class="hgi-stroke hgi-user-group text-[12px]"></i>Panel</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">The Future of Hybrid Events in SEA</p>
+                        <div class="mt-2 flex flex-wrap items-center gap-3">
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">AP</span><span class="text-[12px] font-medium text-ink">Anong P.</span></span>
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">ST</span><span class="text-[12px] font-medium text-ink">Somchai T.</span></span>
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">JW</span><span class="text-[12px] font-medium text-ink">James W.</span></span>
+                        </div>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= DAY 2 ================= -->
+        <div data-tab-panel="day2" class="hidden">
+          <div class="relative">
+            <div class="pointer-events-none absolute left-[70px] top-3 bottom-3 w-px bg-line"></div>
+            <div class="space-y-3">
+
+              <!-- coffee -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">09:00</p><p class="text-[11px] text-muted tnum">30 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-line ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-gray"><i class="hgi-stroke hgi-time-quarter-pass text-[12px]"></i>Break</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-muted">Morning Coffee</p>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Foyer</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- keynote -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">09:30</p><p class="text-[11px] text-muted tnum">45 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-purple"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>Keynote</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Data-Driven Attendee Experiences</p>
+                        <div class="mt-2 flex flex-wrap items-center gap-3">
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">ML</span><span class="text-[12px] font-medium text-ink">Mei L.</span></span>
+                        </div>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- talk -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">10:15</p><p class="text-[11px] text-muted tnum">45 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-blue"><i class="hgi-stroke hgi-message-01 text-[12px]"></i>Talk</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Building Real-time Analytics Dashboards</p>
+                        <div class="mt-2 flex flex-wrap items-center gap-3">
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">ST</span><span class="text-[12px] font-medium text-ink">Somchai T.</span></span>
+                        </div>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- workshop -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">11:00</p><p class="text-[11px] text-muted tnum">75 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-green"><i class="hgi-stroke hgi-note-edit text-[12px]"></i>Workshop</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">QR Check-in &amp; On-site Badge Printing</p>
+                        <div class="mt-2 flex flex-wrap items-center gap-3">
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">AP</span><span class="text-[12px] font-medium text-ink">Anong P.</span></span>
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">PS</span><span class="text-[12px] font-medium text-ink">Ploy S.</span></span>
+                        </div>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall B</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- lunch -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">12:15</p><p class="text-[11px] text-muted tnum">60 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-line ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-gray"><i class="hgi-stroke hgi-time-quarter-pass text-[12px]"></i>Break</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-muted">Lunch</p>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Garden Terrace</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- panel -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">13:15</p><p class="text-[11px] text-muted tnum">45 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-amber"><i class="hgi-stroke hgi-user-group text-[12px]"></i>Panel</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Monetizing Community Events</p>
+                        <div class="mt-2 flex flex-wrap items-center gap-3">
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">JW</span><span class="text-[12px] font-medium text-ink">James W.</span></span>
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">SK</span><span class="text-[12px] font-medium text-ink">Somsak K.</span></span>
+                        </div>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- talk -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">14:00</p><p class="text-[11px] text-muted tnum">45 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-blue"><i class="hgi-stroke hgi-message-01 text-[12px]"></i>Talk</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Payments &amp; Payouts at Scale</p>
+                        <div class="mt-2 flex flex-wrap items-center gap-3">
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">PS</span><span class="text-[12px] font-medium text-ink">Ploy S.</span></span>
+                        </div>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= DAY 3 ================= -->
+        <div data-tab-panel="day3" class="hidden">
+          <div class="relative">
+            <div class="pointer-events-none absolute left-[70px] top-3 bottom-3 w-px bg-line"></div>
+            <div class="space-y-3">
+
+              <!-- coffee -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">09:00</p><p class="text-[11px] text-muted tnum">30 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-line ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-gray"><i class="hgi-stroke hgi-time-quarter-pass text-[12px]"></i>Break</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-muted">Morning Coffee</p>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Foyer</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- keynote -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">09:30</p><p class="text-[11px] text-muted tnum">45 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-purple"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>Keynote</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Closing Vision: What's Next for Eventa</p>
+                        <div class="mt-2 flex flex-wrap items-center gap-3">
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">SK</span><span class="text-[12px] font-medium text-ink">Somsak K.</span></span>
+                        </div>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- talk -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">10:15</p><p class="text-[11px] text-muted tnum">45 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-blue"><i class="hgi-stroke hgi-message-01 text-[12px]"></i>Talk</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Designing for Accessibility at Live Events</p>
+                        <div class="mt-2 flex flex-wrap items-center gap-3">
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">ML</span><span class="text-[12px] font-medium text-ink">Mei L.</span></span>
+                        </div>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- workshop -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">11:00</p><p class="text-[11px] text-muted tnum">60 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-green"><i class="hgi-stroke hgi-note-edit text-[12px]"></i>Workshop</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Building Your First Event Landing Page</p>
+                        <div class="mt-2 flex flex-wrap items-center gap-3">
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">JW</span><span class="text-[12px] font-medium text-ink">James W.</span></span>
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">AP</span><span class="text-[12px] font-medium text-ink">Anong P.</span></span>
+                        </div>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall B</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- lunch -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">12:00</p><p class="text-[11px] text-muted tnum">60 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-line ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-gray"><i class="hgi-stroke hgi-time-quarter-pass text-[12px]"></i>Break</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-muted">Lunch</p>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Garden Terrace</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- panel -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">13:00</p><p class="text-[11px] text-muted tnum">45 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-amber"><i class="hgi-stroke hgi-user-group text-[12px]"></i>Panel</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Lessons from 100 Events</p>
+                        <div class="mt-2 flex flex-wrap items-center gap-3">
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">ST</span><span class="text-[12px] font-medium text-ink">Somchai T.</span></span>
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">PS</span><span class="text-[12px] font-medium text-ink">Ploy S.</span></span>
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">ML</span><span class="text-[12px] font-medium text-ink">Mei L.</span></span>
+                        </div>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- closing -->
+              <div class="grid grid-cols-[64px_1fr] gap-3">
+                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">13:45</p><p class="text-[11px] text-muted tnum">30 min</p></div>
+                <div class="relative">
+                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
+                  <div class="card p-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0 flex-1">
+                        <span class="badge badge-blue"><i class="hgi-stroke hgi-message-01 text-[12px]"></i>Talk</span>
+                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Closing Remarks &amp; Thank You</p>
+                        <div class="mt-2 flex flex-wrap items-center gap-3">
+                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">SK</span><span class="text-[12px] font-medium text-ink">Somsak K.</span></span>
+                        </div>
+                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
+                      </div>
+                      <div class="flex shrink-0 items-center gap-1">
+                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
+                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  </main>
+</div>
+
+<!-- Add / edit session panel -->
+<aside class="panel" id="session-panel">
+  <header class="flex items-center justify-between border-b border-hair p-4">
+    <h3 class="text-[15px] font-bold tracking-tight">Add session</h3>
+    <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+  </header>
+  <div class="flex-1 space-y-4 overflow-y-auto p-4">
+    <div>
+      <label class="label">Session title</label>
+      <input type="text" class="input" placeholder="e.g. Opening Keynote: Building Tomorrow's Events" />
+    </div>
+    <div>
+      <label class="label">Day</label>
+      <select class="select">
+        <option>Day 1 · Jul 18</option>
+        <option>Day 2 · Jul 19</option>
+        <option>Day 3 · Jul 20</option>
+      </select>
+    </div>
+    <div class="grid grid-cols-2 gap-3">
+      <div>
+        <label class="label">Start time</label>
+        <input type="time" class="input" value="09:00" />
+      </div>
+      <div>
+        <label class="label">End time</label>
+        <input type="time" class="input" value="09:45" />
+      </div>
+    </div>
+    <div>
+      <label class="label">Track / type</label>
+      <select class="select">
+        <option>Keynote</option>
+        <option>Talk</option>
+        <option>Workshop</option>
+        <option>Panel</option>
+        <option>Break</option>
+      </select>
+    </div>
+    <div>
+      <label class="label">Speakers</label>
+      <input type="text" class="input" placeholder="e.g. Somsak K., James W." />
+      <p class="hint">Separate multiple speakers with a comma.</p>
+    </div>
+    <div>
+      <label class="label">Room</label>
+      <select class="select">
+        <option>Hall A</option>
+        <option>Hall B</option>
+        <option>Foyer</option>
+        <option>Garden Terrace</option>
+        <option>Main Lobby</option>
+      </select>
+    </div>
+    <div>
+      <label class="label">Description</label>
+      <textarea class="textarea" placeholder="What will this session cover…"></textarea>
+    </div>
+  </div>
+  <footer class="flex gap-2 border-t border-hair p-4">
+    <button class="btn btn-ghost flex-1" data-close>Cancel</button>
+    <button class="btn btn-primary flex-1" data-close>Save session</button>
+  </footer>
+</aside>
+
+<!-- Delete confirm modal -->
+<div class="modal" id="del-modal">
+  <div class="p-5">
+    <div class="grid h-10 w-10 place-items-center rounded-xl bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300"><i class="hgi-stroke hgi-alert-01 text-[18px]"></i></div>
+    <h3 class="mt-3 text-[15px] font-bold tracking-tight">Remove session?</h3>
+    <p class="mt-1 text-[13px] text-muted">This will remove the session from the agenda. Attendees who bookmarked it won't be notified.</p>
+    <div class="mt-4 flex gap-2">
+      <button class="btn btn-ghost flex-1" data-close>Cancel</button>
+      <button class="btn btn-danger flex-1" data-close>Delete</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/shell.js"></script>
+</body>
+</html>

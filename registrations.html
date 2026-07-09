@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Registrations</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="assets/config.js"></script>
+<link rel="stylesheet" href="assets/app.css" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="registrations">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidebar here -->
+
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <div class="min-w-0">
+          <h1 class="text-[22px] font-bold tracking-tight">Registrations</h1>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Manage attendee registrations &amp; approvals.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="btn btn-ghost"><i class="hgi-stroke hgi-download-01 text-[16px]"></i><span class="hidden sm:inline">Export</span></button>
+        <button class="btn btn-primary" data-open="reg-panel"><i class="hgi-stroke hgi-user-add-01 text-[16px]"></i><span class="hidden sm:inline">Add registration</span><span class="sm:hidden">Add</span></button>
+      </div>
+    </div>
+
+    <!-- stat cards -->
+    <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-user-add-01 text-[16px]"></i>Total</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">1,340</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>8,2 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-checkmark-badge-01 text-[16px]"></i>Confirmed</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">1,118</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>5,1 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-clock-01 text-[16px]"></i>Pending approval</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">84</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>3,4 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-time-schedule text-[16px]"></i>Waitlisted</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">96</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>6,7 %</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-cancel-circle text-[16px]"></i>Cancelled</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">42</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>2,1 %</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- toolbar + tabs + table -->
+    <section class="card mt-3 p-4">
+      <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <div class="relative w-full lg:max-w-xs">
+          <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[15px] text-muted"></i>
+          <input type="text" class="input pl-9" placeholder="Search attendees or email…" />
+        </div>
+        <div class="flex flex-col gap-2 sm:flex-row">
+          <select class="select sm:w-48">
+            <option>All events</option>
+            <option>Tech Summit 2026</option>
+            <option>Bangkok Jazz Night</option>
+            <option>Sunrise Yoga Retreat</option>
+            <option>Thai Street Food Festival</option>
+            <option>UX Bangkok Meetup</option>
+          </select>
+          <select class="select sm:w-48">
+            <option>All ticket types</option>
+            <option>General Admission</option>
+            <option>VIP</option>
+            <option>Early Bird</option>
+            <option>Student</option>
+            <option>Free</option>
+          </select>
+        </div>
+      </div>
+
+      <div data-tabs="#tabWrap" class="mt-4 flex gap-4 overflow-x-auto border-b border-hair">
+        <button class="tab tab-active" data-tab="all">All <span class="tnum">(9)</span></button>
+        <button class="tab" data-tab="pending">Pending <span class="tnum">(2)</span></button>
+        <button class="tab" data-tab="waitlist">Waitlist <span class="tnum">(2)</span></button>
+        <button class="tab" data-tab="cancelled">Cancelled <span class="tnum">(1)</span></button>
+      </div>
+
+      <div id="tabWrap" class="mt-3">
+
+        <!-- ALL -->
+        <div data-tab-panel="all">
+          <div class="overflow-x-auto">
+            <table class="data-table min-w-[820px]">
+              <thead>
+                <tr><th>Attendee</th><th>Event</th><th>Ticket</th><th>Registered</th><th>Amount</th><th>Status</th><th class="text-right">Actions</th></tr>
+              </thead>
+              <tbody class="text-[13px]">
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">AP</span><div class="leading-tight"><p class="font-medium text-ink">Anong P.</p><p class="text-[11px] text-muted">anong.p@gmail.com</p></div></div></td>
+                  <td class="text-muted">Tech Summit 2026</td>
+                  <td class="text-muted">VIP</td>
+                  <td class="text-muted tnum">Jul 8, 2026</td>
+                  <td class="font-semibold text-ink tnum">฿2,400</td>
+                  <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Confirmed</span></td>
+                  <td class="text-right">
+                    <div class="flex items-center justify-end gap-1">
+                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">ST</span><div class="leading-tight"><p class="font-medium text-ink">Somchai T.</p><p class="text-[11px] text-muted">somchai.t@hotmail.com</p></div></div></td>
+                  <td class="text-muted">Bangkok Jazz Night</td>
+                  <td class="text-muted">General Admission</td>
+                  <td class="text-muted tnum">Jul 8, 2026</td>
+                  <td class="font-semibold text-ink tnum">฿480</td>
+                  <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Confirmed</span></td>
+                  <td class="text-right">
+                    <div class="flex items-center justify-end gap-1">
+                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">JW</span><div class="leading-tight"><p class="font-medium text-ink">James W.</p><p class="text-[11px] text-muted">james.wilson@gmail.com</p></div></div></td>
+                  <td class="text-muted">UX Bangkok Meetup</td>
+                  <td class="text-muted">Free</td>
+                  <td class="text-muted tnum">Jul 7, 2026</td>
+                  <td><span class="badge badge-green">Free</span></td>
+                  <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Confirmed</span></td>
+                  <td class="text-right">
+                    <div class="flex items-center justify-end gap-1">
+                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">PS</span><div class="leading-tight"><p class="font-medium text-ink">Ploy S.</p><p class="text-[11px] text-muted">ploy.s@outlook.com</p></div></div></td>
+                  <td class="text-muted">Tech Summit 2026</td>
+                  <td class="text-muted">Early Bird</td>
+                  <td class="text-muted tnum">Jul 7, 2026</td>
+                  <td class="font-semibold text-ink tnum">฿950</td>
+                  <td><span class="badge badge-amber"><i class="hgi-stroke hgi-clock-01 text-[12px]"></i>Pending</span></td>
+                  <td class="text-right">
+                    <div class="flex items-center justify-end gap-1">
+                      <button class="btn-icon text-brand" title="Approve"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i></button>
+                      <button class="btn-icon text-red-500 dark:text-red-400" title="Reject"><i class="hgi-stroke hgi-cancel-circle text-[16px]"></i></button>
+                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">ML</span><div class="leading-tight"><p class="font-medium text-ink">Mei L.</p><p class="text-[11px] text-muted">mei.lin@company.io</p></div></div></td>
+                  <td class="text-muted">Thai Street Food Festival</td>
+                  <td class="text-muted">General Admission</td>
+                  <td class="text-muted tnum">Jul 6, 2026</td>
+                  <td class="font-semibold text-ink tnum">฿250</td>
+                  <td><span class="badge badge-blue"><i class="hgi-stroke hgi-time-schedule text-[12px]"></i>Waitlisted</span></td>
+                  <td class="text-right">
+                    <div class="flex items-center justify-end gap-1">
+                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">NK</span><div class="leading-tight"><p class="font-medium text-ink">Nattapong K.</p><p class="text-[11px] text-muted">nattapong.k@gmail.com</p></div></div></td>
+                  <td class="text-muted">Sunrise Yoga Retreat</td>
+                  <td class="text-muted">Student</td>
+                  <td class="text-muted tnum">Jul 6, 2026</td>
+                  <td class="font-semibold text-ink tnum">฿390</td>
+                  <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Confirmed</span></td>
+                  <td class="text-right">
+                    <div class="flex items-center justify-end gap-1">
+                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">SC</span><div class="leading-tight"><p class="font-medium text-ink">Sarah C.</p><p class="text-[11px] text-muted">sarah.chen@gmail.com</p></div></div></td>
+                  <td class="text-muted">Tech Summit 2026</td>
+                  <td class="text-muted">VIP</td>
+                  <td class="text-muted tnum">Jul 5, 2026</td>
+                  <td class="font-semibold text-ink tnum">฿2,400</td>
+                  <td><span class="badge badge-gray"><i class="hgi-stroke hgi-cancel-circle text-[12px]"></i>Cancelled</span></td>
+                  <td class="text-right">
+                    <div class="flex items-center justify-end gap-1">
+                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">KR</span><div class="leading-tight"><p class="font-medium text-ink">Kanya R.</p><p class="text-[11px] text-muted">kanya.r@gmail.com</p></div></div></td>
+                  <td class="text-muted">Bangkok Jazz Night</td>
+                  <td class="text-muted">General Admission</td>
+                  <td class="text-muted tnum">Jul 5, 2026</td>
+                  <td class="font-semibold text-ink tnum">฿480</td>
+                  <td><span class="badge badge-amber"><i class="hgi-stroke hgi-clock-01 text-[12px]"></i>Pending</span></td>
+                  <td class="text-right">
+                    <div class="flex items-center justify-end gap-1">
+                      <button class="btn-icon text-brand" title="Approve"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i></button>
+                      <button class="btn-icon text-red-500 dark:text-red-400" title="Reject"><i class="hgi-stroke hgi-cancel-circle text-[16px]"></i></button>
+                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">DL</span><div class="leading-tight"><p class="font-medium text-ink">David L.</p><p class="text-[11px] text-muted">david.lee@gmail.com</p></div></div></td>
+                  <td class="text-muted">Thai Street Food Festival</td>
+                  <td class="text-muted">Early Bird</td>
+                  <td class="text-muted tnum">Jul 4, 2026</td>
+                  <td class="font-semibold text-ink tnum">฿180</td>
+                  <td><span class="badge badge-blue"><i class="hgi-stroke hgi-time-schedule text-[12px]"></i>Waitlisted</span></td>
+                  <td class="text-right">
+                    <div class="flex items-center justify-end gap-1">
+                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- PENDING -->
+        <div data-tab-panel="pending" class="hidden">
+          <div class="overflow-x-auto">
+            <table class="data-table min-w-[820px]">
+              <thead>
+                <tr><th>Attendee</th><th>Event</th><th>Ticket</th><th>Registered</th><th>Amount</th><th>Status</th><th class="text-right">Actions</th></tr>
+              </thead>
+              <tbody class="text-[13px]">
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">PS</span><div class="leading-tight"><p class="font-medium text-ink">Ploy S.</p><p class="text-[11px] text-muted">ploy.s@outlook.com</p></div></div></td>
+                  <td class="text-muted">Tech Summit 2026</td>
+                  <td class="text-muted">Early Bird</td>
+                  <td class="text-muted tnum">Jul 7, 2026</td>
+                  <td class="font-semibold text-ink tnum">฿950</td>
+                  <td><span class="badge badge-amber"><i class="hgi-stroke hgi-clock-01 text-[12px]"></i>Pending</span></td>
+                  <td class="text-right">
+                    <div class="flex items-center justify-end gap-1">
+                      <button class="btn-icon text-brand" title="Approve"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i></button>
+                      <button class="btn-icon text-red-500 dark:text-red-400" title="Reject"><i class="hgi-stroke hgi-cancel-circle text-[16px]"></i></button>
+                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">KR</span><div class="leading-tight"><p class="font-medium text-ink">Kanya R.</p><p class="text-[11px] text-muted">kanya.r@gmail.com</p></div></div></td>
+                  <td class="text-muted">Bangkok Jazz Night</td>
+                  <td class="text-muted">General Admission</td>
+                  <td class="text-muted tnum">Jul 5, 2026</td>
+                  <td class="font-semibold text-ink tnum">฿480</td>
+                  <td><span class="badge badge-amber"><i class="hgi-stroke hgi-clock-01 text-[12px]"></i>Pending</span></td>
+                  <td class="text-right">
+                    <div class="flex items-center justify-end gap-1">
+                      <button class="btn-icon text-brand" title="Approve"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i></button>
+                      <button class="btn-icon text-red-500 dark:text-red-400" title="Reject"><i class="hgi-stroke hgi-cancel-circle text-[16px]"></i></button>
+                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- WAITLIST -->
+        <div data-tab-panel="waitlist" class="hidden">
+          <div class="overflow-x-auto">
+            <table class="data-table min-w-[820px]">
+              <thead>
+                <tr><th>Attendee</th><th>Event</th><th>Ticket</th><th>Registered</th><th>Amount</th><th>Status</th><th class="text-right">Actions</th></tr>
+              </thead>
+              <tbody class="text-[13px]">
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">ML</span><div class="leading-tight"><p class="font-medium text-ink">Mei L.</p><p class="text-[11px] text-muted">mei.lin@company.io</p></div></div></td>
+                  <td class="text-muted">Thai Street Food Festival</td>
+                  <td class="text-muted">General Admission</td>
+                  <td class="text-muted tnum">Jul 6, 2026</td>
+                  <td class="font-semibold text-ink tnum">฿250</td>
+                  <td><span class="badge badge-blue"><i class="hgi-stroke hgi-time-schedule text-[12px]"></i>Waitlisted</span></td>
+                  <td class="text-right">
+                    <div class="flex items-center justify-end gap-1">
+                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">DL</span><div class="leading-tight"><p class="font-medium text-ink">David L.</p><p class="text-[11px] text-muted">david.lee@gmail.com</p></div></div></td>
+                  <td class="text-muted">Thai Street Food Festival</td>
+                  <td class="text-muted">Early Bird</td>
+                  <td class="text-muted tnum">Jul 4, 2026</td>
+                  <td class="font-semibold text-ink tnum">฿180</td>
+                  <td><span class="badge badge-blue"><i class="hgi-stroke hgi-time-schedule text-[12px]"></i>Waitlisted</span></td>
+                  <td class="text-right">
+                    <div class="flex items-center justify-end gap-1">
+                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- CANCELLED -->
+        <div data-tab-panel="cancelled" class="hidden">
+          <div class="overflow-x-auto">
+            <table class="data-table min-w-[820px]">
+              <thead>
+                <tr><th>Attendee</th><th>Event</th><th>Ticket</th><th>Registered</th><th>Amount</th><th>Status</th><th class="text-right">Actions</th></tr>
+              </thead>
+              <tbody class="text-[13px]">
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">SC</span><div class="leading-tight"><p class="font-medium text-ink">Sarah C.</p><p class="text-[11px] text-muted">sarah.chen@gmail.com</p></div></div></td>
+                  <td class="text-muted">Tech Summit 2026</td>
+                  <td class="text-muted">VIP</td>
+                  <td class="text-muted tnum">Jul 5, 2026</td>
+                  <td class="font-semibold text-ink tnum">฿2,400</td>
+                  <td><span class="badge badge-gray"><i class="hgi-stroke hgi-cancel-circle text-[12px]"></i>Cancelled</span></td>
+                  <td class="text-right">
+                    <div class="flex items-center justify-end gap-1">
+                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
+                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  </main>
+
+  <!-- Add registration slide-over -->
+  <aside class="panel" id="reg-panel">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">Add registration</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-4 overflow-y-auto p-4">
+      <div>
+        <label class="label">Attendee name</label>
+        <input type="text" class="input" placeholder="e.g. Anong Phromsri" />
+      </div>
+      <div>
+        <label class="label">Email</label>
+        <input type="email" class="input" placeholder="attendee@email.com" />
+      </div>
+      <div>
+        <label class="label">Event</label>
+        <select class="select">
+          <option>Tech Summit 2026</option>
+          <option>Bangkok Jazz Night</option>
+          <option>Sunrise Yoga Retreat</option>
+          <option>Thai Street Food Festival</option>
+          <option>UX Bangkok Meetup</option>
+        </select>
+      </div>
+      <div>
+        <label class="label">Ticket type</label>
+        <select class="select">
+          <option>General Admission</option>
+          <option>VIP</option>
+          <option>Early Bird</option>
+          <option>Student</option>
+          <option>Free</option>
+        </select>
+      </div>
+      <div>
+        <label class="label">Quantity</label>
+        <input type="number" class="input" value="1" min="1" />
+      </div>
+      <div class="flex items-center justify-between rounded-lg border border-hair p-3">
+        <div>
+          <p class="text-[13px] font-semibold text-ink">Send confirmation email</p>
+          <p class="hint mt-0.5">Attendee will receive a ticket &amp; QR code.</p>
+        </div>
+        <button type="button" class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span></button>
+      </div>
+      <div>
+        <label class="label">Notes</label>
+        <textarea class="textarea" placeholder="Optional internal note…"></textarea>
+      </div>
+    </div>
+    <footer class="flex gap-2 border-t border-hair p-4">
+      <button class="btn btn-ghost flex-1" data-close>Cancel</button>
+      <button class="btn btn-primary flex-1" data-close>Save registration</button>
+    </footer>
+  </aside>
+</div>
+
+<script src="assets/shell.js"></script>
+</body>
+</html>

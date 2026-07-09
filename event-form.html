@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Create Event</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="assets/config.js"></script>
+<link rel="stylesheet" href="assets/app.css" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="events">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-2">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <a href="events.html" class="btn-icon shrink-0" title="Back to events"><i class="hgi-stroke hgi-arrow-left-01 text-[18px]"></i></a>
+        <div class="min-w-0">
+          <h1 class="text-[22px] font-bold tracking-tight">Create event</h1>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Fill in the details below to set up and publish a new event.</p>
+        </div>
+      </div>
+      <div class="flex shrink-0 items-center gap-2">
+        <a href="events.html" class="btn btn-ghost"><i class="hgi-stroke hgi-note-03 text-[16px]"></i>Save draft</a>
+        <a href="events.html" class="btn btn-primary"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i>Publish</a>
+      </div>
+    </div>
+
+    <!-- form layout -->
+    <div class="grid grid-cols-1 gap-3 xl:grid-cols-3">
+
+      <!-- ============ LEFT / MAIN COLUMN ============ -->
+      <div class="space-y-3 xl:col-span-2">
+
+        <!-- Basic info -->
+        <section class="card p-4">
+          <h2 class="text-[15px] font-bold tracking-tight">Basic info</h2>
+          <div class="mt-3 space-y-3">
+            <div>
+              <label class="label">Event title</label>
+              <input class="input" type="text" placeholder="e.g. Tech Summit 2026" value="Tech Summit 2026" />
+            </div>
+            <div>
+              <label class="label">Description</label>
+              <textarea class="textarea" rows="4" placeholder="Tell attendees what this event is about...">Join 1,500+ founders, engineers and investors for two days of talks, workshops and networking at BITEC. Featuring keynotes on AI, fintech and the future of work in Southeast Asia.</textarea>
+            </div>
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div>
+                <label class="label">Category</label>
+                <select class="select">
+                  <option>Conference</option>
+                  <option>Workshop</option>
+                  <option>Concert &amp; Festival</option>
+                  <option>Meetup</option>
+                  <option>Sports &amp; Wellness</option>
+                  <option>Networking</option>
+                </select>
+              </div>
+              <div>
+                <label class="label">Tags</label>
+                <input class="input" type="text" placeholder="tech, ai, networking" value="tech, ai, startup" />
+                <p class="hint">Comma-separated, used for search &amp; recommendations.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Date & time -->
+        <section class="card p-4">
+          <h2 class="text-[15px] font-bold tracking-tight">Date &amp; time</h2>
+          <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div><label class="label">Start date</label><input class="input" type="date" value="2026-08-18" /></div>
+            <div><label class="label">Start time</label><input class="input" type="time" value="09:00" /></div>
+            <div><label class="label">End date</label><input class="input" type="date" value="2026-08-19" /></div>
+            <div><label class="label">End time</label><input class="input" type="time" value="18:00" /></div>
+          </div>
+          <div class="mt-3">
+            <label class="label">Timezone</label>
+            <select class="select">
+              <option selected>GMT+7 Bangkok</option>
+              <option>GMT+8 Singapore</option>
+              <option>GMT+9 Tokyo</option>
+              <option>GMT+1 Berlin</option>
+              <option>GMT+0 London</option>
+            </select>
+          </div>
+        </section>
+
+        <!-- Location -->
+        <section class="card p-4">
+          <h2 class="text-[15px] font-bold tracking-tight">Location</h2>
+          <div class="segmented mt-3 inline-flex" data-loc-toggle>
+            <button type="button" class="active flex items-center gap-1" data-loc="inperson"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>In-person</button>
+            <button type="button" class="flex items-center gap-1" data-loc="online"><i class="hgi-stroke hgi-global text-[13px]"></i>Online</button>
+          </div>
+
+          <div class="mt-3 space-y-3" data-loc-panel="inperson">
+            <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">In-person details</p>
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div><label class="label">Venue name</label><input class="input" type="text" placeholder="e.g. BITEC" value="BITEC" /></div>
+              <div><label class="label">Address</label><input class="input" type="text" placeholder="Street, district, city" value="88 Bangna-Trad Rd, Bang Na, Bangkok" /></div>
+            </div>
+          </div>
+
+          <div class="mt-3 hidden space-y-3" data-loc-panel="online">
+            <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Online details</p>
+            <div>
+              <label class="label">Meeting link</label>
+              <input class="input" type="url" placeholder="https://meet.eventa.io/tech-summit-2026" />
+              <p class="hint">Sent to attendees by email once they register.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tickets -->
+        <section class="card p-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-[15px] font-bold tracking-tight">Tickets</h2>
+            <span class="text-[11px] text-muted">Add one or more ticket types</span>
+          </div>
+          <div class="mt-3 hidden gap-2 text-[11px] font-semibold uppercase tracking-wider text-muted sm:grid sm:grid-cols-12">
+            <div class="sm:col-span-5">Ticket name</div>
+            <div class="sm:col-span-3">Price (฿)</div>
+            <div class="sm:col-span-3">Quantity</div>
+            <div class="sm:col-span-1"></div>
+          </div>
+          <div id="ticket-rows" class="mt-2 space-y-2">
+            <div class="grid grid-cols-2 gap-2 sm:grid-cols-12 sm:items-center" data-ticket-row>
+              <input class="input sm:col-span-5" type="text" placeholder="Ticket name" value="General" />
+              <input class="input tnum sm:col-span-3" type="number" placeholder="Price" value="890" />
+              <input class="input tnum sm:col-span-3" type="number" placeholder="Quantity" value="600" />
+              <button type="button" class="btn-icon col-span-2 justify-self-end sm:col-span-1 sm:justify-self-center" data-remove-ticket title="Remove ticket type"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+            </div>
+            <div class="grid grid-cols-2 gap-2 sm:grid-cols-12 sm:items-center" data-ticket-row>
+              <input class="input sm:col-span-5" type="text" placeholder="Ticket name" value="VIP" />
+              <input class="input tnum sm:col-span-3" type="number" placeholder="Price" value="1900" />
+              <input class="input tnum sm:col-span-3" type="number" placeholder="Quantity" value="120" />
+              <button type="button" class="btn-icon col-span-2 justify-self-end sm:col-span-1 sm:justify-self-center" data-remove-ticket title="Remove ticket type"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+            </div>
+          </div>
+          <button type="button" id="add-ticket-row" class="btn btn-ghost btn-sm mt-3"><i class="hgi-stroke hgi-add-01 text-[14px]"></i>Add ticket type</button>
+        </section>
+
+        <!-- Capacity & registration -->
+        <section class="card p-4">
+          <h2 class="text-[15px] font-bold tracking-tight">Capacity &amp; registration</h2>
+          <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div><label class="label">Capacity</label><input class="input tnum" type="number" value="1500" /></div>
+            <div><label class="label">Registration opens</label><input class="input" type="date" value="2026-07-14" /></div>
+            <div><label class="label">Registration closes</label><input class="input" type="date" value="2026-08-17" /></div>
+          </div>
+          <div class="mt-4 space-y-3 border-t border-line pt-3">
+            <div class="flex items-center justify-between gap-3">
+              <div class="min-w-0">
+                <p class="text-[13px] font-semibold text-ink">Require approval</p>
+                <p class="text-[11px] text-muted">Manually review each registration before it's confirmed.</p>
+              </div>
+              <button type="button" class="flex h-5 w-9 shrink-0 items-center rounded-full bg-line p-0.5" data-toggle>
+                <span class="h-4 w-4 rounded-full bg-white shadow transition-transform"></span>
+              </button>
+            </div>
+            <div class="flex items-center justify-between gap-3 border-t border-line pt-3">
+              <div class="min-w-0">
+                <p class="text-[13px] font-semibold text-ink">Enable waitlist</p>
+                <p class="text-[11px] text-muted">Let attendees join a waitlist once capacity is reached.</p>
+              </div>
+              <button type="button" class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5" data-toggle>
+                <span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition-transform"></span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Cover image -->
+        <section class="card p-4">
+          <h2 class="text-[15px] font-bold tracking-tight">Cover image</h2>
+          <label class="mt-3 flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-hair p-8 text-center transition-colors hover:border-brand">
+            <span class="grid h-11 w-11 place-items-center rounded-full bg-brand-soft text-brand"><i class="hgi-stroke hgi-image-upload-01 text-[20px]"></i></span>
+            <p class="text-[13px] font-semibold text-ink">Drag &amp; drop or <span class="text-brand">browse</span></p>
+            <p class="text-[11px] text-muted">Recommended 1600×900px · PNG or JPG · up to 5MB</p>
+            <input type="file" class="hidden" accept="image/*" />
+          </label>
+        </section>
+
+      </div>
+
+      <!-- ============ RIGHT / SUMMARY COLUMN ============ -->
+      <div class="xl:col-span-1">
+        <div class="card space-y-4 p-4 xl:sticky xl:top-4">
+          <h2 class="text-[15px] font-bold tracking-tight">Publish settings</h2>
+
+          <div>
+            <label class="label">Status</label>
+            <select class="select">
+              <option selected>Draft</option>
+              <option>Published</option>
+              <option>Archived</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="label">Visibility</label>
+            <select class="select">
+              <option>Public</option>
+              <option>Private</option>
+              <option>Unlisted</option>
+            </select>
+            <p class="hint">Public events are listed on the Eventa discovery page.</p>
+          </div>
+
+          <div class="border-t border-line pt-4">
+            <p class="label mb-2">Organizer</p>
+            <div class="flex items-center gap-2.5">
+              <span class="avatar h-9 w-9 text-[12px]">HN</span>
+              <div class="min-w-0 leading-tight">
+                <p class="truncate text-[13px] font-semibold text-ink">Harper Nelson</p>
+                <p class="truncate text-[11px] text-muted">Event Manager</p>
+              </div>
+            </div>
+          </div>
+
+          <p class="hint">You can edit event details anytime before it goes live. Once published, attendees will be able to register immediately.</p>
+
+          <div class="border-t border-line pt-4">
+            <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Publish checklist</p>
+            <ul class="mt-2.5 space-y-2">
+              <li class="flex items-center gap-2 text-[13px] text-ink"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px] text-brand"></i>Title &amp; description added</li>
+              <li class="flex items-center gap-2 text-[13px] text-ink"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px] text-brand"></i>Date &amp; time set</li>
+              <li class="flex items-center gap-2 text-[13px] text-ink"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px] text-brand"></i>Location added</li>
+              <li class="flex items-center gap-2 text-[13px] text-ink"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px] text-brand"></i>At least one ticket type</li>
+              <li class="flex items-center gap-2 text-[13px] text-muted"><i class="hgi-stroke hgi-alert-circle text-[15px] text-amber-500 dark:text-amber-300"></i>Cover image not uploaded</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  </main>
+</div>
+
+<script src="assets/shell.js"></script>
+<script>
+  /* ---------- Location: in-person / online toggle ---------- */
+  const locToggle = document.querySelector('[data-loc-toggle]');
+  locToggle.addEventListener('click', e => {
+    const btn = e.target.closest('button'); if (!btn) return;
+    [...locToggle.children].forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const mode = btn.dataset.loc;
+    document.querySelectorAll('[data-loc-panel]').forEach(p => {
+      p.classList.toggle('hidden', p.dataset.locPanel !== mode);
+    });
+  });
+
+  /* ---------- Tickets: add / remove rows ---------- */
+  const ticketRows = document.getElementById('ticket-rows');
+  function ticketRowTemplate() {
+    const row = document.createElement('div');
+    row.className = 'grid grid-cols-2 gap-2 sm:grid-cols-12 sm:items-center';
+    row.setAttribute('data-ticket-row', '');
+    row.innerHTML = `
+      <input class="input sm:col-span-5" type="text" placeholder="Ticket name" />
+      <input class="input tnum sm:col-span-3" type="number" placeholder="Price" />
+      <input class="input tnum sm:col-span-3" type="number" placeholder="Quantity" />
+      <button type="button" class="btn-icon col-span-2 justify-self-end sm:col-span-1 sm:justify-self-center" data-remove-ticket title="Remove ticket type"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>`;
+    return row;
+  }
+  document.getElementById('add-ticket-row').addEventListener('click', () => {
+    ticketRows.appendChild(ticketRowTemplate());
+  });
+  ticketRows.addEventListener('click', e => {
+    const btn = e.target.closest('[data-remove-ticket]'); if (!btn) return;
+    const rows = ticketRows.querySelectorAll('[data-ticket-row]');
+    if (rows.length > 1) btn.closest('[data-ticket-row]').remove();
+  });
+
+  /* ---------- Toggle switches (require approval / waitlist) ---------- */
+  document.querySelectorAll('[data-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const on = !btn.classList.contains('bg-brand');
+      btn.classList.toggle('bg-brand', on);
+      btn.classList.toggle('bg-line', !on);
+      btn.querySelector('span').classList.toggle('translate-x-4', on);
+    });
+  });
+</script>
+</body>
+</html>
