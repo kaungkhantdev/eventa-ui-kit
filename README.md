@@ -14,7 +14,7 @@ Everything is static files, so any static file server works. A ready‑made conf
 python3 -m http.server 4599
 ```
 
-Then open **http://localhost:4599/index.html** (the gallery of all screens) or jump straight to **http://localhost:4599/dashboard.html**.
+Then open **http://localhost:4599/index.html** (the gallery of all screens) or jump straight to **http://localhost:4599/admin/dashboard.html**.
 
 > ⚠️ **Internet required to render.** Tailwind, fonts, icons and animation libraries are all loaded from CDNs at runtime — there is no bundled copy.
 
@@ -37,30 +37,34 @@ Both share the same visual language: semantic color tokens, Inter, brand green, 
 
 ## Project structure
 
+Pages are **grouped by area** — this matters because relative links depend on it.
+
 ```
 .
 ├── index.html              # Landing / gallery linking every screen
-├── dashboard.html          # Reference admin dashboard (charts live here)
-├── <feature>.html          # Feature pages (events, tickets, payments, …)
-├── login / register / …    # Standalone auth + attendee pages (no sidebar)
-├── assets/
+├── assets/                 # Shared shell (referenced by admin pages as ../assets/…)
 │   ├── config.js           # Tailwind Play CDN config (semantic color tokens, darkMode:'class')
 │   ├── app.css             # Theme CSS variables + component layer (.btn, .card, .badge-*, …)
 │   └── shell.js            # Renders the sidebar; wires collapse / drawer / dark mode / panels / tabs
-├── primary-ui/
-│   ├── home.html           # Home landing (icon rail only, no sub‑nav)
-│   └── dashboard.html      # Double‑sidebar dashboard (rail = modules, panel = sub‑nav)
+├── admin/                  # 18 sidebar pages (load ../assets/shell.js)
+│   ├── dashboard.html      #   reference admin dashboard (charts live here)
+│   └── events · tickets · payments · reports · settings · …
+├── auth/                   # Standalone auth pages (no sidebar)
+│   └── login.html · register.html · forgot-password.html
+├── portal/                 # Attendee portal
+│   └── my-events.html
+├── primary-ui/             # Self-contained alternative design (reicon web component)
+│   ├── home.html           #   home landing (icon rail only, no sub-nav)
+│   └── dashboard.html      #   double-sidebar dashboard (rail = modules, panel = sub-nav)
 ├── .claude/launch.json     # Preview server config (python http.server on :4599)
 └── CLAUDE.md               # Detailed architecture notes / contributor guide
 ```
 
-### Pages (main app)
+### Pages
 
-**Manage** — dashboard · events · event‑form · event‑detail · registrations · attendees · tickets · check‑in
-**Finance** — payments · payouts · discounts
-**Engage** — speakers · agenda · feedback
-**Insights & System** — reports · notifications · users · settings
-**Attendee & Auth** (standalone, no sidebar) — my‑events · login · register · forgot‑password
+**`admin/`** — *Manage:* dashboard · events · event‑form · event‑detail · registrations · attendees · tickets · check‑in · *Finance:* payments · payouts · discounts · *Engage:* speakers · agenda · feedback · *Insights & System:* reports · notifications · users · settings
+**`auth/`** (standalone, no sidebar) — login · register · forgot‑password
+**`portal/`** (standalone) — my‑events
 
 ---
 

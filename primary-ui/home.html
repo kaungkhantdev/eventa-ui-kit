@@ -103,7 +103,7 @@
           <span class="rail-tip">Theme</span>
         </div>
         <div class="group relative flex justify-center">
-          <a href="../login.html" class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[11px] font-semibold text-white">HN</a>
+          <a href="../auth/login.html" class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[11px] font-semibold text-white">HN</a>
           <span class="rail-tip">Harper Nelson</span>
         </div>
       </div>
@@ -169,16 +169,16 @@
             <h3 class="text-[15px] font-bold tracking-tight">Management tools</h3>
             <nav class="mt-3 space-y-0.5">
               <a href="#" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="store" size="17" class="text-white/55"></re-icon>View public event page</a>
-              <a href="../payments.html" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="receipt" size="17" class="text-white/55"></re-icon>Manage sale transactions</a>
+              <a href="../admin/payments.html" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="receipt" size="17" class="text-white/55"></re-icon>Manage sale transactions</a>
               <a href="#" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="calendar" size="17" class="text-white/55"></re-icon>Schedule a closed day</a>
               <a href="#" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="document2" size="17" class="text-white/55"></re-icon>Add a new blog post</a>
             </nav>
 
             <h3 class="mt-5 text-[15px] font-bold tracking-tight">Service tools</h3>
             <nav class="mt-3 space-y-0.5">
-              <a href="../tickets.html" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="tag-price" size="17" class="text-white/55"></re-icon>Add new pricing</a>
-              <a href="../registrations.html" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="eye" size="17" class="text-white/55"></re-icon>Manage registrations</a>
-              <a href="../users.html" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="user-add" size="17" class="text-white/55"></re-icon>Add new staff</a>
+              <a href="../admin/tickets.html" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="tag-price" size="17" class="text-white/55"></re-icon>Add new pricing</a>
+              <a href="../admin/registrations.html" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="eye" size="17" class="text-white/55"></re-icon>Manage registrations</a>
+              <a href="../admin/users.html" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="user-add" size="17" class="text-white/55"></re-icon>Add new staff</a>
             </nav>
           </div>
         </aside>
@@ -216,6 +216,11 @@
   const THEME_KEY = 'eventa-theme';
   function applyTheme(dark) {
     document.documentElement.classList.toggle('dark', dark);
+    const rail = document.querySelector('#rail');
+    if (rail) {
+      rail.classList.toggle('border-r', dark);
+      rail.classList.toggle('border-hair', dark);
+    }
     const ic = document.querySelector('#rail-theme re-icon');
     if (ic) ic.setAttribute('icon', dark ? 'sun' : 'moon');
     try { localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light'); } catch (e) {}

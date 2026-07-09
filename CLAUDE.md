@@ -11,29 +11,35 @@ Pages share a small **shell** in `assets/` so they stay consistent:
 - `assets/app.css` — theme CSS variables, sidebar-collapse rules, and the **component layer** (`.btn`, `.card`, `.input`/`.select`/`.textarea`/`.label`, `.badge-*`, `.data-table`, `.avatar`, `.segmented`, `.panel`/`.modal`, `.tab`).
 - `assets/shell.js` — renders the sidebar, wires collapse/drawer/dark-mode, and provides **declarative** slide-over panels/modals and tabs.
 
-`dashboard.html` is the reference page (charts live there). Feature pages: `events`, `event-form`, `event-detail`, `registrations`, `attendees`, `tickets`, `check-in`, `payments`, `payouts`, `discounts`, `reports`, `notifications`, `users`, `settings`, `speakers`, `agenda`, `feedback`. Standalone (no sidebar): `login`, `register`, `forgot-password`, `my-events` (attendee portal).
+**Files are grouped by area** (relative links depend on this):
+- `admin/` — the 18 sidebar pages: `dashboard` (reference page, charts live there), `events`, `event-form`, `event-detail`, `registrations`, `attendees`, `tickets`, `check-in`, `payments`, `payouts`, `discounts`, `reports`, `notifications`, `users`, `settings`, `speakers`, `agenda`, `feedback`.
+- `auth/` — `login`, `register`, `forgot-password`.
+- `portal/` — `my-events` (attendee portal).
+- Root — `index.html` (gallery), `assets/` (shared shell), and `primary-ui/` (a self-contained alternative design that uses the [reicon](https://reicon.dev) web component instead of Hugeicons; `home.html` + `dashboard.html`).
+
+Because pages live one level down, they reference the shared shell as `../assets/…`. `shell.js`'s `NAV` hrefs stay **bare** (`events.html`) — they resolve correctly since every sidebar page shares `admin/`; only **cross-folder** links carry a prefix (e.g. the logout link → `../auth/login.html`).
 
 ## Running / previewing
 
-Preview server in `.claude/launch.json` (config `ui-kit`): `python3 -m http.server 4599`; open `http://localhost:4599/dashboard.html`. No tests, linter, or build step.
+Preview server in `.claude/launch.json` (config `ui-kit`): `python3 -m http.server 4599`; open `http://localhost:4599/index.html` (gallery) or `http://localhost:4599/admin/dashboard.html`. No tests, linter, or build step.
 
 ## How a page is put together (the shell contract)
 
 An admin page is just a `<head>` block + a `<main>`; **the sidebar is injected by `shell.js`, never written per-page**. Minimum shape:
-- `<head>`: the shared block — a tiny inline "boot" script that sets `.dark` before paint (no theme flash), Google **Inter**, the Hugeicons font, Tailwind CDN, Motion CDN, then `assets/config.js` and `assets/app.css`.
+- `<head>`: the shared block — a tiny inline "boot" script that sets `.dark` before paint (no theme flash), Google **Inter**, the Hugeicons font, Tailwind CDN, Motion CDN, then `../assets/config.js` and `../assets/app.css`.
 - `<body ... data-page="events">` — **`data-page` must equal a nav id** so `shell.js` highlights the right item.
 - `<div class="flex h-full min-h-screen" data-layout>` — `shell.js` prepends `#backdrop` + `#sidebar` here.
 - `<main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">` — page header (with `#btn-menu` hamburger) + content.
-- `<script src="assets/shell.js"></script>`, then an optional page-local `<script>`.
+- `<script src="../assets/shell.js"></script>`, then an optional page-local `<script>`.
 
-Copy an existing page (e.g. `events.html`) as the template. The nav model lives in the `NAV` array in `shell.js`; add pages/sections there.
+Copy an existing page (e.g. `admin/events.html`) as the template. The nav model lives in the `NAV` array in `shell.js`; add pages/sections there.
 
 **Declarative interactions (no per-page JS needed):**
 - Slide-over / modal: a trigger `[data-open="ID"]` opens the `.panel`/`.modal` with that `id`; `[data-close]` or the auto overlay (or `Esc`) closes it.
 - Tabs: `<div data-tabs="#content">` with `[data-tab="x"]` buttons + `[data-tab-panel="x"]` sections inside `#content`.
 - Pages that must repaint on theme flip set `window.EventaOnThemeChange = fn` (dashboard uses it to re-render its chart).
 
-Standalone pages (auth, attendee portal) omit `shell.js`/sidebar and carry their own tiny theme-toggle button.
+Standalone pages in `auth/` and `portal/` omit `shell.js`/sidebar and carry their own tiny theme-toggle button; they still pull shared styles via `../assets/`.
 
 ## Runtime dependencies (all CDN)
 

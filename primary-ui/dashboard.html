@@ -70,7 +70,7 @@
   <div id="sidenav" class="fixed inset-y-0 left-0 z-50 flex -translate-x-full transition-transform duration-300 lg:static lg:translate-x-0">
 
     <!-- icon rail (MAIN NAV / modules) -->
-    <aside id="rail" class="relative z-30 flex w-16 shrink-0 flex-col items-center bg-[#0e0f12] py-4">
+    <aside id="rail" class="relative z-30 flex w-16 shrink-0 flex-col items-center bg-[#0e0f12] py-4 dark:border-r dark:border-hair">
       <div class="group relative flex justify-center">
         <a href="#" class="grid h-9 w-9 place-items-center rounded-full border border-brand/70 text-brand"><re-icon icon="ticket-star2" size="18" weight="filled"></re-icon></a>
         <span class="rail-tip">Eventa</span>
@@ -83,7 +83,7 @@
           <span class="rail-tip">Theme</span>
         </div>
         <div class="group relative flex justify-center">
-          <a href="../login.html" class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[11px] font-semibold text-white">HN</a>
+          <a href="../auth/login.html" class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[11px] font-semibold text-white">HN</a>
           <span class="rail-tip">Harper Nelson</span>
         </div>
       </div>
@@ -110,7 +110,7 @@
           <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Welcome back, Harper — here's what's happening with your events.</p>
         </div>
       </div>
-      <a href="../event-form.html" class="flex shrink-0 items-center gap-2 rounded-lg bg-brand px-3.5 py-2 text-[13px] font-semibold text-white hover:bg-brand-dark"><re-icon icon="calendar-add" size="16"></re-icon><span class="hidden sm:inline">New event</span><span class="sm:hidden">New</span></a>
+      <a href="../admin/event-form.html" class="flex shrink-0 items-center gap-2 rounded-lg bg-brand px-3.5 py-2 text-[13px] font-semibold text-white hover:bg-brand-dark"><re-icon icon="calendar-add" size="16"></re-icon><span class="hidden sm:inline">New event</span><span class="sm:hidden">New</span></a>
     </div>
 
     <!-- stat cards -->
@@ -178,7 +178,7 @@
       <section class="rounded-2xl border border-hair bg-surface p-4 xl:col-span-2">
         <div class="flex items-center justify-between">
           <h2 class="text-[15px] font-bold tracking-tight">Tickets Selling Fast</h2>
-          <a href="../tickets.html" class="text-[12px] font-semibold text-brand hover:underline">Manage</a>
+          <a href="../admin/tickets.html" class="text-[12px] font-semibold text-brand hover:underline">Manage</a>
         </div>
         <div class="mt-2">
           <div class="flex items-center gap-3 py-3">
@@ -202,7 +202,7 @@
       <section class="rounded-2xl border border-hair bg-surface p-4 xl:col-span-3">
         <div class="flex items-center justify-between">
           <h2 class="text-[15px] font-bold tracking-tight">Recent Registrations</h2>
-          <a href="../registrations.html" class="text-[12px] font-semibold text-brand hover:underline">View all</a>
+          <a href="../admin/registrations.html" class="text-[12px] font-semibold text-brand hover:underline">View all</a>
         </div>
         <div class="mt-2 overflow-x-auto">
           <table class="w-full min-w-[560px] text-left">
@@ -234,37 +234,37 @@
     { id:'dashboard', label:'Dashboard', icon:'element-42' },    /* current page, no sub-nav */
     { id:'events', label:'Events', icon:'calendar', groups:[
       { label:'Schedule', icon:'calendar', items:[
-        { label:'All Events',    href:'../events.html' },
-        { label:'Create Event',  href:'../event-form.html' },
-        { label:'Event Details', href:'../event-detail.html' },
-        { label:'Agenda',        href:'../agenda.html' },
+        { label:'All Events',    href:'../admin/events.html' },
+        { label:'Create Event',  href:'../admin/event-form.html' },
+        { label:'Event Details', href:'../admin/event-detail.html' },
+        { label:'Agenda',        href:'../admin/agenda.html' },
       ]},
       { label:'Attendees', icon:'users', items:[
-        { label:'Registrations', href:'../registrations.html' },
-        { label:'Attendees',     href:'../attendees.html' },
-        { label:'Check-in',      href:'../check-in.html' },
-        { label:'Speakers',      href:'../speakers.html' },
+        { label:'Registrations', href:'../admin/registrations.html' },
+        { label:'Attendees',     href:'../admin/attendees.html' },
+        { label:'Check-in',      href:'../admin/check-in.html' },
+        { label:'Speakers',      href:'../admin/speakers.html' },
       ]},
     ]},
     { id:'finance', label:'Finance', icon:'wallet', groups:[
       { label:'Transactions', icon:'wallet', items:[
-        { label:'Payments', href:'../payments.html' },
-        { label:'Payouts',  href:'../payouts.html' },
+        { label:'Payments', href:'../admin/payments.html' },
+        { label:'Payouts',  href:'../admin/payouts.html' },
       ]},
       { label:'Pricing', icon:'ticket', items:[
-        { label:'Tickets',   href:'../tickets.html' },
-        { label:'Discounts', href:'../discounts.html' },
+        { label:'Tickets',   href:'../admin/tickets.html' },
+        { label:'Discounts', href:'../admin/discounts.html' },
       ]},
     ]},
     { id:'management', label:'Management', icon:'settings', bottom:true, groups:[
       { label:'Business', icon:'briefcase', items:[
-        { label:'Reports',       href:'../reports.html' },
-        { label:'Notifications', href:'../notifications.html' },
-        { label:'Feedback',      href:'../feedback.html' },
-        { label:'Settings',      href:'../settings.html' },
+        { label:'Reports',       href:'../admin/reports.html' },
+        { label:'Notifications', href:'../admin/notifications.html' },
+        { label:'Feedback',      href:'../admin/feedback.html' },
+        { label:'Settings',      href:'../admin/settings.html' },
       ]},
       { label:'Staff', icon:'security-user2', items:[
-        { label:'Users',  href:'../users.html' },
+        { label:'Users',  href:'../admin/users.html' },
         { label:'Roles',  href:'#' },
       ]},
     ]},

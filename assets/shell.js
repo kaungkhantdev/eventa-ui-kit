@@ -74,7 +74,7 @@
           <p class="truncate text-[11px] text-muted">Event Manager</p>
         </div>
       </div>
-      <a href="login.html" class="nav-item mt-2 flex items-center gap-1 rounded-lg pr-2.5 text-[13px] font-medium text-muted hover:bg-line hover:text-ink"><span class="grid h-9 w-9 shrink-0 place-items-center"><i class="hgi-stroke hgi-logout-01 text-[18px]"></i></span><span class="side-label">Log out</span></a>
+      <a href="../auth/login.html" class="nav-item mt-2 flex items-center gap-1 rounded-lg pr-2.5 text-[13px] font-medium text-muted hover:bg-line hover:text-ink"><span class="grid h-9 w-9 shrink-0 place-items-center"><i class="hgi-stroke hgi-logout-01 text-[18px]"></i></span><span class="side-label">Log out</span></a>
     </aside>`;
 
   const layout = document.querySelector('[data-layout]') || document.querySelector('.flex.min-h-screen') || document.body.firstElementChild;

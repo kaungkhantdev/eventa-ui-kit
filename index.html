@@ -27,9 +27,9 @@
     <h1 class="mx-auto mt-5 max-w-2xl text-[30px] font-extrabold leading-tight tracking-tight sm:text-[38px]">Event Registration <span class="text-brand">UI Kit</span></h1>
     <p class="mx-auto mt-3 max-w-xl text-[14px] text-muted">A complete, responsive admin &amp; attendee interface — events, registrations, tickets, check-in, payments, analytics and more. Built with HTML, Tailwind CSS, Hugeicons &amp; Motion. Light &amp; dark ready.</p>
     <div class="mt-6 flex flex-wrap items-center justify-center gap-2.5">
-      <a href="dashboard.html" class="btn btn-primary"><i class="hgi-stroke hgi-dashboard-square-01 text-[16px]"></i>Open dashboard</a>
-      <a href="login.html" class="btn btn-ghost"><i class="hgi-stroke hgi-square-lock-01 text-[16px]"></i>Sign in</a>
-      <a href="my-events.html" class="btn btn-ghost"><i class="hgi-stroke hgi-ticket-02 text-[16px]"></i>Attendee portal</a>
+      <a href="admin/dashboard.html" class="btn btn-primary"><i class="hgi-stroke hgi-dashboard-square-01 text-[16px]"></i>Open dashboard</a>
+      <a href="auth/login.html" class="btn btn-ghost"><i class="hgi-stroke hgi-square-lock-01 text-[16px]"></i>Sign in</a>
+      <a href="portal/my-events.html" class="btn btn-ghost"><i class="hgi-stroke hgi-ticket-02 text-[16px]"></i>Attendee portal</a>
     </div>
     <div class="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-[12px] text-muted">
       <span class="inline-flex items-center gap-1.5"><i class="hgi-stroke hgi-tick-02 text-[14px] text-brand"></i>23 screens</span>
@@ -55,36 +55,36 @@
 
   const GROUPS = [
     { title: 'Manage', items: [
-      { name: 'Dashboard', href: 'dashboard.html', icon: 'hgi-dashboard-square-01', desc: 'KPIs, revenue & recent activity' },
-      { name: 'Events', href: 'events.html', icon: 'hgi-calendar-03', desc: 'Browse & manage all events' },
-      { name: 'Create event', href: 'event-form.html', icon: 'hgi-calendar-add-01', desc: 'Full event builder form' },
-      { name: 'Event detail', href: 'event-detail.html', icon: 'hgi-calendar-check-in-01', desc: 'Overview, tickets & registrations' },
-      { name: 'Registrations', href: 'registrations.html', icon: 'hgi-user-add-01', desc: 'Approvals, waitlist & status' },
-      { name: 'Attendees', href: 'attendees.html', icon: 'hgi-user-multiple', desc: 'Directory & attendee profiles' },
-      { name: 'Tickets', href: 'tickets.html', icon: 'hgi-ticket-01', desc: 'Ticket types, pricing & sales' },
-      { name: 'Check-in', href: 'check-in.html', icon: 'hgi-qr-code-01', desc: 'QR scanning & live attendance' },
+      { name: 'Dashboard', href: 'admin/dashboard.html', icon: 'hgi-dashboard-square-01', desc: 'KPIs, revenue & recent activity' },
+      { name: 'Events', href: 'admin/events.html', icon: 'hgi-calendar-03', desc: 'Browse & manage all events' },
+      { name: 'Create event', href: 'admin/event-form.html', icon: 'hgi-calendar-add-01', desc: 'Full event builder form' },
+      { name: 'Event detail', href: 'admin/event-detail.html', icon: 'hgi-calendar-check-in-01', desc: 'Overview, tickets & registrations' },
+      { name: 'Registrations', href: 'admin/registrations.html', icon: 'hgi-user-add-01', desc: 'Approvals, waitlist & status' },
+      { name: 'Attendees', href: 'admin/attendees.html', icon: 'hgi-user-multiple', desc: 'Directory & attendee profiles' },
+      { name: 'Tickets', href: 'admin/tickets.html', icon: 'hgi-ticket-01', desc: 'Ticket types, pricing & sales' },
+      { name: 'Check-in', href: 'admin/check-in.html', icon: 'hgi-qr-code-01', desc: 'QR scanning & live attendance' },
     ]},
     { title: 'Finance', items: [
-      { name: 'Payments', href: 'payments.html', icon: 'hgi-wallet-01', desc: 'Transactions & refunds' },
-      { name: 'Payouts', href: 'payouts.html', icon: 'hgi-bank', desc: 'Balance & bank withdrawals' },
-      { name: 'Discounts', href: 'discounts.html', icon: 'hgi-discount-tag-01', desc: 'Promo codes & coupons' },
+      { name: 'Payments', href: 'admin/payments.html', icon: 'hgi-wallet-01', desc: 'Transactions & refunds' },
+      { name: 'Payouts', href: 'admin/payouts.html', icon: 'hgi-bank', desc: 'Balance & bank withdrawals' },
+      { name: 'Discounts', href: 'admin/discounts.html', icon: 'hgi-discount-tag-01', desc: 'Promo codes & coupons' },
     ]},
     { title: 'Engage', items: [
-      { name: 'Speakers', href: 'speakers.html', icon: 'hgi-mic-01', desc: 'Speaker profiles & sessions' },
-      { name: 'Agenda', href: 'agenda.html', icon: 'hgi-time-schedule', desc: 'Schedule / session builder' },
-      { name: 'Feedback', href: 'feedback.html', icon: 'hgi-comment-01', desc: 'Surveys & satisfaction' },
+      { name: 'Speakers', href: 'admin/speakers.html', icon: 'hgi-mic-01', desc: 'Speaker profiles & sessions' },
+      { name: 'Agenda', href: 'admin/agenda.html', icon: 'hgi-time-schedule', desc: 'Schedule / session builder' },
+      { name: 'Feedback', href: 'admin/feedback.html', icon: 'hgi-comment-01', desc: 'Surveys & satisfaction' },
     ]},
     { title: 'Insights & System', items: [
-      { name: 'Reports', href: 'reports.html', icon: 'hgi-analytics-up', desc: 'Analytics & exports' },
-      { name: 'Notifications', href: 'notifications.html', icon: 'hgi-notification-03', desc: 'Templates & announcements' },
-      { name: 'Users & Roles', href: 'users.html', icon: 'hgi-user-group', desc: 'Team access & permissions' },
-      { name: 'Settings', href: 'settings.html', icon: 'hgi-settings-01', desc: 'Profile, org, security & billing' },
+      { name: 'Reports', href: 'admin/reports.html', icon: 'hgi-analytics-up', desc: 'Analytics & exports' },
+      { name: 'Notifications', href: 'admin/notifications.html', icon: 'hgi-notification-03', desc: 'Templates & announcements' },
+      { name: 'Users & Roles', href: 'admin/users.html', icon: 'hgi-user-group', desc: 'Team access & permissions' },
+      { name: 'Settings', href: 'admin/settings.html', icon: 'hgi-settings-01', desc: 'Profile, org, security & billing' },
     ]},
     { title: 'Attendee & Auth', items: [
-      { name: 'My Events', href: 'my-events.html', icon: 'hgi-ticket-02', desc: 'Attendee portal & tickets' },
-      { name: 'Sign in', href: 'login.html', icon: 'hgi-square-lock-01', desc: 'Login screen' },
-      { name: 'Create account', href: 'register.html', icon: 'hgi-user-circle', desc: 'Registration screen' },
-      { name: 'Reset password', href: 'forgot-password.html', icon: 'hgi-key-01', desc: 'Forgot-password flow' },
+      { name: 'My Events', href: 'portal/my-events.html', icon: 'hgi-ticket-02', desc: 'Attendee portal & tickets' },
+      { name: 'Sign in', href: 'auth/login.html', icon: 'hgi-square-lock-01', desc: 'Login screen' },
+      { name: 'Create account', href: 'auth/register.html', icon: 'hgi-user-circle', desc: 'Registration screen' },
+      { name: 'Reset password', href: 'auth/forgot-password.html', icon: 'hgi-key-01', desc: 'Forgot-password flow' },
     ]},
   ];
 
