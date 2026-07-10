@@ -9,284 +9,292 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="../assets/config.js"></script>
 <link rel="stylesheet" href="../assets/app.css" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased">
 
-<!-- ============ Top navbar ============ -->
-<header class="sticky top-0 z-30 border-b border-hair bg-surface">
-  <div class="mx-auto flex max-w-5xl items-center gap-3 px-4 py-3">
-    <a href="my-events.html" class="flex shrink-0 items-center gap-2">
-      <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand text-white"><i class="hgi-stroke hgi-ticket-star text-[20px]"></i></span>
-      <span class="text-[18px] font-extrabold text-brand-dark">Eventa</span>
-    </a>
+<div class="flex h-full min-h-screen">
 
-    <nav class="ml-3 hidden items-center gap-1 sm:flex">
-      <a href="my-events.html" class="rounded-lg bg-brand-soft px-3 py-1.5 text-[13px] font-semibold text-brand-dark">My Events</a>
-      <a href="#" class="rounded-lg px-3 py-1.5 text-[13px] font-medium text-muted hover:bg-line hover:text-ink">Tickets</a>
-      <a href="#" class="rounded-lg px-3 py-1.5 text-[13px] font-medium text-muted hover:bg-line hover:text-ink">Profile</a>
-    </nav>
+  <!-- mobile backdrop -->
+  <div id="backdrop" class="fixed inset-0 z-40 hidden bg-black/40 lg:hidden"></div>
 
-    <div class="ml-auto flex shrink-0 items-center gap-2">
-      <button id="theme-btn" class="btn-icon border border-hair"><i class="hgi-stroke hgi-moon-02 text-[18px]"></i></button>
-      <a href="#" class="flex items-center gap-2 rounded-full border border-hair py-1 pl-1 pr-2.5 hover:bg-line">
-        <span class="avatar h-7 w-7 text-[11px]">AP</span>
-        <span class="hidden text-[13px] font-medium text-ink sm:inline">Anong P.</span>
-      </a>
-    </div>
+  <!-- ============ Double sidebar (icon rail = areas, panel = sub-nav) ============ -->
+  <div id="sidenav" class="fixed inset-y-0 left-0 z-50 flex -translate-x-full transition-transform duration-300 lg:static lg:translate-x-0">
+    <aside id="rail" class="relative z-30 flex w-16 shrink-0 flex-col items-center bg-[#0e0f12] py-4">
+      <div class="group relative flex justify-center">
+        <a href="my-events.html" class="grid h-9 w-9 place-items-center rounded-full border border-brand/70 text-brand"><re-icon icon="ticket-star2" size="18" weight="filled"></re-icon></a>
+        <span class="rail-tip">Eventa</span>
+      </div>
+      <div id="rail-top" class="mt-5 flex flex-col items-center gap-1.5"></div>
+      <div class="mt-auto flex flex-col items-center gap-1.5 pt-4">
+        <div class="group relative flex justify-center">
+          <button id="rail-theme" type="button" class="grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand"><re-icon icon="moon" size="20"></re-icon></button>
+          <span class="rail-tip">Theme</span>
+        </div>
+        <div class="group relative flex justify-center">
+          <a href="#" class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[11px] font-semibold text-white">AP</a>
+          <span class="rail-tip">Anong P.</span>
+        </div>
+      </div>
+    </aside>
+    <aside id="panel" class="flex w-64 shrink-0 flex-col border-r border-hair bg-surface">
+      <div class="mt-4 flex h-9 items-center px-4">
+        <h2 id="panel-head" class="text-[17px] font-bold tracking-tight text-ink"></h2>
+      </div>
+      <nav id="panel-nav" class="no-scrollbar mt-2 flex-1 space-y-1.5 overflow-y-auto px-2.5 pb-4"></nav>
+    </aside>
   </div>
 
-  <!-- mobile nav row -->
-  <nav class="flex items-center gap-1 overflow-x-auto border-t border-hair px-4 py-2 sm:hidden">
-    <a href="my-events.html" class="shrink-0 rounded-lg bg-brand-soft px-3 py-1.5 text-[13px] font-semibold text-brand-dark">My Events</a>
-    <a href="#" class="shrink-0 rounded-lg px-3 py-1.5 text-[13px] font-medium text-muted">Tickets</a>
-    <a href="#" class="shrink-0 rounded-lg px-3 py-1.5 text-[13px] font-medium text-muted">Profile</a>
-  </nav>
-</header>
+  <!-- ============ Main ============ -->
+  <main class="min-w-0 flex-1 overflow-y-auto px-4 py-6 lg:px-8">
+    <div class="mx-auto max-w-5xl">
 
-<!-- ============ Content ============ -->
-<main class="mx-auto max-w-5xl px-4 py-6">
-
-  <div>
-    <h1 class="text-[24px] font-bold tracking-tight">My Events</h1>
-    <p class="mt-1 text-[13px] text-muted">Your upcoming and past registrations.</p>
-  </div>
-
-  <div data-tabs="#eventTabs" class="mt-5 flex gap-4 border-b border-hair">
-    <button class="tab tab-active" data-tab="upcoming">Upcoming</button>
-    <button class="tab" data-tab="past">Past</button>
-    <button class="tab" data-tab="tickets">Tickets</button>
-  </div>
-
-  <div id="eventTabs" class="mt-4">
-
-    <!-- ---------- Upcoming ---------- -->
-    <div data-tab-panel="upcoming" class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-
-      <article class="card overflow-hidden">
-        <div class="relative h-24 overflow-hidden bg-gradient-to-br from-brand to-emerald-400">
-          <i class="hgi-stroke hgi-presentation-bar-chart-01 absolute -right-3 -top-3 text-[88px] text-white/15"></i>
+      <div class="mb-5 flex items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <div>
+          <h1 class="text-[24px] font-bold tracking-tight">My Events</h1>
+          <p class="mt-1 text-[13px] text-muted">Your upcoming and past registrations.</p>
         </div>
-        <div class="p-4">
-          <div class="flex items-start justify-between gap-2">
-            <h3 class="text-[14px] font-bold leading-snug tracking-tight text-ink">Tech Summit 2026</h3>
-            <span class="badge badge-purple shrink-0"><i class="hgi-stroke hgi-star text-[11px]"></i>VIP</span>
-          </div>
-          <div class="mt-2 space-y-1.5">
-            <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Sat, Jul 18, 2026 · 09:00</p>
-            <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>BITEC, Bangkok</p>
-          </div>
-          <div class="mt-3.5 flex items-center gap-2 border-t border-hair pt-3.5">
-            <button type="button" class="btn btn-ghost btn-sm flex-1"><i class="hgi-stroke hgi-eye text-[14px]"></i>View details</button>
-            <button type="button" class="btn btn-primary btn-sm flex-1"><i class="hgi-stroke hgi-download-01 text-[14px]"></i>Ticket</button>
-            <button type="button" class="btn-icon shrink-0 border border-hair" data-open="qr-modal" data-ticket-id="EVT-TS26-00482-VIP" title="Show QR code"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i></button>
-          </div>
-        </div>
-      </article>
+      </div>
 
-      <article class="card overflow-hidden">
-        <div class="relative h-24 overflow-hidden bg-gradient-to-br from-indigo-500 to-violet-500">
-          <i class="hgi-stroke hgi-mic-01 absolute -right-3 -top-3 text-[88px] text-white/15"></i>
-        </div>
-        <div class="p-4">
-          <div class="flex items-start justify-between gap-2">
-            <h3 class="text-[14px] font-bold leading-snug tracking-tight text-ink">Bangkok Jazz Night</h3>
-            <span class="badge badge-green shrink-0"><i class="hgi-stroke hgi-ticket-02 text-[11px]"></i>General</span>
-          </div>
-          <div class="mt-2 space-y-1.5">
-            <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Sun, Jul 12, 2026 · 19:30</p>
-            <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>Sala Daeng, Bangkok</p>
-          </div>
-          <div class="mt-3.5 flex items-center gap-2 border-t border-hair pt-3.5">
-            <button type="button" class="btn btn-ghost btn-sm flex-1"><i class="hgi-stroke hgi-eye text-[14px]"></i>View details</button>
-            <button type="button" class="btn btn-primary btn-sm flex-1"><i class="hgi-stroke hgi-download-01 text-[14px]"></i>Ticket</button>
-            <button type="button" class="btn-icon shrink-0 border border-hair" data-open="qr-modal" data-ticket-id="EVT-BJN26-01130-GA" title="Show QR code"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i></button>
-          </div>
-        </div>
-      </article>
+      <div data-tabs="#eventTabs" class="flex gap-4 border-b border-hair">
+        <button class="tab tab-active" data-tab="upcoming">Upcoming</button>
+        <button class="tab" data-tab="past">Past</button>
+        <button class="tab" data-tab="tickets">Tickets</button>
+      </div>
 
-      <article class="card overflow-hidden">
-        <div class="relative h-24 overflow-hidden bg-gradient-to-br from-teal-400 to-cyan-500">
-          <i class="hgi-stroke hgi-calendar-check-in-01 absolute -right-3 -top-3 text-[88px] text-white/15"></i>
-        </div>
-        <div class="p-4">
-          <div class="flex items-start justify-between gap-2">
-            <h3 class="text-[14px] font-bold leading-snug tracking-tight text-ink">Sunrise Yoga Retreat</h3>
-            <span class="badge badge-green shrink-0"><i class="hgi-stroke hgi-ticket-02 text-[11px]"></i>General</span>
-          </div>
-          <div class="mt-2 space-y-1.5">
-            <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Mon, Jul 20, 2026 · 06:00</p>
-            <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>Lumphini Park, Bangkok</p>
-          </div>
-          <div class="mt-3.5 flex items-center gap-2 border-t border-hair pt-3.5">
-            <button type="button" class="btn btn-ghost btn-sm flex-1"><i class="hgi-stroke hgi-eye text-[14px]"></i>View details</button>
-            <button type="button" class="btn btn-primary btn-sm flex-1"><i class="hgi-stroke hgi-download-01 text-[14px]"></i>Ticket</button>
-            <button type="button" class="btn-icon shrink-0 border border-hair" data-open="qr-modal" data-ticket-id="EVT-SYR26-00298-GA" title="Show QR code"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i></button>
-          </div>
-        </div>
-      </article>
+      <div id="eventTabs" class="mt-4">
 
-    </div>
+        <!-- ---------- Upcoming ---------- -->
+        <div data-tab-panel="upcoming" class="grid grid-cols-1 gap-3 sm:grid-cols-2">
 
-    <!-- ---------- Past ---------- -->
-    <div data-tab-panel="past" class="hidden grid grid-cols-1 gap-3 sm:grid-cols-2">
-
-      <article class="card overflow-hidden opacity-90">
-        <div class="grid h-20 place-items-center bg-line">
-          <i class="hgi-stroke hgi-user-group text-[30px] text-muted"></i>
-        </div>
-        <div class="p-4">
-          <div class="flex items-start justify-between gap-2">
-            <h3 class="text-[14px] font-bold leading-snug tracking-tight text-muted">UX Bangkok Meetup</h3>
-            <span class="badge badge-gray shrink-0"><i class="hgi-stroke hgi-checkmark-badge-01 text-[11px]"></i>Completed</span>
-          </div>
-          <div class="mt-2 space-y-1.5">
-            <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Sun, Jun 21, 2026 · 18:00</p>
-            <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>TCDC, Bangkok</p>
-          </div>
-          <div class="mt-3.5 border-t border-hair pt-3.5">
-            <button type="button" class="btn btn-ghost btn-sm w-full"><i class="hgi-stroke hgi-comment-01 text-[14px]"></i>Leave feedback</button>
-          </div>
-        </div>
-      </article>
-
-      <article class="card overflow-hidden opacity-90">
-        <div class="grid h-20 place-items-center bg-line">
-          <i class="hgi-stroke hgi-ticket-02 text-[30px] text-muted"></i>
-        </div>
-        <div class="p-4">
-          <div class="flex items-start justify-between gap-2">
-            <h3 class="text-[14px] font-bold leading-snug tracking-tight text-muted">Thai Street Food Festival</h3>
-            <span class="badge badge-gray shrink-0"><i class="hgi-stroke hgi-checkmark-badge-01 text-[11px]"></i>Completed</span>
-          </div>
-          <div class="mt-2 space-y-1.5">
-            <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Sat, May 30, 2026 · 17:00</p>
-            <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>Lumphini Park, Bangkok</p>
-          </div>
-          <div class="mt-3.5 border-t border-hair pt-3.5">
-            <button type="button" class="btn btn-ghost btn-sm w-full"><i class="hgi-stroke hgi-comment-01 text-[14px]"></i>Leave feedback</button>
-          </div>
-        </div>
-      </article>
-
-      <article class="card overflow-hidden opacity-90">
-        <div class="grid h-20 place-items-center bg-line">
-          <i class="hgi-stroke hgi-mic-01 text-[30px] text-muted"></i>
-        </div>
-        <div class="p-4">
-          <div class="flex items-start justify-between gap-2">
-            <h3 class="text-[14px] font-bold leading-snug tracking-tight text-muted">Startup Pitch Night</h3>
-            <span class="badge badge-gray shrink-0"><i class="hgi-stroke hgi-checkmark-badge-01 text-[11px]"></i>Completed</span>
-          </div>
-          <div class="mt-2 space-y-1.5">
-            <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Tue, Apr 14, 2026 · 18:30</p>
-            <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>True Digital Park, Bangkok</p>
-          </div>
-          <div class="mt-3.5 border-t border-hair pt-3.5">
-            <button type="button" class="btn btn-ghost btn-sm w-full"><i class="hgi-stroke hgi-comment-01 text-[14px]"></i>Leave feedback</button>
-          </div>
-        </div>
-      </article>
-
-    </div>
-
-    <!-- ---------- Tickets ---------- -->
-    <div data-tab-panel="tickets" class="hidden">
-      <div class="card divide-y divide-line p-4">
-
-        <div class="flex flex-col gap-3 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between">
-          <div class="min-w-0">
-            <div class="flex flex-wrap items-center gap-2">
-              <p class="truncate text-[13px] font-semibold text-ink">Tech Summit 2026</p>
-              <span class="badge badge-purple"><i class="hgi-stroke hgi-star text-[11px]"></i>VIP</span>
+          <article class="card overflow-hidden">
+            <div class="relative h-24 overflow-hidden bg-gradient-to-br from-brand to-emerald-400">
+              <i class="hgi-stroke hgi-presentation-bar-chart-01 absolute -right-3 -top-3 text-[88px] text-white/15"></i>
             </div>
-            <p class="mt-1 font-mono text-[11px] text-muted">EVT-TS26-00482-VIP</p>
-          </div>
-          <div class="flex shrink-0 items-center gap-2">
-            <span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Valid</span>
-            <button type="button" class="btn-icon border border-hair" title="Download ticket"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button>
-          </div>
+            <div class="p-4">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="text-[14px] font-bold leading-snug tracking-tight text-ink">Tech Summit 2026</h3>
+                <span class="badge badge-purple shrink-0"><i class="hgi-stroke hgi-star text-[11px]"></i>VIP</span>
+              </div>
+              <div class="mt-2 space-y-1.5">
+                <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Sat, Jul 18, 2026 · 09:00</p>
+                <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>BITEC, Bangkok</p>
+              </div>
+              <div class="mt-3.5 flex items-center gap-2 border-t border-hair pt-3.5">
+                <button type="button" class="btn btn-ghost btn-sm flex-1"><i class="hgi-stroke hgi-eye text-[14px]"></i>View details</button>
+                <button type="button" class="btn btn-primary btn-sm flex-1"><i class="hgi-stroke hgi-download-01 text-[14px]"></i>Ticket</button>
+                <button type="button" class="btn-icon shrink-0 border border-hair" data-open="qr-modal" data-ticket-id="EVT-TS26-00482-VIP" title="Show QR code"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card overflow-hidden">
+            <div class="relative h-24 overflow-hidden bg-gradient-to-br from-indigo-500 to-violet-500">
+              <i class="hgi-stroke hgi-mic-01 absolute -right-3 -top-3 text-[88px] text-white/15"></i>
+            </div>
+            <div class="p-4">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="text-[14px] font-bold leading-snug tracking-tight text-ink">Bangkok Jazz Night</h3>
+                <span class="badge badge-green shrink-0"><i class="hgi-stroke hgi-ticket-02 text-[11px]"></i>General</span>
+              </div>
+              <div class="mt-2 space-y-1.5">
+                <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Sun, Jul 12, 2026 · 19:30</p>
+                <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>Sala Daeng, Bangkok</p>
+              </div>
+              <div class="mt-3.5 flex items-center gap-2 border-t border-hair pt-3.5">
+                <button type="button" class="btn btn-ghost btn-sm flex-1"><i class="hgi-stroke hgi-eye text-[14px]"></i>View details</button>
+                <button type="button" class="btn btn-primary btn-sm flex-1"><i class="hgi-stroke hgi-download-01 text-[14px]"></i>Ticket</button>
+                <button type="button" class="btn-icon shrink-0 border border-hair" data-open="qr-modal" data-ticket-id="EVT-BJN26-01130-GA" title="Show QR code"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card overflow-hidden">
+            <div class="relative h-24 overflow-hidden bg-gradient-to-br from-teal-400 to-cyan-500">
+              <i class="hgi-stroke hgi-calendar-check-in-01 absolute -right-3 -top-3 text-[88px] text-white/15"></i>
+            </div>
+            <div class="p-4">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="text-[14px] font-bold leading-snug tracking-tight text-ink">Sunrise Yoga Retreat</h3>
+                <span class="badge badge-green shrink-0"><i class="hgi-stroke hgi-ticket-02 text-[11px]"></i>General</span>
+              </div>
+              <div class="mt-2 space-y-1.5">
+                <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Mon, Jul 20, 2026 · 06:00</p>
+                <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>Lumphini Park, Bangkok</p>
+              </div>
+              <div class="mt-3.5 flex items-center gap-2 border-t border-hair pt-3.5">
+                <button type="button" class="btn btn-ghost btn-sm flex-1"><i class="hgi-stroke hgi-eye text-[14px]"></i>View details</button>
+                <button type="button" class="btn btn-primary btn-sm flex-1"><i class="hgi-stroke hgi-download-01 text-[14px]"></i>Ticket</button>
+                <button type="button" class="btn-icon shrink-0 border border-hair" data-open="qr-modal" data-ticket-id="EVT-SYR26-00298-GA" title="Show QR code"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i></button>
+              </div>
+            </div>
+          </article>
+
         </div>
 
-        <div class="flex flex-col gap-3 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between">
-          <div class="min-w-0">
-            <div class="flex flex-wrap items-center gap-2">
-              <p class="truncate text-[13px] font-semibold text-ink">Bangkok Jazz Night</p>
-              <span class="badge badge-green"><i class="hgi-stroke hgi-ticket-02 text-[11px]"></i>General</span>
+        <!-- ---------- Past ---------- -->
+        <div data-tab-panel="past" class="hidden grid grid-cols-1 gap-3 sm:grid-cols-2">
+
+          <article class="card overflow-hidden opacity-90">
+            <div class="grid h-20 place-items-center bg-line">
+              <i class="hgi-stroke hgi-user-group text-[30px] text-muted"></i>
             </div>
-            <p class="mt-1 font-mono text-[11px] text-muted">EVT-BJN26-01130-GA</p>
-          </div>
-          <div class="flex shrink-0 items-center gap-2">
-            <span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Valid</span>
-            <button type="button" class="btn-icon border border-hair" title="Download ticket"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button>
-          </div>
+            <div class="p-4">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="text-[14px] font-bold leading-snug tracking-tight text-muted">UX Bangkok Meetup</h3>
+                <span class="badge badge-gray shrink-0"><i class="hgi-stroke hgi-checkmark-badge-01 text-[11px]"></i>Completed</span>
+              </div>
+              <div class="mt-2 space-y-1.5">
+                <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Sun, Jun 21, 2026 · 18:00</p>
+                <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>TCDC, Bangkok</p>
+              </div>
+              <div class="mt-3.5 border-t border-hair pt-3.5">
+                <button type="button" class="btn btn-ghost btn-sm w-full"><i class="hgi-stroke hgi-comment-01 text-[14px]"></i>Leave feedback</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card overflow-hidden opacity-90">
+            <div class="grid h-20 place-items-center bg-line">
+              <i class="hgi-stroke hgi-ticket-02 text-[30px] text-muted"></i>
+            </div>
+            <div class="p-4">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="text-[14px] font-bold leading-snug tracking-tight text-muted">Thai Street Food Festival</h3>
+                <span class="badge badge-gray shrink-0"><i class="hgi-stroke hgi-checkmark-badge-01 text-[11px]"></i>Completed</span>
+              </div>
+              <div class="mt-2 space-y-1.5">
+                <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Sat, May 30, 2026 · 17:00</p>
+                <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>Lumphini Park, Bangkok</p>
+              </div>
+              <div class="mt-3.5 border-t border-hair pt-3.5">
+                <button type="button" class="btn btn-ghost btn-sm w-full"><i class="hgi-stroke hgi-comment-01 text-[14px]"></i>Leave feedback</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card overflow-hidden opacity-90">
+            <div class="grid h-20 place-items-center bg-line">
+              <i class="hgi-stroke hgi-mic-01 text-[30px] text-muted"></i>
+            </div>
+            <div class="p-4">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="text-[14px] font-bold leading-snug tracking-tight text-muted">Startup Pitch Night</h3>
+                <span class="badge badge-gray shrink-0"><i class="hgi-stroke hgi-checkmark-badge-01 text-[11px]"></i>Completed</span>
+              </div>
+              <div class="mt-2 space-y-1.5">
+                <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Tue, Apr 14, 2026 · 18:30</p>
+                <p class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>True Digital Park, Bangkok</p>
+              </div>
+              <div class="mt-3.5 border-t border-hair pt-3.5">
+                <button type="button" class="btn btn-ghost btn-sm w-full"><i class="hgi-stroke hgi-comment-01 text-[14px]"></i>Leave feedback</button>
+              </div>
+            </div>
+          </article>
+
         </div>
 
-        <div class="flex flex-col gap-3 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between">
-          <div class="min-w-0">
-            <div class="flex flex-wrap items-center gap-2">
-              <p class="truncate text-[13px] font-semibold text-ink">Sunrise Yoga Retreat</p>
-              <span class="badge badge-green"><i class="hgi-stroke hgi-ticket-02 text-[11px]"></i>General</span>
-            </div>
-            <p class="mt-1 font-mono text-[11px] text-muted">EVT-SYR26-00298-GA</p>
-          </div>
-          <div class="flex shrink-0 items-center gap-2">
-            <span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Valid</span>
-            <button type="button" class="btn-icon border border-hair" title="Download ticket"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button>
-          </div>
-        </div>
+        <!-- ---------- Tickets ---------- -->
+        <div data-tab-panel="tickets" class="hidden">
+          <div class="card divide-y divide-line p-4">
 
-        <div class="flex flex-col gap-3 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between">
-          <div class="min-w-0">
-            <div class="flex flex-wrap items-center gap-2">
-              <p class="truncate text-[13px] font-semibold text-muted">UX Bangkok Meetup</p>
-              <span class="badge badge-green"><i class="hgi-stroke hgi-ticket-02 text-[11px]"></i>General</span>
+            <div class="flex flex-col gap-3 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between">
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-2">
+                  <p class="truncate text-[13px] font-semibold text-ink">Tech Summit 2026</p>
+                  <span class="badge badge-purple"><i class="hgi-stroke hgi-star text-[11px]"></i>VIP</span>
+                </div>
+                <p class="mt-1 font-mono text-[11px] text-muted">EVT-TS26-00482-VIP</p>
+              </div>
+              <div class="flex shrink-0 items-center gap-2">
+                <span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Valid</span>
+                <button type="button" class="btn-icon border border-hair" title="Download ticket"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button>
+              </div>
             </div>
-            <p class="mt-1 font-mono text-[11px] text-muted">EVT-UXM26-00187-GA</p>
-          </div>
-          <div class="flex shrink-0 items-center gap-2">
-            <span class="badge badge-gray"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Used</span>
-            <button type="button" class="btn-icon border border-hair" title="Download receipt"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button>
-          </div>
-        </div>
 
-        <div class="flex flex-col gap-3 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between">
-          <div class="min-w-0">
-            <div class="flex flex-wrap items-center gap-2">
-              <p class="truncate text-[13px] font-semibold text-muted">Thai Street Food Festival</p>
-              <span class="badge badge-blue"><i class="hgi-stroke hgi-ticket-01 text-[11px]"></i>Early Bird</span>
+            <div class="flex flex-col gap-3 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between">
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-2">
+                  <p class="truncate text-[13px] font-semibold text-ink">Bangkok Jazz Night</p>
+                  <span class="badge badge-green"><i class="hgi-stroke hgi-ticket-02 text-[11px]"></i>General</span>
+                </div>
+                <p class="mt-1 font-mono text-[11px] text-muted">EVT-BJN26-01130-GA</p>
+              </div>
+              <div class="flex shrink-0 items-center gap-2">
+                <span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Valid</span>
+                <button type="button" class="btn-icon border border-hair" title="Download ticket"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button>
+              </div>
             </div>
-            <p class="mt-1 font-mono text-[11px] text-muted">EVT-TSF26-00951-EB</p>
-          </div>
-          <div class="flex shrink-0 items-center gap-2">
-            <span class="badge badge-gray"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Used</span>
-            <button type="button" class="btn-icon border border-hair" title="Download receipt"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button>
-          </div>
-        </div>
 
-        <div class="flex flex-col gap-3 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between">
-          <div class="min-w-0">
-            <div class="flex flex-wrap items-center gap-2">
-              <p class="truncate text-[13px] font-semibold text-muted">Startup Pitch Night</p>
-              <span class="badge badge-green"><i class="hgi-stroke hgi-ticket-02 text-[11px]"></i>General</span>
+            <div class="flex flex-col gap-3 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between">
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-2">
+                  <p class="truncate text-[13px] font-semibold text-ink">Sunrise Yoga Retreat</p>
+                  <span class="badge badge-green"><i class="hgi-stroke hgi-ticket-02 text-[11px]"></i>General</span>
+                </div>
+                <p class="mt-1 font-mono text-[11px] text-muted">EVT-SYR26-00298-GA</p>
+              </div>
+              <div class="flex shrink-0 items-center gap-2">
+                <span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Valid</span>
+                <button type="button" class="btn-icon border border-hair" title="Download ticket"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button>
+              </div>
             </div>
-            <p class="mt-1 font-mono text-[11px] text-muted">EVT-SPN26-00420-GA</p>
-          </div>
-          <div class="flex shrink-0 items-center gap-2">
-            <span class="badge badge-red"><i class="hgi-stroke hgi-delivery-return-01 text-[12px]"></i>Refunded</span>
-            <button type="button" class="btn-icon border border-hair" title="Download receipt"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button>
+
+            <div class="flex flex-col gap-3 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between">
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-2">
+                  <p class="truncate text-[13px] font-semibold text-muted">UX Bangkok Meetup</p>
+                  <span class="badge badge-green"><i class="hgi-stroke hgi-ticket-02 text-[11px]"></i>General</span>
+                </div>
+                <p class="mt-1 font-mono text-[11px] text-muted">EVT-UXM26-00187-GA</p>
+              </div>
+              <div class="flex shrink-0 items-center gap-2">
+                <span class="badge badge-gray"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Used</span>
+                <button type="button" class="btn-icon border border-hair" title="Download receipt"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-3 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between">
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-2">
+                  <p class="truncate text-[13px] font-semibold text-muted">Thai Street Food Festival</p>
+                  <span class="badge badge-blue"><i class="hgi-stroke hgi-ticket-01 text-[11px]"></i>Early Bird</span>
+                </div>
+                <p class="mt-1 font-mono text-[11px] text-muted">EVT-TSF26-00951-EB</p>
+              </div>
+              <div class="flex shrink-0 items-center gap-2">
+                <span class="badge badge-gray"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Used</span>
+                <button type="button" class="btn-icon border border-hair" title="Download receipt"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-3 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between">
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-2">
+                  <p class="truncate text-[13px] font-semibold text-muted">Startup Pitch Night</p>
+                  <span class="badge badge-green"><i class="hgi-stroke hgi-ticket-02 text-[11px]"></i>General</span>
+                </div>
+                <p class="mt-1 font-mono text-[11px] text-muted">EVT-SPN26-00420-GA</p>
+              </div>
+              <div class="flex shrink-0 items-center gap-2">
+                <span class="badge badge-red"><i class="hgi-stroke hgi-delivery-return-01 text-[12px]"></i>Refunded</span>
+                <button type="button" class="btn-icon border border-hair" title="Download receipt"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button>
+              </div>
+            </div>
+
           </div>
         </div>
 
       </div>
+
+      <p class="mt-6 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
     </div>
-
-  </div>
-
-  <p class="mt-6 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
-</main>
+  </main>
+</div>
 
 <!-- ============ QR ticket modal ============ -->
 <div class="panel-overlay" id="overlay"></div>
@@ -311,10 +319,94 @@
 </div>
 
 <script>
-  /* theme toggle (standalone — no shell.js on this page) */
-  (function(){var b=document.getElementById('theme-btn');function set(d){document.documentElement.classList.toggle('dark',d);try{localStorage.setItem('eventa-theme',d?'dark':'light')}catch(e){}b.querySelector('i').className='hgi-stroke '+(d?'hgi-sun-03':'hgi-moon-02')+' text-[18px]';}set(document.documentElement.classList.contains('dark'));b.addEventListener('click',function(){set(!document.documentElement.classList.contains('dark'));});})();
+  /* ---------- Attendee double sidebar — same design as primary-ui/dashboard.html ---------- */
+  (function () {
+    const MODULES = [
+      { id: 'myevents', label: 'My Events', icon: 'ticket', groups: [
+        { label: 'Tickets', icon: 'ticket', items: [
+          { label: 'My Events',       page: 'myevents', href: 'my-events.html' },
+          { label: 'Saved events',    href: '#' },
+          { label: 'Payment history', href: '#' },
+        ]},
+      ]},
+      { id: 'discover', label: 'Discover', icon: 'compass', groups: [
+        { label: 'Explore', icon: 'search', items: [
+          { label: 'Browse events', href: '#' },
+          { label: 'Categories',    href: '#' },
+          { label: 'Near me',       href: '#' },
+        ]},
+      ]},
+      { id: 'account', label: 'Account', icon: 'user', groups: [
+        { label: 'Account', icon: 'user', items: [
+          { label: 'Profile',       href: '#' },
+          { label: 'Notifications', href: '#' },
+          { label: 'Settings',      href: '#' },
+        ]},
+      ]},
+    ];
+    const activePage = 'myevents';
+    let selected = 'myevents';
 
-  /* declarative modal (data-open/data-close) + tabs (data-tabs/data-tab/data-tab-panel) */
+    const railTop = document.getElementById('rail-top');
+    const panelHead = document.getElementById('panel-head');
+    const panelNav = document.getElementById('panel-nav');
+
+    function railBtn(m) {
+      const on = m.id === selected;
+      const cls = on
+        ? 'grid h-9 w-9 place-items-center rounded-lg bg-brand-soft text-brand transition'
+        : 'grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand';
+      return `<div class="group relative flex justify-center"><button type="button" data-mod="${m.id}" class="${cls}"><re-icon icon="${m.icon}" size="18"${on ? ' weight="filled"' : ''}></re-icon></button><span class="rail-tip">${m.label}</span></div>`;
+    }
+    function panelLeaf(it) {
+      const on = it.page === activePage;
+      const cls = on
+        ? 'block rounded-lg py-1.5 pl-9 pr-2.5 text-[13px] font-semibold bg-brand-soft text-brand'
+        : 'block rounded-lg py-1.5 pl-9 pr-2.5 text-[13px] font-medium text-muted transition hover:bg-brand-soft/60 hover:text-brand';
+      return `<li><a href="${it.href}" class="${cls}">${it.label}</a></li>`;
+    }
+    function wireAccordion() {
+      panelNav.querySelectorAll('[data-acc]').forEach(acc => {
+        const btn = acc.querySelector('[data-acc-toggle]'), body = acc.querySelector('[data-acc-body]'), chev = acc.querySelector('[data-acc-chevron]');
+        btn.onclick = () => { const open = !body.classList.contains('hidden'); body.classList.toggle('hidden', open); chev.classList.toggle('rotate-180', !open); };
+      });
+    }
+    function renderRail() { railTop.innerHTML = MODULES.map(railBtn).join(''); }
+    function renderPanel() {
+      const m = MODULES.find(x => x.id === selected);
+      panelHead.textContent = m.label;
+      panelNav.innerHTML = m.groups.map(g => `
+        <div data-acc>
+          <button type="button" data-acc-toggle class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-semibold text-ink transition hover:bg-line">
+            <re-icon icon="${g.icon}" size="17"></re-icon>${g.label}
+            <re-icon data-acc-chevron icon="chevron-down" size="15" class="ml-auto rotate-180 text-muted transition-transform duration-200"></re-icon>
+          </button>
+          <ul data-acc-body class="mt-0.5 space-y-0.5">${g.items.map(panelLeaf).join('')}</ul>
+        </div>`).join('');
+      wireAccordion();
+    }
+    renderRail(); renderPanel();
+    document.getElementById('rail').addEventListener('click', e => {
+      const b = e.target.closest('[data-mod]');
+      if (b) { selected = b.dataset.mod; renderRail(); renderPanel(); }
+    });
+
+    /* mobile drawer */
+    const sidenav = document.getElementById('sidenav'), backdrop = document.getElementById('backdrop');
+    const isDesktop = () => matchMedia('(min-width: 1024px)').matches;
+    document.getElementById('btn-menu').addEventListener('click', () => { sidenav.classList.remove('-translate-x-full'); backdrop.classList.remove('hidden'); });
+    function closeDrawer() { sidenav.classList.add('-translate-x-full'); backdrop.classList.add('hidden'); }
+    backdrop.addEventListener('click', closeDrawer);
+    sidenav.addEventListener('click', e => { if (!isDesktop() && e.target.closest('a[href]:not([href="#"])')) closeDrawer(); });
+    matchMedia('(min-width: 1024px)').addEventListener('change', e => { if (e.matches) sidenav.classList.remove('-translate-x-full'); else sidenav.classList.add('-translate-x-full'); backdrop.classList.add('hidden'); });
+
+    /* dark mode */
+    function applyTheme(dark) { document.documentElement.classList.toggle('dark', dark); const ic = document.querySelector('#rail-theme re-icon'); if (ic) ic.setAttribute('icon', dark ? 'sun' : 'moon'); try { localStorage.setItem('eventa-theme', dark ? 'dark' : 'light'); } catch (e) {} }
+    document.getElementById('rail-theme').addEventListener('click', () => applyTheme(!document.documentElement.classList.contains('dark')));
+    applyTheme(document.documentElement.classList.contains('dark'));
+  })();
+
+  /* ---------- Declarative modal (data-open/data-close) + tabs (data-tabs/data-tab/data-tab-panel) ---------- */
   (function(){
     var overlay = document.getElementById('overlay');
     function closeAll(){

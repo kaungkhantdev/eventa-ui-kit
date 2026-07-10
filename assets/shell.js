@@ -1,7 +1,14 @@
 /* ============================================================
-   Eventa shell — renders the sidebar and wires all shared UI.
-   Each page: <body data-page="events"> ... <script src="assets/shell.js"></script>
-   Exposes window.EventaOnThemeChange(dark) for pages that must repaint on theme flip.
+   Eventa shell — double sidebar (icon rail = modules, labeled panel = sub-nav).
+   Identical design to primary-ui/dashboard.html (reicon icons), injected into
+   [data-layout] on every admin page and driven by <body data-page="…">.
+     • Rail  = main nav (modules). The active module (the one containing the
+       current page) is highlighted + its icon is filled; clicking another
+       module swaps the panel client-side. Dashboard/Home navigate directly.
+     • Panel = the selected module's grouped, collapsible sub-nav; the leaf
+       matching data-page is highlighted. Modules with no groups hide the panel.
+   Also wires: mobile drawer, dark mode (circular reveal), and the declarative
+   slide-over panels / modals / tabs. Exposes window.EventaOnThemeChange(dark).
    ============================================================ */
 (function () {
   const M = window.Motion || null;
@@ -9,122 +16,190 @@
   const isDesktop = () => window.matchMedia('(min-width: 1024px)').matches;
 
   /* ---------------- Navigation model ---------------- */
-  const NAV = [
-    { title: 'Manage', short: 'M', items: [
-      { id: 'dashboard',     label: 'Dashboard',     icon: 'hgi-dashboard-square-01', href: 'dashboard.html' },
-      { id: 'events',        label: 'Events',        icon: 'hgi-calendar-03',         href: 'events.html' },
-      { id: 'registrations', label: 'Registrations', icon: 'hgi-user-add-01',         href: 'registrations.html' },
-      { id: 'attendees',     label: 'Attendees',     icon: 'hgi-user-multiple',       href: 'attendees.html' },
-      { id: 'tickets',       label: 'Tickets',       icon: 'hgi-ticket-01',           href: 'tickets.html' },
-      { id: 'checkin',       label: 'Check-in',      icon: 'hgi-qr-code-01',          href: 'check-in.html' },
+  const MODULES = [
+    { id: 'home', label: 'Home', icon: 'home', href: '../primary-ui/home.html' },
+    { id: 'dashboard', label: 'Dashboard', icon: 'element-42', href: 'dashboard.html' },
+    { id: 'events', label: 'Events', icon: 'calendar', groups: [
+      { label: 'Schedule', icon: 'calendar', items: [
+        { label: 'All Events',    page: 'events',       href: 'events.html' },
+        { label: 'Create Event',  page: 'event-form',   href: 'event-form.html' },
+        { label: 'Event Details', page: 'event-detail', href: 'event-detail.html' },
+        { label: 'Agenda',        page: 'agenda',       href: 'agenda.html' },
+      ]},
+      { label: 'Attendees', icon: 'users', items: [
+        { label: 'Registrations', page: 'registrations', href: 'registrations.html' },
+        { label: 'Attendees',     page: 'attendees',     href: 'attendees.html' },
+        { label: 'Check-in',      page: 'checkin',       href: 'check-in.html' },
+        { label: 'Speakers',      page: 'speakers',      href: 'speakers.html' },
+      ]},
     ]},
-    { title: 'Engage', short: 'E', items: [
-      { id: 'speakers', label: 'Speakers', icon: 'hgi-mic-01',       href: 'speakers.html' },
-      { id: 'agenda',   label: 'Agenda',   icon: 'hgi-time-schedule', href: 'agenda.html' },
-      { id: 'feedback', label: 'Feedback', icon: 'hgi-comment-01',   href: 'feedback.html' },
+    { id: 'finance', label: 'Finance', icon: 'wallet', groups: [
+      { label: 'Transactions', icon: 'wallet', items: [
+        { label: 'Payments', page: 'payments', href: 'payments.html' },
+        { label: 'Payouts',  page: 'payouts',  href: 'payouts.html' },
+      ]},
+      { label: 'Pricing', icon: 'ticket', items: [
+        { label: 'Tickets',   page: 'tickets',   href: 'tickets.html' },
+        { label: 'Discounts', page: 'discounts', href: 'discounts.html' },
+      ]},
     ]},
-    { title: 'Finance', short: 'F', items: [
-      { id: 'payments',  label: 'Payments',  icon: 'hgi-wallet-01',       href: 'payments.html' },
-      { id: 'payouts',   label: 'Payouts',   icon: 'hgi-bank',            href: 'payouts.html' },
-      { id: 'discounts', label: 'Discounts', icon: 'hgi-discount-tag-01', href: 'discounts.html' },
-    ]},
-    { title: 'Insights', short: 'I', items: [
-      { id: 'reports', label: 'Reports', icon: 'hgi-analytics-up', href: 'reports.html' },
-    ]},
-    { title: 'System', short: 'S', items: [
-      { id: 'notifications', label: 'Notifications', icon: 'hgi-notification-03', href: 'notifications.html' },
-      { id: 'users',         label: 'Users & Roles', icon: 'hgi-user-group',     href: 'users.html' },
-      { id: 'settings',      label: 'Settings',      icon: 'hgi-settings-01',    href: 'settings.html' },
+    { id: 'management', label: 'Management', icon: 'settings', bottom: true, groups: [
+      { label: 'Business', icon: 'briefcase', items: [
+        { label: 'Reports',       page: 'reports',       href: 'reports.html' },
+        { label: 'Notifications', page: 'notifications', href: 'notifications.html' },
+        { label: 'Feedback',      page: 'feedback',      href: 'feedback.html' },
+        { label: 'Settings',      page: 'settings',      href: 'settings.html' },
+      ]},
+      { label: 'Staff', icon: 'security-user2', items: [
+        { label: 'Users', page: 'users', href: 'users.html' },
+        { label: 'Roles', page: 'roles', href: '#' },
+      ]},
     ]},
   ];
 
-  const active = document.body.dataset.page || 'dashboard';
-  const collapsed = localStorage.getItem('eventa-collapsed') === '1';
-
-  function navItem(it) {
-    const on = it.id === active;
-    const cls = on
-      ? 'nav-item flex items-center gap-1 rounded-lg bg-brand pr-2.5 text-[13px] font-medium text-white'
-      : 'nav-item flex items-center gap-1 rounded-lg pr-2.5 text-[13px] font-medium text-muted hover:bg-line hover:text-ink';
-    return `<li><a href="${it.href}" class="${cls}"><span class="grid h-9 w-9 shrink-0 place-items-center"><i class="hgi-stroke ${it.icon} text-[19px]"></i></span><span class="side-label">${it.label}</span></a></li>`;
+  const activePage = document.body.dataset.page || 'dashboard';
+  function moduleOfPage(pg) {
+    for (const m of MODULES) {
+      if (m.id === pg) return m.id;
+      if (m.groups) for (const g of m.groups) for (const it of g.items) if (it.page === pg) return m.id;
+    }
+    return 'dashboard';
   }
+  let selectedModule = moduleOfPage(activePage);
 
-  const themeRow = `<li><button class="nav-item theme-toggle w-full flex items-center gap-1 rounded-lg pr-2.5 text-[13px] font-medium text-muted hover:bg-line hover:text-ink"><span class="grid h-9 w-9 shrink-0 place-items-center"><i class="hgi-stroke hgi-moon-02 text-[19px]"></i></span><span class="side-label">Dark mode</span><span class="theme-track side-label ml-auto flex h-5 w-9 items-center rounded-full bg-line p-0.5"><span class="theme-knob h-4 w-4 rounded-full bg-white shadow transition-transform"></span></span></button></li>`;
-
-  const sections = NAV.map(sec => `
-    <div>
-      <p class="section-label px-2 text-[10px] font-semibold uppercase tracking-wider text-muted/80" data-short="${sec.short}">${sec.title}</p>
-      <ul class="mt-1.5 space-y-0.5">${sec.items.map(navItem).join('')}${sec.title === 'System' ? themeRow : ''}</ul>
-    </div>`).join('');
-
-  // append the dark-mode row to the last (System) section's <ul>
-  const sidebarHTML = `
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 flex w-64 -translate-x-full flex-col overflow-hidden border-r border-hair bg-sidebar px-2.5 py-3 transition-transform duration-300 lg:static lg:z-auto lg:w-56 lg:translate-x-0 lg:shrink-0 lg:transition-none${collapsed ? ' collapsed' : ''}">
-      <div class="flex items-center gap-2">
-        <a href="dashboard.html" class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brand text-white"><i class="hgi-stroke hgi-ticket-star text-[20px]"></i></a>
-        <span class="side-label text-[17px] font-extrabold tracking-tight text-brand-dark">Eventa</span>
-        <button id="btn-collapse" class="expanded-only ml-auto grid h-6 w-6 shrink-0 place-items-center rounded-md text-muted hover:bg-line" title="Collapse sidebar"><i class="hgi-stroke hgi-arrow-left-01 text-[16px]"></i></button>
-      </div>
-      <button id="btn-expand" class="collapsed-only mt-2 h-6 w-6 shrink-0 self-center place-items-center rounded-md text-muted hover:bg-line" title="Expand sidebar"><i class="hgi-stroke hgi-arrow-right-01 text-[16px]"></i></button>
-      <nav class="mt-4 flex-1 space-y-4 overflow-y-auto overflow-x-hidden">${sections}</nav>
-      <div class="mt-3 flex items-center gap-2.5 border-t border-hair pt-3">
-        <div class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div>
-        <div class="side-label min-w-0 leading-tight">
-          <p class="truncate text-[13px] font-semibold text-ink">Harper Nelson</p>
-          <p class="truncate text-[11px] text-muted">Event Manager</p>
+  /* ---------------- Sidebar markup ---------------- */
+  const sidenavHTML = `
+    <div id="backdrop" class="fixed inset-0 z-40 hidden bg-black/40 lg:hidden"></div>
+    <div id="sidenav" class="fixed inset-y-0 left-0 z-50 flex -translate-x-full transition-transform duration-300 lg:static lg:translate-x-0">
+      <aside id="rail" class="relative z-30 flex w-16 shrink-0 flex-col items-center bg-[#0e0f12] py-4">
+        <div class="group relative flex justify-center">
+          <a href="dashboard.html" class="grid h-9 w-9 place-items-center rounded-full border border-brand/70 text-brand"><re-icon icon="ticket-star2" size="18" weight="filled"></re-icon></a>
+          <span class="rail-tip">Eventa</span>
         </div>
-      </div>
-      <a href="../auth/login.html" class="nav-item mt-2 flex items-center gap-1 rounded-lg pr-2.5 text-[13px] font-medium text-muted hover:bg-line hover:text-ink"><span class="grid h-9 w-9 shrink-0 place-items-center"><i class="hgi-stroke hgi-logout-01 text-[18px]"></i></span><span class="side-label">Log out</span></a>
-    </aside>`;
+        <div id="rail-top" class="mt-5 flex flex-col items-center gap-1.5"></div>
+        <div class="mt-auto flex flex-col items-center gap-1.5 pt-4">
+          <div id="rail-bottom" class="flex flex-col items-center gap-1.5"></div>
+          <div class="group relative flex justify-center">
+            <button id="rail-theme" type="button" class="grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand"><re-icon icon="moon" size="20"></re-icon></button>
+            <span class="rail-tip">Theme</span>
+          </div>
+          <div class="group relative flex justify-center">
+            <a href="../auth/login.html" class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[11px] font-semibold text-white">HN</a>
+            <span class="rail-tip">Harper Nelson</span>
+          </div>
+        </div>
+      </aside>
+      <aside id="panel" class="hidden w-64 shrink-0 flex-col border-r border-hair bg-surface">
+        <div class="mt-4 flex h-9 items-center px-4">
+          <h2 id="panel-head" class="text-[17px] font-bold tracking-tight text-ink"></h2>
+        </div>
+        <nav id="panel-nav" class="no-scrollbar mt-2 flex-1 space-y-1.5 overflow-y-auto px-2.5 pb-4"></nav>
+      </aside>
+    </div>`;
 
   const layout = document.querySelector('[data-layout]') || document.querySelector('.flex.min-h-screen') || document.body.firstElementChild;
-  layout.insertAdjacentHTML('afterbegin', `<div id="backdrop" class="fixed inset-0 z-40 hidden bg-black/40 lg:hidden"></div>${sidebarHTML}`);
+  layout.insertAdjacentHTML('afterbegin', sidenavHTML);
 
-  const sidebar = document.getElementById('sidebar');
   const backdrop = document.getElementById('backdrop');
+  const sidenav = document.getElementById('sidenav');
+  const rail = document.getElementById('rail');
+  const panel = document.getElementById('panel');
+  const railTop = document.getElementById('rail-top');
+  const railBottom = document.getElementById('rail-bottom');
+  const panelHead = document.getElementById('panel-head');
+  const panelNav = document.getElementById('panel-nav');
 
-  /* ---------------- Collapse / expand (desktop) ---------------- */
-  function setCollapsed(c) {
-    if (!isDesktop()) return;
-    sidebar.classList.toggle('collapsed', c);
-    localStorage.setItem('eventa-collapsed', c ? '1' : '0');
-    if (M && !reduce) {
-      const from = c ? 224 : 56, to = c ? 56 : 224;
-      sidebar.style.width = from + 'px';
-      M.animate(sidebar, { width: [from + 'px', to + 'px'] }, { duration: 0.32, ease: [0.4, 0, 0.2, 1] });
-      setTimeout(() => { sidebar.style.width = ''; }, 360);
-    }
+  /* ---------------- Render: icon rail (modules) ---------------- */
+  function railBtn(m) {
+    const on = m.id === selectedModule;
+    const cls = on
+      ? 'grid h-9 w-9 place-items-center rounded-lg bg-brand-soft text-brand transition'
+      : 'grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand';
+    const inner = `<re-icon icon="${m.icon}" size="18"${on ? ' weight="filled"' : ''}></re-icon>`;
+    const control = m.href
+      ? `<a href="${m.href}" class="${cls}">${inner}</a>`
+      : `<button type="button" data-mod="${m.id}" class="${cls}">${inner}</button>`;
+    return `<div class="group relative flex justify-center">${control}<span class="rail-tip">${m.label}</span></div>`;
   }
-  /* ---------------- Drawer (mobile) ---------------- */
+  function renderRail() {
+    railTop.innerHTML = MODULES.filter(m => !m.bottom).map(railBtn).join('');
+    railBottom.innerHTML = MODULES.filter(m => m.bottom).map(railBtn).join('');
+  }
+
+  /* ---------------- Render: labeled panel (sub-nav) ---------------- */
+  function panelLeaf(it) {
+    const on = it.page === activePage;
+    const cls = on
+      ? 'block rounded-lg py-1.5 pl-9 pr-2.5 text-[13px] font-semibold bg-brand-soft text-brand'
+      : 'block rounded-lg py-1.5 pl-9 pr-2.5 text-[13px] font-medium text-muted transition hover:bg-brand-soft/60 hover:text-brand';
+    return `<li><a href="${it.href}" class="${cls}">${it.label}</a></li>`;
+  }
+  function wireAccordion() {
+    panelNav.querySelectorAll('[data-acc]').forEach(acc => {
+      const btn = acc.querySelector('[data-acc-toggle]');
+      const body = acc.querySelector('[data-acc-body]');
+      const chev = acc.querySelector('[data-acc-chevron]');
+      btn.onclick = () => {
+        const open = !body.classList.contains('hidden');
+        body.classList.toggle('hidden', open);
+        chev.classList.toggle('rotate-180', !open);
+      };
+    });
+  }
+  function renderPanel() {
+    const m = MODULES.find(x => x.id === selectedModule);
+    if (!m || !m.groups || !m.groups.length) { panel.classList.add('hidden'); return; }
+    panel.classList.remove('hidden');
+    panelHead.textContent = m.label;
+    panelNav.innerHTML = m.groups.map(g => `
+      <div data-acc>
+        <button type="button" data-acc-toggle class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-semibold text-ink transition hover:bg-line">
+          <re-icon icon="${g.icon}" size="17"></re-icon>${g.label}
+          <re-icon data-acc-chevron icon="chevron-down" size="15" class="ml-auto rotate-180 text-muted transition-transform duration-200"></re-icon>
+        </button>
+        <ul data-acc-body class="mt-0.5 space-y-0.5">${g.items.map(panelLeaf).join('')}</ul>
+      </div>`).join('');
+    wireAccordion();
+  }
+  function selectModule(id) { selectedModule = id; renderRail(); renderPanel(); }
+
+  renderRail();
+  renderPanel();
+
+  // rail: module buttons switch the panel; Home / Dashboard links navigate
+  rail.addEventListener('click', e => {
+    const b = e.target.closest('[data-mod]');
+    if (b) { e.preventDefault(); selectModule(b.dataset.mod); }
+  });
+
+  /* ---------------- Mobile drawer ---------------- */
   function openDrawer() {
-    sidebar.classList.remove('-translate-x-full'); sidebar.classList.add('translate-x-0');
+    sidenav.classList.remove('-translate-x-full');
     backdrop.classList.remove('hidden');
     if (M && !reduce) M.animate(backdrop, { opacity: [0, 1] }, { duration: 0.25 });
   }
   function closeDrawer() {
-    sidebar.classList.add('-translate-x-full'); sidebar.classList.remove('translate-x-0');
+    sidenav.classList.add('-translate-x-full');
     if (M && !reduce) { M.animate(backdrop, { opacity: [1, 0] }, { duration: 0.22 }); setTimeout(() => backdrop.classList.add('hidden'), 230); }
     else backdrop.classList.add('hidden');
   }
-  window.matchMedia('(min-width: 1024px)').addEventListener('change', e => {
-    sidebar.style.width = '';
-    if (e.matches) sidebar.classList.remove('-translate-x-full', 'translate-x-0');
-    else { sidebar.classList.remove('collapsed'); sidebar.classList.add('-translate-x-full'); }
-    backdrop.classList.add('hidden');
-  });
-  document.getElementById('btn-collapse').addEventListener('click', () => (isDesktop() ? setCollapsed(true) : closeDrawer()));
-  document.getElementById('btn-expand').addEventListener('click', () => setCollapsed(false));
-  backdrop.addEventListener('click', closeDrawer);
-  sidebar.addEventListener('click', e => { if (!isDesktop() && e.target.closest('a')) closeDrawer(); });
   const menuBtn = document.getElementById('btn-menu');
   if (menuBtn) menuBtn.addEventListener('click', openDrawer);
+  backdrop.addEventListener('click', closeDrawer);
+  // close on a real navigation link (leaf / logo / avatar), not on a module-switch button
+  sidenav.addEventListener('click', e => { if (!isDesktop() && e.target.closest('a[href]:not([href="#"])')) closeDrawer(); });
+  window.matchMedia('(min-width: 1024px)').addEventListener('change', e => {
+    if (e.matches) sidenav.classList.remove('-translate-x-full');
+    else sidenav.classList.add('-translate-x-full');
+    backdrop.classList.add('hidden');
+  });
 
   /* ---------------- Dark mode (circular reveal, robust) ---------------- */
   const THEME_KEY = 'eventa-theme';
   function applyTheme(dark) {
     document.documentElement.classList.toggle('dark', dark);
-    document.querySelectorAll('.theme-track').forEach(t => { t.classList.toggle('bg-brand', dark); t.classList.toggle('bg-line', !dark); });
-    document.querySelectorAll('.theme-knob').forEach(k => k.classList.toggle('translate-x-4', dark));
+    const ic = document.querySelector('#rail-theme re-icon');
+    if (ic) ic.setAttribute('icon', dark ? 'sun' : 'moon');
     try { localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light'); } catch (e) {}
     if (typeof window.EventaOnThemeChange === 'function') window.EventaOnThemeChange(dark);
   }
@@ -140,10 +215,10 @@
     ov.style.cssText = `position:fixed;inset:0;z-index:70;pointer-events:none;background:${oldBg};transform-origin:${r.left + r.width / 2}px ${r.top + r.height / 2}px;will-change:transform,opacity;`;
     document.body.appendChild(ov);
     M.animate(ov, { scale: [1, 0], opacity: [1, 0.4] }, { duration: 0.5, ease: [0.4, 0, 0.2, 1] });
-    M.animate('.hgi-moon-02', { rotate: [0, -25, 0], scale: [1, 1.15, 1] }, { duration: 0.5 });
     setTimeout(() => ov.remove(), 650);
   }
-  document.querySelectorAll('.theme-toggle').forEach(btn => btn.addEventListener('click', () => toggleTheme(btn)));
+  const themeBtn = document.getElementById('rail-theme');
+  themeBtn.addEventListener('click', () => toggleTheme(themeBtn));
   // sync toggle UI to whatever the <head> boot script already set (no flash)
   applyTheme(document.documentElement.classList.contains('dark'));
 
