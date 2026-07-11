@@ -10,8 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="assets/config.js?v=4"></script>
-<link rel="stylesheet" href="assets/app.css?v=4" />
+<script src="assets/config.js?v=5"></script>
+<link rel="stylesheet" href="assets/app.css?v=5" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased">
 
@@ -63,6 +63,7 @@
       { name: 'Attendees', href: 'admin/attendees.html', icon: 'hgi-user-multiple', desc: 'Directory & attendee profiles' },
       { name: 'Tickets', href: 'admin/tickets.html', icon: 'hgi-ticket-01', desc: 'Ticket types, pricing & sales' },
       { name: 'Check-in', href: 'admin/check-in.html', icon: 'hgi-qr-code-01', desc: 'QR scanning & live attendance' },
+      { name: 'Landing pages', href: 'admin/landing-pages.html', icon: 'hgi-browser', desc: 'Pick a website template per event' },
     ]},
     { title: 'Finance', items: [
       { name: 'Payments', href: 'admin/payments.html', icon: 'hgi-wallet-01', desc: 'Transactions & refunds' },
@@ -79,6 +80,11 @@
       { name: 'Notifications', href: 'admin/notifications.html', icon: 'hgi-notification-03', desc: 'Templates & announcements' },
       { name: 'Users & Roles', href: 'admin/users.html', icon: 'hgi-user-group', desc: 'Team access & permissions' },
       { name: 'Settings', href: 'admin/settings.html', icon: 'hgi-settings-01', desc: 'Profile, org, security & billing' },
+    ]},
+    { title: 'Event websites (dynamic landing pages)', items: [
+      { name: 'Classic template', href: 'landing/aurora.html?event=tech-summit-2026', icon: 'hgi-layout-01', desc: 'All-purpose event landing page' },
+      { name: 'Spotlight template', href: 'landing/noir.html?event=bangkok-jazz-night', icon: 'hgi-layout-02', desc: 'Split hero with a sticky register card' },
+      { name: 'Minimal template', href: 'landing/minimal.html?event=emma-liam-wedding', icon: 'hgi-layout-03', desc: 'Centered, understated event page' },
     ]},
     { title: 'Attendee & Auth', items: [
       { name: 'My Events', href: 'portal/my-events.html', icon: 'hgi-ticket-02', desc: 'Attendee portal & tickets' },

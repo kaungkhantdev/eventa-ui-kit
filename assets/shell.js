@@ -22,10 +22,11 @@
     { id: 'dashboard', label: 'Dashboard', icon: 'element-42', href: 'dashboard.html' },
     { id: 'events', label: 'Events', icon: 'calendar', href: 'events.html', groups: [
       { label: 'Schedule', icon: 'calendar', items: [
-        { label: 'All Events',    page: 'events',       href: 'events.html' },
-        { label: 'Create Event',  page: 'event-form',   href: 'event-form.html' },
-        { label: 'Event Details', page: 'event-detail', href: 'event-detail.html' },
-        { label: 'Agenda',        page: 'agenda',       href: 'agenda.html' },
+        { label: 'All Events',     page: 'events',        href: 'events.html' },
+        { label: 'Create Event',   page: 'event-form',    href: 'event-form.html' },
+        { label: 'Event Details',  page: 'event-detail',  href: 'event-detail.html' },
+        { label: 'Landing Pages',  page: 'landing-pages', href: 'landing-pages.html' },
+        { label: 'Agenda',         page: 'agenda',        href: 'agenda.html' },
       ]},
       { label: 'Attendees', icon: 'users', items: [
         { label: 'Registrations', page: 'registrations', href: 'registrations.html' },
