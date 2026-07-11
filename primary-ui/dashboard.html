@@ -32,7 +32,7 @@
 </script>
 <style>
   :root {
-    --canvas: 255 255 255; --surface: 255 255 255;
+    --canvas: 247 248 250; --surface: 255 255 255;
     --hair: 229 231 235; --line: 238 240 243;
     --ink: 19 42 34; --muted: 139 147 164; --brand-soft: 230 246 239;
   }
@@ -104,7 +104,7 @@
     <!-- header -->
     <div class="mb-4 flex items-center justify-between gap-3">
       <div class="flex min-w-0 items-center gap-3">
-        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><re-icon icon="menu" size="18"></re-icon></button>
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><re-icon icon="menu" size="18"></re-icon></button>
         <div class="min-w-0">
           <h1 class="text-[22px] font-bold tracking-tight">Dashboard</h1>
           <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Welcome back, Harper — here's what's happening with your events.</p>
@@ -115,23 +115,23 @@
 
     <!-- stat cards -->
     <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
-      <div class="rounded-2xl border border-hair bg-surface p-3.5">
+      <div class="rounded-2xl bg-surface p-3.5">
         <div class="flex items-center gap-1.5 text-[12px] text-muted"><re-icon icon="user-add" size="16"></re-icon>Total registrations</div>
         <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">1,340</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><re-icon icon="arrow-up-right2" size="13"></re-icon>8,2 %</span></div>
       </div>
-      <div class="rounded-2xl border border-hair bg-surface p-3.5">
+      <div class="rounded-2xl bg-surface p-3.5">
         <div class="flex items-center gap-1.5 text-[12px] text-muted"><re-icon icon="ticket" size="16"></re-icon>Ticket revenue</div>
         <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">฿48.29k</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><re-icon icon="arrow-up-right2" size="13"></re-icon>12,5 %</span></div>
       </div>
-      <div class="rounded-2xl border border-hair bg-surface p-3.5">
+      <div class="rounded-2xl bg-surface p-3.5">
         <div class="flex items-center gap-1.5 text-[12px] text-muted"><re-icon icon="calendar" size="16"></re-icon>Upcoming events</div>
         <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">12</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><re-icon icon="arrow-up-right2" size="13"></re-icon>3 new</span></div>
       </div>
-      <div class="rounded-2xl border border-hair bg-surface p-3.5">
+      <div class="rounded-2xl bg-surface p-3.5">
         <div class="flex items-center gap-1.5 text-[12px] text-muted"><re-icon icon="verified" size="16"></re-icon>Check-in rate</div>
         <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">87 %</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><re-icon icon="arrow-down-right2" size="13"></re-icon>1,4 %</span></div>
       </div>
-      <div class="rounded-2xl border border-hair bg-surface p-3.5 sm:col-span-2 xl:col-span-1">
+      <div class="rounded-2xl bg-surface p-3.5 sm:col-span-2 xl:col-span-1">
         <div class="flex items-center gap-1.5 text-[12px] text-muted"><re-icon icon="chair" size="16"></re-icon>Capacity filled</div>
         <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">78 %</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><re-icon icon="arrow-up-right2" size="13"></re-icon>4,6 %</span></div>
       </div>
@@ -139,7 +139,7 @@
 
     <!-- revenue + donut row -->
     <div class="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-5">
-      <section class="rounded-2xl border border-hair bg-surface p-4 xl:col-span-3">
+      <section class="rounded-2xl bg-surface p-4 xl:col-span-3">
         <div class="flex flex-wrap items-start justify-between gap-3">
           <div>
             <h2 class="text-[15px] font-bold tracking-tight">Revenue Overview</h2>
@@ -158,7 +158,7 @@
         <div id="rev-chart" class="mt-2"></div>
       </section>
 
-      <section class="rounded-2xl border border-hair bg-surface p-4 xl:col-span-2">
+      <section class="rounded-2xl bg-surface p-4 xl:col-span-2">
         <h2 class="text-[15px] font-bold tracking-tight">Registrations by Ticket Type</h2>
         <p class="mt-0.5 text-[12px] text-muted">Share of total registrations</p>
         <div class="mt-2 flex justify-center">
@@ -175,7 +175,7 @@
 
     <!-- selling fast + recent registrations row -->
     <div class="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-5">
-      <section class="rounded-2xl border border-hair bg-surface p-4 xl:col-span-2">
+      <section class="rounded-2xl bg-surface p-4 xl:col-span-2">
         <div class="flex items-center justify-between">
           <h2 class="text-[15px] font-bold tracking-tight">Tickets Selling Fast</h2>
           <a href="../admin/tickets.html" class="text-[12px] font-semibold text-brand hover:underline">Manage</a>
@@ -199,7 +199,7 @@
         </div>
       </section>
 
-      <section class="rounded-2xl border border-hair bg-surface p-4 xl:col-span-3">
+      <section class="rounded-2xl bg-surface p-4 xl:col-span-3">
         <div class="flex items-center justify-between">
           <h2 class="text-[15px] font-bold tracking-tight">Recent Registrations</h2>
           <a href="../admin/registrations.html" class="text-[12px] font-semibold text-brand hover:underline">View all</a>
