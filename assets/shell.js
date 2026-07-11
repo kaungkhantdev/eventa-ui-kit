@@ -18,7 +18,7 @@
 
   /* ---------------- Navigation model ---------------- */
   const MODULES = [
-    { id: 'home', label: 'Home', icon: 'home', href: '../primary-ui/home.html' },
+    { id: 'home', label: 'Home', icon: 'home', href: 'home.html' },
     { id: 'dashboard', label: 'Dashboard', icon: 'element-42', href: 'dashboard.html' },
     { id: 'events', label: 'Events', icon: 'calendar', href: 'events.html', groups: [
       { label: 'Schedule', icon: 'calendar', items: [

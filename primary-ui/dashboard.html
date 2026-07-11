@@ -224,15 +224,15 @@
 <script>
   /* ============================================================
      Navigation model
-       • Rail icons = MAIN nav (modules).
-       • The labeled panel shows the active module's SUB nav
-         (grouped, collapsible). The Home module has no sub-nav,
-         so selecting it hides the panel entirely.
+       • Rail icons = MAIN nav (modules). Clicking a module navigates to its
+         landing page (Home/Events/Finance/Management), whose panel opens there.
+       • The labeled panel shows the active module's SUB nav (grouped,
+         collapsible). A module with no href/groups swaps the panel client-side.
      ============================================================ */
   const MODULES = [
     { id:'home', label:'Home', icon:'home', href:'home.html' }, /* link → landing page */
     { id:'dashboard', label:'Dashboard', icon:'element-42' },    /* current page, no sub-nav */
-    { id:'events', label:'Events', icon:'calendar', groups:[
+    { id:'events', label:'Events', icon:'calendar', href:'../admin/events.html', groups:[
       { label:'Schedule', icon:'calendar', items:[
         { label:'All Events',    href:'../admin/events.html' },
         { label:'Create Event',  href:'../admin/event-form.html' },
@@ -246,7 +246,7 @@
         { label:'Speakers',      href:'../admin/speakers.html' },
       ]},
     ]},
-    { id:'finance', label:'Finance', icon:'wallet', groups:[
+    { id:'finance', label:'Finance', icon:'wallet', href:'../admin/payments.html', groups:[
       { label:'Transactions', icon:'wallet', items:[
         { label:'Payments', href:'../admin/payments.html' },
         { label:'Payouts',  href:'../admin/payouts.html' },
@@ -256,7 +256,7 @@
         { label:'Discounts', href:'../admin/discounts.html' },
       ]},
     ]},
-    { id:'management', label:'Management', icon:'settings', bottom:true, groups:[
+    { id:'management', label:'Management', icon:'settings', bottom:true, href:'../admin/reports.html', groups:[
       { label:'Business', icon:'briefcase', items:[
         { label:'Reports',       href:'../admin/reports.html' },
         { label:'Notifications', href:'../admin/notifications.html' },
