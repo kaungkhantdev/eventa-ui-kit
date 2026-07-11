@@ -12,8 +12,8 @@
 <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=8"></script>
-<link rel="stylesheet" href="../assets/app.css?v=8" />
+<script src="../assets/config.js?v=22"></script>
+<link rel="stylesheet" href="../assets/app.css?v=22" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="speakers">
 
@@ -31,23 +31,26 @@
           <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Manage speakers and their sessions.</p>
         </div>
       </div>
-      <button class="btn btn-primary shrink-0" data-open="speaker-panel"><i class="hgi-stroke hgi-user-add-01 text-[16px]"></i><span class="hidden sm:inline">Add speaker</span><span class="sm:hidden">Add</span></button>
+      <div class="flex shrink-0 items-center gap-2.5"><button class="btn btn-primary shrink-0" data-open="speaker-panel"><i class="hgi-stroke hgi-user-add-01 text-[16px]"></i><span class="hidden sm:inline">Add speaker</span><span class="sm:hidden">Add</span></button><button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><re-icon icon="bell" size="18"></re-icon><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button><div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div></div>
     </div>
 
-    <!-- toolbar -->
-    <div class="card flex flex-col gap-2.5 p-3.5 sm:flex-row sm:items-center">
-      <div class="relative flex-1">
-        <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[15px] text-muted"></i>
-        <input type="text" class="input pl-9" placeholder="Search speakers by name, company or topic…" />
+    <!-- toolbar (flat, on canvas) -->
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <re-icon icon="search" size="16" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></re-icon>
+        <input type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search speakers by name, company or topic…" />
       </div>
-      <select class="select w-full sm:w-56">
-        <option>All events</option>
-        <option>Tech Summit 2026</option>
-        <option>Bangkok Jazz Night</option>
-        <option>Sunrise Yoga Retreat</option>
-        <option>Thai Street Food Festival</option>
-        <option>UX Bangkok Meetup</option>
-      </select>
+      <div class="relative w-full sm:w-56">
+        <re-icon icon="calendar" size="15" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></re-icon>
+        <select class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All events</option>
+          <option>Tech Summit 2026</option>
+          <option>Bangkok Jazz Night</option>
+          <option>Sunrise Yoga Retreat</option>
+          <option>Thai Street Food Festival</option>
+          <option>UX Bangkok Meetup</option>
+        </select>
+      </div>
     </div>
 
     <!-- speaker grid -->
@@ -311,6 +314,6 @@
   </div>
 </div>
 
-<script src="../assets/shell.js?v=8"></script>
+<script src="../assets/shell.js?v=22"></script>
 </body>
 </html>

@@ -12,8 +12,8 @@
 <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=8"></script>
-<link rel="stylesheet" href="../assets/app.css?v=8" />
+<script src="../assets/config.js?v=22"></script>
+<link rel="stylesheet" href="../assets/app.css?v=22" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="attendees">
 <div class="flex h-full min-h-screen" data-layout>
@@ -31,57 +31,39 @@
       <div class="flex items-center gap-2">
         <button class="btn btn-ghost"><i class="hgi-stroke hgi-download-01 text-[16px]"></i><span class="hidden sm:inline">Export</span></button>
         <button class="btn btn-primary" data-open="invite-panel"><i class="hgi-stroke hgi-mail-send-01 text-[16px]"></i><span class="hidden sm:inline">Invite</span><span class="sm:hidden">Invite</span></button>
+        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><re-icon icon="bell" size="18"></re-icon><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
+        <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
       </div>
     </div>
 
-    <!-- stat cards -->
-    <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
-      <div class="card p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-user-multiple text-[16px]"></i>Total attendees</div>
-        <div class="mt-2 flex items-end justify-between">
-          <p class="text-[22px] font-bold tracking-tight tnum">2,847</p>
-          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>6,8 %</span>
-        </div>
-      </div>
-      <div class="card p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-user-add-01 text-[16px]"></i>New this month</div>
-        <div class="mt-2 flex items-end justify-between">
-          <p class="text-[22px] font-bold tracking-tight tnum">214</p>
-          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>14,2 %</span>
-        </div>
-      </div>
-      <div class="card p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-checkmark-badge-01 text-[16px]"></i>Checked-in</div>
-        <div class="mt-2 flex items-end justify-between">
-          <p class="text-[22px] font-bold tracking-tight tnum">1,180</p>
-          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>9,3 %</span>
-        </div>
-      </div>
-      <div class="card p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-star text-[16px]"></i>VIPs</div>
-        <div class="mt-2 flex items-end justify-between">
-          <p class="text-[22px] font-bold tracking-tight tnum">96</p>
-          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>5 new</span>
-        </div>
-      </div>
+    <!-- pill tabs (out of table) -->
+    <div data-tabs="#att-table" class="flex flex-wrap items-center gap-1.5 overflow-x-auto">
+      <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count tnum">2,847</span></button>
+      <button class="pilltab" data-tab="new">New <span class="pilltab-count tnum">214</span></button>
+      <button class="pilltab" data-tab="checkedin">Checked-in <span class="pilltab-count tnum">1,180</span></button>
+      <button class="pilltab" data-tab="vip">VIPs <span class="pilltab-count tnum">96</span></button>
     </div>
 
-    <!-- toolbar + table -->
-    <section class="card mt-3 p-4">
-      <div class="flex flex-col gap-3 border-b border-hair pb-3 sm:flex-row sm:items-center sm:justify-between">
-        <div class="relative w-full sm:max-w-xs">
-          <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[15px] text-muted"></i>
-          <input type="text" class="input pl-9" placeholder="Search by name or email..." />
-        </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <select class="select w-auto">
+    <!-- search + filters (out of table) -->
+    <div class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <re-icon icon="search" size="16" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></re-icon>
+        <input type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search by name or email…" />
+      </div>
+      <div class="flex gap-2">
+        <div class="relative flex-1 sm:flex-none">
+          <re-icon icon="tag" size="15" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></re-icon>
+          <select class="select h-10 w-full border-0 bg-surface pl-9 font-medium sm:w-44">
             <option>All tags</option>
             <option>VIP</option>
             <option>Speaker</option>
             <option>Sponsor</option>
             <option>Student</option>
           </select>
-          <select class="select w-auto">
+        </div>
+        <div class="relative flex-1 sm:flex-none">
+          <re-icon icon="sort" size="15" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></re-icon>
+          <select class="select h-10 w-full border-0 bg-surface pl-9 font-medium sm:w-52">
             <option>Sort: Last activity</option>
             <option>Sort: Name (A–Z)</option>
             <option>Sort: Most events</option>
@@ -89,8 +71,11 @@
           </select>
         </div>
       </div>
+    </div>
 
-      <div class="mt-3 overflow-x-auto">
+    <!-- table -->
+    <section class="card mt-3 p-4">
+      <div id="att-table" class="overflow-x-auto">
         <table class="data-table min-w-[860px]">
           <thead>
             <tr>
@@ -478,6 +463,6 @@
   </footer>
 </aside>
 
-<script src="../assets/shell.js?v=8"></script>
+<script src="../assets/shell.js?v=22"></script>
 </body>
 </html>

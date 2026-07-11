@@ -45,7 +45,7 @@
         { label: 'Discounts', page: 'discounts', href: 'discounts.html' },
       ]},
     ]},
-    { id: 'management', label: 'Management', icon: 'settings', bottom: true, href: 'reports.html', groups: [
+    { id: 'management', label: 'Management', icon: 'settings', href: 'reports.html', groups: [
       { label: 'Business', icon: 'briefcase', items: [
         { label: 'Reports',       page: 'reports',       href: 'reports.html' },
         { label: 'Notifications', page: 'notifications', href: 'notifications.html' },
@@ -75,27 +75,31 @@
     <div id="sidenav" class="fixed inset-y-0 left-0 z-50 flex -translate-x-full transition-transform duration-300 lg:static lg:translate-x-0">
       <aside id="rail" class="relative z-30 flex w-16 shrink-0 flex-col items-center bg-[#0e0f12] py-4">
         <div class="group relative flex justify-center">
-          <a href="dashboard.html" class="grid h-9 w-9 place-items-center rounded-full border border-brand/70 text-brand"><re-icon icon="ticket-star2" size="18" weight="filled"></re-icon></a>
+          <a href="dashboard.html" class="grid h-9 w-9 place-items-center rounded-full border border-brand/70 text-brand"><re-icon icon="radio2" size="18" weight="filled"></re-icon></a>
           <span class="rail-tip">Eventa</span>
         </div>
         <div id="rail-top" class="mt-5 flex flex-col items-center gap-1.5"></div>
-        <div class="mt-auto flex flex-col items-center gap-1.5 pt-4">
+        <div class="mt-auto flex flex-col items-center gap-2 pt-4">
           <div id="rail-bottom" class="flex flex-col items-center gap-1.5"></div>
           <div class="group relative flex justify-center">
             <button id="rail-theme" type="button" class="grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand"><re-icon icon="moon" size="20"></re-icon></button>
-            <span class="rail-tip">Theme</span>
+            <span class="rail-tip">Change mode</span>
           </div>
-          <div class="group relative flex justify-center">
-            <a href="../auth/login.html" class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[11px] font-semibold text-white">HN</a>
-            <span class="rail-tip">Harper Nelson</span>
+          <div class="group relative mt-1 flex justify-center">
+            <span class="grid h-9 w-9 place-items-center rounded-[11px] bg-brand text-white shadow-sm"><re-icon icon="radio2" size="18" weight="filled"></re-icon></span>
+            <span class="rail-tip">Eventa for Business · v1.0.0.0</span>
           </div>
         </div>
       </aside>
-      <aside id="panel" class="hidden w-64 shrink-0 flex-col border-r border-hair bg-surface">
+      <aside id="panel" class="hidden w-64 shrink-0 flex flex-col border-r border-hair bg-surface">
         <div class="mt-4 flex h-9 items-center px-4">
           <h2 id="panel-head" class="text-[17px] font-bold tracking-tight text-ink"></h2>
         </div>
         <nav id="panel-nav" class="no-scrollbar mt-2 flex-1 space-y-1.5 overflow-y-auto px-2.5 pb-4"></nav>
+        <div class="border-t border-hair px-4 py-3">
+          <p class="text-[12px] font-semibold text-ink">Eventa for Business</p>
+          <p class="text-[11px] text-muted tnum">Version 1.0.0.0</p>
+        </div>
       </aside>
     </div>`;
 
@@ -249,4 +253,94 @@
       content.querySelectorAll('[data-tab-panel]').forEach(p => p.classList.toggle('hidden', p.getAttribute('data-tab-panel') !== name));
     });
   });
+
+  /* ---------------- Header popovers: notifications + profile ---------------- */
+  const popCls = 'pop hidden fixed z-[70] max-w-[calc(100vw-16px)] overflow-hidden rounded-2xl bg-surface shadow-xl ring-1 ring-black/5 dark:ring-white/10';
+  const notifItem = (icon, tint, title, body, time, unread) => `
+    <a href="notifications.html" class="flex gap-3 px-4 py-2.5 transition hover:bg-line">
+      <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg ${tint}"><re-icon icon="${icon}" size="17"></re-icon></span>
+      <div class="min-w-0 flex-1"><p class="text-[13px] leading-snug text-ink"><span class="font-semibold">${title}</span> · ${body}</p><p class="mt-0.5 text-[11px] text-muted">${time}</p></div>
+      ${unread ? '<span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-brand"></span>' : ''}
+    </a>`;
+  const menuLink = (href, icon, label, extra = '') => `
+    <a href="${href}" class="flex items-center gap-3 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><re-icon icon="${icon}" size="17" class="text-muted"></re-icon>${label}${extra}</a>`;
+  const popHTML = `
+    <div id="eventa-notif-pop" class="${popCls} w-[340px]">
+      <div class="flex items-center justify-between border-b border-hair px-4 py-3">
+        <div class="flex items-center gap-2"><h3 class="text-[14px] font-bold text-ink">Notifications</h3><span class="grid h-5 min-w-[20px] place-items-center rounded-full bg-brand-soft px-1.5 text-[11px] font-semibold text-brand">3</span></div>
+        <button class="text-[12px] font-semibold text-brand hover:underline">Mark all read</button>
+      </div>
+      <div class="max-h-[340px] overflow-y-auto py-1">
+        ${notifItem('user-add', 'bg-brand-soft text-brand', 'New registration', 'Anong Pattana joined Tech Summit 2026', '2 min ago', true)}
+        ${notifItem('wallet', 'bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300', 'Payment received', '฿1,250 from Ploy Srisai', '18 min ago', true)}
+        ${notifItem('ticket', 'bg-amber-50 text-amber-600 dark:bg-amber-400/15 dark:text-amber-300', 'Almost sold out', 'VIP Access is 92% sold', '1 hr ago', true)}
+        ${notifItem('star', 'bg-violet-50 text-violet-600 dark:bg-violet-500/15 dark:text-violet-300', 'New feedback', 'Bangkok Jazz Night rated 4.8★', 'Yesterday', false)}
+      </div>
+      <a href="notifications.html" class="block border-t border-hair px-4 py-2.5 text-center text-[13px] font-semibold text-brand hover:bg-line">View all notifications</a>
+    </div>
+    <div id="eventa-profile-pop" class="${popCls} w-[300px]">
+      <div class="flex items-center gap-3 p-4">
+        <div class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[14px] font-semibold text-white">HN</div>
+        <div class="min-w-0"><p class="truncate text-[14px] font-bold text-ink">Harper Nelson</p><p class="truncate text-[12px] text-muted">Event Manager at Eventa</p></div>
+      </div>
+      <div class="px-2 pb-1">
+        ${menuLink('settings.html', 'user', 'My Account')}
+        ${menuLink('settings.html', 'building', 'Company settings')}
+        ${menuLink('#', 'crown', 'Upgrade to Pro', '<span class="ml-auto rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-semibold text-violet-600 dark:bg-violet-500/20 dark:text-violet-300">Optimized for business</span>')}
+      </div>
+      <div class="mx-3 my-1 border-t border-hair"></div>
+      <div class="px-2 py-1">
+        <div class="flex items-center gap-3 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink"><re-icon icon="flask" size="17" class="text-muted"></re-icon>Beta Features<span class="rounded-full bg-brand-soft px-2 py-0.5 text-[10px] font-semibold text-brand">New</span><button type="button" data-toggle class="relative ml-auto h-5 w-9 shrink-0 rounded-full bg-line transition-colors"><span class="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform"></span></button></div>
+        ${menuLink('#', 'bullhorn', "What's New")}
+      </div>
+      <div class="mx-3 my-1 border-t border-hair"></div>
+      <div class="px-2 py-1">
+        ${menuLink('../auth/login.html', 'logout', 'Log out')}
+      </div>
+      <div class="m-2 rounded-xl bg-violet-50 p-3 dark:bg-violet-500/10">
+        <span class="grid h-9 w-9 place-items-center rounded-lg bg-violet-500 text-white"><re-icon icon="sparkles" size="18"></re-icon></span>
+        <p class="mt-2.5 text-[13px] font-semibold leading-snug text-ink">Get everything you need to run your events like a pro</p>
+        <a href="#" class="mt-1.5 inline-block text-[13px] font-bold text-violet-600 hover:underline dark:text-violet-300">Subscribe Now</a>
+      </div>
+    </div>`;
+  document.body.insertAdjacentHTML('beforeend', popHTML);
+  const notifPop = document.getElementById('eventa-notif-pop');
+  const profilePop = document.getElementById('eventa-profile-pop');
+  const pops = [notifPop, profilePop].filter(Boolean);
+  const closePops = () => pops.forEach(p => p.classList.add('hidden'));
+  function togglePop(pop, trigger) {
+    const isOpen = !pop.classList.contains('hidden');
+    closePops();
+    if (!isOpen) {
+      const r = trigger.getBoundingClientRect();
+      pop.style.top = (r.bottom + 8) + 'px';
+      pop.style.right = Math.max(8, window.innerWidth - r.right) + 'px';
+      pop.classList.remove('hidden');
+    }
+  }
+  document.querySelectorAll('button[title="Notifications"]').forEach(bell => {
+    bell.addEventListener('click', e => { e.stopPropagation(); if (notifPop) togglePop(notifPop, bell); });
+    const profile = bell.nextElementSibling;
+    if (profile && profilePop) {
+      profile.classList.add('cursor-pointer');
+      profile.addEventListener('click', e => { e.stopPropagation(); togglePop(profilePop, profile); });
+    }
+  });
+  if (profilePop) {
+    const bt = profilePop.querySelector('[data-toggle]');
+    if (bt) bt.addEventListener('click', e => {
+      e.stopPropagation();
+      const on = bt.classList.toggle('bg-brand'); bt.classList.toggle('bg-line', !on);
+      bt.firstElementChild.classList.toggle('translate-x-4', on);
+    });
+  }
+  pops.forEach(p => p.addEventListener('click', e => {
+    if (e.target.closest('[data-toggle]')) return;
+    const link = e.target.closest('a');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (!href || href === '#') { e.preventDefault(); closePops(); }
+  }));
+  document.addEventListener('click', e => { if (!e.target.closest('.pop')) closePops(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePops(); });
 })();

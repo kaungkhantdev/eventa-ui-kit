@@ -103,6 +103,15 @@ html.dark .avatar { color: #45c98f; }
 .tab:hover { color: rgb(var(--ink)); }
 .tab.tab-active { color: #1ba770; border-bottom-color: #1ba770; }
 
+/* pill tabs with count badge (declarative: reuses [data-tab]/tab-active toggling) */
+.pilltab { display: inline-flex; align-items: center; gap: .45rem; border-radius: .6rem; padding: .45rem .8rem; font-size: 13px; font-weight: 600; color: rgb(var(--muted)); cursor: pointer; white-space: nowrap; transition: background .15s, color .15s; }
+.pilltab:hover { color: rgb(var(--ink)); }
+.pilltab.tab-active { background: rgb(var(--brand-soft)); color: #157e56; }
+html.dark .pilltab.tab-active { color: #45c98f; }
+.pilltab-count { display: inline-grid; place-items: center; min-width: 1.3rem; height: 1.3rem; padding: 0 .35rem; border-radius: 999px; font-size: 11px; font-weight: 600; line-height: 1; background: rgb(var(--line)); color: rgb(var(--muted)); }
+.pilltab.tab-active .pilltab-count { background: #fff; color: #157e56; }
+html.dark .pilltab.tab-active .pilltab-count { background: rgb(255 255 255 / .14); color: #45c98f; }
+
 /* pill segmented control (chart ranges etc.) */
 .segmented { display: inline-flex; border-radius: .5rem; background: #f3f4f6; padding: 2px; font-size: 12px; font-weight: 500; }
 html.dark .segmented { background: rgba(255,255,255,.05); }

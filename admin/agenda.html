@@ -12,8 +12,8 @@
 <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=8"></script>
-<link rel="stylesheet" href="../assets/app.css?v=8" />
+<script src="../assets/config.js?v=22"></script>
+<link rel="stylesheet" href="../assets/app.css?v=22" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="agenda">
 
@@ -31,548 +31,52 @@
           <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Build your event schedule.</p>
         </div>
       </div>
-      <div class="flex shrink-0 items-center gap-2">
-        <select class="select w-36 sm:w-56">
-          <option>Tech Summit 2026</option>
-          <option>Bangkok Jazz Night</option>
-          <option>Thai Street Food Festival</option>
-          <option>UX Bangkok Meetup</option>
-        </select>
-        <button type="button" class="btn btn-primary shrink-0" data-open="session-panel"><i class="hgi-stroke hgi-add-01 text-[16px]"></i><span class="hidden sm:inline">Add session</span><span class="sm:hidden">Add</span></button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><re-icon icon="bell" size="18"></re-icon><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
+        <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
       </div>
     </div>
 
-    <!-- day tabs -->
-    <div class="card p-4">
-      <div data-tabs="#agendaTabs" class="flex gap-4 overflow-x-auto border-b border-hair">
-        <button class="tab tab-active" data-tab="day1">Day 1 · Jul 18</button>
-        <button class="tab" data-tab="day2">Day 2 · Jul 19</button>
-        <button class="tab" data-tab="day3">Day 3 · Jul 20</button>
+    <!-- calendar toolbar -->
+    <div class="mb-4 flex flex-wrap items-center gap-3">
+      <div class="flex items-center gap-1">
+        <button class="grid h-9 w-9 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink" title="Previous week"><re-icon icon="chevron-left" size="18"></re-icon></button>
+        <h2 class="px-1 text-[17px] font-bold tracking-tight">July 2026</h2>
+        <button class="grid h-9 w-9 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink" title="Next week"><re-icon icon="chevron-right" size="18"></re-icon></button>
       </div>
-
-      <div id="agendaTabs" class="mt-4">
-
-        <!-- ================= DAY 1 ================= -->
-        <div data-tab-panel="day1">
-          <div class="relative">
-            <div class="pointer-events-none absolute left-[70px] top-3 bottom-3 w-px bg-line"></div>
-            <div class="space-y-3">
-
-              <!-- registration -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">08:30</p><p class="text-[11px] text-muted tnum">30 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-line ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-gray"><i class="hgi-stroke hgi-time-quarter-pass text-[12px]"></i>Break</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-muted">Doors Open &amp; Registration</p>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Main Lobby</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- keynote -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">09:00</p><p class="text-[11px] text-muted tnum">45 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-purple"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>Keynote</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Opening Keynote: Building Tomorrow's Events</p>
-                        <div class="mt-2 flex flex-wrap items-center gap-3">
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">SK</span><span class="text-[12px] font-medium text-ink">Somsak K.</span></span>
-                        </div>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- talk -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">09:45</p><p class="text-[11px] text-muted tnum">45 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-blue"><i class="hgi-stroke hgi-message-01 text-[12px]"></i>Talk</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Scaling Ticketing Infrastructure at 10x Growth</p>
-                        <div class="mt-2 flex flex-wrap items-center gap-3">
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">JW</span><span class="text-[12px] font-medium text-ink">James W.</span></span>
-                        </div>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- coffee break -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">10:30</p><p class="text-[11px] text-muted tnum">20 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-line ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-gray"><i class="hgi-stroke hgi-time-quarter-pass text-[12px]"></i>Break</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-muted">Coffee Break</p>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Foyer</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- workshop -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">10:50</p><p class="text-[11px] text-muted tnum">75 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-green"><i class="hgi-stroke hgi-note-edit text-[12px]"></i>Workshop</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Designing Seamless Check-in Flows</p>
-                        <div class="mt-2 flex flex-wrap items-center gap-3">
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">PS</span><span class="text-[12px] font-medium text-ink">Ploy S.</span></span>
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">ML</span><span class="text-[12px] font-medium text-ink">Mei L.</span></span>
-                        </div>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall B</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- lunch -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">12:05</p><p class="text-[11px] text-muted tnum">60 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-line ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-gray"><i class="hgi-stroke hgi-time-quarter-pass text-[12px]"></i>Break</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-muted">Lunch</p>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Garden Terrace</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- panel -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">13:05</p><p class="text-[11px] text-muted tnum">45 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-amber"><i class="hgi-stroke hgi-user-group text-[12px]"></i>Panel</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">The Future of Hybrid Events in SEA</p>
-                        <div class="mt-2 flex flex-wrap items-center gap-3">
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">AP</span><span class="text-[12px] font-medium text-ink">Anong P.</span></span>
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">ST</span><span class="text-[12px] font-medium text-ink">Somchai T.</span></span>
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">JW</span><span class="text-[12px] font-medium text-ink">James W.</span></span>
-                        </div>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
+      <div class="flex w-full flex-wrap items-center gap-2 sm:ml-auto sm:w-auto">
+        <div class="relative w-full sm:w-60">
+          <re-icon icon="search" size="16" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></re-icon>
+          <input id="agenda-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search sessions…" />
         </div>
-
-        <!-- ================= DAY 2 ================= -->
-        <div data-tab-panel="day2" class="hidden">
-          <div class="relative">
-            <div class="pointer-events-none absolute left-[70px] top-3 bottom-3 w-px bg-line"></div>
-            <div class="space-y-3">
-
-              <!-- coffee -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">09:00</p><p class="text-[11px] text-muted tnum">30 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-line ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-gray"><i class="hgi-stroke hgi-time-quarter-pass text-[12px]"></i>Break</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-muted">Morning Coffee</p>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Foyer</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- keynote -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">09:30</p><p class="text-[11px] text-muted tnum">45 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-purple"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>Keynote</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Data-Driven Attendee Experiences</p>
-                        <div class="mt-2 flex flex-wrap items-center gap-3">
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">ML</span><span class="text-[12px] font-medium text-ink">Mei L.</span></span>
-                        </div>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- talk -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">10:15</p><p class="text-[11px] text-muted tnum">45 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-blue"><i class="hgi-stroke hgi-message-01 text-[12px]"></i>Talk</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Building Real-time Analytics Dashboards</p>
-                        <div class="mt-2 flex flex-wrap items-center gap-3">
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">ST</span><span class="text-[12px] font-medium text-ink">Somchai T.</span></span>
-                        </div>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- workshop -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">11:00</p><p class="text-[11px] text-muted tnum">75 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-green"><i class="hgi-stroke hgi-note-edit text-[12px]"></i>Workshop</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">QR Check-in &amp; On-site Badge Printing</p>
-                        <div class="mt-2 flex flex-wrap items-center gap-3">
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">AP</span><span class="text-[12px] font-medium text-ink">Anong P.</span></span>
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">PS</span><span class="text-[12px] font-medium text-ink">Ploy S.</span></span>
-                        </div>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall B</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- lunch -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">12:15</p><p class="text-[11px] text-muted tnum">60 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-line ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-gray"><i class="hgi-stroke hgi-time-quarter-pass text-[12px]"></i>Break</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-muted">Lunch</p>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Garden Terrace</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- panel -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">13:15</p><p class="text-[11px] text-muted tnum">45 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-amber"><i class="hgi-stroke hgi-user-group text-[12px]"></i>Panel</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Monetizing Community Events</p>
-                        <div class="mt-2 flex flex-wrap items-center gap-3">
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">JW</span><span class="text-[12px] font-medium text-ink">James W.</span></span>
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">SK</span><span class="text-[12px] font-medium text-ink">Somsak K.</span></span>
-                        </div>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- talk -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">14:00</p><p class="text-[11px] text-muted tnum">45 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-blue"><i class="hgi-stroke hgi-message-01 text-[12px]"></i>Talk</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Payments &amp; Payouts at Scale</p>
-                        <div class="mt-2 flex flex-wrap items-center gap-3">
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">PS</span><span class="text-[12px] font-medium text-ink">Ploy S.</span></span>
-                        </div>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
+        <div class="inline-flex items-center gap-1 rounded-lg bg-surface p-1">
+          <button data-view="week" class="rounded-md bg-brand-soft px-3.5 py-1.5 text-[13px] font-semibold text-brand transition">Week</button>
+          <button data-view="month" class="rounded-md px-3.5 py-1.5 text-[13px] font-semibold text-muted transition hover:text-ink">Month</button>
         </div>
+        <button type="button" class="btn btn-primary shrink-0" data-open="session-panel"><i class="hgi-stroke hgi-add-01 text-[16px]"></i><span class="hidden sm:inline">Add New</span></button>
+      </div>
+    </div>
 
-        <!-- ================= DAY 3 ================= -->
-        <div data-tab-panel="day3" class="hidden">
-          <div class="relative">
-            <div class="pointer-events-none absolute left-[70px] top-3 bottom-3 w-px bg-line"></div>
-            <div class="space-y-3">
+    <!-- Tailwind safelist for JS-injected session colors -->
+    <div class="hidden">
+      <span class="border-brand bg-brand-soft text-brand"></span>
+      <span class="border-amber-400 bg-amber-50 text-amber-600 dark:border-amber-300 dark:bg-amber-400/10 dark:text-amber-300"></span>
+      <span class="border-rose-400 bg-rose-50 text-rose-600 dark:border-rose-300 dark:bg-rose-400/10 dark:text-rose-300"></span>
+      <span class="border-b border-line/70"></span>
+    </div>
 
-              <!-- coffee -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">09:00</p><p class="text-[11px] text-muted tnum">30 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-line ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-gray"><i class="hgi-stroke hgi-time-quarter-pass text-[12px]"></i>Break</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-muted">Morning Coffee</p>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Foyer</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- keynote -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">09:30</p><p class="text-[11px] text-muted tnum">45 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-purple"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>Keynote</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Closing Vision: What's Next for Eventa</p>
-                        <div class="mt-2 flex flex-wrap items-center gap-3">
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">SK</span><span class="text-[12px] font-medium text-ink">Somsak K.</span></span>
-                        </div>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- talk -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">10:15</p><p class="text-[11px] text-muted tnum">45 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-blue"><i class="hgi-stroke hgi-message-01 text-[12px]"></i>Talk</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Designing for Accessibility at Live Events</p>
-                        <div class="mt-2 flex flex-wrap items-center gap-3">
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">ML</span><span class="text-[12px] font-medium text-ink">Mei L.</span></span>
-                        </div>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- workshop -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">11:00</p><p class="text-[11px] text-muted tnum">60 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-green"><i class="hgi-stroke hgi-note-edit text-[12px]"></i>Workshop</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Building Your First Event Landing Page</p>
-                        <div class="mt-2 flex flex-wrap items-center gap-3">
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">JW</span><span class="text-[12px] font-medium text-ink">James W.</span></span>
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">AP</span><span class="text-[12px] font-medium text-ink">Anong P.</span></span>
-                        </div>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall B</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- lunch -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">12:00</p><p class="text-[11px] text-muted tnum">60 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-line ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-gray"><i class="hgi-stroke hgi-time-quarter-pass text-[12px]"></i>Break</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-muted">Lunch</p>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Garden Terrace</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- panel -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">13:00</p><p class="text-[11px] text-muted tnum">45 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-amber"><i class="hgi-stroke hgi-user-group text-[12px]"></i>Panel</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Lessons from 100 Events</p>
-                        <div class="mt-2 flex flex-wrap items-center gap-3">
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">ST</span><span class="text-[12px] font-medium text-ink">Somchai T.</span></span>
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">PS</span><span class="text-[12px] font-medium text-ink">Ploy S.</span></span>
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">ML</span><span class="text-[12px] font-medium text-ink">Mei L.</span></span>
-                        </div>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- closing -->
-              <div class="grid grid-cols-[64px_1fr] gap-3">
-                <div class="pt-3"><p class="text-[13px] font-bold tnum text-ink">13:45</p><p class="text-[11px] text-muted tnum">30 min</p></div>
-                <div class="relative">
-                  <span class="absolute -left-2.5 top-4 h-2 w-2 rounded-full bg-brand ring-[3px] ring-canvas"></span>
-                  <div class="card p-3">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="min-w-0 flex-1">
-                        <span class="badge badge-blue"><i class="hgi-stroke hgi-message-01 text-[12px]"></i>Talk</span>
-                        <p class="mt-1.5 text-[14px] font-semibold leading-snug text-ink">Closing Remarks &amp; Thank You</p>
-                        <div class="mt-2 flex flex-wrap items-center gap-3">
-                          <span class="flex items-center gap-1.5"><span class="avatar h-6 w-6 text-[9px]">SK</span><span class="text-[12px] font-medium text-ink">Somsak K.</span></span>
-                        </div>
-                        <p class="mt-2 flex items-center gap-1 text-[11px] text-muted"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>Hall A</p>
-                      </div>
-                      <div class="flex shrink-0 items-center gap-1">
-                        <button class="btn-icon" data-open="session-panel" title="Edit session"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i></button>
-                        <button class="btn-icon" data-open="del-modal" title="Delete session"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
+    <!-- calendar -->
+    <div class="card overflow-hidden p-0">
+      <div id="week-view" class="overflow-x-auto">
+        <div class="min-w-[880px]">
+          <div id="week-head" class="grid grid-cols-[56px_repeat(7,minmax(0,1fr))] border-b border-hair"></div>
+          <div id="week-body" class="grid grid-cols-[56px_repeat(7,minmax(0,1fr))]"></div>
         </div>
-
+      </div>
+      <div id="month-view" class="hidden px-6 py-16 text-center">
+        <div class="mx-auto grid h-12 w-12 place-items-center rounded-xl bg-brand-soft text-brand"><re-icon icon="calendar" size="22"></re-icon></div>
+        <p class="mt-4 text-[15px] font-bold tracking-tight">Month view</p>
+        <p class="mx-auto mt-1 max-w-xs text-[13px] text-muted">Switch back to Week to lay out sessions by time slot.</p>
       </div>
     </div>
 
@@ -594,9 +98,13 @@
     <div>
       <label class="label">Day</label>
       <select class="select">
-        <option>Day 1 · Jul 18</option>
-        <option>Day 2 · Jul 19</option>
-        <option>Day 3 · Jul 20</option>
+        <option>Mon · Jul 13</option>
+        <option>Tue · Jul 14</option>
+        <option>Wed · Jul 15</option>
+        <option>Thu · Jul 16</option>
+        <option>Fri · Jul 17</option>
+        <option>Sat · Jul 18</option>
+        <option>Sun · Jul 19</option>
       </select>
     </div>
     <div class="grid grid-cols-2 gap-3">
@@ -606,7 +114,7 @@
       </div>
       <div>
         <label class="label">End time</label>
-        <input type="time" class="input" value="09:45" />
+        <input type="time" class="input" value="10:30" />
       </div>
     </div>
     <div>
@@ -658,6 +166,89 @@
   </div>
 </div>
 
-<script src="../assets/shell.js?v=8"></script>
+<script src="../assets/shell.js?v=22"></script>
+<script>
+  (function () {
+    const HS = 9, HE = 16, HH = 64;               // 09:00–16:00, 64px per hour
+    const days = [
+      { n: 'Mon', d: 'Jul 13' }, { n: 'Tue', d: 'Jul 14' }, { n: 'Wed', d: 'Jul 15' },
+      { n: 'Thu', d: 'Jul 16' }, { n: 'Fri', d: 'Jul 17' }, { n: 'Sat', d: 'Jul 18', hot: true }, { n: 'Sun', d: 'Jul 19' }
+    ];
+    const PAL = {
+      green: { b: 'border-brand', bg: 'bg-brand-soft', t: 'text-brand' },
+      amber: { b: 'border-amber-400 dark:border-amber-300', bg: 'bg-amber-50 dark:bg-amber-400/10', t: 'text-amber-600 dark:text-amber-300' },
+      rose:  { b: 'border-rose-400 dark:border-rose-300',  bg: 'bg-rose-50 dark:bg-rose-400/10',  t: 'text-rose-600 dark:text-rose-300' }
+    };
+    const sessions = [
+      { day: 0, s: '09:00', e: '10:30', id: '#0012', type: 'Keynote',  title: 'Opening Keynote',      who: 'SK', c: 'green' },
+      { day: 0, s: '12:00', e: '14:00', id: '#0013', type: 'Workshop', title: 'Attendee Onboarding',  who: 'JW', c: 'green' },
+      { day: 1, s: '11:00', e: '12:30', id: '#0016', type: 'Talk',     title: 'Growth Marketing 101', who: 'PS', c: 'amber' },
+      { day: 2, s: '14:00', e: '15:30', id: '#0019', type: 'Break',    title: 'Sound Check',          who: 'ML', c: 'rose'  },
+      { day: 3, s: '10:00', e: '11:30', id: '#0020', type: 'Panel',    title: 'Community Building',   who: 'ST', c: 'amber' },
+      { day: 3, s: '12:00', e: '13:30', id: '#0021', type: 'Workshop', title: 'Design Sprint',        who: 'AP', c: 'green' },
+      { day: 4, s: '13:00', e: '14:30', id: '#0024', type: 'Panel',    title: 'Sponsor Briefing',     who: 'JW', c: 'amber' },
+      { day: 5, s: '09:00', e: '11:00', id: '#0027', type: 'Keynote',  title: 'Summit Opening',       who: 'SK', c: 'green' },
+      { day: 5, s: '11:30', e: '13:30', id: '#0028', type: 'Workshop', title: 'Check-in Flows',       who: 'PS', c: 'green' },
+      { day: 6, s: '11:00', e: '12:30', id: '#0030', type: 'Break',    title: 'Teardown & Wrap',      who: 'ML', c: 'rose'  }
+    ];
+    const toMin = t => { const p = t.split(':'); return (+p[0]) * 60 + (+p[1]); };
+
+    // day header row
+    document.getElementById('week-head').innerHTML =
+      '<div class="grid place-items-center border-r border-hair py-3 text-muted"><re-icon icon="calendar" size="16"></re-icon></div>' +
+      days.map(d => `<div class="border-r border-hair py-2.5 text-center last:border-r-0">
+        <p class="text-[13px] font-bold ${d.hot ? 'text-brand' : 'text-ink'}">${d.n}</p>
+        <p class="text-[11px] tnum ${d.hot ? 'text-brand/70' : 'text-muted'}">${d.d}</p></div>`).join('');
+
+    // time gutter
+    let gutter = '<div class="relative border-r border-hair">';
+    for (let h = HS; h < HE; h++)
+      gutter += `<div class="relative" style="height:${HH}px"><span class="absolute right-2 top-1 text-[10px] text-muted tnum">${String(h).padStart(2, '0')}:00</span></div>`;
+    gutter += '</div>';
+
+    // day columns with hour lines + positioned session blocks
+    const cols = days.map((d, di) => {
+      let lines = '';
+      for (let h = HS; h < HE; h++) lines += `<div style="height:${HH}px" class="border-b border-line/70"></div>`;
+      const blocks = sessions.filter(s => s.day === di).map(s => {
+        const top = (toMin(s.s) - HS * 60) / 60 * HH;
+        const height = (toMin(s.e) - toMin(s.s)) / 60 * HH;
+        const p = PAL[s.c];
+        return `<button data-open="session-panel" data-title="${s.title}" data-type="${s.type}" class="session absolute inset-x-1 overflow-hidden rounded-lg border-t-2 ${p.b} ${p.bg} px-2 pt-1.5 text-left transition hover:brightness-[0.97]" style="top:${top + 2}px;height:${height - 4}px">
+          <p class="text-[10px] font-medium tnum ${p.t}">${s.id}</p>
+          <p class="truncate text-[12px] font-bold ${p.t}">${s.title}</p>
+          <span class="avatar absolute bottom-1 right-1 h-6 w-6 text-[9px]">${s.who}</span>
+        </button>`;
+      }).join('');
+      return `<div class="relative border-r border-hair last:border-r-0">${lines}${blocks}</div>`;
+    }).join('');
+    document.getElementById('week-body').innerHTML = gutter + cols;
+
+    // search filter
+    const search = document.getElementById('agenda-search');
+    search.addEventListener('input', () => {
+      const q = search.value.trim().toLowerCase();
+      document.querySelectorAll('.session').forEach(el => {
+        const hit = !q || (el.dataset.title + ' ' + el.dataset.type).toLowerCase().includes(q);
+        el.classList.toggle('hidden', !hit);
+      });
+    });
+
+    // week / month toggle
+    document.querySelectorAll('[data-view]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const v = btn.dataset.view;
+        document.querySelectorAll('[data-view]').forEach(b => {
+          const on = b === btn;
+          b.classList.toggle('bg-brand-soft', on);
+          b.classList.toggle('text-brand', on);
+          b.classList.toggle('text-muted', !on);
+        });
+        document.getElementById('week-view').classList.toggle('hidden', v !== 'week');
+        document.getElementById('month-view').classList.toggle('hidden', v !== 'month');
+      });
+    });
+  })();
+</script>
 </body>
 </html>

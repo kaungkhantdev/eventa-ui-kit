@@ -12,8 +12,8 @@
 <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=8"></script>
-<link rel="stylesheet" href="../assets/app.css?v=8" />
+<script src="../assets/config.js?v=22"></script>
+<link rel="stylesheet" href="../assets/app.css?v=22" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="home">
 
@@ -21,14 +21,14 @@
   <!-- shell.js injects #backdrop + #sidenav (icon rail; panel hidden for Home) here -->
 
   <!-- ============ MAIN ============ -->
-  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-5 lg:px-8 lg:py-6">
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
 
     <!-- top bar -->
     <header class="mb-5 flex items-center gap-3">
       <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><re-icon icon="menu" size="18"></re-icon></button>
-      <div class="relative w-full max-w-sm">
-        <re-icon icon="search" size="16" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></re-icon>
-        <input class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search events, tasks, attendees…" />
+      <div class="min-w-0">
+        <h1 class="truncate text-[22px] font-bold tracking-tight text-ink"><span id="greeting">Good morning</span>, Harper 👋</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Here's what's happening across your events today.</p>
       </div>
       <a href="event-form.html" class="ml-auto inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2.5 text-[13px] font-semibold text-white transition hover:bg-brand-dark"><re-icon icon="calendar-add" size="16"></re-icon><span class="hidden sm:inline">New event</span></a>
       <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
@@ -266,7 +266,7 @@
   </main>
 </div>
 
-<script src="../assets/shell.js?v=8"></script>
+<script src="../assets/shell.js?v=22"></script>
 <script>
   /* ---------- Active-events donut ---------- */
   const projects = [
@@ -284,6 +284,14 @@
     }).join('');
     document.getElementById('donut-legend').innerHTML = projects.map(p => `
       <div class="flex items-center gap-2.5"><span class="h-3 w-3 shrink-0 rounded-full" style="background:${p.c}"></span><span class="truncate text-[13.5px] text-ink">${p.name}</span></div>`).join('');
+  })();
+
+  /* ---------- Time-based greeting ---------- */
+  (function () {
+    const el = document.getElementById('greeting');
+    if (!el) return;
+    const h = new Date().getHours();
+    el.textContent = h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
   })();
 </script>
 </body>

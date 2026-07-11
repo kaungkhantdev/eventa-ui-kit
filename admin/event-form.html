@@ -12,13 +12,13 @@
 <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=8"></script>
-<link rel="stylesheet" href="../assets/app.css?v=8" />
+<script src="../assets/config.js?v=22"></script>
+<link rel="stylesheet" href="../assets/app.css?v=22" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="event-form">
 
 <div class="flex h-full min-h-screen" data-layout>
-  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 pt-4 pb-24 lg:px-7 xl:pb-4">
 
     <!-- header -->
     <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
@@ -30,9 +30,9 @@
           <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Fill in the details below to set up and publish a new event.</p>
         </div>
       </div>
-      <div class="flex shrink-0 items-center gap-2">
-        <a href="events.html" class="btn btn-ghost"><i class="hgi-stroke hgi-note-03 text-[16px]"></i>Save draft</a>
-        <a href="events.html" class="btn btn-primary"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i>Publish</a>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><re-icon icon="bell" size="18"></re-icon><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
+        <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
       </div>
     </div>
 
@@ -240,6 +240,10 @@
       <div class="xl:col-span-1">
         <div class="card space-y-4 p-4 xl:sticky xl:top-4">
           <h2 class="text-[15px] font-bold tracking-tight">Publish settings</h2>
+          <div class="hidden gap-2 xl:flex">
+            <a href="events.html" class="btn btn-soft flex-1"><i class="hgi-stroke hgi-note-03 text-[16px]"></i>Save draft</a>
+            <a href="events.html" class="btn btn-primary flex-1"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i>Publish</a>
+          </div>
 
           <div>
             <label class="label">Status</label>
@@ -292,7 +296,13 @@
   </main>
 </div>
 
-<script src="../assets/shell.js?v=8"></script>
+<!-- mobile sticky publish bar (desktop uses the sticky Publish settings panel) -->
+<div class="fixed inset-x-0 bottom-0 z-40 flex gap-2 border-t border-hair bg-surface px-4 py-3 xl:hidden">
+  <a href="events.html" class="btn btn-soft flex-1"><i class="hgi-stroke hgi-note-03 text-[16px]"></i>Save draft</a>
+  <a href="events.html" class="btn btn-primary flex-1"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i>Publish</a>
+</div>
+
+<script src="../assets/shell.js?v=22"></script>
 <script>
   /* ---------- Location: in-person / online toggle ---------- */
   const locToggle = document.querySelector('[data-loc-toggle]');
