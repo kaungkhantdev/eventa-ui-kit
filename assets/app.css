@@ -3,7 +3,7 @@
    Semantic tokens flip in dark mode; components reference them.
    ============================================================ */
 :root {
-  --canvas: 255 255 255; --surface: 255 255 255; --sidebar: 249 250 251;
+  --canvas: 247 248 250; --surface: 255 255 255; --sidebar: 249 250 251;
   --hair: 229 231 235; --line: 238 240 243;
   --ink: 19 42 34; --muted: 139 147 164; --brand-soft: 230 246 239;
 }
@@ -47,7 +47,7 @@ re-icon { flex: none; }
 .btn-icon:hover { color: rgb(var(--ink)); background: rgb(var(--line)); }
 
 /* ---------- Cards ---------- */
-.card { border-radius: 1rem; border: 1px solid rgb(var(--hair)); background: rgb(var(--surface)); }
+.card { border-radius: 1rem; background: rgb(var(--surface)); }
 
 /* ---------- Forms ---------- */
 .label { display: block; font-size: 12px; font-weight: 600; color: rgb(var(--ink)); margin-bottom: .375rem; }

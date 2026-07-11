@@ -3,8 +3,9 @@
    Identical design to primary-ui/dashboard.html (reicon icons), injected into
    [data-layout] on every admin page and driven by <body data-page="…">.
      • Rail  = main nav (modules). The active module (the one containing the
-       current page) is highlighted + its icon is filled; clicking another
-       module swaps the panel client-side. Dashboard/Home navigate directly.
+       current page) is highlighted + its icon is filled; clicking a module
+       navigates to its landing page (whose panel then opens). A module without
+       an href instead swaps the panel client-side (fallback).
      • Panel = the selected module's grouped, collapsible sub-nav; the leaf
        matching data-page is highlighted. Modules with no groups hide the panel.
    Also wires: mobile drawer, dark mode (circular reveal), and the declarative
@@ -19,7 +20,7 @@
   const MODULES = [
     { id: 'home', label: 'Home', icon: 'home', href: '../primary-ui/home.html' },
     { id: 'dashboard', label: 'Dashboard', icon: 'element-42', href: 'dashboard.html' },
-    { id: 'events', label: 'Events', icon: 'calendar', groups: [
+    { id: 'events', label: 'Events', icon: 'calendar', href: 'events.html', groups: [
       { label: 'Schedule', icon: 'calendar', items: [
         { label: 'All Events',    page: 'events',       href: 'events.html' },
         { label: 'Create Event',  page: 'event-form',   href: 'event-form.html' },
@@ -33,7 +34,7 @@
         { label: 'Speakers',      page: 'speakers',      href: 'speakers.html' },
       ]},
     ]},
-    { id: 'finance', label: 'Finance', icon: 'wallet', groups: [
+    { id: 'finance', label: 'Finance', icon: 'wallet', href: 'payments.html', groups: [
       { label: 'Transactions', icon: 'wallet', items: [
         { label: 'Payments', page: 'payments', href: 'payments.html' },
         { label: 'Payouts',  page: 'payouts',  href: 'payouts.html' },
@@ -43,7 +44,7 @@
         { label: 'Discounts', page: 'discounts', href: 'discounts.html' },
       ]},
     ]},
-    { id: 'management', label: 'Management', icon: 'settings', bottom: true, groups: [
+    { id: 'management', label: 'Management', icon: 'settings', bottom: true, href: 'reports.html', groups: [
       { label: 'Business', icon: 'briefcase', items: [
         { label: 'Reports',       page: 'reports',       href: 'reports.html' },
         { label: 'Notifications', page: 'notifications', href: 'notifications.html' },

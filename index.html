@@ -10,12 +10,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="assets/config.js"></script>
-<link rel="stylesheet" href="assets/app.css" />
+<script src="assets/config.js?v=3"></script>
+<link rel="stylesheet" href="assets/app.css?v=3" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased">
 
-<button id="theme-btn" class="btn-icon fixed right-4 top-4 z-10 border border-hair" title="Toggle theme"><i class="hgi-stroke hgi-moon-02 text-[18px]"></i></button>
+<button id="theme-btn" class="btn-icon fixed right-4 top-4 z-10 bg-surface" title="Toggle theme"><i class="hgi-stroke hgi-moon-02 text-[18px]"></i></button>
 
 <div class="mx-auto max-w-6xl px-5 py-10 lg:py-16">
   <!-- hero -->
@@ -93,7 +93,7 @@
       <h2 class="mb-3 text-[12px] font-semibold uppercase tracking-wider text-muted">${g.title}</h2>
       <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
         ${g.items.map(it => `
-          <a href="${it.href}" class="card group p-4 transition hover:border-brand">
+          <a href="${it.href}" class="card group p-4 transition hover:ring-2 hover:ring-brand/25">
             <div class="flex items-start gap-3">
               <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke ${it.icon} text-[20px]"></i></span>
               <div class="min-w-0">

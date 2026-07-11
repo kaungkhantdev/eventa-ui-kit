@@ -12,8 +12,8 @@
 <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js"></script>
-<link rel="stylesheet" href="../assets/app.css" />
+<script src="../assets/config.js?v=3"></script>
+<link rel="stylesheet" href="../assets/app.css?v=3" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="feedback">
 
@@ -25,7 +25,7 @@
     <!-- header -->
     <div class="mb-4 flex items-center justify-between gap-3">
       <div class="flex min-w-0 items-center gap-3">
-        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
         <div class="min-w-0">
           <h1 class="text-[22px] font-bold tracking-tight">Feedback &amp; Surveys</h1>
           <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Collect and analyze attendee feedback.</p>
@@ -398,7 +398,7 @@
   </footer>
 </aside>
 
-<script src="../assets/shell.js"></script>
+<script src="../assets/shell.js?v=3"></script>
 <script>
   // Question builder: add / remove rows inside the survey panel
   const questionList = document.getElementById('question-list');
