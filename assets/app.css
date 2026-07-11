@@ -39,8 +39,13 @@ re-icon { flex: none; }
 .btn-sm { padding: .375rem .625rem; font-size: 12px; }
 .btn-primary { background: #1ba770; color: #fff; }
 .btn-primary:hover { background: #157e56; }
-.btn-ghost { border-color: rgb(var(--hair)); color: rgb(var(--muted)); background: rgb(var(--surface)); }
+.btn-ghost { color: rgb(var(--ink)); background: rgb(var(--surface)); }
 .btn-ghost:hover { color: rgb(var(--ink)); background: rgb(var(--line)); }
+/* soft/tonal primary — light brand fill; use on white surface cards */
+.btn-soft { color: #157e56; background: rgb(var(--brand-soft)); }
+.btn-soft:hover { color: #157e56; background: color-mix(in srgb, rgb(var(--brand-soft)), #1ba770 12%); }
+html.dark .btn-soft { color: #45c98f; }
+html.dark .btn-soft:hover { color: #45c98f; }
 .btn-danger { background: #ef4444; color: #fff; }
 .btn-danger:hover { background: #dc2626; }
 .btn-icon { width: 2rem; height: 2rem; padding: 0; border-radius: .5rem; color: rgb(var(--muted)); background: transparent; }

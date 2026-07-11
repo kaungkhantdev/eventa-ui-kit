@@ -12,8 +12,8 @@
 <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=5"></script>
-<link rel="stylesheet" href="../assets/app.css?v=5" />
+<script src="../assets/config.js?v=8"></script>
+<link rel="stylesheet" href="../assets/app.css?v=8" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="users">
 <div class="flex h-full min-h-screen" data-layout>
@@ -47,7 +47,7 @@
           <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>Manage payments &amp; payouts</li>
           <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>Configure workspace settings</li>
         </ul>
-        <button class="btn btn-ghost btn-sm js-edit-role mt-3 w-full" data-open="role-panel" data-role="Admin"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit role</button>
+        <button class="btn btn-soft btn-sm js-edit-role mt-3 w-full" data-open="role-panel" data-role="Admin"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit role</button>
       </div>
 
       <div class="card p-4">
@@ -64,7 +64,7 @@
           <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>Manage tickets &amp; discounts</li>
           <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>View registrations &amp; reports</li>
         </ul>
-        <button class="btn btn-ghost btn-sm js-edit-role mt-3 w-full" data-open="role-panel" data-role="Organizer"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit role</button>
+        <button class="btn btn-soft btn-sm js-edit-role mt-3 w-full" data-open="role-panel" data-role="Organizer"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit role</button>
       </div>
 
       <div class="card p-4">
@@ -81,7 +81,7 @@
           <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>Scan &amp; validate tickets</li>
           <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>View registrations</li>
         </ul>
-        <button class="btn btn-ghost btn-sm js-edit-role mt-3 w-full" data-open="role-panel" data-role="Staff"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit role</button>
+        <button class="btn btn-soft btn-sm js-edit-role mt-3 w-full" data-open="role-panel" data-role="Staff"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit role</button>
       </div>
 
       <div class="card p-4">
@@ -98,7 +98,7 @@
           <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>Update own profile</li>
           <li class="flex items-center gap-1.5 text-[12px] text-ink"><i class="hgi-stroke hgi-tick-02 text-[13px] text-brand"></i>No workspace admin access</li>
         </ul>
-        <button class="btn btn-ghost btn-sm js-edit-role mt-3 w-full" data-open="role-panel" data-role="Attendee"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit role</button>
+        <button class="btn btn-soft btn-sm js-edit-role mt-3 w-full" data-open="role-panel" data-role="Attendee"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i>Edit role</button>
       </div>
     </div>
 
@@ -354,7 +354,7 @@
     </div>
   </div>
   <footer class="flex gap-2 border-t border-hair p-4">
-    <button class="btn btn-ghost flex-1" data-close>Cancel</button>
+    <button class="btn btn-soft flex-1" data-close>Cancel</button>
     <button class="btn btn-primary flex-1" data-close><i class="hgi-stroke hgi-mail-send-01 text-[16px]"></i>Send invite</button>
   </footer>
 </aside>
@@ -445,7 +445,7 @@
     </div>
   </div>
   <footer class="flex gap-2 border-t border-hair p-4">
-    <button class="btn btn-ghost flex-1" data-close>Cancel</button>
+    <button class="btn btn-soft flex-1" data-close>Cancel</button>
     <button class="btn btn-primary flex-1" data-close>Save changes</button>
   </footer>
 </aside>
@@ -457,13 +457,13 @@
     <h3 class="mt-3 text-[15px] font-bold tracking-tight">Remove user?</h3>
     <p class="mt-1 text-[13px] text-muted">This immediately revokes their access to this workspace. They can be re-invited at any time.</p>
     <div class="mt-4 flex gap-2">
-      <button class="btn btn-ghost flex-1" data-close>Cancel</button>
+      <button class="btn btn-soft flex-1" data-close>Cancel</button>
       <button class="btn btn-danger flex-1" data-close>Remove</button>
     </div>
   </div>
 </div>
 
-<script src="../assets/shell.js?v=5"></script>
+<script src="../assets/shell.js?v=8"></script>
 <script>
   /* ---------- Role permission presets ---------- */
   const ROLE_PERMS = {
