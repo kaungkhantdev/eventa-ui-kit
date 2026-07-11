@@ -75,7 +75,7 @@
     <div id="sidenav" class="fixed inset-y-0 left-0 z-50 flex -translate-x-full transition-transform duration-300 lg:static lg:translate-x-0">
       <aside id="rail" class="relative z-30 flex w-16 shrink-0 flex-col items-center bg-[#0e0f12] py-4">
         <div class="group relative flex justify-center">
-          <a href="dashboard.html" class="grid h-9 w-9 place-items-center rounded-full border border-brand/70 text-brand"><re-icon icon="radio2" size="18" weight="filled"></re-icon></a>
+          <a href="dashboard.html" class="grid h-9 w-9 place-items-center rounded-full border border-brand/70 text-brand"><re-icon icon="flame" size="18"></re-icon></a>
           <span class="rail-tip">Eventa</span>
         </div>
         <div id="rail-top" class="mt-5 flex flex-col items-center gap-1.5"></div>
@@ -86,7 +86,7 @@
             <span class="rail-tip">Change mode</span>
           </div>
           <div class="group relative mt-1 flex justify-center">
-            <span class="grid h-9 w-9 place-items-center rounded-[11px] bg-brand text-white shadow-sm"><re-icon icon="radio2" size="18" weight="filled"></re-icon></span>
+            <span class="grid h-9 w-9 place-items-center rounded-[11px] bg-brand text-white shadow-sm"><re-icon icon="flame" size="18"></re-icon></span>
             <span class="rail-tip">Eventa for Business · v1.0.0.0</span>
           </div>
         </div>
