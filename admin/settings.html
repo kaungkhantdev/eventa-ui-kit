@@ -12,8 +12,8 @@
 <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=24"></script>
-<link rel="stylesheet" href="../assets/app.css?v=24" />
+<script src="../assets/config.js?v=31"></script>
+<link rel="stylesheet" href="../assets/app.css?v=31" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="settings">
 
@@ -35,199 +35,372 @@
     </div>
 
     <!-- tabs -->
-    <div data-tabs="#settingsTabs" class="flex gap-4 overflow-x-auto border-b border-hair">
-      <button class="tab tab-active" data-tab="profile">Profile</button>
-      <button class="tab" data-tab="organization">Organization</button>
-      <button class="tab" data-tab="security">Security</button>
-      <button class="tab" data-tab="notifications">Notifications</button>
-      <button class="tab" data-tab="billing">Billing</button>
-      <button class="tab" data-tab="api">API</button>
+    <div data-tabs="#settingsTabs" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button class="pilltab tab-active" data-tab="profile">Profile</button>
+      <button class="pilltab" data-tab="organization">Organization</button>
+      <button class="pilltab" data-tab="payments">Payments</button>
+      <button class="pilltab" data-tab="security">Security</button>
+      <button class="pilltab" data-tab="notifications">Notifications</button>
     </div>
 
     <div id="settingsTabs" class="mt-4">
 
       <!-- ===================== PROFILE ===================== -->
-      <div data-tab-panel="profile" class="space-y-3">
-        <section class="card p-4">
-          <h2 class="text-[15px] font-bold tracking-tight">Profile photo</h2>
-          <div class="mt-3 flex flex-wrap items-center gap-4">
-            <div class="grid h-16 w-16 shrink-0 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[20px] font-semibold text-white">HN</div>
-            <div>
-              <button class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-camera-01 text-[14px]"></i>Change photo</button>
-              <p class="hint">JPG, PNG or GIF. Max 2MB, square recommended.</p>
-            </div>
-          </div>
-        </section>
+      <div data-tab-panel="profile">
+        <div class="grid grid-cols-1 gap-4 lg:grid-cols-[280px_minmax(0,1fr)]">
 
-        <section class="card p-4">
-          <h2 class="text-[15px] font-bold tracking-tight">Personal information</h2>
-          <div class="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div>
-              <label class="label">Full name</label>
-              <input class="input" value="Harper Nelson" />
+          <!-- avatar card -->
+          <div class="card p-5">
+            <p class="text-[13px] font-bold tracking-tight">Profile photo</p>
+            <div class="mt-3 flex items-center gap-4">
+              <span class="grid h-20 w-20 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-brand to-emerald-400 text-[26px] font-bold text-white">HN</span>
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-2">
+                  <button type="button" class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-image-upload-01 text-[15px]"></i>Upload</button>
+                  <button type="button" class="text-[12px] font-medium text-muted transition hover:text-red-500">Remove</button>
+                </div>
+                <p class="mt-2 text-[11px] leading-snug text-muted">JPG or PNG · Max 5MB</p>
+              </div>
             </div>
-            <div>
-              <label class="label">Email</label>
-              <input class="input" type="email" value="harper.nelson@eventa.io" />
+            <div class="mt-4 border-t border-hair pt-4">
+              <h3 class="text-[15px] font-bold tracking-tight">Harper Nelson</h3>
+              <p class="text-[12px] text-muted">Event Manager · Eventa</p>
             </div>
-            <div>
-              <label class="label">Phone</label>
-              <input class="input" type="tel" value="+66 81 234 5678" />
-            </div>
-            <div>
-              <label class="label">Timezone</label>
-              <select class="select">
-                <option selected>(GMT+7) Bangkok, Hanoi, Jakarta</option>
-                <option>(GMT+8) Singapore, Kuala Lumpur, Manila</option>
-                <option>(GMT+9) Tokyo, Seoul, Osaka</option>
-                <option>(GMT+0) London, Lisbon, Dublin</option>
-              </select>
-            </div>
-            <div class="sm:col-span-2 sm:max-w-xs">
-              <label class="label">Language</label>
-              <select class="select">
-                <option selected>English</option>
-                <option>ไทย (Thai)</option>
-                <option>中文 (Chinese)</option>
-                <option>日本語 (Japanese)</option>
-              </select>
+            <div class="mt-4 space-y-2 border-t border-hair pt-4 text-[12px]">
+              <p class="flex items-center justify-between"><span class="text-muted">Verified</span><span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[11px]"></i>Email</span></p>
+              <p class="flex items-center justify-between"><span class="text-muted">Events managed</span><span class="font-semibold tabular-nums">24</span></p>
+              <p class="flex items-center justify-between"><span class="text-muted">Member since</span><span class="font-semibold">Jan 2024</span></p>
             </div>
           </div>
-          <div class="mt-4 flex justify-end border-t border-hair pt-4">
-            <button class="btn btn-primary">Save changes</button>
+
+          <!-- details form -->
+          <div class="card p-5">
+            <h3 class="text-[14px] font-bold tracking-tight">Personal information</h3>
+            <p class="mt-0.5 text-[12px] text-muted">Update your name and how your team can reach you.</p>
+
+            <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label class="label">First name</label>
+                <input class="input" value="Harper" />
+              </div>
+              <div>
+                <label class="label">Last name</label>
+                <input class="input" value="Nelson" />
+              </div>
+              <div>
+                <label class="label">Email</label>
+                <input class="input" type="email" value="harper.nelson@eventa.io" />
+              </div>
+              <div>
+                <label class="label">Phone</label>
+                <input class="input" type="tel" value="+66 81 234 5678" />
+              </div>
+              <div>
+                <label class="label">Timezone</label>
+                <select class="select">
+                  <option selected>(GMT+7) Bangkok, Hanoi, Jakarta</option>
+                  <option>(GMT+8) Singapore, Kuala Lumpur, Manila</option>
+                  <option>(GMT+9) Tokyo, Seoul, Osaka</option>
+                  <option>(GMT+0) London, Lisbon, Dublin</option>
+                </select>
+              </div>
+              <div>
+                <label class="label">Language</label>
+                <select class="select">
+                  <option selected>English</option>
+                  <option>ไทย (Thai)</option>
+                  <option>中文 (Chinese)</option>
+                  <option>日本語 (Japanese)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mt-5 flex justify-end gap-2 border-t border-hair pt-4">
+              <button type="button" class="btn btn-soft btn-sm">Cancel</button>
+              <button type="button" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-tick-02 text-[15px]"></i>Save changes</button>
+            </div>
           </div>
-        </section>
+        </div>
       </div>
 
       <!-- ===================== ORGANIZATION ===================== -->
-      <div data-tab-panel="organization" class="hidden space-y-3">
-        <section class="card p-4">
-          <h2 class="text-[15px] font-bold tracking-tight">Organization logo</h2>
-          <div class="mt-3 flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-hair p-6 text-center">
-            <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-image-upload-01 text-[18px]"></i></span>
-            <p class="text-[13px] font-medium text-ink">Click to upload or drag and drop</p>
-            <p class="text-[11px] text-muted">SVG, PNG or JPG, max 1MB</p>
-            <button class="btn btn-soft btn-sm mt-1"><i class="hgi-stroke hgi-upload-01 text-[14px]"></i>Browse files</button>
-          </div>
-        </section>
+      <div data-tab-panel="organization" class="hidden">
+        <div class="grid grid-cols-1 gap-4 lg:grid-cols-[280px_minmax(0,1fr)]">
 
-        <section class="card p-4">
-          <h2 class="text-[15px] font-bold tracking-tight">Organization details</h2>
-          <div class="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div>
-              <label class="label">Organization name</label>
-              <input class="input" value="Eventa Co., Ltd." />
+          <!-- logo card -->
+          <div class="card p-5">
+            <p class="text-[13px] font-bold tracking-tight">Organization logo</p>
+            <div class="mt-3 flex items-center gap-4">
+              <span class="grid h-20 w-20 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-brand to-emerald-400 text-[28px] font-bold text-white">E</span>
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-2">
+                  <button type="button" class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-image-upload-01 text-[15px]"></i>Upload</button>
+                  <button type="button" class="text-[12px] font-medium text-muted transition hover:text-red-500">Remove</button>
+                </div>
+                <p class="mt-2 text-[11px] leading-snug text-muted">SVG, PNG or JPG · Max 1MB</p>
+              </div>
             </div>
-            <div>
-              <label class="label">Website</label>
-              <input class="input" type="url" value="https://eventa.io" />
+            <div class="mt-4 border-t border-hair pt-4">
+              <h3 class="text-[15px] font-bold tracking-tight">Eventa Co., Ltd.</h3>
+              <p class="text-[12px] text-muted">Bangkok, Thailand</p>
             </div>
-            <div class="sm:col-span-2">
-              <label class="label">Address</label>
-              <textarea class="textarea" rows="3">88 Sukhumvit Rd, Klongtoey, Bangkok 10110, Thailand</textarea>
-            </div>
-            <div>
-              <label class="label">Currency</label>
-              <select class="select">
-                <option selected>Thai Baht (฿)</option>
-                <option>US Dollar ($)</option>
-                <option>Euro (€)</option>
-                <option>Singapore Dollar (S$)</option>
-              </select>
-            </div>
-            <div>
-              <label class="label">Tax ID</label>
-              <input class="input" value="0-1055-61234-56-7" />
+            <div class="mt-4 space-y-2 border-t border-hair pt-4 text-[12px]">
+              <p class="flex items-center justify-between"><span class="text-muted">Plan</span><span class="badge badge-green">Pro</span></p>
+              <p class="flex items-center justify-between"><span class="text-muted">Events hosted</span><span class="font-semibold tabular-nums">128</span></p>
+              <p class="flex items-center justify-between"><span class="text-muted">Team members</span><span class="font-semibold tabular-nums">8</span></p>
             </div>
           </div>
-          <div class="mt-4 flex justify-end border-t border-hair pt-4">
-            <button class="btn btn-primary">Save changes</button>
+
+          <!-- details form -->
+          <div class="card p-5">
+            <h3 class="text-[14px] font-bold tracking-tight">Organization details</h3>
+            <p class="mt-0.5 text-[12px] text-muted">Legal business info used on invoices and receipts.</p>
+
+            <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label class="label">Organization name</label>
+                <input class="input" value="Eventa Co., Ltd." />
+              </div>
+              <div>
+                <label class="label">Website</label>
+                <input class="input" type="url" value="https://eventa.io" />
+              </div>
+              <div class="sm:col-span-2">
+                <label class="label">Address</label>
+                <textarea class="textarea" rows="3">88 Sukhumvit Rd, Klongtoey, Bangkok 10110, Thailand</textarea>
+              </div>
+              <div>
+                <label class="label">Currency</label>
+                <select class="select">
+                  <option selected>Thai Baht (฿)</option>
+                  <option>US Dollar ($)</option>
+                  <option>Euro (€)</option>
+                  <option>Singapore Dollar (S$)</option>
+                </select>
+              </div>
+              <div>
+                <label class="label">Tax ID</label>
+                <input class="input" value="0-1055-61234-56-7" />
+              </div>
+            </div>
+
+            <div class="mt-5 flex justify-end gap-2 border-t border-hair pt-4">
+              <button type="button" class="btn btn-soft btn-sm">Cancel</button>
+              <button type="button" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-tick-02 text-[15px]"></i>Save changes</button>
+            </div>
           </div>
-        </section>
+        </div>
       </div>
 
-      <!-- ===================== SECURITY ===================== -->
-      <div data-tab-panel="security" class="hidden space-y-3">
-        <section class="card p-4">
-          <h2 class="text-[15px] font-bold tracking-tight">Change password</h2>
-          <div class="mt-3 max-w-md space-y-4">
-            <div>
-              <label class="label">Current password</label>
-              <div class="relative">
-                <input class="input pr-10" type="password" placeholder="••••••••" />
-                <button class="btn-icon absolute right-1 top-1/2 -translate-y-1/2" title="Show password"><i class="hgi-stroke hgi-view text-[16px]"></i></button>
-              </div>
-            </div>
-            <div>
-              <label class="label">New password</label>
-              <div class="relative">
-                <input class="input pr-10" type="password" placeholder="••••••••" />
-                <button class="btn-icon absolute right-1 top-1/2 -translate-y-1/2" title="Show password"><i class="hgi-stroke hgi-view text-[16px]"></i></button>
-              </div>
-              <p class="hint">At least 8 characters, with a number and a symbol.</p>
-            </div>
-            <div>
-              <label class="label">Confirm new password</label>
-              <div class="relative">
-                <input class="input pr-10" type="password" placeholder="••••••••" />
-                <button class="btn-icon absolute right-1 top-1/2 -translate-y-1/2" title="Show password"><i class="hgi-stroke hgi-view text-[16px]"></i></button>
-              </div>
-            </div>
-          </div>
-          <div class="mt-4 flex max-w-md justify-end border-t border-hair pt-4">
-            <button class="btn btn-primary">Update password</button>
-          </div>
-        </section>
+      <!-- ===================== PAYMENTS (Stripe) ===================== -->
+      <div data-tab-panel="payments" class="hidden space-y-3">
 
-        <section class="card p-4">
-          <div class="flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-start gap-3">
-              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-shield-key text-[18px]"></i></span>
-              <div>
-                <div class="flex flex-wrap items-center gap-2">
-                  <h2 class="text-[15px] font-bold tracking-tight">Two-factor authentication</h2>
-                  <span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Enabled</span>
-                </div>
-                <p class="mt-0.5 text-[12px] text-muted">Require a one-time code from an authenticator app in addition to your password.</p>
-              </div>
-            </div>
-            <button class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span></button>
-          </div>
-        </section>
+        <!-- test-mode banner -->
+        <div id="test-banner" class="flex items-center gap-2.5 rounded-xl border border-amber-300/60 bg-amber-50 px-3.5 py-2.5 text-[12px] font-medium text-amber-700 dark:border-amber-400/25 dark:bg-amber-400/10 dark:text-amber-300">
+          <i class="hgi-stroke hgi-alert-circle text-[16px]"></i>
+          <span>You're using <b>Test keys</b> — no real charges are processed. Add your Live keys to accept payments.</span>
+        </div>
 
-        <section class="card p-4">
-          <h2 class="text-[15px] font-bold tracking-tight">Active sessions</h2>
-          <div class="mt-1 divide-y divide-line">
-            <div class="flex flex-wrap items-center gap-3 py-3">
-              <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line text-muted"><i class="hgi-stroke hgi-smart-phone-01 text-[16px]"></i></span>
-              <div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">Chrome on macOS · Bangkok, Thailand</p><p class="text-[11px] text-muted">Current session · active now</p></div>
-              <span class="badge badge-green">This device</span>
-            </div>
-            <div class="flex flex-wrap items-center gap-3 py-3">
-              <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line text-muted"><i class="hgi-stroke hgi-smart-phone-01 text-[16px]"></i></span>
-              <div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">Safari on iPhone 15 · Bangkok, Thailand</p><p class="text-[11px] text-muted">Last active 2 hours ago</p></div>
-              <button class="btn btn-soft btn-sm">Revoke</button>
-            </div>
-            <div class="flex flex-wrap items-center gap-3 py-3">
-              <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line text-muted"><i class="hgi-stroke hgi-smart-phone-01 text-[16px]"></i></span>
-              <div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">Edge on Windows · Chiang Mai, Thailand</p><p class="text-[11px] text-muted">Last active 3 days ago</p></div>
-              <button class="btn btn-soft btn-sm">Revoke</button>
-            </div>
-          </div>
-        </section>
-
+        <!-- connection status (full width — it's the header/context) -->
         <section class="card p-4">
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center gap-3">
-              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-line text-muted"><i class="hgi-stroke hgi-legal-document-01 text-[18px]"></i></span>
+              <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#635BFF] text-white shadow-sm"><i class="hgi-stroke hgi-credit-card text-[20px]"></i></span>
               <div>
-                <h2 class="text-[15px] font-bold tracking-tight">Audit log</h2>
-                <p class="mt-0.5 text-[12px] text-muted">Review sign-ins, permission changes, and data exports for your account.</p>
+                <div class="flex flex-wrap items-center gap-2">
+                  <h2 class="text-[15px] font-bold tracking-tight">Stripe</h2>
+                  <span id="conn-badge" class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Connected</span>
+                </div>
+                <p class="mt-0.5 text-[12px] text-muted">Your payment gateway for cards, PromptPay and wallets.</p>
               </div>
             </div>
-            <button class="btn btn-soft shrink-0">View log</button>
+            <div class="flex shrink-0 items-center gap-2">
+              <div class="segmented" data-mode-toggle>
+                <button type="button" class="active" data-mode="test">Test</button>
+                <button type="button" data-mode="live">Live</button>
+              </div>
+              <button type="button" id="disconnect-btn" class="btn btn-sm border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-400">Disconnect</button>
+            </div>
           </div>
         </section>
+
+        <!-- API keys (paste from Stripe) -->
+        <section class="card p-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h2 class="text-[15px] font-bold tracking-tight">API keys <span class="ml-1 align-middle text-[11px] font-medium text-muted" data-mode-label>Test mode</span></h2>
+            <a href="#" class="inline-flex items-center gap-1 text-[12px] font-semibold text-brand hover:underline">Where do I find these?<i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i></a>
+          </div>
+          <div class="mt-2 flex items-start gap-2.5 rounded-lg border border-hair bg-canvas px-3 py-2.5 text-[12px] text-muted">
+            <i class="hgi-stroke hgi-idea-01 mt-px shrink-0 text-[15px] text-brand"></i>
+            <span>In your <b class="text-ink">Stripe Dashboard</b> go to <b class="text-ink">Developers → API keys</b>, copy the two keys, and paste them below.</span>
+          </div>
+          <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label class="label">Publishable key</label>
+              <input class="input font-mono text-[12px]" data-key-field placeholder="pk_test_..." data-test="pk_test_51P9xEventa0aB3kY7cQ" data-live="" value="pk_test_51P9xEventa0aB3kY7cQ" />
+              <p class="hint">Starts with <span class="font-mono">pk_test_</span> (test) or <span class="font-mono">pk_live_</span> (live).</p>
+            </div>
+            <div>
+              <label class="label">Secret key</label>
+              <div class="relative">
+                <input class="input pr-10 font-mono text-[12px]" type="password" data-key-field data-secret placeholder="sk_test_..." data-test="sk_test_51P9xEventa7hV6tL1pX" data-live="" value="sk_test_51P9xEventa7hV6tL1pX" />
+                <button type="button" class="btn-icon absolute right-1 top-1/2 -translate-y-1/2" data-reveal title="Reveal"><i class="hgi-stroke hgi-view text-[16px]"></i></button>
+              </div>
+              <p class="hint">Starts with <span class="font-mono">sk_</span>. Stored encrypted — never shown to attendees.</p>
+            </div>
+          </div>
+          <div class="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-hair pt-3">
+            <p class="text-[11px] text-muted">Last saved Jul 9, 2026 · 14:22</p>
+            <div class="flex gap-2">
+              <button class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-plug-socket text-[14px]"></i>Test connection</button>
+              <button class="btn btn-primary btn-sm">Save keys</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- config: methods + checkout preferences side by side (similar-sized → balanced) -->
+        <div class="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:items-start">
+
+        <!-- payment methods -->
+        <section class="card p-4">
+          <h2 class="text-[15px] font-bold tracking-tight">Payment methods</h2>
+          <p class="mt-0.5 text-[12px] text-muted">Choose which methods to offer your attendees at checkout.</p>
+          <div class="mt-2 divide-y divide-line">
+
+            <div class="flex flex-wrap items-center justify-between gap-3 py-3 first:pt-1">
+              <div class="flex min-w-0 items-center gap-3">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-credit-card text-[16px]"></i></span>
+                <div class="min-w-0">
+                  <p class="text-[13px] font-semibold text-ink">Cards</p>
+                  <div class="mt-1 flex flex-wrap items-center gap-1">
+                    <span class="rounded bg-line px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-ink">VISA</span>
+                    <span class="rounded bg-line px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-ink">MC</span>
+                    <span class="rounded bg-line px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-ink">AMEX</span>
+                    <span class="rounded bg-line px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-ink">JCB</span>
+                  </div>
+                </div>
+              </div>
+              <button type="button" data-toggle class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition"></span></button>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 py-3">
+              <div class="flex min-w-0 items-center gap-3">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i></span>
+                <div><p class="text-[13px] font-semibold text-ink">PromptPay</p><p class="text-[11px] text-muted">Thailand QR bank transfer</p></div>
+              </div>
+              <button type="button" data-toggle class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition"></span></button>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 py-3">
+              <div class="flex min-w-0 items-center gap-3">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line text-ink"><i class="hgi-stroke hgi-apple text-[16px]"></i></span>
+                <div><p class="text-[13px] font-semibold text-ink">Apple Pay</p><p class="text-[11px] text-muted">One-tap checkout on Apple devices</p></div>
+              </div>
+              <button type="button" data-toggle class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition"></span></button>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 py-3">
+              <div class="flex min-w-0 items-center gap-3">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line text-muted"><i class="hgi-stroke hgi-wallet-01 text-[16px]"></i></span>
+                <div><p class="text-[13px] font-semibold text-ink">Google Pay</p><p class="text-[11px] text-muted">One-tap checkout on Android &amp; Chrome</p></div>
+              </div>
+              <button type="button" data-toggle class="flex h-5 w-9 shrink-0 items-center rounded-full bg-line p-0.5"><span class="h-4 w-4 rounded-full bg-white shadow transition"></span></button>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 py-3 last:pb-1">
+              <div class="flex min-w-0 items-center gap-3">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line text-muted"><i class="hgi-stroke hgi-bank text-[16px]"></i></span>
+                <div><p class="text-[13px] font-semibold text-ink">Bank transfer</p><p class="text-[11px] text-muted">Pay by direct bank transfer</p></div>
+              </div>
+              <button type="button" data-toggle class="flex h-5 w-9 shrink-0 items-center rounded-full bg-line p-0.5"><span class="h-4 w-4 rounded-full bg-white shadow transition"></span></button>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- checkout preferences -->
+        <section class="card p-4">
+          <h2 class="text-[15px] font-bold tracking-tight">Checkout preferences</h2>
+          <div class="mt-3 grid grid-cols-1 gap-4">
+            <div>
+              <label class="label">Default currency</label>
+              <select class="select">
+                <option selected>Thai Baht (฿ THB)</option>
+                <option>US Dollar ($ USD)</option>
+                <option>Euro (€ EUR)</option>
+                <option>Singapore Dollar (S$ SGD)</option>
+              </select>
+            </div>
+            <div>
+              <label class="label">Statement descriptor</label>
+              <input class="input" value="EVENTA TICKETS" maxlength="22" />
+              <p class="hint">Appears on your attendee's card statement.</p>
+            </div>
+          </div>
+          <div class="mt-3 space-y-1 border-t border-hair pt-2">
+            <label class="flex items-center justify-between gap-3 py-2">
+              <span><span class="block text-[13px] font-medium text-ink">Save cards for faster checkout</span><span class="block text-[11px] text-muted">Let returning attendees reuse a saved card</span></span>
+              <button type="button" data-toggle class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition"></span></button>
+            </label>
+            <label class="flex items-center justify-between gap-3 py-2">
+              <span><span class="block text-[13px] font-medium text-ink">Email receipts</span><span class="block text-[11px] text-muted">Send a receipt after each successful payment</span></span>
+              <button type="button" data-toggle class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition"></span></button>
+            </label>
+          </div>
+          <div class="mt-3 flex justify-end border-t border-hair pt-3">
+            <button class="btn btn-primary">Save changes</button>
+          </div>
+        </section>
+
+        </div><!-- /config grid -->
+      </div>
+
+      <!-- ===================== SECURITY ===================== -->
+      <div data-tab-panel="security" class="hidden">
+        <div class="grid grid-cols-1 gap-3 lg:grid-cols-2">
+
+          <!-- security actions -->
+          <section class="card p-5">
+            <h2 class="flex items-center gap-2 text-[15px] font-bold tracking-tight"><i class="hgi-stroke hgi-shield-key text-[17px] text-muted"></i>Security</h2>
+            <div class="mt-4 space-y-3">
+              <div class="flex items-center justify-between gap-3 rounded-lg border border-hair bg-canvas px-3.5 py-3">
+                <span><span class="block text-[13px] font-medium text-ink">Password</span><span class="block text-[11px] text-muted">Last changed 3 months ago</span></span>
+                <button type="button" class="btn btn-soft btn-sm shrink-0" data-open="password-panel">Change</button>
+              </div>
+              <div class="flex items-center justify-between gap-3 rounded-lg border border-hair bg-canvas px-3.5 py-3">
+                <span><span class="block text-[13px] font-medium text-ink">Two-factor authentication</span><span class="block text-[11px] text-muted">Require a one-time code at sign-in</span></span>
+                <button type="button" class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span></button>
+              </div>
+              <div class="flex items-center justify-between gap-3 rounded-lg border border-hair bg-canvas px-3.5 py-3">
+                <span><span class="block text-[13px] font-medium text-ink">Audit log</span><span class="block text-[11px] text-muted">Sign-ins, permission changes &amp; exports</span></span>
+                <button type="button" class="btn btn-soft btn-sm shrink-0">View log</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- active sessions -->
+          <section class="card p-5">
+            <h2 class="text-[15px] font-bold tracking-tight">Active sessions</h2>
+            <div class="mt-1 divide-y divide-line">
+              <div class="flex flex-wrap items-center gap-3 py-3 first:pt-0">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line text-muted"><i class="hgi-stroke hgi-smart-phone-01 text-[16px]"></i></span>
+                <div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">Chrome on macOS · Bangkok</p><p class="text-[11px] text-muted">Current session · active now</p></div>
+                <span class="badge badge-green shrink-0">This device</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-3 py-3">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line text-muted"><i class="hgi-stroke hgi-smart-phone-01 text-[16px]"></i></span>
+                <div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">Safari on iPhone 15 · Bangkok</p><p class="text-[11px] text-muted">Last active 2 hours ago</p></div>
+                <button class="btn btn-soft btn-sm shrink-0">Revoke</button>
+              </div>
+              <div class="flex flex-wrap items-center gap-3 py-3 last:pb-0">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line text-muted"><i class="hgi-stroke hgi-smart-phone-01 text-[16px]"></i></span>
+                <div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">Edge on Windows · Chiang Mai</p><p class="text-[11px] text-muted">Last active 3 days ago</p></div>
+                <button class="btn btn-soft btn-sm shrink-0">Revoke</button>
+              </div>
+            </div>
+          </section>
+
+        </div>
       </div>
 
       <!-- ===================== NOTIFICATIONS ===================== -->
@@ -283,189 +456,100 @@
         </section>
       </div>
 
-      <!-- ===================== BILLING ===================== -->
-      <div data-tab-panel="billing" class="hidden space-y-3">
-        <div class="grid grid-cols-1 gap-3 lg:grid-cols-2">
-          <section class="card p-4">
-            <div class="flex items-center justify-between">
-              <h2 class="text-[15px] font-bold tracking-tight">Current plan</h2>
-              <span class="badge badge-green">Active</span>
-            </div>
-            <div class="mt-3 flex items-end gap-1"><p class="text-[24px] font-extrabold tracking-tight tnum">฿1,290</p><span class="pb-1 text-[12px] text-muted">/ month</span></div>
-            <p class="mt-1 text-[13px] font-semibold text-ink">Pro plan</p>
-            <p class="text-[12px] text-muted">Renews on Aug 9, 2026</p>
-            <div class="mt-3"><button class="btn btn-soft">Change plan</button></div>
-          </section>
-          <section class="card p-4">
-            <h2 class="text-[15px] font-bold tracking-tight">Payment method</h2>
-            <div class="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-hair p-3">
-              <div class="flex items-center gap-3">
-                <span class="grid h-9 w-12 shrink-0 place-items-center rounded-md bg-line text-[11px] font-bold tracking-wide text-ink">VISA</span>
-                <div><p class="text-[13px] font-semibold text-ink">Visa •••• 4242</p><p class="text-[11px] text-muted">Expires 08/28</p></div>
-              </div>
-              <button class="btn btn-soft btn-sm">Update</button>
-            </div>
-          </section>
-        </div>
-
-        <section class="card p-4">
-          <div class="flex items-center justify-between">
-            <h2 class="text-[15px] font-bold tracking-tight">Invoices</h2>
-            <button class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-download-01 text-[14px]"></i>Export all</button>
-          </div>
-          <div class="mt-2 overflow-x-auto">
-            <table class="data-table min-w-[560px]">
-              <thead>
-                <tr><th>Invoice</th><th>Date</th><th>Amount</th><th>Status</th><th class="text-right">Download</th></tr>
-              </thead>
-              <tbody class="text-[13px]">
-                <tr>
-                  <td class="font-medium text-ink">INV-2026-0007</td>
-                  <td class="text-muted tnum">Jul 9, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿1,290</td>
-                  <td><span class="badge badge-green">Paid</span></td>
-                  <td class="text-right"><button class="btn-icon"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button></td>
-                </tr>
-                <tr>
-                  <td class="font-medium text-ink">INV-2026-0006</td>
-                  <td class="text-muted tnum">Jun 9, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿1,290</td>
-                  <td><span class="badge badge-green">Paid</span></td>
-                  <td class="text-right"><button class="btn-icon"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button></td>
-                </tr>
-                <tr>
-                  <td class="font-medium text-ink">INV-2026-0005</td>
-                  <td class="text-muted tnum">May 9, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿1,290</td>
-                  <td><span class="badge badge-green">Paid</span></td>
-                  <td class="text-right"><button class="btn-icon"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button></td>
-                </tr>
-                <tr>
-                  <td class="font-medium text-ink">INV-2026-0004</td>
-                  <td class="text-muted tnum">Apr 9, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿1,290</td>
-                  <td><span class="badge badge-amber">Pending</span></td>
-                  <td class="text-right"><button class="btn-icon"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button></td>
-                </tr>
-                <tr>
-                  <td class="font-medium text-ink">INV-2026-0003</td>
-                  <td class="text-muted tnum">Mar 9, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿1,290</td>
-                  <td><span class="badge badge-green">Paid</span></td>
-                  <td class="text-right"><button class="btn-icon"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button></td>
-                </tr>
-                <tr>
-                  <td class="font-medium text-ink">INV-2026-0002</td>
-                  <td class="text-muted tnum">Feb 9, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿1,290</td>
-                  <td><span class="badge badge-gray">Refunded</span></td>
-                  <td class="text-right"><button class="btn-icon"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-
-      <!-- ===================== API ===================== -->
-      <div data-tab-panel="api" class="hidden space-y-3">
-        <section class="card p-4">
-          <div class="flex items-center justify-between">
-            <h2 class="text-[15px] font-bold tracking-tight">API keys</h2>
-            <button class="btn btn-primary" data-open="key-panel"><i class="hgi-stroke hgi-add-01 text-[14px]"></i>Create key</button>
-          </div>
-          <div class="mt-2 overflow-x-auto">
-            <table class="data-table min-w-[680px]">
-              <thead>
-                <tr><th>Name</th><th>Key</th><th>Created</th><th>Last used</th><th class="text-right">Actions</th></tr>
-              </thead>
-              <tbody class="text-[13px]">
-                <tr>
-                  <td class="font-medium text-ink">Production server</td>
-                  <td><div class="flex items-center gap-2 text-muted tnum">evt_live_••••••••3f9a<button class="btn-icon" title="Copy"><i class="hgi-stroke hgi-copy-01 text-[14px]"></i></button></div></td>
-                  <td class="text-muted tnum">Jan 12, 2026</td>
-                  <td class="text-muted tnum">2 hours ago</td>
-                  <td class="text-right"><button class="btn btn-soft btn-sm">Revoke</button></td>
-                </tr>
-                <tr>
-                  <td class="font-medium text-ink">Staging environment</td>
-                  <td><div class="flex items-center gap-2 text-muted tnum">evt_test_••••••••7c21<button class="btn-icon" title="Copy"><i class="hgi-stroke hgi-copy-01 text-[14px]"></i></button></div></td>
-                  <td class="text-muted tnum">Mar 3, 2026</td>
-                  <td class="text-muted tnum">5 days ago</td>
-                  <td class="text-right"><button class="btn btn-soft btn-sm">Revoke</button></td>
-                </tr>
-                <tr>
-                  <td class="font-medium text-ink">Check-in kiosk app</td>
-                  <td><div class="flex items-center gap-2 text-muted tnum">evt_live_••••••••a052<button class="btn-icon" title="Copy"><i class="hgi-stroke hgi-copy-01 text-[14px]"></i></button></div></td>
-                  <td class="text-muted tnum">May 28, 2026</td>
-                  <td class="text-muted tnum">Never</td>
-                  <td class="text-right"><button class="btn btn-soft btn-sm">Revoke</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="card p-4">
-          <div class="flex items-center justify-between">
-            <h2 class="text-[15px] font-bold tracking-tight">Webhooks</h2>
-            <button class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-add-01 text-[14px]"></i>Add endpoint</button>
-          </div>
-          <div class="mt-2 divide-y divide-line">
-            <div class="flex flex-wrap items-center justify-between gap-3 py-3">
-              <div class="flex min-w-0 items-center gap-3">
-                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-link-01 text-[16px]"></i></span>
-                <div class="min-w-0"><p class="truncate text-[13px] font-semibold text-ink">https://api.myapp.io/webhooks/eventa</p><p class="text-[11px] text-muted">registration.created, payment.succeeded, checkin.scanned</p></div>
-              </div>
-              <span class="badge badge-green shrink-0">Active</span>
-            </div>
-            <div class="flex flex-wrap items-center justify-between gap-3 py-3">
-              <div class="flex min-w-0 items-center gap-3">
-                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line text-muted"><i class="hgi-stroke hgi-link-01 text-[16px]"></i></span>
-                <div class="min-w-0"><p class="truncate text-[13px] font-semibold text-ink">https://hooks.zapier.com/eventa/8841</p><p class="text-[11px] text-muted">registration.created</p></div>
-              </div>
-              <span class="badge badge-gray shrink-0">Disabled</span>
-            </div>
-          </div>
-        </section>
-      </div>
-
     </div>
 
     <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
   </main>
 
-  <!-- Create API key panel -->
-  <aside class="panel" id="key-panel">
+  <!-- Change password panel -->
+  <aside class="panel" id="password-panel">
     <header class="flex items-center justify-between border-b border-hair p-4">
-      <h3 class="text-[15px] font-bold tracking-tight">Create API key</h3>
+      <h3 class="text-[15px] font-bold tracking-tight">Change password</h3>
       <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
     </header>
     <div class="flex-1 space-y-4 overflow-y-auto p-4">
       <div>
-        <label class="label">Key name</label>
-        <input class="input" placeholder="e.g. Production server" />
-        <p class="hint">A short name to help you identify this key later.</p>
+        <label class="label">Current password</label>
+        <div class="relative">
+          <input class="input pr-10" type="password" placeholder="••••••••" />
+          <button type="button" class="btn-icon absolute right-1 top-1/2 -translate-y-1/2" title="Show password"><i class="hgi-stroke hgi-view text-[16px]"></i></button>
+        </div>
       </div>
       <div>
-        <label class="label">Scopes</label>
-        <div class="space-y-2.5 rounded-lg border border-hair p-3">
-          <label class="flex items-center gap-2 text-[13px] text-ink"><input type="checkbox" class="h-4 w-4 rounded border-hair text-brand focus:ring-brand" checked />Read events</label>
-          <label class="flex items-center gap-2 text-[13px] text-ink"><input type="checkbox" class="h-4 w-4 rounded border-hair text-brand focus:ring-brand" />Write events</label>
-          <label class="flex items-center gap-2 text-[13px] text-ink"><input type="checkbox" class="h-4 w-4 rounded border-hair text-brand focus:ring-brand" checked />Read registrations</label>
-          <label class="flex items-center gap-2 text-[13px] text-ink"><input type="checkbox" class="h-4 w-4 rounded border-hair text-brand focus:ring-brand" />Write registrations</label>
-          <label class="flex items-center gap-2 text-[13px] text-ink"><input type="checkbox" class="h-4 w-4 rounded border-hair text-brand focus:ring-brand" />Read payments</label>
+        <label class="label">New password</label>
+        <div class="relative">
+          <input class="input pr-10" type="password" placeholder="••••••••" />
+          <button type="button" class="btn-icon absolute right-1 top-1/2 -translate-y-1/2" title="Show password"><i class="hgi-stroke hgi-view text-[16px]"></i></button>
         </div>
-        <p class="hint">Keys can be revoked at any time from the API tab.</p>
+        <p class="hint">At least 8 characters, with a number and a symbol.</p>
+      </div>
+      <div>
+        <label class="label">Confirm new password</label>
+        <div class="relative">
+          <input class="input pr-10" type="password" placeholder="••••••••" />
+          <button type="button" class="btn-icon absolute right-1 top-1/2 -translate-y-1/2" title="Show password"><i class="hgi-stroke hgi-view text-[16px]"></i></button>
+        </div>
       </div>
     </div>
     <footer class="flex gap-2 border-t border-hair p-4">
       <button class="btn btn-soft flex-1" data-close>Cancel</button>
-      <button class="btn btn-primary flex-1" data-close>Create key</button>
+      <button class="btn btn-primary flex-1" data-close>Update password</button>
     </footer>
   </aside>
+
 </div>
 
-<script src="../assets/shell.js?v=24"></script>
+<script src="../assets/shell.js?v=31"></script>
+<script>
+  /* ---------- Payments tab: toggles, secret reveal, test/live mode ---------- */
+  (function () {
+    document.addEventListener('click', function (e) {
+      // toggle switches
+      var t = e.target.closest('[data-toggle]');
+      if (t) {
+        var on = t.classList.contains('bg-brand');
+        t.classList.toggle('bg-brand', !on);
+        t.classList.toggle('bg-line', on);
+        var dot = t.querySelector('span');
+        if (dot) dot.classList.toggle('translate-x-4', !on);
+        return;
+      }
+      // reveal secret key
+      var r = e.target.closest('[data-reveal]');
+      if (r) {
+        var input = r.parentElement.querySelector('input');
+        var icon = r.querySelector('i');
+        if (input) {
+          var hidden = input.type === 'password';
+          input.type = hidden ? 'text' : 'password';
+          if (icon) icon.className = 'hgi-stroke ' + (hidden ? 'hgi-view-off' : 'hgi-view') + ' text-[16px]';
+        }
+        return;
+      }
+    });
+
+    // test / live mode — swaps which set of keys is shown
+    var banner = document.getElementById('test-banner');
+    document.querySelectorAll('[data-mode-toggle] [data-mode]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var mode = btn.getAttribute('data-mode');
+        document.querySelectorAll('[data-mode-toggle] [data-mode]').forEach(function (b) { b.classList.toggle('active', b === btn); });
+        if (banner) banner.classList.toggle('hidden', mode !== 'test');
+        document.querySelectorAll('[data-mode-label]').forEach(function (l) { l.textContent = mode === 'test' ? 'Test mode' : 'Live mode'; });
+        document.querySelectorAll('[data-key-field]').forEach(function (f) {
+          f.value = f.getAttribute('data-' + mode) || '';
+          if (f.hasAttribute('data-secret')) f.type = 'password';
+        });
+        var pub = document.querySelector('[data-key-field]:not([data-secret])');
+        var badge = document.getElementById('conn-badge');
+        var connected = pub && pub.value.trim() !== '';
+        if (badge) badge.className = 'badge ' + (connected ? 'badge-green' : 'badge-gray');
+        if (badge) badge.innerHTML = connected
+          ? '<i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Connected'
+          : '<i class="hgi-stroke hgi-alert-circle text-[12px]"></i>Not connected';
+      });
+    });
+  })();
+</script>
 </body>
 </html>

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Check-in tool</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script src="../assets/config.js?v=31"></script>
+<link rel="stylesheet" href="../assets/app.css?v=31" />
+<style>
+  @keyframes scanmove { 0%{transform:translateY(0)} 50%{transform:translateY(220px)} 100%{transform:translateY(0)} }
+  .scan-line{ animation: scanmove 2.6s ease-in-out infinite; }
+  @keyframes resultpop { 0%{opacity:0;transform:scale(.94)} 100%{opacity:1;transform:scale(1)} }
+  .result-pop{ animation: resultpop .22s ease-out; }
+  @media (prefers-reduced-motion: reduce){ .scan-line{animation:none} .result-pop{animation:none} }
+  /* scanner viewport — light, on-brand placeholder when idle; dark only when the camera is live */
+  #cam-stage{ background: linear-gradient(180deg, rgb(var(--canvas)), rgb(var(--line))); }
+  #cam-stage .cam-glow{ background: radial-gradient(ellipse at center, rgb(var(--brand-soft) / .6), transparent 60%); }
+  #cam-stage .frame-corner{ border-color: rgb(var(--muted) / .40); }
+  #cam-stage #qr-ghost{ color: rgb(var(--muted) / .22); }
+  #cam-stage #cam-hint{ color: rgb(var(--muted)); }
+  #cam-stage #cam-hint b{ color: rgb(var(--ink)); }
+  #cam-stage .scan-line{ opacity: 0; }
+  #cam-stage.cam-live{ background: #0b0b0c; }
+  #cam-stage.cam-live .cam-glow{ background: radial-gradient(ellipse at center, rgba(255,255,255,.06), transparent 70%); }
+  #cam-stage.cam-live .frame-corner{ border-color: rgba(255,255,255,.85); }
+  #cam-stage.cam-live #qr-ghost{ color: rgba(255,255,255,.10); }
+  #cam-stage.cam-live #cam-hint{ color: rgba(255,255,255,.72); }
+  #cam-stage.cam-live #cam-hint b{ color: #fff; }
+  #cam-stage.cam-live .scan-line{ opacity: 1; }
+</style>
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="checkin-tool">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidebar here -->
+
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <div class="min-w-0">
+          <h1 class="text-[22px] font-bold tracking-tight">Check-in station</h1>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Scan a ticket QR — attendees are checked in on the spot.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <!-- ambient station context (set once, not per-scan) -->
+        <div class="hidden items-center gap-2.5 rounded-xl bg-surface px-3 py-1.5 md:flex" title="This station is bound to one event">
+          <span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-location-01 text-[15px]"></i></span>
+          <div class="min-w-0 leading-tight">
+            <div class="relative flex items-center">
+              <select id="event-select" class="max-w-[160px] cursor-pointer appearance-none truncate bg-transparent pr-4 text-[12.5px] font-bold text-ink focus:outline-none">
+                <option>Tech Summit 2026</option>
+                <option>Bangkok Jazz Night</option>
+                <option>Sunrise Yoga Retreat</option>
+                <option>Thai Street Food Festival</option>
+                <option>UX Bangkok Meetup</option>
+              </select>
+              <re-icon icon="chevron-down" size="11" class="pointer-events-none absolute right-0 text-muted"></re-icon>
+            </div>
+            <p class="text-[10px] text-muted">Main Hall · Station 1</p>
+          </div>
+        </div>
+        <a href="check-in.html" class="btn btn-ghost shrink-0"><i class="hgi-stroke hgi-menu-square text-[16px]"></i><span class="hidden sm:inline">Check-in list</span></a>
+        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><re-icon icon="bell" size="18"></re-icon><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
+        <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-3 xl:grid-cols-5">
+
+      <!-- ===== scanner (hero) ===== -->
+      <section class="card overflow-hidden p-0 xl:col-span-3">
+        <div class="flex items-center justify-between px-5 pt-4 pb-2">
+          <div>
+            <h2 class="text-[15px] font-bold tracking-tight">Scan tickets</h2>
+            <p class="mt-0.5 text-[12px] text-muted">Every valid scan checks the attendee in instantly.</p>
+          </div>
+          <span id="cam-status" class="flex shrink-0 items-center gap-1.5 text-[11px] font-semibold text-muted"><span class="h-2 w-2 rounded-full bg-muted/50"></span>Camera off</span>
+        </div>
+
+        <!-- viewport -->
+        <div id="cam-stage" class="relative mx-5 mb-4 mt-1 overflow-hidden rounded-2xl border border-hair px-6 py-8 sm:py-10">
+          <!-- real camera feed -->
+          <video id="cam" class="absolute inset-0 hidden h-full w-full object-cover" autoplay playsinline muted></video>
+          <div id="cam-scrim" class="pointer-events-none absolute inset-0 hidden bg-gradient-to-b from-black/40 via-black/10 to-black/50"></div>
+          <div class="cam-glow pointer-events-none absolute inset-0"></div>
+
+          <div class="relative mx-auto flex max-w-xs flex-col items-center">
+            <div class="relative aspect-square w-full max-w-[260px]">
+              <span class="frame-corner absolute left-0 top-0 h-9 w-9 rounded-tl-2xl border-l-[3px] border-t-[3px]"></span>
+              <span class="frame-corner absolute right-0 top-0 h-9 w-9 rounded-tr-2xl border-r-[3px] border-t-[3px]"></span>
+              <span class="frame-corner absolute bottom-0 left-0 h-9 w-9 rounded-bl-2xl border-b-[3px] border-l-[3px]"></span>
+              <span class="frame-corner absolute bottom-0 right-0 h-9 w-9 rounded-br-2xl border-b-[3px] border-r-[3px]"></span>
+              <div id="qr-ghost" class="absolute inset-8 grid place-items-center"><i class="hgi-stroke hgi-qr-code-01 text-[120px]"></i></div>
+              <div class="scan-line absolute inset-x-3 top-2 h-[3px] rounded bg-brand shadow-[0_0_14px_2px_rgba(27,167,112,.7)]"></div>
+            </div>
+            <p id="cam-hint" class="mt-6 max-w-[260px] text-center text-[13px] font-medium">Camera is off — tap <b>Start camera</b> to scan tickets</p>
+          </div>
+
+          <!-- camera error note -->
+          <div id="cam-error" class="absolute inset-x-4 bottom-4 mx-auto hidden max-w-sm items-start gap-2 rounded-lg bg-red-600 px-3 py-2 text-left text-[12px] leading-snug text-white shadow-lg ring-1 ring-black/10"></div>
+
+          <!-- scan result overlay -->
+          <div id="scan-result" class="absolute inset-0 z-20 hidden flex-col items-center justify-center gap-3 p-6 text-center"></div>
+        </div>
+        <canvas id="cam-canvas" class="hidden"></canvas>
+
+        <!-- camera actions -->
+        <div class="flex flex-wrap items-center gap-2 border-t border-hair px-5 py-3">
+          <button id="cam-toggle" type="button" class="btn btn-primary"><i class="hgi-stroke hgi-camera-01 text-[16px]"></i><span data-cam-label>Start camera</span></button>
+          <button id="torch-btn" type="button" class="btn btn-ghost" title="Torch"><i class="hgi-stroke hgi-flash text-[16px]"></i><span class="hidden sm:inline">Torch</span></button>
+          <button id="upload-btn" type="button" class="btn btn-ghost" title="Decode a QR image"><i class="hgi-stroke hgi-image-upload text-[16px]"></i><span class="hidden sm:inline">Upload QR</span></button>
+          <button id="flip-btn" type="button" class="btn btn-ghost" title="Flip camera"><i class="hgi-stroke hgi-camera-rotated-01 text-[16px]"></i><span class="hidden sm:inline">Flip</span></button>
+          <button id="sim-scan" type="button" class="btn btn-ghost ml-auto" title="Fake a detected ticket (demo)"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i>Simulate scan</button>
+          <input id="qr-file" type="file" accept="image/*" class="hidden" />
+        </div>
+
+        <!-- manual fallback -->
+        <div class="border-t border-hair px-5 py-4">
+          <button id="manual-toggle" type="button" class="flex w-full items-center justify-between text-left">
+            <span class="flex items-center gap-2 text-[13px] font-semibold text-ink"><i class="hgi-stroke hgi-search-01 text-[15px] text-muted"></i>Can't scan? Find attendee manually</span>
+            <re-icon id="manual-chev" icon="chevron-down" size="16" class="text-muted transition-transform"></re-icon>
+          </button>
+          <div id="manual-body" class="mt-3 hidden">
+            <div class="relative">
+              <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[16px] text-muted"></i>
+              <input id="checkin-search" type="text" class="input pl-9" placeholder="Search name, email, or ticket ID" />
+            </div>
+            <div class="mb-1 mt-3 flex items-center justify-between">
+              <p class="text-[11px] font-semibold uppercase tracking-wide text-muted">Matching attendees</p>
+              <p id="results-count" class="text-[11px] text-muted"></p>
+            </div>
+            <div id="search-results">
+              <div class="flex items-center gap-3 border-t border-line py-3 first:border-t-0" data-checkin-row data-name="Anong P." data-initials="AP" data-ticket="General Admission" data-badge="badge-green">
+                <span class="avatar h-9 w-9 shrink-0 text-[11px]">AP</span>
+                <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">Anong P.</p><p class="truncate text-[11px] text-muted">General Admission · anong.p@email.com</p></div>
+                <button class="btn btn-primary btn-sm shrink-0" data-checkin-btn><i class="hgi-stroke hgi-tick-02 text-[14px]"></i>Check in</button>
+              </div>
+              <div class="flex items-center gap-3 border-t border-line py-3 first:border-t-0" data-checkin-row data-name="Somchai T." data-initials="ST" data-ticket="VIP" data-badge="badge-purple">
+                <span class="avatar h-9 w-9 shrink-0 text-[11px]">ST</span>
+                <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">Somchai T.</p><p class="truncate text-[11px] text-muted">VIP · somchai.t@email.com</p></div>
+                <span class="badge badge-green shrink-0"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Checked in</span>
+              </div>
+              <div class="flex items-center gap-3 border-t border-line py-3 first:border-t-0" data-checkin-row data-name="Wipada S." data-initials="WS" data-ticket="Early Bird" data-badge="badge-blue">
+                <span class="avatar h-9 w-9 shrink-0 text-[11px]">WS</span>
+                <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">Wipada S.</p><p class="truncate text-[11px] text-muted">Early Bird · wipada.s@email.com</p></div>
+                <button class="btn btn-primary btn-sm shrink-0" data-checkin-btn><i class="hgi-stroke hgi-tick-02 text-[14px]"></i>Check in</button>
+              </div>
+              <div class="flex items-center gap-3 border-t border-line py-3 first:border-t-0" data-checkin-row data-name="Nattapong K." data-initials="NK" data-ticket="General Admission" data-badge="badge-green">
+                <span class="avatar h-9 w-9 shrink-0 text-[11px]">NK</span>
+                <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">Nattapong K.</p><p class="truncate text-[11px] text-muted">General Admission · nattapong.k@email.com</p></div>
+                <button class="btn btn-primary btn-sm shrink-0" data-checkin-btn><i class="hgi-stroke hgi-tick-02 text-[14px]"></i>Check in</button>
+              </div>
+              <div class="flex items-center gap-3 border-t border-line py-3 first:border-t-0" data-checkin-row data-name="Kanya R." data-initials="KR" data-ticket="Student" data-badge="badge-gray">
+                <span class="avatar h-9 w-9 shrink-0 text-[11px]">KR</span>
+                <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">Kanya R.</p><p class="truncate text-[11px] text-muted">Student · kanya.r@email.com</p></div>
+                <button class="btn btn-primary btn-sm shrink-0" data-checkin-btn><i class="hgi-stroke hgi-tick-02 text-[14px]"></i>Check in</button>
+              </div>
+            </div>
+            <div id="search-empty" class="hidden py-6 text-center text-[12px] text-muted">No attendees match your search.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== side rail: counter + live feed ===== -->
+      <div class="flex flex-col gap-3 xl:col-span-2">
+
+        <section class="card p-4">
+          <div class="flex items-center justify-between">
+            <p class="text-[11px] font-semibold uppercase tracking-wide text-muted">Checked in</p>
+            <span id="s-rate" class="text-[13px] font-bold text-brand tnum">86%</span>
+          </div>
+          <p class="mt-1 flex items-baseline gap-1.5"><span id="s-checked" class="text-[26px] font-bold leading-none text-ink tnum">268</span><span class="text-[14px] text-muted">/ <span id="s-total" class="tnum">312</span></span></p>
+          <div class="mt-2.5 h-2 w-full rounded-full bg-line"><div id="s-bar" class="h-2 rounded-full bg-brand transition-all" style="width:86%"></div></div>
+          <div class="mt-3 flex items-center gap-4 text-[11px] text-muted">
+            <span>On-site <b id="s-onsite" class="text-ink tnum">245</b></span>
+            <span>Late <b id="s-late" class="text-red-500 tnum">9</b></span>
+            <span class="ml-auto">Remaining <b id="s-remain" class="text-ink tnum">44</b></span>
+          </div>
+        </section>
+
+        <section class="card flex min-h-0 flex-1 flex-col p-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-[15px] font-bold tracking-tight">Just checked in</h2>
+            <span class="flex items-center gap-1 text-[11px] font-medium text-brand"><span class="h-1.5 w-1.5 rounded-full bg-brand"></span>Live</span>
+          </div>
+          <div id="feed" class="mt-2">
+            <div class="flex items-center gap-2.5 border-t border-line py-2.5 first:border-t-0 first:pt-0">
+              <span class="avatar h-8 w-8 shrink-0 text-[10px]">PS</span>
+              <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">Ploy S.</p><span class="badge badge-purple mt-0.5">VIP</span></div>
+              <span class="shrink-0 text-[11px] tnum text-muted">just now</span>
+            </div>
+            <div class="flex items-center gap-2.5 border-t border-line py-2.5 first:border-t-0 first:pt-0">
+              <span class="avatar h-8 w-8 shrink-0 text-[10px]">JW</span>
+              <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">James W.</p><span class="badge badge-green mt-0.5">General Admission</span></div>
+              <span class="shrink-0 text-[11px] tnum text-muted">1 min ago</span>
+            </div>
+            <div class="flex items-center gap-2.5 border-t border-line py-2.5 first:border-t-0 first:pt-0">
+              <span class="avatar h-8 w-8 shrink-0 text-[10px]">ML</span>
+              <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">Mei L.</p><span class="badge badge-blue mt-0.5">Early Bird</span></div>
+              <span class="shrink-0 text-[11px] tnum text-muted">3 min ago</span>
+            </div>
+            <div class="flex items-center gap-2.5 border-t border-line py-2.5 first:border-t-0 first:pt-0">
+              <span class="avatar h-8 w-8 shrink-0 text-[10px]">NK</span>
+              <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">Nattapong K.</p><span class="badge badge-green mt-0.5">General Admission</span></div>
+              <span class="shrink-0 text-[11px] tnum text-muted">4 min ago</span>
+            </div>
+            <div class="flex items-center gap-2.5 border-t border-line py-2.5 first:border-t-0 first:pt-0">
+              <span class="avatar h-8 w-8 shrink-0 text-[10px]">DS</span>
+              <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">David S.</p><span class="badge badge-purple mt-0.5">VIP</span></div>
+              <span class="shrink-0 text-[11px] tnum text-muted">8 min ago</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  </main>
+</div>
+
+<script src="../assets/shell.js?v=31"></script>
+<script>
+  (function () {
+    var n = function (x) { return x.toLocaleString('en-US'); };
+    function nowTime() { var d = new Date(); return ('0'+d.getHours()).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2); }
+
+    /* per-event check-in stats */
+    var STATS = {
+      'Tech Summit 2026':          { checked: 268,  total: 312,  onsite: 245, late: 9 },
+      'Bangkok Jazz Night':        { checked: 402,  total: 480,  onsite: 388, late: 12 },
+      'Sunrise Yoga Retreat':      { checked: 54,   total: 60,   onsite: 50,  late: 2 },
+      'Thai Street Food Festival': { checked: 1120, total: 1400, onsite: 980, late: 24 },
+      'UX Bangkok Meetup':         { checked: 88,   total: 96,   onsite: 72,  late: 3 }
+    };
+    var eventSelect = document.getElementById('event-select');
+    function renderStats() {
+      var s = STATS[eventSelect.value]; if (!s) return;
+      var pct = Math.round(s.checked / s.total * 100);
+      document.getElementById('s-checked').textContent = n(s.checked);
+      document.getElementById('s-total').textContent = n(s.total);
+      document.getElementById('s-rate').textContent = pct + '%';
+      document.getElementById('s-bar').style.width = pct + '%';
+      document.getElementById('s-onsite').textContent = n(s.onsite);
+      document.getElementById('s-late').textContent = n(s.late);
+      document.getElementById('s-remain').textContent = n(Math.max(0, s.total - s.checked));
+    }
+
+    /* ---- demo scan outcomes ("Simulate scan" cycles through every state) ---- */
+    var QUEUES = {
+      'Tech Summit 2026': [
+        { state:'ok',      name:'Anong P.',     ini:'AP', ticket:'General Admission', badge:'badge-green'  },
+        { state:'dupe',    name:'Somchai T.',   ini:'ST', ticket:'VIP',               badge:'badge-purple', at:'09:12' },
+        { state:'invalid', ref:'X8F2-QZ71-KK' },
+        { state:'wrong',   name:'Chai W.',      ini:'CW', ticket:'General Admission',  badge:'badge-blue',   otherEvent:'Bangkok Jazz Night' },
+        { state:'ok',      name:'Wipada S.',    ini:'WS', ticket:'Early Bird',        badge:'badge-blue'   },
+        { state:'void',    name:'Nattapong K.', ini:'NK', ticket:'VIP',               badge:'badge-gray',   on:'08 Jul' }
+      ]
+    };
+    var DEFAULT_QUEUE = [
+      { state:'ok',      name:'Guest A.', ini:'GA', ticket:'General Admission', badge:'badge-green' },
+      { state:'dupe',    name:'Guest B.', ini:'GB', ticket:'VIP',              badge:'badge-purple', at:'10:04' },
+      { state:'invalid', ref:'A1B2-C3D4-E5' },
+      { state:'ok',      name:'Guest C.', ini:'GC', ticket:'Early Bird',       badge:'badge-blue' },
+      { state:'void',    name:'Guest D.', ini:'GD', ticket:'Student',          badge:'badge-gray', on:'05 Jul' }
+    ];
+    function okPeople() { return (QUEUES[eventSelect.value] || DEFAULT_QUEUE).filter(function (e) { return e.state === 'ok'; }); }
+    var scanIdx = 0, realIdx = 0, seenCodes = {};
+    eventSelect.addEventListener('change', function () { scanIdx = 0; realIdx = 0; seenCodes = {}; renderStats(); });
+
+    /* ---- feed ---- */
+    var feed = document.getElementById('feed');
+    function pushFeed(name, ini, ticket, badge) {
+      if (!feed) return;
+      var entry = document.createElement('div');
+      entry.className = 'flex items-center gap-2.5 border-t border-line py-2.5 first:border-t-0 first:pt-0';
+      entry.innerHTML =
+        '<span class="avatar h-8 w-8 shrink-0 text-[10px]">' + ini + '</span>' +
+        '<div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">' + name + '</p><span class="badge ' + badge + ' mt-0.5">' + ticket + '</span></div>' +
+        '<span class="shrink-0 text-[11px] tnum text-muted">just now</span>';
+      feed.insertBefore(entry, feed.firstChild);
+    }
+    function bump() {
+      var s = STATS[eventSelect.value];
+      if (s && s.checked < s.total) { s.checked++; s.onsite++; renderStats(); }
+    }
+
+    /* ---- scan result overlay (five outcomes) ---- */
+    var RESULTS = {
+      ok:      { bg:'bg-brand',      icon:'hgi-checkmark-circle-02', title:'Checked in',         hold:2400 },
+      dupe:    { bg:'bg-amber-500',  icon:'hgi-alert-02',            title:'Already checked in', hold:3200 },
+      invalid: { bg:'bg-red-500',    icon:'hgi-cancel-circle',       title:'Invalid ticket',     hold:3400 },
+      wrong:   { bg:'bg-orange-500', icon:'hgi-calendar-block-01',   title:'Wrong event',        hold:3400 },
+      void:    { bg:'bg-slate-600',  icon:'hgi-blocked',             title:'Ticket cancelled',   hold:3400 }
+    };
+    var resultEl = document.getElementById('scan-result');
+    var resultTimer = null;
+    function resultNote(a) {
+      switch (a.state) {
+        case 'dupe':    return 'First scanned at ' + (a.at || '—') + ' today';
+        case 'invalid': return 'This QR isn’t a valid ticket for this event.';
+        case 'wrong':   return 'Valid for “' + (a.otherEvent || 'another event') + '”, not this station.';
+        case 'void':    return 'Refunded on ' + (a.on || '—') + ' — entry denied.';
+        default:        return nowTime() + ' · Main Hall · Station 1';
+      }
+    }
+    function showResult(a) {
+      if (resultTimer) clearTimeout(resultTimer);
+      var def = RESULTS[a.state] || RESULTS.ok;
+      var note = a.note || resultNote(a);
+      var card = a.state === 'invalid'
+        ? '<div class="flex items-center gap-2.5 rounded-xl bg-white/15 px-4 py-2.5">' +
+            '<span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/20"><i class="hgi-stroke hgi-ticket-02 text-[18px]"></i></span>' +
+            '<div class="text-left"><p class="text-[14px] font-semibold leading-tight">Unrecognized code</p><p class="text-[12px] tnum text-white/80">' + (a.ref || '—') + '</p></div>' +
+          '</div>'
+        : '<div class="flex items-center gap-2.5 rounded-xl bg-white/15 px-4 py-2.5">' +
+            '<span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/20 text-[12px] font-semibold">' + (a.ini || '?') + '</span>' +
+            '<div class="text-left"><p class="text-[14px] font-semibold leading-tight">' + (a.name || 'Attendee') + '</p><p class="text-[12px] text-white/80">' + (a.ticket || '') + '</p></div>' +
+          '</div>';
+      resultEl.className = 'result-pop absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 p-6 text-center text-white ' + def.bg;
+      resultEl.innerHTML =
+        '<span class="grid h-[70px] w-[70px] place-items-center rounded-full bg-white/15"><i class="hgi-stroke ' + def.icon + ' text-[46px]"></i></span>' +
+        '<p class="text-[20px] font-bold">' + def.title + '</p>' + card +
+        '<p class="max-w-[280px] text-[12px] text-white/80">' + note + '</p>';
+      if (navigator.vibrate) { try { navigator.vibrate(a.state === 'ok' ? 60 : [40, 55, 40]); } catch (e) {} }
+      resultTimer = setTimeout(function () { resultEl.classList.add('hidden'); }, def.hold);
+    }
+
+    document.getElementById('sim-scan').addEventListener('click', function () {
+      var q = QUEUES[eventSelect.value] || DEFAULT_QUEUE;
+      var a = q[scanIdx % q.length];
+      scanIdx++;
+      showResult(a);
+      if (a.state === 'ok') { bump(); pushFeed(a.name, a.ini, a.ticket, a.badge); }
+    });
+
+    /* ---- manual fallback: toggle ---- */
+    var manualBody = document.getElementById('manual-body');
+    var manualChev = document.getElementById('manual-chev');
+    document.getElementById('manual-toggle').addEventListener('click', function () {
+      var open = manualBody.classList.toggle('hidden');
+      manualChev.style.transform = open ? '' : 'rotate(180deg)';
+    });
+
+    /* ---- manual search ---- */
+    var searchInput = document.getElementById('checkin-search');
+    var results = document.getElementById('search-results');
+    var empty = document.getElementById('search-empty');
+    var countEl = document.getElementById('results-count');
+    function applySearch() {
+      var query = (searchInput.value || '').trim().toLowerCase(), shown = 0;
+      results.querySelectorAll('[data-checkin-row]').forEach(function (row) {
+        var hit = !query || row.textContent.toLowerCase().indexOf(query) !== -1;
+        row.classList.toggle('hidden', !hit);
+        if (hit) shown++;
+      });
+      if (empty) empty.classList.toggle('hidden', shown !== 0);
+      if (countEl) countEl.textContent = shown + (shown === 1 ? ' result' : ' results');
+    }
+    searchInput.addEventListener('input', applySearch);
+
+    /* ---- manual check-in ---- */
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-checkin-btn]');
+      if (!btn) return;
+      var row = btn.closest('[data-checkin-row]');
+      if (!row) return;
+      var badge = document.createElement('span');
+      badge.className = 'badge badge-green shrink-0';
+      badge.innerHTML = '<i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Checked in';
+      btn.replaceWith(badge);
+      pushFeed(row.dataset.name, row.dataset.initials, row.dataset.ticket, row.dataset.badge || 'badge-green');
+      bump();
+    });
+
+    /* ================= real camera + QR decode ================= */
+    var stage    = document.getElementById('cam-stage');
+    var video    = document.getElementById('cam');
+    var scrim    = document.getElementById('cam-scrim');
+    var ghost    = document.getElementById('qr-ghost');
+    var hintEl   = document.getElementById('cam-hint');
+    var errEl    = document.getElementById('cam-error');
+    var statusEl = document.getElementById('cam-status');
+    var canvas   = document.getElementById('cam-canvas');
+    var cctx     = canvas.getContext('2d', { willReadFrequently: true });
+    var camBtn   = document.getElementById('cam-toggle');
+    var camLabel = camBtn.querySelector('[data-cam-label]');
+    var facing   = 'environment';
+    var stream = null, streaming = false, rafId = null, cooldown = false;
+
+    function setStatus(live) {
+      statusEl.className = 'flex shrink-0 items-center gap-1.5 text-[11px] font-semibold ' + (live ? 'text-brand' : 'text-muted');
+      statusEl.innerHTML = live
+        ? '<span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-60"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-brand"></span></span>Camera live'
+        : '<span class="h-2 w-2 rounded-full bg-muted/50"></span>Camera off';
+    }
+    function camError(msg) {
+      errEl.innerHTML = '<i class="hgi-stroke hgi-alert-02 mt-px shrink-0 text-[15px]"></i><span>' + msg + '</span>';
+      errEl.classList.remove('hidden'); errEl.classList.add('flex');
+    }
+    function clearError() { errEl.classList.add('hidden'); errEl.classList.remove('flex'); }
+
+    function startCamera() {
+      clearError();
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        camError('This browser can’t open the camera (a secure HTTPS page is required). Use Simulate scan or manual search.');
+        return;
+      }
+      camLabel.textContent = 'Starting…';
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: facing }, audio: false })
+        .then(function (s) {
+          stream = s; video.srcObject = s;
+          var p = video.play(); if (p && p.catch) p.catch(function () {});
+          video.classList.remove('hidden'); scrim.classList.remove('hidden'); ghost.classList.add('hidden');
+          streaming = true;
+          stage.classList.add('cam-live');
+          camBtn.classList.remove('btn-primary'); camBtn.classList.add('btn-danger');
+          camBtn.querySelector('i').className = 'hgi-stroke hgi-camera-off-01 text-[16px]';
+          camLabel.textContent = 'Stop camera';
+          hintEl.innerHTML = 'Point the camera at the attendee’s ticket QR';
+          setStatus(true);
+          scanLoop();
+        })
+        .catch(function (err) {
+          camLabel.textContent = 'Start camera';
+          var name = (err && err.name) || '';
+          var msg = name === 'NotAllowedError'  ? 'Camera permission denied. Allow camera access in your browser, or use Simulate scan / manual search.'
+                  : name === 'NotFoundError'    ? 'No camera was found on this device.'
+                  : name === 'NotReadableError' ? 'The camera is already in use by another app.'
+                  : 'Couldn’t start the camera. Use Simulate scan or manual search.';
+          camError(msg);
+        });
+    }
+    function stopCamera() {
+      streaming = false;
+      if (rafId) cancelAnimationFrame(rafId);
+      if (stream) { stream.getTracks().forEach(function (t) { t.stop(); }); stream = null; }
+      video.srcObject = null;
+      stage.classList.remove('cam-live');
+      video.classList.add('hidden'); scrim.classList.add('hidden'); ghost.classList.remove('hidden');
+      camBtn.classList.add('btn-primary'); camBtn.classList.remove('btn-danger');
+      camBtn.querySelector('i').className = 'hgi-stroke hgi-camera-01 text-[16px]';
+      camLabel.textContent = 'Start camera';
+      hintEl.innerHTML = 'Camera is off — tap <b class="text-white">Start camera</b> to scan tickets';
+      setStatus(false);
+    }
+    camBtn.addEventListener('click', function () { streaming ? stopCamera() : startCamera(); });
+
+    /* decode loop */
+    function scanLoop() {
+      if (!streaming) return;
+      if (video.readyState === video.HAVE_ENOUGH_DATA && window.jsQR) {
+        var w = video.videoWidth, h = video.videoHeight;
+        if (w && h) {
+          var scale = Math.min(1, 480 / w);
+          var cw = Math.round(w * scale), ch = Math.round(h * scale);
+          canvas.width = cw; canvas.height = ch;
+          cctx.drawImage(video, 0, 0, cw, ch);
+          var img = cctx.getImageData(0, 0, cw, ch);
+          var code = window.jsQR(img.data, cw, ch, { inversionAttempts: 'dontInvert' });
+          if (code && code.data) onDetect(code.data);
+        }
+      }
+      rafId = requestAnimationFrame(scanLoop);
+    }
+
+    /* a real QR was read -> check in, or reject a repeat scan as a duplicate */
+    function onDetect(value) {
+      if (cooldown) return;
+      cooldown = true;
+      var v = String(value); var ref = v.length > 22 ? v.slice(0, 22) + '…' : v;
+      if (seenCodes[v]) {
+        var p = seenCodes[v];
+        showResult({ state: 'dupe', name: p.name, ini: p.ini, ticket: p.ticket, at: p.at });
+      } else {
+        var people = okPeople();
+        var a = people.length ? people[realIdx % people.length] : { name: 'Attendee', ini: '✓', ticket: 'Ticket', badge: 'badge-green' };
+        realIdx++;
+        seenCodes[v] = { name: a.name, ini: a.ini, ticket: a.ticket, at: nowTime() };
+        showResult({ state: 'ok', name: a.name, ini: a.ini, ticket: a.ticket, note: nowTime() + ' · ' + ref });
+        bump(); pushFeed(a.name, a.ini, a.ticket, a.badge);
+      }
+      setTimeout(function () { cooldown = false; }, 2600);
+    }
+
+    /* torch */
+    document.getElementById('torch-btn').addEventListener('click', function () {
+      if (!stream) { camError('Start the camera first to use the torch.'); return; }
+      var track = stream.getVideoTracks()[0];
+      var caps = track.getCapabilities ? track.getCapabilities() : {};
+      if (!caps.torch) { camError('Torch isn’t available on this camera.'); return; }
+      this._on = !this._on;
+      track.applyConstraints({ advanced: [{ torch: this._on }] }).catch(function () {});
+    });
+
+    /* flip front/back */
+    document.getElementById('flip-btn').addEventListener('click', function () {
+      facing = facing === 'environment' ? 'user' : 'environment';
+      if (streaming) { stopCamera(); startCamera(); }
+    });
+
+    /* upload a QR image -> decode */
+    var qrFile = document.getElementById('qr-file');
+    document.getElementById('upload-btn').addEventListener('click', function () { qrFile.click(); });
+    qrFile.addEventListener('change', function () {
+      var file = this.files && this.files[0]; if (!file) return;
+      var url = URL.createObjectURL(file), im = new Image();
+      im.onload = function () {
+        var scale = Math.min(1, 640 / im.width);
+        var cw = Math.round(im.width * scale), ch = Math.round(im.height * scale);
+        canvas.width = cw; canvas.height = ch; cctx.drawImage(im, 0, 0, cw, ch);
+        var img = cctx.getImageData(0, 0, cw, ch);
+        var code = window.jsQR ? window.jsQR(img.data, cw, ch, { inversionAttempts: 'attemptBoth' }) : null;
+        URL.revokeObjectURL(url);
+        if (code && code.data) { cooldown = false; onDetect(code.data); clearError(); }
+        else camError('No QR code found in that image.');
+      };
+      im.onerror = function () { URL.revokeObjectURL(url); camError('Couldn’t read that image file.'); };
+      im.src = url; this.value = '';
+    });
+
+    setStatus(false);
+    renderStats();
+    applySearch();
+  })();
+</script>
+</body>
+</html>

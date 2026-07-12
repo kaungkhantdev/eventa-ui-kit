@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Event categories</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets/config.js?v=31"></script>
+<link rel="stylesheet" href="../assets/app.css?v=31" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="event-categories">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidebar here -->
+
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <div class="min-w-0">
+          <h1 class="text-[22px] font-bold tracking-tight">Event categories</h1>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Organize events into categories with their own icon &amp; colour.</p>
+        </div>
+      </div>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <button class="btn btn-primary shrink-0" data-open="category-panel"><i class="hgi-stroke hgi-add-01 text-[16px]"></i><span class="hidden sm:inline">New category</span><span class="sm:hidden">New</span></button>
+        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><re-icon icon="bell" size="18"></re-icon><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
+        <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
+      </div>
+    </div>
+
+    <!-- toolbar -->
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <re-icon icon="search" size="16" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></re-icon>
+        <input id="cat-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search categories…" />
+      </div>
+      <div class="flex shrink-0 items-center gap-1 self-start rounded-lg bg-surface p-1 sm:self-auto">
+        <button type="button" data-view="grid" class="view-btn grid h-8 w-8 place-items-center rounded-md text-muted transition hover:text-ink" title="Grid view"><i class="hgi-stroke hgi-grid-view text-[16px]"></i></button>
+        <button type="button" data-view="list" class="view-btn grid h-8 w-8 place-items-center rounded-md text-muted transition hover:text-ink" title="List view"><i class="hgi-stroke hgi-list-view text-[16px]"></i></button>
+      </div>
+    </div>
+
+    <p id="cat-count" class="mb-2 mt-3 text-[12px] text-muted"></p>
+
+    <div id="category-view"></div>
+    <div id="category-empty" class="mt-2 hidden card flex flex-col items-center justify-center p-12 text-center">
+      <span class="mx-auto grid h-12 w-12 place-items-center rounded-full bg-line text-muted"><i class="hgi-stroke hgi-folder-01 text-[22px]"></i></span>
+      <p class="mt-3 text-[14px] font-semibold text-ink">No categories found</p>
+      <p class="mt-1 text-[12px] text-muted">Try a different search, or create a new category.</p>
+    </div>
+
+    <!-- tailwind JIT safelist for dynamic category colours -->
+    <div aria-hidden="true" class="hidden bg-pink-500 bg-blue-500 bg-amber-500 bg-brand bg-violet-500 bg-indigo-500 bg-teal-500 bg-red-500 bg-orange-500 bg-cyan-500"></div>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  </main>
+</div>
+
+<!-- Create / edit category panel -->
+<aside class="panel" id="category-panel">
+  <header class="flex items-center justify-between border-b border-hair p-4">
+    <h3 class="text-[15px] font-bold tracking-tight">New category</h3>
+    <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+  </header>
+  <div class="flex-1 space-y-4 overflow-y-auto p-4">
+    <div>
+      <label class="label">Category name</label>
+      <input id="cat-name" type="text" class="input" placeholder="e.g. Birthday" />
+    </div>
+    <div>
+      <label class="label">Description</label>
+      <textarea id="cat-desc" class="textarea" placeholder="Short description of this category…"></textarea>
+    </div>
+    <div>
+      <label class="label">Icon</label>
+      <div id="icon-picker" class="grid grid-cols-6 gap-2"></div>
+    </div>
+    <div>
+      <label class="label">Colour</label>
+      <div id="color-picker" class="flex flex-wrap gap-2.5"></div>
+    </div>
+    <div class="rounded-xl bg-canvas p-3">
+      <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Preview</p>
+      <div class="mt-2 flex items-center gap-3">
+        <span id="cat-preview-tile" class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-pink-500 text-white"><re-icon id="cat-preview-icon" icon="confetti" size="21"></re-icon></span>
+        <p id="cat-preview-name" class="text-[14px] font-bold text-ink">New category</p>
+      </div>
+    </div>
+  </div>
+  <footer class="flex gap-2 border-t border-hair p-4">
+    <button class="btn btn-soft flex-1" data-close>Cancel</button>
+    <button id="cat-save-btn" class="btn btn-primary flex-1" data-close><i class="hgi-stroke hgi-add-01 text-[15px]"></i>Save category</button>
+  </footer>
+</aside>
+
+<script src="../assets/shell.js?v=31"></script>
+<script>
+  (function () {
+    var COLORS = { pink:'bg-pink-500', blue:'bg-blue-500', amber:'bg-amber-500', brand:'bg-brand', violet:'bg-violet-500', indigo:'bg-indigo-500', teal:'bg-teal-500', red:'bg-red-500' };
+    var ICONS = ['confetti','heart','presentation','hand-heart','mic','users','briefcase','dumbbell','graduation-cap','palette','camera','gift','music','trophy','star','sparkles','cake2','ticket'];
+
+    var CATEGORIES = [
+      { name:'Birthday',           desc:'Birthday parties and personal celebrations.',       icon:'confetti',       color:'pink',   count:12 },
+      { name:'Wedding',            desc:'Weddings, engagements and receptions.',             icon:'heart',          color:'blue',   count:8  },
+      { name:'Conference',         desc:'Summits, seminars and professional talks.',         icon:'presentation',   color:'amber',  count:24 },
+      { name:'Charity & Gala',     desc:'Fundraisers, galas and non-profit events.',         icon:'hand-heart',     color:'brand',  count:6  },
+      { name:'Concert & Festival', desc:'Live music, festivals and stage performances.',     icon:'mic',            color:'violet', count:15 },
+      { name:'Networking',         desc:'Mixers, meetups and community get-togethers.',      icon:'users',          color:'indigo', count:19 },
+      { name:'Workshop',           desc:'Hands-on classes and training sessions.',           icon:'briefcase',      color:'teal',   count:11 },
+      { name:'Sports & Wellness',  desc:'Fitness, yoga, runs and outdoor activities.',       icon:'dumbbell',       color:'red',    count:9  },
+    ];
+
+    var view = 'grid';
+    var viewEl  = document.getElementById('category-view');
+    var emptyEl = document.getElementById('category-empty');
+    var countEl = document.getElementById('cat-count');
+    var search  = document.getElementById('cat-search');
+
+    function actions(i) {
+      return '<div class="flex shrink-0 items-center gap-0.5">' +
+        '<button data-open="category-panel" class="grid h-8 w-8 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink" title="Edit category"><i class="hgi-stroke hgi-edit-02 text-[15px]"></i></button>' +
+        '<button data-del-cat data-i="' + i + '" class="grid h-8 w-8 place-items-center rounded-lg text-muted transition hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-500/15" title="Delete category"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>' +
+      '</div>';
+    }
+    function tile(c, size) {
+      return '<span class="grid ' + size + ' shrink-0 place-items-center rounded-xl ' + (COLORS[c.color] || COLORS.brand) + ' text-white shadow-sm"><re-icon icon="' + c.icon + '" size="' + (size.indexOf('12') > -1 ? 24 : 21) + '"></re-icon></span>';
+    }
+    function cardGrid(c, i) {
+      return '<div class="card p-4">' +
+        '<div class="flex items-start justify-between">' + tile(c, 'h-12 w-12') + actions(i) + '</div>' +
+        '<p class="mt-3 text-[15px] font-bold text-ink">' + c.name + '</p>' +
+        '<p class="mt-0.5 line-clamp-2 text-[12px] text-muted">' + c.desc + '</p>' +
+        '<div class="mt-3 flex items-center gap-1.5 border-t border-line pt-3 text-[12px] text-muted"><re-icon icon="calendar" size="14"></re-icon><span class="font-semibold text-ink tnum">' + c.count + '</span> events</div>' +
+      '</div>';
+    }
+    function cardList(c, i) {
+      return '<div class="card flex items-center gap-3 p-3">' +
+        tile(c, 'h-11 w-11') +
+        '<div class="min-w-0 flex-1"><p class="text-[14px] font-bold text-ink">' + c.name + '</p><p class="truncate text-[12px] text-muted">' + c.desc + '</p></div>' +
+        '<div class="hidden shrink-0 items-center gap-1.5 text-[12px] text-muted sm:flex"><re-icon icon="calendar" size="14"></re-icon><span class="font-semibold text-ink tnum">' + c.count + '</span> events</div>' +
+        actions(i) +
+      '</div>';
+    }
+    function render() {
+      var q = (search.value || '').trim().toLowerCase();
+      var list = CATEGORIES.map(function (c, i) { return { c: c, i: i }; })
+        .filter(function (x) { return !q || (x.c.name + ' ' + x.c.desc).toLowerCase().indexOf(q) !== -1; });
+      countEl.textContent = list.length + (list.length === 1 ? ' category' : ' categories');
+      if (!list.length) { viewEl.innerHTML = ''; viewEl.className = ''; emptyEl.classList.remove('hidden'); return; }
+      emptyEl.classList.add('hidden');
+      if (view === 'grid') {
+        viewEl.className = 'grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3';
+        viewEl.innerHTML = list.map(function (x) { return cardGrid(x.c, x.i); }).join('');
+      } else {
+        viewEl.className = 'flex flex-col gap-2';
+        viewEl.innerHTML = list.map(function (x) { return cardList(x.c, x.i); }).join('');
+      }
+    }
+    function setView(v) {
+      view = v;
+      document.querySelectorAll('.view-btn').forEach(function (b) {
+        var on = b.dataset.view === v;
+        b.classList.toggle('bg-brand-soft', on);
+        b.classList.toggle('text-brand', on);
+        b.classList.toggle('text-muted', !on);
+      });
+      render();
+    }
+    document.querySelectorAll('.view-btn').forEach(function (b) { b.addEventListener('click', function () { setView(b.dataset.view); }); });
+    search.addEventListener('input', render);
+
+    // delete
+    viewEl.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-del-cat]'); if (!btn) return;
+      CATEGORIES.splice(+btn.dataset.i, 1);
+      render();
+    });
+
+    /* ---------- create form: icon + colour pickers ---------- */
+    var selIcon = 'confetti', selColor = 'pink';
+    var iconPicker = document.getElementById('icon-picker');
+    var colorPicker = document.getElementById('color-picker');
+    var nameInput = document.getElementById('cat-name');
+    var descInput = document.getElementById('cat-desc');
+    var prevTile = document.getElementById('cat-preview-tile');
+    var prevIcon = document.getElementById('cat-preview-icon');
+    var prevName = document.getElementById('cat-preview-name');
+
+    function renderIconPicker() {
+      iconPicker.innerHTML = ICONS.map(function (ic) {
+        var on = ic === selIcon;
+        return '<button type="button" data-pick-icon="' + ic + '" class="grid aspect-square place-items-center rounded-lg border transition ' + (on ? 'border-brand bg-brand-soft text-brand' : 'border-hair text-muted hover:border-brand/40 hover:text-ink') + '"><re-icon icon="' + ic + '" size="18"></re-icon></button>';
+      }).join('');
+    }
+    function renderColorPicker() {
+      colorPicker.innerHTML = Object.keys(COLORS).map(function (col) {
+        var on = col === selColor;
+        return '<button type="button" data-pick-color="' + col + '" class="h-8 w-8 rounded-full ' + COLORS[col] + ' transition ' + (on ? 'ring-2 ring-offset-2 ring-ink ring-offset-surface' : 'hover:scale-110') + '" title="' + col + '"></button>';
+      }).join('');
+    }
+    function updatePreview() {
+      prevTile.className = 'grid h-11 w-11 shrink-0 place-items-center rounded-xl text-white ' + (COLORS[selColor] || COLORS.brand);
+      prevIcon.setAttribute('icon', selIcon);
+      prevName.textContent = (nameInput.value.trim() || 'New category');
+    }
+    iconPicker.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-pick-icon]'); if (!b) return;
+      selIcon = b.dataset.pickIcon; renderIconPicker(); updatePreview();
+    });
+    colorPicker.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-pick-color]'); if (!b) return;
+      selColor = b.dataset.pickColor; renderColorPicker(); updatePreview();
+    });
+    nameInput.addEventListener('input', updatePreview);
+
+    document.getElementById('cat-save-btn').addEventListener('click', function () {
+      CATEGORIES.push({
+        name:  nameInput.value.trim() || 'New category',
+        desc:  descInput.value.trim() || 'No description yet.',
+        icon:  selIcon,
+        color: selColor,
+        count: 0,
+      });
+      render();
+      // reset the form
+      nameInput.value = ''; descInput.value = '';
+      selIcon = 'confetti'; selColor = 'pink';
+      renderIconPicker(); renderColorPicker(); updatePreview();
+    });
+
+    renderIconPicker();
+    renderColorPicker();
+    updatePreview();
+    setView('grid');
+  })();
+</script>
+</body>
+</html>

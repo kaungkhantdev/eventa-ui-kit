@@ -12,298 +12,372 @@
 <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=24"></script>
-<link rel="stylesheet" href="../assets/app.css?v=24" />
+<script src="../assets/config.js?v=31"></script>
+<link rel="stylesheet" href="../assets/app.css?v=31" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" />
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<style>
+  /* Description rich-text editor — match the Eventa design tokens (light + dark) */
+  #desc-editor-wrap{ border:1px solid rgb(var(--hair)); border-radius:10px; background:rgb(var(--surface)); transition:box-shadow .15s ease; }
+  #desc-editor-wrap:focus-within{ box-shadow:0 0 0 4px rgb(27 167 112 / .15); }
+  #desc-editor-wrap .ql-toolbar.ql-snow{ border:0; border-bottom:1px solid rgb(var(--line)); border-radius:10px 10px 0 0; padding:7px 8px; }
+  #desc-editor-wrap .ql-container.ql-snow{ border:0; border-radius:0 0 10px 10px; font-family:inherit; font-size:13px; }
+  #desc-editor-wrap .ql-editor{ min-height:118px; padding:12px; line-height:1.6; color:rgb(var(--ink)); }
+  #desc-editor-wrap .ql-editor.ql-blank::before{ left:12px; right:12px; color:rgb(var(--muted)); font-style:normal; }
+  #desc-editor-wrap .ql-snow .ql-stroke{ stroke:rgb(var(--muted)); }
+  #desc-editor-wrap .ql-snow .ql-fill{ fill:rgb(var(--muted)); }
+  #desc-editor-wrap .ql-snow .ql-picker{ color:rgb(var(--ink)); }
+  #desc-editor-wrap .ql-snow.ql-toolbar button:hover .ql-stroke,
+  #desc-editor-wrap .ql-snow.ql-toolbar button.ql-active .ql-stroke,
+  #desc-editor-wrap .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke{ stroke:#1ba770; }
+  #desc-editor-wrap .ql-snow.ql-toolbar button:hover .ql-fill,
+  #desc-editor-wrap .ql-snow.ql-toolbar button.ql-active .ql-fill{ fill:#1ba770; }
+  #desc-editor-wrap .ql-snow.ql-toolbar button:hover,
+  #desc-editor-wrap .ql-snow.ql-toolbar button.ql-active,
+  #desc-editor-wrap .ql-snow .ql-picker-label:hover,
+  #desc-editor-wrap .ql-snow .ql-picker-item:hover,
+  #desc-editor-wrap .ql-snow .ql-picker-item.ql-selected{ color:#1ba770; }
+  #desc-editor-wrap .ql-snow .ql-picker-options{ background:rgb(var(--surface)); border-color:rgb(var(--hair))!important; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,.14); }
+  #desc-editor-wrap .ql-snow .ql-tooltip{ background:rgb(var(--surface)); border-color:rgb(var(--hair)); color:rgb(var(--ink)); box-shadow:0 8px 24px rgba(0,0,0,.16); border-radius:8px; }
+  #desc-editor-wrap .ql-snow .ql-tooltip input[type=text]{ background:rgb(var(--canvas)); border-color:rgb(var(--hair)); color:rgb(var(--ink)); border-radius:6px; }
+</style>
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="event-form">
 
 <div class="flex h-full min-h-screen" data-layout>
-  <main class="min-w-0 flex-1 overflow-y-auto px-5 pt-4 pb-24 lg:px-7 xl:pb-4">
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
 
-    <!-- header -->
-    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex min-w-0 items-center gap-2">
-        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
-        <a href="events.html" class="btn-icon shrink-0" title="Back to events"><i class="hgi-stroke hgi-arrow-left-01 text-[18px]"></i></a>
-        <div class="min-w-0">
-          <h1 class="text-[22px] font-bold tracking-tight">Create event</h1>
-          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Fill in the details below to set up and publish a new event.</p>
-        </div>
-      </div>
-      <div class="flex shrink-0 items-center gap-2.5">
+    <!-- top bar -->
+    <div class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <a href="events.html" class="btn-icon shrink-0" title="Back to events"><i class="hgi-stroke hgi-arrow-left-01 text-[18px]"></i></a>
+      <div class="ml-auto flex shrink-0 items-center gap-2.5">
+        <a href="events.html" class="btn btn-soft"><i class="hgi-stroke hgi-note-03 text-[16px]"></i><span class="hidden sm:inline">Save as draft</span><span class="sm:hidden">Draft</span></a>
         <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><re-icon icon="bell" size="18"></re-icon><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
         <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
       </div>
     </div>
 
-    <!-- form layout -->
-    <div class="grid grid-cols-1 gap-3 xl:grid-cols-3">
+    <!-- wizard layout -->
+    <div class="grid grid-cols-1 gap-5 lg:grid-cols-[230px_minmax(0,1fr)] xl:grid-cols-[230px_minmax(0,1fr)_270px]">
 
-      <!-- ============ LEFT / MAIN COLUMN ============ -->
-      <div class="space-y-3 xl:col-span-2">
+      <!-- ============ STEP SIDEBAR ============ -->
+      <aside class="lg:sticky lg:top-4 lg:self-start">
+        <nav class="flex items-center gap-1.5 text-[12px] font-medium text-muted">
+          <a href="events.html" class="transition hover:text-ink">Events</a>
+          <re-icon icon="chevron-right" size="13"></re-icon>
+          <span class="text-ink">Create event</span>
+        </nav>
+        <h1 class="mt-2 text-[22px] font-bold tracking-tight">Create event</h1>
+        <p id="wz-progress-label" class="mt-3 text-[13px] font-semibold text-ink tnum">33% completed</p>
+        <div class="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-line"><div id="wz-progress-bar" class="h-full rounded-full bg-brand transition-all duration-300" style="width:33%"></div></div>
+        <div id="wz-steps" class="card mt-4 space-y-1 p-2.5"></div>
+      </aside>
 
-        <!-- Basic info -->
-        <section class="card p-4">
-          <h2 class="text-[15px] font-bold tracking-tight">Basic info</h2>
-          <div class="mt-3 space-y-3">
-            <div>
-              <label class="label">Event title</label>
-              <input id="ef-title" class="input" type="text" placeholder="e.g. Tech Summit 2026" value="Tech Summit 2026" />
-            </div>
-            <div>
-              <label class="label">Description</label>
-              <textarea class="textarea" rows="4" placeholder="Tell attendees what this event is about...">Join 1,500+ founders, engineers and investors for two days of talks, workshops and networking at BITEC. Featuring keynotes on AI, fintech and the future of work in Southeast Asia.</textarea>
-            </div>
-            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <!-- ============ STEP CONTENT ============ -->
+      <div class="min-w-0">
+
+        <!-- ===== STEP 0 · DETAILS ===== -->
+        <section data-step-panel="0" class="space-y-3">
+          <div>
+            <h2 class="text-[20px] font-bold tracking-tight">Event details</h2>
+            <p class="mt-1 text-[13px] text-muted">Tell attendees what your event is, and when &amp; where it happens.</p>
+          </div>
+
+          <!-- Basic info -->
+          <section class="card p-4">
+            <h3 class="text-[14px] font-bold tracking-tight">Basic info</h3>
+            <div class="mt-3 space-y-3">
               <div>
-                <label class="label">Category</label>
+                <label class="label">Event title</label>
+                <input id="ef-title" class="input" type="text" placeholder="e.g. Tech Summit 2026" value="Tech Summit 2026" />
+              </div>
+              <div>
+                <div class="mb-1.5 flex items-center justify-between">
+                  <label class="label mb-0">Description</label>
+                  <span id="desc-count" class="text-[11px] font-medium text-muted tnum">0/250</span>
+                </div>
+                <div id="desc-editor-wrap">
+                  <div id="desc-editor"><p>Join 1,500+ founders, engineers and investors for two days of talks, workshops and networking at BITEC.</p></div>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div>
+                  <label class="label">Category</label>
+                  <select class="select">
+                    <option>Conference</option>
+                    <option>Workshop</option>
+                    <option>Concert &amp; Festival</option>
+                    <option>Meetup</option>
+                    <option>Sports &amp; Wellness</option>
+                    <option>Networking</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="label">Tags</label>
+                  <input class="input" type="text" placeholder="tech, ai, networking" value="tech, ai, startup" />
+                  <p class="hint">Comma-separated, used for search &amp; recommendations.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Date & time -->
+          <section class="card p-4">
+            <h3 class="text-[14px] font-bold tracking-tight">Date &amp; time</h3>
+            <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div><label class="label">Start date</label><input class="input" type="date" value="2026-08-18" /></div>
+              <div><label class="label">Start time</label><input class="input" type="time" value="09:00" /></div>
+              <div><label class="label">End date</label><input class="input" type="date" value="2026-08-19" /></div>
+              <div><label class="label">End time</label><input class="input" type="time" value="18:00" /></div>
+            </div>
+            <div class="mt-3">
+              <label class="label">Timezone</label>
+              <select class="select">
+                <option selected>GMT+7 Bangkok</option>
+                <option>GMT+8 Singapore</option>
+                <option>GMT+9 Tokyo</option>
+                <option>GMT+1 Berlin</option>
+                <option>GMT+0 London</option>
+              </select>
+            </div>
+          </section>
+
+          <!-- Location -->
+          <section class="card p-4">
+            <h3 class="text-[14px] font-bold tracking-tight">Location</h3>
+            <div class="segmented mt-3 inline-flex" data-loc-toggle>
+              <button type="button" class="active flex items-center gap-1" data-loc="inperson"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>In-person</button>
+              <button type="button" class="flex items-center gap-1" data-loc="online"><i class="hgi-stroke hgi-global text-[13px]"></i>Online</button>
+            </div>
+            <div class="mt-3 space-y-3" data-loc-panel="inperson">
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">In-person details</p>
+              <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div><label class="label">Venue name</label><input id="ef-venue" class="input" type="text" placeholder="e.g. BITEC" value="BITEC" /></div>
+                <div><label class="label">Address</label><input class="input" type="text" placeholder="Street, district, city" value="88 Bangna-Trad Rd, Bang Na, Bangkok" /></div>
+              </div>
+            </div>
+            <div class="mt-3 hidden space-y-3" data-loc-panel="online">
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Online details</p>
+              <div>
+                <label class="label">Meeting link</label>
+                <input class="input" type="url" placeholder="https://meet.eventa.io/tech-summit-2026" />
+                <p class="hint">Sent to attendees by email once they register.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Cover image -->
+          <section class="card p-4">
+            <h3 class="text-[14px] font-bold tracking-tight">Cover image</h3>
+            <label class="mt-3 flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-hair p-8 text-center transition-colors hover:border-brand">
+              <span class="grid h-11 w-11 place-items-center rounded-full bg-brand-soft text-brand"><i class="hgi-stroke hgi-image-upload-01 text-[20px]"></i></span>
+              <p class="text-[13px] font-semibold text-ink">Drag &amp; drop or <span class="text-brand">browse</span></p>
+              <p class="text-[11px] text-muted">Recommended 1600×900px · PNG or JPG · up to 5MB</p>
+              <input type="file" class="hidden" accept="image/*" />
+            </label>
+          </section>
+
+          <!-- Highlights -->
+          <section class="card p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-[14px] font-bold tracking-tight">Highlights</h3>
+              <span class="text-[11px] text-muted">Shown on the landing page</span>
+            </div>
+            <p class="mt-1 text-[12px] text-muted">Short selling points for your event — pick an icon and write a label for each.</p>
+            <div id="highlight-rows" class="mt-3 space-y-2"></div>
+            <button type="button" id="add-highlight-row" class="btn btn-soft btn-sm mt-3"><i class="hgi-stroke hgi-add-01 text-[14px]"></i>Add highlight</button>
+          </section>
+        </section>
+
+        <!-- ===== STEP 1 · TICKETS ===== -->
+        <section data-step-panel="1" class="hidden space-y-3">
+          <div>
+            <h2 class="text-[20px] font-bold tracking-tight">Tickets &amp; registration</h2>
+            <p class="mt-1 text-[13px] text-muted">Add your ticket types, then set capacity and when registration is open.</p>
+          </div>
+
+          <!-- Tickets -->
+          <section class="card p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-[14px] font-bold tracking-tight">Ticket types</h3>
+              <span class="text-[11px] text-muted">Add one or more</span>
+            </div>
+            <div class="mt-3 hidden gap-2 text-[11px] font-semibold uppercase tracking-wider text-muted sm:grid sm:grid-cols-12">
+              <div class="sm:col-span-5">Ticket name</div>
+              <div class="sm:col-span-3">Price (฿)</div>
+              <div class="sm:col-span-3">Quantity</div>
+              <div class="sm:col-span-1"></div>
+            </div>
+            <div id="ticket-rows" class="mt-2 space-y-2">
+              <div class="grid grid-cols-2 gap-2 sm:grid-cols-12 sm:items-center" data-ticket-row>
+                <input class="input sm:col-span-5" type="text" placeholder="Ticket name" value="General" />
+                <input class="input tnum sm:col-span-3" type="number" placeholder="Price" value="890" />
+                <input class="input tnum sm:col-span-3" type="number" placeholder="Quantity" value="600" />
+                <button type="button" class="btn-icon col-span-2 justify-self-end sm:col-span-1 sm:justify-self-center" data-remove-ticket title="Remove ticket type"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+              </div>
+              <div class="grid grid-cols-2 gap-2 sm:grid-cols-12 sm:items-center" data-ticket-row>
+                <input class="input sm:col-span-5" type="text" placeholder="Ticket name" value="VIP" />
+                <input class="input tnum sm:col-span-3" type="number" placeholder="Price" value="1900" />
+                <input class="input tnum sm:col-span-3" type="number" placeholder="Quantity" value="120" />
+                <button type="button" class="btn-icon col-span-2 justify-self-end sm:col-span-1 sm:justify-self-center" data-remove-ticket title="Remove ticket type"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+              </div>
+            </div>
+            <button type="button" id="add-ticket-row" class="btn btn-soft btn-sm mt-3"><i class="hgi-stroke hgi-add-01 text-[14px]"></i>Add ticket type</button>
+          </section>
+
+          <!-- Capacity & registration -->
+          <section class="card p-4">
+            <h3 class="text-[14px] font-bold tracking-tight">Capacity &amp; registration</h3>
+            <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <div><label class="label">Capacity</label><input id="ef-capacity" class="input tnum" type="number" value="1500" /></div>
+              <div><label class="label">Registration opens</label><input class="input" type="date" value="2026-07-14" /></div>
+              <div><label class="label">Registration closes</label><input class="input" type="date" value="2026-08-17" /></div>
+            </div>
+            <div class="mt-4 space-y-3 border-t border-line pt-3">
+              <div class="flex items-center justify-between gap-3">
+                <div class="min-w-0">
+                  <p class="text-[13px] font-semibold text-ink">Require approval</p>
+                  <p class="text-[11px] text-muted">Manually review each registration before it's confirmed.</p>
+                </div>
+                <button type="button" class="flex h-5 w-9 shrink-0 items-center rounded-full bg-line p-0.5" data-toggle>
+                  <span class="h-4 w-4 rounded-full bg-white shadow transition-transform"></span>
+                </button>
+              </div>
+              <div class="flex items-center justify-between gap-3 border-t border-line pt-3">
+                <div class="min-w-0">
+                  <p class="text-[13px] font-semibold text-ink">Enable waitlist</p>
+                  <p class="text-[11px] text-muted">Let attendees join a waitlist once capacity is reached.</p>
+                </div>
+                <button type="button" class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5" data-toggle>
+                  <span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition-transform"></span>
+                </button>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <!-- ===== STEP 2 · REVIEW & PUBLISH ===== -->
+        <section data-step-panel="2" class="hidden space-y-3">
+          <div>
+            <h2 class="text-[20px] font-bold tracking-tight">Review &amp; publish</h2>
+            <p class="mt-1 text-[13px] text-muted">Choose a landing-page template and set how your event appears.</p>
+          </div>
+
+          <!-- Landing page -->
+          <section class="card p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-[14px] font-bold tracking-tight">Landing page</h3>
+              <a href="landing-pages.html" class="text-[12px] font-semibold text-brand hover:underline">Browse templates</a>
+            </div>
+            <p class="mt-1 text-[12px] text-muted">Choose a website template — its title, date, venue, agenda and tickets fill in automatically.</p>
+            <div class="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+              <label class="relative block cursor-pointer">
+                <input type="radio" name="landing-tpl" value="aurora" class="peer sr-only" checked />
+                <re-icon icon="check-circle" size="18" class="absolute right-3 top-3 z-10 text-brand opacity-0 transition peer-checked:opacity-100"></re-icon>
+                <div class="rounded-xl bg-canvas p-2 transition hover:bg-line peer-checked:bg-brand-soft peer-checked:ring-2 peer-checked:ring-brand/40">
+                  <div class="h-14 overflow-hidden rounded-lg bg-white"><div class="h-5 bg-gradient-to-r from-brand to-emerald-400"></div><div class="space-y-1 p-1.5"><div class="h-1.5 w-10 rounded bg-neutral-800"></div><div class="h-1 w-8 rounded bg-neutral-300"></div></div></div>
+                  <p class="mt-2 text-[12.5px] font-semibold text-ink">Classic</p>
+                  <p class="text-[10.5px] text-muted">All-purpose</p>
+                </div>
+              </label>
+              <label class="relative block cursor-pointer">
+                <input type="radio" name="landing-tpl" value="noir" class="peer sr-only" />
+                <re-icon icon="check-circle" size="18" class="absolute right-3 top-3 z-10 text-brand opacity-0 transition peer-checked:opacity-100"></re-icon>
+                <div class="rounded-xl bg-canvas p-2 transition hover:bg-line peer-checked:bg-brand-soft peer-checked:ring-2 peer-checked:ring-brand/40">
+                  <div class="grid h-14 grid-cols-5 gap-1 rounded-lg bg-white p-1.5"><div class="col-span-3 space-y-1"><div class="h-1.5 w-full rounded bg-neutral-800"></div><div class="h-1 w-3/4 rounded bg-neutral-300"></div><div class="mt-0.5 h-2 w-6 rounded bg-brand"></div></div><div class="col-span-2 rounded bg-brand-soft"></div></div>
+                  <p class="mt-2 text-[12.5px] font-semibold text-ink">Spotlight</p>
+                  <p class="text-[10.5px] text-muted">Ticket-focused</p>
+                </div>
+              </label>
+              <label class="relative block cursor-pointer">
+                <input type="radio" name="landing-tpl" value="minimal" class="peer sr-only" />
+                <re-icon icon="check-circle" size="18" class="absolute right-3 top-3 z-10 text-brand opacity-0 transition peer-checked:opacity-100"></re-icon>
+                <div class="rounded-xl bg-canvas p-2 transition hover:bg-line peer-checked:bg-brand-soft peer-checked:ring-2 peer-checked:ring-brand/40">
+                  <div class="flex h-14 flex-col items-center justify-center gap-1 rounded-lg bg-white"><div class="h-1 w-4 rounded-full bg-brand"></div><div class="h-1.5 w-14 rounded bg-neutral-800"></div><div class="h-px w-16 bg-neutral-200"></div><div class="h-2 w-8 rounded bg-brand"></div></div>
+                  <p class="mt-2 text-[12.5px] font-semibold text-ink">Minimal</p>
+                  <p class="text-[10.5px] text-muted">Understated</p>
+                </div>
+              </label>
+            </div>
+            <div class="mt-3 flex flex-wrap items-center gap-2 border-t border-line pt-3">
+              <button type="button" id="preview-landing" class="btn btn-soft btn-sm"><re-icon icon="play" size="14"></re-icon>Preview landing page</button>
+              <span class="text-[11px] text-muted">Opens in a new tab with the details you've entered.</span>
+            </div>
+          </section>
+
+          <!-- Publish settings -->
+          <section class="card p-4">
+            <h3 class="text-[14px] font-bold tracking-tight">Publish settings</h3>
+            <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div>
+                <label class="label">Status</label>
                 <select class="select">
-                  <option>Conference</option>
-                  <option>Workshop</option>
-                  <option>Concert &amp; Festival</option>
-                  <option>Meetup</option>
-                  <option>Sports &amp; Wellness</option>
-                  <option>Networking</option>
+                  <option selected>Draft</option>
+                  <option>Published</option>
+                  <option>Archived</option>
                 </select>
               </div>
               <div>
-                <label class="label">Tags</label>
-                <input class="input" type="text" placeholder="tech, ai, networking" value="tech, ai, startup" />
-                <p class="hint">Comma-separated, used for search &amp; recommendations.</p>
+                <label class="label">Visibility</label>
+                <select class="select">
+                  <option>Public</option>
+                  <option>Private</option>
+                  <option>Unlisted</option>
+                </select>
               </div>
             </div>
-          </div>
+            <p class="hint mt-2">Public events are listed on the Eventa discovery page. You can edit details anytime before it goes live.</p>
+            <div class="mt-4 border-t border-line pt-3">
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Publish checklist</p>
+              <ul class="mt-2.5 space-y-2">
+                <li class="flex items-center gap-2 text-[13px] text-ink"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px] text-brand"></i>Title &amp; description added</li>
+                <li class="flex items-center gap-2 text-[13px] text-ink"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px] text-brand"></i>Date &amp; time set</li>
+                <li class="flex items-center gap-2 text-[13px] text-ink"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px] text-brand"></i>Location added</li>
+                <li class="flex items-center gap-2 text-[13px] text-ink"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px] text-brand"></i>At least one ticket type</li>
+                <li class="flex items-center gap-2 text-[13px] text-muted"><i class="hgi-stroke hgi-alert-circle text-[15px] text-amber-500 dark:text-amber-300"></i>Cover image not uploaded</li>
+              </ul>
+            </div>
+          </section>
         </section>
 
-        <!-- Date & time -->
-        <section class="card p-4">
-          <h2 class="text-[15px] font-bold tracking-tight">Date &amp; time</h2>
-          <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <div><label class="label">Start date</label><input class="input" type="date" value="2026-08-18" /></div>
-            <div><label class="label">Start time</label><input class="input" type="time" value="09:00" /></div>
-            <div><label class="label">End date</label><input class="input" type="date" value="2026-08-19" /></div>
-            <div><label class="label">End time</label><input class="input" type="time" value="18:00" /></div>
-          </div>
-          <div class="mt-3">
-            <label class="label">Timezone</label>
-            <select class="select">
-              <option selected>GMT+7 Bangkok</option>
-              <option>GMT+8 Singapore</option>
-              <option>GMT+9 Tokyo</option>
-              <option>GMT+1 Berlin</option>
-              <option>GMT+0 London</option>
-            </select>
-          </div>
-        </section>
-
-        <!-- Location -->
-        <section class="card p-4">
-          <h2 class="text-[15px] font-bold tracking-tight">Location</h2>
-          <div class="segmented mt-3 inline-flex" data-loc-toggle>
-            <button type="button" class="active flex items-center gap-1" data-loc="inperson"><i class="hgi-stroke hgi-location-01 text-[13px]"></i>In-person</button>
-            <button type="button" class="flex items-center gap-1" data-loc="online"><i class="hgi-stroke hgi-global text-[13px]"></i>Online</button>
-          </div>
-
-          <div class="mt-3 space-y-3" data-loc-panel="inperson">
-            <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">In-person details</p>
-            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <div><label class="label">Venue name</label><input id="ef-venue" class="input" type="text" placeholder="e.g. BITEC" value="BITEC" /></div>
-              <div><label class="label">Address</label><input class="input" type="text" placeholder="Street, district, city" value="88 Bangna-Trad Rd, Bang Na, Bangkok" /></div>
-            </div>
-          </div>
-
-          <div class="mt-3 hidden space-y-3" data-loc-panel="online">
-            <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Online details</p>
-            <div>
-              <label class="label">Meeting link</label>
-              <input class="input" type="url" placeholder="https://meet.eventa.io/tech-summit-2026" />
-              <p class="hint">Sent to attendees by email once they register.</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Tickets -->
-        <section class="card p-4">
-          <div class="flex items-center justify-between">
-            <h2 class="text-[15px] font-bold tracking-tight">Tickets</h2>
-            <span class="text-[11px] text-muted">Add one or more ticket types</span>
-          </div>
-          <div class="mt-3 hidden gap-2 text-[11px] font-semibold uppercase tracking-wider text-muted sm:grid sm:grid-cols-12">
-            <div class="sm:col-span-5">Ticket name</div>
-            <div class="sm:col-span-3">Price (฿)</div>
-            <div class="sm:col-span-3">Quantity</div>
-            <div class="sm:col-span-1"></div>
-          </div>
-          <div id="ticket-rows" class="mt-2 space-y-2">
-            <div class="grid grid-cols-2 gap-2 sm:grid-cols-12 sm:items-center" data-ticket-row>
-              <input class="input sm:col-span-5" type="text" placeholder="Ticket name" value="General" />
-              <input class="input tnum sm:col-span-3" type="number" placeholder="Price" value="890" />
-              <input class="input tnum sm:col-span-3" type="number" placeholder="Quantity" value="600" />
-              <button type="button" class="btn-icon col-span-2 justify-self-end sm:col-span-1 sm:justify-self-center" data-remove-ticket title="Remove ticket type"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
-            </div>
-            <div class="grid grid-cols-2 gap-2 sm:grid-cols-12 sm:items-center" data-ticket-row>
-              <input class="input sm:col-span-5" type="text" placeholder="Ticket name" value="VIP" />
-              <input class="input tnum sm:col-span-3" type="number" placeholder="Price" value="1900" />
-              <input class="input tnum sm:col-span-3" type="number" placeholder="Quantity" value="120" />
-              <button type="button" class="btn-icon col-span-2 justify-self-end sm:col-span-1 sm:justify-self-center" data-remove-ticket title="Remove ticket type"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
-            </div>
-          </div>
-          <button type="button" id="add-ticket-row" class="btn btn-soft btn-sm mt-3"><i class="hgi-stroke hgi-add-01 text-[14px]"></i>Add ticket type</button>
-        </section>
-
-        <!-- Capacity & registration -->
-        <section class="card p-4">
-          <h2 class="text-[15px] font-bold tracking-tight">Capacity &amp; registration</h2>
-          <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
-            <div><label class="label">Capacity</label><input class="input tnum" type="number" value="1500" /></div>
-            <div><label class="label">Registration opens</label><input class="input" type="date" value="2026-07-14" /></div>
-            <div><label class="label">Registration closes</label><input class="input" type="date" value="2026-08-17" /></div>
-          </div>
-          <div class="mt-4 space-y-3 border-t border-line pt-3">
-            <div class="flex items-center justify-between gap-3">
-              <div class="min-w-0">
-                <p class="text-[13px] font-semibold text-ink">Require approval</p>
-                <p class="text-[11px] text-muted">Manually review each registration before it's confirmed.</p>
-              </div>
-              <button type="button" class="flex h-5 w-9 shrink-0 items-center rounded-full bg-line p-0.5" data-toggle>
-                <span class="h-4 w-4 rounded-full bg-white shadow transition-transform"></span>
-              </button>
-            </div>
-            <div class="flex items-center justify-between gap-3 border-t border-line pt-3">
-              <div class="min-w-0">
-                <p class="text-[13px] font-semibold text-ink">Enable waitlist</p>
-                <p class="text-[11px] text-muted">Let attendees join a waitlist once capacity is reached.</p>
-              </div>
-              <button type="button" class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5" data-toggle>
-                <span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition-transform"></span>
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <!-- Cover image -->
-        <section class="card p-4">
-          <h2 class="text-[15px] font-bold tracking-tight">Cover image</h2>
-          <label class="mt-3 flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-hair p-8 text-center transition-colors hover:border-brand">
-            <span class="grid h-11 w-11 place-items-center rounded-full bg-brand-soft text-brand"><i class="hgi-stroke hgi-image-upload-01 text-[20px]"></i></span>
-            <p class="text-[13px] font-semibold text-ink">Drag &amp; drop or <span class="text-brand">browse</span></p>
-            <p class="text-[11px] text-muted">Recommended 1600×900px · PNG or JPG · up to 5MB</p>
-            <input type="file" class="hidden" accept="image/*" />
-          </label>
-        </section>
-
-        <!-- Landing page -->
-        <section class="card p-4">
-          <div class="flex items-center justify-between">
-            <h2 class="text-[15px] font-bold tracking-tight">Landing page</h2>
-            <a href="landing-pages.html" class="text-[12px] font-semibold text-brand hover:underline">Browse templates</a>
-          </div>
-          <p class="mt-1 text-[12px] text-muted">Choose a website template for this event — its title, date, venue, agenda and tickets fill in automatically.</p>
-          <div class="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
-            <label class="relative block cursor-pointer">
-              <input type="radio" name="landing-tpl" value="aurora" class="peer sr-only" checked />
-              <re-icon icon="check-circle" size="18" class="absolute right-3 top-3 z-10 text-brand opacity-0 transition peer-checked:opacity-100"></re-icon>
-              <div class="rounded-xl bg-canvas p-2 transition hover:bg-line peer-checked:bg-brand-soft peer-checked:ring-2 peer-checked:ring-brand/40">
-                <div class="h-14 overflow-hidden rounded-lg bg-white"><div class="h-5 bg-gradient-to-r from-brand to-emerald-400"></div><div class="space-y-1 p-1.5"><div class="h-1.5 w-10 rounded bg-neutral-800"></div><div class="h-1 w-8 rounded bg-neutral-300"></div></div></div>
-                <p class="mt-2 text-[12.5px] font-semibold text-ink">Classic</p>
-                <p class="text-[10.5px] text-muted">All-purpose</p>
-              </div>
-            </label>
-            <label class="relative block cursor-pointer">
-              <input type="radio" name="landing-tpl" value="noir" class="peer sr-only" />
-              <re-icon icon="check-circle" size="18" class="absolute right-3 top-3 z-10 text-brand opacity-0 transition peer-checked:opacity-100"></re-icon>
-              <div class="rounded-xl bg-canvas p-2 transition hover:bg-line peer-checked:bg-brand-soft peer-checked:ring-2 peer-checked:ring-brand/40">
-                <div class="grid h-14 grid-cols-5 gap-1 rounded-lg bg-white p-1.5"><div class="col-span-3 space-y-1"><div class="h-1.5 w-full rounded bg-neutral-800"></div><div class="h-1 w-3/4 rounded bg-neutral-300"></div><div class="mt-0.5 h-2 w-6 rounded bg-brand"></div></div><div class="col-span-2 rounded bg-brand-soft"></div></div>
-                <p class="mt-2 text-[12.5px] font-semibold text-ink">Spotlight</p>
-                <p class="text-[10.5px] text-muted">Ticket-focused</p>
-              </div>
-            </label>
-            <label class="relative block cursor-pointer">
-              <input type="radio" name="landing-tpl" value="minimal" class="peer sr-only" />
-              <re-icon icon="check-circle" size="18" class="absolute right-3 top-3 z-10 text-brand opacity-0 transition peer-checked:opacity-100"></re-icon>
-              <div class="rounded-xl bg-canvas p-2 transition hover:bg-line peer-checked:bg-brand-soft peer-checked:ring-2 peer-checked:ring-brand/40">
-                <div class="flex h-14 flex-col items-center justify-center gap-1 rounded-lg bg-white"><div class="h-1 w-4 rounded-full bg-brand"></div><div class="h-1.5 w-14 rounded bg-neutral-800"></div><div class="h-px w-16 bg-neutral-200"></div><div class="h-2 w-8 rounded bg-brand"></div></div>
-                <p class="mt-2 text-[12.5px] font-semibold text-ink">Minimal</p>
-                <p class="text-[10.5px] text-muted">Understated</p>
-              </div>
-            </label>
-          </div>
-          <div class="mt-3 flex flex-wrap items-center gap-2 border-t border-line pt-3">
-            <button type="button" id="preview-landing" class="btn btn-soft btn-sm"><re-icon icon="play" size="14"></re-icon>Preview landing page</button>
-            <span class="text-[11px] text-muted">Opens in a new tab with the details you've entered.</span>
-          </div>
-        </section>
-
-      </div>
-
-      <!-- ============ RIGHT / SUMMARY COLUMN ============ -->
-      <div class="xl:col-span-1">
-        <div class="card space-y-4 p-4 xl:sticky xl:top-4">
-          <h2 class="text-[15px] font-bold tracking-tight">Publish settings</h2>
-          <div class="hidden gap-2 xl:flex">
-            <a href="events.html" class="btn btn-soft flex-1"><i class="hgi-stroke hgi-note-03 text-[16px]"></i>Save draft</a>
-            <a href="events.html" class="btn btn-primary flex-1"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i>Publish</a>
-          </div>
-
-          <div>
-            <label class="label">Status</label>
-            <select class="select">
-              <option selected>Draft</option>
-              <option>Published</option>
-              <option>Archived</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="label">Visibility</label>
-            <select class="select">
-              <option>Public</option>
-              <option>Private</option>
-              <option>Unlisted</option>
-            </select>
-            <p class="hint">Public events are listed on the Eventa discovery page.</p>
-          </div>
-
-          <div class="border-t border-line pt-4">
-            <p class="label mb-2">Organizer</p>
-            <div class="flex items-center gap-2.5">
-              <span class="avatar h-9 w-9 text-[12px]">HN</span>
-              <div class="min-w-0 leading-tight">
-                <p class="truncate text-[13px] font-semibold text-ink">Harper Nelson</p>
-                <p class="truncate text-[11px] text-muted">Event Manager</p>
-              </div>
-            </div>
-          </div>
-
-          <p class="hint">You can edit event details anytime before it goes live. Once published, attendees will be able to register immediately.</p>
-
-          <div class="border-t border-line pt-4">
-            <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Publish checklist</p>
-            <ul class="mt-2.5 space-y-2">
-              <li class="flex items-center gap-2 text-[13px] text-ink"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px] text-brand"></i>Title &amp; description added</li>
-              <li class="flex items-center gap-2 text-[13px] text-ink"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px] text-brand"></i>Date &amp; time set</li>
-              <li class="flex items-center gap-2 text-[13px] text-ink"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px] text-brand"></i>Location added</li>
-              <li class="flex items-center gap-2 text-[13px] text-ink"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px] text-brand"></i>At least one ticket type</li>
-              <li class="flex items-center gap-2 text-[13px] text-muted"><i class="hgi-stroke hgi-alert-circle text-[15px] text-amber-500 dark:text-amber-300"></i>Cover image not uploaded</li>
-            </ul>
-          </div>
+        <!-- ===== nav ===== -->
+        <div class="mt-4 flex items-center justify-between gap-3">
+          <button type="button" id="wz-back" class="btn btn-soft"><re-icon icon="chevron-left" size="15"></re-icon>Back</button>
+          <button type="button" id="wz-next" class="btn btn-primary min-w-[132px] justify-center">Next<re-icon icon="chevron-right" size="15"></re-icon></button>
         </div>
       </div>
 
+      <!-- ============ TIPS / SUMMARY ============ -->
+      <aside class="hidden xl:block">
+        <div class="sticky top-4 space-y-3">
+          <div class="rounded-2xl bg-neutral-900 p-4 text-white">
+            <p class="flex items-center gap-2 text-[13px] font-bold">💡 Tips</p>
+            <p id="wz-tip" class="mt-2 text-[12.5px] leading-relaxed text-white/75"></p>
+          </div>
+          <div class="card p-4">
+            <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Summary</p>
+            <div class="mt-2.5 space-y-2 text-[12.5px]">
+              <div class="flex items-center justify-between gap-2"><span class="text-muted">Event</span><span id="sum-title" class="max-w-[150px] truncate font-semibold text-ink">Tech Summit 2026</span></div>
+              <div class="flex items-center justify-between gap-2"><span class="text-muted">Ticket types</span><span id="sum-tickets" class="font-semibold text-ink tnum">2</span></div>
+              <div class="flex items-center justify-between gap-2"><span class="text-muted">Capacity</span><span id="sum-cap" class="font-semibold text-ink tnum">1,500</span></div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
     </div>
 
-    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+    <p class="mt-6 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
   </main>
 </div>
 
-<!-- mobile sticky publish bar (desktop uses the sticky Publish settings panel) -->
-<div class="fixed inset-x-0 bottom-0 z-40 flex gap-2 border-t border-hair bg-surface px-4 py-3 xl:hidden">
-  <a href="events.html" class="btn btn-soft flex-1"><i class="hgi-stroke hgi-note-03 text-[16px]"></i>Save draft</a>
-  <a href="events.html" class="btn btn-primary flex-1"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i>Publish</a>
-</div>
-
-<script src="../assets/shell.js?v=24"></script>
+<script src="../assets/shell.js?v=31"></script>
 <script>
+  /* focused create flow — hide the module sub-nav panel, keep the icon rail to exit */
+  var modPanel = document.getElementById('panel');
+  if (modPanel) modPanel.classList.add('hidden');
+
   /* ---------- Location: in-person / online toggle ---------- */
   const locToggle = document.querySelector('[data-loc-toggle]');
   locToggle.addEventListener('click', e => {
@@ -331,11 +405,12 @@
   }
   document.getElementById('add-ticket-row').addEventListener('click', () => {
     ticketRows.appendChild(ticketRowTemplate());
+    updateSummary();
   });
   ticketRows.addEventListener('click', e => {
     const btn = e.target.closest('[data-remove-ticket]'); if (!btn) return;
     const rows = ticketRows.querySelectorAll('[data-ticket-row]');
-    if (rows.length > 1) btn.closest('[data-ticket-row]').remove();
+    if (rows.length > 1) { btn.closest('[data-ticket-row]').remove(); updateSummary(); }
   });
 
   /* ---------- Toggle switches (require approval / waitlist) ---------- */
@@ -348,6 +423,45 @@
     });
   });
 
+  /* ---------- Highlights: icon + label rows (shown on the landing page) ---------- */
+  const HL_ICONS = [
+    { slug: 'sparkles', label: 'Sparkles' }, { slug: 'mic', label: 'Speakers' },
+    { slug: 'users', label: 'People' },      { slug: 'presentation', label: 'Talks' },
+    { slug: 'headphones', label: 'Workshops' }, { slug: 'star', label: 'Star' },
+    { slug: 'trophy', label: 'Award' },      { slug: 'ticket', label: 'Ticket' },
+    { slug: 'gift', label: 'Gift' },         { slug: 'music', label: 'Music' },
+    { slug: 'camera', label: 'Photo' },      { slug: 'rocket', label: 'Launch' },
+    { slug: 'globe', label: 'Global' },      { slug: 'heart', label: 'Heart' },
+    { slug: 'wifi', label: 'Wi-Fi' },        { slug: 'medal', label: 'Medal' },
+  ];
+  const hlRows = document.getElementById('highlight-rows');
+  const hlOptions = (sel) => HL_ICONS.map(i => `<option value="${i.slug}"${i.slug === sel ? ' selected' : ''}>${i.label}</option>`).join('');
+  function hlRowEl(icon, label) {
+    icon = icon || 'sparkles';
+    const row = document.createElement('div');
+    row.className = 'grid grid-cols-[124px_minmax(0,1fr)_auto] items-center gap-2';
+    row.setAttribute('data-highlight-row', '');
+    row.innerHTML =
+      '<div class="relative">' +
+        `<re-icon data-hl-preview icon="${icon}" size="16" class="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-brand"></re-icon>` +
+        `<select class="select h-10 w-full pl-8 text-[12.5px]" data-hl-icon>${hlOptions(icon)}</select>` +
+      '</div>' +
+      `<input class="input" type="text" value="${(label || '').replace(/"/g, '&quot;')}" placeholder="e.g. 20+ speakers" data-hl-label />` +
+      '<button type="button" class="btn-icon" data-remove-highlight title="Remove highlight"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>';
+    return row;
+  }
+  [['mic', '20+ speakers'], ['presentation', 'Hands-on workshops'], ['sparkles', 'Startup showcase'], ['users', 'Networking lounge']]
+    .forEach(([ic, lb]) => hlRows.appendChild(hlRowEl(ic, lb)));
+  document.getElementById('add-highlight-row').addEventListener('click', () => hlRows.appendChild(hlRowEl()));
+  hlRows.addEventListener('click', e => {
+    const btn = e.target.closest('[data-remove-highlight]'); if (!btn) return;
+    btn.closest('[data-highlight-row]').remove();
+  });
+  hlRows.addEventListener('change', e => {
+    const sel = e.target.closest('[data-hl-icon]'); if (!sel) return;
+    sel.closest('[data-highlight-row]').querySelector('[data-hl-preview]').setAttribute('icon', sel.value);
+  });
+
   /* ---------- Landing page: preview the selected template with live form data ---------- */
   const previewBtn = document.getElementById('preview-landing');
   if (previewBtn) previewBtn.addEventListener('click', () => {
@@ -357,9 +471,111 @@
     const venue = document.getElementById('ef-venue')?.value.trim();
     if (title) p.set('title', title);
     if (venue) p.set('venue', venue);
+    const locBtn = document.querySelector('[data-loc-toggle] .active');
+    if (locBtn && locBtn.dataset.loc === 'online') p.set('online', '1');
+    const hls = [...hlRows.querySelectorAll('[data-highlight-row]')].map(row => {
+      const label = row.querySelector('[data-hl-label]').value.trim();
+      return label ? (row.querySelector('[data-hl-icon]').value + ':' + label) : null;
+    }).filter(Boolean);
+    if (hls.length) p.set('hl', hls.join('|'));
     const qs = p.toString();
     window.open(`../landing/${tpl}.html${qs ? '?' + qs : ''}`, '_blank', 'noopener');
   });
+
+  /* ---------- Wizard controller ---------- */
+  const STEPS = [
+    { label: 'Details',           tip: 'Give your event a clear title and category, and set exactly when & where it happens. You can refine everything before publishing.' },
+    { label: 'Tickets',           tip: 'Add at least one ticket type with a price and quantity, then set your total capacity and registration window.' },
+    { label: 'Review & publish',  tip: 'Pick a landing-page template and review your setup. Publishing lets attendees register right away.' },
+  ];
+  let cur = 0;
+  const stepsEl = document.getElementById('wz-steps');
+  const barEl   = document.getElementById('wz-progress-bar');
+  const labelEl = document.getElementById('wz-progress-label');
+  const tipEl   = document.getElementById('wz-tip');
+  const backBtn = document.getElementById('wz-back');
+  const nextBtn = document.getElementById('wz-next');
+  const mainEl  = document.querySelector('main');
+
+  function renderSteps() {
+    stepsEl.innerHTML = STEPS.map((s, i) => {
+      const done = i < cur, active = i === cur;
+      const dot = done
+        ? '<span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand text-white"><i class="hgi-stroke hgi-tick-02 text-[13px]"></i></span>'
+        : '<span class="grid h-6 w-6 shrink-0 place-items-center rounded-full text-[11px] font-bold ' + (active ? 'border-2 border-brand text-brand' : 'border border-hair text-muted') + '">' + (i + 1) + '</span>';
+      return '<button type="button" data-step-to="' + i + '" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition ' + (active ? 'bg-brand-soft' : 'hover:bg-line') + '">' +
+        dot + '<span class="text-[13px] font-semibold ' + ((active || done) ? 'text-ink' : 'text-muted') + '">' + s.label + '</span></button>';
+    }).join('');
+  }
+  function render() {
+    document.querySelectorAll('[data-step-panel]').forEach(p => p.classList.toggle('hidden', +p.dataset.stepPanel !== cur));
+    const pct = Math.round((cur + 1) / STEPS.length * 100);
+    barEl.style.width = pct + '%';
+    labelEl.textContent = pct + '% completed';
+    tipEl.textContent = STEPS[cur].tip;
+    backBtn.classList.toggle('pointer-events-none', cur === 0);
+    backBtn.classList.toggle('opacity-40', cur === 0);
+    const last = cur === STEPS.length - 1;
+    nextBtn.innerHTML = last
+      ? '<i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i>Publish event'
+      : 'Next<re-icon icon="chevron-right" size="15"></re-icon>';
+    renderSteps();
+    mainEl.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function goTo(i) { cur = Math.max(0, Math.min(STEPS.length - 1, i)); render(); }
+
+  stepsEl.addEventListener('click', e => { const b = e.target.closest('[data-step-to]'); if (b) goTo(+b.dataset.stepTo); });
+  backBtn.addEventListener('click', () => { if (cur > 0) goTo(cur - 1); });
+  nextBtn.addEventListener('click', () => {
+    if (cur < STEPS.length - 1) goTo(cur + 1);
+    else window.location.href = 'events.html';
+  });
+
+  /* ---------- Live summary ---------- */
+  const sumTitle = document.getElementById('sum-title');
+  const sumTickets = document.getElementById('sum-tickets');
+  const sumCap = document.getElementById('sum-cap');
+  function updateSummary() {
+    const t = document.getElementById('ef-title');
+    if (sumTitle && t) sumTitle.textContent = t.value.trim() || 'Untitled event';
+    if (sumTickets) sumTickets.textContent = document.querySelectorAll('#ticket-rows [data-ticket-row]').length;
+    const cap = document.getElementById('ef-capacity');
+    if (sumCap && cap) sumCap.textContent = Number(cap.value || 0).toLocaleString('en-US');
+  }
+  document.addEventListener('input', updateSummary);
+
+  render();
+  updateSummary();
+
+  /* ---------- Description rich-text editor (Quill) ---------- */
+  if (window.Quill) {
+    const quill = new Quill('#desc-editor', {
+      theme: 'snow',
+      placeholder: 'Tell attendees what this event is about…',
+      modules: { toolbar: [
+        [{ header: [false, 1, 2, 3] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        ['blockquote'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        [{ indent: '-1' }, { indent: '+1' }],
+        ['link', 'image', 'video'],
+        ['clean'],
+      ] },
+    });
+    const DESC_MAX = 250;
+    const descCount = document.getElementById('desc-count');
+    function updateDescCount() {
+      const len = Math.max(0, quill.getLength() - 1);
+      descCount.textContent = len + '/' + DESC_MAX;
+      descCount.classList.toggle('text-red-500', len >= DESC_MAX);
+      descCount.classList.toggle('text-muted', len < DESC_MAX);
+    }
+    quill.on('text-change', () => {
+      if (quill.getLength() - 1 > DESC_MAX) quill.deleteText(DESC_MAX, quill.getLength(), 'silent');
+      updateDescCount();
+    });
+    updateDescCount();
+  }
 </script>
 </body>
 </html>

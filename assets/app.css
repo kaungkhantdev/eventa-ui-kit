@@ -48,7 +48,7 @@ html.dark .btn-soft { color: #45c98f; }
 html.dark .btn-soft:hover { color: #45c98f; }
 .btn-danger { background: #ef4444; color: #fff; }
 .btn-danger:hover { background: #dc2626; }
-.btn-icon { width: 2rem; height: 2rem; padding: 0; border-radius: .5rem; color: rgb(var(--muted)); background: transparent; }
+.btn-icon { display: inline-grid; place-items: center; line-height: 0; width: 2rem; height: 2rem; padding: 0; border-radius: .5rem; color: rgb(var(--muted)); background: transparent; }
 .btn-icon:hover { color: rgb(var(--ink)); background: rgb(var(--line)); }
 
 /* ---------- Cards ---------- */

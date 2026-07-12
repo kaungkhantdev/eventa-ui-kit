@@ -12,8 +12,8 @@
 <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=24"></script>
-<link rel="stylesheet" href="../assets/app.css?v=24" />
+<script src="../assets/config.js?v=31"></script>
+<link rel="stylesheet" href="../assets/app.css?v=31" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="agenda">
 
@@ -27,8 +27,17 @@
       <div class="flex min-w-0 items-center gap-3">
         <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
         <div class="min-w-0">
-          <h1 class="text-[22px] font-bold tracking-tight">Agenda</h1>
-          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Build your event schedule.</p>
+          <p class="text-[11px] font-semibold uppercase tracking-wide text-muted">Agenda for</p>
+          <div class="relative -mt-0.5 inline-flex max-w-full items-center">
+            <select id="agenda-event" class="max-w-full cursor-pointer appearance-none truncate bg-transparent pr-7 text-[22px] font-bold tracking-tight text-ink focus:outline-none">
+              <option>Tech Summit 2026</option>
+              <option>Bangkok Jazz Night</option>
+              <option>Sunrise Yoga Retreat</option>
+              <option>Thai Street Food Festival</option>
+              <option>UX Bangkok Meetup</option>
+            </select>
+            <re-icon icon="chevron-down" size="20" class="pointer-events-none absolute right-0 text-muted"></re-icon>
+          </div>
         </div>
       </div>
       <div class="flex shrink-0 items-center gap-2.5">
@@ -41,7 +50,7 @@
     <div class="mb-4 flex flex-wrap items-center gap-3">
       <div class="flex items-center gap-1">
         <button class="grid h-9 w-9 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink" title="Previous week"><re-icon icon="chevron-left" size="18"></re-icon></button>
-        <h2 class="px-1 text-[17px] font-bold tracking-tight">July 2026</h2>
+        <h2 id="agenda-month" class="px-1 text-[17px] font-bold tracking-tight">July 2026</h2>
         <button class="grid h-9 w-9 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink" title="Next week"><re-icon icon="chevron-right" size="18"></re-icon></button>
       </div>
       <div class="flex w-full flex-wrap items-center gap-2 sm:ml-auto sm:w-auto">
@@ -90,36 +99,29 @@
     <h3 class="text-[15px] font-bold tracking-tight">Add session</h3>
     <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
   </header>
+  <p class="border-b border-hair px-4 py-2.5 text-[12px] text-muted">Adding to <span id="session-event-label" class="font-semibold text-ink">Tech Summit 2026</span></p>
   <div class="flex-1 space-y-4 overflow-y-auto p-4">
     <div>
       <label class="label">Session title</label>
-      <input type="text" class="input" placeholder="e.g. Opening Keynote: Building Tomorrow's Events" />
+      <input id="session-title" type="text" class="input" placeholder="e.g. Opening Keynote: Building Tomorrow's Events" />
     </div>
     <div>
       <label class="label">Day</label>
-      <select class="select">
-        <option>Mon · Jul 13</option>
-        <option>Tue · Jul 14</option>
-        <option>Wed · Jul 15</option>
-        <option>Thu · Jul 16</option>
-        <option>Fri · Jul 17</option>
-        <option>Sat · Jul 18</option>
-        <option>Sun · Jul 19</option>
-      </select>
+      <select id="session-day" class="select"></select>
     </div>
     <div class="grid grid-cols-2 gap-3">
       <div>
         <label class="label">Start time</label>
-        <input type="time" class="input" value="09:00" />
+        <input id="session-start" type="time" class="input" value="09:00" />
       </div>
       <div>
         <label class="label">End time</label>
-        <input type="time" class="input" value="10:30" />
+        <input id="session-end" type="time" class="input" value="10:30" />
       </div>
     </div>
     <div>
       <label class="label">Track / type</label>
-      <select class="select">
+      <select id="session-type" class="select">
         <option>Keynote</option>
         <option>Talk</option>
         <option>Workshop</option>
@@ -128,13 +130,13 @@
       </select>
     </div>
     <div>
-      <label class="label">Speakers</label>
-      <input type="text" class="input" placeholder="e.g. Somsak K., James W." />
-      <p class="hint">Separate multiple speakers with a comma.</p>
+      <label class="label">Speaker (initials)</label>
+      <input id="session-speakers" type="text" maxlength="2" class="input uppercase" placeholder="e.g. SK" />
+      <p class="hint">Shown as an avatar on the session block.</p>
     </div>
     <div>
       <label class="label">Room</label>
-      <select class="select">
+      <select id="session-room" class="select">
         <option>Hall A</option>
         <option>Hall B</option>
         <option>Foyer</option>
@@ -149,7 +151,7 @@
   </div>
   <footer class="flex gap-2 border-t border-hair p-4">
     <button class="btn btn-soft flex-1" data-close>Cancel</button>
-    <button class="btn btn-primary flex-1" data-close>Save session</button>
+    <button id="session-save" class="btn btn-primary flex-1" data-close>Save session</button>
   </footer>
 </aside>
 
@@ -166,72 +168,157 @@
   </div>
 </div>
 
-<script src="../assets/shell.js?v=24"></script>
+<script src="../assets/shell.js?v=31"></script>
 <script>
   (function () {
     const HS = 9, HE = 16, HH = 64;               // 09:00–16:00, 64px per hour
-    const days = [
-      { n: 'Mon', d: 'Jul 13' }, { n: 'Tue', d: 'Jul 14' }, { n: 'Wed', d: 'Jul 15' },
-      { n: 'Thu', d: 'Jul 16' }, { n: 'Fri', d: 'Jul 17' }, { n: 'Sat', d: 'Jul 18', hot: true }, { n: 'Sun', d: 'Jul 19' }
-    ];
     const PAL = {
       green: { b: 'border-brand', bg: 'bg-brand-soft', t: 'text-brand' },
       amber: { b: 'border-amber-400 dark:border-amber-300', bg: 'bg-amber-50 dark:bg-amber-400/10', t: 'text-amber-600 dark:text-amber-300' },
       rose:  { b: 'border-rose-400 dark:border-rose-300',  bg: 'bg-rose-50 dark:bg-rose-400/10',  t: 'text-rose-600 dark:text-rose-300' }
     };
-    const sessions = [
-      { day: 0, s: '09:00', e: '10:30', id: '#0012', type: 'Keynote',  title: 'Opening Keynote',      who: 'SK', c: 'green' },
-      { day: 0, s: '12:00', e: '14:00', id: '#0013', type: 'Workshop', title: 'Attendee Onboarding',  who: 'JW', c: 'green' },
-      { day: 1, s: '11:00', e: '12:30', id: '#0016', type: 'Talk',     title: 'Growth Marketing 101', who: 'PS', c: 'amber' },
-      { day: 2, s: '14:00', e: '15:30', id: '#0019', type: 'Break',    title: 'Sound Check',          who: 'ML', c: 'rose'  },
-      { day: 3, s: '10:00', e: '11:30', id: '#0020', type: 'Panel',    title: 'Community Building',   who: 'ST', c: 'amber' },
-      { day: 3, s: '12:00', e: '13:30', id: '#0021', type: 'Workshop', title: 'Design Sprint',        who: 'AP', c: 'green' },
-      { day: 4, s: '13:00', e: '14:30', id: '#0024', type: 'Panel',    title: 'Sponsor Briefing',     who: 'JW', c: 'amber' },
-      { day: 5, s: '09:00', e: '11:00', id: '#0027', type: 'Keynote',  title: 'Summit Opening',       who: 'SK', c: 'green' },
-      { day: 5, s: '11:30', e: '13:30', id: '#0028', type: 'Workshop', title: 'Check-in Flows',       who: 'PS', c: 'green' },
-      { day: 6, s: '11:00', e: '12:30', id: '#0030', type: 'Break',    title: 'Teardown & Wrap',      who: 'ML', c: 'rose'  }
-    ];
+    const CBY = { Keynote:'green', Workshop:'green', Talk:'amber', Panel:'amber', Break:'rose' };
+
+    // Each event owns its own week + schedule
+    const EVENTS = {
+      'Tech Summit 2026': {
+        month: 'July 2026',
+        days: [ {n:'Mon',d:'Jul 13'},{n:'Tue',d:'Jul 14'},{n:'Wed',d:'Jul 15'},{n:'Thu',d:'Jul 16'},{n:'Fri',d:'Jul 17'},{n:'Sat',d:'Jul 18',hot:true},{n:'Sun',d:'Jul 19',hot:true} ],
+        sessions: [
+          { day:4, s:'10:00', e:'12:00', id:'#0011', type:'Workshop', title:'Speaker Rehearsals', who:'PS', c:'green' },
+          { day:5, s:'09:00', e:'10:30', id:'#0012', type:'Keynote',  title:'Opening Keynote',    who:'SK', c:'green' },
+          { day:5, s:'11:00', e:'12:30', id:'#0013', type:'Talk',     title:'Scaling Ticketing',  who:'JW', c:'amber' },
+          { day:5, s:'13:30', e:'15:00', id:'#0014', type:'Panel',    title:'Future of Events',   who:'ML', c:'amber' },
+          { day:6, s:'09:30', e:'11:00', id:'#0021', type:'Keynote',  title:'Day 2 Keynote',      who:'AP', c:'green' },
+          { day:6, s:'11:30', e:'13:00', id:'#0022', type:'Workshop', title:'Check-in Flows',     who:'PS', c:'green' },
+          { day:6, s:'14:00', e:'14:45', id:'#0023', type:'Break',    title:'Closing & Wrap',     who:'SK', c:'rose'  },
+        ],
+      },
+      'Bangkok Jazz Night': {
+        month: 'July 2026',
+        days: [ {n:'Mon',d:'Jul 20'},{n:'Tue',d:'Jul 21'},{n:'Wed',d:'Jul 22'},{n:'Thu',d:'Jul 23'},{n:'Fri',d:'Jul 24',hot:true},{n:'Sat',d:'Jul 25'},{n:'Sun',d:'Jul 26'} ],
+        sessions: [
+          { day:3, s:'13:00', e:'15:00', id:'#0031', type:'Workshop', title:'Stage & Lighting Setup', who:'TB', c:'green' },
+          { day:4, s:'10:00', e:'12:00', id:'#0032', type:'Talk',     title:'Sound Check',            who:'ML', c:'amber' },
+          { day:4, s:'13:00', e:'14:00', id:'#0033', type:'Break',    title:'Artist Briefing',        who:'RP', c:'rose'  },
+          { day:4, s:'14:30', e:'16:00', id:'#0034', type:'Keynote',  title:'Doors & Opening Act',    who:'PS', c:'green' },
+        ],
+      },
+      'Sunrise Yoga Retreat': {
+        month: 'August 2026',
+        days: [ {n:'Mon',d:'Aug 3'},{n:'Tue',d:'Aug 4'},{n:'Wed',d:'Aug 5'},{n:'Thu',d:'Aug 6'},{n:'Fri',d:'Aug 7'},{n:'Sat',d:'Aug 8',hot:true},{n:'Sun',d:'Aug 9',hot:true} ],
+        sessions: [
+          { day:5, s:'09:00', e:'10:00', id:'#0041', type:'Keynote',  title:'Morning Flow',       who:'AP', c:'green' },
+          { day:5, s:'10:30', e:'11:30', id:'#0042', type:'Workshop', title:'Breathwork Basics',  who:'ML', c:'green' },
+          { day:6, s:'09:00', e:'10:00', id:'#0043', type:'Keynote',  title:'Sunrise Meditation', who:'PS', c:'green' },
+          { day:6, s:'11:00', e:'12:00', id:'#0044', type:'Break',    title:'Closing Circle',     who:'SK', c:'rose'  },
+        ],
+      },
+      'Thai Street Food Festival': {
+        month: 'June 2026',
+        days: [ {n:'Mon',d:'Jun 15'},{n:'Tue',d:'Jun 16'},{n:'Wed',d:'Jun 17'},{n:'Thu',d:'Jun 18'},{n:'Fri',d:'Jun 19'},{n:'Sat',d:'Jun 20',hot:true},{n:'Sun',d:'Jun 21',hot:true} ],
+        sessions: [
+          { day:4, s:'13:00', e:'15:00', id:'#0051', type:'Workshop', title:'Vendor Setup',      who:'JW', c:'green' },
+          { day:5, s:'10:00', e:'11:00', id:'#0052', type:'Keynote',  title:'Festival Opening',  who:'AP', c:'green' },
+          { day:5, s:'12:00', e:'13:30', id:'#0053', type:'Talk',     title:'Live Cooking Demo', who:'ML', c:'amber' },
+          { day:6, s:'11:00', e:'12:30', id:'#0054', type:'Panel',    title:'Chef Meet & Greet', who:'PS', c:'amber' },
+        ],
+      },
+      'UX Bangkok Meetup': {
+        month: 'May 2026',
+        days: [ {n:'Mon',d:'May 11'},{n:'Tue',d:'May 12'},{n:'Wed',d:'May 13'},{n:'Thu',d:'May 14',hot:true},{n:'Fri',d:'May 15'},{n:'Sat',d:'May 16'},{n:'Sun',d:'May 17'} ],
+        sessions: [
+          { day:3, s:'10:00', e:'11:00', id:'#0061', type:'Talk',  title:'Design Systems 101', who:'PS', c:'amber' },
+          { day:3, s:'11:30', e:'12:30', id:'#0062', type:'Panel', title:'Careers in UX',      who:'ML', c:'amber' },
+          { day:3, s:'13:30', e:'14:30', id:'#0063', type:'Break', title:'Networking Lunch',   who:'JW', c:'rose'  },
+        ],
+      },
+    };
     const toMin = t => { const p = t.split(':'); return (+p[0]) * 60 + (+p[1]); };
+    const fmt = m => String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0');
 
-    // day header row
-    document.getElementById('week-head').innerHTML =
-      '<div class="grid place-items-center border-r border-hair py-3 text-muted"><re-icon icon="calendar" size="16"></re-icon></div>' +
-      days.map(d => `<div class="border-r border-hair py-2.5 text-center last:border-r-0">
-        <p class="text-[13px] font-bold ${d.hot ? 'text-brand' : 'text-ink'}">${d.n}</p>
-        <p class="text-[11px] tnum ${d.hot ? 'text-brand/70' : 'text-muted'}">${d.d}</p></div>`).join('');
-
-    // time gutter
-    let gutter = '<div class="relative border-r border-hair">';
-    for (let h = HS; h < HE; h++)
-      gutter += `<div class="relative" style="height:${HH}px"><span class="absolute right-2 top-1 text-[10px] text-muted tnum">${String(h).padStart(2, '0')}:00</span></div>`;
-    gutter += '</div>';
-
-    // day columns with hour lines + positioned session blocks
-    const cols = days.map((d, di) => {
-      let lines = '';
-      for (let h = HS; h < HE; h++) lines += `<div style="height:${HH}px" class="border-b border-line/70"></div>`;
-      const blocks = sessions.filter(s => s.day === di).map(s => {
-        const top = (toMin(s.s) - HS * 60) / 60 * HH;
-        const height = (toMin(s.e) - toMin(s.s)) / 60 * HH;
-        const p = PAL[s.c];
-        return `<button data-open="session-panel" data-title="${s.title}" data-type="${s.type}" class="session absolute inset-x-1 overflow-hidden rounded-lg border-t-2 ${p.b} ${p.bg} px-2 pt-1.5 text-left transition hover:brightness-[0.97]" style="top:${top + 2}px;height:${height - 4}px">
-          <p class="text-[10px] font-medium tnum ${p.t}">${s.id}</p>
-          <p class="truncate text-[12px] font-bold ${p.t}">${s.title}</p>
-          <span class="avatar absolute bottom-1 right-1 h-6 w-6 text-[9px]">${s.who}</span>
-        </button>`;
-      }).join('');
-      return `<div class="relative border-r border-hair last:border-r-0">${lines}${blocks}</div>`;
-    }).join('');
-    document.getElementById('week-body').innerHTML = gutter + cols;
-
-    // search filter
+    const head = document.getElementById('week-head');
+    const body = document.getElementById('week-body');
+    const monthLabel = document.getElementById('agenda-month');
+    const sessionDay = document.getElementById('session-day');
+    const eventSelect = document.getElementById('agenda-event');
+    const eventLabel = document.getElementById('session-event-label');
     const search = document.getElementById('agenda-search');
-    search.addEventListener('input', () => {
-      const q = search.value.trim().toLowerCase();
+    let currentEvent = eventSelect.value;
+    let seq = 90;
+
+    function applySearch() {
+      const q = (search.value || '').trim().toLowerCase();
       document.querySelectorAll('.session').forEach(el => {
         const hit = !q || (el.dataset.title + ' ' + el.dataset.type).toLowerCase().includes(q);
         el.classList.toggle('hidden', !hit);
       });
+    }
+
+    function render() {
+      const data = EVENTS[currentEvent]; if (!data) return;
+      const days = data.days, sessions = data.sessions;
+      monthLabel.textContent = data.month;
+      if (eventLabel) eventLabel.textContent = currentEvent;
+
+      head.innerHTML =
+        '<div class="grid place-items-center border-r border-hair py-3 text-muted"><re-icon icon="calendar" size="16"></re-icon></div>' +
+        days.map(d => `<div class="border-r border-hair py-2.5 text-center last:border-r-0">
+          <p class="text-[13px] font-bold ${d.hot ? 'text-brand' : 'text-ink'}">${d.n}</p>
+          <p class="text-[11px] tnum ${d.hot ? 'text-brand/70' : 'text-muted'}">${d.d}</p></div>`).join('');
+
+      let gutter = '<div class="relative border-r border-hair">';
+      for (let h = HS; h < HE; h++)
+        gutter += `<div class="relative" style="height:${HH}px"><span class="absolute right-2 top-1 text-[10px] text-muted tnum">${String(h).padStart(2, '0')}:00</span></div>`;
+      gutter += '</div>';
+
+      const cols = days.map((d, di) => {
+        let lines = '';
+        for (let h = HS; h < HE; h++) lines += `<div style="height:${HH}px" class="border-b border-line/70"></div>`;
+        const blocks = sessions.filter(s => s.day === di).map(s => {
+          const top = (toMin(s.s) - HS * 60) / 60 * HH;
+          const height = (toMin(s.e) - toMin(s.s)) / 60 * HH;
+          const p = PAL[s.c] || PAL.green;
+          return `<button data-open="session-panel" data-title="${s.title}" data-type="${s.type}" class="session absolute inset-x-1 overflow-hidden rounded-lg ${p.bg} px-2 pt-1.5 text-left transition hover:brightness-[0.97]" style="top:${top + 2}px;height:${Math.max(height - 4, 18)}px">
+            <p class="text-[10px] font-medium tnum ${p.t}">${s.id}</p>
+            <p class="truncate text-[12px] font-bold ${p.t}">${s.title}</p>
+            <span class="absolute bottom-1 right-1 grid h-6 w-6 place-items-center rounded-full bg-surface text-[9px] font-semibold text-ink shadow-sm ring-1 ring-black/5 dark:ring-white/10">${s.who}</span>
+          </button>`;
+        }).join('');
+        return `<div class="relative border-r border-hair last:border-r-0">${lines}${blocks}</div>`;
+      }).join('');
+      body.innerHTML = gutter + cols;
+
+      // keep the Add-session "Day" dropdown in sync with this event's week
+      if (sessionDay) sessionDay.innerHTML = days.map((d, i) => `<option value="${i}">${d.n} · ${d.d}</option>`).join('');
+      applySearch();
+    }
+
+    // switch event → re-scope the whole calendar
+    eventSelect.addEventListener('change', () => { currentEvent = eventSelect.value; render(); });
+    search.addEventListener('input', applySearch);
+    render();
+
+    // add a session to the CURRENT event
+    const saveBtn = document.getElementById('session-save');
+    if (saveBtn) saveBtn.addEventListener('click', () => {
+      const day = +document.getElementById('session-day').value || 0;
+      const s = document.getElementById('session-start').value || '09:00';
+      let e = document.getElementById('session-end').value || '';
+      if (!e || toMin(e) <= toMin(s)) e = fmt(Math.min(toMin(s) + 60, HE * 60));
+      if (toMin(e) > HE * 60) e = fmt(HE * 60);
+      const type = document.getElementById('session-type').value;
+      EVENTS[currentEvent].sessions.push({
+        day, s, e,
+        id: '#' + String(++seq).padStart(4, '0'),
+        type,
+        title: (document.getElementById('session-title').value || '').trim() || 'Untitled session',
+        who: ((document.getElementById('session-speakers').value || '').trim().slice(0, 2).toUpperCase()) || 'NA',
+        c: CBY[type] || 'green',
+      });
+      render();
+      document.getElementById('session-title').value = '';
+      document.getElementById('session-speakers').value = '';
     });
 
     // week / month toggle

@@ -94,6 +94,10 @@
           <re-icon icon="calendar-check" size="15"></re-icon> Add to calendar
         </a>
       </div>
+
+      <div class="reveal d4 relative mt-12 aspect-[16/8] overflow-hidden rounded-2xl bg-gradient-to-br from-brand to-emerald-500">
+        <img id="hero-cover" alt="" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()" />
+      </div>
     </section>
 
     <!-- ============ 3 · HIGHLIGHTS ============ -->
@@ -184,7 +188,8 @@
 
       var reg = ev.registerUrl || '#';
       var title = ev.title || 'Event';
-      var venueCity = [ev.venue, ev.city].filter(Boolean).join(', ');
+      var isOnline = ev.online === true || new URLSearchParams(location.search).get('online') === '1';
+      var venueCity = isOnline ? 'Online event' : [ev.venue, ev.city].filter(Boolean).join(', ');
 
       // ---- document + nav ----
       document.title = title + ' — Register';
@@ -196,11 +201,13 @@
       setText('hero-title', title);
       setText('hero-tagline', ev.tagline);
       setHref('hero-register', reg);
+      var heroCover = ev.image || ('https://picsum.photos/seed/' + ev.slug + '/1600/800');
+      var hc = document.getElementById('hero-cover'); if (hc) hc.src = heroCover;
 
       var heroFacts = [
         { icon: 'calendar', v: ev.dateText },
         { icon: 'clock', v: ev.timeText },
-        { icon: 'pin', v: venueCity }
+        { icon: isOnline ? 'video' : 'pin', v: venueCity }
       ].filter(function (f) { return f.v; });
       html('hero-facts', heroFacts.map(function (f) {
         return '<li class="inline-flex items-center gap-2 tnum">' +
@@ -209,7 +216,7 @@
       }).join(''));
 
       // ---- highlights ----
-      html('highlights', (ev.highlights || []).map(function (h) {
+      html('highlights', ((function(){var q=new URLSearchParams(location.search).get('hl');return q?q.split('|').map(function(s){var i=s.indexOf(':');return{icon:s.slice(0,i),label:s.slice(i+1)};}):(ev.highlights||[]);})()).map(function (h) {
         return '<div class="flex flex-col items-center gap-3 text-center">' +
           '<span class="grid h-11 w-11 place-items-center rounded-xl bg-brand-soft text-brand">' + icon(h.icon, 21) + '</span>' +
           '<span class="text-[13px] font-semibold leading-snug text-ink">' + esc(h.label) + '</span></div>';
@@ -223,8 +230,8 @@
       var aboutRows = [
         { icon: 'calendar', k: 'Date', v: ev.dateText },
         { icon: 'clock', k: 'Time', v: ev.timeText },
-        { icon: 'pin', k: 'Venue', v: ev.venue },
-        { icon: 'map', k: 'Address', v: ev.address },
+        isOnline ? { icon: 'video', k: 'Format', v: 'Online event' } : { icon: 'pin', k: 'Venue', v: ev.venue },
+        isOnline ? { icon: 'link', k: 'Access', v: ev.onlineNote || 'Join link sent after you register' } : { icon: 'map', k: 'Address', v: ev.address },
         { icon: 'ticket', k: 'Category', v: ev.category },
         { icon: 'wallet', k: 'Price', v: priceDisplay }
       ].filter(function (r) { return r.v; });

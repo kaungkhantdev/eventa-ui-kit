@@ -52,6 +52,10 @@
 
     <!-- 2 · Hero (Spotlight split) -->
     <section class="mx-auto max-w-[1080px] px-5 pb-12 pt-10 sm:px-6 lg:pb-16 lg:pt-16">
+      <div class="reveal relative mb-8 aspect-[21/9] overflow-hidden rounded-2xl bg-gradient-to-br from-brand to-emerald-600 sm:mb-10">
+        <img id="hero-cover" alt="" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent"></div>
+      </div>
       <div class="grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-12">
 
         <!-- Left column -->
@@ -190,7 +194,8 @@
       function join(parts, sep) { return parts.filter(Boolean).join(sep); }
 
       var reg = ev.registerUrl || '#';
-      var where = join([ev.venue, ev.city], ', ');
+      var isOnline = ev.online === true || new URLSearchParams(location.search).get('online') === '1';
+      var where = isOnline ? 'Online event' : join([ev.venue, ev.city], ', ');
 
       // ---- document / nav ----
       if (ev.title) document.title = ev.title + ' · ' + (ev.category || 'Event');
@@ -201,11 +206,13 @@
       setText('hero-kicker', ev.kicker);
       setText('hero-title', ev.title);
       setText('hero-tagline', ev.tagline);
+      var heroCover = ev.image || ('https://picsum.photos/seed/' + ev.slug + '/1600/800');
+      var hc = document.getElementById('hero-cover'); if (hc) hc.src = heroCover;
 
       var heroFacts = [
         { icon: 'calendar', v: ev.dateText },
         { icon: 'clock', v: ev.timeText },
-        { icon: 'pin', v: where }
+        { icon: isOnline ? 'video' : 'pin', v: where }
       ].filter(function (f) { return f.v; });
       html('hero-facts', heroFacts.map(function (f) {
         return '<div class="flex items-center gap-2.5" role="listitem">' +
@@ -226,7 +233,7 @@
       var rcFacts = [
         { icon: 'calendar', k: 'Date', v: ev.dateText },
         { icon: 'clock', k: 'Time', v: ev.timeText },
-        { icon: 'pin', k: 'Venue', v: where },
+        { icon: isOnline ? 'video' : 'pin', k: isOnline ? 'Format' : 'Venue', v: where },
         { icon: 'users', k: 'Seats', v: ev.attendeesText }
       ].filter(function (f) { return f.v; });
       html('rc-facts', rcFacts.map(function (f) {
@@ -239,7 +246,7 @@
       }).join(''));
 
       // ---- highlights ----
-      html('highlights', (ev.highlights || []).map(function (h) {
+      html('highlights', ((function(){var q=new URLSearchParams(location.search).get('hl');return q?q.split('|').map(function(s){var i=s.indexOf(':');return{icon:s.slice(0,i),label:s.slice(i+1)};}):(ev.highlights||[]);})()).map(function (h) {
         return '<div class="rounded-2xl bg-surface p-5">' +
           '<div class="grid h-10 w-10 place-items-center rounded-xl bg-brand-soft text-brand">' +
           '<re-icon icon="' + esc(h.icon || 'star') + '" size="20"></re-icon></div>' +
@@ -252,8 +259,8 @@
       var aboutRows = [
         ['Date', ev.dateText],
         ['Time', ev.timeText],
-        ['Venue', ev.venue],
-        ['Address', ev.address],
+        isOnline ? ['Format', 'Online event'] : ['Venue', ev.venue],
+        isOnline ? ['Access', ev.onlineNote || 'Join link sent after you register'] : ['Address', ev.address],
         ['Category', ev.category],
         ['Price', priceDetail]
       ].filter(function (r) { return r[1]; });

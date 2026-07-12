@@ -12,8 +12,8 @@
 <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=24"></script>
-<link rel="stylesheet" href="../assets/app.css?v=24" />
+<script src="../assets/config.js?v=31"></script>
+<link rel="stylesheet" href="../assets/app.css?v=31" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="notifications">
 
@@ -35,10 +35,10 @@
     </div>
 
     <!-- tabs -->
-    <div data-tabs="#notifTabs" class="flex gap-4 border-b border-hair">
-      <button class="tab tab-active" data-tab="templates">Templates</button>
-      <button class="tab" data-tab="announcements">Announcements</button>
-      <button class="tab" data-tab="log">Log</button>
+    <div data-tabs="#notifTabs" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button class="pilltab tab-active" data-tab="templates">Templates</button>
+      <button class="pilltab" data-tab="announcements">Announcements</button>
+      <button class="pilltab" data-tab="log">Log</button>
     </div>
 
     <div id="notifTabs" class="mt-4">
@@ -413,7 +413,7 @@
   </footer>
 </aside>
 
-<script src="../assets/shell.js?v=24"></script>
+<script src="../assets/shell.js?v=31"></script>
 <script>
   // Send now / Schedule segmented control toggles the date field
   document.querySelectorAll('[data-send-toggle]').forEach(wrap => {

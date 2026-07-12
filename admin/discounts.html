@@ -12,8 +12,8 @@
 <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=24"></script>
-<link rel="stylesheet" href="../assets/app.css?v=24" />
+<script src="../assets/config.js?v=31"></script>
+<link rel="stylesheet" href="../assets/app.css?v=31" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="discounts">
 
@@ -35,7 +35,7 @@
     </div>
 
     <!-- pill tabs (out of table) -->
-    <div data-tabs="#disc-table" class="flex flex-wrap items-center gap-1.5 overflow-x-auto">
+    <div data-tabs="#disc-table" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
       <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count tnum">16</span></button>
       <button class="pilltab" data-tab="active">Active <span class="pilltab-count tnum">12</span></button>
       <button class="pilltab" data-tab="scheduled">Scheduled <span class="pilltab-count tnum">2</span></button>
@@ -380,7 +380,7 @@
   </div>
 </div>
 
-<script src="../assets/shell.js?v=24"></script>
+<script src="../assets/shell.js?v=31"></script>
 <script>
   // Copy code to clipboard with a brief tick confirmation
   function copyCode(btn, code) {

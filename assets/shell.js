@@ -27,6 +27,7 @@
         { label: 'Event Details',  page: 'event-detail',  href: 'event-detail.html' },
         { label: 'Landing Pages',  page: 'landing-pages', href: 'landing-pages.html' },
         { label: 'Agenda',         page: 'agenda',        href: 'agenda.html' },
+        { label: 'Categories',     page: 'event-categories', href: 'event-categories.html' },
       ]},
       { label: 'Attendees', icon: 'users', items: [
         { label: 'Registrations', page: 'registrations', href: 'registrations.html' },
@@ -35,6 +36,7 @@
         { label: 'Speakers',      page: 'speakers',      href: 'speakers.html' },
       ]},
     ]},
+    { id: 'checkin-tool', label: 'Check-in tool', icon: 'qr', href: 'check-in-tool.html' },
     { id: 'finance', label: 'Finance', icon: 'wallet', href: 'payments.html', groups: [
       { label: 'Transactions', icon: 'wallet', items: [
         { label: 'Payments', page: 'payments', href: 'payments.html' },
@@ -54,7 +56,7 @@
       ]},
       { label: 'Staff', icon: 'security-user2', items: [
         { label: 'Users', page: 'users', href: 'users.html' },
-        { label: 'Roles', page: 'roles', href: '#' },
+        { label: 'Roles', page: 'roles', href: 'roles.html' },
       ]},
     ]},
   ];
