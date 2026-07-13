@@ -52,6 +52,7 @@
         { label: 'Reports',       page: 'reports',       href: 'reports.html' },
         { label: 'Notifications', page: 'notifications', href: 'notifications.html' },
         { label: 'Feedback',      page: 'feedback',      href: 'feedback.html' },
+        { label: 'Event feedback', page: 'feedback-detail', href: 'feedback-detail.html?event=tech-summit-2026' },
         { label: 'Settings',      page: 'settings',      href: 'settings.html' },
       ]},
       { label: 'Staff', icon: 'hgi-shield-user', items: [
