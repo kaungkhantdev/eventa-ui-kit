@@ -7,14 +7,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="../assets/config.js"></script>
   <link rel="stylesheet" href="../assets/app.css" />
   <style>
     /* Page-specific layout helpers only — colors/borders come from the kit. */
     html, body { overflow-x: hidden; }
-    re-icon { --ri-primary: currentColor; --ri-secondary: currentColor; display: inline-flex; line-height: 1; vertical-align: middle; }
     summary { list-style: none; }
     summary::-webkit-details-marker { display: none; }
     :focus-visible { outline: 2px solid #1ba770; outline-offset: 2px; border-radius: 6px; }
@@ -43,7 +42,7 @@
         <span id="nav-title" class="truncate text-[15px] font-bold text-ink">Event</span>
       </a>
       <a id="nav-register" href="#" class="inline-flex flex-none items-center gap-1.5 rounded-lg bg-brand px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-dark">
-        Register<re-icon icon="arrow-right2" size="15"></re-icon>
+        Register<i class="hgi-stroke hgi-arrow-right-01 text-[15px]"></i>
       </a>
     </div>
   </header>
@@ -81,10 +80,10 @@
               <div id="rc-price" class="mt-1 text-[34px] font-extrabold leading-none tracking-tight text-ink tnum">—</div>
             </div>
             <a id="rc-register" href="#" class="mt-5 inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand px-4 py-3 text-[14px] font-semibold text-white transition hover:bg-brand-dark">
-              Register now<re-icon icon="arrow-right2" size="16"></re-icon>
+              Register now<i class="hgi-stroke hgi-arrow-right-01 text-[16px]"></i>
             </a>
             <a id="rc-calendar" href="#" class="mt-2.5 inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand-soft px-4 py-2.5 text-[13px] font-semibold text-brand transition hover:bg-brand hover:text-white">
-              <re-icon icon="calendar-check" size="16"></re-icon>Add to calendar
+              <i class="hgi-stroke hgi-calendar-check-in-01 text-[16px]"></i>Add to calendar
             </a>
             <dl id="rc-facts" class="mt-5 space-y-3.5 border-t border-line pt-5"></dl>
           </div>
@@ -152,7 +151,7 @@
       </h2>
       <p id="foot-when" class="mt-3 text-[14px] text-muted"></p>
       <a id="footer-register" href="#" class="mt-6 inline-flex items-center gap-1.5 rounded-lg bg-brand px-5 py-3 text-[14px] font-semibold text-white transition hover:bg-brand-dark">
-        Register now<re-icon icon="arrow-right2" size="16"></re-icon>
+        Register now<i class="hgi-stroke hgi-arrow-right-01 text-[16px]"></i>
       </a>
     </div>
 
@@ -160,13 +159,13 @@
       <div class="text-[13px] text-muted">Organised by <strong id="footer-organizer" class="font-semibold text-ink">Organizer</strong></div>
       <div class="flex items-center gap-2">
         <a id="footer-email" href="#" class="inline-flex items-center gap-2 rounded-lg bg-surface px-3 py-2 text-[13px] font-medium text-ink transition hover:text-brand">
-          <re-icon icon="envelope" size="16"></re-icon><span id="footer-email-text">email</span>
+          <i class="hgi-stroke hgi-mail-01 text-[16px]"></i><span id="footer-email-text">email</span>
         </a>
         <a id="footer-instagram" href="#" aria-label="Instagram" class="grid h-9 w-9 place-items-center rounded-lg bg-surface text-ink transition hover:text-brand">
-          <re-icon icon="instagram2" size="18"></re-icon>
+          <i class="hgi-stroke hgi-instagram text-[18px]"></i>
         </a>
         <a id="footer-website" href="#" aria-label="Website" class="grid h-9 w-9 place-items-center rounded-lg bg-surface text-ink transition hover:text-brand">
-          <re-icon icon="globe" size="18"></re-icon>
+          <i class="hgi-stroke hgi-global text-[18px]"></i>
         </a>
       </div>
     </div>
@@ -210,13 +209,13 @@
       var hc = document.getElementById('hero-cover'); if (hc) hc.src = heroCover;
 
       var heroFacts = [
-        { icon: 'calendar', v: ev.dateText },
-        { icon: 'clock', v: ev.timeText },
-        { icon: isOnline ? 'video' : 'pin', v: where }
+        { icon: 'hgi-calendar-03', v: ev.dateText },
+        { icon: 'hgi-clock-01', v: ev.timeText },
+        { icon: isOnline ? 'hgi-video-01' : 'hgi-location-01', v: where }
       ].filter(function (f) { return f.v; });
       html('hero-facts', heroFacts.map(function (f) {
         return '<div class="flex items-center gap-2.5" role="listitem">' +
-          '<re-icon class="text-brand" icon="' + esc(f.icon) + '" size="18"></re-icon>' +
+          '<i class="hgi-stroke ' + esc(f.icon) + ' text-[18px] text-brand"></i>' +
           '<span class="text-[13.5px] font-medium text-ink">' + esc(f.v) + '</span></div>';
       }).join(''));
 
@@ -231,14 +230,14 @@
       setHref('rc-register', reg);
 
       var rcFacts = [
-        { icon: 'calendar', k: 'Date', v: ev.dateText },
-        { icon: 'clock', k: 'Time', v: ev.timeText },
-        { icon: isOnline ? 'video' : 'pin', k: isOnline ? 'Format' : 'Venue', v: where },
-        { icon: 'users', k: 'Seats', v: ev.attendeesText }
+        { icon: 'hgi-calendar-03', k: 'Date', v: ev.dateText },
+        { icon: 'hgi-clock-01', k: 'Time', v: ev.timeText },
+        { icon: isOnline ? 'hgi-video-01' : 'hgi-location-01', k: isOnline ? 'Format' : 'Venue', v: where },
+        { icon: 'hgi-user-multiple', k: 'Seats', v: ev.attendeesText }
       ].filter(function (f) { return f.v; });
       html('rc-facts', rcFacts.map(function (f) {
         return '<div class="flex items-start gap-3">' +
-          '<re-icon class="mt-0.5 flex-none text-brand" icon="' + esc(f.icon) + '" size="17"></re-icon>' +
+          '<i class="hgi-stroke ' + esc(f.icon) + ' text-[17px] mt-0.5 flex-none text-brand"></i>' +
           '<div class="min-w-0">' +
           '<dt class="text-[11px] uppercase tracking-wide text-muted">' + esc(f.k) + '</dt>' +
           '<dd class="text-[13px] font-medium text-ink">' + esc(f.v) + '</dd>' +
@@ -249,7 +248,7 @@
       html('highlights', ((function(){var q=new URLSearchParams(location.search).get('hl');return q?q.split('|').map(function(s){var i=s.indexOf(':');return{icon:s.slice(0,i),label:s.slice(i+1)};}):(ev.highlights||[]);})()).map(function (h) {
         return '<div class="rounded-2xl bg-surface p-5">' +
           '<div class="grid h-10 w-10 place-items-center rounded-xl bg-brand-soft text-brand">' +
-          '<re-icon icon="' + esc(h.icon || 'star') + '" size="20"></re-icon></div>' +
+          '<i class="hgi-stroke ' + esc(h.icon || 'hgi-star') + ' text-[20px]"></i></div>' +
           '<div class="mt-4 text-[14px] font-semibold text-ink">' + esc(h.label) + '</div></div>';
       }).join(''));
 
@@ -299,7 +298,7 @@
           : '';
         var feats = (t.features || []).map(function (f) {
           return '<li class="flex items-start gap-2.5 text-[13.5px] ' + (feat ? 'text-white/90' : 'text-ink') + '">' +
-            '<re-icon class="mt-0.5 flex-none ' + (feat ? 'text-white' : 'text-brand') + '" icon="check" size="16"></re-icon>' +
+            '<i class="hgi-stroke hgi-tick-02 text-[16px] mt-0.5 flex-none ' + (feat ? 'text-white' : 'text-brand') + '"></i>' +
             '<span>' + esc(f) + '</span></li>';
         }).join('');
         var cardCls = feat
@@ -323,7 +322,7 @@
         return '<details class="group px-3 sm:px-4"' + (i === 0 ? ' open' : '') + '>' +
           '<summary class="flex cursor-pointer items-center justify-between gap-4 py-4 text-[14.5px] font-semibold text-ink">' +
           '<span>' + esc(f.q) + '</span>' +
-          '<re-icon class="flex-none text-muted transition-transform group-open:rotate-180" icon="chevron-down" size="18"></re-icon></summary>' +
+          '<i class="hgi-stroke hgi-arrow-down-01 text-[18px] flex-none text-muted transition-transform group-open:rotate-180"></i></summary>' +
           '<div class="pb-4 pr-8 text-[13.5px] leading-relaxed text-muted">' + esc(f.a) + '</div></details>';
       }).join(''));
 

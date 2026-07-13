@@ -9,9 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-
-  <!-- reicon web component -->
-  <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 
   <!-- Tailwind Play CDN + shared Eventa kit -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -22,15 +20,6 @@
   <style>
     html { scroll-behavior: smooth; }
     body { overflow-x: hidden; }
-
-    /* reicon inherits text color */
-    re-icon {
-      --ri-primary: currentColor;
-      --ri-secondary: currentColor;
-      display: inline-flex;
-      line-height: 1;
-      vertical-align: middle;
-    }
 
     /* brand focus ring */
     a:focus-visible, button:focus-visible, summary:focus-visible {
@@ -72,7 +61,7 @@
         <span id="nav-title" class="truncate">Event</span>
       </a>
       <a id="nav-register" href="#" class="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-brand px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-dark">
-        Register <re-icon icon="arrow-right" size="15"></re-icon>
+        Register <i class="hgi-stroke hgi-arrow-right-01 text-[15px]"></i>
       </a>
     </nav>
   </header>
@@ -88,10 +77,10 @@
 
       <div class="reveal d4 mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <a id="hero-register" href="#" class="inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand px-5 py-2.5 text-[13px] font-semibold text-white transition hover:bg-brand-dark sm:w-auto">
-          Register now <re-icon icon="arrow-right" size="15"></re-icon>
+          Register now <i class="hgi-stroke hgi-arrow-right-01 text-[15px]"></i>
         </a>
         <a href="#" class="inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand-soft px-5 py-2.5 text-[13px] font-semibold text-brand transition hover:brightness-95 sm:w-auto">
-          <re-icon icon="calendar-check" size="15"></re-icon> Add to calendar
+          <i class="hgi-stroke hgi-calendar-check-in-01 text-[15px]"></i> Add to calendar
         </a>
       </div>
 
@@ -144,7 +133,7 @@
       <h2 id="foot-head" class="mx-auto mt-3 max-w-[18ch] text-[24px] font-extrabold leading-[1.1] tracking-tight text-ink sm:text-[30px]">Save your place</h2>
       <p id="foot-when" class="mx-auto mt-3 max-w-[46ch] text-[14px] leading-relaxed text-muted"></p>
       <a id="footer-register" href="#" class="mt-6 inline-flex items-center gap-1.5 rounded-lg bg-brand px-5 py-2.5 text-[13px] font-semibold text-white transition hover:bg-brand-dark">
-        Register now <re-icon icon="arrow-right" size="15"></re-icon>
+        Register now <i class="hgi-stroke hgi-arrow-right-01 text-[15px]"></i>
       </a>
     </div>
 
@@ -156,10 +145,10 @@
       </p>
       <div class="flex items-center gap-2">
         <a id="footer-instagram" href="#" aria-label="Instagram" class="grid h-9 w-9 place-items-center rounded-full bg-surface text-muted transition hover:text-brand">
-          <re-icon icon="instagram2" size="17"></re-icon>
+          <i class="hgi-stroke hgi-instagram text-[17px]"></i>
         </a>
         <a id="footer-website" href="#" aria-label="Website" class="grid h-9 w-9 place-items-center rounded-full bg-surface text-muted transition hover:text-brand">
-          <re-icon icon="globe" size="17"></re-icon>
+          <i class="hgi-stroke hgi-global text-[17px]"></i>
         </a>
       </div>
     </div>
@@ -184,7 +173,7 @@
       function setText(id, val) { var el = document.getElementById(id); if (el && val != null && val !== '') el.textContent = val; }
       function setHref(id, val) { var el = document.getElementById(id); if (el && val) el.setAttribute('href', val); }
       function html(id, markup) { var el = document.getElementById(id); if (el) el.innerHTML = markup; }
-      function icon(name, size) { return '<re-icon icon="' + esc(name || 'star') + '" size="' + (size || 16) + '"></re-icon>'; }
+      function icon(name, size) { return '<i class="hgi-stroke ' + esc(name || 'hgi-star') + ' text-[' + (size || 16) + 'px]"></i>'; }
 
       var reg = ev.registerUrl || '#';
       var title = ev.title || 'Event';
@@ -205,9 +194,9 @@
       var hc = document.getElementById('hero-cover'); if (hc) hc.src = heroCover;
 
       var heroFacts = [
-        { icon: 'calendar', v: ev.dateText },
-        { icon: 'clock', v: ev.timeText },
-        { icon: isOnline ? 'video' : 'pin', v: venueCity }
+        { icon: 'hgi-calendar-03', v: ev.dateText },
+        { icon: 'hgi-clock-01', v: ev.timeText },
+        { icon: isOnline ? 'hgi-video-01' : 'hgi-location-01', v: venueCity }
       ].filter(function (f) { return f.v; });
       html('hero-facts', heroFacts.map(function (f) {
         return '<li class="inline-flex items-center gap-2 tnum">' +
@@ -228,12 +217,12 @@
       var lowered = priceVal.toLowerCase();
       var priceDisplay = (!priceVal || lowered === 'free' || priceVal === '—') ? priceVal : 'From ' + priceVal;
       var aboutRows = [
-        { icon: 'calendar', k: 'Date', v: ev.dateText },
-        { icon: 'clock', k: 'Time', v: ev.timeText },
-        isOnline ? { icon: 'video', k: 'Format', v: 'Online event' } : { icon: 'pin', k: 'Venue', v: ev.venue },
-        isOnline ? { icon: 'link', k: 'Access', v: ev.onlineNote || 'Join link sent after you register' } : { icon: 'map', k: 'Address', v: ev.address },
-        { icon: 'ticket', k: 'Category', v: ev.category },
-        { icon: 'wallet', k: 'Price', v: priceDisplay }
+        { icon: 'hgi-calendar-03', k: 'Date', v: ev.dateText },
+        { icon: 'hgi-clock-01', k: 'Time', v: ev.timeText },
+        isOnline ? { icon: 'hgi-video-01', k: 'Format', v: 'Online event' } : { icon: 'hgi-location-01', k: 'Venue', v: ev.venue },
+        isOnline ? { icon: 'hgi-link-01', k: 'Access', v: ev.onlineNote || 'Join link sent after you register' } : { icon: 'hgi-location-01', k: 'Address', v: ev.address },
+        { icon: 'hgi-ticket-01', k: 'Category', v: ev.category },
+        { icon: 'hgi-wallet-01', k: 'Price', v: priceDisplay }
       ].filter(function (r) { return r.v; });
       html('about-facts', aboutRows.map(function (r) {
         return '<div class="flex items-center justify-between gap-4 py-3.5">' +

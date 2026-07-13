@@ -9,11 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
-<script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=31"></script>
-<link rel="stylesheet" href="../assets/app.css?v=31" />
+<script src="../assets/config.js?v=33"></script>
+<link rel="stylesheet" href="../assets/app.css?v=33" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" />
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 <style>
@@ -53,7 +52,7 @@
       <a href="events.html" class="btn-icon shrink-0" title="Back to events"><i class="hgi-stroke hgi-arrow-left-01 text-[18px]"></i></a>
       <div class="ml-auto flex shrink-0 items-center gap-2.5">
         <a href="events.html" class="btn btn-soft"><i class="hgi-stroke hgi-note-03 text-[16px]"></i><span class="hidden sm:inline">Save as draft</span><span class="sm:hidden">Draft</span></a>
-        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><re-icon icon="bell" size="18"></re-icon><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
+        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
         <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
       </div>
     </div>
@@ -65,7 +64,7 @@
       <aside class="lg:sticky lg:top-4 lg:self-start">
         <nav class="flex items-center gap-1.5 text-[12px] font-medium text-muted">
           <a href="events.html" class="transition hover:text-ink">Events</a>
-          <re-icon icon="chevron-right" size="13"></re-icon>
+          <i class="hgi-stroke hgi-arrow-right-01 text-[13px]"></i>
           <span class="text-ink">Create event</span>
         </nav>
         <h1 class="mt-2 text-[22px] font-bold tracking-tight">Create event</h1>
@@ -274,7 +273,7 @@
             <div class="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
               <label class="relative block cursor-pointer">
                 <input type="radio" name="landing-tpl" value="aurora" class="peer sr-only" checked />
-                <re-icon icon="check-circle" size="18" class="absolute right-3 top-3 z-10 text-brand opacity-0 transition peer-checked:opacity-100"></re-icon>
+                <i class="hgi-stroke hgi-checkmark-circle-02 text-[18px] absolute right-3 top-3 z-10 text-brand opacity-0 transition peer-checked:opacity-100"></i>
                 <div class="rounded-xl bg-canvas p-2 transition hover:bg-line peer-checked:bg-brand-soft peer-checked:ring-2 peer-checked:ring-brand/40">
                   <div class="h-14 overflow-hidden rounded-lg bg-white"><div class="h-5 bg-gradient-to-r from-brand to-emerald-400"></div><div class="space-y-1 p-1.5"><div class="h-1.5 w-10 rounded bg-neutral-800"></div><div class="h-1 w-8 rounded bg-neutral-300"></div></div></div>
                   <p class="mt-2 text-[12.5px] font-semibold text-ink">Classic</p>
@@ -283,7 +282,7 @@
               </label>
               <label class="relative block cursor-pointer">
                 <input type="radio" name="landing-tpl" value="noir" class="peer sr-only" />
-                <re-icon icon="check-circle" size="18" class="absolute right-3 top-3 z-10 text-brand opacity-0 transition peer-checked:opacity-100"></re-icon>
+                <i class="hgi-stroke hgi-checkmark-circle-02 text-[18px] absolute right-3 top-3 z-10 text-brand opacity-0 transition peer-checked:opacity-100"></i>
                 <div class="rounded-xl bg-canvas p-2 transition hover:bg-line peer-checked:bg-brand-soft peer-checked:ring-2 peer-checked:ring-brand/40">
                   <div class="grid h-14 grid-cols-5 gap-1 rounded-lg bg-white p-1.5"><div class="col-span-3 space-y-1"><div class="h-1.5 w-full rounded bg-neutral-800"></div><div class="h-1 w-3/4 rounded bg-neutral-300"></div><div class="mt-0.5 h-2 w-6 rounded bg-brand"></div></div><div class="col-span-2 rounded bg-brand-soft"></div></div>
                   <p class="mt-2 text-[12.5px] font-semibold text-ink">Spotlight</p>
@@ -292,7 +291,7 @@
               </label>
               <label class="relative block cursor-pointer">
                 <input type="radio" name="landing-tpl" value="minimal" class="peer sr-only" />
-                <re-icon icon="check-circle" size="18" class="absolute right-3 top-3 z-10 text-brand opacity-0 transition peer-checked:opacity-100"></re-icon>
+                <i class="hgi-stroke hgi-checkmark-circle-02 text-[18px] absolute right-3 top-3 z-10 text-brand opacity-0 transition peer-checked:opacity-100"></i>
                 <div class="rounded-xl bg-canvas p-2 transition hover:bg-line peer-checked:bg-brand-soft peer-checked:ring-2 peer-checked:ring-brand/40">
                   <div class="flex h-14 flex-col items-center justify-center gap-1 rounded-lg bg-white"><div class="h-1 w-4 rounded-full bg-brand"></div><div class="h-1.5 w-14 rounded bg-neutral-800"></div><div class="h-px w-16 bg-neutral-200"></div><div class="h-2 w-8 rounded bg-brand"></div></div>
                   <p class="mt-2 text-[12.5px] font-semibold text-ink">Minimal</p>
@@ -301,7 +300,7 @@
               </label>
             </div>
             <div class="mt-3 flex flex-wrap items-center gap-2 border-t border-line pt-3">
-              <button type="button" id="preview-landing" class="btn btn-soft btn-sm"><re-icon icon="play" size="14"></re-icon>Preview landing page</button>
+              <button type="button" id="preview-landing" class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-play text-[14px]"></i>Preview landing page</button>
               <span class="text-[11px] text-muted">Opens in a new tab with the details you've entered.</span>
             </div>
           </section>
@@ -343,8 +342,8 @@
 
         <!-- ===== nav ===== -->
         <div class="mt-4 flex items-center justify-between gap-3">
-          <button type="button" id="wz-back" class="btn btn-soft"><re-icon icon="chevron-left" size="15"></re-icon>Back</button>
-          <button type="button" id="wz-next" class="btn btn-primary min-w-[132px] justify-center">Next<re-icon icon="chevron-right" size="15"></re-icon></button>
+          <button type="button" id="wz-back" class="btn btn-soft"><i class="hgi-stroke hgi-arrow-left-01 text-[15px]"></i>Back</button>
+          <button type="button" id="wz-next" class="btn btn-primary min-w-[132px] justify-center">Next<i class="hgi-stroke hgi-arrow-right-01 text-[15px]"></i></button>
         </div>
       </div>
 
@@ -372,7 +371,7 @@
   </main>
 </div>
 
-<script src="../assets/shell.js?v=31"></script>
+<script src="../assets/shell.js?v=33"></script>
 <script>
   /* focused create flow — hide the module sub-nav panel, keep the icon rail to exit */
   var modPanel = document.getElementById('panel');
@@ -425,32 +424,32 @@
 
   /* ---------- Highlights: icon + label rows (shown on the landing page) ---------- */
   const HL_ICONS = [
-    { slug: 'sparkles', label: 'Sparkles' }, { slug: 'mic', label: 'Speakers' },
-    { slug: 'users', label: 'People' },      { slug: 'presentation', label: 'Talks' },
-    { slug: 'headphones', label: 'Workshops' }, { slug: 'star', label: 'Star' },
-    { slug: 'trophy', label: 'Award' },      { slug: 'ticket', label: 'Ticket' },
-    { slug: 'gift', label: 'Gift' },         { slug: 'music', label: 'Music' },
-    { slug: 'camera', label: 'Photo' },      { slug: 'rocket', label: 'Launch' },
-    { slug: 'globe', label: 'Global' },      { slug: 'heart', label: 'Heart' },
-    { slug: 'wifi', label: 'Wi-Fi' },        { slug: 'medal', label: 'Medal' },
+    { slug: 'hgi-sparkles', label: 'Sparkles' }, { slug: 'hgi-mic-01', label: 'Speakers' },
+    { slug: 'hgi-user-multiple', label: 'People' },      { slug: 'hgi-presentation-bar-chart-01', label: 'Talks' },
+    { slug: 'hgi-headphones', label: 'Workshops' }, { slug: 'hgi-star', label: 'Star' },
+    { slug: 'hgi-champion', label: 'Award' },      { slug: 'hgi-ticket-01', label: 'Ticket' },
+    { slug: 'hgi-gift', label: 'Gift' },         { slug: 'hgi-music-note-01', label: 'Music' },
+    { slug: 'hgi-camera-01', label: 'Photo' },      { slug: 'hgi-rocket-01', label: 'Launch' },
+    { slug: 'hgi-global', label: 'Global' },      { slug: 'hgi-favourite', label: 'Heart' },
+    { slug: 'hgi-wifi-01', label: 'Wi-Fi' },        { slug: 'hgi-medal-first-place', label: 'Medal' },
   ];
   const hlRows = document.getElementById('highlight-rows');
   const hlOptions = (sel) => HL_ICONS.map(i => `<option value="${i.slug}"${i.slug === sel ? ' selected' : ''}>${i.label}</option>`).join('');
   function hlRowEl(icon, label) {
-    icon = icon || 'sparkles';
+    icon = icon || 'hgi-sparkles';
     const row = document.createElement('div');
     row.className = 'grid grid-cols-[124px_minmax(0,1fr)_auto] items-center gap-2';
     row.setAttribute('data-highlight-row', '');
     row.innerHTML =
       '<div class="relative">' +
-        `<re-icon data-hl-preview icon="${icon}" size="16" class="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-brand"></re-icon>` +
+        `<i data-hl-preview class="hgi-stroke ${icon} text-[16px] pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-brand"></i>` +
         `<select class="select h-10 w-full pl-8 text-[12.5px]" data-hl-icon>${hlOptions(icon)}</select>` +
       '</div>' +
       `<input class="input" type="text" value="${(label || '').replace(/"/g, '&quot;')}" placeholder="e.g. 20+ speakers" data-hl-label />` +
       '<button type="button" class="btn-icon" data-remove-highlight title="Remove highlight"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>';
     return row;
   }
-  [['mic', '20+ speakers'], ['presentation', 'Hands-on workshops'], ['sparkles', 'Startup showcase'], ['users', 'Networking lounge']]
+  [['hgi-mic-01', '20+ speakers'], ['hgi-presentation-bar-chart-01', 'Hands-on workshops'], ['hgi-sparkles', 'Startup showcase'], ['hgi-user-multiple', 'Networking lounge']]
     .forEach(([ic, lb]) => hlRows.appendChild(hlRowEl(ic, lb)));
   document.getElementById('add-highlight-row').addEventListener('click', () => hlRows.appendChild(hlRowEl()));
   hlRows.addEventListener('click', e => {
@@ -459,7 +458,7 @@
   });
   hlRows.addEventListener('change', e => {
     const sel = e.target.closest('[data-hl-icon]'); if (!sel) return;
-    sel.closest('[data-highlight-row]').querySelector('[data-hl-preview]').setAttribute('icon', sel.value);
+    sel.closest('[data-highlight-row]').querySelector('[data-hl-preview]').className = 'hgi-stroke ' + sel.value + ' text-[16px] pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-brand';
   });
 
   /* ---------- Landing page: preview the selected template with live form data ---------- */
@@ -518,7 +517,7 @@
     const last = cur === STEPS.length - 1;
     nextBtn.innerHTML = last
       ? '<i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i>Publish event'
-      : 'Next<re-icon icon="chevron-right" size="15"></re-icon>';
+      : 'Next<i class="hgi-stroke hgi-arrow-right-01 text-[15px]"></i>';
     renderSteps();
     mainEl.scrollTo({ top: 0, behavior: 'smooth' });
   }

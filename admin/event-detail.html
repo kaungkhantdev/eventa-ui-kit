@@ -9,11 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
-<script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=31"></script>
-<link rel="stylesheet" href="../assets/app.css?v=31" />
+<script src="../assets/config.js?v=33"></script>
+<link rel="stylesheet" href="../assets/app.css?v=33" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="event-detail">
 
@@ -24,12 +23,12 @@
 
     <!-- top controls -->
     <div class="mb-3 flex items-center gap-2">
-      <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><re-icon icon="menu" size="18"></re-icon></button>
-      <a href="events.html" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink" title="Back to Events"><re-icon icon="chevron-left" size="20"></re-icon></a>
+      <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <a href="events.html" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink" title="Back to Events"><i class="hgi-stroke hgi-arrow-left-01 text-[20px]"></i></a>
       <div class="ml-auto flex shrink-0 items-center gap-2">
-        <a href="event-form.html" class="inline-flex items-center gap-1.5 rounded-lg bg-brand-soft px-3.5 py-2 text-[13px] font-semibold text-brand transition hover:brightness-95"><re-icon icon="edit2" size="15"></re-icon><span class="hidden sm:inline">Edit</span></a>
-        <a href="../landing/aurora.html?event=tech-summit-2026" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-dark"><re-icon icon="eye" size="15"></re-icon><span class="hidden sm:inline">View page</span></a>
-        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><re-icon icon="bell" size="18"></re-icon><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
+        <a href="event-form.html" class="inline-flex items-center gap-1.5 rounded-lg bg-brand-soft px-3.5 py-2 text-[13px] font-semibold text-brand transition hover:brightness-95"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i><span class="hidden sm:inline">Edit</span></a>
+        <a href="../landing/aurora.html?event=tech-summit-2026" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-dark"><i class="hgi-stroke hgi-view text-[15px]"></i><span class="hidden sm:inline">View page</span></a>
+        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
         <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
       </div>
     </div>
@@ -41,7 +40,7 @@
       <div class="relative flex min-h-[190px] flex-col justify-end p-5 sm:min-h-[230px] sm:p-6">
         <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
           <h1 class="text-[24px] font-extrabold tracking-tight text-white sm:text-[30px]">Tech Summit 2026</h1>
-          <span class="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-inset ring-white/25 backdrop-blur-sm"><re-icon icon="check-circle" size="12"></re-icon>Registration open</span>
+          <span class="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-inset ring-white/25 backdrop-blur-sm"><i class="hgi-stroke hgi-checkmark-circle-02 text-[12px]"></i>Registration open</span>
         </div>
         <p class="mt-1.5 flex flex-wrap items-center gap-2 text-[13px] text-white/85">
           <span>Sat–Sun, July 18–19, 2026 · 09:00</span>
@@ -67,19 +66,19 @@
       <!-- quick stats -->
       <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <div class="rounded-2xl bg-surface p-4">
-          <div class="flex items-center gap-1.5 text-[12px] text-muted"><re-icon icon="user-add" size="16"></re-icon>Registrations</div>
+          <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-user-add-01 text-[16px]"></i>Registrations</div>
           <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">312<span class="text-[13px] font-semibold text-muted">/400</span></p><span class="text-[11px] font-semibold text-brand">78%</span></div>
         </div>
         <div class="rounded-2xl bg-surface p-4">
-          <div class="flex items-center gap-1.5 text-[12px] text-muted"><re-icon icon="wallet" size="16"></re-icon>Revenue</div>
-          <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">฿284k</p><span class="flex items-center gap-0.5 text-[11px] font-semibold text-brand"><re-icon icon="arrow-up-right2" size="12"></re-icon>18%</span></div>
+          <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-wallet-01 text-[16px]"></i>Revenue</div>
+          <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">฿284k</p><span class="flex items-center gap-0.5 text-[11px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[12px]"></i>18%</span></div>
         </div>
         <div class="rounded-2xl bg-surface p-4">
-          <div class="flex items-center gap-1.5 text-[12px] text-muted"><re-icon icon="ticket" size="16"></re-icon>Tickets sold</div>
+          <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-ticket-01 text-[16px]"></i>Tickets sold</div>
           <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">312<span class="text-[13px] font-semibold text-muted">/450</span></p><span class="text-[11px] font-medium text-muted">4 types</span></div>
         </div>
         <div class="rounded-2xl bg-surface p-4">
-          <div class="flex items-center gap-1.5 text-[12px] text-muted"><re-icon icon="calendar" size="16"></re-icon>Days left</div>
+          <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[16px]"></i>Days left</div>
           <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">7</p><span class="text-[11px] font-semibold text-amber-600 dark:text-amber-300">Jul 18</span></div>
         </div>
       </div>
@@ -91,7 +90,7 @@
           <section class="rounded-2xl bg-surface p-4 lg:p-5">
             <div class="flex items-center justify-between">
               <h2 class="text-[16px] font-bold tracking-tight">Landing page</h2>
-              <span class="badge badge-green"><re-icon icon="check-circle" size="12"></re-icon>Published</span>
+              <span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-circle-02 text-[12px]"></i>Published</span>
             </div>
             <div class="mt-4 flex flex-col gap-4 sm:flex-row">
               <!-- template preview -->
@@ -117,13 +116,13 @@
                 </div>
                 <p class="mt-1 text-[12.5px] leading-snug text-muted">A clean, all-purpose event page — the title, date, venue, agenda, speakers and tickets fill in automatically.</p>
                 <div class="mt-3 flex items-center gap-2 rounded-lg bg-canvas px-3 py-2">
-                  <re-icon icon="link" size="14" class="shrink-0 text-muted"></re-icon>
+                  <i class="hgi-stroke hgi-link-01 text-[14px] shrink-0 text-muted"></i>
                   <span id="lp-url" class="min-w-0 flex-1 truncate text-[12px] text-muted">eventa.co/e/tech-summit-2026</span>
                   <button id="lp-copy" class="shrink-0 text-[11px] font-semibold text-brand hover:underline">Copy</button>
                 </div>
                 <div class="mt-3 flex flex-wrap items-center gap-2">
-                  <a href="../landing/aurora.html?event=tech-summit-2026" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-[12.5px] font-semibold text-white transition hover:bg-brand-dark"><re-icon icon="eye" size="15"></re-icon>Preview</a>
-                  <a href="landing-pages.html" class="inline-flex items-center gap-1.5 rounded-lg bg-brand-soft px-3.5 py-2 text-[12.5px] font-semibold text-brand transition hover:brightness-95"><re-icon icon="layout" size="15"></re-icon>Change template</a>
+                  <a href="../landing/aurora.html?event=tech-summit-2026" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-[12.5px] font-semibold text-white transition hover:bg-brand-dark"><i class="hgi-stroke hgi-view text-[15px]"></i>Preview</a>
+                  <a href="landing-pages.html" class="inline-flex items-center gap-1.5 rounded-lg bg-brand-soft px-3.5 py-2 text-[12.5px] font-semibold text-brand transition hover:brightness-95"><i class="hgi-stroke hgi-layout-01 text-[15px]"></i>Change template</a>
                 </div>
               </div>
             </div>
@@ -145,10 +144,10 @@
         <section class="rounded-2xl bg-surface p-4 lg:p-5 xl:col-span-1">
           <h2 class="text-[16px] font-bold tracking-tight">Details</h2>
           <div class="mt-3 space-y-3 text-[13px]">
-            <div class="flex items-start gap-2.5"><re-icon icon="calendar" size="16" class="mt-0.5 shrink-0 text-muted"></re-icon><div><p class="font-semibold text-ink">Jul 18–19, 2026</p><p class="text-[12px] text-muted">09:00 – 18:00 · GMT+7</p></div></div>
-            <div class="flex items-start gap-2.5 border-t border-line pt-3"><re-icon icon="pin" size="16" class="mt-0.5 shrink-0 text-muted"></re-icon><div><p class="font-semibold text-ink">BITEC</p><p class="text-[12px] text-muted">Bang Na, Bangkok</p></div></div>
-            <div class="flex items-start gap-2.5 border-t border-line pt-3"><re-icon icon="users" size="16" class="mt-0.5 shrink-0 text-muted"></re-icon><div><p class="font-semibold text-ink">312 registered</p><p class="text-[12px] text-muted">of 400 capacity</p></div></div>
-            <div class="flex items-start gap-2.5 border-t border-line pt-3"><re-icon icon="verified" size="16" class="mt-0.5 shrink-0 text-muted"></re-icon><div><p class="font-semibold text-ink">Eventa Co.</p><p class="text-[12px] text-muted">Organizer</p></div></div>
+            <div class="flex items-start gap-2.5"><i class="hgi-stroke hgi-calendar-03 text-[16px] mt-0.5 shrink-0 text-muted"></i><div><p class="font-semibold text-ink">Jul 18–19, 2026</p><p class="text-[12px] text-muted">09:00 – 18:00 · GMT+7</p></div></div>
+            <div class="flex items-start gap-2.5 border-t border-line pt-3"><i class="hgi-stroke hgi-location-01 text-[16px] mt-0.5 shrink-0 text-muted"></i><div><p class="font-semibold text-ink">BITEC</p><p class="text-[12px] text-muted">Bang Na, Bangkok</p></div></div>
+            <div class="flex items-start gap-2.5 border-t border-line pt-3"><i class="hgi-stroke hgi-user-multiple text-[16px] mt-0.5 shrink-0 text-muted"></i><div><p class="font-semibold text-ink">312 registered</p><p class="text-[12px] text-muted">of 400 capacity</p></div></div>
+            <div class="flex items-start gap-2.5 border-t border-line pt-3"><i class="hgi-stroke hgi-checkmark-badge-01 text-[16px] mt-0.5 shrink-0 text-muted"></i><div><p class="font-semibold text-ink">Eventa Co.</p><p class="text-[12px] text-muted">Organizer</p></div></div>
           </div>
         </section>
       </div>
@@ -162,7 +161,7 @@
             <h2 class="text-[16px] font-bold tracking-tight">Registrations</h2>
             <span class="rounded-full bg-brand-soft px-2 py-0.5 text-[11px] font-semibold text-brand">312 total</span>
           </div>
-          <button class="inline-flex items-center gap-2 rounded-lg bg-canvas px-3 py-2 text-[13px] font-medium text-muted transition hover:text-ink">All statuses<re-icon icon="chevron-down" size="14"></re-icon></button>
+          <button class="inline-flex items-center gap-2 rounded-lg bg-canvas px-3 py-2 text-[13px] font-medium text-muted transition hover:text-ink">All statuses<i class="hgi-stroke hgi-arrow-down-01 text-[14px]"></i></button>
         </div>
         <div class="mt-3 overflow-x-auto">
           <table class="w-full min-w-[720px] text-left">
@@ -189,7 +188,7 @@
             <h2 class="text-[16px] font-bold tracking-tight">Attendees</h2>
             <span class="rounded-full bg-brand-soft px-2 py-0.5 text-[11px] font-semibold text-brand">296 confirmed</span>
           </div>
-          <button class="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-dark"><re-icon icon="send" size="15"></re-icon><span class="hidden sm:inline">Email all</span></button>
+          <button class="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-dark"><i class="hgi-stroke hgi-mail-send-01 text-[15px]"></i><span class="hidden sm:inline">Email all</span></button>
         </div>
         <div class="mt-3 overflow-x-auto">
           <table class="w-full min-w-[680px] text-left">
@@ -212,7 +211,7 @@
       <section class="rounded-2xl bg-surface p-4 lg:p-5">
         <div class="flex items-center justify-between">
           <h2 class="text-[16px] font-bold tracking-tight">Speakers</h2>
-          <button class="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-dark"><re-icon icon="plus" size="15"></re-icon><span class="hidden sm:inline">Add speaker</span></button>
+          <button class="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-dark"><i class="hgi-stroke hgi-add-01 text-[15px]"></i><span class="hidden sm:inline">Add speaker</span></button>
         </div>
         <div id="spk-grid" class="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3"></div>
       </section>
@@ -225,7 +224,7 @@
           <h2 class="text-[16px] font-bold tracking-tight">Agenda</h2>
           <div class="flex items-center gap-3">
             <a href="agenda.html" class="hidden text-[12px] font-semibold text-brand hover:underline sm:inline">Manage agenda</a>
-            <button class="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-dark" data-open="session-panel"><re-icon icon="plus" size="15"></re-icon><span class="hidden sm:inline">Add session</span><span class="sm:hidden">Add</span></button>
+            <button class="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-dark" data-open="session-panel"><i class="hgi-stroke hgi-add-01 text-[15px]"></i><span class="hidden sm:inline">Add session</span><span class="sm:hidden">Add</span></button>
           </div>
         </div>
         <div id="agenda-list" class="mt-4 space-y-5"></div>
@@ -239,14 +238,14 @@
           <h2 class="text-[16px] font-bold tracking-tight">Ticket types</h2>
           <div class="flex items-center gap-3">
             <a href="tickets.html" class="hidden text-[12px] font-semibold text-brand hover:underline sm:inline">Manage tickets</a>
-            <button type="button" data-open="ticket-panel" class="inline-flex items-center gap-1.5 rounded-lg bg-brand-soft px-3 py-2 text-[13px] font-semibold text-brand transition hover:brightness-95"><re-icon icon="plus" size="15"></re-icon>Add ticket</button>
+            <button type="button" data-open="ticket-panel" class="inline-flex items-center gap-1.5 rounded-lg bg-brand-soft px-3 py-2 text-[13px] font-semibold text-brand transition hover:brightness-95"><i class="hgi-stroke hgi-add-01 text-[15px]"></i>Add ticket</button>
           </div>
         </div>
         <div id="tkt-grid" class="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4"></div>
       </section>
     </div>
 
-    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; reicon</p>
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
   </main>
 </div>
 
@@ -254,7 +253,7 @@
 <aside class="panel" id="session-panel">
   <header class="flex items-center justify-between border-b border-hair p-4">
     <h3 class="text-[15px] font-bold tracking-tight">Add session</h3>
-    <button class="btn-icon" data-close><re-icon icon="x" size="18"></re-icon></button>
+    <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
   </header>
   <div class="flex-1 space-y-4 overflow-y-auto p-4">
     <div>
@@ -297,7 +296,7 @@
   </div>
   <footer class="flex gap-2 border-t border-hair p-4">
     <button class="btn btn-soft flex-1" data-close>Cancel</button>
-    <button id="sess-add-btn" class="btn btn-primary flex-1" data-close><re-icon icon="plus" size="15"></re-icon>Add session</button>
+    <button id="sess-add-btn" class="btn btn-primary flex-1" data-close><i class="hgi-stroke hgi-add-01 text-[15px]"></i>Add session</button>
   </footer>
 </aside>
 
@@ -305,7 +304,7 @@
 <aside class="panel" id="ticket-panel">
   <header class="flex items-center justify-between border-b border-hair p-4">
     <h3 class="text-[15px] font-bold tracking-tight">Add ticket</h3>
-    <button class="btn-icon" data-close><re-icon icon="x" size="18"></re-icon></button>
+    <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
   </header>
   <div class="flex-1 space-y-4 overflow-y-auto p-4">
     <div>
@@ -327,11 +326,11 @@
   </div>
   <footer class="flex gap-2 border-t border-hair p-4">
     <button class="btn btn-soft flex-1" data-close>Cancel</button>
-    <button id="tkt-add-btn" class="btn btn-primary flex-1" data-close><re-icon icon="plus" size="15"></re-icon>Add ticket</button>
+    <button id="tkt-add-btn" class="btn btn-primary flex-1" data-close><i class="hgi-stroke hgi-add-01 text-[15px]"></i>Add ticket</button>
   </footer>
 </aside>
 
-<script src="../assets/shell.js?v=31"></script>
+<script src="../assets/shell.js?v=33"></script>
 <script>
   /* ---------- pill tabs ---------- */
   document.querySelectorAll('[data-pill-group]').forEach(group => {
@@ -419,7 +418,7 @@
         ${avatar(s.initials, s.tone, 'h-11 w-11')}
         <div class="min-w-0"><p class="truncate text-[14px] font-bold text-ink">${s.name}</p><p class="truncate text-[12px] text-muted">${s.role}</p></div>
       </div>
-      <p class="mt-3 flex items-start gap-1.5 text-[12.5px] font-medium text-ink"><re-icon icon="mic" size="14" class="mt-0.5 shrink-0 text-brand"></re-icon>${s.talk}</p>
+      <p class="mt-3 flex items-start gap-1.5 text-[12.5px] font-medium text-ink"><i class="hgi-stroke hgi-mic-01 text-[14px] mt-0.5 shrink-0 text-brand"></i>${s.talk}</p>
       <span class="mt-3 inline-block rounded-full bg-brand-soft px-2 py-0.5 text-[10px] font-semibold text-brand">${s.tag}</span>
     </div>`).join('');
 
@@ -454,9 +453,9 @@
                     <span class="rounded-full px-2 py-0.5 text-[10px] font-semibold ${TONE[SESSION_TONE[s.type] || 'brand']}">${s.type}</span>
                     <p class="text-[13px] font-semibold text-ink">${s.title}</p>
                   </div>
-                  <p class="mt-1 flex items-center gap-1.5 text-[11px] text-muted"><re-icon icon="mic" size="12"></re-icon>${s.who} · ${s.room}</p>
+                  <p class="mt-1 flex items-center gap-1.5 text-[11px] text-muted"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>${s.who} · ${s.room}</p>
                 </div>
-                <button data-del-session data-d="${di}" data-s="${si}" class="grid h-7 w-7 shrink-0 place-items-center rounded-lg text-muted transition hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-500/15" title="Remove session"><re-icon icon="trash" size="14"></re-icon></button>
+                <button data-del-session data-d="${di}" data-s="${si}" class="grid h-7 w-7 shrink-0 place-items-center rounded-lg text-muted transition hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-500/15" title="Remove session"><i class="hgi-stroke hgi-delete-02 text-[14px]"></i></button>
               </div>
             </div>`).join('') : '<p class="rounded-xl bg-canvas px-3 py-5 text-center text-[12px] text-muted">No sessions on this day.</p>'}
         </div>
@@ -510,7 +509,7 @@
           <p class="text-[13px] font-bold text-ink">${t.name}</p>
           <div class="flex items-center gap-1">
             ${t.featured ? '<span class="rounded-full bg-brand px-2 py-0.5 text-[10px] font-semibold text-white">Popular</span>' : ''}
-            <button data-del-ticket data-i="${i}" class="grid h-6 w-6 shrink-0 place-items-center rounded-md text-muted transition hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-500/15" title="Remove ticket"><re-icon icon="trash" size="13"></re-icon></button>
+            <button data-del-ticket data-i="${i}" class="grid h-6 w-6 shrink-0 place-items-center rounded-md text-muted transition hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-500/15" title="Remove ticket"><i class="hgi-stroke hgi-delete-02 text-[13px]"></i></button>
           </div>
         </div>
         <p class="mt-1 text-[20px] font-extrabold tracking-tight text-ink tnum">${t.price}</p>

@@ -9,11 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
-<script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=31"></script>
-<link rel="stylesheet" href="../assets/app.css?v=31" />
+<script src="../assets/config.js?v=33"></script>
+<link rel="stylesheet" href="../assets/app.css?v=33" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="checkin">
 
@@ -33,7 +32,7 @@
       </div>
       <div class="flex items-center gap-2">
         <div class="relative w-40 sm:w-52">
-          <re-icon icon="calendar" size="15" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></re-icon>
+          <i class="hgi-stroke hgi-calendar-03 text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
           <select class="select h-10 w-full border-0 bg-surface pl-9 font-medium" id="event-select">
             <option>Tech Summit 2026</option>
             <option>Bangkok Jazz Night</option>
@@ -43,7 +42,7 @@
           </select>
         </div>
         <a href="check-in-tool.html" class="btn btn-primary shrink-0"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i><span class="hidden sm:inline">Open check-in tool</span><span class="sm:hidden">Tool</span></a>
-        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><re-icon icon="bell" size="18"></re-icon><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
+        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
         <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
       </div>
     </div>
@@ -67,11 +66,11 @@
     <!-- search + filter -->
     <div class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
-        <re-icon icon="search" size="16" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></re-icon>
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
         <input id="list-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search attendee, email or ticket…" />
       </div>
       <div class="relative w-full sm:w-48">
-        <re-icon icon="ticket" size="15" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></re-icon>
+        <i class="hgi-stroke hgi-ticket-01 text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
         <select id="ticket-filter" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
           <option value="">All ticket types</option>
           <option>VIP</option>
@@ -99,7 +98,7 @@
   </main>
 </div>
 
-<script src="../assets/shell.js?v=31"></script>
+<script src="../assets/shell.js?v=33"></script>
 <script>
   (function () {
     var TONE = {
