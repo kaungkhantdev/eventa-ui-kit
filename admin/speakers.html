@@ -12,8 +12,8 @@
 <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js"></script>
-<link rel="stylesheet" href="../assets/app.css" />
+<script src="../assets/config.js?v=31"></script>
+<link rel="stylesheet" href="../assets/app.css?v=31" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="speakers">
 
@@ -25,186 +25,47 @@
     <!-- header -->
     <div class="mb-4 flex items-center justify-between gap-3">
       <div class="flex min-w-0 items-center gap-3">
-        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
         <div class="min-w-0">
           <h1 class="text-[22px] font-bold tracking-tight">Speakers</h1>
           <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Manage speakers and their sessions.</p>
         </div>
       </div>
-      <button class="btn btn-primary shrink-0" data-open="speaker-panel"><i class="hgi-stroke hgi-user-add-01 text-[16px]"></i><span class="hidden sm:inline">Add speaker</span><span class="sm:hidden">Add</span></button>
+      <div class="flex shrink-0 items-center gap-2.5"><button class="btn btn-primary shrink-0" data-open="speaker-panel"><i class="hgi-stroke hgi-user-add-01 text-[16px]"></i><span class="hidden sm:inline">Add speaker</span><span class="sm:hidden">Add</span></button><button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><re-icon icon="bell" size="18"></re-icon><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button><div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div></div>
     </div>
 
-    <!-- toolbar -->
-    <div class="card flex flex-col gap-2.5 p-3.5 sm:flex-row sm:items-center">
-      <div class="relative flex-1">
-        <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[15px] text-muted"></i>
-        <input type="text" class="input pl-9" placeholder="Search speakers by name, company or topic…" />
+    <!-- toolbar (flat, on canvas) -->
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <re-icon icon="search" size="16" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></re-icon>
+        <input id="spk-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search speakers by name, company or topic…" />
       </div>
-      <select class="select w-full sm:w-56">
-        <option>All events</option>
-        <option>Tech Summit 2026</option>
-        <option>Bangkok Jazz Night</option>
-        <option>Sunrise Yoga Retreat</option>
-        <option>Thai Street Food Festival</option>
-        <option>UX Bangkok Meetup</option>
-      </select>
+      <div class="relative w-full sm:w-56">
+        <re-icon icon="calendar" size="15" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></re-icon>
+        <select id="spk-event" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All events</option>
+          <option>Tech Summit 2026</option>
+          <option>Bangkok Jazz Night</option>
+          <option>Sunrise Yoga Retreat</option>
+          <option>Thai Street Food Festival</option>
+          <option>UX Bangkok Meetup</option>
+        </select>
+      </div>
+      <div class="flex shrink-0 items-center gap-1 self-start rounded-lg bg-surface p-1 sm:self-auto">
+        <button type="button" data-view="grid" class="view-btn grid h-8 w-8 place-items-center rounded-md text-muted transition hover:text-ink" title="Grid view"><i class="hgi-stroke hgi-grid-view text-[16px]"></i></button>
+        <button type="button" data-view="list" class="view-btn grid h-8 w-8 place-items-center rounded-md text-muted transition hover:text-ink" title="List view"><i class="hgi-stroke hgi-list-view text-[16px]"></i></button>
+      </div>
     </div>
 
-    <!-- speaker grid -->
-    <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+    <!-- result count -->
+    <p id="spk-count" class="mb-2 mt-3 text-[12px] text-muted"></p>
 
-      <div class="card p-4 text-center">
-        <span class="avatar mx-auto h-16 w-16 text-[18px]">AP</span>
-        <p class="mt-3 text-[14px] font-bold text-ink">Anong Prasert</p>
-        <p class="text-[12px] text-muted">CTO @ Nimble Works</p>
-        <p class="mt-2 text-[12px] text-ink">Scaling APIs for 10M Users</p>
-        <div class="mt-2 flex flex-wrap justify-center gap-1.5">
-          <span class="badge badge-green"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>Tech Summit 2026</span>
-        </div>
-        <div class="mt-3 flex items-center justify-center gap-1.5">
-          <button class="btn-icon" title="Website"><i class="hgi-stroke hgi-global text-[15px]"></i></button>
-          <button class="btn-icon" title="Email"><i class="hgi-stroke hgi-mail-01 text-[15px]"></i></button>
-          <button class="btn-icon" title="LinkedIn"><i class="hgi-stroke hgi-link-01 text-[15px]"></i></button>
-        </div>
-        <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
-          <button class="btn btn-ghost btn-sm flex-1" data-open="speaker-panel">Edit</button>
-          <button class="btn-icon text-red-500" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-        </div>
-      </div>
-
-      <div class="card p-4 text-center">
-        <span class="avatar mx-auto h-16 w-16 text-[18px]">ST</span>
-        <p class="mt-3 text-[14px] font-bold text-ink">Somchai Tanakorn</p>
-        <p class="text-[12px] text-muted">Head of Product @ Motive Labs</p>
-        <p class="mt-2 text-[12px] text-ink">Design Systems that Scale</p>
-        <div class="mt-2 flex flex-wrap justify-center gap-1.5">
-          <span class="badge badge-blue"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>UX Bangkok Meetup</span>
-        </div>
-        <div class="mt-3 flex items-center justify-center gap-1.5">
-          <button class="btn-icon" title="Website"><i class="hgi-stroke hgi-global text-[15px]"></i></button>
-          <button class="btn-icon" title="Email"><i class="hgi-stroke hgi-mail-01 text-[15px]"></i></button>
-          <button class="btn-icon" title="LinkedIn"><i class="hgi-stroke hgi-link-01 text-[15px]"></i></button>
-        </div>
-        <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
-          <button class="btn btn-ghost btn-sm flex-1" data-open="speaker-panel">Edit</button>
-          <button class="btn-icon text-red-500" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-        </div>
-      </div>
-
-      <div class="card p-4 text-center">
-        <span class="avatar mx-auto h-16 w-16 text-[18px]">PS</span>
-        <p class="mt-3 text-[14px] font-bold text-ink">Ploy Suwanaphan</p>
-        <p class="text-[12px] text-muted">Founder @ Sabai Wellness</p>
-        <p class="mt-2 text-[12px] text-ink">Mindful Mornings: Building a Retreat Brand</p>
-        <div class="mt-2 flex flex-wrap justify-center gap-1.5">
-          <span class="badge badge-purple"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>Sunrise Yoga Retreat</span>
-        </div>
-        <div class="mt-3 flex items-center justify-center gap-1.5">
-          <button class="btn-icon" title="Website"><i class="hgi-stroke hgi-global text-[15px]"></i></button>
-          <button class="btn-icon" title="Email"><i class="hgi-stroke hgi-mail-01 text-[15px]"></i></button>
-          <button class="btn-icon" title="LinkedIn"><i class="hgi-stroke hgi-link-01 text-[15px]"></i></button>
-        </div>
-        <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
-          <button class="btn btn-ghost btn-sm flex-1" data-open="speaker-panel">Edit</button>
-          <button class="btn-icon text-red-500" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-        </div>
-      </div>
-
-      <div class="card p-4 text-center">
-        <span class="avatar mx-auto h-16 w-16 text-[18px]">JW</span>
-        <p class="mt-3 text-[14px] font-bold text-ink">James Whitfield</p>
-        <p class="text-[12px] text-muted">Chief Economist @ Meridian Capital</p>
-        <p class="mt-2 text-[12px] text-ink">Southeast Asia's Next Growth Wave</p>
-        <div class="mt-2 flex flex-wrap justify-center gap-1.5">
-          <span class="badge badge-green"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>Tech Summit 2026</span>
-        </div>
-        <div class="mt-3 flex items-center justify-center gap-1.5">
-          <button class="btn-icon" title="Website"><i class="hgi-stroke hgi-global text-[15px]"></i></button>
-          <button class="btn-icon" title="Email"><i class="hgi-stroke hgi-mail-01 text-[15px]"></i></button>
-          <button class="btn-icon" title="LinkedIn"><i class="hgi-stroke hgi-link-01 text-[15px]"></i></button>
-        </div>
-        <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
-          <button class="btn btn-ghost btn-sm flex-1" data-open="speaker-panel">Edit</button>
-          <button class="btn-icon text-red-500" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-        </div>
-      </div>
-
-      <div class="card p-4 text-center">
-        <span class="avatar mx-auto h-16 w-16 text-[18px]">ML</span>
-        <p class="mt-3 text-[14px] font-bold text-ink">Mei Lin</p>
-        <p class="text-[12px] text-muted">Executive Chef @ Baan Suan Kitchen</p>
-        <p class="mt-2 text-[12px] text-ink">Street Food, Reinvented</p>
-        <div class="mt-2 flex flex-wrap justify-center gap-1.5">
-          <span class="badge badge-amber"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>Thai Street Food Festival</span>
-        </div>
-        <div class="mt-3 flex items-center justify-center gap-1.5">
-          <button class="btn-icon" title="Website"><i class="hgi-stroke hgi-global text-[15px]"></i></button>
-          <button class="btn-icon" title="Email"><i class="hgi-stroke hgi-mail-01 text-[15px]"></i></button>
-          <button class="btn-icon" title="LinkedIn"><i class="hgi-stroke hgi-link-01 text-[15px]"></i></button>
-        </div>
-        <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
-          <button class="btn btn-ghost btn-sm flex-1" data-open="speaker-panel">Edit</button>
-          <button class="btn-icon text-red-500" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-        </div>
-      </div>
-
-      <div class="card p-4 text-center">
-        <span class="avatar mx-auto h-16 w-16 text-[18px]">NK</span>
-        <p class="mt-3 text-[14px] font-bold text-ink">Nattapong Kittisak</p>
-        <p class="text-[12px] text-muted">Lead Saxophonist @ Krungthep Quartet</p>
-        <p class="mt-2 text-[12px] text-ink">The Evolution of Thai Jazz</p>
-        <div class="mt-2 flex flex-wrap justify-center gap-1.5">
-          <span class="badge badge-red"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>Bangkok Jazz Night</span>
-        </div>
-        <div class="mt-3 flex items-center justify-center gap-1.5">
-          <button class="btn-icon" title="Website"><i class="hgi-stroke hgi-global text-[15px]"></i></button>
-          <button class="btn-icon" title="Email"><i class="hgi-stroke hgi-mail-01 text-[15px]"></i></button>
-          <button class="btn-icon" title="LinkedIn"><i class="hgi-stroke hgi-link-01 text-[15px]"></i></button>
-        </div>
-        <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
-          <button class="btn btn-ghost btn-sm flex-1" data-open="speaker-panel">Edit</button>
-          <button class="btn-icon text-red-500" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-        </div>
-      </div>
-
-      <div class="card p-4 text-center">
-        <span class="avatar mx-auto h-16 w-16 text-[18px]">KW</span>
-        <p class="mt-3 text-[14px] font-bold text-ink">Kanokwan Wattana</p>
-        <p class="text-[12px] text-muted">Data Science Lead @ Orbit Analytics</p>
-        <p class="mt-2 text-[12px] text-ink">Machine Learning in Production</p>
-        <div class="mt-2 flex flex-wrap justify-center gap-1.5">
-          <span class="badge badge-green"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>Tech Summit 2026</span>
-        </div>
-        <div class="mt-3 flex items-center justify-center gap-1.5">
-          <button class="btn-icon" title="Website"><i class="hgi-stroke hgi-global text-[15px]"></i></button>
-          <button class="btn-icon" title="Email"><i class="hgi-stroke hgi-mail-01 text-[15px]"></i></button>
-          <button class="btn-icon" title="LinkedIn"><i class="hgi-stroke hgi-link-01 text-[15px]"></i></button>
-        </div>
-        <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
-          <button class="btn btn-ghost btn-sm flex-1" data-open="speaker-panel">Edit</button>
-          <button class="btn-icon text-red-500" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-        </div>
-      </div>
-
-      <div class="card p-4 text-center">
-        <span class="avatar mx-auto h-16 w-16 text-[18px]">DR</span>
-        <p class="mt-3 text-[14px] font-bold text-ink">David Reyes</p>
-        <p class="text-[12px] text-muted">UX Director @ Formless Studio</p>
-        <p class="mt-2 text-[12px] text-ink">Designing for Trust in Fintech</p>
-        <div class="mt-2 flex flex-wrap justify-center gap-1.5">
-          <span class="badge badge-blue"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>UX Bangkok Meetup</span>
-        </div>
-        <div class="mt-3 flex items-center justify-center gap-1.5">
-          <button class="btn-icon" title="Website"><i class="hgi-stroke hgi-global text-[15px]"></i></button>
-          <button class="btn-icon" title="Email"><i class="hgi-stroke hgi-mail-01 text-[15px]"></i></button>
-          <button class="btn-icon" title="LinkedIn"><i class="hgi-stroke hgi-link-01 text-[15px]"></i></button>
-        </div>
-        <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
-          <button class="btn btn-ghost btn-sm flex-1" data-open="speaker-panel">Edit</button>
-          <button class="btn-icon text-red-500" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>
-        </div>
-      </div>
-
+    <!-- speakers (grid / list) -->
+    <div id="speaker-view"></div>
+    <div id="speaker-empty" class="mt-2 hidden card flex flex-col items-center justify-center p-12 text-center">
+      <span class="mx-auto grid h-12 w-12 place-items-center rounded-full bg-line text-muted"><i class="hgi-stroke hgi-mic-01 text-[22px]"></i></span>
+      <p class="mt-3 text-[14px] font-semibold text-ink">No speakers found</p>
+      <p class="mt-1 text-[12px] text-muted">Try a different search or event filter.</p>
     </div>
 
     <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
@@ -222,7 +83,7 @@
     <div class="flex items-center gap-4">
       <span class="avatar h-16 w-16 shrink-0 text-[18px]"><i class="hgi-stroke hgi-camera-01 text-[22px]"></i></span>
       <div>
-        <button class="btn btn-ghost btn-sm"><i class="hgi-stroke hgi-image-upload-01 text-[15px]"></i>Upload photo</button>
+        <button class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-image-upload-01 text-[15px]"></i>Upload photo</button>
         <p class="hint">JPG or PNG, at least 200×200px.</p>
       </div>
     </div>
@@ -246,6 +107,11 @@
     <div>
       <label class="label">Email</label>
       <input type="email" class="input" placeholder="name@company.com" />
+    </div>
+
+    <div>
+      <label class="label">Phone</label>
+      <input type="tel" class="input" placeholder="(302) 555-0107" />
     </div>
 
     <div>
@@ -289,7 +155,7 @@
 
   </div>
   <footer class="flex gap-2 border-t border-hair p-4">
-    <button class="btn btn-ghost flex-1" data-close>Cancel</button>
+    <button class="btn btn-soft flex-1" data-close>Cancel</button>
     <button class="btn btn-primary flex-1" data-close>Save speaker</button>
   </footer>
 </aside>
@@ -305,12 +171,128 @@
       </div>
     </div>
     <div class="mt-4 flex gap-2">
-      <button class="btn btn-ghost flex-1" data-close>Cancel</button>
+      <button class="btn btn-soft flex-1" data-close>Cancel</button>
       <button class="btn btn-danger flex-1" data-close>Delete</button>
     </div>
   </div>
 </div>
 
-<script src="../assets/shell.js"></script>
+<script src="../assets/shell.js?v=31"></script>
+<script>
+  (function () {
+    var TONE = {
+      green:  'bg-brand-soft text-brand',
+      blue:   'bg-blue-100 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300',
+      purple: 'bg-purple-100 text-purple-600 dark:bg-purple-500/15 dark:text-purple-300',
+      amber:  'bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300',
+      red:    'bg-red-100 text-red-600 dark:bg-red-500/15 dark:text-red-300',
+      pink:   'bg-pink-100 text-pink-600 dark:bg-pink-500/15 dark:text-pink-300'
+    };
+    var SPEAKERS = [
+      { name:'Anong Prasert',     role:'CTO · Nimble Works',                 email:'anong.prasert@nimble.co',     phone:'(302) 555-0107', ini:'AP', tone:'green',  event:'Tech Summit 2026',           sessions:2, rating:'4.9' },
+      { name:'Somchai Tanakorn',  role:'Head of Product · Motive Labs',      email:'somchai.t@motivelabs.io',     phone:'(629) 555-0129', ini:'ST', tone:'blue',   event:'UX Bangkok Meetup',          sessions:1, rating:'4.7' },
+      { name:'Ploy Suwanaphan',   role:'Founder · Sabai Wellness',           email:'ploy@sabaiwellness.com',      phone:'(480) 555-0103', ini:'PS', tone:'purple', event:'Sunrise Yoga Retreat',       sessions:3, rating:'5.0' },
+      { name:'James Whitfield',   role:'Chief Economist · Meridian Capital', email:'j.whitfield@meridian.com',    phone:'(405) 555-0128', ini:'JW', tone:'amber',  event:'Tech Summit 2026',           sessions:1, rating:'4.6' },
+      { name:'Mei Lin',           role:'Executive Chef · Baan Suan Kitchen', email:'mei.lin@baansuan.co',         phone:'(252) 555-0126', ini:'ML', tone:'red',    event:'Thai Street Food Festival',  sessions:2, rating:'4.8' },
+      { name:'Nattapong Kittisak',role:'Lead Saxophonist · Krungthep Quartet',email:'natt.k@krungthepq.com',      phone:'(316) 555-0116', ini:'NK', tone:'pink',   event:'Bangkok Jazz Night',         sessions:1, rating:'4.9' },
+      { name:'Kanokwan Wattana',  role:'Data Science Lead · Orbit Analytics',email:'kanokwan.w@orbit.ai',         phone:'(704) 555-0127', ini:'KW', tone:'green',  event:'Tech Summit 2026',           sessions:2, rating:'4.5' },
+      { name:'David Reyes',       role:'UX Director · Formless Studio',      email:'david.reyes@formless.design', phone:'(319) 555-0115', ini:'DR', tone:'blue',   event:'UX Bangkok Meetup',          sessions:1, rating:'4.7' }
+    ];
+
+    var view = 'grid';
+    var viewEl  = document.getElementById('speaker-view');
+    var emptyEl = document.getElementById('speaker-empty');
+    var countEl = document.getElementById('spk-count');
+    var search  = document.getElementById('spk-search');
+    var eventSel= document.getElementById('spk-event');
+
+    function cardGrid(s) {
+      return '' +
+      '<div class="card p-4">' +
+        '<div class="flex items-start gap-3">' +
+          '<span class="grid h-12 w-12 shrink-0 place-items-center rounded-full text-[15px] font-semibold ' + TONE[s.tone] + '">' + s.ini + '</span>' +
+          '<div class="min-w-0 flex-1">' +
+            '<p class="truncate text-[15px] font-bold text-ink">' + s.name + '</p>' +
+            '<p class="truncate text-[12px] text-muted">' + s.role + '</p>' +
+          '</div>' +
+          '<button class="btn-icon -mr-1 -mt-1 shrink-0" data-open="speaker-panel" title="Edit speaker"><i class="hgi-stroke hgi-more-horizontal text-[16px]"></i></button>' +
+        '</div>' +
+        '<div class="mt-3 space-y-0.5 border-t border-line pt-3">' +
+          '<div class="flex items-center gap-2.5 py-1 text-[12.5px]"><i class="hgi-stroke hgi-mail-01 shrink-0 text-[15px] text-muted"></i><span class="truncate text-ink">' + s.email + '</span></div>' +
+          '<div class="flex items-center gap-2.5 py-1 text-[12.5px]"><i class="hgi-stroke hgi-call-02 shrink-0 text-[15px] text-muted"></i><span class="text-ink tnum">' + s.phone + '</span></div>' +
+          '<a href="#" class="group -mx-1.5 flex items-center gap-2.5 rounded-lg px-1.5 py-1.5 text-[12.5px] transition hover:bg-brand-soft/50">' +
+            '<i class="hgi-stroke hgi-mic-01 shrink-0 text-[15px] text-muted group-hover:text-brand"></i>' +
+            '<span class="font-medium text-ink group-hover:text-brand">Sessions</span>' +
+            '<span class="ml-auto flex items-center gap-1.5 text-muted"><span class="tnum">' + s.sessions + '</span><i class="hgi-stroke hgi-arrow-right-01 text-[15px] transition-transform group-hover:translate-x-0.5 group-hover:text-brand"></i></span>' +
+          '</a>' +
+          '<a href="#" class="group -mx-1.5 flex items-center gap-2.5 rounded-lg px-1.5 py-1.5 text-[12.5px] transition hover:bg-brand-soft/50">' +
+            '<i class="hgi-stroke hgi-star shrink-0 text-[15px] text-muted group-hover:text-brand"></i>' +
+            '<span class="font-medium text-ink group-hover:text-brand">Reviews</span>' +
+            '<span class="ml-auto flex items-center gap-1.5 text-muted"><span class="tnum">' + s.rating + '</span><i class="hgi-stroke hgi-arrow-right-01 text-[15px] transition-transform group-hover:translate-x-0.5 group-hover:text-brand"></i></span>' +
+          '</a>' +
+        '</div>' +
+      '</div>';
+    }
+
+    function cardList(s) {
+      return '' +
+      '<div class="card flex flex-col gap-3 p-3.5 sm:flex-row sm:items-center">' +
+        '<div class="flex min-w-0 items-center gap-3 sm:w-60 sm:shrink-0">' +
+          '<span class="grid h-11 w-11 shrink-0 place-items-center rounded-full text-[14px] font-semibold ' + TONE[s.tone] + '">' + s.ini + '</span>' +
+          '<div class="min-w-0"><p class="truncate text-[14px] font-bold text-ink">' + s.name + '</p><p class="truncate text-[12px] text-muted">' + s.role + '</p></div>' +
+        '</div>' +
+        '<div class="grid flex-1 grid-cols-2 gap-x-4 gap-y-1.5 sm:grid-cols-4 sm:items-center">' +
+          '<div class="flex min-w-0 items-center gap-2 text-[12.5px] text-ink"><i class="hgi-stroke hgi-mail-01 shrink-0 text-[14px] text-muted"></i><span class="truncate">' + s.email + '</span></div>' +
+          '<div class="flex items-center gap-2 text-[12.5px] text-ink"><i class="hgi-stroke hgi-call-02 shrink-0 text-[14px] text-muted"></i><span class="tnum">' + s.phone + '</span></div>' +
+          '<div class="flex items-center gap-1.5 text-[12.5px] text-muted"><i class="hgi-stroke hgi-mic-01 shrink-0 text-[14px] text-muted"></i><span class="font-semibold text-ink tnum">' + s.sessions + '</span> sessions</div>' +
+          '<div class="flex items-center gap-1.5 text-[12.5px] text-muted"><i class="hgi-stroke hgi-star shrink-0 text-[14px] text-amber-500"></i><span class="font-semibold text-ink tnum">' + s.rating + '</span> rating</div>' +
+        '</div>' +
+        '<div class="flex shrink-0 items-center gap-1.5 sm:pl-2">' +
+          '<button class="btn btn-soft btn-sm" data-open="speaker-panel">Edit</button>' +
+          '<button class="btn-icon text-red-500" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>' +
+        '</div>' +
+      '</div>';
+    }
+
+    function render() {
+      var q = (search.value || '').trim().toLowerCase();
+      var ev = eventSel.value;
+      var list = SPEAKERS.filter(function (s) {
+        var mq = !q || (s.name + ' ' + s.role + ' ' + s.email).toLowerCase().indexOf(q) !== -1;
+        var me = ev === 'All events' || s.event === ev;
+        return mq && me;
+      });
+      countEl.textContent = list.length + (list.length === 1 ? ' speaker' : ' speakers');
+      if (!list.length) { viewEl.innerHTML = ''; viewEl.className = ''; emptyEl.classList.remove('hidden'); return; }
+      emptyEl.classList.add('hidden');
+      if (view === 'grid') {
+        viewEl.className = 'grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4';
+        viewEl.innerHTML = list.map(cardGrid).join('');
+      } else {
+        viewEl.className = 'flex flex-col gap-2';
+        viewEl.innerHTML = list.map(cardList).join('');
+      }
+    }
+
+    function setView(v) {
+      view = v;
+      document.querySelectorAll('.view-btn').forEach(function (b) {
+        var on = b.dataset.view === v;
+        b.classList.toggle('bg-brand-soft', on);
+        b.classList.toggle('text-brand', on);
+        b.classList.toggle('text-muted', !on);
+      });
+      render();
+    }
+
+    document.querySelectorAll('.view-btn').forEach(function (b) {
+      b.addEventListener('click', function () { setView(b.dataset.view); });
+    });
+    search.addEventListener('input', render);
+    eventSel.addEventListener('change', render);
+
+    setView('grid');
+  })();
+</script>
 </body>
 </html>

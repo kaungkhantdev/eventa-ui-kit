@@ -12,338 +12,551 @@
 <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js"></script>
-<link rel="stylesheet" href="../assets/app.css" />
+<script src="../assets/config.js?v=31"></script>
+<link rel="stylesheet" href="../assets/app.css?v=31" />
 </head>
-<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="events">
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="event-detail">
 
 <div class="flex h-full min-h-screen" data-layout>
-  <!-- shell.js injects #backdrop + #sidebar here -->
+  <!-- shell.js injects #backdrop + #sidenav here -->
 
   <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
 
-    <!-- header -->
-    <div class="mb-4 flex items-center justify-between gap-3">
-      <div class="flex min-w-0 items-center gap-2">
-        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
-        <a href="events.html" class="btn-icon border border-hair shrink-0" title="Back to events"><i class="hgi-stroke hgi-arrow-left-01 text-[18px]"></i></a>
-        <div class="min-w-0">
-          <h1 class="truncate text-[22px] font-bold tracking-tight">Tech Summit 2026</h1>
-          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Event details &amp; performance</p>
-        </div>
-      </div>
-      <div class="flex shrink-0 items-center gap-2">
-        <a href="event-form.html" class="btn btn-ghost"><i class="hgi-stroke hgi-pencil-edit-02 text-[14px]"></i><span class="hidden sm:inline">Edit</span></a>
-        <button class="btn btn-ghost"><i class="hgi-stroke hgi-share-08 text-[14px]"></i><span class="hidden sm:inline">Share</span></button>
-        <button class="btn-icon border border-hair" title="More options"><i class="hgi-stroke hgi-more-vertical text-[18px]"></i></button>
+    <!-- top controls -->
+    <div class="mb-3 flex items-center gap-2">
+      <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><re-icon icon="menu" size="18"></re-icon></button>
+      <a href="events.html" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink" title="Back to Events"><re-icon icon="chevron-left" size="20"></re-icon></a>
+      <div class="ml-auto flex shrink-0 items-center gap-2">
+        <a href="event-form.html" class="inline-flex items-center gap-1.5 rounded-lg bg-brand-soft px-3.5 py-2 text-[13px] font-semibold text-brand transition hover:brightness-95"><re-icon icon="edit2" size="15"></re-icon><span class="hidden sm:inline">Edit</span></a>
+        <a href="../landing/aurora.html?event=tech-summit-2026" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-dark"><re-icon icon="eye" size="15"></re-icon><span class="hidden sm:inline">View page</span></a>
+        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><re-icon icon="bell" size="18"></re-icon><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
+        <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
       </div>
     </div>
 
-    <!-- hero card -->
-    <div class="card overflow-hidden">
-      <div class="relative h-32 overflow-hidden bg-gradient-to-br from-brand via-emerald-500 to-emerald-300">
-        <svg class="absolute inset-0 h-full w-full opacity-20" viewBox="0 0 400 128" preserveAspectRatio="xMidYMid slice"><circle cx="40" cy="20" r="60" fill="white" fill-opacity="0.25"/><circle cx="360" cy="110" r="90" fill="white" fill-opacity="0.15"/></svg>
-        <i class="hgi-stroke hgi-ticket-star absolute -bottom-4 -right-4 text-[110px] text-white/15"></i>
-      </div>
-      <div class="p-4 sm:p-5">
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="badge badge-blue"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Registration open</span>
-          <span class="badge badge-purple"><i class="hgi-stroke hgi-presentation-bar-chart-01 text-[12px]"></i>Conference</span>
+    <!-- hero cover -->
+    <div class="relative mb-5 overflow-hidden rounded-2xl bg-gradient-to-br from-brand to-emerald-500">
+      <img src="https://picsum.photos/seed/tech-summit-2026/1280/440" alt="" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()" />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/10"></div>
+      <div class="relative flex min-h-[190px] flex-col justify-end p-5 sm:min-h-[230px] sm:p-6">
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+          <h1 class="text-[24px] font-extrabold tracking-tight text-white sm:text-[30px]">Tech Summit 2026</h1>
+          <span class="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-inset ring-white/25 backdrop-blur-sm"><re-icon icon="check-circle" size="12"></re-icon>Registration open</span>
         </div>
-        <h2 class="mt-2.5 text-[22px] font-extrabold tracking-tight sm:text-[26px]">Tech Summit 2026</h2>
-        <div class="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-[13px] text-muted">
-          <span class="flex items-center gap-1.5"><i class="hgi-stroke hgi-calendar-03 text-[15px]"></i>Saturday, Jul 18, 2026 · 09:00 – 18:00</span>
-          <span class="flex items-center gap-1.5"><i class="hgi-stroke hgi-location-01 text-[15px]"></i>BITEC, Bangkok</span>
-          <span class="flex items-center gap-1.5"><i class="hgi-stroke hgi-user-circle text-[15px]"></i>Organized by Eventa Co.</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- stat tiles -->
-    <div class="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-      <div class="card p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-user-add-01 text-[16px]"></i>Registered</div>
-        <div class="mt-2 flex items-end justify-between">
-          <p class="text-[22px] font-bold tracking-tight tnum">312<span class="text-[13px] font-semibold text-muted">/400</span></p>
-          <span class="text-[11px] font-medium text-muted">88 left</span>
-        </div>
-      </div>
-      <div class="card p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-seat-selector text-[16px]"></i>Capacity filled</div>
-        <div class="mt-2 flex items-end justify-between">
-          <p class="text-[22px] font-bold tracking-tight tnum">78%</p>
-          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>4,6%</span>
-        </div>
-      </div>
-      <div class="card p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-wallet-01 text-[16px]"></i>Revenue</div>
-        <div class="mt-2 flex items-end justify-between">
-          <p class="text-[22px] font-bold tracking-tight tnum">฿284k</p>
-          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>18%</span>
-        </div>
-      </div>
-      <div class="card p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i>Check-ins</div>
-        <div class="mt-2 flex items-end justify-between">
-          <p class="text-[22px] font-bold tracking-tight tnum">—</p>
-          <span class="text-[11px] font-medium text-muted">Opens Jul 18</span>
-        </div>
+        <p class="mt-1.5 flex flex-wrap items-center gap-2 text-[13px] text-white/85">
+          <span>Sat–Sun, July 18–19, 2026 · 09:00</span>
+          <span class="h-1 w-1 rounded-full bg-white/50"></span>
+          <span>BITEC, Bangkok</span>
+        </p>
       </div>
     </div>
 
     <!-- tabs -->
-    <div data-tabs="#eventTabs" class="mt-4 flex gap-4 overflow-x-auto border-b border-hair">
-      <button class="tab tab-active" data-tab="overview">Overview</button>
-      <button class="tab" data-tab="tickets">Tickets</button>
-      <button class="tab" data-tab="registrations">Registrations</button>
-      <button class="tab" data-tab="settings">Settings</button>
+    <div data-pill-group="tab" class="mb-5 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button data-pill="overview" class="rounded-lg bg-brand-soft px-3.5 py-2 text-[13px] font-semibold text-brand transition">Overview</button>
+      <button data-pill="registrations" class="rounded-lg px-3.5 py-2 text-[13px] font-semibold text-muted transition hover:text-ink">Registrations</button>
+      <button data-pill="attendees" class="rounded-lg px-3.5 py-2 text-[13px] font-semibold text-muted transition hover:text-ink">Attendees</button>
+      <button data-pill="speakers" class="rounded-lg px-3.5 py-2 text-[13px] font-semibold text-muted transition hover:text-ink">Speakers</button>
+      <button data-pill="agenda" class="rounded-lg px-3.5 py-2 text-[13px] font-semibold text-muted transition hover:text-ink">Agenda</button>
+      <button data-pill="tickets" class="rounded-lg px-3.5 py-2 text-[13px] font-semibold text-muted transition hover:text-ink">Tickets</button>
     </div>
 
-    <div id="eventTabs" class="mt-4">
+    <!-- ============ OVERVIEW ============ -->
+    <div data-pill-panel="tab:overview" class="space-y-4">
 
-      <!-- Overview -->
-      <div data-tab-panel="overview" class="space-y-3">
-        <section class="card p-4">
-          <h2 class="text-[15px] font-bold tracking-tight">About this event</h2>
-          <p class="mt-2 text-[13px] leading-relaxed text-muted">Tech Summit 2026 brings together founders, engineers, and product leaders from across Southeast Asia for a full day of keynotes, workshops, and hands-on sessions on AI, cloud infrastructure, and the future of digital products. Expect 20+ speakers, breakout tracks, a startup showcase, and plenty of networking over Thai coffee between sessions.</p>
-        </section>
-        <div class="grid grid-cols-1 gap-3 xl:grid-cols-5">
-          <section class="card p-4 xl:col-span-2">
-            <h2 class="text-[15px] font-bold tracking-tight">Location</h2>
-            <div class="mt-3 grid h-40 place-items-center rounded-xl bg-line">
-              <i class="hgi-stroke hgi-maps-location-02 text-[32px] text-muted"></i>
-            </div>
-            <p class="mt-3 text-[13px] font-semibold text-ink">BITEC Bangna</p>
-            <p class="text-[12px] text-muted">88 Bangna-Trad Rd, Bang Na, Bangkok 10260</p>
-          </section>
-          <section class="card p-4 xl:col-span-3">
-            <h2 class="text-[15px] font-bold tracking-tight">Schedule</h2>
-            <div class="mt-1 divide-y divide-line">
-              <div class="flex items-center justify-between py-2.5"><div><p class="text-[13px] font-semibold text-ink">Registration &amp; welcome coffee</p><p class="text-[11px] text-muted">Main Lobby</p></div><span class="shrink-0 text-[12px] text-muted tnum">08:00 – 09:00</span></div>
-              <div class="flex items-center justify-between py-2.5"><div><p class="text-[13px] font-semibold text-ink">Opening keynote</p><p class="text-[11px] text-muted">Hall A</p></div><span class="shrink-0 text-[12px] text-muted tnum">09:00 – 09:30</span></div>
-              <div class="flex items-center justify-between py-2.5"><div><p class="text-[13px] font-semibold text-ink">AI in Product Design</p><p class="text-[11px] text-muted">Hall A · Track 1</p></div><span class="shrink-0 text-[12px] text-muted tnum">09:30 – 11:00</span></div>
-              <div class="flex items-center justify-between py-2.5"><div><p class="text-[13px] font-semibold text-ink">Coffee break</p><p class="text-[11px] text-muted">Exhibition Foyer</p></div><span class="shrink-0 text-[12px] text-muted tnum">11:00 – 11:30</span></div>
-              <div class="flex items-center justify-between py-2.5"><div><p class="text-[13px] font-semibold text-ink">Panel: The future of fintech in SEA</p><p class="text-[11px] text-muted">Hall A</p></div><span class="shrink-0 text-[12px] text-muted tnum">11:30 – 13:00</span></div>
-              <div class="flex items-center justify-between py-2.5"><div><p class="text-[13px] font-semibold text-ink">Lunch</p><p class="text-[11px] text-muted">Sky Terrace</p></div><span class="shrink-0 text-[12px] text-muted tnum">13:00 – 14:00</span></div>
-              <div class="flex items-center justify-between py-2.5"><div><p class="text-[13px] font-semibold text-ink">Closing remarks &amp; networking</p><p class="text-[11px] text-muted">Hall A</p></div><span class="shrink-0 text-[12px] text-muted tnum">17:00 – 18:00</span></div>
-            </div>
-          </section>
+      <!-- quick stats -->
+      <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <div class="rounded-2xl bg-surface p-4">
+          <div class="flex items-center gap-1.5 text-[12px] text-muted"><re-icon icon="user-add" size="16"></re-icon>Registrations</div>
+          <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">312<span class="text-[13px] font-semibold text-muted">/400</span></p><span class="text-[11px] font-semibold text-brand">78%</span></div>
+        </div>
+        <div class="rounded-2xl bg-surface p-4">
+          <div class="flex items-center gap-1.5 text-[12px] text-muted"><re-icon icon="wallet" size="16"></re-icon>Revenue</div>
+          <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">฿284k</p><span class="flex items-center gap-0.5 text-[11px] font-semibold text-brand"><re-icon icon="arrow-up-right2" size="12"></re-icon>18%</span></div>
+        </div>
+        <div class="rounded-2xl bg-surface p-4">
+          <div class="flex items-center gap-1.5 text-[12px] text-muted"><re-icon icon="ticket" size="16"></re-icon>Tickets sold</div>
+          <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">312<span class="text-[13px] font-semibold text-muted">/450</span></p><span class="text-[11px] font-medium text-muted">4 types</span></div>
+        </div>
+        <div class="rounded-2xl bg-surface p-4">
+          <div class="flex items-center gap-1.5 text-[12px] text-muted"><re-icon icon="calendar" size="16"></re-icon>Days left</div>
+          <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">7</p><span class="text-[11px] font-semibold text-amber-600 dark:text-amber-300">Jul 18</span></div>
         </div>
       </div>
 
-      <!-- Tickets -->
-      <div data-tab-panel="tickets" class="hidden space-y-3">
+      <div class="grid grid-cols-1 gap-4 xl:grid-cols-3">
+        <div class="space-y-4 xl:col-span-2">
+
+          <!-- Landing page -->
+          <section class="rounded-2xl bg-surface p-4 lg:p-5">
+            <div class="flex items-center justify-between">
+              <h2 class="text-[16px] font-bold tracking-tight">Landing page</h2>
+              <span class="badge badge-green"><re-icon icon="check-circle" size="12"></re-icon>Published</span>
+            </div>
+            <div class="mt-4 flex flex-col gap-4 sm:flex-row">
+              <!-- template preview -->
+              <div class="w-full shrink-0 sm:w-52">
+                <div class="overflow-hidden rounded-xl bg-canvas p-2">
+                  <div class="flex items-center gap-1 px-1 py-1">
+                    <span class="h-1.5 w-1.5 rounded-full bg-black/15 dark:bg-white/20"></span><span class="h-1.5 w-1.5 rounded-full bg-black/15 dark:bg-white/20"></span><span class="h-1.5 w-1.5 rounded-full bg-black/15 dark:bg-white/20"></span>
+                  </div>
+                  <div class="overflow-hidden rounded-lg bg-white">
+                    <div class="h-8 bg-gradient-to-r from-brand to-emerald-400"></div>
+                    <div class="space-y-1.5 p-2.5">
+                      <div class="h-2 w-16 rounded bg-neutral-800"></div>
+                      <div class="grid grid-cols-3 gap-1"><span class="h-4 rounded bg-neutral-100"></span><span class="h-4 rounded bg-neutral-100"></span><span class="h-4 rounded bg-neutral-100"></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- details -->
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center gap-2">
+                  <p class="text-[14px] font-bold text-ink">Classic</p>
+                  <span class="rounded-full bg-brand-soft px-2 py-0.5 text-[10px] font-semibold text-brand">All-purpose</span>
+                </div>
+                <p class="mt-1 text-[12.5px] leading-snug text-muted">A clean, all-purpose event page — the title, date, venue, agenda, speakers and tickets fill in automatically.</p>
+                <div class="mt-3 flex items-center gap-2 rounded-lg bg-canvas px-3 py-2">
+                  <re-icon icon="link" size="14" class="shrink-0 text-muted"></re-icon>
+                  <span id="lp-url" class="min-w-0 flex-1 truncate text-[12px] text-muted">eventa.co/e/tech-summit-2026</span>
+                  <button id="lp-copy" class="shrink-0 text-[11px] font-semibold text-brand hover:underline">Copy</button>
+                </div>
+                <div class="mt-3 flex flex-wrap items-center gap-2">
+                  <a href="../landing/aurora.html?event=tech-summit-2026" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-[12.5px] font-semibold text-white transition hover:bg-brand-dark"><re-icon icon="eye" size="15"></re-icon>Preview</a>
+                  <a href="landing-pages.html" class="inline-flex items-center gap-1.5 rounded-lg bg-brand-soft px-3.5 py-2 text-[12.5px] font-semibold text-brand transition hover:brightness-95"><re-icon icon="layout" size="15"></re-icon>Change template</a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- About -->
+          <section class="rounded-2xl bg-surface p-4 lg:p-5">
+            <h2 class="text-[16px] font-bold tracking-tight">About this event</h2>
+            <p class="mt-2 text-[13px] leading-relaxed text-muted">Tech Summit 2026 brings together founders, engineers and product leaders from across Southeast Asia for two days of keynotes, hands-on workshops and a startup showcase — with plenty of networking over Thai coffee between sessions.</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="badge badge-green">Conference</span>
+              <span class="badge badge-gray">Public</span>
+              <span class="badge badge-gray">2 days</span>
+            </div>
+          </section>
+        </div>
+
+        <!-- details -->
+        <section class="rounded-2xl bg-surface p-4 lg:p-5 xl:col-span-1">
+          <h2 class="text-[16px] font-bold tracking-tight">Details</h2>
+          <div class="mt-3 space-y-3 text-[13px]">
+            <div class="flex items-start gap-2.5"><re-icon icon="calendar" size="16" class="mt-0.5 shrink-0 text-muted"></re-icon><div><p class="font-semibold text-ink">Jul 18–19, 2026</p><p class="text-[12px] text-muted">09:00 – 18:00 · GMT+7</p></div></div>
+            <div class="flex items-start gap-2.5 border-t border-line pt-3"><re-icon icon="pin" size="16" class="mt-0.5 shrink-0 text-muted"></re-icon><div><p class="font-semibold text-ink">BITEC</p><p class="text-[12px] text-muted">Bang Na, Bangkok</p></div></div>
+            <div class="flex items-start gap-2.5 border-t border-line pt-3"><re-icon icon="users" size="16" class="mt-0.5 shrink-0 text-muted"></re-icon><div><p class="font-semibold text-ink">312 registered</p><p class="text-[12px] text-muted">of 400 capacity</p></div></div>
+            <div class="flex items-start gap-2.5 border-t border-line pt-3"><re-icon icon="verified" size="16" class="mt-0.5 shrink-0 text-muted"></re-icon><div><p class="font-semibold text-ink">Eventa Co.</p><p class="text-[12px] text-muted">Organizer</p></div></div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ============ REGISTRATIONS ============ -->
+    <div data-pill-panel="tab:registrations" class="hidden">
+      <section class="rounded-2xl bg-surface p-4 lg:p-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <h2 class="text-[16px] font-bold tracking-tight">Registrations</h2>
+            <span class="rounded-full bg-brand-soft px-2 py-0.5 text-[11px] font-semibold text-brand">312 total</span>
+          </div>
+          <button class="inline-flex items-center gap-2 rounded-lg bg-canvas px-3 py-2 text-[13px] font-medium text-muted transition hover:text-ink">All statuses<re-icon icon="chevron-down" size="14"></re-icon></button>
+        </div>
+        <div class="mt-3 overflow-x-auto">
+          <table class="w-full min-w-[720px] text-left">
+            <thead>
+              <tr class="text-[10px] font-semibold uppercase tracking-wider text-muted">
+                <th class="pb-3 pr-3 font-semibold">Attendee</th>
+                <th class="pb-3 pr-3 font-semibold">Ticket</th>
+                <th class="pb-3 pr-3 font-semibold">Amount</th>
+                <th class="pb-3 pr-3 font-semibold">Registered</th>
+                <th class="pb-3 pr-3 font-semibold">Status</th>
+              </tr>
+            </thead>
+            <tbody id="reg-rows" class="text-[13px]"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============ ATTENDEES ============ -->
+    <div data-pill-panel="tab:attendees" class="hidden">
+      <section class="rounded-2xl bg-surface p-4 lg:p-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <h2 class="text-[16px] font-bold tracking-tight">Attendees</h2>
+            <span class="rounded-full bg-brand-soft px-2 py-0.5 text-[11px] font-semibold text-brand">296 confirmed</span>
+          </div>
+          <button class="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-dark"><re-icon icon="send" size="15"></re-icon><span class="hidden sm:inline">Email all</span></button>
+        </div>
+        <div class="mt-3 overflow-x-auto">
+          <table class="w-full min-w-[680px] text-left">
+            <thead>
+              <tr class="text-[10px] font-semibold uppercase tracking-wider text-muted">
+                <th class="pb-3 pr-3 font-semibold">Attendee</th>
+                <th class="pb-3 pr-3 font-semibold">Company</th>
+                <th class="pb-3 pr-3 font-semibold">Role</th>
+                <th class="pb-3 pr-3 font-semibold">Ticket</th>
+              </tr>
+            </thead>
+            <tbody id="att-rows" class="text-[13px]"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============ SPEAKERS ============ -->
+    <div data-pill-panel="tab:speakers" class="hidden">
+      <section class="rounded-2xl bg-surface p-4 lg:p-5">
         <div class="flex items-center justify-between">
-          <h2 class="text-[15px] font-bold tracking-tight">Ticket types</h2>
-          <button class="btn btn-primary" data-open="ticket-panel"><i class="hgi-stroke hgi-add-01 text-[14px]"></i>Add ticket</button>
+          <h2 class="text-[16px] font-bold tracking-tight">Speakers</h2>
+          <button class="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-dark"><re-icon icon="plus" size="15"></re-icon><span class="hidden sm:inline">Add speaker</span></button>
         </div>
-
-        <div class="card p-4">
-          <div class="flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-center gap-3">
-              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
-              <div><p class="text-[13px] font-semibold text-ink">General Admission</p><p class="text-[11px] text-muted">Standard entry to all sessions</p></div>
-            </div>
-            <div class="text-right">
-              <p class="text-[15px] font-bold tnum">฿890</p>
-              <p class="text-[11px] text-muted tnum">210 / 250 sold</p>
-            </div>
-          </div>
-          <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:84%"></div></div>
-        </div>
-
-        <div class="card p-4">
-          <div class="flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-center gap-3">
-              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-amber-50 text-amber-500 dark:bg-amber-400/15 dark:text-amber-300"><i class="hgi-stroke hgi-ticket-star text-[18px]"></i></span>
-              <div><p class="text-[13px] font-semibold text-ink">VIP</p><p class="text-[11px] text-muted">Front row seating + speaker meet &amp; greet</p></div>
-            </div>
-            <div class="text-right">
-              <p class="text-[15px] font-bold tnum">฿1,900</p>
-              <p class="text-[11px] text-muted tnum">62 / 100 sold</p>
-            </div>
-          </div>
-          <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-amber-400" style="width:62%"></div></div>
-        </div>
-
-        <div class="card p-4">
-          <div class="flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-center gap-3">
-              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-500 dark:bg-blue-500/15 dark:text-blue-300"><i class="hgi-stroke hgi-ticket-02 text-[18px]"></i></span>
-              <div><p class="text-[13px] font-semibold text-ink">Student</p><p class="text-[11px] text-muted">Valid student ID required at check-in</p></div>
-            </div>
-            <div class="text-right">
-              <p class="text-[15px] font-bold tnum">฿450</p>
-              <p class="text-[11px] text-muted tnum">40 / 50 sold</p>
-            </div>
-          </div>
-          <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-blue-400" style="width:80%"></div></div>
-        </div>
-      </div>
-
-      <!-- Registrations -->
-      <div data-tab-panel="registrations" class="hidden">
-        <section class="card p-4">
-          <div class="flex items-center justify-between">
-            <h2 class="text-[15px] font-bold tracking-tight">Recent registrations</h2>
-            <a href="registrations.html" class="text-[12px] font-semibold text-brand hover:underline">View all</a>
-          </div>
-          <div class="mt-2 overflow-x-auto">
-            <table class="data-table min-w-[640px]">
-              <thead>
-                <tr><th>Attendee</th><th>Ticket</th><th>Status</th><th class="text-right">Date</th></tr>
-              </thead>
-              <tbody class="text-[13px]">
-                <tr>
-                  <td><div class="flex items-center gap-2"><span class="avatar h-7 w-7 text-[10px]">AP</span><span class="font-medium text-ink">Anong P.</span></div></td>
-                  <td class="text-muted">General Admission</td>
-                  <td><span class="badge badge-green">Paid</span></td>
-                  <td class="text-right text-muted tnum">Jul 8, 2026</td>
-                </tr>
-                <tr>
-                  <td><div class="flex items-center gap-2"><span class="avatar h-7 w-7 text-[10px]">JW</span><span class="font-medium text-ink">James W.</span></div></td>
-                  <td class="text-muted">VIP</td>
-                  <td><span class="badge badge-green">Paid</span></td>
-                  <td class="text-right text-muted tnum">Jul 8, 2026</td>
-                </tr>
-                <tr>
-                  <td><div class="flex items-center gap-2"><span class="avatar h-7 w-7 text-[10px]">ST</span><span class="font-medium text-ink">Somchai T.</span></div></td>
-                  <td class="text-muted">General Admission</td>
-                  <td><span class="badge badge-green">Paid</span></td>
-                  <td class="text-right text-muted tnum">Jul 7, 2026</td>
-                </tr>
-                <tr>
-                  <td><div class="flex items-center gap-2"><span class="avatar h-7 w-7 text-[10px]">ML</span><span class="font-medium text-ink">Mei L.</span></div></td>
-                  <td class="text-muted">Student</td>
-                  <td><span class="badge badge-amber">Pending</span></td>
-                  <td class="text-right text-muted tnum">Jul 7, 2026</td>
-                </tr>
-                <tr>
-                  <td><div class="flex items-center gap-2"><span class="avatar h-7 w-7 text-[10px]">PS</span><span class="font-medium text-ink">Ploy S.</span></div></td>
-                  <td class="text-muted">VIP</td>
-                  <td><span class="badge badge-green">Paid</span></td>
-                  <td class="text-right text-muted tnum">Jul 6, 2026</td>
-                </tr>
-                <tr>
-                  <td><div class="flex items-center gap-2"><span class="avatar h-7 w-7 text-[10px]">DK</span><span class="font-medium text-ink">David K.</span></div></td>
-                  <td class="text-muted">General Admission</td>
-                  <td><span class="badge badge-gray">Refunded</span></td>
-                  <td class="text-right text-muted tnum">Jul 5, 2026</td>
-                </tr>
-                <tr>
-                  <td><div class="flex items-center gap-2"><span class="avatar h-7 w-7 text-[10px]">NW</span><span class="font-medium text-ink">Nattakan W.</span></div></td>
-                  <td class="text-muted">Student</td>
-                  <td><span class="badge badge-green">Paid</span></td>
-                  <td class="text-right text-muted tnum">Jul 5, 2026</td>
-                </tr>
-                <tr>
-                  <td><div class="flex items-center gap-2"><span class="avatar h-7 w-7 text-[10px]">BC</span><span class="font-medium text-ink">Ben Carter</span></div></td>
-                  <td class="text-muted">General Admission</td>
-                  <td><span class="badge badge-green">Paid</span></td>
-                  <td class="text-right text-muted tnum">Jul 4, 2026</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-
-      <!-- Settings -->
-      <div data-tab-panel="settings" class="hidden space-y-3">
-        <section class="card p-4">
-          <div class="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <h2 class="text-[15px] font-bold tracking-tight">Publish status</h2>
-              <p class="mt-0.5 text-[12px] text-muted">This event is live and visible on the public registration page.</p>
-            </div>
-            <button class="btn btn-ghost">Unpublish</button>
-          </div>
-        </section>
-        <section class="card p-4">
-          <div class="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <h2 class="text-[15px] font-bold tracking-tight">Duplicate event</h2>
-              <p class="mt-0.5 text-[12px] text-muted">Create a copy of this event, including tickets and schedule.</p>
-            </div>
-            <button class="btn btn-ghost"><i class="hgi-stroke hgi-copy-01 text-[14px]"></i>Duplicate</button>
-          </div>
-        </section>
-        <section class="card border-red-200 p-4 dark:border-red-500/25">
-          <h2 class="text-[15px] font-bold tracking-tight text-red-600 dark:text-red-400">Danger zone</h2>
-          <div class="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-red-100 pt-3 dark:border-red-500/15">
-            <div>
-              <p class="text-[13px] font-semibold text-ink">Cancel event</p>
-              <p class="text-[11px] text-muted">Notify all registrants by email and offer a full refund.</p>
-            </div>
-            <button class="btn btn-ghost" data-open="cancel-modal">Cancel event</button>
-          </div>
-          <div class="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-red-100 pt-3 dark:border-red-500/15">
-            <div>
-              <p class="text-[13px] font-semibold text-ink">Delete event</p>
-              <p class="text-[11px] text-muted">Permanently remove this event and all of its data.</p>
-            </div>
-            <button class="btn btn-danger" data-open="delete-modal">Delete event</button>
-          </div>
-        </section>
-      </div>
-
+        <div id="spk-grid" class="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3"></div>
+      </section>
     </div>
 
-    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+    <!-- ============ AGENDA ============ -->
+    <div data-pill-panel="tab:agenda" class="hidden">
+      <section class="rounded-2xl bg-surface p-4 lg:p-5">
+        <div class="flex items-center justify-between gap-2">
+          <h2 class="text-[16px] font-bold tracking-tight">Agenda</h2>
+          <div class="flex items-center gap-3">
+            <a href="agenda.html" class="hidden text-[12px] font-semibold text-brand hover:underline sm:inline">Manage agenda</a>
+            <button class="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-dark" data-open="session-panel"><re-icon icon="plus" size="15"></re-icon><span class="hidden sm:inline">Add session</span><span class="sm:hidden">Add</span></button>
+          </div>
+        </div>
+        <div id="agenda-list" class="mt-4 space-y-5"></div>
+      </section>
+    </div>
+
+    <!-- ============ TICKETS ============ -->
+    <div data-pill-panel="tab:tickets" class="hidden">
+      <section class="rounded-2xl bg-surface p-4 lg:p-5">
+        <div class="flex items-center justify-between gap-3">
+          <h2 class="text-[16px] font-bold tracking-tight">Ticket types</h2>
+          <div class="flex items-center gap-3">
+            <a href="tickets.html" class="hidden text-[12px] font-semibold text-brand hover:underline sm:inline">Manage tickets</a>
+            <button type="button" data-open="ticket-panel" class="inline-flex items-center gap-1.5 rounded-lg bg-brand-soft px-3 py-2 text-[13px] font-semibold text-brand transition hover:brightness-95"><re-icon icon="plus" size="15"></re-icon>Add ticket</button>
+          </div>
+        </div>
+        <div id="tkt-grid" class="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4"></div>
+      </section>
+    </div>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; reicon</p>
   </main>
-
-  <!-- Add ticket panel -->
-  <aside class="panel" id="ticket-panel">
-    <header class="flex items-center justify-between border-b border-hair p-4">
-      <h3 class="text-[15px] font-bold tracking-tight">Add ticket type</h3>
-      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
-    </header>
-    <div class="flex-1 space-y-4 overflow-y-auto p-4">
-      <div><label class="label">Ticket name</label><input class="input" placeholder="e.g. Early Bird" /></div>
-      <div class="grid grid-cols-2 gap-3">
-        <div><label class="label">Price (฿)</label><input class="input" type="number" placeholder="890" /></div>
-        <div><label class="label">Quantity</label><input class="input" type="number" placeholder="100" /></div>
-      </div>
-      <div><label class="label">Description</label><textarea class="textarea" placeholder="What's included with this ticket..."></textarea></div>
-      <div>
-        <label class="label">Sales window</label>
-        <div class="grid grid-cols-2 gap-3"><input class="input" type="date" /><input class="input" type="date" /></div>
-        <p class="hint">Leave the end date blank to sell until the event starts.</p>
-      </div>
-    </div>
-    <footer class="flex gap-2 border-t border-hair p-4">
-      <button class="btn btn-ghost flex-1" data-close>Cancel</button>
-      <button class="btn btn-primary flex-1" data-close>Save ticket</button>
-    </footer>
-  </aside>
-
-  <!-- Cancel event modal -->
-  <div class="modal" id="cancel-modal">
-    <div class="p-5">
-      <div class="grid h-10 w-10 place-items-center rounded-full bg-amber-50 text-amber-500 dark:bg-amber-400/15 dark:text-amber-300"><i class="hgi-stroke hgi-alert-01 text-[18px]"></i></div>
-      <h3 class="mt-3 text-[15px] font-bold tracking-tight">Cancel this event?</h3>
-      <p class="mt-1 text-[13px] text-muted">All 312 registrants will be notified by email and offered a full refund. This can't be undone.</p>
-      <div class="mt-4 flex gap-2">
-        <button class="btn btn-ghost flex-1" data-close>Keep event</button>
-        <button class="btn btn-danger flex-1" data-close>Cancel event</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Delete event modal -->
-  <div class="modal" id="delete-modal">
-    <div class="p-5">
-      <div class="grid h-10 w-10 place-items-center rounded-full bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300"><i class="hgi-stroke hgi-delete-02 text-[18px]"></i></div>
-      <h3 class="mt-3 text-[15px] font-bold tracking-tight">Delete "Tech Summit 2026"?</h3>
-      <p class="mt-1 text-[13px] text-muted">This permanently deletes the event, its tickets, and all registration records. This can't be undone.</p>
-      <div class="mt-4 flex gap-2">
-        <button class="btn btn-ghost flex-1" data-close>Cancel</button>
-        <button class="btn btn-danger flex-1" data-close>Delete event</button>
-      </div>
-    </div>
-  </div>
 </div>
 
-<script src="../assets/shell.js"></script>
+<!-- Add session panel -->
+<aside class="panel" id="session-panel">
+  <header class="flex items-center justify-between border-b border-hair p-4">
+    <h3 class="text-[15px] font-bold tracking-tight">Add session</h3>
+    <button class="btn-icon" data-close><re-icon icon="x" size="18"></re-icon></button>
+  </header>
+  <div class="flex-1 space-y-4 overflow-y-auto p-4">
+    <div>
+      <label class="label">Session title</label>
+      <input id="sess-title" type="text" class="input" placeholder="e.g. Opening Keynote" />
+    </div>
+    <div>
+      <label class="label">Day</label>
+      <select id="sess-day" class="select">
+        <option value="0">Day 1 · Sat, Jul 18</option>
+        <option value="1">Day 2 · Sun, Jul 19</option>
+      </select>
+    </div>
+    <div class="grid grid-cols-2 gap-3">
+      <div><label class="label">Start time</label><input id="sess-time" type="time" class="input" value="09:00" /></div>
+      <div><label class="label">Duration (min)</label><input id="sess-dur" type="number" min="5" step="5" class="input" value="45" /></div>
+    </div>
+    <div>
+      <label class="label">Type</label>
+      <select id="sess-type" class="select">
+        <option>Keynote</option>
+        <option>Talk</option>
+        <option>Workshop</option>
+        <option>Panel</option>
+        <option>Break</option>
+      </select>
+    </div>
+    <div>
+      <label class="label">Speaker</label>
+      <input id="sess-who" type="text" class="input" placeholder="e.g. Dr. Anna Wong" />
+    </div>
+    <div>
+      <label class="label">Room</label>
+      <select id="sess-room" class="select">
+        <option>Hall A</option>
+        <option>Hall B</option>
+        <option>Foyer</option>
+      </select>
+    </div>
+  </div>
+  <footer class="flex gap-2 border-t border-hair p-4">
+    <button class="btn btn-soft flex-1" data-close>Cancel</button>
+    <button id="sess-add-btn" class="btn btn-primary flex-1" data-close><re-icon icon="plus" size="15"></re-icon>Add session</button>
+  </footer>
+</aside>
+
+<!-- Add ticket panel -->
+<aside class="panel" id="ticket-panel">
+  <header class="flex items-center justify-between border-b border-hair p-4">
+    <h3 class="text-[15px] font-bold tracking-tight">Add ticket</h3>
+    <button class="btn-icon" data-close><re-icon icon="x" size="18"></re-icon></button>
+  </header>
+  <div class="flex-1 space-y-4 overflow-y-auto p-4">
+    <div>
+      <label class="label">Ticket name</label>
+      <input id="tkt-name" type="text" class="input" placeholder="e.g. Early Bird" />
+    </div>
+    <div class="grid grid-cols-2 gap-3">
+      <div><label class="label">Price (฿)</label><input id="tkt-price" type="number" min="0" step="50" class="input" placeholder="1250" /></div>
+      <div><label class="label">Quantity</label><input id="tkt-qty" type="number" min="1" step="1" class="input" placeholder="200" /></div>
+    </div>
+    <div>
+      <label class="label">Description <span class="font-normal text-muted">(optional)</span></label>
+      <textarea id="tkt-desc" class="textarea" placeholder="What's included with this ticket…"></textarea>
+    </div>
+    <label class="flex cursor-pointer items-center gap-2.5 rounded-lg bg-canvas p-3">
+      <input id="tkt-featured" type="checkbox" class="h-4 w-4 accent-[#1ba770]" />
+      <span class="text-[13px] font-medium text-ink">Mark as “Popular”</span>
+    </label>
+  </div>
+  <footer class="flex gap-2 border-t border-hair p-4">
+    <button class="btn btn-soft flex-1" data-close>Cancel</button>
+    <button id="tkt-add-btn" class="btn btn-primary flex-1" data-close><re-icon icon="plus" size="15"></re-icon>Add ticket</button>
+  </footer>
+</aside>
+
+<script src="../assets/shell.js?v=31"></script>
+<script>
+  /* ---------- pill tabs ---------- */
+  document.querySelectorAll('[data-pill-group]').forEach(group => {
+    const name = group.dataset.pillGroup;
+    group.addEventListener('click', e => {
+      const b = e.target.closest('[data-pill]'); if (!b) return;
+      group.querySelectorAll('[data-pill]').forEach(x => {
+        const on = x === b;
+        x.classList.toggle('bg-brand-soft', on);
+        x.classList.toggle('text-brand', on);
+        x.classList.toggle('text-muted', !on);
+      });
+      document.querySelectorAll(`[data-pill-panel^="${name}:"]`).forEach(p => {
+        p.classList.toggle('hidden', p.dataset.pillPanel !== `${name}:${b.dataset.pill}`);
+      });
+    });
+  });
+
+  /* ---------- shared helpers ---------- */
+  const TONE = {
+    brand:  'bg-brand-soft text-brand-dark dark:text-brand',
+    blue:   'bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',
+    pink:   'bg-pink-100 text-pink-700 dark:bg-pink-500/15 dark:text-pink-300',
+    amber:  'bg-amber-100 text-amber-700 dark:bg-amber-400/15 dark:text-amber-300',
+    violet: 'bg-violet-100 text-violet-700 dark:bg-violet-500/15 dark:text-violet-300',
+  };
+  const avatar = (initials, tone, size = 'h-9 w-9') => `<span class="grid ${size} shrink-0 place-items-center rounded-full text-[11px] font-semibold ${TONE[tone]}">${initials}</span>`;
+
+  /* ---------- Registrations ---------- */
+  const REGSTATUS = {
+    Paid:     'bg-brand-soft text-brand-dark dark:text-brand',
+    Pending:  'bg-amber-50 text-amber-600 dark:bg-amber-400/15 dark:text-amber-300',
+    Refunded: 'bg-gray-100 text-gray-500 dark:bg-white/10 dark:text-gray-300',
+  };
+  const registrations = [
+    { name:'Anong Pattana',    email:'anong.p@email.com',   ticket:'VIP',        amount:'฿3,500', date:'Jul 2, 10:24', status:'Paid',     initials:'AP', tone:'brand'  },
+    { name:'Somchai Thongchai',email:'somchai.t@email.com', ticket:'Standard',   amount:'฿1,900', date:'Jul 2, 10:02', status:'Paid',     initials:'ST', tone:'blue'   },
+    { name:'Ploy Srisai',      email:'ploy.s@email.com',    ticket:'Early Bird', amount:'฿1,250', date:'Jul 1, 09:47', status:'Paid',     initials:'PS', tone:'pink'   },
+    { name:'James Wong',       email:'james.w@email.com',   ticket:'Early Bird', amount:'฿1,250', date:'Jul 1, 09:31', status:'Paid',     initials:'JW', tone:'amber'  },
+    { name:'Nadia Rahman',     email:'nadia.r@email.com',   ticket:'Standard',   amount:'฿1,900', date:'Jun 30, 16:12',status:'Pending',  initials:'NR', tone:'violet' },
+    { name:'David Chen',       email:'david.c@email.com',   ticket:'VIP',        amount:'฿3,500', date:'Jun 30, 14:05',status:'Paid',     initials:'DC', tone:'brand'  },
+    { name:'Mia Thompson',     email:'mia.t@email.com',     ticket:'Student',    amount:'฿650',   date:'Jun 29, 11:20',status:'Refunded', initials:'MT', tone:'blue'   },
+    { name:'Raj Patel',        email:'raj.p@email.com',     ticket:'Standard',   amount:'฿1,900', date:'Jun 28, 18:44',status:'Paid',     initials:'RP', tone:'pink'   },
+  ];
+  document.getElementById('reg-rows').innerHTML = registrations.map(r => `
+    <tr class="border-t border-line transition hover:bg-line/50">
+      <td class="py-2.5 pr-3"><div class="flex items-center gap-2.5">${avatar(r.initials, r.tone)}<div class="min-w-0"><p class="truncate text-[13px] font-semibold text-ink">${r.name}</p><p class="truncate text-[11px] text-muted">${r.email}</p></div></div></td>
+      <td class="py-2.5 pr-3 text-[13px] text-muted">${r.ticket}</td>
+      <td class="py-2.5 pr-3 text-[13px] font-semibold text-ink tnum">${r.amount}</td>
+      <td class="py-2.5 pr-3 text-[13px] text-muted tnum">${r.date}</td>
+      <td class="py-2.5 pr-3"><span class="rounded-full px-2.5 py-1 text-[11px] font-medium ${REGSTATUS[r.status]}">${r.status}</span></td>
+    </tr>`).join('');
+
+  /* ---------- Attendees ---------- */
+  const attendees = [
+    { name:'Anong Pattana',    email:'anong.p@email.com',   company:'Nimbus AI',    role:'Head of AI',      ticket:'VIP',        initials:'AP', tone:'brand'  },
+    { name:'Somchai Thongchai',email:'somchai.t@email.com', company:'Fintech Labs', role:'Engineer',        ticket:'Standard',   initials:'ST', tone:'blue'   },
+    { name:'Ploy Srisai',      email:'ploy.s@email.com',    company:'Skylark',      role:'Product Manager', ticket:'Early Bird', initials:'PS', tone:'pink'   },
+    { name:'James Wong',       email:'james.w@email.com',   company:'DevHouse',     role:'Founder',         ticket:'Early Bird', initials:'JW', tone:'amber'  },
+    { name:'David Chen',       email:'david.c@email.com',   company:'Canvas',       role:'Design Lead',     ticket:'VIP',        initials:'DC', tone:'brand'  },
+    { name:'Raj Patel',        email:'raj.p@email.com',     company:'Nomad',        role:'Data Scientist',  ticket:'Standard',   initials:'RP', tone:'pink'   },
+    { name:'Grace Bennett',    email:'grace.b@email.com',   company:'Golden Co',    role:'Marketing',       ticket:'Student',    initials:'GB', tone:'violet' },
+    { name:'Oliver Scott',     email:'oliver.s@email.com',  company:'Memoria',      role:'Developer',       ticket:'Standard',   initials:'OS', tone:'amber'  },
+  ];
+  document.getElementById('att-rows').innerHTML = attendees.map(a => `
+    <tr class="border-t border-line transition hover:bg-line/50">
+      <td class="py-2.5 pr-3"><div class="flex items-center gap-2.5">${avatar(a.initials, a.tone)}<div class="min-w-0"><p class="truncate text-[13px] font-semibold text-ink">${a.name}</p><p class="truncate text-[11px] text-muted">${a.email}</p></div></div></td>
+      <td class="py-2.5 pr-3 text-[13px] font-medium text-ink">${a.company}</td>
+      <td class="py-2.5 pr-3 text-[13px] text-muted">${a.role}</td>
+      <td class="py-2.5 pr-3"><span class="rounded-full bg-canvas px-2.5 py-1 text-[11px] font-medium text-muted">${a.ticket}</span></td>
+    </tr>`).join('');
+
+  /* ---------- Speakers ---------- */
+  const speakers = [
+    { name:'Dr. Anna Wong', role:'Head of AI, Nimbus',      talk:'The State of AI in Southeast Asia', tag:'Keynote',  initials:'AW', tone:'brand'  },
+    { name:'Raj Patel',     role:'CTO, Fintech Labs',       talk:'Scaling Payments to Millions',      tag:'Track A',  initials:'RP', tone:'blue'   },
+    { name:'Mei Lin',       role:'VP Product, Skylark',     talk:'Product-led Growth in APAC',        tag:'Track B',  initials:'ML', tone:'pink'   },
+    { name:'Tom Becker',    role:'Founder, DevHouse',       talk:'Building Developer Communities',    tag:'Track A',  initials:'TB', tone:'amber'  },
+    { name:'Priya Sharma',  role:'Design Lead, Canvas',     talk:'Design Systems at Scale',           tag:'Track B',  initials:'PS', tone:'violet' },
+    { name:'Ken Tanaka',    role:'Data Scientist, Nomad',   talk:'Machine Learning in Production',    tag:'Workshop', initials:'KT', tone:'brand'  },
+  ];
+  document.getElementById('spk-grid').innerHTML = speakers.map(s => `
+    <div class="rounded-2xl bg-canvas p-4">
+      <div class="flex items-center gap-3">
+        ${avatar(s.initials, s.tone, 'h-11 w-11')}
+        <div class="min-w-0"><p class="truncate text-[14px] font-bold text-ink">${s.name}</p><p class="truncate text-[12px] text-muted">${s.role}</p></div>
+      </div>
+      <p class="mt-3 flex items-start gap-1.5 text-[12.5px] font-medium text-ink"><re-icon icon="mic" size="14" class="mt-0.5 shrink-0 text-brand"></re-icon>${s.talk}</p>
+      <span class="mt-3 inline-block rounded-full bg-brand-soft px-2 py-0.5 text-[10px] font-semibold text-brand">${s.tag}</span>
+    </div>`).join('');
+
+  /* ---------- Agenda (add / remove sessions) ---------- */
+  const SESSION_TONE = { Keynote:'brand', Talk:'blue', Workshop:'violet', Panel:'amber', Break:'brand' };
+  const agenda = [
+    { day:'Day 1 · Sat, Jul 18', sessions:[
+      { time:'09:00', dur:'45m', title:'Opening Keynote: Building Tomorrow', type:'Keynote',  who:'Dr. Anna Wong', room:'Hall A' },
+      { time:'10:00', dur:'45m', title:'Scaling Payments to Millions',       type:'Talk',     who:'Raj Patel',     room:'Hall A' },
+      { time:'11:00', dur:'75m', title:'Design Systems at Scale',            type:'Workshop', who:'Priya Sharma',  room:'Hall B' },
+      { time:'13:00', dur:'45m', title:'The Future of Hybrid Events in SEA', type:'Panel',    who:'Mei Lin +2',    room:'Hall A' },
+    ]},
+    { day:'Day 2 · Sun, Jul 19', sessions:[
+      { time:'09:30', dur:'45m', title:'Product-led Growth in APAC',         type:'Keynote',  who:'Mei Lin',       room:'Hall A' },
+      { time:'10:30', dur:'45m', title:'Machine Learning in Production',     type:'Talk',     who:'Ken Tanaka',    room:'Hall A' },
+      { time:'11:30', dur:'60m', title:'Building Developer Communities',     type:'Workshop', who:'Tom Becker',    room:'Hall B' },
+      { time:'13:00', dur:'30m', title:'Closing Remarks & Thank You',        type:'Talk',     who:'Dr. Anna Wong', room:'Hall A' },
+    ]},
+  ];
+  const agList = document.getElementById('agenda-list');
+  function renderAgenda() {
+    agList.innerHTML = agenda.map((d, di) => `
+      <div>
+        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted">${d.day}</p>
+        <div class="space-y-2">
+          ${d.sessions.length ? d.sessions.map((s, si) => `
+            <div class="flex gap-3 rounded-xl bg-canvas p-3">
+              <div class="w-12 shrink-0 text-right"><p class="text-[13px] font-bold text-ink tnum">${s.time}</p><p class="text-[10px] text-muted">${s.dur}</p></div>
+              <div class="flex min-w-0 flex-1 items-start justify-between gap-2 border-l border-hair pl-3">
+                <div class="min-w-0">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="rounded-full px-2 py-0.5 text-[10px] font-semibold ${TONE[SESSION_TONE[s.type] || 'brand']}">${s.type}</span>
+                    <p class="text-[13px] font-semibold text-ink">${s.title}</p>
+                  </div>
+                  <p class="mt-1 flex items-center gap-1.5 text-[11px] text-muted"><re-icon icon="mic" size="12"></re-icon>${s.who} · ${s.room}</p>
+                </div>
+                <button data-del-session data-d="${di}" data-s="${si}" class="grid h-7 w-7 shrink-0 place-items-center rounded-lg text-muted transition hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-500/15" title="Remove session"><re-icon icon="trash" size="14"></re-icon></button>
+              </div>
+            </div>`).join('') : '<p class="rounded-xl bg-canvas px-3 py-5 text-center text-[12px] text-muted">No sessions on this day.</p>'}
+        </div>
+      </div>`).join('');
+  }
+  renderAgenda();
+
+  // remove a session
+  agList.addEventListener('click', e => {
+    const btn = e.target.closest('[data-del-session]'); if (!btn) return;
+    agenda[+btn.dataset.d].sessions.splice(+btn.dataset.s, 1);
+    renderAgenda();
+  });
+
+  // add a session (from the slide-over)
+  const sessAddBtn = document.getElementById('sess-add-btn');
+  if (sessAddBtn) sessAddBtn.addEventListener('click', () => {
+    const di = +document.getElementById('sess-day').value;
+    agenda[di].sessions.push({
+      time: document.getElementById('sess-time').value || '09:00',
+      dur:  (document.getElementById('sess-dur').value || '45') + 'm',
+      title: document.getElementById('sess-title').value.trim() || 'Untitled session',
+      type: document.getElementById('sess-type').value,
+      who:  document.getElementById('sess-who').value.trim() || 'TBA',
+      room: document.getElementById('sess-room').value,
+    });
+    agenda[di].sessions.sort((a, b) => a.time.localeCompare(b.time));
+    renderAgenda();
+    document.getElementById('sess-title').value = '';
+    document.getElementById('sess-who').value = '';
+  });
+
+  /* ---------- Tickets ---------- */
+  const tickets = [
+    { name:'Early Bird', price:'฿1,250', sold:180, total:200, revenue:'฿225k',   featured:false },
+    { name:'Standard',   price:'฿1,900', sold:95,  total:150, revenue:'฿180.5k', featured:true  },
+    { name:'VIP',        price:'฿3,500', sold:28,  total:40,  revenue:'฿98k',    featured:false },
+    { name:'Student',    price:'฿650',   sold:9,   total:60,  revenue:'฿5.9k',   featured:false },
+  ];
+  const tktGrid = document.getElementById('tkt-grid');
+  function renderTickets() {
+    if (!tickets.length) {
+      tktGrid.innerHTML = '<div class="col-span-full rounded-2xl bg-canvas px-4 py-10 text-center text-[13px] text-muted">No ticket types yet — click “Add ticket” to create one.</div>';
+      return;
+    }
+    tktGrid.innerHTML = tickets.map((t, i) => {
+      const pct = t.total ? Math.round(t.sold / t.total * 100) : 0;
+      return `
+      <div class="rounded-2xl ${t.featured ? 'bg-brand-soft' : 'bg-canvas'} p-4">
+        <div class="flex items-start justify-between gap-2">
+          <p class="text-[13px] font-bold text-ink">${t.name}</p>
+          <div class="flex items-center gap-1">
+            ${t.featured ? '<span class="rounded-full bg-brand px-2 py-0.5 text-[10px] font-semibold text-white">Popular</span>' : ''}
+            <button data-del-ticket data-i="${i}" class="grid h-6 w-6 shrink-0 place-items-center rounded-md text-muted transition hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-500/15" title="Remove ticket"><re-icon icon="trash" size="13"></re-icon></button>
+          </div>
+        </div>
+        <p class="mt-1 text-[20px] font-extrabold tracking-tight text-ink tnum">${t.price}</p>
+        <div class="mt-3">
+          <div class="flex items-center justify-between text-[11px]"><span class="text-muted tnum">${t.sold}/${t.total} sold</span><span class="font-semibold text-ink tnum">${pct}%</span></div>
+          <div class="mt-1 h-1.5 overflow-hidden rounded-full bg-white/70 dark:bg-white/10"><div class="h-full rounded-full bg-brand" style="width:${pct}%"></div></div>
+        </div>
+        <p class="mt-3 border-t ${t.featured ? 'border-black/5 dark:border-white/10' : 'border-line'} pt-2.5 text-[12px] text-muted">Revenue <span class="font-semibold text-ink tnum">${t.revenue}</span></p>
+      </div>`;
+    }).join('');
+  }
+  renderTickets();
+
+  // remove a ticket
+  tktGrid.addEventListener('click', e => {
+    const btn = e.target.closest('[data-del-ticket]'); if (!btn) return;
+    tickets.splice(+btn.dataset.i, 1);
+    renderTickets();
+  });
+
+  // add a ticket (from the slide-over form)
+  const tktAddBtn = document.getElementById('tkt-add-btn');
+  if (tktAddBtn) tktAddBtn.addEventListener('click', () => {
+    const priceNum = parseInt(document.getElementById('tkt-price').value, 10);
+    const qty = parseInt(document.getElementById('tkt-qty').value, 10);
+    tickets.push({
+      name:     document.getElementById('tkt-name').value.trim() || 'New Ticket',
+      price:    '฿' + (isNaN(priceNum) ? 0 : priceNum).toLocaleString('en-US'),
+      sold:     0,
+      total:    isNaN(qty) ? 0 : qty,
+      revenue:  '฿0',
+      featured: document.getElementById('tkt-featured').checked,
+    });
+    renderTickets();
+    ['tkt-name', 'tkt-price', 'tkt-qty', 'tkt-desc'].forEach(id => { document.getElementById(id).value = ''; });
+    document.getElementById('tkt-featured').checked = false;
+  });
+
+  /* ---------- Overview: copy the landing-page link ---------- */
+  const lpCopy = document.getElementById('lp-copy');
+  if (lpCopy) lpCopy.addEventListener('click', async () => {
+    const url = 'https://' + (document.getElementById('lp-url')?.textContent.trim() || '');
+    try { await navigator.clipboard.writeText(url); } catch (e) {}
+    lpCopy.textContent = 'Copied';
+    setTimeout(() => { lpCopy.textContent = 'Copy'; }, 1500);
+  });
+</script>
 </body>
 </html>

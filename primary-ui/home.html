@@ -67,10 +67,10 @@
   <div id="backdrop" class="fixed inset-0 z-40 hidden bg-black/40 lg:hidden"></div>
 
   <!-- ============ ICON RAIL (MAIN NAV) — home has no sub-nav panel ============ -->
-  <div id="sidenav" class="fixed inset-y-0 left-0 z-50 flex -translate-x-full transition-transform duration-300 lg:static lg:translate-x-0">
+  <div id="sidenav" class="fixed inset-y-0 left-0 z-50 flex -translate-x-full transition-transform duration-300 lg:static lg:translate-x-0 dark:border-r dark:border-hair">
     <aside id="rail" class="relative z-30 flex w-16 shrink-0 flex-col items-center bg-[#0e0f12] py-4">
       <div class="group relative flex justify-center">
-        <a href="#" class="grid h-9 w-9 place-items-center rounded-full border border-brand/70 text-brand"><re-icon icon="ticket-star2" size="18" weight="filled"></re-icon></a>
+        <a href="#" class="grid h-9 w-9 place-items-center rounded-full border border-brand/70 text-brand"><re-icon icon="flame" size="18"></re-icon></a>
         <span class="rail-tip">Eventa</span>
       </div>
 
@@ -91,136 +91,294 @@
           <a href="dashboard.html#finance" class="grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand"><re-icon icon="wallet" size="18"></re-icon></a>
           <span class="rail-tip">Finance</span>
         </div>
-      </nav>
-
-      <div class="mt-auto flex flex-col items-center gap-1.5 pt-4">
         <div class="group relative flex justify-center">
           <a href="dashboard.html#management" class="grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand"><re-icon icon="settings" size="18"></re-icon></a>
           <span class="rail-tip">Management</span>
         </div>
+      </nav>
+
+      <div class="mt-auto flex flex-col items-center gap-2 pt-4">
         <div class="group relative flex justify-center">
           <button id="rail-theme" class="grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand"><re-icon icon="moon" size="20"></re-icon></button>
-          <span class="rail-tip">Theme</span>
+          <span class="rail-tip">Change mode</span>
         </div>
-        <div class="group relative flex justify-center">
-          <a href="../auth/login.html" class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[11px] font-semibold text-white">HN</a>
-          <span class="rail-tip">Harper Nelson</span>
+        <div class="group relative mt-1 flex justify-center">
+          <span class="grid h-9 w-9 place-items-center rounded-[11px] bg-brand text-white shadow-sm"><re-icon icon="flame" size="18"></re-icon></span>
+          <span class="rail-tip">Eventa for Business · v1.0.0.0</span>
         </div>
       </div>
     </aside>
   </div>
 
   <!-- ============ MAIN ============ -->
-  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-5 lg:px-8 lg:py-6">
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
 
     <!-- top bar -->
-    <header class="mb-7 flex items-center gap-3">
-      <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><re-icon icon="menu" size="18"></re-icon></button>
-      <div class="ml-auto flex items-center gap-2.5">
-        <span class="hidden rounded-full border border-hair px-3 py-1.5 text-[12px] font-medium text-muted sm:inline-flex">Trial: 14 days left</span>
-        <span class="hidden items-center gap-1.5 rounded-full border border-hair px-3 py-1.5 text-[12px] font-medium text-muted sm:inline-flex"><re-icon icon="location-2" size="14"></re-icon>Bangkok</span>
-        <button class="flex items-center gap-2 rounded-full border border-hair py-1 pl-1 pr-2.5 transition hover:bg-line" title="Account">
-          <span class="grid h-7 w-7 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[11px] font-semibold text-white">HN</span>
-          <span class="hidden text-[13px] font-semibold text-ink sm:inline">Harper Nelson</span>
-          <re-icon icon="chevron-down" size="15" class="text-muted"></re-icon>
-        </button>
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><re-icon icon="menu" size="18"></re-icon></button>
+      <div class="relative w-full max-w-sm">
+        <re-icon icon="search" size="16" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></re-icon>
+        <input class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search events, tasks, attendees…" />
+      </div>
+      <a href="../admin/event-form.html" class="ml-auto inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2.5 text-[13px] font-semibold text-white transition hover:bg-brand-dark"><re-icon icon="calendar-add" size="16"></re-icon><span class="hidden sm:inline">New event</span></a>
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <re-icon icon="bell" size="18"></re-icon>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Harper Nelson</p>
+          <p class="text-[11px] text-muted">Event Manager</p>
+        </div>
       </div>
     </header>
 
-    <!-- hero + stats -->
-    <div class="grid gap-5 lg:grid-cols-2 lg:items-center">
-      <div>
-        <h1 class="text-[30px] font-bold tracking-tight sm:text-[36px]">Hi! <span class="align-middle">👋</span></h1>
-        <p class="mt-1 text-[24px] font-semibold tracking-tight text-muted sm:text-[28px]">Welcome back to Eventa.</p>
-      </div>
+    <!-- Row 1: Tasks · Meetings · Projects -->
+    <div class="grid gap-4 lg:grid-cols-3">
 
-      <div class="rounded-2xl bg-gradient-to-br from-brand to-emerald-700 p-5 text-white shadow-pop sm:p-6">
-        <div class="grid grid-cols-3 gap-2 divide-x divide-white/20">
-          <div class="pr-3 sm:pr-4">
-            <p class="text-[26px] font-extrabold tracking-tight tnum sm:text-[30px]">1,500</p>
-            <p class="mt-1.5 flex items-center gap-1.5 text-[12px] font-medium text-white/85"><re-icon icon="calendar" size="15"></re-icon>Total registrations</p>
+      <!-- Today's Registrations -->
+      <section class="rounded-2xl bg-surface p-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <h2 class="text-[15px] font-bold tracking-tight">Today's Registrations</h2>
+            <span class="grid h-5 min-w-[20px] place-items-center rounded-full bg-brand-soft px-1.5 text-[11px] font-semibold text-brand-dark dark:text-brand">48</span>
           </div>
-          <div class="px-3 sm:px-4">
-            <p class="text-[26px] font-extrabold tracking-tight tnum sm:text-[30px]">฿751,912</p>
-            <p class="mt-1.5 flex items-center gap-1.5 text-[12px] font-medium text-white/85"><re-icon icon="chart-bar" size="15"></re-icon>Total revenue</p>
+          <a href="../admin/registrations.html" class="text-[12px] font-semibold text-brand hover:underline">See all</a>
+        </div>
+        <div class="mt-3.5 space-y-3.5">
+          <div class="flex items-center gap-2.5">
+            <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand-soft text-[11px] font-semibold text-brand-dark dark:text-brand">AP</span>
+            <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">Anong Pattana</p><p class="truncate text-[12px] text-muted">Tech Summit 2026 · VIP</p></div>
+            <span class="shrink-0 text-[11px] text-muted tnum">10:24</span>
           </div>
-          <div class="pl-3 sm:pl-4">
-            <p class="text-[26px] font-extrabold tracking-tight tnum sm:text-[30px]">121</p>
-            <p class="mt-1.5 flex items-center gap-1.5 text-[12px] font-medium text-white/85"><re-icon icon="face-smile" size="15"></re-icon>Total attendees</p>
+          <div class="flex items-center gap-2.5">
+            <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-blue-100 text-[11px] font-semibold text-blue-700 dark:bg-blue-500/15 dark:text-blue-300">ST</span>
+            <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">Somchai Thongchai</p><p class="truncate text-[12px] text-muted">Bangkok Jazz Night · General</p></div>
+            <span class="shrink-0 text-[11px] text-muted tnum">10:02</span>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-pink-100 text-[11px] font-semibold text-pink-700 dark:bg-pink-500/15 dark:text-pink-300">PS</span>
+            <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">Ploy Srisai</p><p class="truncate text-[12px] text-muted">Sunrise Yoga Retreat · General</p></div>
+            <span class="shrink-0 text-[11px] text-muted tnum">09:47</span>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-amber-100 text-[11px] font-semibold text-amber-700 dark:bg-amber-400/15 dark:text-amber-300">JW</span>
+            <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">James Wong</p><p class="truncate text-[12px] text-muted">Tech Summit 2026 · Early Bird</p></div>
+            <span class="shrink-0 text-[11px] text-muted tnum">09:31</span>
           </div>
         </div>
-      </div>
+        <a href="../admin/registrations.html" class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-brand hover:text-brand-dark"><re-icon icon="user-add" size="15"></re-icon>View all registrations</a>
+      </section>
+
+      <!-- Today's Meetings -->
+      <section class="rounded-2xl bg-surface p-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <h2 class="text-[15px] font-bold tracking-tight">Today's Meetings</h2>
+            <span class="grid h-5 min-w-[20px] place-items-center rounded-full bg-line px-1.5 text-[11px] font-semibold text-muted">5</span>
+          </div>
+          <a href="#" class="text-[12px] font-semibold text-brand hover:underline">See all</a>
+        </div>
+        <div class="mt-3.5 space-y-4">
+          <div class="flex gap-3">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><re-icon icon="video" size="18"></re-icon></span>
+            <div class="min-w-0">
+              <p class="text-[13px] font-semibold text-ink">Seating plan approval</p>
+              <p class="mt-0.5 text-[12px] text-muted tnum">10:00 AM – 10:30 AM</p>
+              <p class="text-[12px] text-muted">Venue Coordinator · Sophia Reynolds</p>
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300"><re-icon icon="video" size="18"></re-icon></span>
+            <div class="min-w-0">
+              <p class="text-[13px] font-semibold text-ink">Sponsor onboarding call</p>
+              <p class="mt-0.5 text-[12px] text-muted tnum">10:45 AM – 11:15 AM</p>
+              <p class="text-[12px] text-muted">Client · Brann Callahan</p>
+            </div>
+          </div>
+        </div>
+        <button class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-brand hover:text-brand-dark"><re-icon icon="plus" size="15"></re-icon>Schedule meeting</button>
+      </section>
+
+      <!-- Active events -->
+      <section class="flex flex-col rounded-2xl bg-surface p-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-[15px] font-bold tracking-tight">Active events</h2>
+          <a href="dashboard.html#events" class="text-[12px] font-semibold text-brand hover:underline">See all</a>
+        </div>
+        <div class="mt-4 flex flex-1 items-center gap-5">
+          <div class="relative grid h-36 w-36 shrink-0 place-items-center sm:h-40 sm:w-40">
+            <svg id="donut" viewBox="0 0 42 42" class="h-full w-full"></svg>
+            <div class="pointer-events-none absolute inset-0 grid place-items-center text-center">
+              <div><p class="text-[30px] font-bold leading-none text-ink tnum">4</p><p class="mt-1 text-[11px] text-muted">events</p></div>
+            </div>
+          </div>
+          <div id="donut-legend" class="min-w-0 flex-1 space-y-4"></div>
+        </div>
+      </section>
     </div>
 
-    <!-- upcoming sessions + tools -->
-    <section class="mt-8">
-      <h2 class="text-[18px] font-bold tracking-tight">Upcoming sessions today</h2>
+    <!-- Row 2: Upcoming Events · Alerts -->
+    <div class="mt-4 grid gap-4 xl:grid-cols-3">
 
-      <div class="mt-4 grid gap-5 xl:grid-cols-3">
-        <!-- sessions list -->
-        <div class="xl:col-span-2">
-          <p class="text-[13.5px] font-bold tracking-tight text-brand-dark dark:text-brand">Thursday, 9 Jul 2026</p>
-          <div id="sessions" class="mt-3 space-y-3"></div>
+      <!-- Upcoming Events -->
+      <section class="rounded-2xl bg-surface p-4 xl:col-span-2">
+        <div class="flex items-center justify-between">
+          <h2 class="text-[15px] font-bold tracking-tight">Upcoming Events</h2>
+          <a href="dashboard.html#events" class="text-[12px] font-semibold text-brand hover:underline">See all</a>
         </div>
+        <div class="mt-3.5 grid gap-3 sm:grid-cols-3">
 
-        <!-- tools -->
-        <aside class="xl:col-span-1">
-          <div class="rounded-2xl bg-[#14161a] p-5 text-white">
-            <h3 class="text-[15px] font-bold tracking-tight">Management tools</h3>
-            <nav class="mt-3 space-y-0.5">
-              <a href="#" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="store" size="17" class="text-white/55"></re-icon>View public event page</a>
-              <a href="../admin/payments.html" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="receipt" size="17" class="text-white/55"></re-icon>Manage sale transactions</a>
-              <a href="#" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="calendar" size="17" class="text-white/55"></re-icon>Schedule a closed day</a>
-              <a href="#" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="document2" size="17" class="text-white/55"></re-icon>Add a new blog post</a>
-            </nav>
-
-            <h3 class="mt-5 text-[15px] font-bold tracking-tight">Service tools</h3>
-            <nav class="mt-3 space-y-0.5">
-              <a href="../admin/tickets.html" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="tag-price" size="17" class="text-white/55"></re-icon>Add new pricing</a>
-              <a href="../admin/registrations.html" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="eye" size="17" class="text-white/55"></re-icon>Manage registrations</a>
-              <a href="../admin/users.html" class="flex items-center gap-3 rounded-lg px-2 py-2 text-[13px] text-white/85 transition hover:bg-white/10 hover:text-white"><re-icon icon="user-add" size="17" class="text-white/55"></re-icon>Add new staff</a>
-            </nav>
+          <div class="rounded-xl bg-blue-50 p-4 dark:bg-blue-500/10">
+            <div class="flex items-center justify-between">
+              <div class="flex -space-x-2">
+                <span class="grid h-8 w-8 place-items-center rounded-full bg-white text-[10px] font-semibold text-blue-700 ring-2 ring-blue-50 dark:ring-blue-500/10">AP</span>
+                <span class="grid h-8 w-8 place-items-center rounded-full bg-blue-600 text-[10px] font-semibold text-white ring-2 ring-blue-50 dark:ring-blue-500/10">+312</span>
+              </div>
+              <span class="rounded-full bg-white/80 px-2.5 py-1 text-[11px] font-semibold text-ink dark:bg-white/10">3 days left</span>
+            </div>
+            <p class="mt-3 text-[14px] font-bold tracking-tight text-ink">Tech Summit 2026</p>
+            <div class="mt-3">
+              <div class="flex items-center justify-between text-[12px]"><span class="text-muted">Progress</span><span class="font-semibold text-ink tnum">83%</span></div>
+              <div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/70 dark:bg-white/10"><div class="h-full rounded-full bg-blue-600" style="width:83%"></div></div>
+            </div>
           </div>
-        </aside>
+
+          <div class="rounded-xl bg-brand-soft p-4">
+            <div class="flex items-center justify-between">
+              <div class="flex -space-x-2">
+                <span class="grid h-8 w-8 place-items-center rounded-full bg-white text-[10px] font-semibold text-brand-dark ring-2 ring-brand-soft">ST</span>
+                <span class="grid h-8 w-8 place-items-center rounded-full bg-brand text-[10px] font-semibold text-white ring-2 ring-brand-soft">+240</span>
+              </div>
+              <span class="rounded-full bg-white/80 px-2.5 py-1 text-[11px] font-semibold text-ink dark:bg-white/10">12 days left</span>
+            </div>
+            <p class="mt-3 text-[14px] font-bold tracking-tight text-ink">Bangkok Jazz Night</p>
+            <div class="mt-3">
+              <div class="flex items-center justify-between text-[12px]"><span class="text-muted">Progress</span><span class="font-semibold text-ink tnum">67%</span></div>
+              <div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/70 dark:bg-white/10"><div class="h-full rounded-full bg-brand" style="width:67%"></div></div>
+            </div>
+          </div>
+
+          <div class="rounded-xl bg-pink-50 p-4 dark:bg-pink-500/10">
+            <div class="flex items-center justify-between">
+              <div class="flex -space-x-2">
+                <span class="grid h-8 w-8 place-items-center rounded-full bg-white text-[10px] font-semibold text-pink-700 ring-2 ring-pink-50 dark:ring-pink-500/10">PS</span>
+                <span class="grid h-8 w-8 place-items-center rounded-full bg-pink-500 text-[10px] font-semibold text-white ring-2 ring-pink-50 dark:ring-pink-500/10">+88</span>
+              </div>
+              <span class="rounded-full bg-white/80 px-2.5 py-1 text-[11px] font-semibold text-ink dark:bg-white/10">18 days left</span>
+            </div>
+            <p class="mt-3 text-[14px] font-bold tracking-tight text-ink">Sunrise Yoga Retreat</p>
+            <div class="mt-3">
+              <div class="flex items-center justify-between text-[12px]"><span class="text-muted">Progress</span><span class="font-semibold text-ink tnum">48%</span></div>
+              <div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/70 dark:bg-white/10"><div class="h-full rounded-full bg-pink-500" style="width:48%"></div></div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Alerts -->
+      <section class="rounded-2xl bg-surface p-4 xl:col-span-1">
+        <div class="flex items-center justify-between">
+          <h2 class="text-[15px] font-bold tracking-tight">Alerts</h2>
+          <a href="../admin/notifications.html" class="text-[12px] font-semibold text-brand hover:underline">See all</a>
+        </div>
+        <div class="mt-3.5 space-y-3.5">
+          <div class="flex items-start gap-2.5">
+            <re-icon icon="check-circle" size="18" weight="filled" class="mt-0.5 shrink-0 text-brand"></re-icon>
+            <p class="text-[13px] leading-snug text-ink">Registration form needs approval for <a href="../admin/events.html" class="font-semibold text-brand hover:underline">Tech Summit 2026</a></p>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <re-icon icon="alert-circle" size="18" weight="filled" class="mt-0.5 shrink-0 text-red-500"></re-icon>
+            <p class="text-[13px] leading-snug text-ink">Mia Thompson's payment was declined for <a href="../admin/payments.html" class="font-semibold text-brand hover:underline">Bangkok Jazz Night</a></p>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <re-icon icon="alert-circle" size="18" weight="filled" class="mt-0.5 shrink-0 text-red-500"></re-icon>
+            <p class="text-[13px] leading-snug text-ink">Speaker not confirmed · <a href="../admin/speakers.html" class="font-semibold text-brand hover:underline">Sunrise Yoga Retreat</a></p>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <re-icon icon="alert-circle" size="18" weight="filled" class="mt-0.5 shrink-0 text-red-500"></re-icon>
+            <p class="text-[13px] leading-snug text-ink">Vendor reply pending · <a href="../admin/feedback.html" class="font-semibold text-brand hover:underline">Tech Summit 2026</a></p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Row 3: Recent Templates -->
+    <section class="mt-4 rounded-2xl bg-surface p-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-[15px] font-bold tracking-tight">Recent Templates</h2>
+        <a href="#" class="text-[12px] font-semibold text-brand hover:underline">See all</a>
+      </div>
+      <div class="mt-3.5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+
+        <a href="#" class="group rounded-xl bg-canvas p-4 transition hover:bg-line">
+          <div class="flex items-start justify-between">
+            <span class="rounded-md bg-line px-2 py-1 text-[11px] font-medium text-muted">Finance</span>
+            <span class="grid h-7 w-7 place-items-center rounded-lg bg-brand-soft text-brand transition group-hover:bg-brand group-hover:text-white"><re-icon icon="arrow-up-right2" size="14"></re-icon></span>
+          </div>
+          <p class="mt-3 text-[14px] font-bold tracking-tight text-ink">Event Budget Tracker</p>
+          <p class="mt-1 text-[12px] leading-snug text-muted">Track and manage expenses across key categories.</p>
+        </a>
+
+        <a href="#" class="group rounded-xl bg-canvas p-4 transition hover:bg-line">
+          <div class="flex items-start justify-between">
+            <span class="rounded-md bg-line px-2 py-1 text-[11px] font-medium text-muted">Guest Management</span>
+            <span class="grid h-7 w-7 place-items-center rounded-lg bg-brand-soft text-brand transition group-hover:bg-brand group-hover:text-white"><re-icon icon="arrow-up-right2" size="14"></re-icon></span>
+          </div>
+          <p class="mt-3 text-[14px] font-bold tracking-tight text-ink">Guest Seating Plan</p>
+          <p class="mt-1 text-[12px] leading-snug text-muted">Plan guest seating with drag &amp; drop layout.</p>
+        </a>
+
+        <a href="#" class="group rounded-xl bg-canvas p-4 transition hover:bg-line">
+          <div class="flex items-start justify-between">
+            <span class="rounded-md bg-line px-2 py-1 text-[11px] font-medium text-muted">Vendors</span>
+            <span class="grid h-7 w-7 place-items-center rounded-lg bg-brand-soft text-brand transition group-hover:bg-brand group-hover:text-white"><re-icon icon="arrow-up-right2" size="14"></re-icon></span>
+          </div>
+          <p class="mt-3 text-[14px] font-bold tracking-tight text-ink">Vendor Onboarding Checklist</p>
+          <p class="mt-1 text-[12px] leading-snug text-muted">Step-by-step tasks to onboard new vendors efficiently.</p>
+        </a>
+
+        <a href="#" class="group rounded-xl bg-canvas p-4 transition hover:bg-line">
+          <div class="flex items-start justify-between">
+            <span class="rounded-md bg-line px-2 py-1 text-[11px] font-medium text-muted">Guest Management</span>
+            <span class="grid h-7 w-7 place-items-center rounded-lg bg-brand-soft text-brand transition group-hover:bg-brand group-hover:text-white"><re-icon icon="arrow-up-right2" size="14"></re-icon></span>
+          </div>
+          <p class="mt-3 text-[14px] font-bold tracking-tight text-ink">RSVP Tracker</p>
+          <p class="mt-1 text-[12px] leading-snug text-muted">Track guest responses, meal choices &amp; special notes.</p>
+        </a>
+
       </div>
     </section>
 
-    <p class="mt-8 text-center text-[11px] text-muted/70">Eventa · Home · self-contained design source</p>
+    <p class="mt-6 text-center text-[11px] text-muted/70">Eventa · Home · self-contained design source</p>
   </main>
 </div>
 
 <script>
-  /* ---------- Upcoming sessions ---------- */
-  const sessions = [
-    { time:'11:00 AM', dur:'45 mins', title:'Keynote: The Future of Live Events', host:'Dawn Chaung',  venue:'BITEC · Hall A',        booked:'142/200 registered', left:'58 spots left',  wait:'12', status:'Upcoming', badge:'amber' },
-    { time:'1:30 PM',  dur:'60 mins', title:'Workshop: Ticketing & Payments',      host:'Du Kai Hui',   venue:'Cosy Corner · Room 1',  booked:'40/40 registered',   left:'Fully booked',   wait:'8',  status:'Full',     badge:'red'   },
-    { time:'2:00 PM',  dur:'30 mins', title:'Panel: Building Event Communities',   host:'Somchai Tan',  venue:'Main meeting room',     booked:'0/60 registered',    left:'60 spots left',  wait:'0',  status:'Upcoming', badge:'amber' },
-    { time:'4:00 PM',  dur:'90 mins', title:'Sunset Networking Mixer',             host:'Ploy Srisai',  venue:'Rooftop Garden',        booked:'88/120 registered',  left:'32 spots left',  wait:'0',  status:'Live',     badge:'green' },
+  /* ---------- Active-events donut ---------- */
+  const projects = [
+    { name: 'Tech Summit 2026',     pct: 34, c: '#1ba770' },
+    { name: 'Bangkok Jazz Night',   pct: 27, c: '#3b82f6' },
+    { name: 'Sunrise Yoga Retreat', pct: 22, c: '#ec4899' },
+    { name: 'UX Bangkok Meetup',    pct: 17, c: '#f59e0b' },
   ];
-  const badgeCls = {
-    amber: 'bg-amber-200 text-amber-800 dark:bg-amber-400/15 dark:text-amber-300',
-    green: 'bg-brand-soft text-brand-dark dark:text-brand',
-    red:   'bg-red-100 text-red-600 dark:bg-red-500/15 dark:text-red-300',
-  };
-  document.getElementById('sessions').innerHTML = sessions.map(s => `
-    <div class="grid grid-cols-2 items-center gap-x-4 gap-y-2.5 rounded-xl border border-hair bg-surface px-4 py-3.5 transition hover:border-brand/40 sm:grid-cols-[100px_1.5fr_1.4fr_1fr_74px_96px]">
-      <div><p class="text-[14px] font-bold tracking-tight text-ink tnum">${s.time}</p><p class="text-[12px] text-muted">${s.dur}</p></div>
-      <div class="min-w-0"><p class="truncate text-[13.5px] font-semibold text-ink">${s.title}</p><p class="truncate text-[12px] text-muted">${s.host}</p></div>
-      <div class="min-w-0"><p class="truncate text-[13px] font-medium text-ink">${s.venue}</p></div>
-      <div><p class="text-[13px] font-semibold text-ink tnum">${s.booked}</p><p class="text-[12px] text-muted">${s.left}</p></div>
-      <div><p class="text-[13px] font-semibold text-ink tnum">${s.wait}</p><p class="text-[11px] text-muted">Waitlist</p></div>
-      <div class="justify-self-start sm:justify-self-end"><span class="whitespace-nowrap rounded-md px-2.5 py-1 text-[12px] font-semibold ${badgeCls[s.badge]}">${s.status}</span></div>
-    </div>`).join('');
+  (function () {
+    const R = 15.915, GAP = 2.4, SW = 4.5; let start = 0;
+    document.getElementById('donut').innerHTML = projects.map(p => {
+      const len = Math.max(p.pct - GAP, 0.5);
+      const arc = `<circle cx="21" cy="21" r="${R}" fill="none" stroke="${p.c}" stroke-width="${SW}" stroke-linecap="round" stroke-dasharray="${len} ${100 - len}" stroke-dashoffset="${25 - start}" />`;
+      start += p.pct; return arc;
+    }).join('');
+    document.getElementById('donut-legend').innerHTML = projects.map(p => `
+      <div class="flex items-center gap-2.5"><span class="h-3 w-3 shrink-0 rounded-full" style="background:${p.c}"></span><span class="truncate text-[13.5px] text-ink">${p.name}</span></div>`).join('');
+  })();
 
   /* ---------- Dark mode ---------- */
   const THEME_KEY = 'eventa-theme';
   function applyTheme(dark) {
     document.documentElement.classList.toggle('dark', dark);
-    const rail = document.querySelector('#rail');
-    if (rail) {
-      rail.classList.toggle('border-r', dark);
-      rail.classList.toggle('border-hair', dark);
-    }
     const ic = document.querySelector('#rail-theme re-icon');
     if (ic) ic.setAttribute('icon', dark ? 'sun' : 'moon');
     try { localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light'); } catch (e) {}
@@ -236,6 +394,101 @@
   backdrop.addEventListener('click', closeNav);
   sidenav.addEventListener('click', e => { if (e.target.closest('a[href]:not([href="#"])') && !matchMedia('(min-width: 1024px)').matches) closeNav(); });
   matchMedia('(min-width: 1024px)').addEventListener('change', e => { if (e.matches) { sidenav.classList.remove('-translate-x-full'); backdrop.classList.add('hidden'); } else sidenav.classList.add('-translate-x-full'); });
+</script>
+
+<!-- Header popovers: notifications + profile -->
+<div id="eventa-notif-pop" class="pop hidden fixed z-[70] w-[340px] max-w-[calc(100vw-16px)] overflow-hidden rounded-2xl bg-surface shadow-xl ring-1 ring-black/5 dark:ring-white/10">
+  <div class="flex items-center justify-between border-b border-hair px-4 py-3">
+    <div class="flex items-center gap-2"><h3 class="text-[14px] font-bold text-ink">Notifications</h3><span class="grid h-5 min-w-[20px] place-items-center rounded-full bg-brand-soft px-1.5 text-[11px] font-semibold text-brand">3</span></div>
+    <button class="text-[12px] font-semibold text-brand hover:underline">Mark all read</button>
+  </div>
+  <div class="max-h-[340px] overflow-y-auto py-1">
+    <a href="../admin/notifications.html" class="flex gap-3 px-4 py-2.5 transition hover:bg-line">
+      <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><re-icon icon="user-add" size="17"></re-icon></span>
+      <div class="min-w-0 flex-1"><p class="text-[13px] leading-snug text-ink"><span class="font-semibold">New registration</span> · Anong Pattana joined Tech Summit 2026</p><p class="mt-0.5 text-[11px] text-muted">2 min ago</p></div>
+      <span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-brand"></span>
+    </a>
+    <a href="../admin/notifications.html" class="flex gap-3 px-4 py-2.5 transition hover:bg-line">
+      <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300"><re-icon icon="wallet" size="17"></re-icon></span>
+      <div class="min-w-0 flex-1"><p class="text-[13px] leading-snug text-ink"><span class="font-semibold">Payment received</span> · ฿1,250 from Ploy Srisai</p><p class="mt-0.5 text-[11px] text-muted">18 min ago</p></div>
+      <span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-brand"></span>
+    </a>
+    <a href="../admin/notifications.html" class="flex gap-3 px-4 py-2.5 transition hover:bg-line">
+      <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-amber-50 text-amber-600 dark:bg-amber-400/15 dark:text-amber-300"><re-icon icon="ticket" size="17"></re-icon></span>
+      <div class="min-w-0 flex-1"><p class="text-[13px] leading-snug text-ink"><span class="font-semibold">Almost sold out</span> · VIP Access is 92% sold</p><p class="mt-0.5 text-[11px] text-muted">1 hr ago</p></div>
+      <span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-brand"></span>
+    </a>
+    <a href="../admin/notifications.html" class="flex gap-3 px-4 py-2.5 transition hover:bg-line">
+      <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-violet-50 text-violet-600 dark:bg-violet-500/15 dark:text-violet-300"><re-icon icon="star" size="17"></re-icon></span>
+      <div class="min-w-0 flex-1"><p class="text-[13px] leading-snug text-ink"><span class="font-semibold">New feedback</span> · Bangkok Jazz Night rated 4.8★</p><p class="mt-0.5 text-[11px] text-muted">Yesterday</p></div>
+    </a>
+  </div>
+  <a href="../admin/notifications.html" class="block border-t border-hair px-4 py-2.5 text-center text-[13px] font-semibold text-brand hover:bg-line">View all notifications</a>
+</div>
+<div id="eventa-profile-pop" class="pop hidden fixed z-[70] w-[300px] max-w-[calc(100vw-16px)] overflow-hidden rounded-2xl bg-surface shadow-xl ring-1 ring-black/5 dark:ring-white/10">
+  <div class="flex items-center gap-3 p-4">
+    <div class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[14px] font-semibold text-white">HN</div>
+    <div class="min-w-0"><p class="truncate text-[14px] font-bold text-ink">Harper Nelson</p><p class="truncate text-[12px] text-muted">Event Manager at Eventa</p></div>
+  </div>
+  <div class="px-2 pb-1">
+    <a href="../admin/settings.html" class="flex items-center gap-3 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><re-icon icon="user" size="17" class="text-muted"></re-icon>My Account</a>
+    <a href="../admin/settings.html" class="flex items-center gap-3 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><re-icon icon="building" size="17" class="text-muted"></re-icon>Company settings</a>
+    <a href="#" class="flex items-center gap-3 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><re-icon icon="crown" size="17" class="text-muted"></re-icon>Upgrade to Pro<span class="ml-auto rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-semibold text-violet-600 dark:bg-violet-500/20 dark:text-violet-300">Optimized for business</span></a>
+  </div>
+  <div class="mx-3 my-1 border-t border-hair"></div>
+  <div class="px-2 py-1">
+    <div class="flex items-center gap-3 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink"><re-icon icon="flask" size="17" class="text-muted"></re-icon>Beta Features<span class="rounded-full bg-brand-soft px-2 py-0.5 text-[10px] font-semibold text-brand">New</span><button type="button" data-toggle class="relative ml-auto h-5 w-9 shrink-0 rounded-full bg-line transition-colors"><span class="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform"></span></button></div>
+    <a href="#" class="flex items-center gap-3 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><re-icon icon="bullhorn" size="17" class="text-muted"></re-icon>What's New</a>
+  </div>
+  <div class="mx-3 my-1 border-t border-hair"></div>
+  <div class="px-2 py-1">
+    <a href="../auth/login.html" class="flex items-center gap-3 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><re-icon icon="logout" size="17" class="text-muted"></re-icon>Log out</a>
+  </div>
+  <div class="m-2 rounded-xl bg-violet-50 p-3 dark:bg-violet-500/10">
+    <span class="grid h-9 w-9 place-items-center rounded-lg bg-violet-500 text-white"><re-icon icon="sparkles" size="18"></re-icon></span>
+    <p class="mt-2.5 text-[13px] font-semibold leading-snug text-ink">Get everything you need to run your events like a pro</p>
+    <a href="#" class="mt-1.5 inline-block text-[13px] font-bold text-violet-600 hover:underline dark:text-violet-300">Subscribe Now</a>
+  </div>
+</div>
+
+<script>
+  /* ---------- Header popovers: notifications + profile ---------- */
+  (function () {
+    const notifPop = document.getElementById('eventa-notif-pop');
+    const profilePop = document.getElementById('eventa-profile-pop');
+    const pops = [notifPop, profilePop].filter(Boolean);
+    const closePops = () => pops.forEach(p => p.classList.add('hidden'));
+    function togglePop(pop, trigger) {
+      const isOpen = !pop.classList.contains('hidden');
+      closePops();
+      if (!isOpen) {
+        const r = trigger.getBoundingClientRect();
+        pop.style.top = (r.bottom + 8) + 'px';
+        pop.style.right = Math.max(8, window.innerWidth - r.right) + 'px';
+        pop.classList.remove('hidden');
+      }
+    }
+    document.querySelectorAll('button[title="Notifications"]').forEach(bell => {
+      bell.addEventListener('click', e => { e.stopPropagation(); if (notifPop) togglePop(notifPop, bell); });
+      const profile = bell.nextElementSibling;
+      if (profile && profilePop) {
+        profile.classList.add('cursor-pointer');
+        profile.addEventListener('click', e => { e.stopPropagation(); togglePop(profilePop, profile); });
+      }
+    });
+    if (profilePop) {
+      const bt = profilePop.querySelector('[data-toggle]');
+      if (bt) bt.addEventListener('click', e => { e.stopPropagation(); const on = bt.classList.toggle('bg-brand'); bt.classList.toggle('bg-line', !on); bt.firstElementChild.classList.toggle('translate-x-4', on); });
+    }
+    pops.forEach(p => p.addEventListener('click', e => {
+      if (e.target.closest('[data-toggle]')) return;
+      const link = e.target.closest('a'); if (!link) return;
+      const href = link.getAttribute('href');
+      if (!href || href === '#') { e.preventDefault(); closePops(); }
+    }));
+    document.addEventListener('click', e => { if (!e.target.closest('.pop')) closePops(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closePops(); });
+  })();
 </script>
 </body>
 </html>

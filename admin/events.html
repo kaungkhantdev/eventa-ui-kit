@@ -12,221 +12,418 @@
 <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js"></script>
-<link rel="stylesheet" href="../assets/app.css" />
+<script src="../assets/config.js?v=31"></script>
+<link rel="stylesheet" href="../assets/app.css?v=31" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="events">
 
 <div class="flex h-full min-h-screen" data-layout>
-  <!-- shell.js injects #backdrop + #sidebar here -->
+  <!-- shell.js injects #backdrop + #sidenav here -->
 
-  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
 
-    <!-- header -->
-    <div class="mb-4 flex items-center justify-between gap-3">
-      <div class="flex min-w-0 items-center gap-3">
-        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
-        <div class="min-w-0">
-          <h1 class="text-[22px] font-bold tracking-tight">Events</h1>
-          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Create and manage your events.</p>
+    <!-- top bar -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><re-icon icon="menu" size="18"></re-icon></button>
+      <div class="min-w-0">
+        <h1 class="text-[22px] font-bold tracking-tight">Events</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Create and manage your events.</p>
+      </div>
+      <a href="event-form.html" class="ml-auto inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2.5 text-[13px] font-semibold text-white transition hover:bg-brand-dark"><re-icon icon="plus" size="16"></re-icon><span class="hidden sm:inline">New Event</span></a>
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <re-icon icon="bell" size="18"></re-icon>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Harper Nelson</p>
+          <p class="text-[11px] text-muted">Event Manager</p>
         </div>
       </div>
-      <div class="flex shrink-0 items-center gap-2">
-        <button class="btn btn-ghost"><i class="hgi-stroke hgi-download-01 text-[16px]"></i><span class="hidden sm:inline">Export</span></button>
-        <a href="event-form.html" class="btn btn-primary"><i class="hgi-stroke hgi-calendar-add-01 text-[16px]"></i><span class="hidden sm:inline">New event</span><span class="sm:hidden">New</span></a>
-      </div>
-    </div>
+    </header>
 
-    <!-- toolbar -->
-    <div class="card flex flex-col gap-3 p-3.5 lg:flex-row lg:items-center">
-      <div class="relative flex-1 lg:max-w-xs">
-        <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[16px] text-muted"></i>
-        <input type="text" placeholder="Search events…" class="input pl-9" />
+    <!-- view tabs + search -->
+    <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+      <div data-pill-group="view" class="inline-flex items-center gap-1 rounded-xl bg-surface p-1">
+        <button data-pill="overview" class="rounded-lg bg-brand-soft px-4 py-2 text-[13px] font-semibold text-brand transition">Overview</button>
+        <button data-pill="calendar" class="rounded-lg px-4 py-2 text-[13px] font-semibold text-muted transition hover:text-ink">Calendar</button>
       </div>
-      <select class="select w-full lg:w-44">
-        <option>All statuses</option>
-        <option>Draft</option>
-        <option>Published</option>
-        <option>Registration open</option>
-        <option>Closed</option>
-        <option>Completed</option>
-      </select>
-      <select class="select w-full lg:w-44">
-        <option>All categories</option>
-        <option>Conference</option>
-        <option>Workshop</option>
-        <option>Concert</option>
-        <option>Festival</option>
-        <option>Networking</option>
-      </select>
-      <div class="flex items-center justify-between gap-2 lg:ml-auto lg:justify-end">
-        <span class="hidden text-[12px] text-muted sm:inline">6 events</span>
-        <div class="segmented">
-          <button class="active"><i class="hgi-stroke hgi-dashboard-square-01 text-[14px]"></i><span class="ml-1 hidden sm:inline">Grid</span></button>
-          <button><i class="hgi-stroke hgi-more-horizontal text-[14px]"></i><span class="ml-1 hidden sm:inline">List</span></button>
-        </div>
+      <div class="relative w-full sm:w-72">
+        <re-icon icon="search" size="16" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></re-icon>
+        <input class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search events…" />
       </div>
     </div>
 
-    <!-- events grid -->
-    <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+    <!-- ============ OVERVIEW ============ -->
+    <div data-pill-panel="view:overview">
 
-      <!-- 1 -->
-      <div class="card overflow-hidden">
-        <div class="relative flex h-28 items-start justify-between p-3" style="background:linear-gradient(135deg,#1ba770,#0e6b47)">
-          <span class="badge badge-blue">Registration open</span>
-          <span class="badge bg-white/15 text-white backdrop-blur">Conference</span>
+      <!-- Upcoming Events -->
+      <section class="rounded-2xl bg-surface p-4 lg:p-5">
+        <div class="flex items-center justify-between">
+          <h2 class="text-[16px] font-bold tracking-tight">Upcoming Events</h2>
+          <a href="#manage-events" class="text-[12px] font-semibold text-brand hover:underline">See all</a>
         </div>
-        <div class="p-4">
-          <p class="font-bold text-ink">Tech Summit 2026</p>
-          <div class="mt-2 space-y-1.5">
-            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Jul 18, 2026 · 09:00</div>
-            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>BITEC, Bangkok</div>
-          </div>
-          <div class="mt-3">
-            <div class="flex items-center justify-between text-[11px] text-muted"><span class="tnum">312 / 400 registered</span><span class="tnum">78%</span></div>
-            <div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:78%"></div></div>
-          </div>
-          <p class="mt-3 text-[13px] font-semibold text-ink tnum">฿18,400 revenue</p>
-          <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
-            <a href="event-detail.html" class="btn btn-ghost btn-sm flex-1">View</a>
-            <a href="event-form.html" class="btn-icon" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></a>
-            <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-horizontal text-[16px]"></i></button>
-          </div>
-        </div>
-      </div>
+        <div id="upcoming-cards" class="no-scrollbar -mx-1 mt-3 flex snap-x snap-mandatory gap-4 overflow-x-auto p-1"></div>
+        <!-- tailwind JIT safelist for the dynamically-rendered card colors -->
+        <div aria-hidden="true" class="hidden bg-pink-50 bg-blue-50 bg-amber-50 bg-violet-50 bg-indigo-50 bg-teal-50 bg-red-50 bg-brand-soft dark:bg-pink-500/10 dark:bg-blue-500/10 dark:bg-amber-400/10 dark:bg-violet-500/10 dark:bg-indigo-500/10 dark:bg-teal-500/10 dark:bg-red-500/10 from-pink-400 to-pink-600 from-blue-400 to-blue-600 from-amber-400 to-amber-600 from-violet-400 to-violet-600 from-indigo-400 to-indigo-600 from-teal-400 to-teal-600 from-red-400 to-red-600 from-brand to-emerald-500 bg-pink-500 bg-blue-500 bg-blue-600 bg-amber-500 bg-violet-500 bg-indigo-500 bg-teal-500 bg-red-500 bg-brand ring-pink-50 ring-blue-50 ring-amber-50 ring-violet-50 ring-indigo-50 ring-teal-50 ring-red-50 ring-brand-soft dark:ring-pink-500/10 dark:ring-blue-500/10 dark:ring-amber-400/10 dark:ring-violet-500/10 dark:ring-indigo-500/10 dark:ring-teal-500/10 dark:ring-red-500/10"></div>
+      </section>
 
-      <!-- 2 -->
-      <div class="card overflow-hidden">
-        <div class="relative flex h-28 items-start justify-between p-3" style="background:linear-gradient(135deg,#7c3aed,#4c1d95)">
-          <span class="badge badge-purple">Completed</span>
-          <span class="badge bg-white/15 text-white backdrop-blur">Concert</span>
-        </div>
-        <div class="p-4">
-          <p class="font-bold text-ink">Bangkok Jazz Night</p>
-          <div class="mt-2 space-y-1.5">
-            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Jul 12, 2026 · 19:30</div>
-            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>Sala Daeng, Bangkok</div>
-          </div>
-          <div class="mt-3">
-            <div class="flex items-center justify-between text-[11px] text-muted"><span class="tnum">240 / 240 registered</span><span class="tnum">100%</span></div>
-            <div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:100%"></div></div>
-          </div>
-          <p class="mt-3 text-[13px] font-semibold text-ink tnum">฿11,520 revenue</p>
-          <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
-            <a href="event-detail.html" class="btn btn-ghost btn-sm flex-1">View</a>
-            <a href="event-form.html" class="btn-icon" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></a>
-            <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-horizontal text-[16px]"></i></button>
+      <!-- Manage Events -->
+      <section id="manage-events" class="mt-4 scroll-mt-4 rounded-2xl bg-surface p-4 lg:p-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <h2 class="text-[16px] font-bold tracking-tight">Manage Events</h2>
+          <div class="flex items-center gap-2">
+            <button class="inline-flex items-center gap-2 rounded-lg bg-canvas px-3 py-2 text-[13px] font-medium text-muted transition hover:text-ink">Sort by<re-icon icon="chevron-down" size="14"></re-icon></button>
+            <button class="inline-flex items-center gap-2 rounded-lg bg-canvas px-3 py-2 text-[13px] font-medium text-muted transition hover:text-ink">Event type<re-icon icon="chevron-down" size="14"></re-icon></button>
           </div>
         </div>
-      </div>
 
-      <!-- 3 -->
-      <div class="card overflow-hidden">
-        <div class="relative flex h-28 items-start justify-between p-3" style="background:linear-gradient(135deg,#34d399,#059669)">
-          <span class="badge badge-blue">Registration open</span>
-          <span class="badge bg-white/15 text-white backdrop-blur">Workshop</span>
+        <!-- active/completed tabs -->
+        <div data-pill-group="manage" class="mt-4 inline-flex items-center gap-1">
+          <button data-pill="active" class="inline-flex items-center gap-1.5 rounded-lg bg-brand-soft px-3 py-1.5 text-[13px] font-semibold text-brand transition">Active<span class="grid h-4 min-w-[16px] place-items-center rounded-full bg-brand/15 px-1 text-[10px] font-bold text-brand">32</span></button>
+          <button data-pill="completed" class="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[13px] font-semibold text-muted transition hover:text-ink">Completed<span class="grid h-4 min-w-[16px] place-items-center rounded-full bg-line px-1 text-[10px] font-bold text-muted">24</span></button>
         </div>
-        <div class="p-4">
-          <p class="font-bold text-ink">Sunrise Yoga Retreat</p>
-          <div class="mt-2 space-y-1.5">
-            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Jul 20, 2026 · 06:00</div>
-            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>Lumphini Park, Bangkok</div>
-          </div>
-          <div class="mt-3">
-            <div class="flex items-center justify-between text-[11px] text-muted"><span class="tnum">88 / 100 registered</span><span class="tnum">88%</span></div>
-            <div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:88%"></div></div>
-          </div>
-          <p class="mt-3 text-[13px] font-semibold text-ink tnum"><span class="badge badge-green">Free</span></p>
-          <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
-            <a href="event-detail.html" class="btn btn-ghost btn-sm flex-1">View</a>
-            <a href="event-form.html" class="btn-icon" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></a>
-            <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-horizontal text-[16px]"></i></button>
-          </div>
-        </div>
-      </div>
 
-      <!-- 4 -->
-      <div class="card overflow-hidden">
-        <div class="relative flex h-28 items-start justify-between p-3" style="background:linear-gradient(135deg,#fbbf24,#d97706)">
-          <span class="badge badge-amber">Closed</span>
-          <span class="badge bg-white/15 text-white backdrop-blur">Festival</span>
+        <!-- active table -->
+        <div data-pill-panel="manage:active" class="mt-3 overflow-x-auto">
+          <table class="w-full min-w-[640px] text-left">
+            <thead>
+              <tr class="text-[10.5px] font-semibold uppercase tracking-wider text-muted">
+                <th class="pb-3 pr-4 font-semibold">Event</th>
+                <th class="pb-3 pr-4 font-semibold">Date</th>
+                <th class="pb-3 pr-4 font-semibold">Registrations</th>
+                <th class="pb-3 pr-4 font-semibold">Status</th>
+                <th class="w-10 pb-3"></th>
+              </tr>
+            </thead>
+            <tbody id="active-rows" class="text-[13px]"></tbody>
+          </table>
         </div>
-        <div class="p-4">
-          <p class="font-bold text-ink">Thai Street Food Festival</p>
-          <div class="mt-2 space-y-1.5">
-            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Aug 2, 2026 · 16:00</div>
-            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>IconSiam, Bangkok</div>
-          </div>
-          <div class="mt-3">
-            <div class="flex items-center justify-between text-[11px] text-muted"><span class="tnum">650 / 650 registered</span><span class="tnum">100%</span></div>
-            <div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:100%"></div></div>
-          </div>
-          <p class="mt-3 text-[13px] font-semibold text-ink tnum">฿9,750 revenue</p>
-          <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
-            <a href="event-detail.html" class="btn btn-ghost btn-sm flex-1">View</a>
-            <a href="event-form.html" class="btn-icon" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></a>
-            <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-horizontal text-[16px]"></i></button>
-          </div>
-        </div>
-      </div>
 
-      <!-- 5 -->
-      <div class="card overflow-hidden">
-        <div class="relative flex h-28 items-start justify-between p-3" style="background:linear-gradient(135deg,#60a5fa,#2563eb)">
-          <span class="badge badge-gray">Draft</span>
-          <span class="badge bg-white/15 text-white backdrop-blur">Networking</span>
+        <!-- completed table -->
+        <div data-pill-panel="manage:completed" class="mt-3 hidden overflow-x-auto">
+          <table class="w-full min-w-[640px] text-left">
+            <thead>
+              <tr class="text-[10.5px] font-semibold uppercase tracking-wider text-muted">
+                <th class="pb-3 pr-4 font-semibold">Event</th>
+                <th class="pb-3 pr-4 font-semibold">Date</th>
+                <th class="pb-3 pr-4 font-semibold">Registrations</th>
+                <th class="pb-3 pr-4 font-semibold">Status</th>
+                <th class="w-10 pb-3"></th>
+              </tr>
+            </thead>
+            <tbody id="completed-rows" class="text-[13px]"></tbody>
+          </table>
         </div>
-        <div class="p-4">
-          <p class="font-bold text-ink">UX Bangkok Meetup</p>
-          <div class="mt-2 space-y-1.5">
-            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Aug 9, 2026 · 18:30</div>
-            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>WeWork Asok, Bangkok</div>
-          </div>
-          <div class="mt-3">
-            <div class="flex items-center justify-between text-[11px] text-muted"><span class="tnum">0 / 120 registered</span><span class="tnum">0%</span></div>
-            <div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:0%"></div></div>
-          </div>
-          <p class="mt-3 text-[13px] font-semibold text-ink tnum"><span class="badge badge-green">Free</span></p>
-          <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
-            <a href="event-detail.html" class="btn btn-ghost btn-sm flex-1">View</a>
-            <a href="event-form.html" class="btn-icon" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></a>
-            <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-horizontal text-[16px]"></i></button>
-          </div>
-        </div>
-      </div>
-
-      <!-- 6 -->
-      <div class="card overflow-hidden">
-        <div class="relative flex h-28 items-start justify-between p-3" style="background:linear-gradient(135deg,#1ba770,#0e6b47)">
-          <span class="badge badge-green">Published</span>
-          <span class="badge bg-white/15 text-white backdrop-blur">Conference</span>
-        </div>
-        <div class="p-4">
-          <p class="font-bold text-ink">Startup Founders Forum</p>
-          <div class="mt-2 space-y-1.5">
-            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i>Sep 4, 2026 · 09:30</div>
-            <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>True Digital Park, Bangkok</div>
-          </div>
-          <div class="mt-3">
-            <div class="flex items-center justify-between text-[11px] text-muted"><span class="tnum">54 / 300 registered</span><span class="tnum">18%</span></div>
-            <div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:18%"></div></div>
-          </div>
-          <p class="mt-3 text-[13px] font-semibold text-ink tnum">฿4,050 revenue</p>
-          <div class="mt-3 flex items-center gap-2 border-t border-line pt-3">
-            <a href="event-detail.html" class="btn btn-ghost btn-sm flex-1">View</a>
-            <a href="event-form.html" class="btn-icon" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></a>
-            <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-horizontal text-[16px]"></i></button>
-          </div>
-        </div>
-      </div>
-
+      </section>
     </div>
 
-    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+    <!-- ============ CALENDAR ============ -->
+    <div data-pill-panel="view:calendar" class="hidden">
+      <section class="rounded-2xl bg-surface p-4 lg:p-5">
+        <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <button id="cal-prev" type="button" class="btn-icon" title="Previous month"><re-icon icon="chevron-left" size="18"></re-icon></button>
+            <div class="min-w-[150px] text-center">
+              <h2 id="cal-title" class="text-[16px] font-bold tracking-tight">Month</h2>
+              <p id="cal-count" class="text-[11px] text-muted"></p>
+            </div>
+            <button id="cal-next" type="button" class="btn-icon" title="Next month"><re-icon icon="chevron-right" size="18"></re-icon></button>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="cal-today" type="button" class="btn btn-soft btn-sm">Today</button>
+            <a href="event-form.html" class="btn btn-primary btn-sm"><re-icon icon="plus" size="14"></re-icon><span class="hidden sm:inline">New event</span></a>
+          </div>
+        </div>
+        <div class="grid gap-4 xl:grid-cols-[minmax(0,1fr)_300px]">
+          <div class="overflow-x-auto">
+            <div class="min-w-[680px] overflow-hidden rounded-xl border-l border-t border-line">
+              <div id="cal-weekdays" class="grid grid-cols-7"></div>
+              <div id="cal-grid" class="grid grid-cols-7"></div>
+            </div>
+          </div>
+          <aside class="rounded-xl border border-hair p-4">
+            <p id="cal-agenda-date" class="text-[14px] font-bold tracking-tight text-ink">Selected day</p>
+            <p id="cal-agenda-sub" class="text-[11px] text-muted"></p>
+            <div id="cal-agenda" class="mt-3 space-y-2"></div>
+          </aside>
+        </div>
+        <!-- tailwind JIT safelist for event-pill colours -->
+        <div aria-hidden="true" class="hidden bg-pink-100 text-pink-700 dark:bg-pink-500/20 dark:text-pink-200 bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-200 bg-amber-100 text-amber-700 dark:bg-amber-400/20 dark:text-amber-200 bg-violet-100 text-violet-700 dark:bg-violet-500/20 dark:text-violet-200 bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-200 bg-teal-100 text-teal-700 dark:bg-teal-500/20 dark:text-teal-200 bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-200 bg-brand-soft text-brand-dark dark:text-brand ring-2 ring-inset ring-brand/60"></div>
+      </section>
+    </div>
+
+    <!-- shared row-actions menu (fixed so overflow-x-auto can't clip it) -->
+    <div id="row-menu" class="fixed z-50 hidden w-44 rounded-xl border border-hair bg-surface p-1.5 shadow-xl">
+      <a href="event-detail.html" class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><re-icon icon="eye" size="15" class="text-muted"></re-icon>View details</a>
+      <a href="event-form.html" class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><re-icon icon="edit2" size="15" class="text-muted"></re-icon>Edit</a>
+      <button type="button" data-act="duplicate" class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-[13px] font-medium text-ink transition hover:bg-line"><re-icon icon="copy" size="15" class="text-muted"></re-icon>Duplicate</button>
+      <div class="my-1 h-px bg-line"></div>
+      <button type="button" data-act="delete" class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-[13px] font-medium text-red-500 transition hover:bg-red-50 dark:hover:bg-red-500/15"><re-icon icon="trash" size="15"></re-icon>Delete</button>
+    </div>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; reicon</p>
   </main>
 </div>
 
-<script src="../assets/shell.js"></script>
+<script src="../assets/shell.js?v=31"></script>
+<script>
+  /* ---------- pill tab groups (view + manage) ---------- */
+  document.querySelectorAll('[data-pill-group]').forEach(group => {
+    const name = group.dataset.pillGroup;
+    group.addEventListener('click', e => {
+      const b = e.target.closest('[data-pill]'); if (!b) return;
+      const val = b.dataset.pill;
+      group.querySelectorAll('[data-pill]').forEach(x => {
+        const on = x === b;
+        x.classList.toggle('bg-brand-soft', on);
+        x.classList.toggle('text-brand', on);
+        x.classList.toggle('text-muted', !on);
+      });
+      document.querySelectorAll(`[data-pill-panel^="${name}:"]`).forEach(p => {
+        p.classList.toggle('hidden', p.dataset.pillPanel !== `${name}:${val}`);
+      });
+    });
+  });
+
+  /* ---------- Upcoming Events (scrollable cards) ---------- */
+  const UP_TONE = {
+    pink:   { bg:'bg-pink-50 dark:bg-pink-500/10',     grad:'from-pink-400 to-pink-600',     solid:'bg-pink-500',  bar:'bg-pink-500',  ring:'ring-pink-50 dark:ring-pink-500/10' },
+    blue:   { bg:'bg-blue-50 dark:bg-blue-500/10',     grad:'from-blue-400 to-blue-600',     solid:'bg-blue-500',  bar:'bg-blue-600',  ring:'ring-blue-50 dark:ring-blue-500/10' },
+    amber:  { bg:'bg-amber-50 dark:bg-amber-400/10',   grad:'from-amber-400 to-amber-600',   solid:'bg-amber-500', bar:'bg-amber-500', ring:'ring-amber-50 dark:ring-amber-400/10' },
+    brand:  { bg:'bg-brand-soft',                      grad:'from-brand to-emerald-500',     solid:'bg-brand',     bar:'bg-brand',     ring:'ring-brand-soft' },
+    violet: { bg:'bg-violet-50 dark:bg-violet-500/10', grad:'from-violet-400 to-violet-600', solid:'bg-violet-500',bar:'bg-violet-500',ring:'ring-violet-50 dark:ring-violet-500/10' },
+    indigo: { bg:'bg-indigo-50 dark:bg-indigo-500/10', grad:'from-indigo-400 to-indigo-600', solid:'bg-indigo-500',bar:'bg-indigo-500',ring:'ring-indigo-50 dark:ring-indigo-500/10' },
+    teal:   { bg:'bg-teal-50 dark:bg-teal-500/10',     grad:'from-teal-400 to-teal-600',     solid:'bg-teal-500',  bar:'bg-teal-500',  ring:'ring-teal-50 dark:ring-teal-500/10' },
+    red:    { bg:'bg-red-50 dark:bg-red-500/10',       grad:'from-red-400 to-red-600',       solid:'bg-red-500',   bar:'bg-red-500',   ring:'ring-red-50 dark:ring-red-500/10' },
+  };
+  const upcoming = [
+    { name:'Tech Innovators Forum',     icon:'presentation', tone:'amber',  days:3,  reg:'39/50',   pct:78, seed:'evt-conference', att:39  },
+    { name:'UX Bangkok Meetup',         icon:'users',        tone:'indigo', days:5,  reg:'72/90',   pct:80, seed:'evt-networking', att:72  },
+    { name:'Cloud Builders Workshop',   icon:'briefcase',    tone:'teal',   days:8,  reg:'40/60',   pct:67, seed:'evt-workshop',   att:40  },
+    { name:'Hope for All Charity Gala', icon:'hand-heart',   tone:'brand',  days:12, reg:'34/51',   pct:67, seed:'evt-charity',    att:34  },
+    { name:'Summer Music Festival',     icon:'mic',          tone:'violet', days:15, reg:'320/400', pct:80, seed:'evt-festival',   att:320 },
+    { name:'Sunrise Yoga Retreat',      icon:'dumbbell',     tone:'red',    days:18, reg:'48/60',   pct:80, seed:'evt-wellness',   att:48  },
+  ];
+  function upCard(e) {
+    const t = UP_TONE[e.tone] || UP_TONE.brand;
+    const avatars = [1, 2, 3].map(function (i) {
+      return '<span class="relative grid h-6 w-6 place-items-center overflow-hidden rounded-full ' + t.solid + ' ring-2 ' + t.ring + '">' +
+        '<img src="https://picsum.photos/seed/' + e.seed + '-a' + i + '/48/48" alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()"></span>';
+    }).join('');
+    return '' +
+    '<a href="event-detail.html" class="group block w-[268px] shrink-0 snap-start overflow-hidden rounded-2xl ring-2 ring-transparent transition ' + t.bg + ' hover:ring-brand">' +
+      '<div class="relative h-24 bg-gradient-to-br ' + t.grad + '">' +
+        '<img src="https://picsum.photos/seed/' + e.seed + '/540/240" alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()">' +
+        '<span class="absolute right-2.5 top-2.5 rounded-full bg-white/85 px-2.5 py-1 text-[11px] font-semibold text-ink backdrop-blur-sm">' + e.days + ' days left</span>' +
+        '<span class="absolute -bottom-5 left-4 grid h-11 w-11 place-items-center rounded-xl ' + t.solid + ' text-white shadow-md ring-4 ' + t.ring + '"><re-icon icon="' + e.icon + '" size="22"></re-icon></span>' +
+      '</div>' +
+      '<div class="px-4 pb-4 pt-7">' +
+        '<p class="truncate text-[15px] font-bold tracking-tight text-ink">' + e.name + '</p>' +
+        '<p class="mt-0.5 text-[12px] text-muted">Registrations: <span class="font-semibold text-ink tnum">' + e.reg + '</span></p>' +
+        '<div class="mt-3">' +
+          '<div class="flex items-center justify-between text-[12px]"><span class="text-muted">Filled</span><span class="font-semibold text-ink tnum">' + e.pct + '%</span></div>' +
+          '<div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/70 dark:bg-white/10"><div class="h-full rounded-full ' + t.bar + '" style="width:' + e.pct + '%"></div></div>' +
+        '</div>' +
+        '<div class="mt-3.5 flex items-center gap-2 border-t border-black/5 pt-3 dark:border-white/10">' +
+          '<div class="flex -space-x-2">' + avatars + '</div>' +
+          '<span class="text-[12px] font-semibold text-ink"><span class="tnum">' + e.att + '</span> attendees</span>' +
+        '</div>' +
+      '</div>' +
+    '</a>';
+  }
+  document.getElementById('upcoming-cards').innerHTML = upcoming.map(upCard).join('');
+
+  /* ---------- Manage Events tables ---------- */
+  const cover = {
+    brand:  'bg-brand',
+    blue:   'bg-blue-500',
+    pink:   'bg-pink-500',
+    amber:  'bg-amber-500',
+    violet: 'bg-violet-500',
+    indigo: 'bg-indigo-500',
+    teal:   'bg-teal-500',
+    red:    'bg-red-500',
+  };
+  const statusPill = {
+    Upcoming:  'bg-amber-50 text-amber-600 dark:bg-amber-400/15 dark:text-amber-300',
+    Planned:   'bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300',
+    Completed: 'bg-brand-soft text-brand-dark dark:text-brand',
+  };
+  function rowHTML(r) {
+    const parts = String(r.tasks).split('/');
+    const pct = parts[1] ? Math.round(parseInt(parts[0], 10) / parseInt(parts[1], 10) * 100) : 0;
+    return `
+      <tr class="border-t border-line align-middle transition hover:bg-line/40">
+        <td class="py-4 pr-4">
+          <div class="flex items-center gap-3.5">
+            <span class="relative grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-xl ${cover[r.tone]} text-white shadow-sm"><re-icon icon="${r.icon}" size="22"></re-icon><img src="https://picsum.photos/seed/${r.name.replace(/[^a-z0-9]+/gi,'-').toLowerCase()}/96/96" alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()"></span>
+            <div class="min-w-0">
+              <p class="truncate text-[14.5px] font-bold tracking-tight text-ink">${r.name}</p>
+              <p class="mt-0.5 truncate text-[12px] text-muted">${r.type}</p>
+            </div>
+          </div>
+        </td>
+        <td class="py-4 pr-4 whitespace-nowrap text-[13px] text-muted tnum">${r.date}</td>
+        <td class="py-4 pr-4">
+          <div class="w-36 max-w-full">
+            <div class="flex items-center justify-between gap-2 text-[12.5px]"><span class="font-bold text-ink tnum">${r.tasks}</span><span class="text-muted tnum">${pct}%</span></div>
+            <div class="mt-1.5 h-2 overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:${pct}%"></div></div>
+          </div>
+        </td>
+        <td class="py-4 pr-4"><span class="inline-block rounded-full px-3 py-1 text-[12px] font-medium ${statusPill[r.status]}">${r.status}</span></td>
+        <td class="py-4"><button type="button" data-row-kebab class="grid h-9 w-9 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink" title="More actions"><re-icon icon="more-v-circle" size="19"></re-icon></button></td>
+      </tr>`;
+  }
+  const active = [
+    { name: 'Tech Innovators Forum',    date: 'August 27, 2025',    type: 'Conference',            icon: 'presentation', tone: 'amber',  tasks: '39/50', status: 'Upcoming' },
+    { name: 'UX Bangkok Meetup',        date: 'August 20, 2025',    type: 'Networking',            icon: 'users',        tone: 'indigo', tasks: '72/90', status: 'Upcoming' },
+    { name: 'Cloud Builders Workshop',  date: 'August 22, 2025',    type: 'Workshop',              icon: 'briefcase',    tone: 'teal',   tasks: '40/60', status: 'Upcoming' },
+    { name: 'Hope for All Charity Gala',date: 'August 29, 2025',    type: 'Charity & Gala',        icon: 'hand-heart',   tone: 'brand',  tasks: '34/51', status: 'Upcoming' },
+    { name: 'Sunrise Yoga Retreat',     date: 'September 11, 2025', type: 'Sports & Wellness',     icon: 'dumbbell',     tone: 'red',    tasks: '48/60', status: 'Planned' },
+  ];
+  const completed = [
+    { name: 'Corporate Leadership Summit', date: 'December 20, 2024', type: 'Conference',          icon: 'presentation', tone: 'amber',  tasks: '64/64', status: 'Completed' },
+    { name: 'Summer Music Festival',    date: 'June 15, 2025',      type: 'Concert & Festival',    icon: 'mic',          tone: 'violet', tasks: '400/400', status: 'Completed' },
+    { name: 'Product Launch Mixer',     date: 'May 2, 2025',        type: 'Networking',            icon: 'users',        tone: 'indigo', tasks: '30/30', status: 'Completed' },
+  ];
+  document.getElementById('active-rows').innerHTML = active.map(rowHTML).join('');
+  document.getElementById('completed-rows').innerHTML = completed.map(rowHTML).join('');
+
+  /* ---------- Row actions menu (⋮) ---------- */
+  const rowMenu = document.getElementById('row-menu');
+  let menuRow = null;
+  const closeRowMenu = () => rowMenu.classList.add('hidden');
+  document.addEventListener('click', e => {
+    const kebab = e.target.closest('[data-row-kebab]');
+    if (kebab) {
+      e.stopPropagation();
+      menuRow = kebab.closest('tr');
+      rowMenu.classList.remove('hidden');            // un-hide first so we can measure it
+      const r = kebab.getBoundingClientRect();
+      let left = r.right - rowMenu.offsetWidth;
+      let top = r.bottom + 6;
+      if (left < 8) left = 8;
+      if (top + rowMenu.offsetHeight > window.innerHeight - 8) top = r.top - rowMenu.offsetHeight - 6;
+      rowMenu.style.left = left + 'px';
+      rowMenu.style.top = top + 'px';
+      return;
+    }
+    const act = e.target.closest('#row-menu [data-act]');
+    if (act) {
+      if (act.dataset.act === 'delete' && menuRow) menuRow.remove();
+      else if (act.dataset.act === 'duplicate' && menuRow) menuRow.after(menuRow.cloneNode(true));
+      closeRowMenu();
+      return;
+    }
+    if (!e.target.closest('#row-menu')) closeRowMenu();
+  });
+  document.querySelector('main').addEventListener('scroll', closeRowMenu);
+  window.addEventListener('resize', closeRowMenu);
+
+  /* ---------- Calendar view ---------- */
+  const CAL_PILL = {
+    pink:   'bg-pink-100 text-pink-700 dark:bg-pink-500/20 dark:text-pink-200',
+    blue:   'bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-200',
+    amber:  'bg-amber-100 text-amber-700 dark:bg-amber-400/20 dark:text-amber-200',
+    brand:  'bg-brand-soft text-brand-dark dark:text-brand',
+    violet: 'bg-violet-100 text-violet-700 dark:bg-violet-500/20 dark:text-violet-200',
+    indigo: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-200',
+    teal:   'bg-teal-100 text-teal-700 dark:bg-teal-500/20 dark:text-teal-200',
+    red:    'bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-200',
+  };
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const WEEK = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const today = new Date();
+  const addDays = (base, n) => { const d = new Date(base); d.setDate(d.getDate() + n); return d; };
+  const CAL_EVENTS = [
+    { d: addDays(today, -3), t: '09:00', name: 'Team offsite',              tone: 'brand'  },
+    { d: addDays(today,  0), t: '09:30', name: 'Weekly standup',            tone: 'blue'   },
+    { d: addDays(today,  0), t: '15:00', name: 'Sponsor onboarding',        tone: 'indigo' },
+    { d: addDays(today,  1), t: '11:00', name: 'Vendor call',               tone: 'amber'  },
+    { d: addDays(today,  2), t: '18:30', name: 'UX Bangkok Meetup',         tone: 'indigo' },
+    { d: addDays(today,  3), t: '10:00', name: 'Cloud Builders Workshop',   tone: 'teal'   },
+    { d: addDays(today,  5), t: '14:00', name: 'Design review',             tone: 'violet' },
+    { d: addDays(today,  5), t: '15:30', name: 'Sponsor sync',              tone: 'amber'  },
+    { d: addDays(today, 10), t: '09:00', name: 'Tech Innovators Forum',     tone: 'amber'  },
+    { d: addDays(today, 12), t: '19:00', name: 'Hope for All Charity Gala', tone: 'brand'  },
+    { d: addDays(today, 12), t: '20:00', name: 'Sponsor dinner',            tone: 'violet' },
+    { d: addDays(today, 12), t: '16:00', name: 'Stakeholder review',        tone: 'violet' },
+    { d: addDays(today, 18), t: '17:00', name: 'Summer Music Festival',     tone: 'violet' },
+    { d: addDays(today, 25), t: '18:00', name: 'Product Launch Mixer',      tone: 'indigo' },
+  ];
+  const calState = { y: today.getFullYear(), m: today.getMonth() };
+  let selectedDay = new Date(today);
+  const sameDay = (a, b) => a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  const fmtTime = (t) => { const [h, m] = t.split(':').map(Number); const ap = h < 12 ? 'am' : 'pm'; const h12 = (h % 12) || 12; return m === 0 ? (h12 + ap) : (h12 + ':' + String(m).padStart(2, '0') + ap); };
+  const fmtTimeLong = (t) => { const [h, m] = t.split(':').map(Number); const ap = h < 12 ? 'AM' : 'PM'; const h12 = (h % 12) || 12; return h12 + ':' + String(m).padStart(2, '0') + ' ' + ap; };
+
+  const calWeekdays = document.getElementById('cal-weekdays');
+  if (calWeekdays) calWeekdays.innerHTML = WEEK.map(w =>
+    `<div class="border-b border-r border-line bg-canvas/50 py-2 text-center text-[11px] font-semibold uppercase tracking-wide text-muted">${w}</div>`).join('');
+
+  function renderCalendar() {
+    document.getElementById('cal-title').textContent = MONTHS[calState.m] + ' ' + calState.y;
+    const monthCount = CAL_EVENTS.filter(e => e.d.getFullYear() === calState.y && e.d.getMonth() === calState.m).length;
+    document.getElementById('cal-count').textContent = monthCount + (monthCount === 1 ? ' event' : ' events') + ' this month';
+
+    const first = new Date(calState.y, calState.m, 1);
+    const gridStart = new Date(calState.y, calState.m, 1 - first.getDay());
+    let cells = '';
+    for (let i = 0; i < 42; i++) {
+      const d = addDays(gridStart, i);
+      const other = d.getMonth() !== calState.m;
+      const isToday = sameDay(d, today);
+      const evs = CAL_EVENTS.filter(e => sameDay(e.d, d)).sort((a, b) => a.t.localeCompare(b.t));
+      const shown = evs.slice(0, 3);
+      const more = evs.length - shown.length;
+      const numCls = isToday
+        ? 'grid h-6 w-6 place-items-center rounded-full bg-brand text-[12px] font-bold text-white'
+        : 'text-[12px] font-semibold ' + (other ? 'text-muted/40' : 'text-ink');
+      const isSel = sameDay(d, selectedDay);
+      cells +=
+        `<div data-day="${d.getFullYear()}-${d.getMonth()}-${d.getDate()}" class="min-h-[118px] cursor-pointer border-b border-r border-line p-1.5 transition ${other ? 'bg-canvas/40' : ''} ${isSel ? 'ring-2 ring-inset ring-brand/60' : 'hover:bg-line/30'}">` +
+          `<div class="mb-1"><span class="${numCls}">${d.getDate()}</span></div>` +
+          '<div class="space-y-1">' +
+            shown.map(e => `<a href="event-detail.html" title="${e.name} · ${fmtTime(e.t)}" class="block rounded-md px-1.5 py-1 ${CAL_PILL[e.tone] || CAL_PILL.brand} transition hover:brightness-95"><span class="block truncate text-[11px] font-semibold leading-tight">${e.name}</span><span class="mt-0.5 block text-[10px] font-medium leading-tight opacity-75 tnum">${fmtTime(e.t)}</span></a>`).join('') +
+            (more > 0 ? `<div class="px-1.5 text-[10px] font-semibold text-muted">+${more} more</div>` : '') +
+          '</div>' +
+        '</div>';
+    }
+    document.getElementById('cal-grid').innerHTML = cells;
+    renderAgenda();
+  }
+  function renderAgenda() {
+    const evs = CAL_EVENTS.filter(e => sameDay(e.d, selectedDay)).sort((a, b) => a.t.localeCompare(b.t));
+    const isToday = sameDay(selectedDay, today);
+    document.getElementById('cal-agenda-date').textContent =
+      (isToday ? 'Today · ' : '') + selectedDay.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+    document.getElementById('cal-agenda-sub').textContent = evs.length + (evs.length === 1 ? ' event scheduled' : ' events scheduled');
+    document.getElementById('cal-agenda').innerHTML = evs.length
+      ? evs.map(e =>
+          '<a href="event-detail.html" class="flex items-center gap-3 rounded-lg bg-canvas p-2.5 transition hover:bg-line">' +
+            `<span class="h-9 w-1 shrink-0 rounded-full ${cover[e.tone] || 'bg-brand'}"></span>` +
+            '<div class="min-w-0 flex-1">' +
+              `<p class="text-[13px] font-bold text-ink tnum leading-tight">${fmtTimeLong(e.t)}</p>` +
+              `<p class="mt-0.5 truncate text-[12.5px] font-medium text-ink">${e.name}</p>` +
+            '</div>' +
+            '<re-icon icon="chevron-right" size="15" class="shrink-0 text-muted"></re-icon>' +
+          '</a>').join('')
+      : '<div class="rounded-lg bg-canvas px-3 py-8 text-center text-[12px] text-muted">No events scheduled.</div>';
+  }
+  document.getElementById('cal-grid').addEventListener('click', e => {
+    if (e.target.closest('a')) return;   // event pills navigate to their detail page
+    const cell = e.target.closest('[data-day]'); if (!cell) return;
+    const [y, m, day] = cell.dataset.day.split('-').map(Number);
+    selectedDay = new Date(y, m, day);
+    if (m !== calState.m || y !== calState.y) { calState.y = y; calState.m = m; }
+    renderCalendar();
+  });
+  document.getElementById('cal-prev').addEventListener('click', () => { if (--calState.m < 0) { calState.m = 11; calState.y--; } renderCalendar(); });
+  document.getElementById('cal-next').addEventListener('click', () => { if (++calState.m > 11) { calState.m = 0; calState.y++; } renderCalendar(); });
+  document.getElementById('cal-today').addEventListener('click', () => { calState.y = today.getFullYear(); calState.m = today.getMonth(); renderCalendar(); });
+  renderCalendar();
+</script>
 </body>
 </html>

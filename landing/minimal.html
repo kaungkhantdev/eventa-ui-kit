@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Event — Register</title>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- reicon web component -->
+  <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
+
+  <!-- Tailwind Play CDN + shared Eventa kit -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../assets/config.js"></script>
+  <link rel="stylesheet" href="../assets/app.css" />
+
+  <!-- page-local layout helpers only (no colors/borders that fight the kit) -->
+  <style>
+    html { scroll-behavior: smooth; }
+    body { overflow-x: hidden; }
+
+    /* reicon inherits text color */
+    re-icon {
+      --ri-primary: currentColor;
+      --ri-secondary: currentColor;
+      display: inline-flex;
+      line-height: 1;
+      vertical-align: middle;
+    }
+
+    /* brand focus ring */
+    a:focus-visible, button:focus-visible, summary:focus-visible {
+      outline: 2px solid #1ba770;
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+
+    /* FAQ disclosure */
+    details.faq > summary { list-style: none; cursor: pointer; }
+    details.faq > summary::-webkit-details-marker { display: none; }
+    details.faq[open] .faq-chev { transform: rotate(180deg); }
+    .faq-chev { transition: transform .22s ease; }
+
+    section[id] { scroll-margin-top: 72px; }
+
+    /* calm editorial reveal — opt-in only */
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal { animation: rise .7s cubic-bezier(.22,.61,.36,1) both; }
+      .reveal.d1 { animation-delay: .06s; }
+      .reveal.d2 { animation-delay: .13s; }
+      .reveal.d3 { animation-delay: .20s; }
+      .reveal.d4 { animation-delay: .27s; }
+      @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-canvas font-sans text-ink antialiased">
+
+  <!-- ============ 1 · STICKY NAV ============ -->
+  <header class="sticky top-0 z-50 border-b border-line bg-canvas/85 backdrop-blur">
+    <nav class="mx-auto flex h-14 max-w-[720px] items-center justify-between gap-4 px-6" aria-label="Primary">
+      <a href="#top" class="flex min-w-0 items-center gap-2.5 text-[15px] font-bold tracking-tight text-ink">
+        <span class="h-2 w-2 shrink-0 rounded-full bg-brand" aria-hidden="true"></span>
+        <span id="nav-title" class="truncate">Event</span>
+      </a>
+      <a id="nav-register" href="#" class="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-brand px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-dark">
+        Register <re-icon icon="arrow-right" size="15"></re-icon>
+      </a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- ============ 2 · HERO ============ -->
+    <section class="mx-auto max-w-[720px] px-6 pt-16 pb-14 text-center sm:pt-24">
+      <p id="hero-kicker" class="reveal text-[12px] font-semibold uppercase tracking-[0.18em] text-brand"></p>
+      <h1 id="hero-title" class="reveal d1 mx-auto mt-5 max-w-[16ch] text-[2rem] font-extrabold leading-[1.05] tracking-tight text-ink sm:text-[2.6rem]">Event title</h1>
+      <p id="hero-tagline" class="reveal d2 mx-auto mt-5 max-w-[52ch] text-[15px] leading-relaxed text-muted"></p>
+
+      <ul id="hero-facts" class="reveal d3 mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2.5 text-[13px] text-muted"></ul>
+
+      <div class="reveal d4 mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a id="hero-register" href="#" class="inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand px-5 py-2.5 text-[13px] font-semibold text-white transition hover:bg-brand-dark sm:w-auto">
+          Register now <re-icon icon="arrow-right" size="15"></re-icon>
+        </a>
+        <a href="#" class="inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand-soft px-5 py-2.5 text-[13px] font-semibold text-brand transition hover:brightness-95 sm:w-auto">
+          <re-icon icon="calendar-check" size="15"></re-icon> Add to calendar
+        </a>
+      </div>
+
+      <div class="reveal d4 relative mt-12 aspect-[16/8] overflow-hidden rounded-2xl bg-gradient-to-br from-brand to-emerald-500">
+        <img id="hero-cover" alt="" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()" />
+      </div>
+    </section>
+
+    <!-- ============ 3 · HIGHLIGHTS ============ -->
+    <section class="mx-auto max-w-[720px] border-t border-line px-6 py-14">
+      <div id="highlights" class="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4"></div>
+    </section>
+
+    <!-- ============ 4 · ABOUT ============ -->
+    <section id="about" class="mx-auto max-w-[720px] border-t border-line px-6 py-14">
+      <h2 class="text-[12px] font-semibold uppercase tracking-[0.16em] text-brand">About</h2>
+      <p id="about-text" class="mt-4 text-[15px] leading-[1.75] text-muted"></p>
+      <dl id="about-facts" class="mt-8 divide-y divide-line rounded-2xl bg-surface px-5"></dl>
+    </section>
+
+    <!-- ============ 5 · AGENDA ============ -->
+    <section id="agenda" class="mx-auto max-w-[720px] border-t border-line px-6 py-14">
+      <h2 id="agenda-title" class="text-[18px] font-bold tracking-tight text-ink">Schedule</h2>
+      <ol id="agenda-list" class="mt-7"></ol>
+    </section>
+
+    <!-- ============ 6 · SPEAKERS ============ -->
+    <section id="speakers" class="mx-auto max-w-[720px] border-t border-line px-6 py-14">
+      <h2 id="speakers-title" class="text-[18px] font-bold tracking-tight text-ink">Speakers</h2>
+      <div id="speakers-list" class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4"></div>
+    </section>
+
+    <!-- ============ 7 · TICKETS ============ -->
+    <section id="tickets" class="mx-auto max-w-[720px] border-t border-line px-6 py-14">
+      <h2 id="tickets-title" class="text-[18px] font-bold tracking-tight text-ink">Tickets</h2>
+      <div id="tickets-list" class="mt-6 grid items-start gap-3 sm:grid-cols-3"></div>
+    </section>
+
+    <!-- ============ 8 · FAQ ============ -->
+    <section id="faq" class="mx-auto max-w-[720px] border-t border-line px-6 py-14">
+      <h2 class="text-[18px] font-bold tracking-tight text-ink">Frequently asked</h2>
+      <div id="faq-list" class="mt-5 border-t border-line"></div>
+    </section>
+  </main>
+
+  <!-- ============ 9 · FOOTER ============ -->
+  <footer class="border-t border-line">
+    <div class="mx-auto max-w-[720px] px-6 py-16 text-center">
+      <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-brand">Join us</p>
+      <h2 id="foot-head" class="mx-auto mt-3 max-w-[18ch] text-[24px] font-extrabold leading-[1.1] tracking-tight text-ink sm:text-[30px]">Save your place</h2>
+      <p id="foot-when" class="mx-auto mt-3 max-w-[46ch] text-[14px] leading-relaxed text-muted"></p>
+      <a id="footer-register" href="#" class="mt-6 inline-flex items-center gap-1.5 rounded-lg bg-brand px-5 py-2.5 text-[13px] font-semibold text-white transition hover:bg-brand-dark">
+        Register now <re-icon icon="arrow-right" size="15"></re-icon>
+      </a>
+    </div>
+
+    <div class="mx-auto flex max-w-[720px] flex-col items-center justify-between gap-4 border-t border-line px-6 py-6 text-[13px] text-muted sm:flex-row">
+      <p>
+        Organised by <span id="footer-organizer" class="font-semibold text-ink">Organizer</span>
+        <span class="mx-1.5 text-line">·</span>
+        <a id="footer-email" href="#" class="text-brand transition hover:text-brand-dark hover:underline">email</a>
+      </p>
+      <div class="flex items-center gap-2">
+        <a id="footer-instagram" href="#" aria-label="Instagram" class="grid h-9 w-9 place-items-center rounded-full bg-surface text-muted transition hover:text-brand">
+          <re-icon icon="instagram2" size="17"></re-icon>
+        </a>
+        <a id="footer-website" href="#" aria-label="Website" class="grid h-9 w-9 place-items-center rounded-full bg-surface text-muted transition hover:text-brand">
+          <re-icon icon="globe" size="17"></re-icon>
+        </a>
+      </div>
+    </div>
+
+    <p class="mx-auto max-w-[720px] px-6 pb-10 text-[12px] text-muted">
+      © <span id="foot-year">2026</span> <span id="foot-org2">Organizer</span> · Built with Eventa.
+    </p>
+  </footer>
+
+  <!-- ============ DATA + RENDER ============ -->
+  <script src="data.js"></script>
+  <script>
+    (function () {
+      var ev = (window.EVENTA_getEvent && window.EVENTA_getEvent()) || {};
+
+      // ---- helpers ----
+      function esc(s) {
+        return String(s == null ? '' : s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      }
+      function setText(id, val) { var el = document.getElementById(id); if (el && val != null && val !== '') el.textContent = val; }
+      function setHref(id, val) { var el = document.getElementById(id); if (el && val) el.setAttribute('href', val); }
+      function html(id, markup) { var el = document.getElementById(id); if (el) el.innerHTML = markup; }
+      function icon(name, size) { return '<re-icon icon="' + esc(name || 'star') + '" size="' + (size || 16) + '"></re-icon>'; }
+
+      var reg = ev.registerUrl || '#';
+      var title = ev.title || 'Event';
+      var isOnline = ev.online === true || new URLSearchParams(location.search).get('online') === '1';
+      var venueCity = isOnline ? 'Online event' : [ev.venue, ev.city].filter(Boolean).join(', ');
+
+      // ---- document + nav ----
+      document.title = title + ' — Register';
+      setText('nav-title', title);
+      setHref('nav-register', reg);
+
+      // ---- hero ----
+      setText('hero-kicker', ev.kicker);
+      setText('hero-title', title);
+      setText('hero-tagline', ev.tagline);
+      setHref('hero-register', reg);
+      var heroCover = ev.image || ('https://picsum.photos/seed/' + ev.slug + '/1600/800');
+      var hc = document.getElementById('hero-cover'); if (hc) hc.src = heroCover;
+
+      var heroFacts = [
+        { icon: 'calendar', v: ev.dateText },
+        { icon: 'clock', v: ev.timeText },
+        { icon: isOnline ? 'video' : 'pin', v: venueCity }
+      ].filter(function (f) { return f.v; });
+      html('hero-facts', heroFacts.map(function (f) {
+        return '<li class="inline-flex items-center gap-2 tnum">' +
+          '<span class="text-brand">' + icon(f.icon, 15) + '</span>' +
+          '<span>' + esc(f.v) + '</span></li>';
+      }).join(''));
+
+      // ---- highlights ----
+      html('highlights', ((function(){var q=new URLSearchParams(location.search).get('hl');return q?q.split('|').map(function(s){var i=s.indexOf(':');return{icon:s.slice(0,i),label:s.slice(i+1)};}):(ev.highlights||[]);})()).map(function (h) {
+        return '<div class="flex flex-col items-center gap-3 text-center">' +
+          '<span class="grid h-11 w-11 place-items-center rounded-xl bg-brand-soft text-brand">' + icon(h.icon, 21) + '</span>' +
+          '<span class="text-[13px] font-semibold leading-snug text-ink">' + esc(h.label) + '</span></div>';
+      }).join(''));
+
+      // ---- about ----
+      setText('about-text', ev.about);
+      var priceVal = ev.priceFrom || '';
+      var lowered = priceVal.toLowerCase();
+      var priceDisplay = (!priceVal || lowered === 'free' || priceVal === '—') ? priceVal : 'From ' + priceVal;
+      var aboutRows = [
+        { icon: 'calendar', k: 'Date', v: ev.dateText },
+        { icon: 'clock', k: 'Time', v: ev.timeText },
+        isOnline ? { icon: 'video', k: 'Format', v: 'Online event' } : { icon: 'pin', k: 'Venue', v: ev.venue },
+        isOnline ? { icon: 'link', k: 'Access', v: ev.onlineNote || 'Join link sent after you register' } : { icon: 'map', k: 'Address', v: ev.address },
+        { icon: 'ticket', k: 'Category', v: ev.category },
+        { icon: 'wallet', k: 'Price', v: priceDisplay }
+      ].filter(function (r) { return r.v; });
+      html('about-facts', aboutRows.map(function (r) {
+        return '<div class="flex items-center justify-between gap-4 py-3.5">' +
+          '<dt class="flex items-center gap-2 text-[12px] font-medium uppercase tracking-wide text-muted">' +
+          '<span class="text-brand">' + icon(r.icon, 15) + '</span>' + esc(r.k) + '</dt>' +
+          '<dd class="text-right text-[13.5px] font-medium text-ink">' + esc(r.v) + '</dd></div>';
+      }).join(''));
+
+      // ---- agenda ----
+      setText('agenda-title', ev.agendaTitle);
+      var ag = ev.agenda || [];
+      html('agenda-list', ag.map(function (a, i) {
+        var last = i === ag.length - 1;
+        return '<li class="grid grid-cols-[62px_1fr] gap-4">' +
+          '<div class="pt-0.5 text-right text-[13px] font-semibold tnum text-brand">' + esc(a.time) + '</div>' +
+          '<div class="relative border-l border-line pl-5 ' + (last ? 'pb-1' : 'pb-7') + '">' +
+          '<span class="absolute -left-[4px] top-1.5 h-2 w-2 rounded-full bg-brand ring-4 ring-canvas"></span>' +
+          '<h3 class="text-[14.5px] font-semibold leading-snug text-ink">' + esc(a.title) + '</h3>' +
+          '<p class="mt-1 text-[13.5px] leading-relaxed text-muted">' + esc(a.desc) + '</p>' +
+          '</div></li>';
+      }).join(''));
+
+      // ---- speakers ----
+      setText('speakers-title', ev.speakersTitle);
+      html('speakers-list', (ev.speakers || []).map(function (s) {
+        return '<div class="rounded-2xl bg-surface p-4 text-center">' +
+          '<span class="mx-auto grid h-14 w-14 place-items-center rounded-full bg-brand-soft text-[15px] font-bold text-brand" aria-hidden="true">' + esc(s.initials) + '</span>' +
+          '<div class="mt-3 text-[13.5px] font-semibold leading-snug text-ink">' + esc(s.name) + '</div>' +
+          '<div class="mt-0.5 text-[12px] text-muted">' + esc(s.role) + '</div></div>';
+      }).join(''));
+
+      // ---- tickets ----
+      setText('tickets-title', ev.ticketsTitle);
+      html('tickets-list', (ev.tickets || []).map(function (t) {
+        var feat = !!t.featured;
+        var note = t.note
+          ? '<span class="shrink-0 rounded-full px-2 py-0.5 text-[10.5px] font-semibold uppercase tracking-wide ' +
+            (feat ? 'bg-brand text-white' : 'bg-brand-soft text-brand') + '">' + esc(t.note) + '</span>'
+          : '';
+        var feats = (t.features || []).map(function (f) {
+          return '<li class="flex items-start gap-2 text-[13px] text-muted">' +
+            '<span class="mt-0.5 text-brand">' + icon('check', 15) + '</span>' +
+            '<span>' + esc(f) + '</span></li>';
+        }).join('');
+        var btn = feat
+          ? '<a href="' + esc(reg) + '" class="mt-5 inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand px-4 py-2.5 text-[13px] font-semibold text-white transition hover:bg-brand-dark">Register ' + icon('arrow-right', 15) + '</a>'
+          : '<a href="' + esc(reg) + '" class="mt-5 inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand-soft px-4 py-2.5 text-[13px] font-semibold text-brand transition hover:brightness-95">Register ' + icon('arrow-right', 15) + '</a>';
+        return '<div class="flex h-full flex-col rounded-2xl p-5 ' + (feat ? 'bg-brand-soft' : 'bg-surface') + '">' +
+          '<div class="flex items-center justify-between gap-2">' +
+          '<h3 class="text-[12.5px] font-bold uppercase tracking-wide text-ink">' + esc(t.name) + '</h3>' + note + '</div>' +
+          '<div class="mt-3 text-[24px] font-extrabold tracking-tight tnum text-ink">' + esc(t.price) + '</div>' +
+          '<ul class="mt-4 flex-1 space-y-2.5">' + feats + '</ul>' + btn + '</div>';
+      }).join(''));
+
+      // ---- faq ----
+      html('faq-list', (ev.faqs || []).map(function (f, i) {
+        return '<details class="faq border-b border-line"' + (i === 0 ? ' open' : '') + '>' +
+          '<summary class="flex items-center justify-between gap-4 py-4 text-[14.5px] font-semibold text-ink">' +
+          '<span>' + esc(f.q) + '</span>' +
+          '<span class="faq-chev shrink-0 text-brand">' + icon('chevron-down', 18) + '</span></summary>' +
+          '<p class="pb-4 pr-8 text-[14px] leading-relaxed text-muted">' + esc(f.a) + '</p></details>';
+      }).join(''));
+
+      // ---- footer ----
+      var when = [ev.dateText, venueCity].filter(Boolean).join('  ·  ');
+      setText('foot-when', when);
+      setHref('footer-register', reg);
+      setText('footer-organizer', ev.organizer);
+      setText('foot-org2', ev.organizer);
+      var yr = (ev.dateText && (ev.dateText.match(/\b(20\d{2})\b/) || [])[1]) || String(new Date().getFullYear());
+      setText('foot-year', yr);
+      if (ev.contactEmail) {
+        setHref('footer-email', 'mailto:' + ev.contactEmail);
+        setText('footer-email', ev.contactEmail);
+      }
+      var socials = ev.socials || {};
+      setHref('footer-instagram', socials.instagram || '#');
+      setHref('footer-website', socials.website || '#');
+    })();
+  </script>
+</body>
+</html>

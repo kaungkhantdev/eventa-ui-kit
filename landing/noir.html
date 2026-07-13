@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Event — Eventa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../assets/config.js"></script>
+  <link rel="stylesheet" href="../assets/app.css" />
+  <style>
+    /* Page-specific layout helpers only — colors/borders come from the kit. */
+    html, body { overflow-x: hidden; }
+    re-icon { --ri-primary: currentColor; --ri-secondary: currentColor; display: inline-flex; line-height: 1; vertical-align: middle; }
+    summary { list-style: none; }
+    summary::-webkit-details-marker { display: none; }
+    :focus-visible { outline: 2px solid #1ba770; outline-offset: 2px; border-radius: 6px; }
+
+    @media (prefers-reduced-motion: no-preference) {
+      html { scroll-behavior: smooth; }
+      @keyframes eventa-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+      .reveal { animation: eventa-rise .6s cubic-bezier(.22,.61,.36,1) both; }
+      .reveal.d1 { animation-delay: .06s; }
+      .reveal.d2 { animation-delay: .12s; }
+      .reveal.d3 { animation-delay: .18s; }
+      .reveal.d4 { animation-delay: .24s; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { animation: none !important; }
+    }
+  </style>
+</head>
+<body class="bg-canvas text-ink font-sans antialiased">
+
+  <!-- 1 · Sticky nav -->
+  <header class="sticky top-0 z-40 bg-canvas/85 backdrop-blur-md border-b border-line">
+    <div class="mx-auto flex h-14 max-w-[1080px] items-center justify-between gap-4 px-5 sm:px-6">
+      <a href="#top" class="inline-flex min-w-0 items-center gap-2.5" aria-label="Back to top">
+        <span class="h-2.5 w-2.5 flex-none rounded-full bg-brand" aria-hidden="true"></span>
+        <span id="nav-title" class="truncate text-[15px] font-bold text-ink">Event</span>
+      </a>
+      <a id="nav-register" href="#" class="inline-flex flex-none items-center gap-1.5 rounded-lg bg-brand px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-dark">
+        Register<re-icon icon="arrow-right2" size="15"></re-icon>
+      </a>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- 2 · Hero (Spotlight split) -->
+    <section class="mx-auto max-w-[1080px] px-5 pb-12 pt-10 sm:px-6 lg:pb-16 lg:pt-16">
+      <div class="reveal relative mb-8 aspect-[21/9] overflow-hidden rounded-2xl bg-gradient-to-br from-brand to-emerald-600 sm:mb-10">
+        <img id="hero-cover" alt="" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent"></div>
+      </div>
+      <div class="grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-12">
+
+        <!-- Left column -->
+        <div>
+          <p class="reveal inline-flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-brand">
+            <span class="h-px w-6 bg-brand" aria-hidden="true"></span>
+            <span id="hero-kicker">Kicker</span>
+          </p>
+          <h1 id="hero-title" class="reveal d1 mt-4 text-[32px] font-extrabold leading-[1.05] tracking-tight text-ink sm:text-[40px] lg:text-[44px]">Event title</h1>
+          <p id="hero-tagline" class="reveal d2 mt-4 max-w-[52ch] text-[15px] leading-relaxed text-muted sm:text-[16px]">Tagline</p>
+          <div id="hero-facts" class="reveal d3 mt-8 flex flex-col gap-x-8 gap-y-3.5 sm:flex-row sm:flex-wrap" role="list"></div>
+        </div>
+
+        <!-- Right column · sticky register card -->
+        <aside class="reveal d2 lg:sticky lg:top-20">
+          <div class="rounded-2xl bg-surface p-5 sm:p-6">
+            <div class="flex items-center justify-between gap-3">
+              <span id="rc-category" class="badge badge-green">Event</span>
+              <span id="rc-attendees" class="text-[12px] font-medium text-muted"></span>
+            </div>
+            <div class="mt-5">
+              <div id="rc-price-label" class="text-[11px] font-semibold uppercase tracking-wide text-muted">Starting from</div>
+              <div id="rc-price" class="mt-1 text-[34px] font-extrabold leading-none tracking-tight text-ink tnum">—</div>
+            </div>
+            <a id="rc-register" href="#" class="mt-5 inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand px-4 py-3 text-[14px] font-semibold text-white transition hover:bg-brand-dark">
+              Register now<re-icon icon="arrow-right2" size="16"></re-icon>
+            </a>
+            <a id="rc-calendar" href="#" class="mt-2.5 inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand-soft px-4 py-2.5 text-[13px] font-semibold text-brand transition hover:bg-brand hover:text-white">
+              <re-icon icon="calendar-check" size="16"></re-icon>Add to calendar
+            </a>
+            <dl id="rc-facts" class="mt-5 space-y-3.5 border-t border-line pt-5"></dl>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- 3 · Highlights -->
+    <section class="mx-auto max-w-[1080px] px-5 py-8 sm:px-6 lg:py-10" aria-labelledby="lbl-highlights">
+      <h2 id="lbl-highlights" class="sr-only">Highlights</h2>
+      <div id="highlights" class="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4"></div>
+    </section>
+
+    <!-- 4 · About + facts panel -->
+    <section class="mx-auto max-w-[1080px] px-5 py-8 sm:px-6 lg:py-10" aria-labelledby="lbl-about">
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-[1.4fr_1fr] lg:gap-10">
+        <div>
+          <h2 id="lbl-about" class="text-[18px] font-bold text-ink">About this event</h2>
+          <p id="about-text" class="mt-4 text-[14.5px] leading-relaxed text-muted"></p>
+        </div>
+        <div class="rounded-2xl bg-surface p-5 sm:p-6">
+          <div class="mb-1 text-[12px] font-semibold uppercase tracking-wide text-muted">Event details</div>
+          <dl id="about-facts" class="divide-y divide-line"></dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · Agenda -->
+    <section class="mx-auto max-w-[1080px] px-5 py-8 sm:px-6 lg:py-10" aria-labelledby="agenda-title">
+      <h2 id="agenda-title" class="mb-5 text-[18px] font-bold text-ink">Schedule</h2>
+      <div class="rounded-2xl bg-surface p-5 sm:p-6">
+        <ol id="agenda-list" class="divide-y divide-line"></ol>
+      </div>
+    </section>
+
+    <!-- 6 · Speakers -->
+    <section class="mx-auto max-w-[1080px] px-5 py-8 sm:px-6 lg:py-10" aria-labelledby="speakers-title">
+      <h2 id="speakers-title" class="mb-5 text-[18px] font-bold text-ink">Speakers</h2>
+      <div id="speakers-list" class="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4"></div>
+    </section>
+
+    <!-- 7 · Tickets -->
+    <section class="mx-auto max-w-[1080px] px-5 py-8 sm:px-6 lg:py-10" aria-labelledby="tickets-title">
+      <h2 id="tickets-title" class="mb-5 text-[18px] font-bold text-ink">Tickets</h2>
+      <div id="tickets-list" class="grid grid-cols-1 items-start gap-4 md:grid-cols-3"></div>
+    </section>
+
+    <!-- 8 · FAQ -->
+    <section class="mx-auto max-w-[1080px] px-5 py-8 sm:px-6 lg:py-10" aria-labelledby="lbl-faq">
+      <h2 id="lbl-faq" class="mb-5 text-[18px] font-bold text-ink">Frequently asked</h2>
+      <div class="rounded-2xl bg-surface px-2 py-1 sm:px-3">
+        <div id="faq-list" class="divide-y divide-line"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 9 · Footer -->
+  <footer class="mx-auto max-w-[1080px] px-5 pb-12 pt-4 sm:px-6">
+    <div class="rounded-2xl bg-surface p-8 text-center sm:p-10">
+      <p class="text-[12px] font-semibold uppercase tracking-[0.14em] text-brand">Join us</p>
+      <h2 class="mx-auto mt-3 max-w-[20ch] text-[24px] font-extrabold tracking-tight text-ink sm:text-[30px]">
+        Save your place at <span id="foot-title">the event</span>
+      </h2>
+      <p id="foot-when" class="mt-3 text-[14px] text-muted"></p>
+      <a id="footer-register" href="#" class="mt-6 inline-flex items-center gap-1.5 rounded-lg bg-brand px-5 py-3 text-[14px] font-semibold text-white transition hover:bg-brand-dark">
+        Register now<re-icon icon="arrow-right2" size="16"></re-icon>
+      </a>
+    </div>
+
+    <div class="mt-6 flex flex-col items-center justify-between gap-4 sm:flex-row">
+      <div class="text-[13px] text-muted">Organised by <strong id="footer-organizer" class="font-semibold text-ink">Organizer</strong></div>
+      <div class="flex items-center gap-2">
+        <a id="footer-email" href="#" class="inline-flex items-center gap-2 rounded-lg bg-surface px-3 py-2 text-[13px] font-medium text-ink transition hover:text-brand">
+          <re-icon icon="envelope" size="16"></re-icon><span id="footer-email-text">email</span>
+        </a>
+        <a id="footer-instagram" href="#" aria-label="Instagram" class="grid h-9 w-9 place-items-center rounded-lg bg-surface text-ink transition hover:text-brand">
+          <re-icon icon="instagram2" size="18"></re-icon>
+        </a>
+        <a id="footer-website" href="#" aria-label="Website" class="grid h-9 w-9 place-items-center rounded-lg bg-surface text-ink transition hover:text-brand">
+          <re-icon icon="globe" size="18"></re-icon>
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-6 text-center text-[12px] text-muted">© <span id="foot-year">2026</span> <span id="foot-org2">Organizer</span> · Built with Eventa.</div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script>
+    (function () {
+      var ev = (window.EVENTA_getEvent && window.EVENTA_getEvent()) || {};
+
+      // ---- helpers ----
+      function esc(s) {
+        return String(s == null ? '' : s)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+      function setText(id, val) { var el = document.getElementById(id); if (el && val != null) el.textContent = val; }
+      function setHref(id, val) { var el = document.getElementById(id); if (el && val) el.setAttribute('href', val); }
+      function html(id, markup) { var el = document.getElementById(id); if (el) el.innerHTML = markup; }
+      function join(parts, sep) { return parts.filter(Boolean).join(sep); }
+
+      var reg = ev.registerUrl || '#';
+      var isOnline = ev.online === true || new URLSearchParams(location.search).get('online') === '1';
+      var where = isOnline ? 'Online event' : join([ev.venue, ev.city], ', ');
+
+      // ---- document / nav ----
+      if (ev.title) document.title = ev.title + ' · ' + (ev.category || 'Event');
+      setText('nav-title', ev.title);
+      setHref('nav-register', reg);
+
+      // ---- hero left ----
+      setText('hero-kicker', ev.kicker);
+      setText('hero-title', ev.title);
+      setText('hero-tagline', ev.tagline);
+      var heroCover = ev.image || ('https://picsum.photos/seed/' + ev.slug + '/1600/800');
+      var hc = document.getElementById('hero-cover'); if (hc) hc.src = heroCover;
+
+      var heroFacts = [
+        { icon: 'calendar', v: ev.dateText },
+        { icon: 'clock', v: ev.timeText },
+        { icon: isOnline ? 'video' : 'pin', v: where }
+      ].filter(function (f) { return f.v; });
+      html('hero-facts', heroFacts.map(function (f) {
+        return '<div class="flex items-center gap-2.5" role="listitem">' +
+          '<re-icon class="text-brand" icon="' + esc(f.icon) + '" size="18"></re-icon>' +
+          '<span class="text-[13.5px] font-medium text-ink">' + esc(f.v) + '</span></div>';
+      }).join(''));
+
+      // ---- register card ----
+      var priceVal = ev.priceFrom || '';
+      var lowered = priceVal.toLowerCase();
+      var flatPrice = (!priceVal || lowered === 'free' || lowered === 'rsvp' || priceVal === '—');
+      setText('rc-price-label', flatPrice ? 'Price' : 'Starting from');
+      setText('rc-price', priceVal || '—');
+      setText('rc-category', ev.category || 'Event');
+      setText('rc-attendees', ev.attendeesText);
+      setHref('rc-register', reg);
+
+      var rcFacts = [
+        { icon: 'calendar', k: 'Date', v: ev.dateText },
+        { icon: 'clock', k: 'Time', v: ev.timeText },
+        { icon: isOnline ? 'video' : 'pin', k: isOnline ? 'Format' : 'Venue', v: where },
+        { icon: 'users', k: 'Seats', v: ev.attendeesText }
+      ].filter(function (f) { return f.v; });
+      html('rc-facts', rcFacts.map(function (f) {
+        return '<div class="flex items-start gap-3">' +
+          '<re-icon class="mt-0.5 flex-none text-brand" icon="' + esc(f.icon) + '" size="17"></re-icon>' +
+          '<div class="min-w-0">' +
+          '<dt class="text-[11px] uppercase tracking-wide text-muted">' + esc(f.k) + '</dt>' +
+          '<dd class="text-[13px] font-medium text-ink">' + esc(f.v) + '</dd>' +
+          '</div></div>';
+      }).join(''));
+
+      // ---- highlights ----
+      html('highlights', ((function(){var q=new URLSearchParams(location.search).get('hl');return q?q.split('|').map(function(s){var i=s.indexOf(':');return{icon:s.slice(0,i),label:s.slice(i+1)};}):(ev.highlights||[]);})()).map(function (h) {
+        return '<div class="rounded-2xl bg-surface p-5">' +
+          '<div class="grid h-10 w-10 place-items-center rounded-xl bg-brand-soft text-brand">' +
+          '<re-icon icon="' + esc(h.icon || 'star') + '" size="20"></re-icon></div>' +
+          '<div class="mt-4 text-[14px] font-semibold text-ink">' + esc(h.label) + '</div></div>';
+      }).join(''));
+
+      // ---- about ----
+      setText('about-text', ev.about);
+      var priceDetail = flatPrice ? priceVal : 'From ' + priceVal;
+      var aboutRows = [
+        ['Date', ev.dateText],
+        ['Time', ev.timeText],
+        isOnline ? ['Format', 'Online event'] : ['Venue', ev.venue],
+        isOnline ? ['Access', ev.onlineNote || 'Join link sent after you register'] : ['Address', ev.address],
+        ['Category', ev.category],
+        ['Price', priceDetail]
+      ].filter(function (r) { return r[1]; });
+      html('about-facts', aboutRows.map(function (r) {
+        return '<div class="flex items-baseline justify-between gap-4 py-3">' +
+          '<dt class="flex-none text-[12px] uppercase tracking-wide text-muted">' + esc(r[0]) + '</dt>' +
+          '<dd class="text-right text-[13px] font-medium text-ink">' + esc(r[1]) + '</dd></div>';
+      }).join(''));
+
+      // ---- agenda ----
+      setText('agenda-title', ev.agendaTitle);
+      html('agenda-list', (ev.agenda || []).map(function (a) {
+        return '<li class="grid grid-cols-[64px_1fr] gap-4 py-4 first:pt-0 last:pb-0 sm:grid-cols-[92px_1fr]">' +
+          '<div class="pt-0.5 text-[13px] font-semibold text-brand tnum">' + esc(a.time) + '</div>' +
+          '<div><div class="text-[14.5px] font-semibold text-ink">' + esc(a.title) + '</div>' +
+          '<div class="mt-0.5 text-[13px] text-muted">' + esc(a.desc) + '</div></div></li>';
+      }).join(''));
+
+      // ---- speakers ----
+      setText('speakers-title', ev.speakersTitle);
+      html('speakers-list', (ev.speakers || []).map(function (s) {
+        return '<div class="rounded-2xl bg-surface p-5">' +
+          '<div class="avatar h-12 w-12 text-[15px]" aria-hidden="true">' + esc(s.initials) + '</div>' +
+          '<div class="mt-4 text-[14.5px] font-semibold text-ink">' + esc(s.name) + '</div>' +
+          '<div class="mt-0.5 text-[12.5px] text-muted">' + esc(s.role) + '</div></div>';
+      }).join(''));
+
+      // ---- tickets ----
+      setText('tickets-title', ev.ticketsTitle);
+      html('tickets-list', (ev.tickets || []).map(function (t) {
+        var feat = !!t.featured;
+        var note = t.note
+          ? (feat
+              ? '<span class="rounded-full bg-white/20 px-2 py-0.5 text-[11px] font-medium text-white">' + esc(t.note) + '</span>'
+              : '<span class="badge badge-green">' + esc(t.note) + '</span>')
+          : '';
+        var feats = (t.features || []).map(function (f) {
+          return '<li class="flex items-start gap-2.5 text-[13.5px] ' + (feat ? 'text-white/90' : 'text-ink') + '">' +
+            '<re-icon class="mt-0.5 flex-none ' + (feat ? 'text-white' : 'text-brand') + '" icon="check" size="16"></re-icon>' +
+            '<span>' + esc(f) + '</span></li>';
+        }).join('');
+        var cardCls = feat
+          ? 'flex flex-col gap-5 rounded-2xl bg-brand p-6 text-white md:-translate-y-1'
+          : 'flex flex-col gap-5 rounded-2xl bg-surface p-6';
+        var nameCls = feat ? 'text-[12px] font-semibold uppercase tracking-wide text-white/90' : 'text-[12px] font-semibold uppercase tracking-wide text-ink';
+        var priceCls = feat ? 'text-[30px] font-extrabold leading-none tracking-tight text-white tnum' : 'text-[30px] font-extrabold leading-none tracking-tight text-ink tnum';
+        var btnCls = feat
+          ? 'mt-auto inline-flex w-full items-center justify-center rounded-lg bg-white px-4 py-2.5 text-[13px] font-semibold text-brand transition hover:bg-white/90'
+          : 'mt-auto inline-flex w-full items-center justify-center rounded-lg bg-brand-soft px-4 py-2.5 text-[13px] font-semibold text-brand transition hover:bg-brand hover:text-white';
+        return '<div class="' + cardCls + '">' +
+          '<div class="flex min-h-[24px] items-center justify-between gap-3">' +
+          '<span class="' + nameCls + '">' + esc(t.name) + '</span>' + note + '</div>' +
+          '<div class="' + priceCls + '">' + esc(t.price) + '</div>' +
+          '<ul class="flex flex-col gap-2.5">' + feats + '</ul>' +
+          '<a class="' + btnCls + '" href="' + esc(reg) + '">Register</a></div>';
+      }).join(''));
+
+      // ---- faq ----
+      html('faq-list', (ev.faqs || []).map(function (f, i) {
+        return '<details class="group px-3 sm:px-4"' + (i === 0 ? ' open' : '') + '>' +
+          '<summary class="flex cursor-pointer items-center justify-between gap-4 py-4 text-[14.5px] font-semibold text-ink">' +
+          '<span>' + esc(f.q) + '</span>' +
+          '<re-icon class="flex-none text-muted transition-transform group-open:rotate-180" icon="chevron-down" size="18"></re-icon></summary>' +
+          '<div class="pb-4 pr-8 text-[13.5px] leading-relaxed text-muted">' + esc(f.a) + '</div></details>';
+      }).join(''));
+
+      // ---- footer ----
+      setText('foot-title', ev.title);
+      setText('foot-when', join([ev.dateText, where], '  ·  '));
+      setHref('footer-register', reg);
+      setText('footer-organizer', ev.organizer);
+      setText('foot-org2', ev.organizer);
+      setText('foot-year', String(new Date().getFullYear()));
+      if (ev.contactEmail) {
+        setHref('footer-email', 'mailto:' + ev.contactEmail);
+        setText('footer-email-text', ev.contactEmail);
+      }
+      var socials = ev.socials || {};
+      setHref('footer-instagram', socials.instagram || '#');
+      setHref('footer-website', socials.website || '#');
+    })();
+  </script>
+</body>
+</html>

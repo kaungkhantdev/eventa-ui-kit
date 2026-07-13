@@ -12,8 +12,8 @@
 <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js"></script>
-<link rel="stylesheet" href="../assets/app.css" />
+<script src="../assets/config.js?v=31"></script>
+<link rel="stylesheet" href="../assets/app.css?v=31" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="reports">
 
@@ -26,7 +26,7 @@
     <div class="mb-4">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div class="flex min-w-0 items-center gap-3">
-          <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hair text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+          <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
           <div class="min-w-0">
             <h1 class="text-[22px] font-bold tracking-tight">Reports &amp; Analytics</h1>
             <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Insights across all your events.</p>
@@ -40,6 +40,8 @@
             <button data-range="year" class="active">Year</button>
           </div>
           <button class="btn btn-ghost"><i class="hgi-stroke hgi-download-01 text-[16px]"></i><span class="hidden sm:inline">Export</span></button>
+          <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><re-icon icon="bell" size="18"></re-icon><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
+          <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
         </div>
       </div>
       <div class="mt-2 flex flex-wrap items-center justify-end gap-1.5">
@@ -257,7 +259,7 @@
   </main>
 </div>
 
-<script src="../assets/shell.js"></script>
+<script src="../assets/shell.js?v=31"></script>
 <script>
   /* ---------- Revenue trend: smooth area chart (mirrors dashboard.html technique) ---------- */
   const rtDatasets = {
