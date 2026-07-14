@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Share your feedback</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="../assets/config.js?v=34"></script>
+<link rel="stylesheet" href="../assets/app.css?v=34" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased">
+
+<button id="theme-btn" class="btn-icon fixed right-4 top-4 z-10 bg-surface" title="Toggle theme"><i class="hgi-stroke hgi-moon-02 text-[18px]"></i></button>
+
+<main class="mx-auto max-w-xl px-4 py-10 sm:py-14">
+
+  <!-- brand -->
+  <a href="../index.html" class="mx-auto mb-6 flex w-fit items-center gap-2.5">
+    <span class="grid h-8 w-8 place-items-center rounded-lg bg-brand text-white"><i class="hgi-stroke hgi-ticket-star text-[18px]"></i></span>
+    <span class="text-[15px] font-extrabold tracking-tight">Eventa</span>
+  </a>
+
+  <!-- ============ Survey ============ -->
+  <div class="card overflow-hidden" id="survey-card">
+    <!-- event banner -->
+    <div class="relative h-28 bg-gradient-to-br from-brand to-emerald-500">
+      <img id="banner-img" alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-90" onerror="this.remove()">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/55 to-black/5"></div>
+      <div class="absolute inset-x-0 bottom-0 p-4">
+        <p class="text-[11px] font-semibold uppercase tracking-wide text-white/80">You attended</p>
+        <h1 class="text-[18px] font-bold tracking-tight text-white" data-event-name>Tech Summit 2026</h1>
+      </div>
+    </div>
+
+    <div class="p-5 sm:p-7">
+      <h2 class="text-[17px] font-bold tracking-tight">How was it?</h2>
+      <p class="mt-1 text-[13px] text-muted">Your feedback helps us make future events even better. Takes about a minute.</p>
+
+      <form id="survey-form" class="mt-6 space-y-7" novalidate>
+
+        <!-- Q1 · Rating (required) -->
+        <div>
+          <label class="block text-[13.5px] font-semibold text-ink">Overall, how would you rate the event? <span class="text-red-500">*</span></label>
+          <div class="mt-2.5 flex flex-wrap items-center gap-1" id="star-rating" data-rating="0">
+            <button type="button" data-star="1" class="star-btn flex p-0.5 transition hover:scale-110" aria-label="1 star"><i class="hgi-stroke hgi-star text-[30px] text-gray-300 transition-colors dark:text-gray-600"></i></button>
+            <button type="button" data-star="2" class="star-btn flex p-0.5 transition hover:scale-110" aria-label="2 stars"><i class="hgi-stroke hgi-star text-[30px] text-gray-300 transition-colors dark:text-gray-600"></i></button>
+            <button type="button" data-star="3" class="star-btn flex p-0.5 transition hover:scale-110" aria-label="3 stars"><i class="hgi-stroke hgi-star text-[30px] text-gray-300 transition-colors dark:text-gray-600"></i></button>
+            <button type="button" data-star="4" class="star-btn flex p-0.5 transition hover:scale-110" aria-label="4 stars"><i class="hgi-stroke hgi-star text-[30px] text-gray-300 transition-colors dark:text-gray-600"></i></button>
+            <button type="button" data-star="5" class="star-btn flex p-0.5 transition hover:scale-110" aria-label="5 stars"><i class="hgi-stroke hgi-star text-[30px] text-gray-300 transition-colors dark:text-gray-600"></i></button>
+            <span id="rating-label" class="ml-2 text-[13px] font-semibold text-muted"></span>
+          </div>
+          <p id="rating-error" class="mt-1.5 hidden text-[12px] font-medium text-red-500">Please pick a rating to continue.</p>
+        </div>
+
+        <!-- Q2 · Text -->
+        <div>
+          <label class="block text-[13.5px] font-semibold text-ink">What did you enjoy most?</label>
+          <textarea class="textarea mt-2" rows="3" placeholder="Tell us what stood out…"></textarea>
+        </div>
+
+        <!-- Q3 · Multiple choice -->
+        <div>
+          <label class="block text-[13.5px] font-semibold text-ink">How did you hear about this event?</label>
+          <div class="mt-2.5 space-y-2">
+            <label class="block cursor-pointer">
+              <input type="radio" name="hear" value="social" class="peer sr-only" />
+              <span class="block rounded-lg border border-hair px-3.5 py-3 text-[13px] font-medium text-ink transition hover:bg-line/60 peer-checked:border-brand peer-checked:bg-brand-soft/50 peer-checked:font-semibold peer-checked:text-brand">Social media</span>
+            </label>
+            <label class="block cursor-pointer">
+              <input type="radio" name="hear" value="friend" class="peer sr-only" />
+              <span class="block rounded-lg border border-hair px-3.5 py-3 text-[13px] font-medium text-ink transition hover:bg-line/60 peer-checked:border-brand peer-checked:bg-brand-soft/50 peer-checked:font-semibold peer-checked:text-brand">Friend or colleague</span>
+            </label>
+            <label class="block cursor-pointer">
+              <input type="radio" name="hear" value="email" class="peer sr-only" />
+              <span class="block rounded-lg border border-hair px-3.5 py-3 text-[13px] font-medium text-ink transition hover:bg-line/60 peer-checked:border-brand peer-checked:bg-brand-soft/50 peer-checked:font-semibold peer-checked:text-brand">Email newsletter</span>
+            </label>
+            <label class="block cursor-pointer">
+              <input type="radio" name="hear" value="search" class="peer sr-only" />
+              <span class="block rounded-lg border border-hair px-3.5 py-3 text-[13px] font-medium text-ink transition hover:bg-line/60 peer-checked:border-brand peer-checked:bg-brand-soft/50 peer-checked:font-semibold peer-checked:text-brand">Search engine</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q4 · Recommend -->
+        <div>
+          <label class="block text-[13.5px] font-semibold text-ink">Would you recommend Eventa events to a friend?</label>
+          <div class="mt-2.5 grid grid-cols-3 gap-2">
+            <label class="block cursor-pointer">
+              <input type="radio" name="recommend" value="yes" class="peer sr-only" />
+              <span class="flex flex-col items-center gap-1.5 rounded-lg border border-hair py-3 text-center transition hover:bg-line/60 peer-checked:border-brand peer-checked:bg-brand-soft/50">
+                <i class="hgi-stroke hgi-thumbs-up text-[20px] text-brand"></i>
+                <span class="text-[12.5px] font-semibold text-ink">Definitely</span>
+              </span>
+            </label>
+            <label class="block cursor-pointer">
+              <input type="radio" name="recommend" value="maybe" class="peer sr-only" />
+              <span class="flex flex-col items-center gap-1.5 rounded-lg border border-hair py-3 text-center transition hover:bg-line/60 peer-checked:border-brand peer-checked:bg-brand-soft/50">
+                <i class="hgi-stroke hgi-help-circle text-[20px] text-amber-500"></i>
+                <span class="text-[12.5px] font-semibold text-ink">Maybe</span>
+              </span>
+            </label>
+            <label class="block cursor-pointer">
+              <input type="radio" name="recommend" value="no" class="peer sr-only" />
+              <span class="flex flex-col items-center gap-1.5 rounded-lg border border-hair py-3 text-center transition hover:bg-line/60 peer-checked:border-brand peer-checked:bg-brand-soft/50">
+                <i class="hgi-stroke hgi-thumbs-down text-[20px] text-red-500"></i>
+                <span class="text-[12.5px] font-semibold text-ink">No</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-full"><i class="hgi-stroke hgi-sent text-[16px]"></i>Submit feedback</button>
+        <p class="text-center text-[11px] text-muted/80">Your response is anonymous to other attendees.</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============ Thank-you ============ -->
+  <div class="card hidden p-8 text-center" id="thankyou-card">
+    <span class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-checkmark-badge-01 text-[30px]"></i></span>
+    <h2 class="mt-4 text-[19px] font-bold tracking-tight">Thank you!</h2>
+    <p class="mx-auto mt-1.5 max-w-sm text-[13px] text-muted">Your feedback for <b class="text-ink" data-event-name>Tech Summit 2026</b> has been recorded — it helps us make future events even better.</p>
+    <div class="mt-5 flex flex-wrap justify-center gap-2">
+      <a href="my-events.html" class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-ticket-02 text-[15px]"></i>Back to my events</a>
+      <a href="../index.html" class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-search-01 text-[15px]"></i>Discover events</a>
+    </div>
+  </div>
+
+  <p class="mt-6 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+</main>
+
+<!-- JIT safelist for JS-driven star colors -->
+<div class="hidden text-amber-400 text-gray-300 dark:text-gray-600"></div>
+
+<script>
+  /* ---------- theme toggle (standalone) ---------- */
+  (function () {
+    var b = document.getElementById('theme-btn');
+    function set(d) { document.documentElement.classList.toggle('dark', d); try { localStorage.setItem('eventa-theme', d ? 'dark' : 'light'); } catch (e) {} b.querySelector('i').className = 'hgi-stroke ' + (d ? 'hgi-sun-03' : 'hgi-moon-02') + ' text-[18px]'; }
+    set(document.documentElement.classList.contains('dark'));
+    b.addEventListener('click', function () { set(!document.documentElement.classList.contains('dark')); });
+  })();
+
+  /* ---------- event context from ?event= ---------- */
+  (function () {
+    var EVENTS = {
+      'tech-summit-2026': 'Tech Summit 2026',
+      'bangkok-jazz-night': 'Bangkok Jazz Night',
+      'sunrise-yoga-retreat': 'Sunrise Yoga Retreat',
+      'ux-bangkok-meetup': 'UX Bangkok Meetup',
+      'thai-street-food-festival': 'Thai Street Food Festival',
+      'startup-pitch-night': 'Startup Pitch Night'
+    };
+    var slug = new URLSearchParams(location.search).get('event') || 'tech-summit-2026';
+    var name = EVENTS[slug] || slug.replace(/-/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+    document.querySelectorAll('[data-event-name]').forEach(function (el) { el.textContent = name; });
+    document.title = 'Eventa · Feedback for ' + name;
+    var img = document.getElementById('banner-img');
+    if (img) img.src = 'https://picsum.photos/seed/' + slug + '/720/240';
+  })();
+
+  /* ---------- star rating ---------- */
+  (function () {
+    var wrap = document.getElementById('star-rating');
+    var stars = [].slice.call(wrap.querySelectorAll('[data-star]'));
+    var label = document.getElementById('rating-label');
+    var err = document.getElementById('rating-error');
+    var LABELS = { 1: 'Poor', 2: 'Fair', 3: 'Good', 4: 'Great', 5: 'Excellent' };
+    var selected = 0;
+    function paint(n) {
+      stars.forEach(function (s, i) {
+        var icon = s.querySelector('i');
+        var on = i < n;
+        icon.classList.toggle('text-amber-400', on);
+        icon.classList.toggle('text-gray-300', !on);
+        icon.classList.toggle('dark:text-gray-600', !on);
+      });
+    }
+    stars.forEach(function (s, i) {
+      s.addEventListener('mouseenter', function () { paint(i + 1); });
+      s.addEventListener('click', function () {
+        selected = i + 1;
+        wrap.setAttribute('data-rating', selected);
+        paint(selected);
+        label.textContent = selected + ' · ' + LABELS[selected];
+        err.classList.add('hidden');
+      });
+    });
+    wrap.addEventListener('mouseleave', function () { paint(selected); });
+
+    /* ---------- submit -> thank-you ---------- */
+    document.getElementById('survey-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (selected === 0) {
+        err.classList.remove('hidden');
+        wrap.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        return;
+      }
+      document.getElementById('survey-card').classList.add('hidden');
+      document.getElementById('thankyou-card').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  })();
+</script>
+</body>
+</html>

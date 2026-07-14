@@ -31,10 +31,10 @@
       socials: { instagram: '#', website: '#' },
       about: 'Tech Summit 2026 brings together founders, engineers and product leaders from across Southeast Asia for two days of keynotes, hands-on workshops and a startup showcase — with plenty of Thai coffee and networking in between.',
       highlights: [
-        { icon: 'mic', label: '20+ speakers' },
-        { icon: 'headphones', label: 'Hands-on workshops' },
-        { icon: 'sparkles', label: 'Startup showcase' },
-        { icon: 'users', label: 'Networking lounge' },
+        { icon: 'hgi-mic-01', label: '20+ speakers' },
+        { icon: 'hgi-headphones', label: 'Hands-on workshops' },
+        { icon: 'hgi-sparkles', label: 'Startup showcase' },
+        { icon: 'hgi-user-multiple', label: 'Networking lounge' },
       ],
       agendaTitle: 'Schedule',
       agenda: [
@@ -86,10 +86,10 @@
       socials: { instagram: '#', website: '#' },
       about: 'Emma and Liam met eight summers ago on a windswept pier and have been inseparable since. This August, surrounded by the people they love most, they’ll say “I do” on the cliffs above the Pacific.',
       highlights: [
-        { icon: 'heart', label: 'Ceremony at 4 PM' },
-        { icon: 'confetti', label: 'Cocktail hour' },
-        { icon: 'music', label: 'Live band & dancing' },
-        { icon: 'camera', label: 'Photo booth' },
+        { icon: 'hgi-favourite', label: 'Ceremony at 4 PM' },
+        { icon: 'hgi-new-releases', label: 'Cocktail hour' },
+        { icon: 'hgi-music-note-01', label: 'Live band & dancing' },
+        { icon: 'hgi-camera-01', label: 'Photo booth' },
       ],
       agendaTitle: 'Order of the day',
       agenda: [
@@ -140,10 +140,10 @@
       socials: { instagram: '#', website: '#' },
       about: 'A curated evening of live jazz on an open-air rooftop — five acts, craft cocktails and skyline views, closing out with a late-night vinyl afterparty.',
       highlights: [
-        { icon: 'music', label: '5 live acts' },
-        { icon: 'headphones', label: 'Vinyl afterparty' },
-        { icon: 'star', label: 'Rooftop views' },
-        { icon: 'star2', label: 'Craft cocktails' },
+        { icon: 'hgi-music-note-01', label: '5 live acts' },
+        { icon: 'hgi-headphones', label: 'Vinyl afterparty' },
+        { icon: 'hgi-star', label: 'Rooftop views' },
+        { icon: 'hgi-star', label: 'Craft cocktails' },
       ],
       agendaTitle: 'Set times',
       agenda: [

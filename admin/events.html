@@ -9,11 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
-<script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=31"></script>
-<link rel="stylesheet" href="../assets/app.css?v=31" />
+<script src="../assets/config.js?v=34"></script>
+<link rel="stylesheet" href="../assets/app.css?v=34" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="events">
 
@@ -24,14 +23,14 @@
 
     <!-- top bar -->
     <header class="mb-5 flex items-center gap-3">
-      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><re-icon icon="menu" size="18"></re-icon></button>
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
       <div class="min-w-0">
         <h1 class="text-[22px] font-bold tracking-tight">Events</h1>
         <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Create and manage your events.</p>
       </div>
-      <a href="event-form.html" class="ml-auto inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2.5 text-[13px] font-semibold text-white transition hover:bg-brand-dark"><re-icon icon="plus" size="16"></re-icon><span class="hidden sm:inline">New Event</span></a>
+      <a href="event-form.html" class="ml-auto inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2.5 text-[13px] font-semibold text-white transition hover:bg-brand-dark"><i class="hgi-stroke hgi-add-01 text-[16px]"></i><span class="hidden sm:inline">New Event</span></a>
       <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
-        <re-icon icon="bell" size="18"></re-icon>
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
         <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
       </button>
       <div class="flex shrink-0 items-center gap-2.5">
@@ -50,7 +49,7 @@
         <button data-pill="calendar" class="rounded-lg px-4 py-2 text-[13px] font-semibold text-muted transition hover:text-ink">Calendar</button>
       </div>
       <div class="relative w-full sm:w-72">
-        <re-icon icon="search" size="16" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></re-icon>
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
         <input class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search events…" />
       </div>
     </div>
@@ -74,8 +73,8 @@
         <div class="flex flex-wrap items-center justify-between gap-3">
           <h2 class="text-[16px] font-bold tracking-tight">Manage Events</h2>
           <div class="flex items-center gap-2">
-            <button class="inline-flex items-center gap-2 rounded-lg bg-canvas px-3 py-2 text-[13px] font-medium text-muted transition hover:text-ink">Sort by<re-icon icon="chevron-down" size="14"></re-icon></button>
-            <button class="inline-flex items-center gap-2 rounded-lg bg-canvas px-3 py-2 text-[13px] font-medium text-muted transition hover:text-ink">Event type<re-icon icon="chevron-down" size="14"></re-icon></button>
+            <button class="inline-flex items-center gap-2 rounded-lg bg-canvas px-3 py-2 text-[13px] font-medium text-muted transition hover:text-ink">Sort by<i class="hgi-stroke hgi-arrow-down-01 text-[14px]"></i></button>
+            <button class="inline-flex items-center gap-2 rounded-lg bg-canvas px-3 py-2 text-[13px] font-medium text-muted transition hover:text-ink">Event type<i class="hgi-stroke hgi-arrow-down-01 text-[14px]"></i></button>
           </div>
         </div>
 
@@ -124,16 +123,16 @@
       <section class="rounded-2xl bg-surface p-4 lg:p-5">
         <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div class="flex items-center gap-2">
-            <button id="cal-prev" type="button" class="btn-icon" title="Previous month"><re-icon icon="chevron-left" size="18"></re-icon></button>
+            <button id="cal-prev" type="button" class="btn-icon" title="Previous month"><i class="hgi-stroke hgi-arrow-left-01 text-[18px]"></i></button>
             <div class="min-w-[150px] text-center">
               <h2 id="cal-title" class="text-[16px] font-bold tracking-tight">Month</h2>
               <p id="cal-count" class="text-[11px] text-muted"></p>
             </div>
-            <button id="cal-next" type="button" class="btn-icon" title="Next month"><re-icon icon="chevron-right" size="18"></re-icon></button>
+            <button id="cal-next" type="button" class="btn-icon" title="Next month"><i class="hgi-stroke hgi-arrow-right-01 text-[18px]"></i></button>
           </div>
           <div class="flex items-center gap-2">
             <button id="cal-today" type="button" class="btn btn-soft btn-sm">Today</button>
-            <a href="event-form.html" class="btn btn-primary btn-sm"><re-icon icon="plus" size="14"></re-icon><span class="hidden sm:inline">New event</span></a>
+            <a href="event-form.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-add-01 text-[14px]"></i><span class="hidden sm:inline">New event</span></a>
           </div>
         </div>
         <div class="grid gap-4 xl:grid-cols-[minmax(0,1fr)_300px]">
@@ -156,18 +155,18 @@
 
     <!-- shared row-actions menu (fixed so overflow-x-auto can't clip it) -->
     <div id="row-menu" class="fixed z-50 hidden w-44 rounded-xl border border-hair bg-surface p-1.5 shadow-xl">
-      <a href="event-detail.html" class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><re-icon icon="eye" size="15" class="text-muted"></re-icon>View details</a>
-      <a href="event-form.html" class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><re-icon icon="edit2" size="15" class="text-muted"></re-icon>Edit</a>
-      <button type="button" data-act="duplicate" class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-[13px] font-medium text-ink transition hover:bg-line"><re-icon icon="copy" size="15" class="text-muted"></re-icon>Duplicate</button>
+      <a href="event-detail.html" class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><i class="hgi-stroke hgi-view text-[15px] text-muted"></i>View details</a>
+      <a href="event-form.html" class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px] text-muted"></i>Edit</a>
+      <button type="button" data-act="duplicate" class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-[13px] font-medium text-ink transition hover:bg-line"><i class="hgi-stroke hgi-copy-01 text-[15px] text-muted"></i>Duplicate</button>
       <div class="my-1 h-px bg-line"></div>
-      <button type="button" data-act="delete" class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-[13px] font-medium text-red-500 transition hover:bg-red-50 dark:hover:bg-red-500/15"><re-icon icon="trash" size="15"></re-icon>Delete</button>
+      <button type="button" data-act="delete" class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-[13px] font-medium text-red-500 transition hover:bg-red-50 dark:hover:bg-red-500/15"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i>Delete</button>
     </div>
 
-    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; reicon</p>
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
   </main>
 </div>
 
-<script src="../assets/shell.js?v=31"></script>
+<script src="../assets/shell.js?v=34"></script>
 <script>
   /* ---------- pill tab groups (view + manage) ---------- */
   document.querySelectorAll('[data-pill-group]').forEach(group => {
@@ -199,12 +198,12 @@
     red:    { bg:'bg-red-50 dark:bg-red-500/10',       grad:'from-red-400 to-red-600',       solid:'bg-red-500',   bar:'bg-red-500',   ring:'ring-red-50 dark:ring-red-500/10' },
   };
   const upcoming = [
-    { name:'Tech Innovators Forum',     icon:'presentation', tone:'amber',  days:3,  reg:'39/50',   pct:78, seed:'evt-conference', att:39  },
-    { name:'UX Bangkok Meetup',         icon:'users',        tone:'indigo', days:5,  reg:'72/90',   pct:80, seed:'evt-networking', att:72  },
-    { name:'Cloud Builders Workshop',   icon:'briefcase',    tone:'teal',   days:8,  reg:'40/60',   pct:67, seed:'evt-workshop',   att:40  },
-    { name:'Hope for All Charity Gala', icon:'hand-heart',   tone:'brand',  days:12, reg:'34/51',   pct:67, seed:'evt-charity',    att:34  },
-    { name:'Summer Music Festival',     icon:'mic',          tone:'violet', days:15, reg:'320/400', pct:80, seed:'evt-festival',   att:320 },
-    { name:'Sunrise Yoga Retreat',      icon:'dumbbell',     tone:'red',    days:18, reg:'48/60',   pct:80, seed:'evt-wellness',   att:48  },
+    { name:'Tech Innovators Forum',     icon:'hgi-presentation-bar-chart-01', tone:'amber',  days:3,  reg:'39/50',   pct:78, seed:'evt-conference', att:39  },
+    { name:'UX Bangkok Meetup',         icon:'hgi-user-multiple',        tone:'indigo', days:5,  reg:'72/90',   pct:80, seed:'evt-networking', att:72  },
+    { name:'Cloud Builders Workshop',   icon:'hgi-briefcase-01',    tone:'teal',   days:8,  reg:'40/60',   pct:67, seed:'evt-workshop',   att:40  },
+    { name:'Hope for All Charity Gala', icon:'hgi-charity',   tone:'brand',  days:12, reg:'34/51',   pct:67, seed:'evt-charity',    att:34  },
+    { name:'Summer Music Festival',     icon:'hgi-mic-01',          tone:'violet', days:15, reg:'320/400', pct:80, seed:'evt-festival',   att:320 },
+    { name:'Sunrise Yoga Retreat',      icon:'hgi-dumbbell-01',     tone:'red',    days:18, reg:'48/60',   pct:80, seed:'evt-wellness',   att:48  },
   ];
   function upCard(e) {
     const t = UP_TONE[e.tone] || UP_TONE.brand;
@@ -217,7 +216,7 @@
       '<div class="relative h-24 bg-gradient-to-br ' + t.grad + '">' +
         '<img src="https://picsum.photos/seed/' + e.seed + '/540/240" alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()">' +
         '<span class="absolute right-2.5 top-2.5 rounded-full bg-white/85 px-2.5 py-1 text-[11px] font-semibold text-ink backdrop-blur-sm">' + e.days + ' days left</span>' +
-        '<span class="absolute -bottom-5 left-4 grid h-11 w-11 place-items-center rounded-xl ' + t.solid + ' text-white shadow-md ring-4 ' + t.ring + '"><re-icon icon="' + e.icon + '" size="22"></re-icon></span>' +
+        '<span class="absolute -bottom-5 left-4 grid h-11 w-11 place-items-center rounded-xl ' + t.solid + ' text-white shadow-md ring-4 ' + t.ring + '"><i class="hgi-stroke ' + e.icon + ' text-[22px]"></i></span>' +
       '</div>' +
       '<div class="px-4 pb-4 pt-7">' +
         '<p class="truncate text-[15px] font-bold tracking-tight text-ink">' + e.name + '</p>' +
@@ -258,7 +257,7 @@
       <tr class="border-t border-line align-middle transition hover:bg-line/40">
         <td class="py-4 pr-4">
           <div class="flex items-center gap-3.5">
-            <span class="relative grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-xl ${cover[r.tone]} text-white shadow-sm"><re-icon icon="${r.icon}" size="22"></re-icon><img src="https://picsum.photos/seed/${r.name.replace(/[^a-z0-9]+/gi,'-').toLowerCase()}/96/96" alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()"></span>
+            <span class="relative grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-xl ${cover[r.tone]} text-white shadow-sm"><i class="hgi-stroke ${r.icon} text-[22px]"></i><img src="https://picsum.photos/seed/${r.name.replace(/[^a-z0-9]+/gi,'-').toLowerCase()}/96/96" alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()"></span>
             <div class="min-w-0">
               <p class="truncate text-[14.5px] font-bold tracking-tight text-ink">${r.name}</p>
               <p class="mt-0.5 truncate text-[12px] text-muted">${r.type}</p>
@@ -273,20 +272,20 @@
           </div>
         </td>
         <td class="py-4 pr-4"><span class="inline-block rounded-full px-3 py-1 text-[12px] font-medium ${statusPill[r.status]}">${r.status}</span></td>
-        <td class="py-4"><button type="button" data-row-kebab class="grid h-9 w-9 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink" title="More actions"><re-icon icon="more-v-circle" size="19"></re-icon></button></td>
+        <td class="py-4"><button type="button" data-row-kebab class="grid h-9 w-9 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink" title="More actions"><i class="hgi-stroke hgi-more-vertical text-[19px]"></i></button></td>
       </tr>`;
   }
   const active = [
-    { name: 'Tech Innovators Forum',    date: 'August 27, 2025',    type: 'Conference',            icon: 'presentation', tone: 'amber',  tasks: '39/50', status: 'Upcoming' },
-    { name: 'UX Bangkok Meetup',        date: 'August 20, 2025',    type: 'Networking',            icon: 'users',        tone: 'indigo', tasks: '72/90', status: 'Upcoming' },
-    { name: 'Cloud Builders Workshop',  date: 'August 22, 2025',    type: 'Workshop',              icon: 'briefcase',    tone: 'teal',   tasks: '40/60', status: 'Upcoming' },
-    { name: 'Hope for All Charity Gala',date: 'August 29, 2025',    type: 'Charity & Gala',        icon: 'hand-heart',   tone: 'brand',  tasks: '34/51', status: 'Upcoming' },
-    { name: 'Sunrise Yoga Retreat',     date: 'September 11, 2025', type: 'Sports & Wellness',     icon: 'dumbbell',     tone: 'red',    tasks: '48/60', status: 'Planned' },
+    { name: 'Tech Innovators Forum',    date: 'August 27, 2025',    type: 'Conference',            icon: 'hgi-presentation-bar-chart-01', tone: 'amber',  tasks: '39/50', status: 'Upcoming' },
+    { name: 'UX Bangkok Meetup',        date: 'August 20, 2025',    type: 'Networking',            icon: 'hgi-user-multiple',        tone: 'indigo', tasks: '72/90', status: 'Upcoming' },
+    { name: 'Cloud Builders Workshop',  date: 'August 22, 2025',    type: 'Workshop',              icon: 'hgi-briefcase-01',    tone: 'teal',   tasks: '40/60', status: 'Upcoming' },
+    { name: 'Hope for All Charity Gala',date: 'August 29, 2025',    type: 'Charity & Gala',        icon: 'hgi-charity',   tone: 'brand',  tasks: '34/51', status: 'Upcoming' },
+    { name: 'Sunrise Yoga Retreat',     date: 'September 11, 2025', type: 'Sports & Wellness',     icon: 'hgi-dumbbell-01',     tone: 'red',    tasks: '48/60', status: 'Planned' },
   ];
   const completed = [
-    { name: 'Corporate Leadership Summit', date: 'December 20, 2024', type: 'Conference',          icon: 'presentation', tone: 'amber',  tasks: '64/64', status: 'Completed' },
-    { name: 'Summer Music Festival',    date: 'June 15, 2025',      type: 'Concert & Festival',    icon: 'mic',          tone: 'violet', tasks: '400/400', status: 'Completed' },
-    { name: 'Product Launch Mixer',     date: 'May 2, 2025',        type: 'Networking',            icon: 'users',        tone: 'indigo', tasks: '30/30', status: 'Completed' },
+    { name: 'Corporate Leadership Summit', date: 'December 20, 2024', type: 'Conference',          icon: 'hgi-presentation-bar-chart-01', tone: 'amber',  tasks: '64/64', status: 'Completed' },
+    { name: 'Summer Music Festival',    date: 'June 15, 2025',      type: 'Concert & Festival',    icon: 'hgi-mic-01',          tone: 'violet', tasks: '400/400', status: 'Completed' },
+    { name: 'Product Launch Mixer',     date: 'May 2, 2025',        type: 'Networking',            icon: 'hgi-user-multiple',        tone: 'indigo', tasks: '30/30', status: 'Completed' },
   ];
   document.getElementById('active-rows').innerHTML = active.map(rowHTML).join('');
   document.getElementById('completed-rows').innerHTML = completed.map(rowHTML).join('');
@@ -408,7 +407,7 @@
               `<p class="text-[13px] font-bold text-ink tnum leading-tight">${fmtTimeLong(e.t)}</p>` +
               `<p class="mt-0.5 truncate text-[12.5px] font-medium text-ink">${e.name}</p>` +
             '</div>' +
-            '<re-icon icon="chevron-right" size="15" class="shrink-0 text-muted"></re-icon>' +
+            '<i class="hgi-stroke hgi-arrow-right-01 text-[15px] shrink-0 text-muted"></i>' +
           '</a>').join('')
       : '<div class="rounded-lg bg-canvas px-3 py-8 text-center text-[12px] text-muted">No events scheduled.</div>';
   }

@@ -9,11 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
-<script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=31"></script>
-<link rel="stylesheet" href="../assets/app.css?v=31" />
+<script src="../assets/config.js?v=34"></script>
+<link rel="stylesheet" href="../assets/app.css?v=34" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="agenda">
 
@@ -36,12 +35,12 @@
               <option>Thai Street Food Festival</option>
               <option>UX Bangkok Meetup</option>
             </select>
-            <re-icon icon="chevron-down" size="20" class="pointer-events-none absolute right-0 text-muted"></re-icon>
+            <i class="hgi-stroke hgi-arrow-down-01 text-[20px] pointer-events-none absolute right-0 text-muted"></i>
           </div>
         </div>
       </div>
       <div class="flex shrink-0 items-center gap-2.5">
-        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><re-icon icon="bell" size="18"></re-icon><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
+        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
         <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
       </div>
     </div>
@@ -49,13 +48,13 @@
     <!-- calendar toolbar -->
     <div class="mb-4 flex flex-wrap items-center gap-3">
       <div class="flex items-center gap-1">
-        <button class="grid h-9 w-9 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink" title="Previous week"><re-icon icon="chevron-left" size="18"></re-icon></button>
+        <button class="grid h-9 w-9 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink" title="Previous week"><i class="hgi-stroke hgi-arrow-left-01 text-[18px]"></i></button>
         <h2 id="agenda-month" class="px-1 text-[17px] font-bold tracking-tight">July 2026</h2>
-        <button class="grid h-9 w-9 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink" title="Next week"><re-icon icon="chevron-right" size="18"></re-icon></button>
+        <button class="grid h-9 w-9 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink" title="Next week"><i class="hgi-stroke hgi-arrow-right-01 text-[18px]"></i></button>
       </div>
       <div class="flex w-full flex-wrap items-center gap-2 sm:ml-auto sm:w-auto">
         <div class="relative w-full sm:w-60">
-          <re-icon icon="search" size="16" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></re-icon>
+          <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
           <input id="agenda-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search sessions…" />
         </div>
         <div class="inline-flex items-center gap-1 rounded-lg bg-surface p-1">
@@ -83,7 +82,7 @@
         </div>
       </div>
       <div id="month-view" class="hidden px-6 py-16 text-center">
-        <div class="mx-auto grid h-12 w-12 place-items-center rounded-xl bg-brand-soft text-brand"><re-icon icon="calendar" size="22"></re-icon></div>
+        <div class="mx-auto grid h-12 w-12 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-calendar-03 text-[22px]"></i></div>
         <p class="mt-4 text-[15px] font-bold tracking-tight">Month view</p>
         <p class="mx-auto mt-1 max-w-xs text-[13px] text-muted">Switch back to Week to lay out sessions by time slot.</p>
       </div>
@@ -168,7 +167,7 @@
   </div>
 </div>
 
-<script src="../assets/shell.js?v=31"></script>
+<script src="../assets/shell.js?v=34"></script>
 <script>
   (function () {
     const HS = 9, HE = 16, HH = 64;               // 09:00–16:00, 64px per hour
@@ -262,7 +261,7 @@
       if (eventLabel) eventLabel.textContent = currentEvent;
 
       head.innerHTML =
-        '<div class="grid place-items-center border-r border-hair py-3 text-muted"><re-icon icon="calendar" size="16"></re-icon></div>' +
+        '<div class="grid place-items-center border-r border-hair py-3 text-muted"><i class="hgi-stroke hgi-calendar-03 text-[16px]"></i></div>' +
         days.map(d => `<div class="border-r border-hair py-2.5 text-center last:border-r-0">
           <p class="text-[13px] font-bold ${d.hot ? 'text-brand' : 'text-ink'}">${d.n}</p>
           <p class="text-[11px] tnum ${d.hot ? 'text-brand/70' : 'text-muted'}">${d.d}</p></div>`).join('');

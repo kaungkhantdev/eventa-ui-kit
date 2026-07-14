@@ -1,9 +1,9 @@
 /* ============================================================
    Eventa shell — double sidebar (icon rail = modules, labeled panel = sub-nav).
-   Identical design to primary-ui/dashboard.html (reicon icons), injected into
-   [data-layout] on every admin page and driven by <body data-page="…">.
+   Injected into [data-layout] on every admin page and driven by
+   <body data-page="…">. Icons are Hugeicons (hgi-stroke).
      • Rail  = main nav (modules). The active module (the one containing the
-       current page) is highlighted + its icon is filled; clicking a module
+       current page) is highlighted (bg-brand-soft text-brand); clicking a module
        navigates to its landing page (whose panel then opens). A module without
        an href instead swaps the panel client-side (fallback).
      • Panel = the selected module's grouped, collapsible sub-nav; the leaf
@@ -18,10 +18,10 @@
 
   /* ---------------- Navigation model ---------------- */
   const MODULES = [
-    { id: 'home', label: 'Home', icon: 'home', href: 'home.html' },
-    { id: 'dashboard', label: 'Dashboard', icon: 'element-42', href: 'dashboard.html' },
-    { id: 'events', label: 'Events', icon: 'calendar', href: 'events.html', groups: [
-      { label: 'Schedule', icon: 'calendar', items: [
+    { id: 'home', label: 'Home', icon: 'hgi-home-01', href: 'home.html' },
+    { id: 'dashboard', label: 'Dashboard', icon: 'hgi-dashboard-square-01', href: 'dashboard.html' },
+    { id: 'events', label: 'Events', icon: 'hgi-calendar-03', href: 'events.html', groups: [
+      { label: 'Schedule', icon: 'hgi-calendar-03', items: [
         { label: 'All Events',     page: 'events',        href: 'events.html' },
         { label: 'Create Event',   page: 'event-form',    href: 'event-form.html' },
         { label: 'Event Details',  page: 'event-detail',  href: 'event-detail.html' },
@@ -29,32 +29,33 @@
         { label: 'Agenda',         page: 'agenda',        href: 'agenda.html' },
         { label: 'Categories',     page: 'event-categories', href: 'event-categories.html' },
       ]},
-      { label: 'Attendees', icon: 'users', items: [
+      { label: 'Attendees', icon: 'hgi-user-multiple', items: [
         { label: 'Registrations', page: 'registrations', href: 'registrations.html' },
         { label: 'Attendees',     page: 'attendees',     href: 'attendees.html' },
         { label: 'Check-in',      page: 'checkin',       href: 'check-in.html' },
         { label: 'Speakers',      page: 'speakers',      href: 'speakers.html' },
       ]},
     ]},
-    { id: 'checkin-tool', label: 'Check-in tool', icon: 'qr', href: 'check-in-tool.html' },
-    { id: 'finance', label: 'Finance', icon: 'wallet', href: 'payments.html', groups: [
-      { label: 'Transactions', icon: 'wallet', items: [
+    { id: 'checkin-tool', label: 'Check-in tool', icon: 'hgi-qr-code-01', href: 'check-in-tool.html' },
+    { id: 'finance', label: 'Finance', icon: 'hgi-wallet-01', href: 'payments.html', groups: [
+      { label: 'Transactions', icon: 'hgi-wallet-01', items: [
         { label: 'Payments', page: 'payments', href: 'payments.html' },
         { label: 'Payouts',  page: 'payouts',  href: 'payouts.html' },
       ]},
-      { label: 'Pricing', icon: 'ticket', items: [
+      { label: 'Pricing', icon: 'hgi-ticket-01', items: [
         { label: 'Tickets',   page: 'tickets',   href: 'tickets.html' },
         { label: 'Discounts', page: 'discounts', href: 'discounts.html' },
       ]},
     ]},
-    { id: 'management', label: 'Management', icon: 'settings', href: 'reports.html', groups: [
-      { label: 'Business', icon: 'briefcase', items: [
+    { id: 'management', label: 'Management', icon: 'hgi-settings-01', href: 'reports.html', groups: [
+      { label: 'Business', icon: 'hgi-briefcase-01', items: [
         { label: 'Reports',       page: 'reports',       href: 'reports.html' },
         { label: 'Notifications', page: 'notifications', href: 'notifications.html' },
         { label: 'Feedback',      page: 'feedback',      href: 'feedback.html' },
+        { label: 'Event feedback', page: 'feedback-detail', href: 'feedback-detail.html?event=tech-summit-2026' },
         { label: 'Settings',      page: 'settings',      href: 'settings.html' },
       ]},
-      { label: 'Staff', icon: 'security-user2', items: [
+      { label: 'Staff', icon: 'hgi-shield-user', items: [
         { label: 'Users', page: 'users', href: 'users.html' },
         { label: 'Roles', page: 'roles', href: 'roles.html' },
       ]},
@@ -77,18 +78,18 @@
     <div id="sidenav" class="fixed inset-y-0 left-0 z-50 flex -translate-x-full transition-transform duration-300 lg:static lg:translate-x-0">
       <aside id="rail" class="relative z-30 flex w-16 shrink-0 flex-col items-center bg-[#0e0f12] py-4">
         <div class="group relative flex justify-center">
-          <a href="dashboard.html" class="grid h-9 w-9 place-items-center rounded-full border border-brand/70 text-brand"><re-icon icon="flame" size="18"></re-icon></a>
+          <a href="dashboard.html" class="grid h-9 w-9 place-items-center rounded-full border border-brand/70 text-brand"><i class="hgi-stroke hgi-fire text-[18px]"></i></a>
           <span class="rail-tip">Eventa</span>
         </div>
         <div id="rail-top" class="mt-5 flex flex-col items-center gap-1.5"></div>
         <div class="mt-auto flex flex-col items-center gap-2 pt-4">
           <div id="rail-bottom" class="flex flex-col items-center gap-1.5"></div>
           <div class="group relative flex justify-center">
-            <button id="rail-theme" type="button" class="grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand"><re-icon icon="moon" size="20"></re-icon></button>
+            <button id="rail-theme" type="button" class="grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand"><i class="hgi-stroke hgi-moon-02 text-[20px]"></i></button>
             <span class="rail-tip">Change mode</span>
           </div>
           <div class="group relative mt-1 flex justify-center">
-            <span class="grid h-9 w-9 place-items-center rounded-[11px] bg-brand text-white shadow-sm"><re-icon icon="flame" size="18"></re-icon></span>
+            <span class="grid h-9 w-9 place-items-center rounded-[11px] bg-brand text-white shadow-sm"><i class="hgi-stroke hgi-fire text-[18px]"></i></span>
             <span class="rail-tip">Eventa for Business · v1.0.0.0</span>
           </div>
         </div>
@@ -121,9 +122,9 @@
   function railBtn(m) {
     const on = m.id === selectedModule;
     const cls = on
-      ? 'grid h-9 w-9 place-items-center rounded-lg bg-brand-soft text-brand transition'
+      ? 'grid h-9 w-9 place-items-center rounded-lg bg-brand text-white shadow-sm transition'
       : 'grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand';
-    const inner = `<re-icon icon="${m.icon}" size="18"${on ? ' weight="filled"' : ''}></re-icon>`;
+    const inner = `<i class="hgi-stroke ${m.icon} text-[18px]"></i>`;
     const control = m.href
       ? `<a href="${m.href}" class="${cls}">${inner}</a>`
       : `<button type="button" data-mod="${m.id}" class="${cls}">${inner}</button>`;
@@ -162,8 +163,8 @@
     panelNav.innerHTML = m.groups.map(g => `
       <div data-acc>
         <button type="button" data-acc-toggle class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-semibold text-ink transition hover:bg-line">
-          <re-icon icon="${g.icon}" size="17"></re-icon>${g.label}
-          <re-icon data-acc-chevron icon="chevron-down" size="15" class="ml-auto rotate-180 text-muted transition-transform duration-200"></re-icon>
+          <i class="hgi-stroke ${g.icon} text-[17px]"></i>${g.label}
+          <i data-acc-chevron class="hgi-stroke hgi-arrow-down-01 text-[15px] ml-auto rotate-180 text-muted transition-transform duration-200"></i>
         </button>
         <ul data-acc-body class="mt-0.5 space-y-0.5">${g.items.map(panelLeaf).join('')}</ul>
       </div>`).join('');
@@ -206,8 +207,8 @@
   const THEME_KEY = 'eventa-theme';
   function applyTheme(dark) {
     document.documentElement.classList.toggle('dark', dark);
-    const ic = document.querySelector('#rail-theme re-icon');
-    if (ic) ic.setAttribute('icon', dark ? 'sun' : 'moon');
+    const ic = document.querySelector('#rail-theme i');
+    if (ic) ic.className = 'hgi-stroke ' + (dark ? 'hgi-sun-03' : 'hgi-moon-02') + ' text-[20px]';
     try { localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light'); } catch (e) {}
     if (typeof window.EventaOnThemeChange === 'function') window.EventaOnThemeChange(dark);
   }
@@ -260,12 +261,12 @@
   const popCls = 'pop hidden fixed z-[70] max-w-[calc(100vw-16px)] overflow-hidden rounded-2xl bg-surface shadow-xl ring-1 ring-black/5 dark:ring-white/10';
   const notifItem = (icon, tint, title, body, time, unread) => `
     <a href="notifications.html" class="flex gap-3 px-4 py-2.5 transition hover:bg-line">
-      <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg ${tint}"><re-icon icon="${icon}" size="17"></re-icon></span>
+      <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg ${tint}"><i class="hgi-stroke ${icon} text-[17px]"></i></span>
       <div class="min-w-0 flex-1"><p class="text-[13px] leading-snug text-ink"><span class="font-semibold">${title}</span> · ${body}</p><p class="mt-0.5 text-[11px] text-muted">${time}</p></div>
       ${unread ? '<span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-brand"></span>' : ''}
     </a>`;
   const menuLink = (href, icon, label, extra = '') => `
-    <a href="${href}" class="flex items-center gap-3 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><re-icon icon="${icon}" size="17" class="text-muted"></re-icon>${label}${extra}</a>`;
+    <a href="${href}" class="flex items-center gap-3 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><i class="hgi-stroke ${icon} text-[17px] text-muted"></i>${label}${extra}</a>`;
   const popHTML = `
     <div id="eventa-notif-pop" class="${popCls} w-[340px]">
       <div class="flex items-center justify-between border-b border-hair px-4 py-3">
@@ -273,10 +274,10 @@
         <button class="text-[12px] font-semibold text-brand hover:underline">Mark all read</button>
       </div>
       <div class="max-h-[340px] overflow-y-auto py-1">
-        ${notifItem('user-add', 'bg-brand-soft text-brand', 'New registration', 'Anong Pattana joined Tech Summit 2026', '2 min ago', true)}
-        ${notifItem('wallet', 'bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300', 'Payment received', '฿1,250 from Ploy Srisai', '18 min ago', true)}
-        ${notifItem('ticket', 'bg-amber-50 text-amber-600 dark:bg-amber-400/15 dark:text-amber-300', 'Almost sold out', 'VIP Access is 92% sold', '1 hr ago', true)}
-        ${notifItem('star', 'bg-violet-50 text-violet-600 dark:bg-violet-500/15 dark:text-violet-300', 'New feedback', 'Bangkok Jazz Night rated 4.8★', 'Yesterday', false)}
+        ${notifItem('hgi-user-add-01', 'bg-brand-soft text-brand', 'New registration', 'Anong Pattana joined Tech Summit 2026', '2 min ago', true)}
+        ${notifItem('hgi-wallet-01', 'bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300', 'Payment received', '฿1,250 from Ploy Srisai', '18 min ago', true)}
+        ${notifItem('hgi-ticket-01', 'bg-amber-50 text-amber-600 dark:bg-amber-400/15 dark:text-amber-300', 'Almost sold out', 'VIP Access is 92% sold', '1 hr ago', true)}
+        ${notifItem('hgi-star', 'bg-violet-50 text-violet-600 dark:bg-violet-500/15 dark:text-violet-300', 'New feedback', 'Bangkok Jazz Night rated 4.8★', 'Yesterday', false)}
       </div>
       <a href="notifications.html" class="block border-t border-hair px-4 py-2.5 text-center text-[13px] font-semibold text-brand hover:bg-line">View all notifications</a>
     </div>
@@ -286,21 +287,21 @@
         <div class="min-w-0"><p class="truncate text-[14px] font-bold text-ink">Harper Nelson</p><p class="truncate text-[12px] text-muted">Event Manager at Eventa</p></div>
       </div>
       <div class="px-2 pb-1">
-        ${menuLink('settings.html', 'user', 'My Account')}
-        ${menuLink('settings.html', 'building', 'Company settings')}
-        ${menuLink('#', 'crown', 'Upgrade to Pro', '<span class="ml-auto rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-semibold text-violet-600 dark:bg-violet-500/20 dark:text-violet-300">Optimized for business</span>')}
+        ${menuLink('settings.html', 'hgi-user-circle', 'My Account')}
+        ${menuLink('settings.html', 'hgi-building-06', 'Company settings')}
+        ${menuLink('#', 'hgi-crown', 'Upgrade to Pro', '<span class="ml-auto rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-semibold text-violet-600 dark:bg-violet-500/20 dark:text-violet-300">Optimized for business</span>')}
       </div>
       <div class="mx-3 my-1 border-t border-hair"></div>
       <div class="px-2 py-1">
-        <div class="flex items-center gap-3 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink"><re-icon icon="flask" size="17" class="text-muted"></re-icon>Beta Features<span class="rounded-full bg-brand-soft px-2 py-0.5 text-[10px] font-semibold text-brand">New</span><button type="button" data-toggle class="relative ml-auto h-5 w-9 shrink-0 rounded-full bg-line transition-colors"><span class="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform"></span></button></div>
-        ${menuLink('#', 'bullhorn', "What's New")}
+        <div class="flex items-center gap-3 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink"><i class="hgi-stroke hgi-test-tube-01 text-[17px] text-muted"></i>Beta Features<span class="rounded-full bg-brand-soft px-2 py-0.5 text-[10px] font-semibold text-brand">New</span><button type="button" data-toggle class="relative ml-auto h-5 w-9 shrink-0 rounded-full bg-line transition-colors"><span class="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform"></span></button></div>
+        ${menuLink('#', 'hgi-megaphone-01', "What's New")}
       </div>
       <div class="mx-3 my-1 border-t border-hair"></div>
       <div class="px-2 py-1">
-        ${menuLink('../auth/login.html', 'logout', 'Log out')}
+        ${menuLink('../auth/login.html', 'hgi-logout-03', 'Log out')}
       </div>
       <div class="m-2 rounded-xl bg-violet-50 p-3 dark:bg-violet-500/10">
-        <span class="grid h-9 w-9 place-items-center rounded-lg bg-violet-500 text-white"><re-icon icon="sparkles" size="18"></re-icon></span>
+        <span class="grid h-9 w-9 place-items-center rounded-lg bg-violet-500 text-white"><i class="hgi-stroke hgi-sparkles text-[18px]"></i></span>
         <p class="mt-2.5 text-[13px] font-semibold leading-snug text-ink">Get everything you need to run your events like a pro</p>
         <a href="#" class="mt-1.5 inline-block text-[13px] font-bold text-violet-600 hover:underline dark:text-violet-300">Subscribe Now</a>
       </div>
