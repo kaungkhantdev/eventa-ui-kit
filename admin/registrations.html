@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=34"></script>
-<link rel="stylesheet" href="../assets/app.css?v=34" />
+<script src="../assets/config.js?v=36"></script>
+<link rel="stylesheet" href="../assets/app.css?v=36" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="registrations">
 
@@ -39,23 +39,23 @@
     </div>
 
     <!-- pill tabs (out of table) -->
-    <div data-tabs="#tabWrap" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
-      <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count tnum">9</span></button>
-      <button class="pilltab" data-tab="pending">Pending <span class="pilltab-count tnum">2</span></button>
-      <button class="pilltab" data-tab="waitlist">Waitlist <span class="pilltab-count tnum">2</span></button>
-      <button class="pilltab" data-tab="cancelled">Cancelled <span class="pilltab-count tnum">1</span></button>
+    <div data-tabs="#reg-table" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count tnum" data-count="all">30</span></button>
+      <button class="pilltab" data-tab="pending">Pending <span class="pilltab-count tnum" data-count="pending">5</span></button>
+      <button class="pilltab" data-tab="waitlist">Waitlist <span class="pilltab-count tnum" data-count="waitlist">5</span></button>
+      <button class="pilltab" data-tab="cancelled">Cancelled <span class="pilltab-count tnum" data-count="cancelled">4</span></button>
     </div>
 
     <!-- search + filters (out of table) -->
     <div class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
         <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
-        <input type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search attendee, email or order ID…" />
+        <input id="reg-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search attendee, email or order ID…" />
       </div>
       <div class="flex gap-2">
         <div class="relative flex-1 sm:flex-none">
           <i class="hgi-stroke hgi-calendar-03 text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
-          <select class="select h-10 w-full border-0 bg-surface pl-9 font-medium sm:w-44">
+          <select id="reg-event-filter" class="select h-10 w-full border-0 bg-surface pl-9 font-medium sm:w-44">
             <option>All events</option>
             <option>Tech Summit 2026</option>
             <option>Bangkok Jazz Night</option>
@@ -66,7 +66,7 @@
         </div>
         <div class="relative flex-1 sm:flex-none">
           <i class="hgi-stroke hgi-ticket-01 text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
-          <select class="select h-10 w-full border-0 bg-surface pl-9 font-medium sm:w-44">
+          <select id="reg-ticket-filter" class="select h-10 w-full border-0 bg-surface pl-9 font-medium sm:w-44">
             <option>All ticket types</option>
             <option>General Admission</option>
             <option>VIP</option>
@@ -80,264 +80,28 @@
 
     <!-- table -->
     <section class="card mt-3 p-4">
-      <div id="tabWrap">
+      <div id="reg-table" class="overflow-x-auto">
+        <table class="data-table min-w-[820px]">
+          <thead>
+            <tr><th>Attendee</th><th>Event</th><th>Ticket</th><th>Registered</th><th>Amount</th><th>Status</th><th class="text-right">Actions</th></tr>
+          </thead>
+          <tbody id="reg-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
 
-        <!-- ALL -->
-        <div data-tab-panel="all">
-          <div class="overflow-x-auto">
-            <table class="data-table min-w-[820px]">
-              <thead>
-                <tr><th>Attendee</th><th>Event</th><th>Ticket</th><th>Registered</th><th>Amount</th><th>Status</th><th class="text-right">Actions</th></tr>
-              </thead>
-              <tbody class="text-[13px]">
-                <tr>
-                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">AP</span><div class="leading-tight"><p class="font-medium text-ink">Anong P.</p><p class="text-[11px] text-muted">anong.p@gmail.com</p></div></div></td>
-                  <td class="text-muted">Tech Summit 2026</td>
-                  <td class="text-muted">VIP</td>
-                  <td class="text-muted tnum">Jul 8, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿2,400</td>
-                  <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Confirmed</span></td>
-                  <td class="text-right">
-                    <div class="flex items-center justify-end gap-1">
-                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">ST</span><div class="leading-tight"><p class="font-medium text-ink">Somchai T.</p><p class="text-[11px] text-muted">somchai.t@hotmail.com</p></div></div></td>
-                  <td class="text-muted">Bangkok Jazz Night</td>
-                  <td class="text-muted">General Admission</td>
-                  <td class="text-muted tnum">Jul 8, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿480</td>
-                  <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Confirmed</span></td>
-                  <td class="text-right">
-                    <div class="flex items-center justify-end gap-1">
-                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">JW</span><div class="leading-tight"><p class="font-medium text-ink">James W.</p><p class="text-[11px] text-muted">james.wilson@gmail.com</p></div></div></td>
-                  <td class="text-muted">UX Bangkok Meetup</td>
-                  <td class="text-muted">Free</td>
-                  <td class="text-muted tnum">Jul 7, 2026</td>
-                  <td><span class="badge badge-green">Free</span></td>
-                  <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Confirmed</span></td>
-                  <td class="text-right">
-                    <div class="flex items-center justify-end gap-1">
-                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">PS</span><div class="leading-tight"><p class="font-medium text-ink">Ploy S.</p><p class="text-[11px] text-muted">ploy.s@outlook.com</p></div></div></td>
-                  <td class="text-muted">Tech Summit 2026</td>
-                  <td class="text-muted">Early Bird</td>
-                  <td class="text-muted tnum">Jul 7, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿950</td>
-                  <td><span class="badge badge-amber"><i class="hgi-stroke hgi-clock-01 text-[12px]"></i>Pending</span></td>
-                  <td class="text-right">
-                    <div class="flex items-center justify-end gap-1">
-                      <button class="btn-icon text-brand" title="Approve"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i></button>
-                      <button class="btn-icon text-red-500 dark:text-red-400" title="Reject"><i class="hgi-stroke hgi-cancel-circle text-[16px]"></i></button>
-                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">ML</span><div class="leading-tight"><p class="font-medium text-ink">Mei L.</p><p class="text-[11px] text-muted">mei.lin@company.io</p></div></div></td>
-                  <td class="text-muted">Thai Street Food Festival</td>
-                  <td class="text-muted">General Admission</td>
-                  <td class="text-muted tnum">Jul 6, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿250</td>
-                  <td><span class="badge badge-blue"><i class="hgi-stroke hgi-time-schedule text-[12px]"></i>Waitlisted</span></td>
-                  <td class="text-right">
-                    <div class="flex items-center justify-end gap-1">
-                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">NK</span><div class="leading-tight"><p class="font-medium text-ink">Nattapong K.</p><p class="text-[11px] text-muted">nattapong.k@gmail.com</p></div></div></td>
-                  <td class="text-muted">Sunrise Yoga Retreat</td>
-                  <td class="text-muted">Student</td>
-                  <td class="text-muted tnum">Jul 6, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿390</td>
-                  <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Confirmed</span></td>
-                  <td class="text-right">
-                    <div class="flex items-center justify-end gap-1">
-                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">SC</span><div class="leading-tight"><p class="font-medium text-ink">Sarah C.</p><p class="text-[11px] text-muted">sarah.chen@gmail.com</p></div></div></td>
-                  <td class="text-muted">Tech Summit 2026</td>
-                  <td class="text-muted">VIP</td>
-                  <td class="text-muted tnum">Jul 5, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿2,400</td>
-                  <td><span class="badge badge-gray"><i class="hgi-stroke hgi-cancel-circle text-[12px]"></i>Cancelled</span></td>
-                  <td class="text-right">
-                    <div class="flex items-center justify-end gap-1">
-                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">KR</span><div class="leading-tight"><p class="font-medium text-ink">Kanya R.</p><p class="text-[11px] text-muted">kanya.r@gmail.com</p></div></div></td>
-                  <td class="text-muted">Bangkok Jazz Night</td>
-                  <td class="text-muted">General Admission</td>
-                  <td class="text-muted tnum">Jul 5, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿480</td>
-                  <td><span class="badge badge-amber"><i class="hgi-stroke hgi-clock-01 text-[12px]"></i>Pending</span></td>
-                  <td class="text-right">
-                    <div class="flex items-center justify-end gap-1">
-                      <button class="btn-icon text-brand" title="Approve"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i></button>
-                      <button class="btn-icon text-red-500 dark:text-red-400" title="Reject"><i class="hgi-stroke hgi-cancel-circle text-[16px]"></i></button>
-                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">DL</span><div class="leading-tight"><p class="font-medium text-ink">David L.</p><p class="text-[11px] text-muted">david.lee@gmail.com</p></div></div></td>
-                  <td class="text-muted">Thai Street Food Festival</td>
-                  <td class="text-muted">Early Bird</td>
-                  <td class="text-muted tnum">Jul 4, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿180</td>
-                  <td><span class="badge badge-blue"><i class="hgi-stroke hgi-time-schedule text-[12px]"></i>Waitlisted</span></td>
-                  <td class="text-right">
-                    <div class="flex items-center justify-end gap-1">
-                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+      <div id="reg-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="reg-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="reg-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="reg-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="reg-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
           </div>
         </div>
-
-        <!-- PENDING -->
-        <div data-tab-panel="pending" class="hidden">
-          <div class="overflow-x-auto">
-            <table class="data-table min-w-[820px]">
-              <thead>
-                <tr><th>Attendee</th><th>Event</th><th>Ticket</th><th>Registered</th><th>Amount</th><th>Status</th><th class="text-right">Actions</th></tr>
-              </thead>
-              <tbody class="text-[13px]">
-                <tr>
-                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">PS</span><div class="leading-tight"><p class="font-medium text-ink">Ploy S.</p><p class="text-[11px] text-muted">ploy.s@outlook.com</p></div></div></td>
-                  <td class="text-muted">Tech Summit 2026</td>
-                  <td class="text-muted">Early Bird</td>
-                  <td class="text-muted tnum">Jul 7, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿950</td>
-                  <td><span class="badge badge-amber"><i class="hgi-stroke hgi-clock-01 text-[12px]"></i>Pending</span></td>
-                  <td class="text-right">
-                    <div class="flex items-center justify-end gap-1">
-                      <button class="btn-icon text-brand" title="Approve"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i></button>
-                      <button class="btn-icon text-red-500 dark:text-red-400" title="Reject"><i class="hgi-stroke hgi-cancel-circle text-[16px]"></i></button>
-                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">KR</span><div class="leading-tight"><p class="font-medium text-ink">Kanya R.</p><p class="text-[11px] text-muted">kanya.r@gmail.com</p></div></div></td>
-                  <td class="text-muted">Bangkok Jazz Night</td>
-                  <td class="text-muted">General Admission</td>
-                  <td class="text-muted tnum">Jul 5, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿480</td>
-                  <td><span class="badge badge-amber"><i class="hgi-stroke hgi-clock-01 text-[12px]"></i>Pending</span></td>
-                  <td class="text-right">
-                    <div class="flex items-center justify-end gap-1">
-                      <button class="btn-icon text-brand" title="Approve"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i></button>
-                      <button class="btn-icon text-red-500 dark:text-red-400" title="Reject"><i class="hgi-stroke hgi-cancel-circle text-[16px]"></i></button>
-                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- WAITLIST -->
-        <div data-tab-panel="waitlist" class="hidden">
-          <div class="overflow-x-auto">
-            <table class="data-table min-w-[820px]">
-              <thead>
-                <tr><th>Attendee</th><th>Event</th><th>Ticket</th><th>Registered</th><th>Amount</th><th>Status</th><th class="text-right">Actions</th></tr>
-              </thead>
-              <tbody class="text-[13px]">
-                <tr>
-                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">ML</span><div class="leading-tight"><p class="font-medium text-ink">Mei L.</p><p class="text-[11px] text-muted">mei.lin@company.io</p></div></div></td>
-                  <td class="text-muted">Thai Street Food Festival</td>
-                  <td class="text-muted">General Admission</td>
-                  <td class="text-muted tnum">Jul 6, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿250</td>
-                  <td><span class="badge badge-blue"><i class="hgi-stroke hgi-time-schedule text-[12px]"></i>Waitlisted</span></td>
-                  <td class="text-right">
-                    <div class="flex items-center justify-end gap-1">
-                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">DL</span><div class="leading-tight"><p class="font-medium text-ink">David L.</p><p class="text-[11px] text-muted">david.lee@gmail.com</p></div></div></td>
-                  <td class="text-muted">Thai Street Food Festival</td>
-                  <td class="text-muted">Early Bird</td>
-                  <td class="text-muted tnum">Jul 4, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿180</td>
-                  <td><span class="badge badge-blue"><i class="hgi-stroke hgi-time-schedule text-[12px]"></i>Waitlisted</span></td>
-                  <td class="text-right">
-                    <div class="flex items-center justify-end gap-1">
-                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- CANCELLED -->
-        <div data-tab-panel="cancelled" class="hidden">
-          <div class="overflow-x-auto">
-            <table class="data-table min-w-[820px]">
-              <thead>
-                <tr><th>Attendee</th><th>Event</th><th>Ticket</th><th>Registered</th><th>Amount</th><th>Status</th><th class="text-right">Actions</th></tr>
-              </thead>
-              <tbody class="text-[13px]">
-                <tr>
-                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">SC</span><div class="leading-tight"><p class="font-medium text-ink">Sarah C.</p><p class="text-[11px] text-muted">sarah.chen@gmail.com</p></div></div></td>
-                  <td class="text-muted">Tech Summit 2026</td>
-                  <td class="text-muted">VIP</td>
-                  <td class="text-muted tnum">Jul 5, 2026</td>
-                  <td class="font-semibold text-ink tnum">฿2,400</td>
-                  <td><span class="badge badge-gray"><i class="hgi-stroke hgi-cancel-circle text-[12px]"></i>Cancelled</span></td>
-                  <td class="text-right">
-                    <div class="flex items-center justify-end gap-1">
-                      <button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                      <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
       </div>
     </section>
 
@@ -402,6 +166,142 @@
   </aside>
 </div>
 
-<script src="../assets/shell.js?v=34"></script>
+<script src="../assets/shell.js?v=36"></script>
+<script>
+  /* ---------- Registrations: data-driven, filterable, paginated ---------- */
+  const DATA = [
+    { initials:'AP', name:'Anong P.',     email:'anong.p@gmail.com',        event:'Tech Summit 2026',           ticket:'VIP',               date:'Jul 8, 2026', amount:'฿2,400', status:'Confirmed' },
+    { initials:'ST', name:'Somchai T.',   email:'somchai.t@hotmail.com',    event:'Bangkok Jazz Night',         ticket:'General Admission', date:'Jul 8, 2026', amount:'฿480',   status:'Confirmed' },
+    { initials:'JW', name:'James W.',      email:'james.wilson@gmail.com',   event:'UX Bangkok Meetup',          ticket:'Free',              date:'Jul 7, 2026', amount:'Free',   status:'Confirmed' },
+    { initials:'PS', name:'Ploy S.',       email:'ploy.s@outlook.com',       event:'Tech Summit 2026',           ticket:'Early Bird',        date:'Jul 7, 2026', amount:'฿950',   status:'Pending' },
+    { initials:'ML', name:'Mei L.',        email:'mei.lin@company.io',       event:'Thai Street Food Festival',  ticket:'General Admission', date:'Jul 6, 2026', amount:'฿250',   status:'Waitlisted' },
+    { initials:'NK', name:'Nattapong K.',  email:'nattapong.k@gmail.com',    event:'Sunrise Yoga Retreat',       ticket:'Student',           date:'Jul 6, 2026', amount:'฿390',   status:'Confirmed' },
+    { initials:'SC', name:'Sarah C.',      email:'sarah.chen@gmail.com',     event:'Tech Summit 2026',           ticket:'VIP',               date:'Jul 5, 2026', amount:'฿2,400', status:'Cancelled' },
+    { initials:'KR', name:'Kanya R.',      email:'kanya.r@gmail.com',        event:'Bangkok Jazz Night',         ticket:'General Admission', date:'Jul 5, 2026', amount:'฿480',   status:'Pending' },
+    { initials:'DL', name:'David L.',      email:'david.lee@gmail.com',      event:'Thai Street Food Festival',  ticket:'Early Bird',        date:'Jul 4, 2026', amount:'฿180',   status:'Waitlisted' },
+    { initials:'GH', name:'Grace H.',      email:'grace.h@gmail.com',        event:'UX Bangkok Meetup',          ticket:'Free',              date:'Jul 4, 2026', amount:'Free',   status:'Confirmed' },
+    { initials:'JP', name:'Jun P.',        email:'jun.park@outlook.com',     event:'Tech Summit 2026',           ticket:'General Admission', date:'Jul 3, 2026', amount:'฿1,200', status:'Confirmed' },
+    { initials:'RM', name:'Ravi M.',       email:'ravi.menon@corpmail.com',  event:'Bangkok Jazz Night',         ticket:'VIP',               date:'Jul 3, 2026', amount:'฿1,600', status:'Confirmed' },
+    { initials:'SA', name:'Siriporn A.',   email:'siriporn.a@yahoo.com',     event:'Sunrise Yoga Retreat',       ticket:'Early Bird',        date:'Jul 3, 2026', amount:'฿590',   status:'Pending' },
+    { initials:'AW', name:'Arthit W.',     email:'arthit.w@outlook.com',     event:'Thai Street Food Festival',  ticket:'General Admission', date:'Jul 2, 2026', amount:'฿250',   status:'Waitlisted' },
+    { initials:'SK', name:'Suda K.',       email:'suda.k@yahoo.com',         event:'Tech Summit 2026',           ticket:'Student',           date:'Jul 2, 2026', amount:'฿1,100', status:'Confirmed' },
+    { initials:'LT', name:'Lily T.',       email:'lily.tan@gmail.com',       event:'Bangkok Jazz Night',         ticket:'General Admission', date:'Jul 2, 2026', amount:'฿480',   status:'Confirmed' },
+    { initials:'KO', name:'Kevin O.',      email:'kevin.oduya@corpmail.com', event:'UX Bangkok Meetup',          ticket:'Free',              date:'Jul 1, 2026', amount:'Free',   status:'Confirmed' },
+    { initials:'PN', name:'Preeya N.',     email:'preeya.n@outlook.com',     event:'Sunrise Yoga Retreat',       ticket:'Student',           date:'Jul 1, 2026', amount:'฿390',   status:'Cancelled' },
+    { initials:'NS', name:'Nattapong S.',  email:'nattapong.s@gmail.com',    event:'Tech Summit 2026',           ticket:'VIP',               date:'Jul 1, 2026', amount:'฿2,400', status:'Confirmed' },
+    { initials:'RD', name:'Rachel D.',     email:'rachel.davies@gmail.com',  event:'Thai Street Food Festival',  ticket:'Early Bird',        date:'Jun 30, 2026', amount:'฿180',  status:'Pending' },
+    { initials:'WP', name:'Wichai P.',     email:'wichai.p@hotmail.com',     event:'Bangkok Jazz Night',         ticket:'General Admission', date:'Jun 30, 2026', amount:'฿480',  status:'Confirmed' },
+    { initials:'MR', name:'Malee R.',      email:'malee.r@gmail.com',        event:'Sunrise Yoga Retreat',       ticket:'Early Bird',        date:'Jun 29, 2026', amount:'฿590',  status:'Waitlisted' },
+    { initials:'TB', name:'Tom B.',        email:'tom.bradley@gmail.com',    event:'Tech Summit 2026',           ticket:'General Admission', date:'Jun 29, 2026', amount:'฿1,200', status:'Confirmed' },
+    { initials:'CL', name:'Chai L.',       email:'chai.l@outlook.com',       event:'Thai Street Food Festival',  ticket:'Student',           date:'Jun 28, 2026', amount:'฿150',  status:'Confirmed' },
+    { initials:'DO', name:'David O.',      email:'d.okafor@corpmail.com',    event:'UX Bangkok Meetup',          ticket:'Free',              date:'Jun 28, 2026', amount:'Free',  status:'Cancelled' },
+    { initials:'AN', name:'Anong N.',      email:'anong.n@gmail.com',        event:'Bangkok Jazz Night',         ticket:'VIP',               date:'Jun 27, 2026', amount:'฿1,600', status:'Pending' },
+    { initials:'PT', name:'Prasert T.',    email:'prasert.t@yahoo.com',      event:'Sunrise Yoga Retreat',       ticket:'Student',           date:'Jun 27, 2026', amount:'฿390',  status:'Confirmed' },
+    { initials:'MC', name:'Mai C.',        email:'mai.chen@company.io',      event:'Tech Summit 2026',           ticket:'Early Bird',        date:'Jun 26, 2026', amount:'฿950',  status:'Waitlisted' },
+    { initials:'JR', name:'Jira W.',       email:'jira.w@gmail.com',         event:'Thai Street Food Festival',  ticket:'General Admission', date:'Jun 26, 2026', amount:'฿250',  status:'Confirmed' },
+    { initials:'BK', name:'Bua K.',        email:'bua.k@outlook.com',        event:'Bangkok Jazz Night',         ticket:'General Admission', date:'Jun 25, 2026', amount:'฿480',  status:'Cancelled' },
+  ];
+
+  const STATUS_BADGE = {
+    Confirmed:  { cls:'badge-green', icon:'hgi-checkmark-badge-01' },
+    Pending:    { cls:'badge-amber', icon:'hgi-clock-01' },
+    Waitlisted: { cls:'badge-blue',  icon:'hgi-time-schedule' },
+    Cancelled:  { cls:'badge-gray',  icon:'hgi-cancel-circle' },
+  };
+  const TAB_STATUS = { pending:'Pending', waitlist:'Waitlisted', cancelled:'Cancelled' };
+
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+  function nf(n){ return n.toLocaleString('en-US'); }
+
+  function amountCell(r){
+    return r.amount === 'Free'
+      ? '<td><span class="badge badge-green">Free</span></td>'
+      : '<td class="font-semibold text-ink tnum">' + esc(r.amount) + '</td>';
+  }
+  function actionsCell(r){
+    const pending = r.status === 'Pending'
+      ? '<button class="btn-icon text-brand" title="Approve"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i></button>' +
+        '<button class="btn-icon text-red-500 dark:text-red-400" title="Reject"><i class="hgi-stroke hgi-cancel-circle text-[16px]"></i></button>'
+      : '';
+    return '<td class="text-right">' +
+      '<div class="flex items-center justify-end gap-1">' +
+        pending +
+        '<button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>' +
+        '<button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>' +
+      '</div>' +
+    '</td>';
+  }
+  function rowHTML(r){
+    const sb = STATUS_BADGE[r.status];
+    return '<tr>' +
+      '<td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[11px]">' + esc(r.initials) + '</span>' +
+        '<div class="leading-tight"><p class="font-medium text-ink">' + esc(r.name) + '</p>' +
+        '<p class="text-[11px] text-muted">' + esc(r.email) + '</p></div></div></td>' +
+      '<td class="text-muted">' + esc(r.event) + '</td>' +
+      '<td class="text-muted">' + esc(r.ticket) + '</td>' +
+      '<td class="text-muted tnum">' + esc(r.date) + '</td>' +
+      amountCell(r) +
+      '<td><span class="badge ' + sb.cls + '"><i class="hgi-stroke ' + sb.icon + ' text-[12px]"></i>' + r.status + '</span></td>' +
+      actionsCell(r) +
+    '</tr>';
+  }
+
+  const state = { q:'', tab:'all', event:'All events', ticket:'All ticket types', page:0, size:10 };
+
+  const byTab = r => state.tab === 'all' || r.status === TAB_STATUS[state.tab];
+  const byEvent = r => state.event === 'All events' || r.event === state.event;
+  const byTicket = r => state.ticket === 'All ticket types' || r.ticket === state.ticket;
+  const bySearch = r => { const q = state.q.trim().toLowerCase(); return !q || r.name.toLowerCase().includes(q) || r.email.toLowerCase().includes(q); };
+  function filtered(){ return DATA.filter(byTab).filter(byEvent).filter(byTicket).filter(bySearch); }
+
+  const tbody    = document.getElementById('reg-rows');
+  const showing  = document.getElementById('reg-showing');
+  const prevBtn  = document.getElementById('reg-prev');
+  const nextBtn  = document.getElementById('reg-next');
+  const sizeSel  = document.getElementById('reg-size');
+  const searchEl = document.getElementById('reg-search');
+  const eventFilter  = document.getElementById('reg-event-filter');
+  const ticketFilter = document.getElementById('reg-ticket-filter');
+
+  function refreshTabCounts(){
+    document.querySelector('[data-count="all"]').textContent = nf(DATA.length);
+    document.querySelector('[data-count="pending"]').textContent = nf(DATA.filter(r => r.status === 'Pending').length);
+    document.querySelector('[data-count="waitlist"]').textContent = nf(DATA.filter(r => r.status === 'Waitlisted').length);
+    document.querySelector('[data-count="cancelled"]').textContent = nf(DATA.filter(r => r.status === 'Cancelled').length);
+  }
+
+  function render(){
+    const list = filtered(), total = list.length, pages = Math.max(1, Math.ceil(total / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    const start = state.page * state.size, slice = list.slice(start, start + state.size);
+    tbody.innerHTML = slice.length
+      ? slice.map(rowHTML).join('')
+      : '<tr><td colspan="7"><div class="py-10 text-center text-[13px] text-muted">No matches.</div></td></tr>';
+    if (total === 0) {
+      showing.textContent = 'No registrations';
+    } else {
+      showing.innerHTML = 'Showing <span class="font-semibold text-ink">' + (start + 1) + '–' + (start + slice.length) +
+        '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> registrations';
+    }
+    prevBtn.disabled = total === 0 || state.page === 0;
+    nextBtn.disabled = total === 0 || state.page >= pages - 1;
+    refreshTabCounts();
+  }
+
+  searchEl.addEventListener('input', () => { state.q = searchEl.value; state.page = 0; render(); });
+  eventFilter.addEventListener('change', () => { state.event = eventFilter.value; state.page = 0; render(); });
+  ticketFilter.addEventListener('change', () => { state.ticket = ticketFilter.value; state.page = 0; render(); });
+  sizeSel.addEventListener('change', () => { state.size = +sizeSel.value; state.page = 0; render(); });
+  prevBtn.addEventListener('click', () => { if (state.page > 0) { state.page--; render(); } });
+  nextBtn.addEventListener('click', () => { state.page++; render(); });
+  // pill-tabs: shell.js toggles .tab-active; we read the chosen tab and filter.
+  document.querySelector('[data-tabs]').addEventListener('click', e => {
+    const t = e.target.closest('[data-tab]'); if (!t) return;
+    state.tab = t.getAttribute('data-tab'); state.page = 0; render();
+  });
+
+  render();
+</script>
 </body>
 </html>

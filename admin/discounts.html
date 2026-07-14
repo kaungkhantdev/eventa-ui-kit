@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=34"></script>
-<link rel="stylesheet" href="../assets/app.css?v=34" />
+<script src="../assets/config.js?v=36"></script>
+<link rel="stylesheet" href="../assets/app.css?v=36" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="discounts">
 
@@ -35,22 +35,22 @@
 
     <!-- pill tabs (out of table) -->
     <div data-tabs="#disc-table" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
-      <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count tnum">16</span></button>
-      <button class="pilltab" data-tab="active">Active <span class="pilltab-count tnum">12</span></button>
-      <button class="pilltab" data-tab="scheduled">Scheduled <span class="pilltab-count tnum">2</span></button>
-      <button class="pilltab" data-tab="expired">Expired <span class="pilltab-count tnum">1</span></button>
-      <button class="pilltab" data-tab="disabled">Disabled <span class="pilltab-count tnum">1</span></button>
+      <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count tnum">22</span></button>
+      <button class="pilltab" data-tab="active">Active <span class="pilltab-count tnum">14</span></button>
+      <button class="pilltab" data-tab="scheduled">Scheduled <span class="pilltab-count tnum">3</span></button>
+      <button class="pilltab" data-tab="expired">Expired <span class="pilltab-count tnum">3</span></button>
+      <button class="pilltab" data-tab="disabled">Disabled <span class="pilltab-count tnum">2</span></button>
     </div>
 
     <!-- search + filter (out of table) -->
     <div class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
         <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
-        <input type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search codes…" />
+        <input id="disc-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search codes…" />
       </div>
       <div class="relative w-full sm:w-56">
         <i class="hgi-stroke hgi-calendar-03 text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
-        <select class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+        <select id="disc-event" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
           <option>All events</option>
           <option>Tech Summit 2026</option>
           <option>Bangkok Jazz Night</option>
@@ -76,201 +76,23 @@
               <th class="text-right">Actions</th>
             </tr>
           </thead>
-          <tbody class="text-[13px]">
-            <tr>
-              <td>
-                <div class="flex items-center gap-1.5">
-                  <span class="font-mono text-[12px] font-semibold uppercase tracking-wide text-ink">EARLYBIRD25</span>
-                  <button class="btn-icon h-7 w-7" title="Copy code" onclick="copyCode(this,'EARLYBIRD25')"><i class="hgi-stroke hgi-copy-01 text-[13px]"></i></button>
-                </div>
-              </td>
-              <td><span class="badge badge-purple">25% off</span></td>
-              <td class="text-muted">Tech Summit 2026</td>
-              <td>
-                <div class="w-28">
-                  <p class="text-[11px] text-muted tnum">342 / 500</p>
-                  <div class="mt-1 h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:68%"></div></div>
-                </div>
-              </td>
-              <td class="text-muted tnum">Jun 1 – Jul 31, 2026</td>
-              <td><span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Active</span></td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon" data-open="code-panel" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
-                  <button class="btn-icon" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-1.5">
-                  <span class="font-mono text-[12px] font-semibold uppercase tracking-wide text-ink">JAZZ200</span>
-                  <button class="btn-icon h-7 w-7" title="Copy code" onclick="copyCode(this,'JAZZ200')"><i class="hgi-stroke hgi-copy-01 text-[13px]"></i></button>
-                </div>
-              </td>
-              <td><span class="badge badge-blue">฿200 off</span></td>
-              <td class="text-muted">Bangkok Jazz Night</td>
-              <td>
-                <div class="w-28">
-                  <p class="text-[11px] text-muted tnum">89 / 150</p>
-                  <div class="mt-1 h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:59%"></div></div>
-                </div>
-              </td>
-              <td class="text-muted tnum">Jun 15 – Jul 12, 2026</td>
-              <td><span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Active</span></td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon" data-open="code-panel" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
-                  <button class="btn-icon" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-1.5">
-                  <span class="font-mono text-[12px] font-semibold uppercase tracking-wide text-ink">YOGA10</span>
-                  <button class="btn-icon h-7 w-7" title="Copy code" onclick="copyCode(this,'YOGA10')"><i class="hgi-stroke hgi-copy-01 text-[13px]"></i></button>
-                </div>
-              </td>
-              <td><span class="badge badge-purple">10% off</span></td>
-              <td class="text-muted">Sunrise Yoga Retreat</td>
-              <td>
-                <div class="w-28">
-                  <p class="text-[11px] text-muted tnum">54 / 100</p>
-                  <div class="mt-1 h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:54%"></div></div>
-                </div>
-              </td>
-              <td class="text-muted tnum">Jul 1 – Jul 20, 2026</td>
-              <td><span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Active</span></td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon" data-open="code-panel" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
-                  <button class="btn-icon" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-1.5">
-                  <span class="font-mono text-[12px] font-semibold uppercase tracking-wide text-ink">FOODFEST50</span>
-                  <button class="btn-icon h-7 w-7" title="Copy code" onclick="copyCode(this,'FOODFEST50')"><i class="hgi-stroke hgi-copy-01 text-[13px]"></i></button>
-                </div>
-              </td>
-              <td><span class="badge badge-blue">฿50 off</span></td>
-              <td class="text-muted">Thai Street Food Festival</td>
-              <td>
-                <div class="w-28">
-                  <p class="text-[11px] text-muted tnum">210 / 400</p>
-                  <div class="mt-1 h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:53%"></div></div>
-                </div>
-              </td>
-              <td class="text-muted tnum">Jul 5 – Aug 3, 2026</td>
-              <td><span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Active</span></td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon" data-open="code-panel" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
-                  <button class="btn-icon" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-1.5">
-                  <span class="font-mono text-[12px] font-semibold uppercase tracking-wide text-ink">UXBKK20</span>
-                  <button class="btn-icon h-7 w-7" title="Copy code" onclick="copyCode(this,'UXBKK20')"><i class="hgi-stroke hgi-copy-01 text-[13px]"></i></button>
-                </div>
-              </td>
-              <td><span class="badge badge-purple">20% off</span></td>
-              <td class="text-muted">UX Bangkok Meetup</td>
-              <td>
-                <div class="w-28">
-                  <p class="text-[11px] text-muted tnum">0 / 60</p>
-                  <div class="mt-1 h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:0%"></div></div>
-                </div>
-              </td>
-              <td class="text-muted tnum">Aug 1 – Aug 15, 2026</td>
-              <td><span class="badge badge-blue"><i class="hgi-stroke hgi-time-schedule text-[12px]"></i>Scheduled</span></td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon" data-open="code-panel" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
-                  <button class="btn-icon" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-1.5">
-                  <span class="font-mono text-[12px] font-semibold uppercase tracking-wide text-ink">WELCOME100</span>
-                  <button class="btn-icon h-7 w-7" title="Copy code" onclick="copyCode(this,'WELCOME100')"><i class="hgi-stroke hgi-copy-01 text-[13px]"></i></button>
-                </div>
-              </td>
-              <td><span class="badge badge-blue">฿100 off</span></td>
-              <td class="text-muted">All events</td>
-              <td>
-                <div class="w-28">
-                  <p class="text-[11px] text-muted tnum">980 / 1,000</p>
-                  <div class="mt-1 h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:98%"></div></div>
-                </div>
-              </td>
-              <td class="text-muted tnum">Jan 1 – Dec 31, 2026</td>
-              <td><span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Active</span></td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon" data-open="code-panel" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
-                  <button class="btn-icon" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-1.5">
-                  <span class="font-mono text-[12px] font-semibold uppercase tracking-wide text-ink">VIPACCESS30</span>
-                  <button class="btn-icon h-7 w-7" title="Copy code" onclick="copyCode(this,'VIPACCESS30')"><i class="hgi-stroke hgi-copy-01 text-[13px]"></i></button>
-                </div>
-              </td>
-              <td><span class="badge badge-purple">30% off</span></td>
-              <td class="text-muted">Tech Summit 2026</td>
-              <td>
-                <div class="w-28">
-                  <p class="text-[11px] text-muted tnum">500 / 500</p>
-                  <div class="mt-1 h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:100%"></div></div>
-                </div>
-              </td>
-              <td class="text-muted tnum">May 1 – Jun 30, 2026</td>
-              <td><span class="badge badge-gray"><i class="hgi-stroke hgi-clock-01 text-[12px]"></i>Expired</span></td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon" data-open="code-panel" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
-                  <button class="btn-icon" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-1.5">
-                  <span class="font-mono text-[12px] font-semibold uppercase tracking-wide text-ink">STAFFONLY</span>
-                  <button class="btn-icon h-7 w-7" title="Copy code" onclick="copyCode(this,'STAFFONLY')"><i class="hgi-stroke hgi-copy-01 text-[13px]"></i></button>
-                </div>
-              </td>
-              <td><span class="badge badge-blue">฿500 off</span></td>
-              <td class="text-muted">All events</td>
-              <td>
-                <div class="w-28">
-                  <p class="text-[11px] text-muted tnum">12 / 20</p>
-                  <div class="mt-1 h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:60%"></div></div>
-                </div>
-              </td>
-              <td class="text-muted tnum">Jul 1 – Jul 31, 2026</td>
-              <td><span class="badge badge-amber"><i class="hgi-stroke hgi-alert-circle text-[12px]"></i>Disabled</span></td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon" data-open="code-panel" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
-                  <button class="btn-icon" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
+          <tbody id="disc-rows" class="text-[13px]"></tbody>
         </table>
+      </div>
+
+      <div id="disc-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="disc-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="disc-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="disc-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="disc-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -379,7 +201,7 @@
   </div>
 </div>
 
-<script src="../assets/shell.js?v=34"></script>
+<script src="../assets/shell.js?v=36"></script>
 <script>
   // Copy code to clipboard with a brief tick confirmation
   function copyCode(btn, code) {
@@ -420,6 +242,130 @@
       if (knob) knob.classList.toggle('translate-x-4', on);
     });
   });
+
+  // ---------- Data-driven table + pagination ----------
+  (function () {
+    var nf = function (n) { return n.toLocaleString('en-US'); };
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    function attr(s) { return String(s == null ? '' : s).replace(/'/g, '&#39;').replace(/"/g, '&quot;'); }
+
+    // code, type ('percent'|'fixed'), value, event, used, limit, valid, status
+    function d(code, type, value, event, used, limit, valid, status) {
+      return { code: code, type: type, value: value, event: event, used: used, limit: limit, valid: valid, status: status };
+    }
+    var DATA = [
+      d('EARLYBIRD25', 'percent', 25, 'Tech Summit 2026', 342, 500, 'Jun 1 – Jul 31, 2026', 'active'),
+      d('JAZZ200', 'fixed', 200, 'Bangkok Jazz Night', 89, 150, 'Jun 15 – Jul 12, 2026', 'active'),
+      d('YOGA10', 'percent', 10, 'Sunrise Yoga Retreat', 54, 100, 'Jul 1 – Jul 20, 2026', 'active'),
+      d('FOODFEST50', 'fixed', 50, 'Thai Street Food Festival', 210, 400, 'Jul 5 – Aug 3, 2026', 'active'),
+      d('UXBKK20', 'percent', 20, 'UX Bangkok Meetup', 0, 60, 'Aug 1 – Aug 15, 2026', 'scheduled'),
+      d('WELCOME100', 'fixed', 100, 'All events', 980, 1000, 'Jan 1 – Dec 31, 2026', 'active'),
+      d('VIPACCESS30', 'percent', 30, 'Tech Summit 2026', 500, 500, 'May 1 – Jun 30, 2026', 'expired'),
+      d('STAFFONLY', 'fixed', 500, 'All events', 12, 20, 'Jul 1 – Jul 31, 2026', 'disabled'),
+      d('SUMMERSALE', 'percent', 15, 'Thai Street Food Festival', 120, 300, 'Jun 10 – Aug 10, 2026', 'active'),
+      d('FLASH500', 'fixed', 500, 'Tech Summit 2026', 45, 50, 'Jul 8 – Jul 15, 2026', 'active'),
+      d('STUDENT15', 'percent', 15, 'UX Bangkok Meetup', 76, 200, 'Jun 1 – Aug 31, 2026', 'active'),
+      d('GROUP150', 'fixed', 150, 'Bangkok Jazz Night', 30, 80, 'Jul 1 – Jul 31, 2026', 'active'),
+      d('LOYALTY20', 'percent', 20, 'All events', 410, 600, 'Jan 1 – Dec 31, 2026', 'active'),
+      d('NEWYEAR40', 'percent', 40, 'Tech Summit 2026', 300, 300, 'Jan 1 – Feb 28, 2026', 'expired'),
+      d('AUTUMN25', 'percent', 25, 'Sunrise Yoga Retreat', 0, 120, 'Sep 1 – Sep 30, 2026', 'scheduled'),
+      d('WEEKEND100', 'fixed', 100, 'Thai Street Food Festival', 55, 150, 'Jul 10 – Jul 20, 2026', 'active'),
+      d('PARTNER50', 'percent', 50, 'All events', 8, 25, 'Jul 1 – Dec 31, 2026', 'active'),
+      d('TECHFAN250', 'fixed', 250, 'Tech Summit 2026', 130, 250, 'Jun 20 – Jul 31, 2026', 'active'),
+      d('RETREATVIP', 'percent', 35, 'Sunrise Yoga Retreat', 40, 40, 'Apr 1 – May 31, 2026', 'expired'),
+      d('PRESALE300', 'fixed', 300, 'UX Bangkok Meetup', 0, 100, 'Aug 5 – Aug 20, 2026', 'scheduled'),
+      d('JAZZLOVER', 'percent', 12, 'Bangkok Jazz Night', 22, 90, 'Jul 3 – Jul 12, 2026', 'active'),
+      d('HOLIDAY75', 'fixed', 75, 'Thai Street Food Festival', 90, 200, 'Jul 1 – Jul 31, 2026', 'disabled')
+    ];
+
+    var STATUS = {
+      active: ['badge-green', 'hgi-tick-02', 'Active'],
+      scheduled: ['badge-blue', 'hgi-time-schedule', 'Scheduled'],
+      expired: ['badge-gray', 'hgi-clock-01', 'Expired'],
+      disabled: ['badge-amber', 'hgi-alert-circle', 'Disabled']
+    };
+
+    function typeCell(a) {
+      if (a.type === 'fixed') return '<td><span class="badge badge-blue">฿' + esc(a.value) + ' off</span></td>';
+      return '<td><span class="badge badge-purple">' + esc(a.value) + '% off</span></td>';
+    }
+    function rowHTML(a) {
+      var pct = a.limit ? Math.round(a.used / a.limit * 100) : 0;
+      var s = STATUS[a.status] || STATUS.active;
+      return '<tr>' +
+        '<td>' +
+          '<div class="flex items-center gap-1.5">' +
+            '<span class="font-mono text-[12px] font-semibold uppercase tracking-wide text-ink">' + esc(a.code) + '</span>' +
+            '<button class="btn-icon h-7 w-7" title="Copy code" onclick="copyCode(this,\'' + attr(a.code) + '\')"><i class="hgi-stroke hgi-copy-01 text-[13px]"></i></button>' +
+          '</div>' +
+        '</td>' +
+        typeCell(a) +
+        '<td class="text-muted">' + esc(a.event) + '</td>' +
+        '<td>' +
+          '<div class="w-28">' +
+            '<p class="text-[11px] text-muted tnum">' + nf(a.used) + ' / ' + nf(a.limit) + '</p>' +
+            '<div class="mt-1 h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:' + pct + '%"></div></div>' +
+          '</div>' +
+        '</td>' +
+        '<td class="text-muted tnum">' + esc(a.valid) + '</td>' +
+        '<td><span class="badge ' + s[0] + '"><i class="hgi-stroke ' + s[1] + ' text-[12px]"></i>' + s[2] + '</span></td>' +
+        '<td class="text-right">' +
+          '<div class="flex items-center justify-end gap-1">' +
+            '<button class="btn-icon" data-open="code-panel" title="Edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>' +
+            '<button class="btn-icon" data-open="del-modal" title="Delete"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>' +
+          '</div>' +
+        '</td>' +
+      '</tr>';
+    }
+
+    var state = { q: '', tab: 'all', event: '', page: 0, size: 10 };
+    function byTab(a) { return state.tab === 'all' || a.status === state.tab; }
+    // A code applying to "All events" always matches a specific-event filter
+    function byEvent(a) { return !state.event || a.event === state.event || a.event === 'All events'; }
+    function bySearch(a) { return !state.q || a.code.toLowerCase().indexOf(state.q) >= 0 || a.event.toLowerCase().indexOf(state.q) >= 0; }
+    function filtered() { return DATA.filter(byTab).filter(byEvent).filter(bySearch); }
+
+    var tbody = document.getElementById('disc-rows');
+    var elShowing = document.getElementById('disc-showing');
+    var elPrev = document.getElementById('disc-prev');
+    var elNext = document.getElementById('disc-next');
+    var counts = document.querySelectorAll('.pilltab-count'); // order: all, active, scheduled, expired, disabled
+
+    function refreshCounts() {
+      var c = { active: 0, scheduled: 0, expired: 0, disabled: 0 };
+      for (var i = 0; i < DATA.length; i++) { if (c[DATA[i].status] != null) c[DATA[i].status]++; }
+      counts[0].textContent = nf(DATA.length);
+      counts[1].textContent = nf(c.active);
+      counts[2].textContent = nf(c.scheduled);
+      counts[3].textContent = nf(c.expired);
+      counts[4].textContent = nf(c.disabled);
+    }
+
+    function render() {
+      var list = filtered(), total = list.length, pages = Math.max(1, Math.ceil(total / state.size));
+      if (state.page >= pages) state.page = pages - 1;
+      if (state.page < 0) state.page = 0;
+      var start = state.page * state.size, slice = list.slice(start, start + state.size);
+      tbody.innerHTML = slice.length ? slice.map(rowHTML).join('') : '<tr><td colspan="7"><div class="py-10 text-center text-[13px] text-muted">No matches.</div></td></tr>';
+      if (total === 0) { elShowing.textContent = 'No discount codes'; }
+      else { elShowing.innerHTML = 'Showing <span class="font-semibold text-ink">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> discount codes'; }
+      elPrev.disabled = total === 0 || state.page === 0;
+      elNext.disabled = total === 0 || state.page >= pages - 1;
+    }
+
+    var elSearch = document.getElementById('disc-search');
+    if (elSearch) elSearch.addEventListener('input', function () { state.q = this.value.trim().toLowerCase(); state.page = 0; render(); });
+    var elEvent = document.getElementById('disc-event');
+    if (elEvent) elEvent.addEventListener('change', function () { state.event = this.value === 'All events' ? '' : this.value; state.page = 0; render(); });
+    document.getElementById('disc-size').addEventListener('change', function () { state.size = +this.value; state.page = 0; render(); });
+    elPrev.addEventListener('click', function () { if (state.page > 0) { state.page--; render(); } });
+    elNext.addEventListener('click', function () { state.page++; render(); });
+    var tabsGroup = document.querySelector('[data-tabs]');
+    if (tabsGroup) tabsGroup.addEventListener('click', function (e) { var t = e.target.closest('[data-tab]'); if (!t) return; state.tab = t.getAttribute('data-tab'); state.page = 0; render(); });
+
+    refreshCounts();
+    render();
+  })();
 </script>
 </body>
 </html>

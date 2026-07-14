@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=34"></script>
-<link rel="stylesheet" href="../assets/app.css?v=34" />
+<script src="../assets/config.js?v=36"></script>
+<link rel="stylesheet" href="../assets/app.css?v=36" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="attendees">
 <div class="flex h-full min-h-screen" data-layout>
@@ -47,12 +47,12 @@
     <div class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
         <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
-        <input type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search by name or email…" />
+        <input id="att-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search by name or email…" />
       </div>
       <div class="flex gap-2">
         <div class="relative flex-1 sm:flex-none">
           <i class="hgi-stroke hgi-tag-01 text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
-          <select class="select h-10 w-full border-0 bg-surface pl-9 font-medium sm:w-44">
+          <select id="att-tag" class="select h-10 w-full border-0 bg-surface pl-9 font-medium sm:w-44">
             <option>All tags</option>
             <option>VIP</option>
             <option>Speaker</option>
@@ -62,7 +62,7 @@
         </div>
         <div class="relative flex-1 sm:flex-none">
           <i class="hgi-stroke hgi-arrow-up-down text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
-          <select class="select h-10 w-full border-0 bg-surface pl-9 font-medium sm:w-52">
+          <select id="att-sort" class="select h-10 w-full border-0 bg-surface pl-9 font-medium sm:w-52">
             <option>Sort: Last activity</option>
             <option>Sort: Name (A–Z)</option>
             <option>Sort: Most events</option>
@@ -87,241 +87,22 @@
               <th class="text-right">Actions</th>
             </tr>
           </thead>
-          <tbody class="text-[13px]">
-            <tr>
-              <td>
-                <div class="flex items-center gap-2">
-                  <span class="avatar h-8 w-8 text-[11px]">AP</span>
-                  <div class="min-w-0 leading-tight">
-                    <p class="truncate font-medium text-ink">Anong Praditsarn</p>
-                    <p class="truncate text-[11px] text-muted">anong.p@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td class="text-muted tnum">+66 81 234 5678</td>
-              <td class="text-muted tnum">5 events</td>
-              <td class="font-semibold text-ink tnum">7</td>
-              <td><span class="badge badge-purple"><i class="hgi-stroke hgi-star text-[12px]"></i>VIP</span></td>
-              <td class="text-muted tnum">Jul 15, 2026</td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-2">
-                  <span class="avatar h-8 w-8 text-[11px]">ST</span>
-                  <div class="min-w-0 leading-tight">
-                    <p class="truncate font-medium text-ink">Somchai Tanakit</p>
-                    <p class="truncate text-[11px] text-muted">somchai.t@outlook.com</p>
-                  </div>
-                </div>
-              </td>
-              <td class="text-muted tnum">+66 89 555 1023</td>
-              <td class="text-muted tnum">3 events</td>
-              <td class="font-semibold text-ink tnum">3</td>
-              <td class="text-muted">—</td>
-              <td class="text-muted tnum">Jul 14, 2026</td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-2">
-                  <span class="avatar h-8 w-8 text-[11px]">PS</span>
-                  <div class="min-w-0 leading-tight">
-                    <p class="truncate font-medium text-ink">Ploy Suwannarat</p>
-                    <p class="truncate text-[11px] text-muted">ploy.suwan@yahoo.com</p>
-                  </div>
-                </div>
-              </td>
-              <td class="text-muted tnum">+66 92 345 6789</td>
-              <td class="text-muted tnum">8 events</td>
-              <td class="font-semibold text-ink tnum">12</td>
-              <td><span class="badge badge-amber"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>Speaker</span></td>
-              <td class="text-muted tnum">Jul 16, 2026</td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-2">
-                  <span class="avatar h-8 w-8 text-[11px]">JW</span>
-                  <div class="min-w-0 leading-tight">
-                    <p class="truncate font-medium text-ink">James Whitfield</p>
-                    <p class="truncate text-[11px] text-muted">james.whitfield@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td class="text-muted tnum">+1 415 555 0134</td>
-              <td class="text-muted tnum">2 events</td>
-              <td class="font-semibold text-ink tnum">2</td>
-              <td><span class="badge badge-green"><i class="hgi-stroke hgi-sale-tag-01 text-[12px]"></i>Sponsor</span></td>
-              <td class="text-muted tnum">Jul 10, 2026</td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-2">
-                  <span class="avatar h-8 w-8 text-[11px]">ML</span>
-                  <div class="min-w-0 leading-tight">
-                    <p class="truncate font-medium text-ink">Mei Lin</p>
-                    <p class="truncate text-[11px] text-muted">mei.lin88@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td class="text-muted tnum">+65 8123 4567</td>
-              <td class="text-muted tnum">6 events</td>
-              <td class="font-semibold text-ink tnum">9</td>
-              <td>
-                <div class="flex flex-wrap gap-1">
-                  <span class="badge badge-purple"><i class="hgi-stroke hgi-star text-[12px]"></i>VIP</span>
-                  <span class="badge badge-amber"><i class="hgi-stroke hgi-mic-01 text-[12px]"></i>Speaker</span>
-                </div>
-              </td>
-              <td class="text-muted tnum">Jul 17, 2026</td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-2">
-                  <span class="avatar h-8 w-8 text-[11px]">NC</span>
-                  <div class="min-w-0 leading-tight">
-                    <p class="truncate font-medium text-ink">Natthaphong Charoen</p>
-                    <p class="truncate text-[11px] text-muted">nat.charoen@hotmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td class="text-muted tnum">+66 84 111 2233</td>
-              <td class="text-muted tnum">1 event</td>
-              <td class="font-semibold text-ink tnum">1</td>
-              <td><span class="badge badge-blue"><i class="hgi-stroke hgi-certificate-01 text-[12px]"></i>Student</span></td>
-              <td class="text-muted tnum">Jul 8, 2026</td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-2">
-                  <span class="avatar h-8 w-8 text-[11px]">KS</span>
-                  <div class="min-w-0 leading-tight">
-                    <p class="truncate font-medium text-ink">Kanokwan Srisai</p>
-                    <p class="truncate text-[11px] text-muted">kanokwan.s@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td class="text-muted tnum">+66 90 876 5432</td>
-              <td class="text-muted tnum">4 events</td>
-              <td class="font-semibold text-ink tnum">5</td>
-              <td class="text-muted">—</td>
-              <td class="text-muted tnum">Jul 12, 2026</td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-2">
-                  <span class="avatar h-8 w-8 text-[11px]">DO</span>
-                  <div class="min-w-0 leading-tight">
-                    <p class="truncate font-medium text-ink">David Okafor</p>
-                    <p class="truncate text-[11px] text-muted">d.okafor@corpmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td class="text-muted tnum">+44 7700 900123</td>
-              <td class="text-muted tnum">3 events</td>
-              <td class="font-semibold text-ink tnum">4</td>
-              <td><span class="badge badge-green"><i class="hgi-stroke hgi-sale-tag-01 text-[12px]"></i>Sponsor</span></td>
-              <td class="text-muted tnum">Jul 9, 2026</td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-2">
-                  <span class="avatar h-8 w-8 text-[11px]">SB</span>
-                  <div class="min-w-0 leading-tight">
-                    <p class="truncate font-medium text-ink">Suchada Boonmee</p>
-                    <p class="truncate text-[11px] text-muted">suchada.b@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td class="text-muted tnum">+66 86 234 1122</td>
-              <td class="text-muted tnum">7 events</td>
-              <td class="font-semibold text-ink tnum">10</td>
-              <td><span class="badge badge-purple"><i class="hgi-stroke hgi-star text-[12px]"></i>VIP</span></td>
-              <td class="text-muted tnum">Jul 18, 2026</td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-2">
-                  <span class="avatar h-8 w-8 text-[11px]">WR</span>
-                  <div class="min-w-0 leading-tight">
-                    <p class="truncate font-medium text-ink">Wichai Ratanakosin</p>
-                    <p class="truncate text-[11px] text-muted">wichai.r@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td class="text-muted tnum">+66 95 678 9012</td>
-              <td class="text-muted tnum">2 events</td>
-              <td class="font-semibold text-ink tnum">2</td>
-              <td><span class="badge badge-blue"><i class="hgi-stroke hgi-certificate-01 text-[12px]"></i>Student</span></td>
-              <td class="text-muted tnum">Jul 5, 2026</td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>
-                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
+          <tbody id="att-rows" class="text-[13px]"></tbody>
         </table>
       </div>
 
-      <div class="mt-3 flex items-center justify-between text-[12px] text-muted">
-        <p>Showing <span class="font-semibold text-ink">1–10</span> of <span class="font-semibold text-ink tnum">2,847</span> attendees</p>
-        <div class="flex gap-1">
-          <button class="btn-icon" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[15px]"></i></button>
-          <button class="btn-icon"><i class="hgi-stroke hgi-arrow-right-01 text-[15px]"></i></button>
+      <div id="att-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="att-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="att-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="att-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="att-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
         </div>
       </div>
     </section>
@@ -462,6 +243,169 @@
   </footer>
 </aside>
 
-<script src="../assets/shell.js?v=34"></script>
+<script src="../assets/shell.js?v=36"></script>
+<script>
+(function () {
+  var nf = function (n) { return n.toLocaleString('en-US'); };
+  var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function pad(n, len) { n = String(n); while (n.length < len) n = '0' + n; return n; }
+
+  var BASE = new Date(2026, 6, 16); // Jul 16, 2026
+  function dateFor(daysAgo) {
+    var d = new Date(BASE.getTime()); d.setDate(d.getDate() - daysAgo);
+    return { str: MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear(), ts: d.getTime() };
+  }
+
+  /* ---------- name / contact pools (deterministic, index-derived) ---------- */
+  var thaiFirst = ['Anong', 'Somchai', 'Ploy', 'Nattapong', 'Suda', 'Wichai', 'Preeya', 'Siriporn', 'Malee', 'Kanya', 'Arthit', 'Kanokwan', 'Suchada', 'Natthaphong', 'Apinya', 'Chalermchai', 'Duangkamol', 'Kittisak', 'Lawan', 'Manop', 'Narong', 'Orawan', 'Pichai', 'Rungnapa', 'Sakda', 'Tanapon', 'Wanida', 'Yupin', 'Chatchai', 'Busaba'];
+  var thaiLast = ['Praditsarn', 'Tanakit', 'Suwannarat', 'Ratanakosin', 'Srisai', 'Boonmee', 'Charoen', 'Wongsawat', 'Chaiyaphon', 'Saetang', 'Intanon', 'Phongam', 'Rojanasakul', 'Thongchai', 'Sombat', 'Chaidee', 'Nakarin', 'Phromdit', 'Rattanaporn', 'Saengchan', 'Thanawat', 'Wattana', 'Sirikul', 'Aromdee', 'Bunnag', 'Kasemsan', 'Leelawat', 'Mongkut', 'Prasert', 'Yodsuwan'];
+  var intlFirst = ['James', 'Mei', 'David', 'Rachel', 'Grace', 'Kevin', 'Emma', 'Tom', 'Ravi', 'Lily', 'Jun', 'Michael', 'Sarah', 'Daniel', 'Priya', 'Olivia', 'Liam', 'Sofia', 'Marcus', 'Aisha', 'Yuki', 'Omar', 'Elena', 'Lucas'];
+  var intlLast = ['Whitfield', 'Lin', 'Okafor', 'Davies', 'Harris', 'Chen', 'Kumar', 'Nakamura', 'Kim', 'Park', 'Nguyen', 'Silva', 'Muller', 'Rossi', 'Cohen', 'Reyes', 'Santos', 'Khan', 'Wang', 'Lee', 'Garcia', 'Patel', 'Novak', 'Andersson'];
+  var domains = ['gmail.com', 'outlook.com', 'yahoo.com', 'hotmail.com', 'icloud.com', 'corpmail.com', 'proton.me'];
+  var intlCodes = ['+1', '+44', '+65', '+81', '+61'];
+
+  function initialsOf(name) { var p = name.split(/\s+/); return ((p[0][0] || '') + (p[p.length - 1][0] || '')).toUpperCase(); }
+  function slug(s) { return s.toLowerCase().replace(/[^a-z]/g, ''); }
+  function emailFor(first, last, i) {
+    var f = slug(first), l = slug(last), dom = domains[i % domains.length], style = i % 3;
+    if (style === 0) return f + '.' + l.charAt(0) + '@' + dom;
+    if (style === 1) return f + '.' + l + '@' + dom;
+    return f + '.' + l + (10 + (i % 89)) + '@' + dom;
+  }
+  function phoneFor(isThai, i) {
+    if (isThai) return '+66 ' + (8 + (i % 2)) + (i % 10) + ' ' + pad((i * 13) % 1000, 3) + ' ' + pad((i * 29) % 10000, 4);
+    return intlCodes[i % intlCodes.length] + ' ' + pad((i * 17) % 1000, 3) + ' ' + pad((i * 23) % 10000, 4);
+  }
+
+  /* ---------- build DATA: 3 seeded rows + 2844 generated = 2847 ---------- */
+  function seed(name, email, phone, events, tickets, tag, daysAgo, isNew, checkedIn) {
+    var dt = dateFor(daysAgo);
+    return { name: name, email: email, initials: initialsOf(name), phone: phone, events: events, tickets: tickets, tag: tag, date: dt.str, ts: dt.ts, isNew: isNew, checkedIn: checkedIn };
+  }
+  var DATA = [
+    seed('Anong Praditsarn', 'anong.p@gmail.com', '+66 81 234 5678', 5, 7, 'VIP', 1, false, true),
+    seed('Somchai Tanakit', 'somchai.t@outlook.com', '+66 89 555 1023', 3, 3, null, 2, false, false),
+    seed('Ploy Suwannarat', 'ploy.suwan@yahoo.com', '+66 92 345 6789', 8, 12, 'Speaker', 0, false, true)
+  ];
+  // avalanche integer hash → well-mixed name/contact choices (deterministic, no Math.random)
+  function hash(n) { n = n | 0; n = Math.imul(n ^ (n >>> 16), 2246822507); n = Math.imul(n ^ (n >>> 13), 3266489909); n ^= n >>> 16; return n >>> 0; }
+  for (var i = 0; i < 2844; i++) {
+    var h = hash(i + 1);
+    var isThai = (h % 100) < 72;
+    var first = isThai ? thaiFirst[(h >>> 3) % thaiFirst.length] : intlFirst[(h >>> 3) % intlFirst.length];
+    var last = isThai ? thaiLast[(h >>> 11) % thaiLast.length] : intlLast[(h >>> 11) % intlLast.length];
+    var name = first + ' ' + last;
+    // tag / isNew / checkedIn stay index-modulo so the tab-count badges hit their targets
+    var tag = null;
+    if (i % 30 === 4) tag = 'VIP';
+    else if (i % 19 === 6) tag = 'Speaker';
+    else if (i % 23 === 9) tag = 'Sponsor';
+    else if (i % 17 === 3) tag = 'Student';
+    var dt = dateFor(4 + (h % 210));
+    DATA.push({
+      name: name, email: emailFor(first, last, i), initials: initialsOf(name),
+      phone: phoneFor(isThai, i), events: 1 + ((h >>> 17) % 12), tickets: 1 + ((h >>> 22) % 15),
+      tag: tag, date: dt.str, ts: dt.ts, isNew: (i % 13 === 2), checkedIn: (i % 17 < 7)
+    });
+  }
+
+  /* ---------- row markup (byte-identical to original static rows) ---------- */
+  function tagCell(tag) {
+    if (!tag) return '<td class="text-muted">—</td>';
+    var m = {
+      VIP: ['badge-purple', 'hgi-star', 'VIP'],
+      Speaker: ['badge-amber', 'hgi-mic-01', 'Speaker'],
+      Sponsor: ['badge-blue', 'hgi-building-06', 'Sponsor'],
+      Student: ['badge-gray', 'hgi-mortarboard-01', 'Student']
+    }[tag];
+    return '<td><span class="badge ' + m[0] + '"><i class="hgi-stroke ' + m[1] + ' text-[12px]"></i>' + m[2] + '</span></td>';
+  }
+  function rowHTML(a) {
+    return '<tr>' +
+      '<td>' +
+        '<div class="flex items-center gap-2">' +
+          '<span class="avatar h-8 w-8 text-[11px]">' + esc(a.initials) + '</span>' +
+          '<div class="min-w-0 leading-tight">' +
+            '<p class="truncate font-medium text-ink">' + esc(a.name) + '</p>' +
+            '<p class="truncate text-[11px] text-muted">' + esc(a.email) + '</p>' +
+          '</div>' +
+        '</div>' +
+      '</td>' +
+      '<td class="text-muted tnum">' + esc(a.phone) + '</td>' +
+      '<td class="text-muted tnum">' + a.events + ' event' + (a.events === 1 ? '' : 's') + '</td>' +
+      '<td class="font-semibold text-ink tnum">' + a.tickets + '</td>' +
+      tagCell(a.tag) +
+      '<td class="text-muted tnum">' + esc(a.date) + '</td>' +
+      '<td class="text-right">' +
+        '<div class="flex items-center justify-end gap-1">' +
+          '<button class="btn-icon" data-open="profile-panel" title="View profile"><i class="hgi-stroke hgi-eye text-[16px]"></i></button>' +
+          '<button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>' +
+        '</div>' +
+      '</td>' +
+    '</tr>';
+  }
+
+  /* ---------- state + filtering ---------- */
+  var state = { q: '', tab: 'all', tag: '', sort: 'activity', page: 0, size: 10 };
+  function byTab(a) {
+    if (state.tab === 'new') return a.isNew;
+    if (state.tab === 'checkedin') return a.checkedIn;
+    if (state.tab === 'vip') return a.tag === 'VIP';
+    return true;
+  }
+  function byTag(a) { return !state.tag || a.tag === state.tag; }
+  function bySearch(a) { return !state.q || a.name.toLowerCase().indexOf(state.q) >= 0 || a.email.toLowerCase().indexOf(state.q) >= 0; }
+  function sortList(list) {
+    var l = list.slice(), s = state.sort;
+    if (s === 'name') l.sort(function (a, b) { return a.name.localeCompare(b.name); });
+    else if (s === 'events') l.sort(function (a, b) { return b.events - a.events || b.ts - a.ts; });
+    else if (s === 'tickets') l.sort(function (a, b) { return b.tickets - a.tickets || b.ts - a.ts; });
+    else l.sort(function (a, b) { return b.ts - a.ts; });
+    return l;
+  }
+  function filtered() { return sortList(DATA.filter(byTab).filter(byTag).filter(bySearch)); }
+
+  var tbody = document.getElementById('att-rows');
+  var elShowing = document.getElementById('att-showing');
+  var elPrev = document.getElementById('att-prev');
+  var elNext = document.getElementById('att-next');
+  var counts = document.querySelectorAll('.pilltab-count'); // order: all, new, checkedin, vip
+
+  function refreshCounts() {
+    var nw = 0, ci = 0, vip = 0;
+    for (var i = 0; i < DATA.length; i++) { if (DATA[i].isNew) nw++; if (DATA[i].checkedIn) ci++; if (DATA[i].tag === 'VIP') vip++; }
+    counts[0].textContent = nf(DATA.length);
+    counts[1].textContent = nf(nw);
+    counts[2].textContent = nf(ci);
+    counts[3].textContent = nf(vip);
+  }
+
+  function render() {
+    var list = filtered(), total = list.length, pages = Math.max(1, Math.ceil(total / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    var start = state.page * state.size, slice = list.slice(start, start + state.size);
+    tbody.innerHTML = slice.length ? slice.map(rowHTML).join('') : '<tr><td colspan="7"><div class="py-10 text-center text-[13px] text-muted">No matches.</div></td></tr>';
+    if (total === 0) { elShowing.textContent = 'No attendees'; }
+    else { elShowing.innerHTML = 'Showing <span class="font-semibold text-ink">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> attendees'; }
+    elPrev.disabled = total === 0 || state.page === 0;
+    elNext.disabled = total === 0 || state.page >= pages - 1;
+  }
+
+  /* ---------- wire controls ---------- */
+  document.getElementById('att-search').addEventListener('input', function () { state.q = this.value.trim().toLowerCase(); state.page = 0; render(); });
+  document.getElementById('att-tag').addEventListener('change', function () { state.tag = this.value === 'All tags' ? '' : this.value; state.page = 0; render(); });
+  document.getElementById('att-sort').addEventListener('change', function () { state.sort = ['activity', 'name', 'events', 'tickets'][this.selectedIndex] || 'activity'; state.page = 0; render(); });
+  document.getElementById('att-size').addEventListener('change', function () { state.size = +this.value; state.page = 0; render(); });
+  elPrev.addEventListener('click', function () { if (state.page > 0) { state.page--; render(); } });
+  elNext.addEventListener('click', function () { state.page++; render(); });
+  var tabsGroup = document.querySelector('[data-tabs]');
+  if (tabsGroup) tabsGroup.addEventListener('click', function (e) { var t = e.target.closest('[data-tab]'); if (!t) return; state.tab = t.getAttribute('data-tab'); state.page = 0; render(); });
+
+  refreshCounts();
+  render();
+})();
+</script>
 </body>
 </html>

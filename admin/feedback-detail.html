@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=34"></script>
-<link rel="stylesheet" href="../assets/app.css?v=34" />
+<script src="../assets/config.js?v=36"></script>
+<link rel="stylesheet" href="../assets/app.css?v=36" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="feedback-detail">
 
@@ -102,12 +102,18 @@
         </div>
       </div>
       <div id="resp-list" class="mt-3"></div>
-      <div id="resp-pager" class="mt-3 hidden flex-wrap items-center justify-between gap-3 border-t border-line pt-3">
-        <span id="resp-showing" class="text-[12px] text-muted tnum"></span>
-        <div class="flex items-center gap-1.5">
-          <button id="resp-prev" class="btn btn-soft btn-sm" type="button"><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i>Prev</button>
-          <span id="resp-page" class="px-1 text-[12px] font-medium text-muted tnum"></span>
-          <button id="resp-next" class="btn btn-soft btn-sm" type="button">Next<i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+      <div id="resp-pager" class="mt-3 hidden flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="resp-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="resp-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="resp-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="resp-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
         </div>
       </div>
     </section>
@@ -186,8 +192,8 @@
   </footer>
 </aside>
 
-<script src="../assets/feedback-data.js?v=34"></script>
-<script src="../assets/shell.js?v=34"></script>
+<script src="../assets/feedback-data.js?v=36"></script>
+<script src="../assets/shell.js?v=36"></script>
 <script>
   (function () {
     var F = window.FEEDBACK;
@@ -317,12 +323,12 @@
     }
 
     var respAll = buildResponses();
-    var respState = { survey: '', rating: '', page: 0, size: 8 };
+    var respState = { survey: '', rating: '', page: 0, size: 10 };
     var elList = document.getElementById('resp-list'), elCount = document.getElementById('resp-count'),
         elPager = document.getElementById('resp-pager'), elShowing = document.getElementById('resp-showing'),
-        elPage = document.getElementById('resp-page'), elPrev = document.getElementById('resp-prev'),
+        elPrev = document.getElementById('resp-prev'),
         elNext = document.getElementById('resp-next'), selSurvey = document.getElementById('resp-survey'),
-        selRating = document.getElementById('resp-rating');
+        selRating = document.getElementById('resp-rating'), selSize = document.getElementById('resp-size');
 
     function respFiltered() {
       return respAll.filter(function (r) {
@@ -362,11 +368,9 @@
       var start = respState.page * respState.size, slice = list.slice(start, start + respState.size);
       elList.innerHTML = slice.map(respItem).join('');
       elPager.classList.remove('hidden'); elPager.classList.add('flex');
-      elShowing.textContent = 'Showing ' + (start + 1) + '–' + (start + slice.length) + ' of ' + nf(total);
-      elPage.textContent = (respState.page + 1) + ' / ' + nf(pages);
+      elShowing.innerHTML = 'Showing <span class="font-semibold text-ink">' + (start + 1) + '–' + (start + slice.length) +
+        '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> responses';
       elPrev.disabled = respState.page === 0; elNext.disabled = respState.page >= pages - 1;
-      elPrev.classList.toggle('opacity-40', elPrev.disabled);
-      elNext.classList.toggle('opacity-40', elNext.disabled);
     }
     (function initRespFilters() {
       var withResp = ev.surveys.filter(function (s) { return s.responses; });
@@ -378,6 +382,7 @@
     })();
     selSurvey.addEventListener('change', function () { respState.survey = selSurvey.value; respState.page = 0; renderResponses(); });
     selRating.addEventListener('change', function () { respState.rating = selRating.value; respState.page = 0; renderResponses(); });
+    selSize.addEventListener('change', function () { respState.size = +selSize.value; respState.page = 0; renderResponses(); });
     elPrev.addEventListener('click', function () { if (respState.page > 0) { respState.page--; renderResponses(); } });
     elNext.addEventListener('click', function () { respState.page++; renderResponses(); });
 
