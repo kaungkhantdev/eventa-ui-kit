@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=34"></script>
-<link rel="stylesheet" href="../assets/app.css?v=34" />
+<script src="../assets/config.js?v=36"></script>
+<link rel="stylesheet" href="../assets/app.css?v=36" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="event-detail">
 
@@ -161,7 +161,7 @@
             <h2 class="text-[16px] font-bold tracking-tight">Registrations</h2>
             <span class="rounded-full bg-brand-soft px-2 py-0.5 text-[11px] font-semibold text-brand">312 total</span>
           </div>
-          <button class="inline-flex items-center gap-2 rounded-lg bg-canvas px-3 py-2 text-[13px] font-medium text-muted transition hover:text-ink">All statuses<i class="hgi-stroke hgi-arrow-down-01 text-[14px]"></i></button>
+          <div id="reg-filter" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-canvas p-1"></div>
         </div>
         <div class="mt-3 overflow-x-auto">
           <table class="w-full min-w-[720px] text-left">
@@ -176,6 +176,21 @@
             </thead>
             <tbody id="reg-rows" class="text-[13px]"></tbody>
           </table>
+        </div>
+
+        <div id="evreg-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+          <p id="evreg-showing"></p>
+          <div class="flex items-center gap-3">
+            <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+              <select id="evreg-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+                <option>10</option><option>20</option><option>30</option><option>50</option>
+              </select>
+            </label>
+            <div class="flex gap-1">
+              <button id="evreg-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+              <button id="evreg-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+            </div>
+          </div>
         </div>
       </section>
     </div>
@@ -330,7 +345,7 @@
   </footer>
 </aside>
 
-<script src="../assets/shell.js?v=34"></script>
+<script src="../assets/shell.js?v=36"></script>
 <script>
   /* ---------- pill tabs ---------- */
   document.querySelectorAll('[data-pill-group]').forEach(group => {
@@ -374,15 +389,83 @@
     { name:'David Chen',       email:'david.c@email.com',   ticket:'VIP',        amount:'฿3,500', date:'Jun 30, 14:05',status:'Paid',     initials:'DC', tone:'brand'  },
     { name:'Mia Thompson',     email:'mia.t@email.com',     ticket:'Student',    amount:'฿650',   date:'Jun 29, 11:20',status:'Refunded', initials:'MT', tone:'blue'   },
     { name:'Raj Patel',        email:'raj.p@email.com',     ticket:'Standard',   amount:'฿1,900', date:'Jun 28, 18:44',status:'Paid',     initials:'RP', tone:'pink'   },
+    { name:'Grace Bennett',    email:'grace.b@email.com',   ticket:'Student',    amount:'฿650',   date:'Jun 28, 15:33',status:'Paid',     initials:'GB', tone:'violet' },
+    { name:'Oliver Scott',     email:'oliver.s@email.com',  ticket:'Standard',   amount:'฿1,900', date:'Jun 27, 12:18',status:'Paid',     initials:'OS', tone:'amber'  },
+    { name:'Kanya Rattana',    email:'kanya.r@email.com',   ticket:'VIP',        amount:'฿3,500', date:'Jun 27, 09:52',status:'Pending',  initials:'KR', tone:'brand'  },
+    { name:'Ethan Brooks',     email:'ethan.b@email.com',   ticket:'Early Bird', amount:'฿1,250', date:'Jun 26, 17:41',status:'Paid',     initials:'EB', tone:'blue'   },
+    { name:'Suda Kittisak',    email:'suda.k@email.com',    ticket:'Standard',   amount:'฿1,900', date:'Jun 26, 11:09',status:'Paid',     initials:'SK', tone:'pink'   },
+    { name:'Liam Foster',      email:'liam.f@email.com',    ticket:'Standard',   amount:'฿1,900', date:'Jun 25, 14:26',status:'Refunded', initials:'LF', tone:'amber'  },
+    { name:'Preeya Nakamura',  email:'preeya.n@email.com',  ticket:'VIP',        amount:'฿3,500', date:'Jun 25, 10:03',status:'Paid',     initials:'PN', tone:'violet' },
+    { name:'Marcus Reed',      email:'marcus.r@email.com',  ticket:'Early Bird', amount:'฿1,250', date:'Jun 24, 16:55',status:'Paid',     initials:'MR', tone:'brand'  },
+    { name:'Wichai Phumipat',  email:'wichai.p@email.com',  ticket:'Standard',   amount:'฿1,900', date:'Jun 24, 09:12',status:'Pending',  initials:'WP', tone:'blue'   },
+    { name:'Chloe Adams',      email:'chloe.a@email.com',   ticket:'Student',    amount:'฿650',   date:'Jun 23, 13:47',status:'Paid',     initials:'CA', tone:'pink'   },
+    { name:'Nattapong Sri',    email:'nattapong.s@email.com',ticket:'VIP',       amount:'฿3,500', date:'Jun 23, 08:38',status:'Paid',     initials:'NS', tone:'amber'  },
+    { name:'Isabella Cruz',    email:'isabella.c@email.com',ticket:'Standard',   amount:'฿1,900', date:'Jun 22, 15:20',status:'Paid',     initials:'IC', tone:'violet' },
+    { name:'Arthit Wongsawat', email:'arthit.w@email.com',  ticket:'Early Bird', amount:'฿1,250', date:'Jun 22, 10:44',status:'Refunded', initials:'AW', tone:'brand'  },
+    { name:'Sophie Turner',    email:'sophie.t@email.com',  ticket:'Standard',   amount:'฿1,900', date:'Jun 21, 12:01',status:'Paid',     initials:'ST', tone:'blue'   },
   ];
-  document.getElementById('reg-rows').innerHTML = registrations.map(r => `
+
+  const regBody = document.getElementById('reg-rows');
+  const regShowing = document.getElementById('evreg-showing');
+  const regPrev = document.getElementById('evreg-prev');
+  const regNext = document.getElementById('evreg-next');
+  const regSize = document.getElementById('evreg-size');
+  const regFilterBar = document.getElementById('reg-filter');
+  const regState = { page:0, size:10, filter:'all' };
+  const REG_FILTERS = ['all', 'Paid', 'Pending', 'Refunded'];
+  const nf = n => n.toLocaleString('en-US');
+  const regCount = f => f === 'all' ? registrations.length : registrations.filter(r => r.status === f).length;
+  const regFiltered = () => regState.filter === 'all' ? registrations : registrations.filter(r => r.status === regState.filter);
+
+  const regRowHTML = r => `
     <tr class="border-t border-line transition hover:bg-line/50">
       <td class="py-2.5 pr-3"><div class="flex items-center gap-2.5">${avatar(r.initials, r.tone)}<div class="min-w-0"><p class="truncate text-[13px] font-semibold text-ink">${r.name}</p><p class="truncate text-[11px] text-muted">${r.email}</p></div></div></td>
       <td class="py-2.5 pr-3 text-[13px] text-muted">${r.ticket}</td>
       <td class="py-2.5 pr-3 text-[13px] font-semibold text-ink tnum">${r.amount}</td>
       <td class="py-2.5 pr-3 text-[13px] text-muted tnum">${r.date}</td>
       <td class="py-2.5 pr-3"><span class="rounded-full px-2.5 py-1 text-[11px] font-medium ${REGSTATUS[r.status]}">${r.status}</span></td>
-    </tr>`).join('');
+    </tr>`;
+
+  function renderRegFilters() {
+    regFilterBar.innerHTML = REG_FILTERS.map(f => {
+      const on = f === regState.filter;
+      const label = f === 'all' ? 'All' : f;
+      return `<button type="button" data-reg-filter="${f}" class="inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-1.5 text-[12.5px] font-semibold transition ${on ? 'bg-brand-soft text-brand' : 'text-muted hover:text-ink'}">${label}<span class="rounded-full px-1.5 py-0.5 text-[10px] tnum ${on ? 'bg-brand/15 text-brand' : 'bg-line text-muted'}">${regCount(f)}</span></button>`;
+    }).join('');
+  }
+
+  function renderRegistrations() {
+    const data = regFiltered();
+    const total = data.length, pages = Math.max(1, Math.ceil(total / regState.size));
+    if (regState.page >= pages) regState.page = pages - 1;
+    if (regState.page < 0) regState.page = 0;
+    const start = regState.page * regState.size, slice = data.slice(start, start + regState.size);
+    regBody.innerHTML = total === 0
+      ? '<tr><td colspan="5" class="py-8 text-center text-[12px] text-muted">No registrations</td></tr>'
+      : slice.map(regRowHTML).join('');
+    if (total === 0) {
+      regShowing.textContent = 'No registrations';
+    } else {
+      regShowing.innerHTML = 'Showing <span class="font-semibold text-ink">' + (start + 1) + '–' + (start + slice.length) +
+        '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> registrations';
+    }
+    regPrev.disabled = total === 0 || regState.page === 0;
+    regNext.disabled = total === 0 || regState.page >= pages - 1;
+  }
+
+  regFilterBar.addEventListener('click', e => {
+    const b = e.target.closest('[data-reg-filter]'); if (!b) return;
+    if (b.dataset.regFilter === regState.filter) return;
+    regState.filter = b.dataset.regFilter;
+    regState.page = 0;
+    renderRegFilters();
+    renderRegistrations();
+  });
+  regSize.addEventListener('change', () => { regState.size = +regSize.value; regState.page = 0; renderRegistrations(); });
+  regPrev.addEventListener('click', () => { if (regState.page > 0) { regState.page--; renderRegistrations(); } });
+  regNext.addEventListener('click', () => { regState.page++; renderRegistrations(); });
+  renderRegFilters();
+  renderRegistrations();
 
   /* ---------- Attendees ---------- */
   const attendees = [

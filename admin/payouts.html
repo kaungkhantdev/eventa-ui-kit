@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=34"></script>
-<link rel="stylesheet" href="../assets/app.css?v=34" />
+<script src="../assets/config.js?v=36"></script>
+<link rel="stylesheet" href="../assets/app.css?v=36" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="payouts">
 
@@ -89,81 +89,23 @@
           <thead>
             <tr><th>Payout</th><th>Amount</th><th>Bank account</th><th>Status</th><th>Requested</th><th>Completed</th><th class="text-right">Actions</th></tr>
           </thead>
-          <tbody class="text-[13px]">
-            <tr>
-              <td class="font-mono text-[12px] text-ink">#PO-2043</td>
-              <td class="font-semibold text-ink tnum">฿850,000</td>
-              <td class="text-muted">SCB •••• 4821</td>
-              <td><span class="badge badge-green">Paid</span></td>
-              <td class="text-muted tnum">Jul 01, 2026</td>
-              <td class="text-muted tnum">Jul 03, 2026</td>
-              <td class="text-right"><button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>
-            </tr>
-            <tr>
-              <td class="font-mono text-[12px] text-ink">#PO-2042</td>
-              <td class="font-semibold text-ink tnum">฿120,000</td>
-              <td class="text-muted">SCB •••• 4821</td>
-              <td><span class="badge badge-blue">Processing</span></td>
-              <td class="text-muted tnum">Jul 07, 2026</td>
-              <td class="text-muted tnum">—</td>
-              <td class="text-right"><button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>
-            </tr>
-            <tr>
-              <td class="font-mono text-[12px] text-ink">#PO-2041</td>
-              <td class="font-semibold text-ink tnum">฿640,500</td>
-              <td class="text-muted">SCB •••• 4821</td>
-              <td><span class="badge badge-green">Paid</span></td>
-              <td class="text-muted tnum">Jun 24, 2026</td>
-              <td class="text-muted tnum">Jun 26, 2026</td>
-              <td class="text-right"><button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>
-            </tr>
-            <tr>
-              <td class="font-mono text-[12px] text-ink">#PO-2040</td>
-              <td class="font-semibold text-ink tnum">฿95,000</td>
-              <td class="text-muted">SCB •••• 4821</td>
-              <td><span class="badge badge-amber">Scheduled</span></td>
-              <td class="text-muted tnum">Jul 09, 2026</td>
-              <td class="text-muted tnum">—</td>
-              <td class="text-right"><button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>
-            </tr>
-            <tr>
-              <td class="font-mono text-[12px] text-ink">#PO-2039</td>
-              <td class="font-semibold text-ink tnum">฿1,240,000</td>
-              <td class="text-muted">SCB •••• 4821</td>
-              <td><span class="badge badge-green">Paid</span></td>
-              <td class="text-muted tnum">Jun 15, 2026</td>
-              <td class="text-muted tnum">Jun 17, 2026</td>
-              <td class="text-right"><button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>
-            </tr>
-            <tr>
-              <td class="font-mono text-[12px] text-ink">#PO-2038</td>
-              <td class="font-semibold text-ink tnum">฿310,000</td>
-              <td class="text-muted">SCB •••• 4821</td>
-              <td><span class="badge badge-red">Failed</span></td>
-              <td class="text-muted tnum">Jun 10, 2026</td>
-              <td class="text-muted tnum">—</td>
-              <td class="text-right"><button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>
-            </tr>
-            <tr>
-              <td class="font-mono text-[12px] text-ink">#PO-2037</td>
-              <td class="font-semibold text-ink tnum">฿480,000</td>
-              <td class="text-muted">SCB •••• 4821</td>
-              <td><span class="badge badge-green">Paid</span></td>
-              <td class="text-muted tnum">Jun 03, 2026</td>
-              <td class="text-muted tnum">Jun 05, 2026</td>
-              <td class="text-right"><button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>
-            </tr>
-            <tr>
-              <td class="font-mono text-[12px] text-ink">#PO-2036</td>
-              <td class="font-semibold text-ink tnum">฿2,100,000</td>
-              <td class="text-muted">SCB •••• 4821</td>
-              <td><span class="badge badge-green">Paid</span></td>
-              <td class="text-muted tnum">May 28, 2026</td>
-              <td class="text-muted tnum">May 30, 2026</td>
-              <td class="text-right"><button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>
-            </tr>
-          </tbody>
+          <tbody id="po-rows" class="text-[13px]"></tbody>
         </table>
+      </div>
+
+      <div id="po-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="po-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="po-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="po-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="po-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -205,6 +147,108 @@
   </aside>
 </div>
 
-<script src="../assets/shell.js?v=34"></script>
+<script src="../assets/shell.js?v=36"></script>
+<script>
+(function () {
+  var nf = function (n) { return n.toLocaleString('en-US'); };
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  /* ---------- DATA: 8 seeded rows (verbatim) + 12 more = 20 payouts ---------- */
+  function po(id, amount, status, requested, completed) {
+    return { id: id, amount: amount, bank: 'SCB •••• 4821', status: status, requested: requested, completed: completed };
+  }
+  var DATA = [
+    po('#PO-2043', 850000, 'Paid', 'Jul 01, 2026', 'Jul 03, 2026'),
+    po('#PO-2042', 120000, 'Processing', 'Jul 07, 2026', '—'),
+    po('#PO-2041', 640500, 'Paid', 'Jun 24, 2026', 'Jun 26, 2026'),
+    po('#PO-2040', 95000, 'Scheduled', 'Jul 09, 2026', '—'),
+    po('#PO-2039', 1240000, 'Paid', 'Jun 15, 2026', 'Jun 17, 2026'),
+    po('#PO-2038', 310000, 'Failed', 'Jun 10, 2026', '—'),
+    po('#PO-2037', 480000, 'Paid', 'Jun 03, 2026', 'Jun 05, 2026'),
+    po('#PO-2036', 2100000, 'Paid', 'May 28, 2026', 'May 30, 2026'),
+    po('#PO-2035', 560000, 'Paid', 'May 20, 2026', 'May 22, 2026'),
+    po('#PO-2034', 180000, 'Paid', 'May 14, 2026', 'May 16, 2026'),
+    po('#PO-2033', 920000, 'Paid', 'May 06, 2026', 'May 08, 2026'),
+    po('#PO-2032', 75000, 'Failed', 'Apr 29, 2026', '—'),
+    po('#PO-2031', 1450000, 'Paid', 'Apr 21, 2026', 'Apr 23, 2026'),
+    po('#PO-2030', 320000, 'Paid', 'Apr 12, 2026', 'Apr 14, 2026'),
+    po('#PO-2029', 240000, 'Paid', 'Apr 03, 2026', 'Apr 05, 2026'),
+    po('#PO-2028', 1780000, 'Paid', 'Mar 25, 2026', 'Mar 27, 2026'),
+    po('#PO-2027', 150000, 'Paid', 'Mar 17, 2026', 'Mar 19, 2026'),
+    po('#PO-2026', 890000, 'Paid', 'Mar 08, 2026', 'Mar 10, 2026'),
+    po('#PO-2025', 410000, 'Paid', 'Feb 27, 2026', 'Mar 01, 2026'),
+    po('#PO-2024', 1120000, 'Paid', 'Feb 18, 2026', 'Feb 20, 2026')
+  ];
+
+  /* ---------- row markup (byte-identical to original static rows) ---------- */
+  function statusBadge(status) {
+    var cls = { Paid: 'badge-green', Processing: 'badge-blue', Scheduled: 'badge-amber', Failed: 'badge-red' }[status] || 'badge-gray';
+    return '<span class="badge ' + cls + '">' + esc(status) + '</span>';
+  }
+  function rowHTML(p) {
+    return '<tr>' +
+      '<td class="font-mono text-[12px] text-ink">' + esc(p.id) + '</td>' +
+      '<td class="font-semibold text-ink tnum">฿' + nf(p.amount) + '</td>' +
+      '<td class="text-muted">' + esc(p.bank) + '</td>' +
+      '<td>' + statusBadge(p.status) + '</td>' +
+      '<td class="text-muted tnum">' + esc(p.requested) + '</td>' +
+      '<td class="text-muted tnum">' + esc(p.completed) + '</td>' +
+      '<td class="text-right"><button class="btn-icon" title="View"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>' +
+    '</tr>';
+  }
+
+  /* ---------- state + filtering ---------- */
+  var state = { tab: 'all', page: 0, size: 10 };
+  function byTab(p) {
+    if (state.tab === 'paid') return p.status === 'Paid';
+    if (state.tab === 'processing') return p.status === 'Processing';
+    if (state.tab === 'scheduled') return p.status === 'Scheduled';
+    if (state.tab === 'failed') return p.status === 'Failed';
+    return true;
+  }
+  function filtered() { return DATA.filter(byTab); }
+
+  var tbody = document.getElementById('po-rows');
+  var elShowing = document.getElementById('po-showing');
+  var elPrev = document.getElementById('po-prev');
+  var elNext = document.getElementById('po-next');
+  var counts = document.querySelectorAll('.pilltab-count'); // order: all, paid, processing, scheduled, failed
+
+  function refreshCounts() {
+    var paid = 0, proc = 0, sched = 0, failed = 0;
+    for (var i = 0; i < DATA.length; i++) {
+      var s = DATA[i].status;
+      if (s === 'Paid') paid++; else if (s === 'Processing') proc++; else if (s === 'Scheduled') sched++; else if (s === 'Failed') failed++;
+    }
+    counts[0].textContent = nf(DATA.length);
+    counts[1].textContent = nf(paid);
+    counts[2].textContent = nf(proc);
+    counts[3].textContent = nf(sched);
+    counts[4].textContent = nf(failed);
+  }
+
+  function render() {
+    var list = filtered(), total = list.length, pages = Math.max(1, Math.ceil(total / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    var start = state.page * state.size, slice = list.slice(start, start + state.size);
+    tbody.innerHTML = slice.length ? slice.map(rowHTML).join('') : '<tr><td colspan="7"><div class="py-10 text-center text-[13px] text-muted">No matches.</div></td></tr>';
+    if (total === 0) { elShowing.textContent = 'No payouts'; }
+    else { elShowing.innerHTML = 'Showing <span class="font-semibold text-ink">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> payouts'; }
+    elPrev.disabled = total === 0 || state.page === 0;
+    elNext.disabled = total === 0 || state.page >= pages - 1;
+  }
+
+  /* ---------- wire controls ---------- */
+  document.getElementById('po-size').addEventListener('change', function () { state.size = +this.value; state.page = 0; render(); });
+  elPrev.addEventListener('click', function () { if (state.page > 0) { state.page--; render(); } });
+  elNext.addEventListener('click', function () { state.page++; render(); });
+  var tabsGroup = document.querySelector('[data-tabs]');
+  if (tabsGroup) tabsGroup.addEventListener('click', function (e) { var t = e.target.closest('[data-tab]'); if (!t) return; state.tab = t.getAttribute('data-tab'); state.page = 0; render(); });
+
+  refreshCounts();
+  render();
+})();
+</script>
 </body>
 </html>

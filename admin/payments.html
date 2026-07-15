@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=34"></script>
-<link rel="stylesheet" href="../assets/app.css?v=34" />
+<script src="../assets/config.js?v=36"></script>
+<link rel="stylesheet" href="../assets/app.css?v=36" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="payments">
 <div class="flex h-full min-h-screen" data-layout>
@@ -81,6 +81,21 @@
         </table>
       </div>
       <p id="pay-empty" class="hidden py-8 text-center text-[13px] text-muted">No transactions match your filters.</p>
+
+      <div id="pay-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="pay-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="pay-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="pay-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="pay-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
+      </div>
     </section>
 
     <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
@@ -105,7 +120,7 @@
   </div>
 </div>
 
-<script src="../assets/shell.js?v=34"></script>
+<script src="../assets/shell.js?v=36"></script>
 <script>
   const badgeStatus = {
     Paid:     { cls: 'badge badge-green', icon: 'hgi-tick-02' },
@@ -129,6 +144,24 @@
     { txn: '#TXN-10485', ini: 'SK', name: 'Suda K.',     ev: 'Tech Summit 2026',           method: 'Card',          amt: 1250, st: 'Paid',     date: 'Jul 16, 2026', time: '08:58' },
     { txn: '#TXN-10484', ini: 'DC', name: 'David C.',    ev: 'Sunrise Yoga Retreat',       method: 'PromptPay',     amt: 890,  st: 'Paid',     date: 'Jul 15, 2026', time: '19:32' },
     { txn: '#TXN-10483', ini: 'NW', name: 'Nutcha W.',   ev: 'Bangkok Jazz Night',         method: 'Card',          amt: 480,  st: 'Pending',  date: 'Jul 15, 2026', time: '17:10' },
+    { txn: '#TXN-10482', ini: 'RH', name: 'Rachel H.',   ev: 'Thai Street Food Festival',  method: 'Card',          amt: 650,  st: 'Paid',     date: 'Jul 15, 2026', time: '13:41' },
+    { txn: '#TXN-10481', ini: 'WC', name: 'Wichai C.',   ev: 'Tech Summit 2026',           method: 'PromptPay',     amt: 1250, st: 'Paid',     date: 'Jul 15, 2026', time: '11:08' },
+    { txn: '#TXN-10480', ini: 'GH', name: 'Grace H.',    ev: 'UX Bangkok Meetup',          method: 'Card',          amt: 320,  st: 'Paid',     date: 'Jul 14, 2026', time: '18:55' },
+    { txn: '#TXN-10479', ini: 'PB', name: 'Preeya B.',   ev: 'Sunrise Yoga Retreat',       method: 'Bank transfer', amt: 890,  st: 'Refunded', date: 'Jul 14, 2026', time: '16:20' },
+    { txn: '#TXN-10478', ini: 'KC', name: 'Kevin C.',    ev: 'Bangkok Jazz Night',         method: 'PromptPay',     amt: 480,  st: 'Paid',     date: 'Jul 14, 2026', time: '12:33' },
+    { txn: '#TXN-10477', ini: 'SW', name: 'Siriporn W.', ev: 'Tech Summit 2026',           method: 'Card',          amt: 1250, st: 'Paid',     date: 'Jul 14, 2026', time: '09:14' },
+    { txn: '#TXN-10476', ini: 'EK', name: 'Emma K.',     ev: 'Thai Street Food Festival',  method: 'PromptPay',     amt: 650,  st: 'Pending',  date: 'Jul 13, 2026', time: '20:02' },
+    { txn: '#TXN-10475', ini: 'NR', name: 'Narong R.',   ev: 'UX Bangkok Meetup',          method: 'Bank transfer', amt: 320,  st: 'Failed',   date: 'Jul 13, 2026', time: '15:47' },
+    { txn: '#TXN-10474', ini: 'TS', name: 'Tom S.',      ev: 'Sunrise Yoga Retreat',       method: 'Card',          amt: 890,  st: 'Paid',     date: 'Jul 13, 2026', time: '11:29' },
+    { txn: '#TXN-10473', ini: 'MP', name: 'Malee P.',    ev: 'Bangkok Jazz Night',         method: 'PromptPay',     amt: 480,  st: 'Paid',     date: 'Jul 12, 2026', time: '19:18' },
+    { txn: '#TXN-10472', ini: 'RK', name: 'Ravi K.',     ev: 'Tech Summit 2026',           method: 'Card',          amt: 1250, st: 'Paid',     date: 'Jul 12, 2026', time: '14:56' },
+    { txn: '#TXN-10471', ini: 'KI', name: 'Kanya I.',    ev: 'Thai Street Food Festival',  method: 'Bank transfer', amt: 650,  st: 'Paid',     date: 'Jul 12, 2026', time: '10:41' },
+    { txn: '#TXN-10470', ini: 'LS', name: 'Lily S.',     ev: 'UX Bangkok Meetup',          method: 'PromptPay',     amt: 320,  st: 'Refunded', date: 'Jul 11, 2026', time: '17:33' },
+    { txn: '#TXN-10469', ini: 'AT', name: 'Arthit T.',   ev: 'Sunrise Yoga Retreat',       method: 'Card',          amt: 890,  st: 'Pending',  date: 'Jul 11, 2026', time: '13:07' },
+    { txn: '#TXN-10468', ini: 'JN', name: 'Jun N.',      ev: 'Tech Summit 2026',           method: 'PromptPay',     amt: 1250, st: 'Paid',     date: 'Jul 11, 2026', time: '09:52' },
+    { txn: '#TXN-10467', ini: 'SP', name: 'Sofia P.',    ev: 'Bangkok Jazz Night',         method: 'Card',          amt: 480,  st: 'Paid',     date: 'Jul 10, 2026', time: '18:44' },
+    { txn: '#TXN-10466', ini: 'CM', name: 'Chalerm M.',  ev: 'Thai Street Food Festival',  method: 'Bank transfer', amt: 650,  st: 'Failed',   date: 'Jul 10, 2026', time: '15:26' },
+    { txn: '#TXN-10465', ini: 'OW', name: 'Orawan W.',   ev: 'UX Bangkok Meetup',          method: 'Card',          amt: 320,  st: 'Paid',     date: 'Jul 10, 2026', time: '11:03' },
   ];
   function fmtBaht(n) { return '฿' + n.toLocaleString('en-US'); }
 
@@ -161,7 +194,14 @@
   const searchInput = document.getElementById('pay-search');
   const methodSelect = document.getElementById('pay-method');
   const statusTabs = document.querySelectorAll('.pilltab');
+  const elShowing = document.getElementById('pay-showing');
+  const elPrev = document.getElementById('pay-prev');
+  const elNext = document.getElementById('pay-next');
+  const sizeSelect = document.getElementById('pay-size');
+  const nf = function (n) { return n.toLocaleString('en-US'); };
   let currentStatus = '';
+  let page = 0;
+  let size = 10;
 
   // fill status tab counts from the data
   document.querySelectorAll('[data-count]').forEach(el => {
@@ -179,8 +219,21 @@
       const matchesStatus = !status || p.st === status;
       return matchesQ && matchesMethod && matchesStatus;
     });
-    tbody.innerHTML = filtered.map(rowHtml).join('');
-    empty.classList.toggle('hidden', filtered.length > 0);
+
+    const total = filtered.length;
+    const pages = Math.max(1, Math.ceil(total / size));
+    if (page >= pages) page = pages - 1;
+    if (page < 0) page = 0;
+    const start = page * size;
+    const slice = filtered.slice(start, start + size);
+
+    tbody.innerHTML = slice.map(rowHtml).join('');
+    empty.classList.toggle('hidden', total > 0);
+
+    if (total === 0) { elShowing.textContent = 'No transactions'; }
+    else { elShowing.innerHTML = 'Showing <span class="font-semibold text-ink">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> transactions'; }
+    elPrev.disabled = total === 0 || page === 0;
+    elNext.disabled = total === 0 || page >= pages - 1;
 
     tbody.querySelectorAll('[data-refund]').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -190,8 +243,11 @@
       });
     });
   }
-  statusTabs.forEach(t => t.addEventListener('click', () => { currentStatus = t.dataset.status || ''; renderRows(); }));
-  [searchInput, methodSelect].forEach(el => el.addEventListener('input', renderRows));
+  statusTabs.forEach(t => t.addEventListener('click', () => { currentStatus = t.dataset.status || ''; page = 0; renderRows(); }));
+  [searchInput, methodSelect].forEach(el => el.addEventListener('input', () => { page = 0; renderRows(); }));
+  sizeSelect.addEventListener('change', function () { size = +this.value; page = 0; renderRows(); });
+  elPrev.addEventListener('click', () => { if (page > 0) { page--; renderRows(); } });
+  elNext.addEventListener('click', () => { page++; renderRows(); });
   renderRows();
 </script>
 </body>

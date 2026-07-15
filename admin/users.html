@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=34"></script>
-<link rel="stylesheet" href="../assets/app.css?v=34" />
+<script src="../assets/config.js?v=36"></script>
+<link rel="stylesheet" href="../assets/app.css?v=36" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="users">
 <div class="flex h-full min-h-screen" data-layout>
@@ -32,21 +32,21 @@
 
     <!-- pill tabs (out of table) -->
     <div data-tabs="#users-table" class="mt-4 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
-      <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count tnum">11</span></button>
-      <button class="pilltab" data-tab="active">Active <span class="pilltab-count tnum">7</span></button>
-      <button class="pilltab" data-tab="invited">Invited <span class="pilltab-count tnum">2</span></button>
-      <button class="pilltab" data-tab="suspended">Suspended <span class="pilltab-count tnum">2</span></button>
+      <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count tnum" data-count="all">24</span></button>
+      <button class="pilltab" data-tab="active">Active <span class="pilltab-count tnum" data-count="active">17</span></button>
+      <button class="pilltab" data-tab="invited">Invited <span class="pilltab-count tnum" data-count="invited">4</span></button>
+      <button class="pilltab" data-tab="suspended">Suspended <span class="pilltab-count tnum" data-count="suspended">3</span></button>
     </div>
 
     <!-- search + filter (out of table) -->
     <div class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
         <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
-        <input type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search by name or email…" />
+        <input id="users-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search by name or email…" />
       </div>
       <div class="relative w-full sm:w-52">
         <i class="hgi-stroke hgi-shield-user text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
-        <select class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+        <select id="users-role-filter" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
           <option>All roles</option>
           <option>Admin</option>
           <option>Organizer</option>
@@ -69,184 +69,22 @@
               <th class="text-right">Actions</th>
             </tr>
           </thead>
-          <tbody class="text-[13px]">
-            <tr>
-              <td>
-                <div class="flex items-center gap-2">
-                  <span class="avatar h-8 w-8 text-[11px]">HN</span>
-                  <div class="min-w-0 leading-tight">
-                    <p class="truncate font-medium text-ink">Harper Nelson</p>
-                    <p class="truncate text-[11px] text-muted">harper.nelson@eventa.io</p>
-                  </div>
-                </div>
-              </td>
-              <td><span class="badge badge-purple"><i class="hgi-stroke hgi-shield-key text-[12px]"></i>Admin</span></td>
-              <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Active</span></td>
-              <td class="text-muted tnum">Jul 18, 2026</td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon js-edit-role" data-open="role-panel" data-role="Admin" title="Edit role"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
-                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                  <button class="btn-icon" data-open="del-modal" title="Remove user"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-2">
-                  <span class="avatar h-8 w-8 text-[11px]">AP</span>
-                  <div class="min-w-0 leading-tight">
-                    <p class="truncate font-medium text-ink">Anong Praditsarn</p>
-                    <p class="truncate text-[11px] text-muted">anong.p@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td><span class="badge badge-green"><i class="hgi-stroke hgi-shield-user text-[12px]"></i>Organizer</span></td>
-              <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Active</span></td>
-              <td class="text-muted tnum">Jul 17, 2026</td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon js-edit-role" data-open="role-panel" data-role="Organizer" title="Edit role"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
-                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                  <button class="btn-icon" data-open="del-modal" title="Remove user"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-2">
-                  <span class="avatar h-8 w-8 text-[11px]">ST</span>
-                  <div class="min-w-0 leading-tight">
-                    <p class="truncate font-medium text-ink">Somchai Tanakit</p>
-                    <p class="truncate text-[11px] text-muted">somchai.t@outlook.com</p>
-                  </div>
-                </div>
-              </td>
-              <td><span class="badge badge-green"><i class="hgi-stroke hgi-shield-user text-[12px]"></i>Organizer</span></td>
-              <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Active</span></td>
-              <td class="text-muted tnum">Jul 16, 2026</td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon js-edit-role" data-open="role-panel" data-role="Organizer" title="Edit role"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
-                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                  <button class="btn-icon" data-open="del-modal" title="Remove user"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-2">
-                  <span class="avatar h-8 w-8 text-[11px]">PS</span>
-                  <div class="min-w-0 leading-tight">
-                    <p class="truncate font-medium text-ink">Ploy Suwannarat</p>
-                    <p class="truncate text-[11px] text-muted">ploy.suwan@yahoo.com</p>
-                  </div>
-                </div>
-              </td>
-              <td><span class="badge badge-blue"><i class="hgi-stroke hgi-user-check-01 text-[12px]"></i>Staff</span></td>
-              <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Active</span></td>
-              <td class="text-muted tnum">Jul 15, 2026</td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon js-edit-role" data-open="role-panel" data-role="Staff" title="Edit role"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
-                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                  <button class="btn-icon" data-open="del-modal" title="Remove user"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-2">
-                  <span class="avatar h-8 w-8 text-[11px]">JW</span>
-                  <div class="min-w-0 leading-tight">
-                    <p class="truncate font-medium text-ink">James Whitfield</p>
-                    <p class="truncate text-[11px] text-muted">james.whitfield@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td><span class="badge badge-blue"><i class="hgi-stroke hgi-user-check-01 text-[12px]"></i>Staff</span></td>
-              <td><span class="badge badge-amber"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Invited</span></td>
-              <td class="text-muted">—</td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon js-edit-role" data-open="role-panel" data-role="Staff" title="Edit role"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
-                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                  <button class="btn-icon" data-open="del-modal" title="Remove user"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-2">
-                  <span class="avatar h-8 w-8 text-[11px]">ML</span>
-                  <div class="min-w-0 leading-tight">
-                    <p class="truncate font-medium text-ink">Mei Lin</p>
-                    <p class="truncate text-[11px] text-muted">mei.lin88@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td><span class="badge badge-blue"><i class="hgi-stroke hgi-user-check-01 text-[12px]"></i>Staff</span></td>
-              <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Active</span></td>
-              <td class="text-muted tnum">Jul 12, 2026</td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon js-edit-role" data-open="role-panel" data-role="Staff" title="Edit role"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
-                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                  <button class="btn-icon" data-open="del-modal" title="Remove user"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-2">
-                  <span class="avatar h-8 w-8 text-[11px]">NC</span>
-                  <div class="min-w-0 leading-tight">
-                    <p class="truncate font-medium text-ink">Natthaphong Charoen</p>
-                    <p class="truncate text-[11px] text-muted">nat.charoen@hotmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td><span class="badge badge-gray"><i class="hgi-stroke hgi-user-circle text-[12px]"></i>Attendee</span></td>
-              <td><span class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Active</span></td>
-              <td class="text-muted tnum">Jul 5, 2026</td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon js-edit-role" data-open="role-panel" data-role="Attendee" title="Edit role"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
-                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                  <button class="btn-icon" data-open="del-modal" title="Remove user"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex items-center gap-2">
-                  <span class="avatar h-8 w-8 text-[11px]">DO</span>
-                  <div class="min-w-0 leading-tight">
-                    <p class="truncate font-medium text-ink">David Okafor</p>
-                    <p class="truncate text-[11px] text-muted">d.okafor@corpmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td><span class="badge badge-green"><i class="hgi-stroke hgi-shield-user text-[12px]"></i>Organizer</span></td>
-              <td><span class="badge badge-red"><i class="hgi-stroke hgi-cancel-circle text-[12px]"></i>Suspended</span></td>
-              <td class="text-muted tnum">Jun 20, 2026</td>
-              <td class="text-right">
-                <div class="flex items-center justify-end gap-1">
-                  <button class="btn-icon js-edit-role" data-open="role-panel" data-role="Organizer" title="Edit role"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>
-                  <button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
-                  <button class="btn-icon" data-open="del-modal" title="Remove user"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
+          <tbody id="users-rows" class="text-[13px]"></tbody>
         </table>
       </div>
 
-      <div class="mt-3 flex items-center justify-between text-[12px] text-muted">
-        <p>Showing <span class="font-semibold text-ink">1–8</span> of <span class="font-semibold text-ink tnum">23</span> workspace users</p>
-        <div class="flex gap-1">
-          <button class="btn-icon" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[15px]"></i></button>
-          <button class="btn-icon"><i class="hgi-stroke hgi-arrow-right-01 text-[15px]"></i></button>
+      <div id="users-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="users-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="users-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="users-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="users-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
         </div>
       </div>
     </section>
@@ -395,7 +233,7 @@
   </div>
 </div>
 
-<script src="../assets/shell.js?v=34"></script>
+<script src="../assets/shell.js?v=36"></script>
 <script>
   /* ---------- Role permission presets ---------- */
   const ROLE_PERMS = {
@@ -433,11 +271,141 @@
       setToggle(btn, !!perms[btn.dataset.perm]);
     });
   }
-  // Attach directly to the buttons (fires before shell.js's document-level
-  // [data-open] handler opens the panel) so the panel is populated first.
-  document.querySelectorAll('.js-edit-role').forEach(btn => {
-    btn.addEventListener('click', () => openRolePanel(btn.dataset.role));
+  // Attach directly to the (dynamically rendered) role buttons — a target-level
+  // listener fires before shell.js's document-level [data-open] handler opens the
+  // panel, so the panel is populated first. Re-run after every table render.
+  function attachRoleHandlers() {
+    document.querySelectorAll('#users-rows .js-edit-role').forEach(btn => {
+      btn.addEventListener('click', () => openRolePanel(btn.dataset.role));
+    });
+  }
+
+  /* ---------- Users table: data-driven, filterable, paginated ---------- */
+  const DATA = [
+    { name:'Harper Nelson',       email:'harper.nelson@eventa.io',    initials:'HN', role:'Admin',     status:'Active',    lastActive:'Jul 18, 2026' },
+    { name:'Anong Praditsarn',    email:'anong.p@gmail.com',          initials:'AP', role:'Organizer', status:'Active',    lastActive:'Jul 17, 2026' },
+    { name:'Somchai Tanakit',     email:'somchai.t@outlook.com',      initials:'ST', role:'Organizer', status:'Active',    lastActive:'Jul 16, 2026' },
+    { name:'Ploy Suwannarat',     email:'ploy.suwan@yahoo.com',       initials:'PS', role:'Staff',     status:'Active',    lastActive:'Jul 15, 2026' },
+    { name:'James Whitfield',     email:'james.whitfield@gmail.com',  initials:'JW', role:'Staff',     status:'Invited',   lastActive:'—' },
+    { name:'Mei Lin',             email:'mei.lin88@gmail.com',        initials:'ML', role:'Staff',     status:'Active',    lastActive:'Jul 12, 2026' },
+    { name:'Natthaphong Charoen', email:'nat.charoen@hotmail.com',    initials:'NC', role:'Attendee',  status:'Active',    lastActive:'Jul 5, 2026' },
+    { name:'David Okafor',        email:'d.okafor@corpmail.com',      initials:'DO', role:'Organizer', status:'Suspended', lastActive:'Jun 20, 2026' },
+    { name:'Grace Hoffman',       email:'grace.hoffman@eventa.io',    initials:'GH', role:'Admin',     status:'Active',    lastActive:'Jul 18, 2026' },
+    { name:'Jun Park',            email:'jun.park@gmail.com',         initials:'JP', role:'Admin',     status:'Active',    lastActive:'Jul 3, 2026' },
+    { name:'Kanya Rattanakosin',  email:'kanya.r@gmail.com',          initials:'KR', role:'Organizer', status:'Active',    lastActive:'Jul 14, 2026' },
+    { name:'Ravi Menon',          email:'ravi.menon@corpmail.com',    initials:'RM', role:'Organizer', status:'Active',    lastActive:'Jul 9, 2026' },
+    { name:'Siriporn Adisai',     email:'siriporn.a@yahoo.com',       initials:'SA', role:'Organizer', status:'Active',    lastActive:'Jul 7, 2026' },
+    { name:'Arthit Wongsawat',    email:'arthit.w@outlook.com',       initials:'AW', role:'Organizer', status:'Invited',   lastActive:'—' },
+    { name:'Suda Kittisak',       email:'suda.k@yahoo.com',           initials:'SK', role:'Staff',     status:'Active',    lastActive:'Jul 13, 2026' },
+    { name:'Lily Tan',            email:'lily.tan@gmail.com',         initials:'LT', role:'Staff',     status:'Active',    lastActive:'Jul 11, 2026' },
+    { name:'Kevin Oduya',         email:'kevin.oduya@corpmail.com',   initials:'KO', role:'Staff',     status:'Active',    lastActive:'Jul 6, 2026' },
+    { name:'Preeya Nakamura',     email:'preeya.n@outlook.com',       initials:'PN', role:'Staff',     status:'Invited',   lastActive:'—' },
+    { name:'Nattapong Sirichai',  email:'nattapong.s@gmail.com',      initials:'NS', role:'Staff',     status:'Suspended', lastActive:'Jun 28, 2026' },
+    { name:'Rachel Davies',       email:'rachel.davies@gmail.com',    initials:'RD', role:'Attendee',  status:'Active',    lastActive:'Jul 10, 2026' },
+    { name:'Wichai Phumipat',     email:'wichai.p@hotmail.com',       initials:'WP', role:'Attendee',  status:'Active',    lastActive:'Jul 8, 2026' },
+    { name:'Malee Rojana',        email:'malee.r@gmail.com',          initials:'MR', role:'Attendee',  status:'Active',    lastActive:'Jul 4, 2026' },
+    { name:'Tom Bradley',         email:'tom.bradley@gmail.com',      initials:'TB', role:'Attendee',  status:'Suspended', lastActive:'Jun 15, 2026' },
+    { name:'Chai Leelawat',       email:'chai.l@outlook.com',         initials:'CL', role:'Attendee',  status:'Invited',   lastActive:'—' },
+  ];
+
+  const ROLE_BADGE = {
+    Admin:     { cls:'badge-purple', icon:'hgi-shield-key' },
+    Organizer: { cls:'badge-green',  icon:'hgi-shield-user' },
+    Staff:     { cls:'badge-blue',   icon:'hgi-user-check-01' },
+    Attendee:  { cls:'badge-gray',   icon:'hgi-user-multiple' },
+  };
+  const STATUS_BADGE = {
+    Active:    { cls:'badge-green', icon:'hgi-checkmark-badge-01' },
+    Invited:   { cls:'badge-amber', icon:'hgi-mail-01' },
+    Suspended: { cls:'badge-red',   icon:'hgi-cancel-circle' },
+  };
+  const TAB_STATUS = { active:'Active', invited:'Invited', suspended:'Suspended' };
+
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+  function nf(n){ return n.toLocaleString('en-US'); }
+
+  function rowHTML(u){
+    const rb = ROLE_BADGE[u.role], sb = STATUS_BADGE[u.status];
+    const last = u.lastActive === '—'
+      ? '<td class="text-muted">—</td>'
+      : '<td class="text-muted tnum">' + esc(u.lastActive) + '</td>';
+    return '<tr>' +
+      '<td>' +
+        '<div class="flex items-center gap-2">' +
+          '<span class="avatar h-8 w-8 text-[11px]">' + esc(u.initials) + '</span>' +
+          '<div class="min-w-0 leading-tight">' +
+            '<p class="truncate font-medium text-ink">' + esc(u.name) + '</p>' +
+            '<p class="truncate text-[11px] text-muted">' + esc(u.email) + '</p>' +
+          '</div>' +
+        '</div>' +
+      '</td>' +
+      '<td><span class="badge ' + rb.cls + '"><i class="hgi-stroke ' + rb.icon + ' text-[12px]"></i>' + u.role + '</span></td>' +
+      '<td><span class="badge ' + sb.cls + '"><i class="hgi-stroke ' + sb.icon + ' text-[12px]"></i>' + u.status + '</span></td>' +
+      last +
+      '<td class="text-right">' +
+        '<div class="flex items-center justify-end gap-1">' +
+          '<button class="btn-icon js-edit-role" data-open="role-panel" data-role="' + u.role + '" title="Edit role"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]"></i></button>' +
+          '<button class="btn-icon" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>' +
+          '<button class="btn-icon" data-open="del-modal" title="Remove user"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>' +
+        '</div>' +
+      '</td>' +
+    '</tr>';
+  }
+
+  const state = { q:'', tab:'all', role:'All roles', page:0, size:10 };
+
+  const byTab = u => state.tab === 'all' || u.status === TAB_STATUS[state.tab];
+  const byRole = u => state.role === 'All roles' || u.role === state.role;
+  const bySearch = u => { const q = state.q.trim().toLowerCase(); return !q || u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q); };
+  function filtered(){ return DATA.filter(byTab).filter(byRole).filter(bySearch); }
+
+  const tbody   = document.getElementById('users-rows');
+  const showing = document.getElementById('users-showing');
+  const prevBtn = document.getElementById('users-prev');
+  const nextBtn = document.getElementById('users-next');
+  const sizeSel = document.getElementById('users-size');
+  const searchEl = document.getElementById('users-search');
+  const roleFilter = document.getElementById('users-role-filter');
+
+  function refreshTabCounts(){
+    document.querySelector('[data-count="all"]').textContent = nf(DATA.length);
+    document.querySelector('[data-count="active"]').textContent = nf(DATA.filter(u => u.status === 'Active').length);
+    document.querySelector('[data-count="invited"]').textContent = nf(DATA.filter(u => u.status === 'Invited').length);
+    document.querySelector('[data-count="suspended"]').textContent = nf(DATA.filter(u => u.status === 'Suspended').length);
+  }
+
+  function render(){
+    const list = filtered(), total = list.length, pages = Math.max(1, Math.ceil(total / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    const start = state.page * state.size, slice = list.slice(start, start + state.size);
+    tbody.innerHTML = slice.length
+      ? slice.map(rowHTML).join('')
+      : '<tr><td colspan="5"><div class="py-10 text-center text-[13px] text-muted">No matches.</div></td></tr>';
+    if (total === 0) {
+      showing.textContent = 'No workspace users';
+    } else {
+      showing.innerHTML = 'Showing <span class="font-semibold text-ink">' + (start + 1) + '–' + (start + slice.length) +
+        '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> workspace users';
+    }
+    prevBtn.disabled = total === 0 || state.page === 0;
+    nextBtn.disabled = total === 0 || state.page >= pages - 1;
+    refreshTabCounts();
+    attachRoleHandlers();
+  }
+
+  searchEl.addEventListener('input', () => { state.q = searchEl.value; state.page = 0; render(); });
+  roleFilter.addEventListener('change', () => { state.role = roleFilter.value; state.page = 0; render(); });
+  sizeSel.addEventListener('change', () => { state.size = +sizeSel.value; state.page = 0; render(); });
+  prevBtn.addEventListener('click', () => { if (state.page > 0) { state.page--; render(); } });
+  nextBtn.addEventListener('click', () => { state.page++; render(); });
+  // pill-tabs: shell.js toggles .tab-active; we read the chosen tab and filter.
+  document.querySelector('[data-tabs]').addEventListener('click', e => {
+    const t = e.target.closest('[data-tab]'); if (!t) return;
+    state.tab = t.getAttribute('data-tab'); state.page = 0; render();
   });
+
+  render();
 
   /* ---------- Invite panel: live permissions preview ---------- */
   function renderInvitePreview() {
