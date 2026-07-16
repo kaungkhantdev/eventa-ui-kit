@@ -192,64 +192,21 @@
       </section>
     </div>
 
-    <!-- top events table -->
+    <!-- top events table (View all → full searchable/paginated list) -->
     <section class="card mt-3 p-4">
       <div class="flex items-center justify-between">
         <div>
           <h2 class="text-[15px] font-bold tracking-tight">Top events</h2>
           <p class="mt-0.5 text-[12px] text-muted">Ranked by registrations this period</p>
         </div>
-        <a href="event-detail.html" class="text-[12px] font-semibold text-brand hover:underline">View all</a>
+        <a href="reports-events.html" class="inline-flex items-center gap-1 text-[12px] font-semibold text-brand hover:underline">View all<i class="hgi-stroke hgi-arrow-right-01 text-[13px]"></i></a>
       </div>
       <div class="mt-3 overflow-x-auto">
         <table class="data-table min-w-[720px]">
           <thead>
             <tr><th>Event</th><th>Registrations</th><th>Revenue ฿</th><th>Attendance %</th><th>Status</th></tr>
           </thead>
-          <tbody class="text-[13px]">
-            <tr>
-              <td><div><a href="event-detail.html" class="font-semibold text-ink hover:text-brand hover:underline">Tech Summit 2026</a><p class="text-[11px] text-muted">Jul 18 · BITEC</p></div></td>
-              <td class="text-ink tnum">412</td>
-              <td class="font-semibold text-ink tnum">฿824,000</td>
-              <td class="text-muted tnum">92%</td>
-              <td><span class="badge badge-blue">Upcoming</span></td>
-            </tr>
-            <tr>
-              <td><div><a href="event-detail.html" class="font-semibold text-ink hover:text-brand hover:underline">Bangkok Jazz Night</a><p class="text-[11px] text-muted">Jul 12 · Sala Daeng</p></div></td>
-              <td class="text-ink tnum">268</td>
-              <td class="font-semibold text-ink tnum">฿128,640</td>
-              <td class="text-muted tnum">88%</td>
-              <td><span class="badge badge-blue">Upcoming</span></td>
-            </tr>
-            <tr>
-              <td><div><a href="event-detail.html" class="font-semibold text-ink hover:text-brand hover:underline">Sunrise Yoga Retreat</a><p class="text-[11px] text-muted">Jul 20 · Lumphini Park</p></div></td>
-              <td class="text-ink tnum">201</td>
-              <td class="font-semibold text-ink tnum">฿178,890</td>
-              <td class="text-muted tnum">95%</td>
-              <td><span class="badge badge-blue">Upcoming</span></td>
-            </tr>
-            <tr>
-              <td><div><a href="event-detail.html" class="font-semibold text-ink hover:text-brand hover:underline">Thai Street Food Festival</a><p class="text-[11px] text-muted">Jun 14 · IconSiam</p></div></td>
-              <td class="text-ink tnum">178</td>
-              <td class="font-semibold text-ink tnum">฿26,700</td>
-              <td class="text-muted tnum">81%</td>
-              <td><span class="badge badge-gray">Completed</span></td>
-            </tr>
-            <tr>
-              <td><div><a href="event-detail.html" class="font-semibold text-ink hover:text-brand hover:underline">UX Bangkok Meetup</a><p class="text-[11px] text-muted">May 22 · TCDC Bangkok</p></div></td>
-              <td class="text-ink tnum">154</td>
-              <td class="font-semibold text-ink tnum">฿0</td>
-              <td class="text-muted tnum">90%</td>
-              <td><span class="badge badge-gray">Completed</span></td>
-            </tr>
-            <tr>
-              <td><div><a href="event-detail.html" class="font-semibold text-ink hover:text-brand hover:underline">Startup Pitch Night</a><p class="text-[11px] text-muted">Jul 9 · True Digital Park</p></div></td>
-              <td class="text-ink tnum">127</td>
-              <td class="font-semibold text-ink tnum">฿31,750</td>
-              <td class="text-muted tnum">68%</td>
-              <td><span class="badge badge-green">Live</span></td>
-            </tr>
-          </tbody>
+          <tbody id="ev-rows" class="text-[13px]"></tbody>
         </table>
       </div>
     </section>
@@ -353,6 +310,25 @@
       </div>
       <span class="text-[15px] font-bold tnum">${t.pct}%</span>
     </div>`).join('');
+</script>
+
+<script src="../assets/reports-data.js?v=36"></script>
+<script>
+  /* ---------- "Top events" card: top 6 from the shared reports data ---------- */
+  (function () {
+    function nf(n) { return n.toLocaleString('en-US'); }
+    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    var STATUS = { Upcoming: 'badge-blue', Completed: 'badge-gray', Live: 'badge-green' };
+    function badge(s) { return '<span class="badge ' + (STATUS[s] || 'badge-gray') + '">' + s + '</span>'; }
+    document.getElementById('ev-rows').innerHTML = (window.REPORTS_EVENTS || []).slice(0, 6).map(function (e) {
+      return '<tr><td><div><a href="event-detail.html" class="font-semibold text-ink hover:text-brand hover:underline">' + esc(e.name) + '</a>' +
+        '<p class="text-[11px] text-muted">' + esc(e.meta) + '</p></div></td>' +
+        '<td class="text-ink tnum">' + nf(e.regs) + '</td>' +
+        '<td class="font-semibold text-ink tnum">฿' + nf(e.rev) + '</td>' +
+        '<td class="text-muted tnum">' + (e.att ? e.att + '%' : '—') + '</td>' +
+        '<td>' + badge(e.status) + '</td></tr>';
+    }).join('');
+  })();
 </script>
 </body>
 </html>

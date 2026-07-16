@@ -76,7 +76,7 @@
   const sidenavHTML = `
     <div id="backdrop" class="fixed inset-0 z-40 hidden bg-black/40 lg:hidden"></div>
     <div id="sidenav" class="fixed inset-y-0 left-0 z-50 flex -translate-x-full transition-transform duration-300 lg:static lg:translate-x-0">
-      <aside id="rail" class="relative z-30 flex w-16 shrink-0 flex-col items-center bg-[#0e0f12] py-4">
+      <aside id="rail" class="relative z-30 flex w-16 shrink-0 flex-col items-center bg-[#0e0f12] py-4 dark:bg-[#101613]">
         <div class="group relative flex justify-center">
           <a href="dashboard.html" class="grid h-9 w-9 place-items-center rounded-full border border-brand/70 text-brand"><i class="hgi-stroke hgi-fire text-[18px]"></i></a>
           <span class="rail-tip">Eventa</span>
