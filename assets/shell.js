@@ -25,15 +25,19 @@
         { label: 'All Events',     page: 'events',        href: 'events.html' },
         { label: 'Create Event',   page: 'event-form',    href: 'event-form.html' },
         { label: 'Event Details',  page: 'event-detail',  href: 'event-detail.html' },
-        { label: 'Landing Pages',  page: 'landing-pages', href: 'landing-pages.html' },
-        { label: 'Agenda',         page: 'agenda',        href: 'agenda.html' },
+      ]},
+      { label: 'Program', icon: 'hgi-mic-01', items: [
+        { label: 'Agenda',    page: 'agenda',   href: 'agenda.html' },
+        { label: 'Speakers',  page: 'speakers', href: 'speakers.html' },
+      ]},
+      { label: 'Content', icon: 'hgi-browser', items: [
+        { label: 'Landing Pages',  page: 'landing-pages',    href: 'landing-pages.html' },
         { label: 'Categories',     page: 'event-categories', href: 'event-categories.html' },
       ]},
       { label: 'Attendees', icon: 'hgi-user-multiple', items: [
         { label: 'Registrations', page: 'registrations', href: 'registrations.html' },
         { label: 'Attendees',     page: 'attendees',     href: 'attendees.html' },
         { label: 'Check-in',      page: 'checkin',       href: 'check-in.html' },
-        { label: 'Speakers',      page: 'speakers',      href: 'speakers.html' },
       ]},
     ]},
     { id: 'checkin-tool', label: 'Check-in tool', icon: 'hgi-qr-code-01', href: 'check-in-tool.html' },

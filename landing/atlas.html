@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Event — Atlas</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../assets/config.js"></script>
+  <link rel="stylesheet" href="../assets/app.css" />
+
+  <!-- page-specific layout helpers only (no colors/borders that fight the kit) -->
+  <style>
+    body { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
+    a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid #1ba770; outline-offset: 3px; border-radius: 12px; }
+    .on-brand:focus-visible { outline-color: #fff; }
+    .faq[open] .faq-chev { transform: rotate(180deg); }
+    summary::-webkit-details-marker { display: none; }
+    summary { list-style: none; }
+    @media (prefers-reduced-motion: no-preference) {
+      html { scroll-behavior: smooth; }
+      @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+      .reveal { animation: rise .55s cubic-bezier(.22,.61,.36,1) both; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; scroll-behavior: auto !important; } }
+
+    /* sticky bar — transparent over the hero, solid once you scroll past it */
+    #bar { background: transparent; transition: background .3s ease, border-color .3s ease; border-bottom: 1px solid transparent; }
+    #bar.bar-solid { background: rgb(var(--canvas) / .88); backdrop-filter: blur(12px); border-bottom-color: rgb(var(--line)); }
+    #bar-title { color: #fff; }
+    #bar.bar-solid #bar-title { color: rgb(var(--ink)); }
+    #bar-logo { background: rgba(255,255,255,.16); color: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.28); }
+    #bar.bar-solid #bar-logo { background: #1ba770; color: #fff; box-shadow: none; }
+    .bar-reg { background: #fff; color: #1ba770; }
+    .bar-reg:hover { background: rgba(255,255,255,.9); }
+    #bar.bar-solid .bar-reg { background: #1ba770; color: #fff; }
+    #bar.bar-solid .bar-reg:hover { background: #178a60; }
+  </style>
+</head>
+
+<body class="bg-canvas text-ink antialiased">
+
+  <!-- Sticky bar -->
+  <header id="bar" class="fixed inset-x-0 top-0 z-50">
+    <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+      <a href="#top" class="flex min-w-0 items-center gap-2.5" aria-label="Back to top">
+        <span id="bar-logo" class="grid h-8 w-8 shrink-0 place-items-center rounded-lg backdrop-blur"><i class="hgi-stroke hgi-fire text-[17px]"></i></span>
+        <span id="bar-title" data-navtitle class="truncate text-[15px] font-bold tracking-tight">Event</span>
+      </a>
+      <a data-register href="#" class="bar-reg shrink-0 rounded-full px-4 py-2 text-[13px] font-bold transition">Get tickets</a>
+    </div>
+  </header>
+
+  <!-- 1 · Full-bleed poster hero -->
+  <section id="top" class="relative flex min-h-[92vh] items-end overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand to-emerald-600"></div>
+    <img id="hero-cover" alt="" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()" />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/25"></div>
+    <div class="relative mx-auto w-full max-w-6xl px-4 pb-14 pt-28 sm:px-6 sm:pb-20">
+      <span id="hero-category" class="inline-flex w-fit items-center gap-1 rounded-full bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white ring-1 ring-inset ring-white/30 backdrop-blur-sm"></span>
+      <p id="hero-kicker" class="mt-4 text-[13px] font-semibold uppercase tracking-[0.2em] text-white/85"></p>
+      <h1 id="hero-title" class="mt-3 max-w-[16ch] text-[44px] font-extrabold leading-[0.95] tracking-tight text-white sm:text-[68px] lg:text-[84px]">Event</h1>
+      <div id="hero-facts" class="mt-7 flex flex-wrap gap-x-7 gap-y-3"></div>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a data-register href="#" class="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-[14px] font-bold text-brand shadow-lg transition hover:bg-white/90">Get tickets <i class="hgi-stroke hgi-arrow-right-01 text-[16px]"></i></a>
+        <a href="#s-speakers" class="inline-flex items-center gap-2 rounded-full bg-white/10 px-6 py-3.5 text-[14px] font-semibold text-white ring-1 ring-inset ring-white/30 backdrop-blur transition hover:bg-white/20">See the line-up</a>
+      </div>
+    </div>
+    <a href="#s-intro" class="absolute bottom-6 left-1/2 hidden -translate-x-1/2 text-white/70 transition hover:text-white sm:block" aria-label="Scroll down"><i class="hgi-stroke hgi-arrow-down-01 text-[26px]"></i></a>
+  </section>
+
+  <!-- 2 · Lead line -->
+  <section id="s-intro" class="border-b border-line bg-surface">
+    <div class="mx-auto max-w-4xl px-4 py-12 text-center sm:px-6 sm:py-16">
+      <p id="hero-tagline" class="text-[19px] font-medium leading-relaxed text-ink sm:text-[24px]"></p>
+    </div>
+  </section>
+
+  <!-- 3 · Highlights (green band) -->
+  <section id="s-highlights" class="scroll-mt-20 bg-brand">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
+      <p class="text-[12px] font-bold uppercase tracking-[0.2em] text-white/70">On the night</p>
+      <h2 class="mt-1 text-[26px] font-extrabold tracking-tight text-white sm:text-[32px]">What to expect</h2>
+      <div id="highlights" class="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4"></div>
+    </div>
+  </section>
+
+  <!-- 4 · About -->
+  <section id="s-about" class="scroll-mt-20">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
+      <div class="grid gap-8 md:grid-cols-[1.5fr_1fr] md:gap-12">
+        <div>
+          <p class="text-[12px] font-bold uppercase tracking-[0.2em] text-brand">The show</p>
+          <h2 class="mt-1 text-[26px] font-extrabold tracking-tight text-ink sm:text-[32px]">About the night</h2>
+          <p id="about-text" class="mt-4 max-w-[58ch] text-[15px] leading-relaxed text-muted"></p>
+        </div>
+        <div>
+          <h3 class="mb-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-muted">Details</h3>
+          <dl id="about-facts" class="rounded-2xl bg-surface px-4"></dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · Set times / Agenda -->
+  <section id="s-agenda" class="scroll-mt-20 bg-surface">
+    <div class="mx-auto max-w-4xl px-4 py-14 sm:px-6 sm:py-16">
+      <p class="text-[12px] font-bold uppercase tracking-[0.2em] text-brand">Running order</p>
+      <h2 id="agenda-title" class="mt-1 text-[26px] font-extrabold tracking-tight text-ink sm:text-[32px]">Schedule</h2>
+      <ol id="agenda-list" class="mt-6 grid gap-3 sm:grid-cols-2"></ol>
+    </div>
+  </section>
+
+  <!-- 6 · Line-up / Speakers -->
+  <section id="s-speakers" class="scroll-mt-20">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
+      <p class="text-[12px] font-bold uppercase tracking-[0.2em] text-brand">Who's playing</p>
+      <h2 id="speakers-title" class="mt-1 text-[26px] font-extrabold tracking-tight text-ink sm:text-[32px]">Line-up</h2>
+      <div id="speakers-list" class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+    </div>
+  </section>
+
+  <!-- 7 · Tickets -->
+  <section id="s-tickets" class="scroll-mt-20 bg-surface">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
+      <p class="text-[12px] font-bold uppercase tracking-[0.2em] text-brand">Get in the door</p>
+      <h2 id="tickets-title" class="mt-1 text-[26px] font-extrabold tracking-tight text-ink sm:text-[32px]">Tickets</h2>
+      <p id="tickets-note" class="mt-2 inline-flex items-center gap-1.5 text-[13px] font-semibold text-brand"></p>
+      <div id="tickets-list" class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3 md:items-start"></div>
+    </div>
+  </section>
+
+  <!-- 8 · FAQ -->
+  <section id="s-faq" class="scroll-mt-20">
+    <div class="mx-auto max-w-4xl px-4 py-14 sm:px-6 sm:py-16">
+      <p class="text-[12px] font-bold uppercase tracking-[0.2em] text-brand">Before you go</p>
+      <h2 class="mt-1 text-[26px] font-extrabold tracking-tight text-ink sm:text-[32px]">Know before the show</h2>
+      <div id="faq-list" class="mt-4"></div>
+    </div>
+  </section>
+
+  <!-- 9 · Final CTA (green band) -->
+  <section class="bg-brand text-white">
+    <div class="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 sm:py-20">
+      <p class="text-[12px] font-semibold uppercase tracking-[0.2em] text-white/75">Don't miss the show</p>
+      <h2 class="mx-auto mt-2 max-w-[18ch] text-[30px] font-extrabold leading-tight tracking-tight sm:text-[42px]">Grab your ticket to <span id="foot-title">the show</span>.</h2>
+      <p id="foot-when" class="mt-3 text-[15px] text-white/85"></p>
+      <a id="footer-register" data-register href="#" class="on-brand mt-7 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-[14px] font-bold text-brand shadow-lg transition hover:bg-white/90">Get tickets <i class="hgi-stroke hgi-arrow-right-01 text-[16px]"></i></a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-line">
+    <div class="mx-auto max-w-6xl space-y-4 px-4 py-8 sm:px-6">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <p class="text-[13px] text-muted">Presented by <strong id="footer-organizer" class="font-semibold text-ink">Organizer</strong></p>
+        <div class="flex flex-wrap items-center gap-2">
+          <a id="footer-email" href="#" class="inline-flex items-center gap-1.5 rounded-lg bg-surface px-3 py-2 text-[13px] font-medium text-ink transition hover:text-brand"><i class="hgi-stroke hgi-mail-01 text-[16px] text-brand"></i><span id="footer-email-text">email</span></a>
+          <a id="footer-instagram" href="#" aria-label="Instagram" class="grid h-9 w-9 place-items-center rounded-lg bg-surface text-muted transition hover:text-brand"><i class="hgi-stroke hgi-instagram text-[18px]"></i></a>
+          <a id="footer-website" href="#" aria-label="Website" class="grid h-9 w-9 place-items-center rounded-lg bg-surface text-muted transition hover:text-brand"><i class="hgi-stroke hgi-global text-[18px]"></i></a>
+        </div>
+      </div>
+      <p class="text-[12px] text-muted">© <span id="foot-year">2026</span> <span id="foot-org2">Organizer</span> · Built with Eventa.</p>
+    </div>
+  </footer>
+
+  <script src="../assets/landing-data.js"></script>
+  <script>
+    (function () {
+      var ev = (window.EVENTA_getEvent && window.EVENTA_getEvent()) || {};
+
+      function esc(s) {
+        return String(s == null ? '' : s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      }
+      function setText(id, val) { var el = document.getElementById(id); if (el && val != null) el.textContent = val; }
+      function setHref(id, val) { var el = document.getElementById(id); if (el && val) el.setAttribute('href', val); }
+      function html(id, markup) { var el = document.getElementById(id); if (el) el.innerHTML = markup; }
+      function hideIfEmpty(id, val) { var el = document.getElementById(id); if (el && !val) el.style.display = 'none'; }
+      function join(parts) { return parts.filter(Boolean).join(', '); }
+
+      var reg = ev.registerUrl || '#';
+      var isOnline = ev.online === true || new URLSearchParams(location.search).get('online') === '1';
+      var whereText = isOnline ? 'Online event' : join([ev.venue, ev.city]);
+
+      // ---- document / title + register (sweeps fill the sticky bar, hero, footer CTAs) ----
+      if (ev.title) document.title = ev.title + ' — ' + (ev.category || 'Event');
+      document.querySelectorAll('[data-navtitle]').forEach(function (el) { el.textContent = ev.title || 'Event'; });
+      document.querySelectorAll('[data-register]').forEach(function (el) { el.setAttribute('href', reg); });
+
+      // ---- hero (facts are WHITE — they sit on the dark poster) ----
+      setText('hero-category', ev.category);
+      hideIfEmpty('hero-category', ev.category);
+      setText('hero-kicker', ev.kicker);
+      setText('hero-title', ev.title);
+      setText('hero-tagline', ev.tagline);
+      var heroCover = ev.image || ('https://picsum.photos/seed/' + ev.slug + '/1600/900');
+      var hc = document.getElementById('hero-cover'); if (hc) hc.src = heroCover;
+
+      var heroFacts = [
+        { icon: 'hgi-calendar-03', v: ev.dateText },
+        { icon: 'hgi-clock-01', v: ev.timeText },
+        { icon: isOnline ? 'hgi-video-01' : 'hgi-location-01', v: whereText },
+        { icon: 'hgi-user-multiple', v: ev.attendeesText }
+      ].filter(function (f) { return f.v; });
+      html('hero-facts', heroFacts.map(function (f) {
+        return '<span class="inline-flex items-center gap-2 text-[14px] font-semibold text-white">' +
+          '<i class="hgi-stroke ' + esc(f.icon) + ' text-[17px] text-white/80"></i>' + esc(f.v) + '</span>';
+      }).join(''));
+
+      // ---- highlights (white cards on the green band) ----
+      html('highlights', ((function(){var q=new URLSearchParams(location.search).get('hl');return q?q.split('|').map(function(s){var i=s.indexOf(':');return{icon:s.slice(0,i),label:s.slice(i+1)};}):(ev.highlights||[]);})()).map(function (h) {
+        return '<div class="rounded-2xl bg-surface p-5">' +
+          '<span class="grid h-11 w-11 place-items-center rounded-xl bg-brand-soft text-brand">' +
+          '<i class="hgi-stroke ' + esc(h.icon || 'hgi-star') + ' text-[22px]"></i></span>' +
+          '<div class="mt-3 text-[14px] font-semibold text-ink">' + esc(h.label) + '</div></div>';
+      }).join(''));
+
+      // ---- about ----
+      setText('about-text', ev.about);
+      var priceVal = ev.priceFrom || '';
+      var lowered = priceVal.toLowerCase();
+      var priceDisplay = (!priceVal || lowered === 'free' || priceVal === '—') ? priceVal : 'From ' + priceVal;
+      var aboutRows = [
+        ['hgi-calendar-03', 'Date', ev.dateText],
+        ['hgi-clock-01', 'Time', ev.timeText],
+        isOnline ? ['hgi-video-01', 'Format', 'Online event'] : ['hgi-location-01', 'Venue', ev.venue],
+        isOnline ? ['hgi-link-01', 'Access', ev.onlineNote || 'Join link sent after you register'] : ['hgi-location-01', 'Address', ev.address],
+        ['hgi-building-06', 'Category', ev.category],
+        ['hgi-wallet-01', 'Price', priceDisplay]
+      ].filter(function (r) { return r[2]; });
+      html('about-facts', aboutRows.map(function (r) {
+        return '<div class="flex items-center gap-3 border-t border-line py-3 first:border-t-0">' +
+          '<i class="hgi-stroke ' + esc(r[0]) + ' text-[16px] text-brand"></i>' +
+          '<dt class="text-[12px] font-medium uppercase tracking-[0.08em] text-muted">' + esc(r[1]) + '</dt>' +
+          '<dd class="ml-auto text-right text-[13px] font-semibold text-ink">' + esc(r[2]) + '</dd></div>';
+      }).join(''));
+
+      // ---- set times / agenda ----
+      setText('agenda-title', ev.agendaTitle);
+      var agenda = ev.agenda || [];
+      html('agenda-list', agenda.map(function (a) {
+        return '<li class="flex items-center gap-3.5 rounded-2xl bg-canvas p-4 ring-1 ring-line transition hover:ring-brand/40">' +
+          '<span class="grid shrink-0 place-items-center rounded-xl bg-brand px-3 py-2 text-center text-[13px] font-extrabold leading-tight tnum text-white">' + esc(a.time) + '</span>' +
+          '<div class="min-w-0 flex-1">' +
+          '<div class="text-[15px] font-bold tracking-tight text-ink">' + esc(a.title) + '</div>' +
+          '<div class="mt-0.5 text-[13px] font-medium text-muted">' + esc(a.desc) + '</div>' +
+          '</div>' +
+          '<i class="hgi-stroke hgi-music-note-01 text-[18px] shrink-0 text-brand/30"></i>' +
+          '</li>';
+      }).join(''));
+
+      // ---- line-up / speakers (bold artist cards, headliner in brand green) ----
+      setText('speakers-title', ev.speakersTitle);
+      html('speakers-list', (ev.speakers || []).map(function (s, i) {
+        var lead = i === 0;
+        return '<div class="flex items-center gap-4 rounded-2xl p-5 ' + (lead ? 'bg-brand text-white' : 'bg-surface') + '">' +
+          '<div class="grid h-16 w-16 shrink-0 place-items-center rounded-full text-[17px] font-bold ' +
+          (lead ? 'bg-white/15 text-white ring-2 ring-white/30' : 'bg-brand-soft text-brand') + '" aria-hidden="true">' + esc(s.initials) + '</div>' +
+          '<div class="min-w-0">' +
+          '<div class="truncate text-[17px] font-bold tracking-tight ' + (lead ? 'text-white' : 'text-ink') + '">' + esc(s.name) + '</div>' +
+          '<div class="mt-0.5 truncate text-[12px] font-semibold uppercase tracking-wide ' + (lead ? 'text-white/85' : 'text-brand') + '">' + esc(s.role) + '</div>' +
+          '</div></div>';
+      }).join(''));
+
+      // ---- tickets ----
+      setText('tickets-title', ev.ticketsTitle);
+      if (ev.seatsLeft) html('tickets-note', '<i class="hgi-stroke hgi-fire text-[15px]"></i> Going fast — only ' + ev.seatsLeft + ' left');
+      html('tickets-list', (ev.tickets || []).map(function (t) {
+        var feat = !!t.featured;
+        var feats = (t.features || []).map(function (f) {
+          return '<li class="flex items-start gap-2 text-[13px] ' + (feat ? 'text-white/90' : 'text-muted') + '">' +
+            '<i class="hgi-stroke hgi-tick-02 text-[15px] mt-0.5 ' + (feat ? 'text-white' : 'text-brand') + '"></i>' +
+            '<span>' + esc(f) + '</span></li>';
+        }).join('');
+        var note = t.note
+          ? (feat
+              ? '<span class="rounded-full bg-white/20 px-2.5 py-0.5 text-[11px] font-semibold text-white">' + esc(t.note) + '</span>'
+              : '<span class="badge badge-green">' + esc(t.note) + '</span>')
+          : '';
+        var btn = feat
+          ? '<a href="' + esc(reg) + '" class="on-brand mt-1 inline-flex items-center justify-center gap-1.5 rounded-full bg-white px-4 py-2.5 text-[13px] font-semibold text-brand transition hover:bg-white/90">Get tickets</a>'
+          : '<a href="' + esc(reg) + '" class="mt-1 inline-flex items-center justify-center gap-1.5 rounded-full bg-brand-soft px-4 py-2.5 text-[13px] font-semibold text-brand transition hover:brightness-95">Get tickets</a>';
+        return '<div class="flex flex-col gap-4 rounded-2xl p-6 ' + (feat ? 'bg-brand text-white shadow-lg md:-translate-y-2' : 'bg-canvas ring-1 ring-line') + '">' +
+          '<div class="flex items-center justify-between gap-3">' +
+          '<span class="text-[12px] font-semibold uppercase tracking-[0.08em] ' + (feat ? 'text-white/80' : 'text-ink') + '">' + esc(t.name) + '</span>' + note + '</div>' +
+          '<div class="text-[30px] font-extrabold tracking-tight tnum ' + (feat ? 'text-white' : 'text-ink') + '">' + esc(t.price) + '</div>' +
+          '<ul class="flex flex-col gap-2.5">' + feats + '</ul>' + btn + '</div>';
+      }).join(''));
+
+      // ---- faq ----
+      html('faq-list', (ev.faqs || []).map(function (f, i) {
+        return '<details class="faq border-t border-line py-1 first:border-t-0"' + (i === 0 ? ' open' : '') + '>' +
+          '<summary class="flex cursor-pointer items-center justify-between gap-4 py-3 text-[15px] font-semibold text-ink">' +
+          '<span>' + esc(f.q) + '</span>' +
+          '<i class="hgi-stroke hgi-arrow-down-01 text-[17px] faq-chev shrink-0 text-muted transition-transform duration-200"></i></summary>' +
+          '<div class="pb-3 pr-8 text-[13px] leading-relaxed text-muted">' + esc(f.a) + '</div></details>';
+      }).join(''));
+
+      // ---- footer ----
+      setText('foot-title', ev.title);
+      setText('foot-when', [ev.dateText, whereText].filter(Boolean).join('  ·  '));
+      setText('footer-organizer', ev.organizer);
+      setText('foot-org2', ev.organizer);
+      setText('foot-year', String(new Date().getFullYear()));
+      if (ev.contactEmail) {
+        setHref('footer-email', 'mailto:' + ev.contactEmail);
+        setText('footer-email-text', ev.contactEmail);
+      }
+      var socials = ev.socials || {};
+      setHref('footer-instagram', socials.instagram || '#');
+      setHref('footer-website', socials.website || '#');
+
+      // ---- sticky bar: transparent over the hero, solid after you scroll past it ----
+      var bar = document.getElementById('bar');
+      var ticking = false;
+      function onScroll() {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(function () {
+            bar.classList.toggle('bar-solid', window.scrollY > window.innerHeight * 0.72);
+            ticking = false;
+          });
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+</body>
+</html>
