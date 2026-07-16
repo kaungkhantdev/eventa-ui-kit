@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=36"></script>
-<link rel="stylesheet" href="../assets/app.css?v=36" />
+<script src="../assets/config.js?v=37"></script>
+<link rel="stylesheet" href="../assets/app.css?v=37" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="event-detail">
 
@@ -26,8 +26,9 @@
       <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
       <a href="events.html" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink" title="Back to Events"><i class="hgi-stroke hgi-arrow-left-01 text-[20px]"></i></a>
       <div class="ml-auto flex shrink-0 items-center gap-2">
-        <a href="event-form.html" class="inline-flex items-center gap-1.5 rounded-lg bg-brand-soft px-3.5 py-2 text-[13px] font-semibold text-brand transition hover:brightness-95"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i><span class="hidden sm:inline">Edit</span></a>
+        <a href="event-form.html" class="inline-flex items-center gap-1.5 rounded-lg bg-brand-soft px-3.5 py-2 text-[13px] font-semibold text-brand transition hover:brightness-95"><i class="hgi-stroke hgi-edit-02 text-[15px]"></i><span class="hidden sm:inline">Edit</span></a>
         <a href="../landing/aurora.html?event=tech-summit-2026" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-dark"><i class="hgi-stroke hgi-view text-[15px]"></i><span class="hidden sm:inline">View page</span></a>
+        <button type="button" data-open="share-modal" class="inline-flex items-center gap-1.5 rounded-lg bg-surface px-3.5 py-2 text-[13px] font-semibold text-ink transition hover:bg-line" title="Share event"><i class="hgi-stroke hgi-share-08 text-[15px]"></i><span class="hidden sm:inline">Share</span></button>
         <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
         <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
       </div>
@@ -345,7 +346,59 @@
   </footer>
 </aside>
 
-<script src="../assets/shell.js?v=36"></script>
+<!-- Share event modal -->
+<div class="modal" id="share-modal" style="max-width:452px">
+  <div class="max-h-[88vh] overflow-y-auto p-4 sm:p-5">
+    <!-- header -->
+    <div class="relative mb-4 flex items-center justify-center">
+      <h3 class="text-[15px] font-bold tracking-tight">Share event</h3>
+      <button class="btn-icon absolute right-0 top-1/2 -translate-y-1/2" data-close aria-label="Close"><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </div>
+
+    <!-- share channels -->
+    <div class="grid grid-cols-6 gap-y-3">
+      <button type="button" data-share="copy" class="group flex flex-col items-center gap-2">
+        <span class="grid h-11 w-11 place-items-center rounded-full border border-hair bg-surface text-ink transition group-hover:-translate-y-0.5 group-hover:border-brand/40 group-hover:shadow-sm"><i class="hgi-stroke hgi-link-01 text-[22px]"></i></span>
+        <span class="text-[12px] font-medium text-muted group-hover:text-ink" data-copy-label>Copy link</span>
+      </button>
+      <button type="button" data-share="facebook" class="group flex flex-col items-center gap-2">
+        <span class="grid h-11 w-11 place-items-center rounded-full border border-hair bg-surface text-[#1877F2] transition group-hover:-translate-y-0.5 group-hover:border-brand/40 group-hover:shadow-sm"><i class="hgi-stroke hgi-facebook-01 text-[22px]"></i></span>
+        <span class="text-[12px] font-medium text-muted group-hover:text-ink">Facebook</span>
+      </button>
+      <button type="button" data-share="x" class="group flex flex-col items-center gap-2">
+        <span class="grid h-11 w-11 place-items-center rounded-full border border-hair bg-surface text-ink transition group-hover:-translate-y-0.5 group-hover:border-brand/40 group-hover:shadow-sm"><i class="hgi-stroke hgi-new-twitter text-[20px]"></i></span>
+        <span class="text-[12px] font-medium text-muted group-hover:text-ink">X</span>
+      </button>
+      <button type="button" data-share="line" class="group flex flex-col items-center gap-2">
+        <span class="grid h-11 w-11 place-items-center rounded-full border border-hair bg-surface text-[#06C755] transition group-hover:-translate-y-0.5 group-hover:border-brand/40 group-hover:shadow-sm"><i class="hgi-stroke hgi-line text-[22px]"></i></span>
+        <span class="text-[12px] font-medium text-muted group-hover:text-ink">LINE</span>
+      </button>
+      <button type="button" data-share="whatsapp" class="group flex flex-col items-center gap-2">
+        <span class="grid h-11 w-11 place-items-center rounded-full border border-hair bg-surface text-[#25D366] transition group-hover:-translate-y-0.5 group-hover:border-brand/40 group-hover:shadow-sm"><i class="hgi-stroke hgi-whatsapp text-[22px]"></i></span>
+        <span class="text-[12px] font-medium text-muted group-hover:text-ink">WhatsApp</span>
+      </button>
+      <button type="button" data-share="email" class="group flex flex-col items-center gap-2">
+        <span class="grid h-11 w-11 place-items-center rounded-full border border-hair bg-surface text-muted transition group-hover:-translate-y-0.5 group-hover:border-brand/40 group-hover:shadow-sm group-hover:text-ink"><i class="hgi-stroke hgi-mail-01 text-[22px]"></i></span>
+        <span class="text-[12px] font-medium text-muted group-hover:text-ink">Email</span>
+      </button>
+    </div>
+
+    <!-- divider -->
+    <div class="my-4 flex items-center gap-3 text-[12px] font-medium text-muted">
+      <span class="h-px flex-1 bg-hair"></span>or share a flyer<span class="h-px flex-1 bg-hair"></span>
+    </div>
+
+    <!-- flyer (single) — hover the card to reveal Save -->
+    <div id="flyer" class="group relative">
+      <div id="fl-poster" class="mx-auto max-w-[300px] overflow-hidden rounded-2xl ring-1 ring-hair"></div>
+      <button id="fl-save" type="button" class="pointer-events-none absolute bottom-4 left-1/2 inline-flex -translate-x-1/2 translate-y-1 items-center gap-1.5 rounded-full bg-surface px-4 py-2 text-[12.5px] font-bold text-ink opacity-0 shadow-xl ring-1 ring-black/5 transition-all duration-200 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 focus-visible:pointer-events-auto focus-visible:translate-y-0 focus-visible:opacity-100 dark:ring-white/10">
+        <i class="hgi-stroke hgi-download-04 text-[15px]"></i>Save
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/shell.js?v=37"></script>
 <script>
   /* ---------- pill tabs ---------- */
   document.querySelectorAll('[data-pill-group]').forEach(group => {
@@ -639,6 +692,115 @@
     lpCopy.textContent = 'Copied';
     setTimeout(() => { lpCopy.textContent = 'Copy'; }, 1500);
   });
+</script>
+<script>
+  /* ---------- Share event modal: channels + flyer carousel ---------- */
+  (function () {
+    const EVT = { title: 'Tech Summit 2026', seed: 'tech-summit-2026', mon: 'JUL', day: '18',
+      dateLine: 'Sat–Sun · Jul 18–19, 2026', loc: 'BITEC, Bangkok', url: 'eventa.co/e/tech-summit-2026' };
+    const shareUrl = 'https://' + EVT.url;
+    const shareText = 'Join me at ' + EVT.title + ' — ' + EVT.dateLine.replace('·', '·') + ' at ' + EVT.loc;
+
+    const modal = document.getElementById('share-modal');
+    const poster = document.getElementById('fl-poster');
+    if (!modal || !poster) return;
+
+    function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+    /* ---- share channels ---- */
+    const CHAN = {
+      facebook: function (u) { return 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(u); },
+      x:        function (u, t) { return 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(t) + '&url=' + encodeURIComponent(u); },
+      line:     function (u) { return 'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(u); },
+      whatsapp: function (u, t) { return 'https://wa.me/?text=' + encodeURIComponent(t + ' ' + u); },
+      email:    function (u, t) { return 'mailto:?subject=' + encodeURIComponent(EVT.title) + '&body=' + encodeURIComponent(t + '\n\n' + u); }
+    };
+    let copyT;
+    modal.addEventListener('click', function (e) {
+      const b = e.target.closest('[data-share]'); if (!b) return;
+      const kind = b.dataset.share;
+      if (kind === 'copy') {
+        const lbl = b.querySelector('[data-copy-label]');
+        const done = function () { lbl.textContent = 'Copied!'; clearTimeout(copyT); copyT = setTimeout(function () { lbl.textContent = 'Copy link'; }, 1600); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(shareUrl).then(done, done); else done();
+        return;
+      }
+      const href = CHAN[kind](shareUrl, shareText);
+      if (kind === 'email') { const a = document.createElement('a'); a.href = href; document.body.appendChild(a); a.click(); a.remove(); }
+      else window.open(href, '_blank', 'noopener,noreferrer,width=620,height=540');
+    });
+
+    /* ---- flyer poster: self-contained SVG with a QR code, our brand (preview AND PNG export) ---- */
+    function hashStr(s) { let h = 2166136261 >>> 0; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+    function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+    function qrRects(seed, ox, oy, size) {
+      const N = 21, rnd = mulberry32(hashStr(seed)), on = [];
+      for (let y = 0; y < N; y++) { on[y] = []; for (let x = 0; x < N; x++) on[y][x] = rnd() > 0.5; }
+      function finder(fx, fy) { for (let y = -1; y <= 7; y++) for (let x = -1; x <= 7; x++) { const gx = fx + x, gy = fy + y; if (gx < 0 || gy < 0 || gx >= N || gy >= N) continue; let v; if (x < 0 || x > 6 || y < 0 || y > 6) v = false; else if (x === 0 || x === 6 || y === 0 || y === 6) v = true; else if (x >= 2 && x <= 4 && y >= 2 && y <= 4) v = true; else v = false; on[gy][gx] = v; } }
+      finder(0, 0); finder(N - 7, 0); finder(0, N - 7);   // three QR finder patterns
+      const cell = size / N; let r = '';
+      for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) if (on[y][x]) r += '<rect x="' + (ox + x * cell).toFixed(2) + '" y="' + (oy + y * cell).toFixed(2) + '" width="' + cell.toFixed(2) + '" height="' + cell.toFixed(2) + '" fill="#0b1220"/>';
+      return r;
+    }
+    // Eventa flame mark (matches our real logo — flame glyph, drawn as a vector so it survives PNG export)
+    function flame(x, y, size, fill) {
+      const s = size / 24;
+      return '<g transform="translate(' + x + ',' + y + ') scale(' + s.toFixed(4) + ')" fill="' + fill + '" fill-rule="evenodd">' +
+        '<path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></g>';
+    }
+    // The ENTIRE flyer is one SVG on one background — so Save exports the whole thing (branding, QR, button, logo).
+    function posterSVG() {
+      const qr = qrRects(EVT.url, 36, 296, 80);
+      return '<svg viewBox="0 0 440 540" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto" font-family="Inter, system-ui, sans-serif">' +
+        '<defs><linearGradient id="pbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1aa873"/><stop offset="1" stop-color="#128455"/></linearGradient>' +
+        '<clipPath id="pcl"><rect x="0" y="0" width="440" height="540" rx="22"/></clipPath></defs>' +
+        '<g clip-path="url(#pcl)">' +
+        '<rect x="0" y="0" width="440" height="540" fill="url(#pbg)"/>' +
+        '<circle cx="46" cy="34" r="96" fill="#ffffff" opacity="0.07"/>' +
+        '<circle cx="410" cy="150" r="90" fill="#ffffff" opacity="0.06"/>' +
+        '<text x="220" y="104" text-anchor="middle" font-size="18" font-weight="700" letter-spacing="5" fill="#fbf4e6">TECH SUMMIT</text>' +
+        '<text x="220" y="178" text-anchor="middle" font-size="70" font-weight="800" letter-spacing="1" fill="#ffffff">2026</text>' +
+        '<text x="220" y="212" text-anchor="middle" font-size="10.5" font-weight="600" letter-spacing="2.5" fill="#fbf4e6" opacity="0.92">BANGKOK · EST. 2026</text>' +
+        // cream detail panel
+        '<rect x="0" y="266" width="440" height="274" fill="#faf3e4"/>' +
+        '<rect x="28" y="288" width="96" height="96" rx="12" fill="#ffffff"/>' +
+        qr +
+        '<text x="142" y="315" font-size="13" font-weight="800" fill="#14342a">Sat–Sun · Jul 18–19, 2026</text>' +
+        '<text x="142" y="338" font-size="12" font-weight="500" fill="#6f8078">09:00 · BITEC, Bangkok</text>' +
+        '<text x="142" y="360" font-size="11.5" font-weight="500" fill="#6f8078">By Eventa Events</text>' +
+        '<text x="142" y="387" font-size="11" font-weight="800" letter-spacing="0.5" fill="#128455">SCAN TO REGISTER</text>' +
+        // register CTA (part of the flyer graphic)
+        '<rect x="28" y="404" width="384" height="46" rx="23" fill="#128455"/>' +
+        '<text x="220" y="433" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">Register on Eventa</text>' +
+        // footer: real Eventa logo (green tile + white flame + wordmark) + url
+        '<rect x="28" y="482" width="30" height="30" rx="9" fill="#128455"/>' +
+        flame(34, 487, 18, '#ffffff') +
+        '<text x="66" y="503" font-size="15.5" font-weight="800" fill="#14342a">Eventa</text>' +
+        '<text x="412" y="503" text-anchor="end" font-size="11" font-weight="500" fill="#6f8078">' + EVT.url + '</text>' +
+        '</g></svg>';
+    }
+    poster.innerHTML = posterSVG();
+
+    /* ---- save flyer as PNG — rasterize the inline SVG (fully self-contained, always works) ---- */
+    document.getElementById('fl-save').addEventListener('click', function () {
+      const src = poster.querySelector('svg'); if (!src) return;
+      const clone = src.cloneNode(true);
+      clone.setAttribute('width', '880'); clone.setAttribute('height', '1080');
+      const xml = new XMLSerializer().serializeToString(clone);
+      const img = new Image();
+      img.onload = function () {
+        const W = 880, H = 1080, c = document.createElement('canvas'); c.width = W; c.height = H;
+        const ctx = c.getContext('2d'); ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, W, H);
+        try {
+          ctx.drawImage(img, 0, 0, W, H);
+          const a = document.createElement('a'); a.href = c.toDataURL('image/png');
+          a.download = 'eventa-flyer-' + EVT.seed + '.png';
+          document.body.appendChild(a); a.click(); a.remove();
+        } catch (err) { console.warn('flyer export blocked', err); }
+      };
+      img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(xml)));
+    });
+  })();
 </script>
 </body>
 </html>

@@ -19,7 +19,7 @@
   /* ---------------- Navigation model ---------------- */
   const MODULES = [
     { id: 'home', label: 'Home', icon: 'hgi-home-01', href: 'home.html' },
-    { id: 'dashboard', label: 'Dashboard', icon: 'hgi-dashboard-square-01', href: 'dashboard.html' },
+    { id: 'dashboard', label: 'Dashboard', icon: 'hgi-dashboard-speed-01', href: 'dashboard.html' },
     { id: 'events', label: 'Events', icon: 'hgi-calendar-03', href: 'events.html', groups: [
       { label: 'Schedule', icon: 'hgi-calendar-03', items: [
         { label: 'All Events',     page: 'events',        href: 'events.html' },
