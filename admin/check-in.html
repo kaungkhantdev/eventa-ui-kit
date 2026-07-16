@@ -56,28 +56,31 @@
       <div class="mt-2 h-2 w-full rounded-full bg-line"><div id="p-bar" class="h-2 rounded-full bg-brand transition-all" style="width:0%"></div></div>
     </div>
 
-    <!-- pill tabs (status) -->
-    <div class="mt-4 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
-      <button class="pilltab tab-active" data-filter="all">All <span class="pilltab-count tnum" id="c-all">0</span></button>
-      <button class="pilltab" data-filter="in">Checked in <span class="pilltab-count tnum" id="c-in">0</span></button>
-      <button class="pilltab" data-filter="notyet">Not yet <span class="pilltab-count tnum" id="c-notyet">0</span></button>
-    </div>
-
-    <!-- search + filter -->
-    <div class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
-      <div class="relative w-full flex-1">
-        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
-        <input id="list-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search attendee, email or ticket…" />
+    <!-- tabs (left) + search & filter (right) -->
+    <div class="mt-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+      <!-- pill tabs (status) -->
+      <div class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+        <button class="pilltab tab-active" data-filter="all">All <span class="pilltab-count tnum" id="c-all">0</span></button>
+        <button class="pilltab" data-filter="in">Checked in <span class="pilltab-count tnum" id="c-in">0</span></button>
+        <button class="pilltab" data-filter="notyet">Not yet <span class="pilltab-count tnum" id="c-notyet">0</span></button>
       </div>
-      <div class="relative w-full sm:w-48">
-        <i class="hgi-stroke hgi-ticket-01 text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
-        <select id="ticket-filter" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
-          <option value="">All ticket types</option>
-          <option>VIP</option>
-          <option>General Admission</option>
-          <option>Early Bird</option>
-          <option>Student</option>
-        </select>
+
+      <!-- search + filter -->
+      <div class="flex w-full flex-col gap-2 sm:flex-row sm:items-center lg:w-auto">
+        <div class="relative w-full sm:flex-1 lg:w-72 lg:flex-none">
+          <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+          <input id="list-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search attendee, email or ticket…" />
+        </div>
+        <div class="relative w-full sm:w-48">
+          <i class="hgi-stroke hgi-ticket-01 text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+          <select id="ticket-filter" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+            <option value="">All ticket types</option>
+            <option>VIP</option>
+            <option>General Admission</option>
+            <option>Early Bird</option>
+            <option>Student</option>
+          </select>
+        </div>
       </div>
     </div>
 
