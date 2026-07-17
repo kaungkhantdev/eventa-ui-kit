@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Transactions report</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets/config.js?v=53"></script>
+<link rel="stylesheet" href="../assets/app.css?v=53" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="reports-transactions">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidebar here -->
+
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <div class="min-w-0">
+          <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Reports</p>
+          <h1 class="text-[22px] font-bold tracking-tight">Transactions</h1>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="btn btn-primary"><i class="hgi-stroke hgi-download-01 text-[16px]"></i><span class="hidden sm:inline">Export</span></button>
+        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
+        <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
+      </div>
+    </div>
+
+    <!-- filter bar: date range + event -->
+    <div class="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+      <div class="segmented w-fit" id="range-toggle">
+        <button data-range="7d">7 days</button>
+        <button data-range="30d">30 days</button>
+        <button data-range="90d">90 days</button>
+        <button data-range="year" class="active">Year</button>
+      </div>
+      <div class="relative w-full sm:w-52">
+        <i class="hgi-stroke hgi-calendar-03 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-brand"></i>
+        <select data-event-picker="catalog" id="rpt-event" class="select h-10 w-full border-0 bg-surface pl-9 text-[14px] font-semibold">
+          <option>All events</option>
+          <option>Tech Summit 2026</option>
+          <option>Bangkok Jazz Night</option>
+          <option>Sunrise Yoga Retreat</option>
+          <option>Thai Street Food Festival</option>
+          <option>UX Bangkok Meetup</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- KPI row -->
+    <div class="grid grid-cols-2 gap-3 xl:grid-cols-4">
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-exchange-01 text-[16px]"></i>Transactions</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">1,482</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>6.4%</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-wallet-01 text-[16px]"></i>Payments</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿3.55M</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>11.2%</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-delivery-return-01 text-[16px]"></i>Refunds</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">41</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>8.3%</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-checkmark-badge-01 text-[16px]"></i>Success rate</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">98.6%</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>0.3%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- trend chart -->
+    <section class="card mt-3 p-4">
+      <div class="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h2 class="text-[15px] font-bold tracking-tight">Transaction volume</h2>
+          <div class="mt-1 flex items-center gap-2">
+            <span id="rt-value" class="text-[24px] font-extrabold tracking-tight tnum">1,482</span>
+            <span id="rt-delta" class="flex items-center gap-0.5 text-[13px] font-semibold text-brand"></span>
+            <span class="text-[12px] text-muted">vs previous period</span>
+          </div>
+        </div>
+      </div>
+      <div id="rt-chart" class="mt-2"></div>
+    </section>
+
+    <!-- detailed table: all transactions -->
+    <section class="card mt-3 p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-[15px] font-bold tracking-tight">All transactions</h2>
+          <p class="mt-0.5 text-[12px] text-muted">Payments &amp; refunds ledger</p>
+        </div>
+      </div>
+      <div id="txn-table" class="mt-3 overflow-x-auto">
+        <table class="data-table min-w-[880px]">
+          <thead>
+            <tr><th>Reference</th><th>Date</th><th>Attendee</th><th>Event</th><th>Method</th><th class="text-right">Amount ฿</th><th>Type</th><th>Status</th></tr>
+          </thead>
+          <tbody id="txn-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+
+      <div id="txn-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="txn-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="txn-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="txn-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="txn-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  </main>
+</div>
+
+<script src="../assets/shell.js?v=53"></script>
+<script src="../assets/reports-chart.js?v=53"></script>
+<script src="../assets/reports-data.js?v=53"></script>
+<script>
+  /* ---------- trend chart (shared helper) ---------- */
+  var DATASETS = {
+    '7d':   { labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], values:[180,210,195,230,250,265,240], max:300, prefix:'', suffix:'', value:'1,570', delta:'4.8%', up:true },
+    '30d':  { labels:['1','5','10','15','20','25','30'], values:[95,100,98,110,108,115,116], max:130, prefix:'', suffix:'', value:'742', delta:'9.1%', up:true },
+    '90d':  { labels:['Wk1','Wk2','Wk3','Wk4','Wk5','Wk6'], values:[280,310,300,340,360,395], max:450, prefix:'', suffix:'', value:'1,985', delta:'15.2%', up:true },
+    'year': { labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], values:[98,105,96,120,132,124,140,168,178,172,164,155], max:200, prefix:'', suffix:'', value:'1,482', delta:'6.4%', up:true },
+  };
+  var curRange = 'year';
+  function renderTrend(key) {
+    curRange = key;
+    var d = DATASETS[key];
+    EventaChart('rt-chart', Object.assign({}, d, { type: 'area' }));
+    document.getElementById('rt-value').textContent = d.value;
+    var dl = document.getElementById('rt-delta');
+    dl.className = 'flex items-center gap-0.5 text-[13px] font-semibold ' + (d.up ? 'text-brand' : 'text-red-500');
+    dl.innerHTML = '<i class="hgi-stroke ' + (d.up ? 'hgi-arrow-up-right-01' : 'hgi-arrow-down-right-01') + ' text-[13px]"></i>' + d.delta;
+  }
+  var rangeToggle = document.getElementById('range-toggle');
+  rangeToggle.addEventListener('click', function (e) {
+    var btn = e.target.closest('button'); if (!btn) return;
+    Array.prototype.forEach.call(rangeToggle.children, function (b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    renderTrend(btn.dataset.range);
+  });
+  renderTrend('year');
+  window.EventaOnThemeChange = window.EventaReportRerender;
+
+  /* ---------- detailed table: all transactions (canonical paginator) ---------- */
+  (function () {
+    var ROWS = [
+      { ref:'TXN-8842', date:'Jul 16, 2026', attendee:'Somchai Jaidee',           event:'Tech Summit 2026',           method:'Visa',       amount:2500, type:'Payment', status:'Succeeded' },
+      { ref:'TXN-8841', date:'Jul 16, 2026', attendee:'Nattaya Wongsawat',        event:'Bangkok Jazz Night',         method:'PromptPay',  amount:1200, type:'Payment', status:'Succeeded' },
+      { ref:'TXN-8840', date:'Jul 15, 2026', attendee:'Kittisak Boonmee',         event:'Sunrise Yoga Retreat',       method:'Mastercard', amount:1250, type:'Refund',  status:'Refunded'  },
+      { ref:'TXN-8839', date:'Jul 15, 2026', attendee:'Ploychompoo Srisai',       event:'Thai Street Food Festival',  method:'PayPal',     amount:680,  type:'Payment', status:'Succeeded' },
+      { ref:'TXN-8838', date:'Jul 15, 2026', attendee:'Anucha Phromma',           event:'UX Bangkok Meetup',          method:'Visa',       amount:480,  type:'Payment', status:'Succeeded' },
+      { ref:'TXN-8837', date:'Jul 14, 2026', attendee:'Warunee Chaiyo',           event:'Tech Summit 2026',           method:'Mastercard', amount:2500, type:'Payment', status:'Failed'    },
+      { ref:'TXN-8836', date:'Jul 14, 2026', attendee:'Thanawat Rattana',         event:'Bangkok Jazz Night',         method:'PromptPay',  amount:1500, type:'Payment', status:'Succeeded' },
+      { ref:'TXN-8835', date:'Jul 14, 2026', attendee:'Siriporn Kaewkla',         event:'Sunrise Yoga Retreat',       method:'Visa',       amount:950,  type:'Payment', status:'Succeeded' },
+      { ref:'TXN-8834', date:'Jul 13, 2026', attendee:'Chalermchai Pattanakul',   event:'Thai Street Food Festival',  method:'PromptPay',  amount:720,  type:'Payment', status:'Succeeded' },
+      { ref:'TXN-8833', date:'Jul 13, 2026', attendee:'Kanya Suksawat',           event:'Tech Summit 2026',           method:'Visa',       amount:2800, type:'Payment', status:'Succeeded' },
+      { ref:'TXN-8832', date:'Jul 12, 2026', attendee:'Peerapong Intira',         event:'UX Bangkok Meetup',          method:'PayPal',     amount:480,  type:'Refund',  status:'Refunded'  },
+      { ref:'TXN-8831', date:'Jul 12, 2026', attendee:'Malee Thongdee',           event:'Bangkok Jazz Night',         method:'Mastercard', amount:1350, type:'Payment', status:'Succeeded' },
+      { ref:'TXN-8830', date:'Jul 12, 2026', attendee:'Wichai Sombat',            event:'Sunrise Yoga Retreat',       method:'PromptPay',  amount:1250, type:'Payment', status:'Succeeded' },
+      { ref:'TXN-8829', date:'Jul 11, 2026', attendee:'Napaporn Chaidet',         event:'Thai Street Food Festival',  method:'Visa',       amount:640,  type:'Payment', status:'Succeeded' },
+      { ref:'TXN-8828', date:'Jul 11, 2026', attendee:'Anong Rungrueang',         event:'Tech Summit 2026',           method:'PromptPay',  amount:2500, type:'Payment', status:'Succeeded' },
+      { ref:'TXN-8827', date:'Jul 10, 2026', attendee:'Prasert Wattana',          event:'Bangkok Jazz Night',         method:'Visa',       amount:1200, type:'Payment', status:'Failed'    },
+      { ref:'TXN-8826', date:'Jul 10, 2026', attendee:'Suchada Maneerat',         event:'UX Bangkok Meetup',          method:'Mastercard', amount:560,  type:'Payment', status:'Succeeded' },
+      { ref:'TXN-8825', date:'Jul 09, 2026', attendee:'Teerapat Boonrueng',       event:'Sunrise Yoga Retreat',       method:'Visa',       amount:950,  type:'Refund',  status:'Refunded'  },
+      { ref:'TXN-8824', date:'Jul 09, 2026', attendee:'Jiraporn Saetang',         event:'Thai Street Food Festival',  method:'PromptPay',  amount:700,  type:'Payment', status:'Succeeded' },
+      { ref:'TXN-8823', date:'Jul 08, 2026', attendee:'Ekachai Phumipat',         event:'Tech Summit 2026',           method:'PayPal',     amount:2650, type:'Payment', status:'Succeeded' },
+      { ref:'TXN-8822', date:'Jul 08, 2026', attendee:'Rungnapa Kittikorn',       event:'Bangkok Jazz Night',         method:'PromptPay',  amount:1500, type:'Payment', status:'Succeeded' },
+      { ref:'TXN-8821', date:'Jul 07, 2026', attendee:'Somsak Wongchai',          event:'UX Bangkok Meetup',          method:'Visa',       amount:520,  type:'Payment', status:'Succeeded' },
+    ];
+    function nf(n) { return n.toLocaleString('en-US'); }
+    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    function typeBadge(t) { return '<span class="badge ' + (t === 'Refund' ? 'badge-amber' : 'badge-green') + '">' + esc(t) + '</span>'; }
+    function statusBadge(s) {
+      var cls = s === 'Succeeded' ? 'badge-green' : s === 'Refunded' ? 'badge-gray' : 'badge-red';
+      return '<span class="badge ' + cls + '">' + esc(s) + '</span>';
+    }
+    function amountCell(r) {
+      return r.type === 'Refund'
+        ? '<span class="font-semibold text-red-500">-฿' + nf(r.amount) + '</span>'
+        : '<span class="font-semibold text-ink">฿' + nf(r.amount) + '</span>';
+    }
+
+    var state = { event: 'All events', page: 0, size: 10 };
+    var tbody = document.getElementById('txn-rows');
+    var showing = document.getElementById('txn-showing');
+    var prev = document.getElementById('txn-prev');
+    var next = document.getElementById('txn-next');
+    var sizeSel = document.getElementById('txn-size');
+    var eventSel = document.getElementById('rpt-event');
+
+    function filtered() {
+      return ROWS.filter(function (r) { return state.event === 'All events' || r.event === state.event; });
+    }
+    function rowHTML(r) {
+      return '<tr>' +
+        '<td class="font-semibold text-ink tnum">' + esc(r.ref) + '</td>' +
+        '<td class="whitespace-nowrap text-muted">' + esc(r.date) + '</td>' +
+        '<td class="text-ink">' + esc(r.attendee) + '</td>' +
+        '<td class="text-muted">' + esc(r.event) + '</td>' +
+        '<td class="text-muted">' + esc(r.method) + '</td>' +
+        '<td class="text-right tnum">' + amountCell(r) + '</td>' +
+        '<td>' + typeBadge(r.type) + '</td>' +
+        '<td>' + statusBadge(r.status) + '</td>' +
+      '</tr>';
+    }
+    function render() {
+      var rows = filtered();
+      var total = rows.length;
+      var pages = Math.max(1, Math.ceil(total / state.size));
+      if (state.page >= pages) state.page = pages - 1;
+      var start = state.page * state.size;
+      var slice = rows.slice(start, start + state.size);
+      tbody.innerHTML = slice.length
+        ? slice.map(rowHTML).join('')
+        : '<tr><td colspan="8" class="py-10 text-center text-[13px] text-muted">No transactions for this selection.</td></tr>';
+      showing.innerHTML = total
+        ? 'Showing <b class="text-ink">' + (start + 1) + '–' + (start + slice.length) + '</b> of <b class="text-ink">' + nf(total) + '</b> transactions'
+        : 'No results';
+      prev.disabled = state.page === 0;
+      next.disabled = state.page >= pages - 1;
+    }
+    prev.addEventListener('click', function () { if (state.page > 0) { state.page--; render(); } });
+    next.addEventListener('click', function () { state.page++; render(); });
+    sizeSel.addEventListener('change', function () { state.size = +sizeSel.value; state.page = 0; render(); });
+    eventSel.addEventListener('change', function () { state.event = eventSel.value; state.page = 0; render(); });
+    render();
+  })();
+</script>
+</body>
+</html>

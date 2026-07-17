@@ -26,6 +26,10 @@
         { label: 'Create Event',   page: 'event-form',    href: 'event-form.html' },
         { label: 'Event Details',  page: 'event-detail',  href: 'event-detail.html' },
       ]},
+      { label: 'Ticketing', icon: 'hgi-ticket-01', items: [
+        { label: 'Tickets',   page: 'tickets',   href: 'tickets.html' },
+        { label: 'Discounts', page: 'discounts', href: 'discounts.html' },
+      ]},
       { label: 'Program', icon: 'hgi-mic-01', items: [
         { label: 'Agenda',    page: 'agenda',   href: 'agenda.html' },
         { label: 'Speakers',  page: 'speakers', href: 'speakers.html' },
@@ -46,20 +50,51 @@
         { label: 'Payments', page: 'payments', href: 'payments.html' },
         { label: 'Payouts',  page: 'payouts',  href: 'payouts.html' },
       ]},
-      { label: 'Pricing', icon: 'hgi-ticket-01', items: [
-        { label: 'Tickets',   page: 'tickets',   href: 'tickets.html' },
-        { label: 'Discounts', page: 'discounts', href: 'discounts.html' },
+      { label: 'Tax & invoicing', icon: 'hgi-invoice-01', items: [
+        { label: 'Invoices', page: 'invoices', href: 'invoices.html' },
+        { label: 'Taxes',    page: 'taxes',    href: 'taxes.html' },
       ]},
     ]},
-    { id: 'management', label: 'Management', icon: 'hgi-settings-01', href: 'reports.html', groups: [
-      { label: 'Business', icon: 'hgi-briefcase-01', items: [
-        { label: 'Reports',       page: 'reports',       href: 'reports.html' },
-        { label: 'Notifications', page: 'notifications', href: 'notifications.html' },
-        { label: 'Feedback',      page: 'feedback',      href: 'feedback.html' },
-        { label: 'Event feedback', page: 'feedback-detail', href: 'feedback-detail.html?event=tech-summit-2026' },
-        { label: 'Settings',      page: 'settings',      href: 'settings.html' },
+    { id: 'reports', label: 'Insights', icon: 'hgi-analytics-up', href: 'reports.html', groups: [
+      { label: 'Summary', icon: 'hgi-analytics-up', items: [
+        { label: 'Overview', page: 'reports', href: 'reports.html' },
       ]},
-      { label: 'Staff', icon: 'hgi-shield-user', items: [
+      { label: 'Financial', icon: 'hgi-wallet-01', items: [
+        { label: 'Income',       page: 'reports-income',       href: 'reports-income.html' },
+        { label: 'Transactions', page: 'reports-transactions', href: 'reports-transactions.html' },
+        { label: 'Payouts',      page: 'reports-payouts',      href: 'reports-payouts.html' },
+      ]},
+      { label: 'Attendees', icon: 'hgi-user-multiple', items: [
+        { label: 'Registrations', page: 'reports-registrations', href: 'reports-registrations.html' },
+        { label: 'Attendance',    page: 'reports-attendance',    href: 'reports-attendance.html' },
+      ]},
+      { label: 'Marketing', icon: 'hgi-discount-tag-01', items: [
+        { label: 'Discounts', page: 'reports-discounts', href: 'reports-discounts.html' },
+      ]},
+      { label: 'Events', icon: 'hgi-calendar-03', items: [
+        { label: 'Event performance', page: 'reports-events', href: 'reports-events.html' },
+      ]},
+    ]},
+    { id: 'engagement', label: 'Engagement', icon: 'hgi-megaphone-01', href: 'notifications.html', groups: [
+      { label: 'Messaging', icon: 'hgi-notification-03', items: [
+        { label: 'Notifications', page: 'notifications', href: 'notifications.html' },
+      ]},
+      { label: 'Feedback', icon: 'hgi-comment-01', items: [
+        { label: 'Feedback',       page: 'feedback',        href: 'feedback.html' },
+        { label: 'Event feedback', page: 'feedback-detail', href: 'feedback-detail.html?event=tech-summit-2026' },
+      ]},
+    ]},
+    { id: 'settings', label: 'Settings', icon: 'hgi-settings-01', href: 'settings-profile.html', bottom: true, groups: [
+      { label: 'Account', icon: 'hgi-user-circle', items: [
+        { label: 'Profile',      page: 'settings-profile',       href: 'settings-profile.html' },
+        { label: 'Security',     page: 'settings-security',      href: 'settings-security.html' },
+        { label: 'Notification preferences', page: 'settings-notifications', href: 'settings-notifications.html' },
+      ]},
+      { label: 'Workspace', icon: 'hgi-building-03', items: [
+        { label: 'Organization', page: 'settings-organization', href: 'settings-organization.html' },
+        { label: 'Payments',     page: 'settings-payments',     href: 'settings-payments.html' },
+      ]},
+      { label: 'Access', icon: 'hgi-shield-user', items: [
         { label: 'Users', page: 'users', href: 'users.html' },
         { label: 'Roles', page: 'roles', href: 'roles.html' },
       ]},
@@ -291,8 +326,8 @@
         <div class="min-w-0"><p class="truncate text-[14px] font-bold text-ink">Harper Nelson</p><p class="truncate text-[12px] text-muted">Event Manager at Eventa</p></div>
       </div>
       <div class="px-2 pb-1">
-        ${menuLink('settings.html', 'hgi-user-circle', 'My Account')}
-        ${menuLink('settings.html', 'hgi-building-06', 'Company settings')}
+        ${menuLink('settings-profile.html', 'hgi-user-circle', 'My Account')}
+        ${menuLink('settings-organization.html', 'hgi-building-06', 'Company settings')}
         ${menuLink('#', 'hgi-crown', 'Upgrade to Pro', '<span class="ml-auto rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-semibold text-violet-600 dark:bg-violet-500/20 dark:text-violet-300">Optimized for business</span>')}
       </div>
       <div class="mx-3 my-1 border-t border-hair"></div>
@@ -350,4 +385,176 @@
   }));
   document.addEventListener('click', e => { if (!e.target.closest('.pop')) closePops(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closePops(); });
+
+  /* ---------------- Searchable event picker ----------------
+     A plain <select> can't scale to thousands of events (no search, whole list in
+     the DOM, awful on mobile). This enhances any <select data-event-picker> into a
+     type-to-filter combobox. The native <select> stays in the DOM (hidden) as the
+     value holder, so existing page code — select.value + 'change' events — is
+     untouched. `data-event-picker="catalog"` first seeds the select from a shared
+     catalog so search is actually useful; a leading "All events"/empty option is
+     preserved for filter selects. At real scale, swap the local filter for a
+     debounced server query — same UI. */
+  const EVENT_CATALOG = [
+    { name: 'Tech Summit 2026',          date: 'Jul 18, 2026', status: 'Live' },
+    { name: 'Bangkok Jazz Night',        date: 'Jul 12, 2026', status: 'Live' },
+    { name: 'Thai Street Food Festival', date: 'Aug 3, 2026',  status: 'Upcoming' },
+    { name: 'UX Bangkok Meetup',         date: 'Aug 20, 2026', status: 'Upcoming' },
+    { name: 'Sunrise Yoga Retreat',      date: 'Sep 11, 2026', status: 'Upcoming' },
+    { name: 'DevOps World Bangkok',      date: 'Sep 3, 2026',  status: 'Upcoming' },
+    { name: 'Founders Coffee Connect',   date: 'Sep 5, 2026',  status: 'Upcoming' },
+    { name: 'AI Prototyping Bootcamp',   date: 'Sep 9, 2026',  status: 'Upcoming' },
+    { name: 'Green Future Art Expo',     date: 'Sep 14, 2026', status: 'Upcoming' },
+    { name: 'Marathon for Mangroves',    date: 'Sep 18, 2026', status: 'Upcoming' },
+    { name: 'Indie Sound Night',         date: 'Sep 21, 2026', status: 'Live' },
+    { name: 'Product Strategy Masterclass', date: 'Sep 24, 2026', status: 'Upcoming' },
+    { name: 'Startup Pitch Arena',       date: 'Sep 27, 2026', status: 'Upcoming' },
+    { name: 'Cloud Security Summit',     date: 'Oct 1, 2026',  status: 'Upcoming' },
+    { name: 'Watercolor Weekend',        date: 'Oct 4, 2026',  status: 'Upcoming' },
+    { name: 'Hearts United Benefit Ball',date: 'Oct 8, 2026',  status: 'Upcoming' },
+    { name: 'Sunset Trail Run',          date: 'Oct 11, 2026', status: 'Upcoming' },
+    { name: 'Bangkok Design Biennale',   date: 'Oct 15, 2026', status: 'Live' },
+    { name: 'Jazz on the Rooftop',       date: 'Oct 18, 2026', status: 'Upcoming' },
+    { name: 'Data Science Forum',        date: 'Oct 22, 2026', status: 'Upcoming' },
+    { name: 'UX Research Roundtable',    date: 'Oct 25, 2026', status: 'Upcoming' },
+    { name: 'Women in Tech Mixer',       date: 'Oct 29, 2026', status: 'Upcoming' },
+    { name: 'Mindful Movement Retreat',  date: 'Nov 2, 2026',  status: 'Upcoming' },
+    { name: 'Rapid Prototyping Lab',     date: 'Nov 6, 2026',  status: 'Upcoming' },
+    { name: 'Charity Gala Under the Stars', date: 'Nov 9, 2026', status: 'Upcoming' },
+    { name: 'Neon Nights Festival',      date: 'Nov 13, 2026', status: 'Live' },
+    { name: 'Enterprise Cloud Expo',     date: 'Nov 17, 2026', status: 'Upcoming' },
+    { name: 'Leadership in Practice',    date: 'Nov 20, 2026', status: 'Upcoming' },
+    { name: 'Corporate Leadership Summit', date: 'Dec 20, 2025', status: 'Completed' },
+    { name: 'Summer Music Festival',     date: 'Jun 15, 2025', status: 'Completed' },
+    { name: 'Product Launch Mixer',      date: 'May 2, 2025',  status: 'Completed' },
+    { name: 'Winter Code Conference',    date: 'Jan 18, 2025', status: 'Completed' },
+    { name: 'Design Systems Workshop',   date: 'Feb 12, 2025', status: 'Completed' },
+    { name: 'Love & Give Charity Dinner',date: 'Feb 14, 2025', status: 'Completed' },
+    { name: 'Spring Wellness Retreat',   date: 'Mar 8, 2025',  status: 'Completed' },
+    { name: 'Contemporary Art Showcase', date: 'Mar 22, 2025', status: 'Completed' },
+    { name: 'Frontend Masters Seminar',  date: 'Apr 5, 2025',  status: 'Completed' },
+    { name: 'Startup Growth Summit',     date: 'Apr 19, 2025', status: 'Completed' },
+    { name: 'Investor Networking Night', date: 'May 16, 2025', status: 'Completed' },
+    { name: 'Summer Beats Block Party',  date: 'Jul 19, 2025', status: 'Completed' },
+  ];
+  const CAT_META = {}; EVENT_CATALOG.forEach(e => { CAT_META[e.name] = e; });
+  const STATUS_DOT = { Live: 'bg-brand', Upcoming: 'bg-blue-500', Completed: 'bg-gray-400', Draft: 'bg-amber-500' };
+  function epEsc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+
+  let epOpenPop = null;
+  function epCloseOpen() { if (epOpenPop) { epOpenPop.remove(); epOpenPop = null; } }
+
+  function enhanceEventPickers() {
+    document.querySelectorAll('select[data-event-picker]').forEach(function (sel) {
+      if (sel.dataset.epReady) return; sel.dataset.epReady = '1';
+
+      const first = sel.options[0];
+      const allOpt = first && (first.value === '' || /all events/i.test(first.textContent)) ? first.cloneNode(true) : null;
+
+      if (sel.dataset.eventPicker === 'catalog') {
+        const keep = sel.value || (sel.options[sel.selectedIndex] || {}).textContent;
+        sel.innerHTML = (allOpt ? '<option value="' + epEsc(allOpt.value) + '">' + epEsc(allOpt.textContent) + '</option>' : '') +
+          EVENT_CATALOG.map(e => '<option>' + epEsc(e.name) + '</option>').join('');
+        const match = Array.prototype.find.call(sel.options, o => o.value === keep || o.textContent === keep);
+        sel.value = match ? match.value : (allOpt ? allOpt.value : sel.options[0].textContent);
+      }
+
+      // trigger button reuses the select's own classes for visual parity
+      const trigger = document.createElement('button');
+      trigger.type = 'button';
+      trigger.setAttribute('data-ep-trigger', '');
+      trigger.className = sel.className + ' inline-flex items-center text-left';
+      const epLabelSpan = document.createElement('span');
+      epLabelSpan.className = 'truncate';
+      trigger.appendChild(epLabelSpan);
+      const setLabel = () => { epLabelSpan.textContent = (sel.options[sel.selectedIndex] || {}).textContent || 'Select event'; };
+      setLabel();
+      sel.classList.add('hidden');
+      sel.parentNode.insertBefore(trigger, sel);
+
+      function optionRows() {
+        return Array.prototype.map.call(sel.options, function (o) {
+          const meta = CAT_META[o.textContent];
+          return { label: o.textContent, value: o.value, isAll: allOpt && o.value === allOpt.value && o.textContent === allOpt.textContent, meta: meta };
+        });
+      }
+
+      function openPop() {
+        epCloseOpen();
+        const rows = optionRows();
+        const pop = document.createElement('div');
+        pop.className = 'fixed z-[70] w-[300px] max-w-[calc(100vw-24px)] overflow-hidden rounded-xl border border-hair bg-surface shadow-xl';
+        pop.innerHTML =
+          '<div class="border-b border-hair p-2">' +
+            '<div class="relative"><i class="hgi-stroke hgi-search-01 text-[15px] pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-muted"></i>' +
+            '<input data-ep-search type="text" placeholder="Search events…" class="h-9 w-full rounded-lg bg-canvas pl-8 pr-2.5 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15"></div>' +
+          '</div>' +
+          '<div data-ep-list class="max-h-[280px] overflow-y-auto p-1.5"></div>';
+        document.body.appendChild(pop);
+        epOpenPop = pop;
+
+        const r = trigger.getBoundingClientRect();
+        let left = r.left; if (left + 300 > window.innerWidth - 12) left = window.innerWidth - 12 - 300;
+        pop.style.left = Math.max(12, left) + 'px';
+        let top = r.bottom + 6;
+        if (top + 340 > window.innerHeight && r.top - 340 > 0) top = r.top - 6 - pop.offsetHeight;
+        pop.style.top = top + 'px';
+
+        const listEl = pop.querySelector('[data-ep-list]');
+        const searchEl = pop.querySelector('[data-ep-search]');
+        let active = -1, view = rows;
+
+        function paint(q) {
+          const s = (q || '').trim().toLowerCase();
+          view = rows.filter(r => !s || r.label.toLowerCase().indexOf(s) !== -1);
+          active = view.findIndex(r => r.value === sel.value && r.label === (sel.options[sel.selectedIndex] || {}).textContent);
+          if (active < 0) active = view.length ? 0 : -1;
+          listEl.innerHTML = view.length ? view.map(function (r, i) {
+            const on = r.value === sel.value && r.label === (sel.options[sel.selectedIndex] || {}).textContent;
+            const meta = r.meta ? '<span class="ml-auto flex shrink-0 items-center gap-1.5 whitespace-nowrap pl-2 text-[11px] text-muted"><span class="tnum">' + epEsc(r.meta.date) + '</span><span class="h-1.5 w-1.5 rounded-full ' + (STATUS_DOT[r.meta.status] || 'bg-gray-400') + '"></span></span>' : '';
+            return '<button type="button" data-ep-i="' + i + '" class="ep-row flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-[13px] ' + (on ? 'bg-brand-soft font-semibold text-brand' : 'font-medium text-ink hover:bg-line') + '">' +
+              '<i class="hgi-stroke hgi-tick-02 text-[14px] ' + (on ? 'text-brand' : 'invisible') + '"></i>' +
+              '<span class="truncate">' + epEsc(r.label) + '</span>' + meta + '</button>';
+          }).join('') : '<div class="px-2.5 py-6 text-center text-[13px] text-muted">No events match.</div>';
+          highlight();
+        }
+        function highlight() {
+          Array.prototype.forEach.call(listEl.querySelectorAll('.ep-row'), function (el, i) {
+            el.classList.toggle('ring-2', i === active); el.classList.toggle('ring-inset', i === active); el.classList.toggle('ring-brand/40', i === active);
+          });
+        }
+        function choose(i) {
+          const row = view[i]; if (!row) return;
+          const idx = Array.prototype.findIndex.call(sel.options, o => o.value === row.value && o.textContent === row.label);
+          if (idx >= 0) sel.selectedIndex = idx;
+          setLabel();
+          sel.dispatchEvent(new Event('change', { bubbles: true }));
+          epCloseOpen(); trigger.focus();
+        }
+        listEl.addEventListener('click', e => { const b = e.target.closest('[data-ep-i]'); if (b) choose(+b.dataset.epI); });
+        listEl.addEventListener('mousemove', e => { const b = e.target.closest('[data-ep-i]'); if (b) { active = +b.dataset.epI; highlight(); } });
+        searchEl.addEventListener('input', () => paint(searchEl.value));
+        searchEl.addEventListener('keydown', e => {
+          if (e.key === 'ArrowDown') { e.preventDefault(); active = Math.min(view.length - 1, active + 1); highlight(); scrollActive(); }
+          else if (e.key === 'ArrowUp') { e.preventDefault(); active = Math.max(0, active - 1); highlight(); scrollActive(); }
+          else if (e.key === 'Enter') { e.preventDefault(); choose(active); }
+          else if (e.key === 'Escape') { e.preventDefault(); epCloseOpen(); trigger.focus(); }
+        });
+        function scrollActive() { const el = listEl.querySelectorAll('.ep-row')[active]; if (el) el.scrollIntoView({ block: 'nearest' }); }
+        paint('');
+        searchEl.focus();
+      }
+
+      trigger.addEventListener('click', function (e) { e.stopPropagation(); if (epOpenPop) epCloseOpen(); else openPop(); });
+    });
+  }
+  document.addEventListener('click', e => { if (epOpenPop && !e.target.closest('.fixed.z-\\[70\\]') && !e.target.closest('[data-ep-trigger]')) epCloseOpen(); });
+  window.addEventListener('resize', epCloseOpen);
+  enhanceEventPickers();
+  window.EventaEnhanceEventPickers = enhanceEventPickers; // for panels/tabs that inject selects later
+  // event metadata lookup for pages that headline the event (name → {date, status, dot})
+  window.EventaEventMeta = function (name) {
+    const m = CAT_META[name];
+    return m ? { name: m.name, date: m.date, status: m.status, dot: STATUS_DOT[m.status] || 'bg-gray-400' } : null;
+  };
 })();

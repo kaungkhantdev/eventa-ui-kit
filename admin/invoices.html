@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Invoices</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets/config.js?v=53"></script>
+<link rel="stylesheet" href="../assets/app.css?v=53" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="invoices">
+<div class="flex h-full min-h-screen" data-layout>
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <div class="min-w-0">
+          <h1 class="text-[22px] font-bold tracking-tight">Invoices</h1>
+          <p class="mt-0.5 hidden text-[12px] text-muted sm:block">Bills issued to buyers — who still owes you. Looking for a charge or refund? <a href="payments.html" class="font-medium text-brand hover:underline">See Payments</a></p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="btn btn-ghost"><i class="hgi-stroke hgi-download-01 text-[16px]"></i><span class="hidden sm:inline">Export</span></button>
+        <button class="btn btn-ghost"><i class="hgi-stroke hgi-refresh text-[16px]"></i><span class="hidden sm:inline">Refresh</span></button>
+        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
+        <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
+      </div>
+    </div>
+
+    <!-- pill tabs (out of table) -->
+    <div data-tabs="#inv-table" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button class="pilltab tab-active" data-tab="all" data-status="">All <span class="pilltab-count tnum" data-count="all">0</span></button>
+      <button class="pilltab" data-tab="paid" data-status="Paid">Paid <span class="pilltab-count tnum" data-count="Paid">0</span></button>
+      <button class="pilltab" data-tab="issued" data-status="Issued">Issued <span class="pilltab-count tnum" data-count="Issued">0</span></button>
+      <button class="pilltab" data-tab="overdue" data-status="Overdue">Overdue <span class="pilltab-count tnum" data-count="Overdue">0</span></button>
+      <button class="pilltab" data-tab="void" data-status="Void">Void <span class="pilltab-count tnum" data-count="Void">0</span></button>
+    </div>
+
+    <!-- search + filter (out of table) -->
+    <div class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="inv-search" type="text" placeholder="Search invoice no. or buyer…" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" />
+      </div>
+      <div class="relative w-full sm:w-52">
+        <i class="hgi-stroke hgi-calendar-03 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-brand"></i>
+        <select data-event-picker="catalog" id="inv-event" class="select h-10 w-full border-0 bg-surface pl-9 text-[14px] font-semibold">
+          <option>All events</option>
+          <option>Tech Summit 2026</option>
+          <option>Bangkok Jazz Night</option>
+          <option>Sunrise Yoga Retreat</option>
+          <option>Thai Street Food Festival</option>
+          <option>UX Bangkok Meetup</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- table -->
+    <section class="card mt-3 p-4">
+      <div id="inv-table" class="overflow-x-auto">
+        <table class="data-table min-w-[860px]">
+          <thead>
+            <tr>
+              <th>Invoice</th>
+              <th>Buyer</th>
+              <th>Event</th>
+              <th class="text-right">Amount</th>
+              <th>Due</th>
+              <th>Status</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="inv-rows" class="text-[13px]"></tbody>
+        <!-- tailwind JIT safelist: the overdue ageing colour is only ever emitted by JS,
+             so without this the Play CDN can render a row before generating the class -->
+        <tbody aria-hidden="true" class="hidden"><tr><td class="text-red-500"></td></tr></tbody>
+        </table>
+      </div>
+      <p id="inv-empty" class="hidden py-8 text-center text-[13px] text-muted">No invoices match your filters.</p>
+
+      <div id="inv-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="inv-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="inv-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="inv-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="inv-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  </main>
+
+  <!-- Invoice detail — figures derive from the invoice's own amount (VAT-inclusive),
+       so subtotal + 7% VAT always equals the total shown in the row. -->
+  <div class="modal" id="invoice-modal">
+    <div class="p-5">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex min-w-0 items-center gap-3">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-soft text-brand"><i class="hgi-stroke hgi-invoice-01 text-[20px]"></i></span>
+          <div class="min-w-0">
+            <h3 class="text-[15px] font-bold tracking-tight">Invoice <span id="ivd-no" class="font-mono">—</span></h3>
+            <p class="truncate text-[12px] text-muted">Order <span id="ivd-ref" class="font-mono text-ink">—</span></p>
+          </div>
+        </div>
+        <span id="ivd-status" class="badge badge-gray shrink-0">—</span>
+      </div>
+
+      <div class="mt-4 rounded-xl border border-hair p-3">
+        <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Billed to</p>
+        <p id="ivd-buyer" class="mt-1 text-[14px] font-semibold text-ink">—</p>
+        <p id="ivd-email" class="truncate text-[12px] text-muted">—</p>
+      </div>
+
+      <div class="mt-3 rounded-xl border border-hair">
+        <div class="flex items-center justify-between gap-3 border-b border-line p-3">
+          <div class="min-w-0">
+            <p class="text-[13px] font-medium text-ink">Event ticket</p>
+            <p id="ivd-ev" class="truncate text-[11px] text-muted">—</p>
+          </div>
+          <span id="ivd-line" class="shrink-0 text-[13px] font-semibold text-ink tnum">—</span>
+        </div>
+        <div class="space-y-1.5 p-3 text-[12px]">
+          <div class="flex justify-between"><span class="text-muted">Subtotal (excl. VAT)</span><span id="ivd-sub" class="text-ink tnum">—</span></div>
+          <div class="flex justify-between"><span class="text-muted">VAT 7%</span><span id="ivd-vat" class="text-ink tnum">—</span></div>
+          <div class="mt-1 flex justify-between border-t border-line pt-2"><span class="font-semibold text-ink">Total</span><span id="ivd-total" class="text-[14px] font-bold text-ink tnum">—</span></div>
+        </div>
+      </div>
+
+      <div class="mt-3 space-y-1 text-[11px] text-muted">
+        <div class="flex justify-between gap-3"><span>Issued</span><span id="ivd-issued" class="text-ink">—</span></div>
+        <div class="flex justify-between gap-3"><span>Due</span><span id="ivd-due" class="text-ink">—</span></div>
+        <div class="flex justify-between gap-3"><span>Payment</span><span id="ivd-pay" class="text-ink">—</span></div>
+      </div>
+
+      <div class="mt-4">
+        <button class="btn btn-soft w-full" data-close>Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/shell.js?v=53"></script>
+<script>
+  const badgeStatus = {
+    Paid:    { cls: 'badge badge-green', icon: 'hgi-tick-02' },
+    Issued:  { cls: 'badge badge-blue',  icon: 'hgi-invoice-01' },
+    Overdue: { cls: 'badge badge-amber', icon: 'hgi-alert-01' },
+    Void:    { cls: 'badge badge-gray',  icon: 'hgi-cancel-01' },
+  };
+
+  /* The kit's fixed "today" (matches the Taxes report). Everything time-based on this
+     page derives from it, so the ageing text can never contradict the status badge. */
+  const TODAY = new Date(2026, 6, 17); // Jul 17, 2026
+  const MONTHS = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
+  function parseD(s) { const m = /^(\w{3}) (\d{1,2}), (\d{4})$/.exec(s); return new Date(+m[3], MONTHS[m[1]], +m[2]); }
+  function daysFromToday(s) { return Math.round((parseD(s) - TODAY) / 86400000); }
+
+  /* Invoices carry 14-day payment terms: `due` = issued + 14d.
+     Paid / Void are terminal states and are authored. Everything else is DERIVED from
+     the due date — an unpaid bill is Overdue once its due date has passed, otherwise
+     Issued. That's why `st` is omitted on those rows: it can't drift from the date. */
+  const invoices = [
+    { no: '#INV-2041', ref: 'ORD-88214', issued: 'Jul 16, 2026', due: 'Jul 30, 2026', buyer: 'Siam Digital Co., Ltd.',  sub: 'finance@siamdigital.co.th',  ev: 'Tech Summit 2026',          amt: 48000 },
+    { no: '#INV-2040', ref: 'ORD-88209', issued: 'Jul 15, 2026', due: 'Jul 29, 2026', buyer: 'Anong Preechawut',        sub: 'anong.p@gmail.com',          ev: 'Tech Summit 2026',          amt: 1250,  st: 'Paid', paidVia: 'Card',          paidOn: 'Jul 15, 2026' },
+    { no: '#INV-2039', ref: 'ORD-88197', issued: 'Jul 14, 2026', due: 'Jul 28, 2026', buyer: 'Bangkok Cloudworks Ltd.', sub: 'ap@cloudworks.co.th',        ev: 'Tech Summit 2026',          amt: 32500, st: 'Paid', paidVia: 'Bank transfer', paidOn: 'Jul 16, 2026' },
+    { no: '#INV-2038', ref: 'ORD-88186', issued: 'Jul 13, 2026', due: 'Jul 27, 2026', buyer: 'Somchai Thanakit',        sub: 'somchai.t@outlook.com',      ev: 'Bangkok Jazz Night',        amt: 480,   st: 'Paid', paidVia: 'PromptPay',     paidOn: 'Jul 13, 2026' },
+    { no: '#INV-2037', ref: 'ORD-88175', issued: 'Jul 12, 2026', due: 'Jul 26, 2026', buyer: 'Ploy Sirichai',           sub: 'ploy.s@gmail.com',           ev: 'Tech Summit 2026',          amt: 2500  },
+    { no: '#INV-2036', ref: 'ORD-88168', issued: 'Jul 11, 2026', due: 'Jul 25, 2026', buyer: 'Lotus Media Group',       sub: 'billing@lotusmedia.co.th',   ev: 'Bangkok Jazz Night',        amt: 19200 },
+    { no: '#INV-2035', ref: 'ORD-88154', issued: 'Jul 10, 2026', due: 'Jul 24, 2026', buyer: 'Kittipong Rattana',       sub: 'kittipong.r@gmail.com',      ev: 'UX Bangkok Meetup',         amt: 640,   st: 'Void' },
+    { no: '#INV-2034', ref: 'ORD-88141', issued: 'Jul 9, 2026',  due: 'Jul 23, 2026', buyer: 'Suda Kaewkla',            sub: 'suda.k@yahoo.com',           ev: 'Sunrise Yoga Retreat',      amt: 1780,  st: 'Paid', paidVia: 'Card',          paidOn: 'Jul 10, 2026' },
+    { no: '#INV-2033', ref: 'ORD-88133', issued: 'Jul 8, 2026',  due: 'Jul 22, 2026', buyer: 'Thonburi Wellness Co.',   sub: 'accounts@thonburiwell.com',  ev: 'Sunrise Yoga Retreat',      amt: 26700, st: 'Paid', paidVia: 'Bank transfer', paidOn: 'Jul 14, 2026' },
+    { no: '#INV-2032', ref: 'ORD-88120', issued: 'Jul 7, 2026',  due: 'Jul 21, 2026', buyer: 'Nutcha Wongsuwan',        sub: 'nutcha.w@gmail.com',         ev: 'Bangkok Jazz Night',        amt: 960   },
+    { no: '#INV-2031', ref: 'ORD-88112', issued: 'Jul 6, 2026',  due: 'Jul 20, 2026', buyer: 'Wichai Chaiyaphum',       sub: 'wichai.c@gmail.com',         ev: 'Tech Summit 2026',          amt: 1250,  st: 'Paid', paidVia: 'Card',          paidOn: 'Jul 6, 2026' },
+    { no: '#INV-2030', ref: 'ORD-88104', issued: 'Jul 4, 2026',  due: 'Jul 18, 2026', buyer: 'Ratchada Foods Co., Ltd.', sub: 'finance@ratchadafoods.th',  ev: 'Thai Street Food Festival', amt: 13000 },
+    { no: '#INV-2029', ref: 'ORD-88093', issued: 'Jul 3, 2026',  due: 'Jul 17, 2026', buyer: 'Malee Panyarachun',       sub: 'malee.p@gmail.com',          ev: 'Thai Street Food Festival', amt: 650,   st: 'Paid', paidVia: 'PromptPay',     paidOn: 'Jul 5, 2026' },
+    { no: '#INV-2028', ref: 'ORD-88081', issued: 'Jul 2, 2026',  due: 'Jul 16, 2026', buyer: 'Siriporn Wattana',        sub: 'siriporn.w@hotmail.com',     ev: 'Tech Summit 2026',          amt: 3750  },
+    { no: '#INV-2027', ref: 'ORD-88070', issued: 'Jul 1, 2026',  due: 'Jul 15, 2026', buyer: 'Narong Ruangsak',         sub: 'narong.r@gmail.com',         ev: 'UX Bangkok Meetup',         amt: 320,   st: 'Void' },
+    { no: '#INV-2026', ref: 'ORD-88062', issued: 'Jun 29, 2026', due: 'Jul 13, 2026', buyer: 'Chao Phraya Bank PCL',    sub: 'ap@chaophrayabank.co.th',    ev: 'Tech Summit 2026',          amt: 41250, st: 'Paid', paidVia: 'Bank transfer', paidOn: 'Jul 10, 2026' },
+    { no: '#INV-2025', ref: 'ORD-88051', issued: 'Jun 27, 2026', due: 'Jul 11, 2026', buyer: 'Preeya Boonmee',          sub: 'preeya.b@gmail.com',         ev: 'Sunrise Yoga Retreat',      amt: 890,   st: 'Paid', paidVia: 'Card',          paidOn: 'Jun 28, 2026' },
+    { no: '#INV-2024', ref: 'ORD-88044', issued: 'Jun 25, 2026', due: 'Jul 9, 2026',  buyer: 'Arthit Tantiwong',        sub: 'arthit.t@gmail.com',         ev: 'Sunrise Yoga Retreat',      amt: 1780  },
+    { no: '#INV-2023', ref: 'ORD-88032', issued: 'Jun 23, 2026', due: 'Jul 7, 2026',  buyer: 'Sukhumvit Design Studio', sub: 'hello@sukhumvitdesign.co',   ev: 'UX Bangkok Meetup',         amt: 9600,  st: 'Paid', paidVia: 'Bank transfer', paidOn: 'Jul 2, 2026' },
+    { no: '#INV-2022', ref: 'ORD-88021', issued: 'Jun 21, 2026', due: 'Jul 5, 2026',  buyer: 'Kanya Intharat',          sub: 'kanya.i@gmail.com',          ev: 'Thai Street Food Festival', amt: 1300,  st: 'Paid', paidVia: 'Card',          paidOn: 'Jun 22, 2026' },
+    { no: '#INV-2021', ref: 'ORD-88015', issued: 'Jun 19, 2026', due: 'Jul 3, 2026',  buyer: 'Chalerm Mekwattana',      sub: 'chalerm.m@gmail.com',        ev: 'Thai Street Food Festival', amt: 650,   st: 'Void' },
+    { no: '#INV-2020', ref: 'ORD-88006', issued: 'Jun 17, 2026', due: 'Jul 1, 2026',  buyer: 'Orawan Wisetsuk',         sub: 'orawan.w@outlook.com',       ev: 'UX Bangkok Meetup',         amt: 480   },
+    { no: '#INV-2019', ref: 'ORD-87994', issued: 'Jun 15, 2026', due: 'Jun 29, 2026', buyer: 'Bangkok Jazz Society',    sub: 'treasurer@bkkjazz.org',      ev: 'Bangkok Jazz Night',        amt: 14400 },
+    { no: '#INV-2018', ref: 'ORD-87982', issued: 'Jun 12, 2026', due: 'Jun 26, 2026', buyer: 'Jun Nakamura',            sub: 'jun.nakamura@gmail.com',     ev: 'Bangkok Jazz Night',        amt: 480,   st: 'Paid', paidVia: 'PromptPay',     paidOn: 'Jun 12, 2026' },
+  ];
+
+  /* single source of truth for an invoice's state */
+  function statusOf(iv) { return iv.st || (daysFromToday(iv.due) < 0 ? 'Overdue' : 'Issued'); }
+
+  /* ageing that sits INLINE next to the due date — only meaningful while a bill is
+     still outstanding. Kept terse ("in 9 days") because it renders beside the date. */
+  function ageText(iv) {
+    const st = statusOf(iv);
+    if (st === 'Paid' || st === 'Void') return '';
+    const d = daysFromToday(iv.due);
+    if (d < 0) return Math.abs(d) + (Math.abs(d) === 1 ? ' day overdue' : ' days overdue');
+    if (d === 0) return 'due today';
+    return 'in ' + d + (d === 1 ? ' day' : ' days');
+  }
+
+  /* how the bill was settled — the bit Payments can't show you.
+     In the TABLE this only renders for Paid: "Awaiting payment" under an Issued/Overdue
+     badge, or "Voided" under a Void badge, just restates the badge. In the MODAL it's a
+     labelled field, so every state needs a value. */
+  function payText(iv) {
+    const st = statusOf(iv);
+    if (st === 'Paid') return iv.paidVia + ' · ' + shortD(iv.paidOn);
+    if (st === 'Void') return 'Voided';
+    return 'Awaiting payment';
+  }
+
+  /* the whole dataset is 2026 — repeating the year on every cell is pure noise */
+  function shortD(s) { const y = ', ' + TODAY.getFullYear(); return s.endsWith(y) ? s.slice(0, -y.length) : s; }
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+  function fmtBaht(n) { return '฿' + n.toLocaleString('en-US'); }
+
+  function rowHtml(iv) {
+    const st = statusOf(iv);
+    const s = badgeStatus[st];
+    const age = ageText(iv);
+    const ageCls = st === 'Overdue' ? 'text-red-500' : 'text-muted';
+    return `
+    <tr>
+      <td class="whitespace-nowrap font-mono text-[12.5px] font-semibold text-ink">${esc(iv.no)}</td>
+      <td class="font-medium text-ink">${esc(iv.buyer)}</td>
+      <td class="text-muted">${esc(iv.ev)}</td>
+      <td class="text-right font-semibold text-ink tnum">${fmtBaht(iv.amt)}</td>
+      <td class="whitespace-nowrap"><span class="text-ink tnum">${esc(shortD(iv.due))}</span>${age ? `<span class="ml-1.5 text-[11px] font-medium ${ageCls}">${esc(age)}</span>` : ''}</td>
+      <td class="whitespace-nowrap"><span class="inline-flex items-center gap-2"><span class="${s.cls}"><i class="hgi-stroke ${s.icon} text-[12px]"></i>${esc(st)}</span>${st === 'Paid' ? `<span class="text-[11px] text-muted">${esc(payText(iv))}</span>` : ''}</span></td>
+      <td class="text-right">
+        <div class="flex items-center justify-end gap-1">
+          <button class="btn-icon" data-open="invoice-modal" data-view data-no="${esc(iv.no)}" title="View invoice"><i class="hgi-stroke hgi-view text-[16px]"></i></button>
+          <button class="btn-icon" title="Download PDF"><i class="hgi-stroke hgi-download-01 text-[16px]"></i></button>
+          <button class="btn-icon" title="Resend to buyer"><i class="hgi-stroke hgi-mail-01 text-[16px]"></i></button>
+        </div>
+      </td>
+    </tr>`;
+  }
+
+  const tbody = document.getElementById('inv-rows');
+  const empty = document.getElementById('inv-empty');
+  const searchInput = document.getElementById('inv-search');
+  const eventSelect = document.getElementById('inv-event');
+  const statusTabs = document.querySelectorAll('.pilltab');
+  const elShowing = document.getElementById('inv-showing');
+  const elPrev = document.getElementById('inv-prev');
+  const elNext = document.getElementById('inv-next');
+  const sizeSelect = document.getElementById('inv-size');
+  const nf = function (n) { return n.toLocaleString('en-US'); };
+  const state = { page: 0, size: 10, status: '' };
+
+  // fill status tab counts from the data
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const key = el.getAttribute('data-count');
+    el.textContent = key === 'all' ? invoices.length : invoices.filter(iv => statusOf(iv) === key).length;
+  });
+
+  function renderRows() {
+    const q = searchInput.value.trim().toLowerCase();
+    const ev = eventSelect.value;
+    const evAll = !ev || /all events/i.test(ev);
+    const filtered = invoices.filter(iv => {
+      const matchesQ = !q || iv.no.toLowerCase().includes(q) || iv.buyer.toLowerCase().includes(q);
+      const matchesEvent = evAll || iv.ev === ev;
+      const matchesStatus = !state.status || statusOf(iv) === state.status;
+      return matchesQ && matchesEvent && matchesStatus;
+    });
+
+    const total = filtered.length;
+    const pages = Math.max(1, Math.ceil(total / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    const start = state.page * state.size;
+    const slice = filtered.slice(start, start + state.size);
+
+    tbody.innerHTML = slice.map(rowHtml).join('');
+    empty.classList.toggle('hidden', total > 0);
+
+    if (total === 0) { elShowing.textContent = 'No invoices'; }
+    else { elShowing.innerHTML = 'Showing <span class="font-semibold text-ink">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> invoices'; }
+    elPrev.disabled = total === 0 || state.page === 0;
+    elNext.disabled = total === 0 || state.page >= pages - 1;
+
+    tbody.querySelectorAll('[data-view]').forEach(btn => {
+      btn.addEventListener('click', () => fillInvoice(btn.dataset.no));
+    });
+  }
+
+  /* The stored amount is the VAT-inclusive total, so work backwards:
+     subtotal = total / 1.07, VAT = the remainder. Keeps subtotal + VAT === the
+     amount in the row, on the same 7% basis as the Taxes report. */
+  function fillInvoice(no) {
+    const iv = invoices.find(x => x.no === no);
+    if (!iv) return;
+    const sub = Math.round(iv.amt / 1.07);
+    const vat = iv.amt - sub;
+    const set = (id, v) => { document.getElementById(id).textContent = v; };
+    set('ivd-no', iv.no);
+    set('ivd-ref', iv.ref);
+    set('ivd-buyer', iv.buyer);
+    set('ivd-email', iv.sub);
+    set('ivd-ev', iv.ev);
+    set('ivd-line', fmtBaht(iv.amt));
+    set('ivd-sub', fmtBaht(sub));
+    set('ivd-vat', fmtBaht(vat));
+    set('ivd-total', fmtBaht(iv.amt));
+    const st = statusOf(iv);
+    set('ivd-issued', iv.issued);
+    set('ivd-due', iv.due + (ageText(iv) ? ' · ' + ageText(iv) : ''));
+    set('ivd-pay', payText(iv));
+    const s = badgeStatus[st];
+    const badge = document.getElementById('ivd-status');
+    badge.className = s.cls + ' shrink-0';
+    badge.innerHTML = '<i class="hgi-stroke ' + s.icon + ' text-[12px]"></i>' + esc(st);
+  }
+
+  statusTabs.forEach(t => t.addEventListener('click', () => { state.status = t.dataset.status || ''; state.page = 0; renderRows(); }));
+  searchInput.addEventListener('input', () => { state.page = 0; renderRows(); });
+  eventSelect.addEventListener('change', () => { state.page = 0; renderRows(); });
+  sizeSelect.addEventListener('change', function () { state.size = +this.value; state.page = 0; renderRows(); });
+  elPrev.addEventListener('click', () => { if (state.page > 0) { state.page--; renderRows(); } });
+  elNext.addEventListener('click', () => { state.page++; renderRows(); });
+  renderRows();
+</script>
+</body>
+</html>

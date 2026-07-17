@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=39"></script>
-<link rel="stylesheet" href="../assets/app.css?v=39" />
+<script src="../assets/config.js?v=53"></script>
+<link rel="stylesheet" href="../assets/app.css?v=53" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="attendees">
 <div class="flex h-full min-h-screen" data-layout>
@@ -223,7 +223,7 @@
     </div>
     <div>
       <label class="label">Event</label>
-      <select class="select">
+      <select data-event-picker="catalog" class="select">
         <option>Tech Summit 2026</option>
         <option>Bangkok Jazz Night</option>
         <option>Sunrise Yoga Retreat</option>
@@ -243,7 +243,7 @@
   </footer>
 </aside>
 
-<script src="../assets/shell.js?v=39"></script>
+<script src="../assets/shell.js?v=53"></script>
 <script>
 (function () {
   var nf = function (n) { return n.toLocaleString('en-US'); };

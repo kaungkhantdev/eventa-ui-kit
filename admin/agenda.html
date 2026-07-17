@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=39"></script>
-<link rel="stylesheet" href="../assets/app.css?v=39" />
+<script src="../assets/config.js?v=53"></script>
+<link rel="stylesheet" href="../assets/app.css?v=53" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="agenda">
 
@@ -28,7 +28,7 @@
         <div class="min-w-0">
           <p class="text-[11px] font-semibold uppercase tracking-wide text-muted">Agenda for</p>
           <div class="relative -mt-0.5 inline-flex max-w-full items-center">
-            <select id="agenda-event" class="max-w-full cursor-pointer appearance-none truncate bg-transparent pr-7 text-[22px] font-bold tracking-tight text-ink focus:outline-none">
+            <select id="agenda-event" data-event-picker="catalog" class="max-w-full cursor-pointer appearance-none truncate bg-transparent pr-7 text-[22px] font-bold tracking-tight text-ink focus:outline-none">
               <option>Tech Summit 2026</option>
               <option>Bangkok Jazz Night</option>
               <option>Sunrise Yoga Retreat</option>
@@ -167,7 +167,7 @@
   </div>
 </div>
 
-<script src="../assets/shell.js?v=39"></script>
+<script src="../assets/shell.js?v=53"></script>
 <script>
   (function () {
     const HS = 9, HE = 16, HH = 64;               // 09:00–16:00, 64px per hour
@@ -255,7 +255,14 @@
     }
 
     function render() {
-      const data = EVENTS[currentEvent]; if (!data) return;
+      const data = EVENTS[currentEvent];
+      if (eventLabel) eventLabel.textContent = currentEvent;
+      if (!data) {
+        head.innerHTML = '';
+        body.innerHTML = '<div class="col-span-full grid place-items-center px-4 py-16 text-center"><div class="max-w-sm"><i class="hgi-stroke hgi-calendar-03 text-[30px] text-muted/40"></i><p class="mt-2 text-[14px] font-semibold text-ink">No agenda for ' + currentEvent + ' yet</p><p class="mt-1 text-[13px] text-muted">Add a session to start building this event’s schedule.</p></div></div>';
+        if (monthLabel) monthLabel.textContent = '';
+        return;
+      }
       const days = data.days, sessions = data.sessions;
       monthLabel.textContent = data.month;
       if (eventLabel) eventLabel.textContent = currentEvent;

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Payments</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets/config.js?v=53"></script>
+<link rel="stylesheet" href="../assets/app.css?v=53" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="settings-payments">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidebar here -->
+
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <div class="min-w-0">
+          <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Settings</p>
+          <h1 class="text-[22px] font-bold tracking-tight">Payments</h1>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Payment provider, API keys and checkout preferences.</p>
+        </div>
+      </div>
+      <div class="ml-auto flex shrink-0 items-center gap-2.5"><button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button><div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div></div>
+    </div>
+
+    <div class="space-y-3">
+
+        <!-- test-mode banner -->
+        <div id="test-banner" class="flex items-center gap-2.5 rounded-xl border border-amber-300/60 bg-amber-50 px-3.5 py-2.5 text-[12px] font-medium text-amber-700 dark:border-amber-400/25 dark:bg-amber-400/10 dark:text-amber-300">
+          <i class="hgi-stroke hgi-alert-circle text-[16px]"></i>
+          <span>You're using <b>Test keys</b> — no real charges are processed. Add your Live keys to accept payments.</span>
+        </div>
+
+        <!-- connection status (full width — it's the header/context) -->
+        <section class="card p-4">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#635BFF] text-white shadow-sm"><i class="hgi-stroke hgi-credit-card text-[20px]"></i></span>
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <h2 class="text-[15px] font-bold tracking-tight">Stripe</h2>
+                  <span id="conn-badge" class="badge badge-green"><i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Connected</span>
+                </div>
+                <p class="mt-0.5 text-[12px] text-muted">Your payment gateway for cards, PromptPay and wallets.</p>
+              </div>
+            </div>
+            <div class="flex shrink-0 items-center gap-2">
+              <div class="segmented" data-mode-toggle>
+                <button type="button" class="active" data-mode="test">Test</button>
+                <button type="button" data-mode="live">Live</button>
+              </div>
+              <button type="button" id="disconnect-btn" class="btn btn-sm border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-400">Disconnect</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- API keys (paste from Stripe) -->
+        <section class="card p-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h2 class="text-[15px] font-bold tracking-tight">API keys <span class="ml-1 align-middle text-[11px] font-medium text-muted" data-mode-label>Test mode</span></h2>
+            <a href="#" class="inline-flex items-center gap-1 text-[12px] font-semibold text-brand hover:underline">Where do I find these?<i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i></a>
+          </div>
+          <div class="mt-2 flex items-start gap-2.5 rounded-lg border border-hair bg-canvas px-3 py-2.5 text-[12px] text-muted">
+            <i class="hgi-stroke hgi-idea-01 mt-px shrink-0 text-[15px] text-brand"></i>
+            <span>In your <b class="text-ink">Stripe Dashboard</b> go to <b class="text-ink">Developers → API keys</b>, copy the two keys, and paste them below.</span>
+          </div>
+          <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label class="label">Publishable key</label>
+              <input class="input font-mono text-[12px]" data-key-field placeholder="pk_test_..." data-test="pk_test_51P9xEventa0aB3kY7cQ" data-live="" value="pk_test_51P9xEventa0aB3kY7cQ" />
+              <p class="hint">Starts with <span class="font-mono">pk_test_</span> (test) or <span class="font-mono">pk_live_</span> (live).</p>
+            </div>
+            <div>
+              <label class="label">Secret key</label>
+              <div class="relative">
+                <input class="input pr-10 font-mono text-[12px]" type="password" data-key-field data-secret placeholder="sk_test_..." data-test="sk_test_51P9xEventa7hV6tL1pX" data-live="" value="sk_test_51P9xEventa7hV6tL1pX" />
+                <button type="button" class="btn-icon absolute right-1 top-1/2 -translate-y-1/2" data-reveal title="Reveal"><i class="hgi-stroke hgi-view text-[16px]"></i></button>
+              </div>
+              <p class="hint">Starts with <span class="font-mono">sk_</span>. Stored encrypted — never shown to attendees.</p>
+            </div>
+          </div>
+          <div class="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-hair pt-3">
+            <p class="text-[11px] text-muted">Last saved Jul 9, 2026 · 14:22</p>
+            <div class="flex gap-2">
+              <button class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-plug-socket text-[14px]"></i>Test connection</button>
+              <button class="btn btn-primary btn-sm">Save keys</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- config: methods + checkout preferences side by side (similar-sized → balanced) -->
+        <div class="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:items-start">
+
+        <!-- payment methods -->
+        <section class="card p-4">
+          <h2 class="text-[15px] font-bold tracking-tight">Payment methods</h2>
+          <p class="mt-0.5 text-[12px] text-muted">Choose which methods to offer your attendees at checkout.</p>
+          <div class="mt-2 divide-y divide-line">
+
+            <div class="flex flex-wrap items-center justify-between gap-3 py-3 first:pt-1">
+              <div class="flex min-w-0 items-center gap-3">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-credit-card text-[16px]"></i></span>
+                <div class="min-w-0">
+                  <p class="text-[13px] font-semibold text-ink">Cards</p>
+                  <div class="mt-1 flex flex-wrap items-center gap-1">
+                    <span class="rounded bg-line px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-ink">VISA</span>
+                    <span class="rounded bg-line px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-ink">MC</span>
+                    <span class="rounded bg-line px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-ink">AMEX</span>
+                    <span class="rounded bg-line px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-ink">JCB</span>
+                  </div>
+                </div>
+              </div>
+              <button type="button" data-toggle class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition"></span></button>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 py-3">
+              <div class="flex min-w-0 items-center gap-3">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400"><i class="hgi-stroke hgi-qr-code-01 text-[16px]"></i></span>
+                <div><p class="text-[13px] font-semibold text-ink">PromptPay</p><p class="text-[11px] text-muted">Thailand QR bank transfer</p></div>
+              </div>
+              <button type="button" data-toggle class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition"></span></button>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 py-3">
+              <div class="flex min-w-0 items-center gap-3">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line text-ink"><i class="hgi-stroke hgi-apple text-[16px]"></i></span>
+                <div><p class="text-[13px] font-semibold text-ink">Apple Pay</p><p class="text-[11px] text-muted">One-tap checkout on Apple devices</p></div>
+              </div>
+              <button type="button" data-toggle class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition"></span></button>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 py-3">
+              <div class="flex min-w-0 items-center gap-3">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line text-muted"><i class="hgi-stroke hgi-wallet-01 text-[16px]"></i></span>
+                <div><p class="text-[13px] font-semibold text-ink">Google Pay</p><p class="text-[11px] text-muted">One-tap checkout on Android &amp; Chrome</p></div>
+              </div>
+              <button type="button" data-toggle class="flex h-5 w-9 shrink-0 items-center rounded-full bg-line p-0.5"><span class="h-4 w-4 rounded-full bg-white shadow transition"></span></button>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 py-3 last:pb-1">
+              <div class="flex min-w-0 items-center gap-3">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line text-muted"><i class="hgi-stroke hgi-bank text-[16px]"></i></span>
+                <div><p class="text-[13px] font-semibold text-ink">Bank transfer</p><p class="text-[11px] text-muted">Pay by direct bank transfer</p></div>
+              </div>
+              <button type="button" data-toggle class="flex h-5 w-9 shrink-0 items-center rounded-full bg-line p-0.5"><span class="h-4 w-4 rounded-full bg-white shadow transition"></span></button>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- checkout preferences -->
+        <section class="card p-4">
+          <h2 class="text-[15px] font-bold tracking-tight">Checkout preferences</h2>
+          <div class="mt-3 grid grid-cols-1 gap-4">
+            <div>
+              <label class="label">Default currency</label>
+              <select class="select">
+                <option selected>Thai Baht (฿ THB)</option>
+                <option>US Dollar ($ USD)</option>
+                <option>Euro (€ EUR)</option>
+                <option>Singapore Dollar (S$ SGD)</option>
+              </select>
+            </div>
+            <div>
+              <label class="label">Statement descriptor</label>
+              <input class="input" value="EVENTA TICKETS" maxlength="22" />
+              <p class="hint">Appears on your attendee's card statement.</p>
+            </div>
+          </div>
+          <div class="mt-3 space-y-1 border-t border-hair pt-2">
+            <label class="flex items-center justify-between gap-3 py-2">
+              <span><span class="block text-[13px] font-medium text-ink">Save cards for faster checkout</span><span class="block text-[11px] text-muted">Let returning attendees reuse a saved card</span></span>
+              <button type="button" data-toggle class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition"></span></button>
+            </label>
+            <label class="flex items-center justify-between gap-3 py-2">
+              <span><span class="block text-[13px] font-medium text-ink">Email receipts</span><span class="block text-[11px] text-muted">Send a receipt after each successful payment</span></span>
+              <button type="button" data-toggle class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition"></span></button>
+            </label>
+          </div>
+          <div class="mt-3 flex justify-end border-t border-hair pt-3">
+            <button class="btn btn-primary">Save changes</button>
+          </div>
+        </section>
+
+        </div><!-- /config grid -->
+    </div>
+
+  </main>
+</div>
+
+<script src="../assets/shell.js?v=53"></script>
+<script src="../assets/settings-ui.js?v=53"></script>
+</body>
+</html>
