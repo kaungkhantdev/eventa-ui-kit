@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · What's on</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="../assets/config.js?v=64"></script>
+<link rel="stylesheet" href="../assets/app.css?v=64" />
+</head>
+<body class="h-full bg-surface font-sans text-ink antialiased">
+
+<!-- ============ Top bar ============ -->
+<header class="sticky top-0 z-30 border-b border-hair bg-surface/90 backdrop-blur">
+  <div class="mx-auto flex h-14 max-w-5xl items-center gap-3 px-4 lg:px-6">
+    <a href="../index.html" class="flex shrink-0 items-center gap-2.5">
+      <span class="brand-logo text-brand h-[17px] w-[31px]"></span>
+      <span class="hidden text-[15px] font-extrabold tracking-tight sm:inline">Eventa</span>
+    </a>
+    <!-- search (in top nav) -->
+    <div class="relative min-w-0 flex-1">
+      <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[16px] text-muted"></i>
+      <input id="q" type="search" class="h-9 w-full rounded-full border border-transparent bg-canvas pl-10 pr-4 text-[13px] text-ink transition placeholder:text-muted hover:bg-line focus:border-brand/40 focus:bg-surface focus:outline-none focus:ring-2 focus:ring-brand/20" placeholder="Search events, cities, categories…" autocomplete="off" />
+    </div>
+    <div class="flex shrink-0 items-center gap-1.5">
+      <a href="discover.html" class="hidden rounded-lg px-3 py-1.5 text-[13px] font-semibold text-brand md:inline-flex md:items-center md:gap-1.5"><i class="hgi-stroke hgi-compass-01 text-[15px]"></i>Explore</a>
+      <a href="my-events.html" class="hidden rounded-lg px-3 py-1.5 text-[13px] font-medium text-muted transition hover:bg-line hover:text-ink md:inline-flex md:items-center md:gap-1.5"><i class="hgi-stroke hgi-ticket-02 text-[15px]"></i>My tickets</a>
+      <button id="theme-btn" class="btn-icon bg-surface" title="Toggle theme"><i class="hgi-stroke hgi-moon-02 text-[18px]"></i></button>
+      <a href="../auth/login.html" class="btn btn-primary btn-sm">Sign in</a>
+    </div>
+  </div>
+</header>
+
+<main class="mx-auto pb-16 pt-7 lg:px-6 max-w-5xl px-4 lg:px-6">
+
+  <!-- hero -->
+  <div class="mb-6">
+    <h1 class="text-[26px] font-extrabold tracking-tight sm:text-[34px]">What's on in <span class="text-brand">Bangkok</span></h1>
+    <p class="mt-1 text-[14px] text-muted">Find your next conference, concert, workshop or festival — all in one place.</p>
+  </div>
+
+  <!-- category filter (Meetup-style: icon over label, active = underline) -->
+  <div class="relative mb-6">
+    <div id="cats" class="no-scrollbar flex gap-7 overflow-x-auto scroll-smooth px-0.5 sm:gap-9"></div>
+    <!-- left control -->
+    <div id="cat-left-wrap" class="pointer-events-none absolute inset-y-0 left-0 hidden items-center pr-8" style="background:linear-gradient(90deg, rgb(var(--surface)) 55%, transparent)">
+      <button id="cat-left" type="button" aria-label="Scroll categories left" class="pointer-events-auto grid h-9 w-9 place-items-center rounded-full bg-ink text-canvas shadow-md transition hover:opacity-90"><i class="hgi-stroke hgi-arrow-left-01 text-[18px]"></i></button>
+    </div>
+    <!-- right control -->
+    <div id="cat-right-wrap" class="pointer-events-none absolute inset-y-0 right-0 hidden items-center justify-end pl-8" style="background:linear-gradient(270deg, rgb(var(--surface)) 55%, transparent)">
+      <button id="cat-right" type="button" aria-label="Scroll categories right" class="pointer-events-auto grid h-9 w-9 place-items-center rounded-full bg-ink text-canvas shadow-md transition hover:opacity-90"><i class="hgi-stroke hgi-arrow-right-01 text-[18px]"></i></button>
+    </div>
+  </div>
+
+  <!-- results -->
+  <p id="count" class="mb-3 text-[12px] font-medium text-muted"></p>
+  <div id="grid" class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3"></div>
+
+  <!-- empty state -->
+  <div id="empty" class="hidden py-16 text-center">
+    <span class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-line text-muted"><i class="hgi-stroke hgi-search-remove text-[26px]"></i></span>
+    <p class="mt-3 text-[15px] font-semibold">No events found</p>
+    <p class="mt-1 text-[13px] text-muted">Try a different search or category.</p>
+  </div>
+
+  <p class="mt-10 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+</main>
+
+<!-- JIT safelist for classes only ever inserted by JS -->
+<div class="hidden text-white text-ink text-muted text-red-500 text-amber-400 line-clamp-2 aspect-[3/2] scale-105 group-hover:scale-105 group-hover:text-brand group-hover:text-ink group-hover:scale-110 -space-x-2 ring-2 ring-canvas bg-white bg-ink text-canvas bg-brand bg-amber-500 bg-black/40 bg-black/55 bg-black/60 backdrop-blur-sm shadow-sm rounded-2xl rounded-full object-cover border-b-2 border-ink border-transparent font-semibold"></div>
+
+<script src="../assets/landing-data.js"></script>
+<script>
+  /* theme toggle (standalone) */
+  (function () {
+    var b = document.getElementById('theme-btn');
+    function set(d) {
+      document.documentElement.classList.toggle('dark', d);
+      try { localStorage.setItem('eventa-theme', d ? 'dark' : 'light'); } catch (e) {}
+      b.querySelector('i').className = 'hgi-stroke ' + (d ? 'hgi-sun-03' : 'hgi-moon-02') + ' text-[18px]';
+    }
+    set(document.documentElement.classList.contains('dark'));
+    b.addEventListener('click', function () { set(!document.documentElement.classList.contains('dark')); });
+  })();
+</script>
+<script>
+(function () {
+  var EVENTS = window.EVENTA_EVENTS ? Object.values(window.EVENTA_EVENTS) : [];
+  var ALL = 'All events';
+  var GRAD = [['#1ba770', '#059669'], ['#7c3aed', '#c026d3'], ['#f59e0b', '#f97316'], ['#0ea5e9', '#6366f1'], ['#f43f5e', '#ec4899'], ['#14b8a6', '#06b6d4'], ['#8b5cf6', '#6d28d9'], ['#10b981', '#0d9488'], ['#eab308', '#f59e0b']];
+  var CAT_ICON = {
+    'All events': 'hgi-sparkles', 'Concert': 'hgi-music-note-01', 'Conference': 'hgi-presentation-01',
+    'Exhibition': 'hgi-image-01', 'Food & Drink': 'hgi-restaurant-02', 'Meetup': 'hgi-user-group',
+    'Networking': 'hgi-connect', 'Sports & Wellness': 'hgi-workout-run', 'Wedding': 'hgi-favourite'
+  };
+  var CAT_COLOR = {
+    'All events': '#1ba770', 'Concert': '#7c3aed', 'Conference': '#0ea5e9', 'Exhibition': '#ec4899',
+    'Food & Drink': '#f97316', 'Meetup': '#6366f1', 'Networking': '#14b8a6',
+    'Sports & Wellness': '#f59e0b', 'Wedding': '#f43f5e'
+  };
+  var SAVE_OFF = 'absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-black/40 text-white backdrop-blur-sm transition hover:bg-black/60';
+  var SAVE_ON = 'absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-white text-red-500 shadow-sm transition';
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function hash(s) { var h = 0; s = String(s); for (var i = 0; i < s.length; i++) h = (h + s.charCodeAt(i)) | 0; return Math.abs(h); }
+  function num(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  function catIcon(c) { return CAT_ICON[c] || 'hgi-ticket-star'; }
+  function rating(slug) { return (4.3 + (hash(slug) % 7) / 10).toFixed(1); }        // 4.3–4.9, stable per event
+  function going(ev) { return (ev.capacity != null && ev.seatsLeft != null) ? Math.max(0, ev.capacity - ev.seatsLeft) : null; }
+  function tpl(cat) {
+    cat = (cat || '').toLowerCase();
+    if (/festival|food|music|concert/.test(cat)) return 'atlas';
+    if (/wedding/.test(cat)) return 'minimal';
+    if (/exhibition|art/.test(cat)) return 'noir';
+    return 'aurora';
+  }
+  function isFree(ev) { return /free/i.test(ev.priceFrom || '') || /^฿?0$/.test((ev.priceFrom || '').replace(/[, ]/g, '')); }
+
+  function avatars(ev) {
+    var out = '';
+    for (var i = 0; i < 3; i++) {
+      var gg = GRAD[(hash(ev.slug) + i * 3) % GRAD.length];
+      out += '<span class="relative inline-block h-6 w-6 overflow-hidden rounded-full ring-2 ring-canvas" style="background-image:linear-gradient(135deg,' + gg[0] + ',' + gg[1] + ')">' +
+        '<img src="https://picsum.photos/seed/' + encodeURIComponent(ev.slug) + '-a' + i + '/48/48" alt="" loading="lazy" class="h-full w-full object-cover" onerror="this.remove()"></span>';
+    }
+    return '<span class="flex -space-x-2">' + out + '</span>';
+  }
+
+  var state = { q: '', cat: ALL };
+  var gridEl = document.getElementById('grid'), countEl = document.getElementById('count'), emptyEl = document.getElementById('empty');
+
+  /* category chips */
+  var cats = [ALL].concat(EVENTS.map(function (e) { return e.category; }).filter(function (v, i, a) { return v && a.indexOf(v) === i; }).sort());
+  var catsEl = document.getElementById('cats');
+  function renderCats() {
+    catsEl.innerHTML = cats.map(function (c) {
+      var on = c === state.cat;
+      var col = CAT_COLOR[c] || '#1ba770';
+      return '<button type="button" data-cat="' + esc(c) + '" class="group flex shrink-0 flex-col items-center gap-1.5 pt-0.5 outline-none">' +
+        '<i class="hgi-stroke ' + catIcon(c) + ' text-[27px] leading-none transition group-hover:scale-110" style="color:' + col + '"></i>' +
+        '<span class="whitespace-nowrap border-b-2 pb-2.5 text-[12.5px] transition ' +
+          (on ? 'border-ink font-semibold text-ink' : 'border-transparent text-muted group-hover:text-ink') + '">' + esc(c) + '</span>' +
+        '</button>';
+    }).join('');
+  }
+  catsEl.addEventListener('click', function (e) { var b = e.target.closest('[data-cat]'); if (!b) return; state.cat = b.getAttribute('data-cat'); renderCats(); render(); updateArrows(); });
+
+  /* horizontal scroll controls for the category strip */
+  var leftWrap = document.getElementById('cat-left-wrap'), rightWrap = document.getElementById('cat-right-wrap');
+  function updateArrows() {
+    var el = catsEl, max = el.scrollWidth - el.clientWidth;
+    var canLeft = el.scrollLeft > 2, canRight = el.scrollLeft < max - 2;
+    leftWrap.classList.toggle('hidden', !canLeft); leftWrap.classList.toggle('flex', canLeft);
+    rightWrap.classList.toggle('hidden', !canRight); rightWrap.classList.toggle('flex', canRight);
+  }
+  function scrollCats(dir) { catsEl.scrollBy({ left: dir * Math.max(200, catsEl.clientWidth * 0.7), behavior: 'smooth' }); }
+  document.getElementById('cat-left').addEventListener('click', function () { scrollCats(-1); });
+  document.getElementById('cat-right').addEventListener('click', function () { scrollCats(1); });
+  catsEl.addEventListener('scroll', updateArrows, { passive: true });
+  window.addEventListener('resize', updateArrows);
+
+  function card(ev) {
+    var g = GRAD[hash(ev.slug) % GRAD.length];
+    var free = isFree(ev);
+    var left = ev.seatsLeft, cap = ev.capacity;
+    var pct = (left != null && cap) ? left / cap : 1;
+    var status = '';
+    if (left === 0) status = '<span class="absolute left-3 top-3 rounded-full bg-amber-500 px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm">Waitlist</span>';
+    else if (pct <= 0.15) status = '<span class="absolute left-3 top-3 rounded-full bg-black/60 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">Selling fast</span>';
+    var priceTxt = free ? '<span class="font-semibold text-brand">Free</span>' : 'From <span class="font-bold text-ink">' + esc(ev.priceFrom) + '</span>';
+    var g0 = going(ev);
+    var attendees = g0 != null
+      ? '<span class="flex items-center gap-2 text-[12px] text-muted">' + avatars(ev) + '<span>' + num(g0) + ' going</span></span>'
+      : '<span></span>';
+    return '' +
+      '<a href="../landing/' + tpl(ev.category) + '.html?event=' + encodeURIComponent(ev.slug) + '" class="group block">' +
+        '<div class="relative aspect-[3/2] overflow-hidden rounded-2xl" style="background-image:linear-gradient(135deg,' + g[0] + ',' + g[1] + ')">' +
+          '<img src="https://picsum.photos/seed/' + encodeURIComponent(ev.slug) + '/560/374" alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-105" onerror="this.remove()">' +
+          status +
+          '<button type="button" data-save aria-label="Save event" class="' + SAVE_OFF + '"><i class="hgi-stroke hgi-favourite text-[16px]"></i></button>' +
+        '</div>' +
+        '<div class="pt-3">' +
+          '<p class="text-[11px] font-semibold uppercase tracking-wide" style="color:' + (ev.accent || '#1ba770') + '">' + esc(ev.category || 'Event') + '</p>' +
+          '<h3 class="mt-1 line-clamp-2 text-[15.5px] font-bold leading-snug tracking-tight text-ink transition group-hover:text-brand">' + esc(ev.title) + '</h3>' +
+          '<p class="mt-1.5 flex items-center gap-1.5 text-[12.5px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i><span class="truncate">' + esc(ev.dateText || '') + '</span></p>' +
+          '<p class="mt-1 flex items-center gap-1.5 text-[12.5px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i><span class="truncate">' + esc([ev.venue, ev.city].filter(Boolean).join(', ')) + '</span></p>' +
+          '<p class="mt-1 flex items-center gap-1 text-[12.5px] text-muted"><span class="truncate">by ' + esc(ev.organizer || 'Eventa') + '</span><span>·</span><i class="hgi-stroke hgi-star text-[13px] text-amber-400"></i><span class="font-semibold text-ink">' + rating(ev.slug) + '</span></p>' +
+          '<div class="mt-2.5 flex items-center justify-between">' + attendees +
+            '<span class="text-[13px] text-muted">' + priceTxt + '</span>' +
+          '</div>' +
+        '</div>' +
+      '</a>';
+  }
+
+  function render() {
+    var q = state.q.trim().toLowerCase();
+    var list = EVENTS.filter(function (ev) {
+      if (state.cat !== ALL && ev.category !== state.cat) return false;
+      if (!q) return true;
+      return [ev.title, ev.category, ev.city, ev.venue].join(' ').toLowerCase().indexOf(q) !== -1;
+    });
+    gridEl.innerHTML = list.map(card).join('');
+    countEl.textContent = list.length + (list.length === 1 ? ' event' : ' events');
+    emptyEl.classList.toggle('hidden', list.length !== 0);
+    gridEl.classList.toggle('hidden', list.length === 0);
+  }
+
+  /* save-toggle (decorative) — don't navigate when the heart is clicked */
+  gridEl.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-save]');
+    if (!b) return;
+    e.preventDefault(); e.stopPropagation();
+    var on = b.getAttribute('data-on') === '1';
+    if (on) { b.removeAttribute('data-on'); b.className = SAVE_OFF; }
+    else { b.setAttribute('data-on', '1'); b.className = SAVE_ON; }
+  });
+
+  document.getElementById('q').addEventListener('input', function (e) { state.q = e.target.value; render(); });
+
+  renderCats();
+  render();
+  updateArrows();
+  setTimeout(updateArrows, 350);   // re-measure after the icon font loads (glyph widths shift layout)
+})();
+</script>
+</body>
+</html>

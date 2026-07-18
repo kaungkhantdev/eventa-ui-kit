@@ -19,12 +19,11 @@
   /* ---------------- Navigation model ---------------- */
   const MODULES = [
     { id: 'home', label: 'Home', icon: 'hgi-home-01', href: 'home.html' },
-    { id: 'dashboard', label: 'Dashboard', icon: 'hgi-dashboard-speed-01', href: 'dashboard.html' },
+    { id: 'dashboard', label: 'Dashboard', icon: 'hgi-dashboard-speed-02', href: 'dashboard.html' },
     { id: 'events', label: 'Events', icon: 'hgi-calendar-03', href: 'events.html', groups: [
-      { label: 'Schedule', icon: 'hgi-calendar-03', items: [
-        { label: 'All Events',     page: 'events',        href: 'events.html' },
-        { label: 'Create Event',   page: 'event-form',    href: 'event-form.html' },
-        { label: 'Event Details',  page: 'event-detail',  href: 'event-detail.html' },
+      { label: 'Manage', icon: 'hgi-calendar-03', items: [
+        { label: 'All events',   page: 'events',     href: 'events.html' },
+        { label: 'Create event', page: 'event-form', href: 'event-form.html' },
       ]},
       { label: 'Ticketing', icon: 'hgi-ticket-01', items: [
         { label: 'Tickets',   page: 'tickets',   href: 'tickets.html' },
@@ -35,7 +34,7 @@
         { label: 'Speakers',  page: 'speakers', href: 'speakers.html' },
       ]},
       { label: 'Content', icon: 'hgi-browser', items: [
-        { label: 'Landing Pages',  page: 'landing-pages',    href: 'landing-pages.html' },
+        { label: 'Landing pages',  page: 'landing-pages',    href: 'landing-pages.html' },
         { label: 'Categories',     page: 'event-categories', href: 'event-categories.html' },
       ]},
       { label: 'Attendees', icon: 'hgi-user-multiple', items: [
@@ -76,12 +75,16 @@
       ]},
     ]},
     { id: 'engagement', label: 'Engagement', icon: 'hgi-megaphone-01', href: 'notifications.html', groups: [
-      { label: 'Messaging', icon: 'hgi-notification-03', items: [
+      { label: 'Activity', icon: 'hgi-notification-03', items: [
         { label: 'Notifications', page: 'notifications', href: 'notifications.html' },
       ]},
+      { label: 'Messaging', icon: 'hgi-mail-01', items: [
+        { label: 'Templates',     page: 'messaging-templates',     href: 'messaging-templates.html' },
+        { label: 'Announcements', page: 'messaging-announcements', href: 'messaging-announcements.html' },
+        { label: 'Delivery log',  page: 'messaging-log',           href: 'messaging-log.html' },
+      ]},
       { label: 'Feedback', icon: 'hgi-comment-01', items: [
-        { label: 'Feedback',       page: 'feedback',        href: 'feedback.html' },
-        { label: 'Event feedback', page: 'feedback-detail', href: 'feedback-detail.html?event=tech-summit-2026' },
+        { label: 'Overview', page: 'feedback', href: 'feedback.html' },
       ]},
     ]},
     { id: 'settings', label: 'Settings', icon: 'hgi-settings-01', href: 'settings-profile.html', bottom: true, groups: [
@@ -117,8 +120,8 @@
     <div id="sidenav" class="fixed inset-y-0 left-0 z-50 flex -translate-x-full transition-transform duration-300 lg:static lg:translate-x-0">
       <aside id="rail" class="relative z-30 flex w-16 shrink-0 flex-col items-center bg-[#0e0f12] py-4 dark:bg-[#101613]">
         <div class="group relative flex justify-center">
-          <a href="dashboard.html" class="grid h-9 w-9 place-items-center rounded-full border border-brand/70 text-brand"><i class="hgi-stroke hgi-fire text-[18px]"></i></a>
-          <span class="rail-tip">Eventa</span>
+          <a href="dashboard.html" class="grid h-9 w-9 place-items-center rounded-full border border-white/40 text-[13px] font-extrabold tracking-tight text-white">EC</a>
+          <span class="rail-tip">Eventa Co., Ltd.</span>
         </div>
         <div id="rail-top" class="mt-5 flex flex-col items-center gap-1.5"></div>
         <div class="mt-auto flex flex-col items-center gap-2 pt-4">
@@ -128,7 +131,7 @@
             <span class="rail-tip">Change mode</span>
           </div>
           <div class="group relative mt-1 flex justify-center">
-            <span class="grid h-9 w-9 place-items-center rounded-[11px] bg-brand text-white shadow-sm"><i class="hgi-stroke hgi-fire text-[18px]"></i></span>
+            <span class="grid h-9 w-9 place-items-center text-brand"><span class="brand-logo h-[13px] w-[24px]"></span></span>
             <span class="rail-tip">Eventa for Business · v1.0.0.0</span>
           </div>
         </div>

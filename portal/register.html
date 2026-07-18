@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Register</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="../assets/config.js?v=64"></script>
+<link rel="stylesheet" href="../assets/app.css?v=64" />
+<style>
+  /* ---- cinema seat map (always-dark auditorium panel) ---- */
+  .house { background: radial-gradient(120% 90% at 50% -10%, #17201c 0%, #0c110f 60%); }
+  .seat {
+    position: relative; height: 30px; width: 30px; border-radius: 9px 9px 4px 4px;
+    display: grid; place-items: center; font-size: 11px; font-weight: 600;
+    transition: background .12s, box-shadow .12s, color .12s; user-select: none;
+  }
+  .seat::after { content: ''; position: absolute; bottom: -3px; left: 4px; right: 4px; height: 3px; border-radius: 2px; background: inherit; opacity: .55; }
+  .seat-avail  { background: rgba(255,255,255,.08); color: rgba(255,255,255,.72); cursor: pointer; }
+  .seat-avail:hover { background: rgba(27,167,112,.4); color: #fff; }
+  .seat-sel    { background: #1ba770; color: #fff; cursor: pointer; box-shadow: 0 0 0 3px rgba(27,167,112,.28); }
+  .seat-booked { background: rgba(255,255,255,.035); color: rgba(255,255,255,.16); cursor: not-allowed; }
+  .rowlab { color: rgba(255,255,255,.4); font-size: 12px; font-weight: 600; width: 18px; text-align: center; }
+</style>
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased">
+
+<!-- ============ Top bar ============ -->
+<header class="sticky top-0 z-30 border-b border-hair bg-surface/90 backdrop-blur">
+  <div class="mx-auto flex h-14 max-w-4xl items-center justify-between px-4 lg:px-6">
+    <a href="../index.html" class="flex items-center gap-2.5">
+      <span class="brand-logo text-brand h-[17px] w-[31px]"></span>
+      <span class="text-[15px] font-extrabold tracking-tight">Eventa</span>
+    </a>
+    <div class="flex items-center gap-1.5">
+      <a id="back-link" href="../index.html" class="hidden rounded-lg px-3 py-1.5 text-[13px] font-medium text-muted transition hover:bg-line hover:text-ink sm:inline-flex sm:items-center sm:gap-1.5"><i class="hgi-stroke hgi-arrow-left-01 text-[15px]"></i>Back to event</a>
+      <button id="theme-btn" class="btn-icon bg-surface" title="Toggle theme"><i class="hgi-stroke hgi-moon-02 text-[18px]"></i></button>
+    </div>
+  </div>
+</header>
+
+<main class="mx-auto max-w-4xl px-4 pb-36 pt-6 lg:px-6">
+
+  <!-- event summary -->
+  <div class="mb-5">
+    <p class="text-[12px] font-semibold uppercase tracking-wider text-brand">Register</p>
+    <h1 id="ev-title" class="mt-1 text-[24px] font-extrabold tracking-tight sm:text-[28px]">Event</h1>
+    <p id="ev-meta" class="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px] text-muted"></p>
+  </div>
+
+  <!-- ticket type -->
+  <section class="mb-6">
+    <h2 class="mb-2 text-[13px] font-bold uppercase tracking-wide text-muted">1 · Ticket type</h2>
+    <div id="tiers" class="grid grid-cols-1 gap-3 sm:grid-cols-2"></div>
+  </section>
+
+  <!-- step 2: seats (reserved) OR quantity (GA / online) -->
+  <section>
+    <h2 id="step2-title" class="mb-2 text-[13px] font-bold uppercase tracking-wide text-muted">2 · Choose your seats</h2>
+
+    <!-- reserved: seat map -->
+    <div id="seat-block">
+      <div class="house overflow-hidden rounded-2xl p-5 sm:p-7">
+        <!-- stage -->
+        <div class="mb-6 flex flex-col items-center">
+          <svg viewBox="0 0 400 34" class="w-full max-w-md" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="stageg" x1="0" x2="1"><stop offset="0" stop-color="#1ba770" stop-opacity="0"/><stop offset=".5" stop-color="#1ba770"/><stop offset="1" stop-color="#1ba770" stop-opacity="0"/></linearGradient>
+            </defs>
+            <path d="M8 30 Q200 2 392 30" fill="none" stroke="url(#stageg)" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <span class="mt-2 text-[12px] font-semibold uppercase tracking-[0.35em] text-white/45">Stage</span>
+        </div>
+        <!-- seat grid -->
+        <div id="seatmap" class="flex flex-col items-center gap-2 overflow-x-auto"></div>
+        <!-- legend -->
+        <div class="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-white/10 pt-5 text-[12px] text-white/60">
+          <span class="inline-flex items-center gap-2"><span class="seat seat-sel !h-4 !w-4 !rounded-[4px]"></span>Selected</span>
+          <span class="inline-flex items-center gap-2"><span class="seat seat-avail !h-4 !w-4 !rounded-[4px]"></span>Available</span>
+          <span class="inline-flex items-center gap-2"><span class="seat seat-booked !h-4 !w-4 !rounded-[4px]"></span>Booked</span>
+        </div>
+      </div>
+      <p class="mt-2 text-center text-[12px] text-muted">Tap a seat to select. Up to 8 seats per booking.</p>
+    </div>
+
+    <!-- GA / online: quantity stepper -->
+    <div id="qty-block" class="hidden">
+      <div class="rounded-2xl border border-hair bg-surface p-6 text-center">
+        <span class="mx-auto grid h-12 w-12 place-items-center rounded-xl bg-brand-soft text-brand"><i id="qty-icon" class="hgi-stroke hgi-user-group text-[22px]"></i></span>
+        <p id="qty-note" class="mx-auto mt-3 max-w-sm text-[13px] text-muted">General admission — no assigned seats.</p>
+        <div class="mt-4 inline-flex items-center gap-5">
+          <button type="button" id="qty-minus" class="btn-icon bg-line" aria-label="Fewer tickets"><i class="hgi-stroke hgi-minus-sign text-[18px]"></i></button>
+          <span id="qty-val" class="w-12 text-center text-[26px] font-extrabold tnum">1</span>
+          <button type="button" id="qty-plus" class="btn-icon bg-line" aria-label="More tickets"><i class="hgi-stroke hgi-add-01 text-[18px]"></i></button>
+        </div>
+        <p class="mt-1 text-[12px] text-muted">tickets · up to 8</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- step 3: payment (paid events only) -->
+  <section id="pay-block" class="mt-6 hidden">
+    <h2 class="mb-2 text-[13px] font-bold uppercase tracking-wide text-muted">3 · Payment</h2>
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_300px]">
+      <!-- method + card -->
+      <div class="card p-4 sm:p-5">
+        <div class="grid grid-cols-2 gap-3" id="pay-method">
+          <button type="button" data-method="card" class="flex items-center gap-2.5 rounded-xl border border-hair bg-surface p-3 text-left transition hover:border-brand/40">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-credit-card text-[18px]"></i></span>
+            <span class="min-w-0 flex-1"><span class="block text-[13.5px] font-bold text-ink">Card</span><span class="block text-[11.5px] text-muted">Visa · Mastercard</span></span>
+            <span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border border-hair text-transparent" data-method-check><i class="hgi-stroke hgi-tick-02 text-[12px]"></i></span>
+          </button>
+          <button type="button" data-method="promptpay" class="flex items-center gap-2.5 rounded-xl border border-hair bg-surface p-3 text-left transition hover:border-brand/40">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-qr-code-01 text-[18px]"></i></span>
+            <span class="min-w-0 flex-1"><span class="block text-[13.5px] font-bold text-ink">PromptPay</span><span class="block text-[11.5px] text-muted">Thai QR · banking app</span></span>
+            <span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border border-hair text-transparent" data-method-check><i class="hgi-stroke hgi-tick-02 text-[12px]"></i></span>
+          </button>
+        </div>
+
+        <!-- card fields -->
+        <div id="pay-card" class="mt-4 space-y-3">
+          <div>
+            <label class="label">Card number</label>
+            <div class="relative">
+              <i class="hgi-stroke hgi-credit-card pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[16px] text-muted"></i>
+              <input id="pay-num" class="input pl-9 tnum" inputmode="numeric" autocomplete="cc-number" maxlength="19" placeholder="1234 5678 9012 3456" />
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div><label class="label">Expiry</label><input id="pay-exp" class="input tnum" inputmode="numeric" autocomplete="cc-exp" maxlength="5" placeholder="MM/YY" /></div>
+            <div><label class="label">CVC</label><input id="pay-cvc" class="input tnum" inputmode="numeric" autocomplete="cc-csc" maxlength="4" placeholder="123" /></div>
+          </div>
+          <div><label class="label">Name on card</label><input id="pay-name" class="input" autocomplete="cc-name" placeholder="Anong Pattana" /></div>
+        </div>
+
+        <!-- promptpay panel -->
+        <div id="pay-promptpay" class="mt-4 hidden">
+          <div class="rounded-xl border border-hair bg-canvas p-4 text-center">
+            <span class="mx-auto grid h-11 w-11 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-qr-code-01 text-[22px]"></i></span>
+            <p class="mt-2 text-[13px] font-semibold text-ink">Pay with PromptPay</p>
+            <p class="mt-0.5 text-[12px] text-muted">A QR code to scan with your banking app is shown after you continue.</p>
+          </div>
+        </div>
+
+        <p class="mt-3 flex items-center gap-1.5 text-[11.5px] text-muted"><i class="hgi-stroke hgi-square-lock-02 text-[14px] text-brand"></i>Encrypted checkout · demo — no real payment is taken.</p>
+      </div>
+
+      <!-- order summary -->
+      <div class="card h-fit p-4 sm:p-5">
+        <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Order summary</p>
+        <div class="mt-3 space-y-2 text-[13px]">
+          <div class="flex items-center justify-between gap-2"><span id="os-tickets" class="text-muted">Tickets</span><span id="os-subtotal" class="font-semibold text-ink tnum">฿0</span></div>
+          <div class="flex items-center justify-between gap-2"><span class="text-muted">Service fee</span><span id="os-fee" class="font-semibold text-ink tnum">฿0</span></div>
+          <div class="flex items-center justify-between gap-2 border-t border-hair pt-2"><span class="font-semibold text-ink">Total</span><span id="os-total" class="text-[16px] font-extrabold text-brand tnum">฿0</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ sticky summary bar ============ -->
+<div class="fixed inset-x-0 bottom-0 z-30 border-t border-hair bg-surface/95 backdrop-blur">
+  <div class="mx-auto flex max-w-4xl items-center justify-between gap-3 px-4 py-3 lg:px-6">
+    <div class="min-w-0">
+      <p id="sum-seats" class="truncate text-[13px] font-semibold text-ink">No seats selected</p>
+      <p id="sum-total" class="text-[12px] text-muted">Select seats to continue</p>
+    </div>
+    <button id="confirm" type="button" class="btn btn-primary shrink-0" disabled><i class="hgi-stroke hgi-ticket-02 text-[16px]"></i>Confirm registration</button>
+  </div>
+</div>
+
+<!-- ============ success overlay ============ -->
+<div id="done" class="fixed inset-0 z-40 place-items-center bg-black/50 p-4" style="display:none">
+  <div class="w-full max-w-sm rounded-2xl bg-surface p-6 text-center shadow-xl">
+    <span class="mx-auto grid h-14 w-14 place-items-center rounded-full bg-brand-soft text-brand"><i class="hgi-stroke hgi-checkmark-circle-02 text-[30px]"></i></span>
+    <h3 class="mt-4 text-[18px] font-bold tracking-tight">You're registered!</h3>
+    <p id="done-msg" class="mt-1 text-[13px] text-muted"></p>
+    <div class="mt-5 flex flex-col gap-2">
+      <a href="my-events.html" class="btn btn-primary w-full"><i class="hgi-stroke hgi-ticket-02 text-[16px]"></i>View my tickets</a>
+      <a href="../index.html" class="btn btn-soft w-full">Back to Eventa</a>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/landing-data.js"></script>
+<script>
+  /* theme toggle (standalone, matches portal/auth) */
+  (function () {
+    var b = document.getElementById('theme-btn');
+    function set(d) {
+      document.documentElement.classList.toggle('dark', d);
+      try { localStorage.setItem('eventa-theme', d ? 'dark' : 'light'); } catch (e) {}
+      b.querySelector('i').className = 'hgi-stroke ' + (d ? 'hgi-sun-03' : 'hgi-moon-02') + ' text-[18px]';
+    }
+    set(document.documentElement.classList.contains('dark'));
+    b.addEventListener('click', function () { set(!document.documentElement.classList.contains('dark')); });
+  })();
+</script>
+<script>
+(function () {
+  var ev = (window.EVENTA_getEvent && window.EVENTA_getEvent()) || { title: 'Event', dateText: '', timeText: '', venue: '', city: '', priceFrom: '฿0', slug: '' };
+  var slug = new URLSearchParams(location.search).get('event') || ev.slug || '';
+
+  /* header + back link */
+  document.getElementById('ev-title').textContent = ev.title || 'Event';
+  var meta = [];
+  if (ev.dateText) meta.push('<span class="inline-flex items-center gap-1.5"><i class="hgi-stroke hgi-calendar-03 text-[15px]"></i>' + ev.dateText + (ev.timeText ? ' · ' + ev.timeText : '') + '</span>');
+  if (ev.venue) meta.push('<span class="inline-flex items-center gap-1.5"><i class="hgi-stroke hgi-location-01 text-[15px]"></i>' + ev.venue + (ev.city ? ', ' + ev.city : '') + '</span>');
+  document.getElementById('ev-meta').innerHTML = meta.join('');
+  if (slug) document.getElementById('back-link').setAttribute('href', '../landing/aurora.html?event=' + encodeURIComponent(slug));
+
+  /* event type → registration mode: reserved (seat map) / ga (quantity) / online (quantity + join link) */
+  var params = new URLSearchParams(location.search);
+  var isOnline = ev.online === true || params.get('online') === '1';
+  var seatingMode = params.get('seating') || ev.seating || 'ga';
+  var mode = isOnline ? 'online' : (seatingMode === 'reserved' ? 'reserved' : 'ga');
+  document.getElementById('seat-block').classList.toggle('hidden', mode !== 'reserved');
+  document.getElementById('qty-block').classList.toggle('hidden', mode === 'reserved');
+  document.getElementById('step2-title').textContent = mode === 'reserved' ? '2 · Choose your seats' : '2 · How many tickets?';
+  if (mode !== 'reserved') {
+    document.getElementById('qty-note').textContent = mode === 'online'
+      ? 'Online event — a join link is emailed after you register.'
+      : 'General admission — no assigned seats, first come first served.';
+    document.getElementById('qty-icon').className = 'hgi-stroke ' + (mode === 'online' ? 'hgi-video-01' : 'hgi-user-group') + ' text-[22px]';
+  }
+
+  /* price: parse "฿480" → 480; Free/RSVP → 0 */
+  var base = parseInt(String(ev.priceFrom || '').replace(/[^\d]/g, ''), 10) || 0;
+  var free = base === 0;
+  function baht(n) { return free ? 'Free' : '฿' + n.toLocaleString('en-US'); }
+
+  var TIERS = [
+    { key: 'general', name: 'General Admission', desc: 'Standard seating', price: base },
+    { key: 'vip', name: 'VIP', desc: 'Front rows · priority entry', price: Math.round(base * 2.5 / 10) * 10 }
+  ];
+  var tier = TIERS[0];
+
+  /* render ticket tiers */
+  var tiersEl = document.getElementById('tiers');
+  function renderTiers() {
+    tiersEl.innerHTML = TIERS.map(function (tr) {
+      var on = tr.key === tier.key;
+      return '<button type="button" data-tier="' + tr.key + '" class="flex items-center justify-between rounded-xl border p-3.5 text-left transition ' +
+        (on ? 'border-brand bg-brand-soft ring-1 ring-brand' : 'border-hair bg-surface hover:border-brand/40') + '">' +
+        '<span><span class="block text-[14px] font-bold text-ink">' + tr.name + '</span><span class="block text-[12px] text-muted">' + tr.desc + '</span></span>' +
+        '<span class="flex items-center gap-2"><span class="text-[15px] font-bold ' + (on ? 'text-brand' : 'text-ink') + '">' + baht(tr.price) + '</span>' +
+        '<span class="grid h-5 w-5 place-items-center rounded-full border ' + (on ? 'border-brand bg-brand text-white' : 'border-hair text-transparent') + '"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i></span></span>' +
+        '</button>';
+    }).join('');
+  }
+  tiersEl.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-tier]'); if (!b) return;
+    tier = TIERS.filter(function (x) { return x.key === b.getAttribute('data-tier'); })[0];
+    renderTiers(); updateSummary();
+  });
+
+  /* ---- seat map ---- */
+  var ROWS = ['A', 'B', 'C', 'D', 'E', 'F', 'G'], COLS = 16, MAX = 8;
+  var BOOKED = {
+    A: [5, 8, 9, 12], B: [2, 3, 15, 16], C: [6, 7, 8, 11, 14, 15],
+    D: [3, 4, 5, 7, 11, 12, 16], E: [6, 7, 8, 9, 14, 15], F: [1, 16], G: []
+  };
+  var selected = [];   /* seat ids like "B8" */
+  var seatmap = document.getElementById('seatmap');
+
+  function isBooked(r, c) { return (BOOKED[r] || []).indexOf(c) !== -1; }
+  function seatClass(r, c) {
+    var id = r + c;
+    if (isBooked(r, c)) return 'seat seat-booked';
+    return 'seat ' + (selected.indexOf(id) !== -1 ? 'seat-sel' : 'seat-avail');
+  }
+  function renderSeats() {
+    var html = '';
+    ROWS.forEach(function (r) {
+      html += '<div class="flex items-center gap-1.5 sm:gap-2">';
+      html += '<span class="rowlab">' + r + '</span>';
+      for (var c = 1; c <= COLS; c++) {
+        html += '<button type="button" data-seat="' + r + c + '" class="' + seatClass(r, c) + '">' + c + '</button>';
+        if (c === 8) html += '<span class="w-3 sm:w-5"></span>';   /* centre aisle */
+      }
+      html += '<span class="rowlab">' + r + '</span>';
+      html += '</div>';
+    });
+    seatmap.innerHTML = html;
+  }
+  seatmap.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-seat]'); if (!b) return;
+    var id = b.getAttribute('data-seat'), r = id.charAt(0), c = +id.slice(1);
+    if (isBooked(r, c)) return;
+    var i = selected.indexOf(id);
+    if (i !== -1) selected.splice(i, 1);
+    else { if (selected.length >= MAX) return; selected.push(id); }
+    b.className = seatClass(r, c);
+    updateSummary();
+  });
+
+  /* natural sort of seat ids (row then number) */
+  function sortSeats(a) { return a.slice().sort(function (x, y) { return x.charAt(0) === y.charAt(0) ? (+x.slice(1)) - (+y.slice(1)) : x.charAt(0) < y.charAt(0) ? -1 : 1; }); }
+
+  /* ---- quantity stepper (GA / online) ---- */
+  var qty = 1, qtyVal = document.getElementById('qty-val');
+  function setQty(n) { qty = Math.max(1, Math.min(MAX, n)); if (qtyVal) qtyVal.textContent = qty; updateSummary(); }
+  var qm = document.getElementById('qty-minus'), qp = document.getElementById('qty-plus');
+  if (qm) qm.addEventListener('click', function () { setQty(qty - 1); });
+  if (qp) qp.addEventListener('click', function () { setQty(qty + 1); });
+
+  function count() { return mode === 'reserved' ? selected.length : qty; }
+
+  var sumSeats = document.getElementById('sum-seats'), sumTotal = document.getElementById('sum-total'), confirm = document.getElementById('confirm');
+  var payBlock = document.getElementById('pay-block');
+  function money(x) { return '฿' + x.toLocaleString('en-US'); }
+  function setTxt(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; }
+  function totals() {
+    var n = count(), subtotal = tier.price * n, fee = free ? 0 : Math.round(subtotal * 0.05);
+    return { n: n, subtotal: subtotal, fee: fee, total: subtotal + fee };
+  }
+  function updateSummary() {
+    var t = totals(), n = t.n;
+    /* order summary (paid events) */
+    setTxt('os-tickets', n > 0 ? (n + ' × ' + tier.name) : 'Tickets');
+    setTxt('os-subtotal', money(t.subtotal));
+    setTxt('os-fee', money(t.fee));
+    setTxt('os-total', money(t.total));
+    /* sticky bar */
+    if (mode === 'reserved' && n === 0) {
+      sumSeats.textContent = 'No seats selected';
+      sumTotal.textContent = 'Select seats to continue';
+      confirm.disabled = true;
+    } else {
+      sumSeats.textContent = mode === 'reserved'
+        ? n + (n === 1 ? ' seat' : ' seats') + ' · ' + sortSeats(selected).join(', ')
+        : n + (n === 1 ? ' ticket' : ' tickets') + ' · ' + tier.name;
+      sumTotal.innerHTML = free ? 'Free admission' : ('Total · <span class="font-semibold text-ink">' + money(t.total) + '</span>');
+      confirm.disabled = false;
+    }
+    /* button label */
+    confirm.innerHTML = free
+      ? '<i class="hgi-stroke hgi-ticket-02 text-[16px]"></i>Confirm registration'
+      : '<i class="hgi-stroke hgi-square-lock-02 text-[16px]"></i>' + (confirm.disabled ? 'Pay' : 'Pay ' + money(t.total));
+  }
+
+  /* ---- payment method toggle + card formatting (paid events) ---- */
+  var payMethod = 'card';
+  var payMethodEl = document.getElementById('pay-method');
+  function renderMethod() {
+    if (!payMethodEl) return;
+    payMethodEl.querySelectorAll('[data-method]').forEach(function (b) {
+      var on = b.dataset.method === payMethod;
+      b.classList.toggle('border-brand', on); b.classList.toggle('ring-1', on); b.classList.toggle('ring-brand', on); b.classList.toggle('border-hair', !on);
+      var chk = b.querySelector('[data-method-check]');
+      chk.classList.toggle('border-brand', on); chk.classList.toggle('bg-brand', on); chk.classList.toggle('text-white', on); chk.classList.toggle('border-hair', !on); chk.classList.toggle('text-transparent', !on);
+    });
+    document.getElementById('pay-card').classList.toggle('hidden', payMethod !== 'card');
+    document.getElementById('pay-promptpay').classList.toggle('hidden', payMethod !== 'promptpay');
+  }
+  if (payMethodEl) payMethodEl.addEventListener('click', function (e) { var b = e.target.closest('[data-method]'); if (b) { payMethod = b.dataset.method; renderMethod(); } });
+  var payNum = document.getElementById('pay-num');
+  if (payNum) payNum.addEventListener('input', function () { var v = payNum.value.replace(/\D/g, '').slice(0, 16); payNum.value = v.replace(/(.{4})(?=.)/g, '$1 '); });
+  var payExp = document.getElementById('pay-exp');
+  if (payExp) payExp.addEventListener('input', function () { var v = payExp.value.replace(/\D/g, '').slice(0, 4); payExp.value = v.length > 2 ? v.slice(0, 2) + '/' + v.slice(2) : v; });
+  var payCvc = document.getElementById('pay-cvc');
+  if (payCvc) payCvc.addEventListener('input', function () { payCvc.value = payCvc.value.replace(/\D/g, '').slice(0, 4); });
+
+  /* confirm → success overlay */
+  confirm.addEventListener('click', function () {
+    var t = totals(), n = t.n; if (n < 1) return;
+    var verb = n === 1 ? 'is' : 'are', s = function (x) { return '<span class="font-semibold text-ink">' + x + '</span>'; };
+    var what = mode === 'reserved'
+      ? (tier.name + (n === 1 ? ' seat ' : ' seats ') + s(sortSeats(selected).join(', ')))
+      : (s(n) + ' ' + tier.name + (n === 1 ? ' ticket' : ' tickets'));
+    var pay = free ? ' Free admission — no payment needed.' : (' You paid ' + s(money(t.total)) + ' via ' + (payMethod === 'card' ? 'card' : 'PromptPay') + '.');
+    var tail = mode === 'online' ? ' A join link will be emailed to you.' : '';
+    document.getElementById('done-msg').innerHTML =
+      'Your ' + what + ' for ' + s(ev.title || 'the event') + ' ' + verb + ' booked.' + pay + tail;
+    document.getElementById('done').style.display = 'grid';
+  });
+
+  if (payBlock && !free) payBlock.classList.remove('hidden');
+  renderMethod();
+  renderTiers();
+  if (mode === 'reserved') renderSeats();
+  updateSummary();
+})();
+</script>
+</body>
+</html>

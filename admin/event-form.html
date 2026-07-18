@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=53"></script>
-<link rel="stylesheet" href="../assets/app.css?v=53" />
+<script src="../assets/config.js?v=64"></script>
+<link rel="stylesheet" href="../assets/app.css?v=64" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" />
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 <style>
@@ -79,8 +79,8 @@
         <!-- ===== STEP 0 · DETAILS ===== -->
         <section data-step-panel="0" class="space-y-3">
           <div>
-            <h2 class="text-[20px] font-bold tracking-tight">Event details</h2>
-            <p class="mt-1 text-[13px] text-muted">Tell attendees what your event is, and when &amp; where it happens.</p>
+            <h2 class="text-[20px] font-bold tracking-tight">Basics</h2>
+            <p class="mt-1 text-[13px] text-muted">Tell attendees what your event is about.</p>
           </div>
 
           <!-- Basic info -->
@@ -120,6 +120,36 @@
               </div>
             </div>
           </section>
+
+          <!-- Cover image -->
+          <section class="card p-4">
+            <h3 class="text-[14px] font-bold tracking-tight">Cover image</h3>
+            <label class="mt-3 flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-hair p-8 text-center transition-colors hover:border-brand">
+              <span class="grid h-11 w-11 place-items-center rounded-full bg-brand-soft text-brand"><i class="hgi-stroke hgi-image-upload-01 text-[20px]"></i></span>
+              <p class="text-[13px] font-semibold text-ink">Drag &amp; drop or <span class="text-brand">browse</span></p>
+              <p class="text-[11px] text-muted">Recommended 1600×900px · PNG or JPG · up to 5MB</p>
+              <input type="file" class="hidden" accept="image/*" />
+            </label>
+          </section>
+
+          <!-- Highlights -->
+          <section class="card p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-[14px] font-bold tracking-tight">Highlights</h3>
+              <span class="text-[11px] text-muted">Shown on the landing page</span>
+            </div>
+            <p class="mt-1 text-[12px] text-muted">Short selling points for your event — pick an icon and write a label for each.</p>
+            <div id="highlight-rows" class="mt-3 space-y-2"></div>
+            <button type="button" id="add-highlight-row" class="btn btn-soft btn-sm mt-3"><i class="hgi-stroke hgi-add-01 text-[14px]"></i>Add highlight</button>
+          </section>
+        </section>
+
+        <!-- ===== STEP 1 · DATE & LOCATION ===== -->
+        <section data-step-panel="1" class="hidden space-y-3">
+          <div>
+            <h2 class="text-[20px] font-bold tracking-tight">Date &amp; location</h2>
+            <p class="mt-1 text-[13px] text-muted">When and where your event happens.</p>
+          </div>
 
           <!-- Date & time -->
           <section class="card p-4">
@@ -165,32 +195,75 @@
               </div>
             </div>
           </section>
+        </section>
 
-          <!-- Cover image -->
-          <section class="card p-4">
-            <h3 class="text-[14px] font-bold tracking-tight">Cover image</h3>
-            <label class="mt-3 flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-hair p-8 text-center transition-colors hover:border-brand">
-              <span class="grid h-11 w-11 place-items-center rounded-full bg-brand-soft text-brand"><i class="hgi-stroke hgi-image-upload-01 text-[20px]"></i></span>
-              <p class="text-[13px] font-semibold text-ink">Drag &amp; drop or <span class="text-brand">browse</span></p>
-              <p class="text-[11px] text-muted">Recommended 1600×900px · PNG or JPG · up to 5MB</p>
-              <input type="file" class="hidden" accept="image/*" />
-            </label>
-          </section>
+        <!-- ===== STEP 2 · SEATING ===== -->
+        <section data-step-panel="2" class="hidden space-y-3">
+          <style>
+            .efhouse{background:radial-gradient(120% 90% at 50% -10%, #17201c 0%, #0c110f 60%)}
+            .efseat{height:16px;width:16px;flex:none;border-radius:5px 5px 2px 2px;background:rgba(255,255,255,.16)}
+            .efseat-sel{background:#1ba770;box-shadow:0 0 0 2px rgba(27,167,112,.3)}
+            .efseat-booked{background:rgba(255,255,255,.05)}
+            .efrowlab{color:rgba(255,255,255,.5);font-size:10px;font-weight:600;width:14px;text-align:center;flex:none}
+          </style>
+          <div>
+            <h2 class="text-[20px] font-bold tracking-tight">Seating</h2>
+            <p class="mt-1 text-[13px] text-muted">Choose how attendees get a spot — and preview the seat map they'll see.</p>
+          </div>
 
-          <!-- Highlights -->
+          <!-- Seating -->
           <section class="card p-4">
-            <div class="flex items-center justify-between">
-              <h3 class="text-[14px] font-bold tracking-tight">Highlights</h3>
-              <span class="text-[11px] text-muted">Shown on the landing page</span>
+            <h3 class="text-[14px] font-bold tracking-tight">Admission</h3>
+            <p class="mt-1 text-[12px] text-muted">How attendees get a spot at your event.</p>
+            <div data-seating-inperson>
+              <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2" data-seating-toggle>
+                <button type="button" data-seating="ga" class="flex items-start gap-3 rounded-xl border border-hair bg-surface p-3.5 text-left transition hover:border-brand/40">
+                  <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-user-group text-[18px]"></i></span>
+                  <span class="min-w-0 flex-1">
+                    <span class="flex items-center justify-between gap-2"><span class="text-[13.5px] font-bold text-ink">General admission</span><span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border border-hair text-transparent" data-seating-check><i class="hgi-stroke hgi-tick-02 text-[12px]"></i></span></span>
+                    <span class="mt-0.5 block text-[12px] text-muted">No assigned seats — open or standing. Free or paid.</span>
+                  </span>
+                </button>
+                <button type="button" data-seating="reserved" class="flex items-start gap-3 rounded-xl border border-hair bg-surface p-3.5 text-left transition hover:border-brand/40">
+                  <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-seat-selector text-[18px]"></i></span>
+                  <span class="min-w-0 flex-1">
+                    <span class="flex items-center justify-between gap-2"><span class="text-[13.5px] font-bold text-ink">Reserved seating</span><span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border border-hair text-transparent" data-seating-check><i class="hgi-stroke hgi-tick-02 text-[12px]"></i></span></span>
+                    <span class="mt-0.5 block text-[12px] text-muted">Attendees pick their seat from a seat map at checkout.</span>
+                  </span>
+                </button>
+              </div>
+              <div class="mt-3 hidden rounded-xl border border-hair bg-canvas p-3.5" data-seating-config>
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Seat map</p>
+                <div class="mt-2 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:items-end">
+                  <div><label class="label">Rows</label><input id="ef-rows" class="input tnum" type="number" min="1" max="26" value="7" /></div>
+                  <div><label class="label">Seats / row</label><input id="ef-cols" class="input tnum" type="number" min="1" max="40" value="16" /></div>
+                  <div class="rounded-lg bg-brand-soft px-3 py-2 text-center"><span class="block text-[11px] text-muted">Total seats</span><span id="ef-seat-total" class="text-[16px] font-bold text-brand tnum">112</span></div>
+                </div>
+              </div>
+              <!-- live seat-map preview -->
+              <div class="mt-3 hidden" data-seating-preview>
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Preview — what attendees see</p>
+                <div class="efhouse mt-2 overflow-hidden rounded-2xl p-5">
+                  <div class="mb-4 flex flex-col items-center">
+                    <svg viewBox="0 0 400 28" class="w-full max-w-sm" preserveAspectRatio="none" aria-hidden="true"><path d="M8 24 Q200 2 392 24" fill="none" stroke="rgba(27,167,112,.7)" stroke-width="2.5" stroke-linecap="round"/></svg>
+                    <span class="mt-1.5 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/40">Stage</span>
+                  </div>
+                  <div id="ef-seat-preview" class="flex flex-col items-center gap-1.5 overflow-x-auto"></div>
+                  <div class="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 border-t border-white/10 pt-4 text-[11px] text-white/55">
+                    <span class="inline-flex items-center gap-1.5"><span class="efseat efseat-sel !h-3.5 !w-3.5"></span>Selected</span>
+                    <span class="inline-flex items-center gap-1.5"><span class="efseat !h-3.5 !w-3.5"></span>Available</span>
+                    <span class="inline-flex items-center gap-1.5"><span class="efseat efseat-booked !h-3.5 !w-3.5"></span>Booked</span>
+                  </div>
+                </div>
+                <p class="hint mt-2">The same green seat picker runs on the attendee ticket page.</p>
+              </div>
             </div>
-            <p class="mt-1 text-[12px] text-muted">Short selling points for your event — pick an icon and write a label for each.</p>
-            <div id="highlight-rows" class="mt-3 space-y-2"></div>
-            <button type="button" id="add-highlight-row" class="btn btn-soft btn-sm mt-3"><i class="hgi-stroke hgi-add-01 text-[14px]"></i>Add highlight</button>
+            <p class="mt-3 hidden inline-flex items-center gap-1.5 text-[12px] text-muted" data-seating-online><i class="hgi-stroke hgi-video-01 text-[14px]"></i>Online event — no seating. A join link is emailed after registration.</p>
           </section>
         </section>
 
         <!-- ===== STEP 1 · TICKETS ===== -->
-        <section data-step-panel="1" class="hidden space-y-3">
+        <section data-step-panel="3" class="hidden space-y-3">
           <div>
             <h2 class="text-[20px] font-bold tracking-tight">Tickets &amp; registration</h2>
             <p class="mt-1 text-[13px] text-muted">Add your ticket types, then set capacity and when registration is open.</p>
@@ -257,7 +330,7 @@
         </section>
 
         <!-- ===== STEP 2 · REVIEW & PUBLISH ===== -->
-        <section data-step-panel="2" class="hidden space-y-3">
+        <section data-step-panel="4" class="hidden space-y-3">
           <div>
             <h2 class="text-[20px] font-bold tracking-tight">Review &amp; publish</h2>
             <p class="mt-1 text-[13px] text-muted">Choose a landing-page template and set how your event appears.</p>
@@ -360,6 +433,7 @@
               <div class="flex items-center justify-between gap-2"><span class="text-muted">Event</span><span id="sum-title" class="max-w-[150px] truncate font-semibold text-ink">Tech Summit 2026</span></div>
               <div class="flex items-center justify-between gap-2"><span class="text-muted">Ticket types</span><span id="sum-tickets" class="font-semibold text-ink tnum">2</span></div>
               <div class="flex items-center justify-between gap-2"><span class="text-muted">Capacity</span><span id="sum-cap" class="font-semibold text-ink tnum">1,500</span></div>
+              <div class="flex items-center justify-between gap-2"><span class="text-muted">Seating</span><span id="sum-seating" class="font-semibold text-ink">General admission</span></div>
             </div>
           </div>
         </div>
@@ -371,7 +445,7 @@
   </main>
 </div>
 
-<script src="../assets/shell.js?v=53"></script>
+<script src="../assets/shell.js?v=64"></script>
 <script>
   /* focused create flow — hide the module sub-nav panel, keep the icon rail to exit */
   var modPanel = document.getElementById('panel');
@@ -387,6 +461,62 @@
     document.querySelectorAll('[data-loc-panel]').forEach(p => {
       p.classList.toggle('hidden', p.dataset.locPanel !== mode);
     });
+    const online = mode === 'online';
+    const si = document.querySelector('[data-seating-inperson]');
+    const so = document.querySelector('[data-seating-online]');
+    if (si) si.classList.toggle('hidden', online);
+    if (so) so.classList.toggle('hidden', !online);
+    updateSummary();
+  });
+
+  /* ---------- Seating: general admission / reserved (+ live seat-map preview) ---------- */
+  let seating = 'ga';
+  const seatToggle = document.querySelector('[data-seating-toggle]');
+  const seatConfig = document.querySelector('[data-seating-config]');
+  const seatPreview = document.querySelector('[data-seating-preview]');
+  const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  function renderSeatPreview() {
+    const wrap = document.getElementById('ef-seat-preview'); if (!wrap) return;
+    const rows = Math.max(1, Math.min(26, +(document.getElementById('ef-rows') || {}).value || 0));
+    const cols = Math.max(1, Math.min(40, +(document.getElementById('ef-cols') || {}).value || 0));
+    const selRow = Math.floor((rows - 1) / 2);
+    const isSel = (r, c) => r === selRow && c >= 3 && c <= Math.min(5, cols);
+    const isBooked = (r, c) => (r === 0 && (c === 2 || c === cols - 1)) || (r === rows - 1 && c === 4) || (r === selRow - 1 && c === cols - 2);
+    let html = '';
+    for (let r = 0; r < rows; r++) {
+      html += '<div class="flex items-center gap-1"><span class="efrowlab">' + LETTERS[r] + '</span>';
+      for (let c = 1; c <= cols; c++) {
+        const cls = isBooked(r, c) ? 'efseat efseat-booked' : isSel(r, c) ? 'efseat efseat-sel' : 'efseat';
+        html += '<span class="' + cls + '"></span>';
+        if (cols > 8 && c === Math.ceil(cols / 2)) html += '<span class="inline-block w-2 shrink-0"></span>';
+      }
+      html += '<span class="efrowlab">' + LETTERS[r] + '</span></div>';
+    }
+    wrap.innerHTML = html;
+  }
+  function renderSeating() {
+    if (!seatToggle) return;
+    seatToggle.querySelectorAll('[data-seating]').forEach(b => {
+      const on = b.dataset.seating === seating;
+      b.classList.toggle('border-brand', on); b.classList.toggle('ring-1', on); b.classList.toggle('ring-brand', on);
+      b.classList.toggle('border-hair', !on);
+      const chk = b.querySelector('[data-seating-check]');
+      chk.classList.toggle('border-brand', on); chk.classList.toggle('bg-brand', on); chk.classList.toggle('text-white', on);
+      chk.classList.toggle('border-hair', !on); chk.classList.toggle('text-transparent', !on);
+    });
+    const reserved = seating === 'reserved';
+    if (seatConfig) seatConfig.classList.toggle('hidden', !reserved);
+    if (seatPreview) seatPreview.classList.toggle('hidden', !reserved);
+    if (reserved) renderSeatPreview();
+    updateSummary();
+  }
+  if (seatToggle) seatToggle.addEventListener('click', e => {
+    const b = e.target.closest('[data-seating]'); if (!b) return;
+    seating = b.dataset.seating; renderSeating();
+  });
+  ['ef-rows', 'ef-cols'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', renderSeatPreview);
   });
 
   /* ---------- Tickets: add / remove rows ---------- */
@@ -483,7 +613,9 @@
 
   /* ---------- Wizard controller ---------- */
   const STEPS = [
-    { label: 'Details',           tip: 'Give your event a clear title and category, and set exactly when & where it happens. You can refine everything before publishing.' },
+    { label: 'Basics',            tip: 'Give your event a clear title and description, a cover image and a few highlights for the landing page.' },
+    { label: 'Date & location',   tip: 'Set exactly when your event runs, and whether it is in-person (with a venue) or online.' },
+    { label: 'Seating',           tip: 'General admission needs no seats. Reserved seating lets attendees pick their spot — preview the seat map here.' },
     { label: 'Tickets',           tip: 'Add at least one ticket type with a price and quantity, then set your total capacity and registration window.' },
     { label: 'Review & publish',  tip: 'Pick a landing-page template and review your setup. Publishing lets attendees register right away.' },
   ];
@@ -540,10 +672,19 @@
     if (sumTickets) sumTickets.textContent = document.querySelectorAll('#ticket-rows [data-ticket-row]').length;
     const cap = document.getElementById('ef-capacity');
     if (sumCap && cap) sumCap.textContent = Number(cap.value || 0).toLocaleString('en-US');
+    /* seat map total + seating summary */
+    const rows = +(document.getElementById('ef-rows') || {}).value || 0;
+    const cols = +(document.getElementById('ef-cols') || {}).value || 0;
+    const stEl = document.getElementById('ef-seat-total'); if (stEl) stEl.textContent = (rows * cols).toLocaleString('en-US');
+    const onlineBtn = document.querySelector('[data-loc="online"]');
+    const online = onlineBtn && onlineBtn.classList.contains('active');
+    const ss = document.getElementById('sum-seating');
+    if (ss) ss.textContent = online ? 'Online' : (seating === 'reserved' ? ('Reserved · ' + rows + '×' + cols) : 'General admission');
   }
   document.addEventListener('input', updateSummary);
 
   render();
+  renderSeating();
   updateSummary();
 
   /* ---------- Description rich-text editor (Quill) ---------- */

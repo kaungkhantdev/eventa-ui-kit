@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=53"></script>
-<link rel="stylesheet" href="../assets/app.css?v=53" />
+<script src="../assets/config.js?v=64"></script>
+<link rel="stylesheet" href="../assets/app.css?v=64" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="notifications">
 
@@ -27,435 +27,134 @@
         <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
         <div class="min-w-0">
           <h1 class="text-[22px] font-bold tracking-tight">Notifications</h1>
-          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Templates, announcements &amp; delivery log.</p>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Registrations, payments, feedback and things that need your attention.</p>
         </div>
       </div>
-      <div class="flex shrink-0 items-center gap-2.5"><button type="button" class="btn btn-primary shrink-0" data-open="announce-panel"><i class="hgi-stroke hgi-megaphone-01 text-[16px]"></i><span class="hidden sm:inline">Send announcement</span><span class="sm:hidden">Send</span></button><button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button><div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div></div>
+      <div class="flex shrink-0 items-center gap-2.5"><button id="mark-all" type="button" class="btn btn-ghost shrink-0"><i class="hgi-stroke hgi-tick-double-01 text-[16px]"></i><span class="hidden sm:inline">Mark all read</span><span class="sm:hidden">Read</span></button><button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button><div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div></div>
     </div>
 
-    <!-- tabs -->
-    <div data-tabs="#notifTabs" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
-      <button class="pilltab tab-active" data-tab="templates">Templates</button>
-      <button class="pilltab" data-tab="announcements">Announcements</button>
-      <button class="pilltab" data-tab="log">Log</button>
+    <!-- filter -->
+    <div class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button class="pilltab tab-active" data-filter="all">All<span class="pilltab-count" id="count-all">0</span></button>
+      <button class="pilltab" data-filter="unread">Unread<span class="pilltab-count" id="count-unread">0</span></button>
     </div>
 
-    <div id="notifTabs" class="mt-4">
+    <div id="feed" class="mt-4 space-y-4 rounded-2xl bg-surface p-2 sm:p-3"></div>
+    <p id="feed-empty" class="hidden py-10 text-center text-[13px] text-muted">You're all caught up — no unread notifications.</p>
+    <!-- JIT safelist for JS-inserted feed-row classes -->
+    <div class="hidden hover:bg-line bg-brand-soft/50 space-y-0.5"></div>
 
-      <!-- ============ TEMPLATES ============ -->
-      <div data-tab-panel="templates">
-        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
-
-          <!-- Registration confirmation -->
-          <div class="card flex flex-col gap-3 p-4">
-            <div class="flex items-center gap-3">
-              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-checkmark-badge-01 text-[18px]"></i></span>
-              <p class="text-[14px] font-semibold text-ink">Registration confirmation</p>
-            </div>
-            <p class="text-[12px] text-muted">Sent instantly when a registrant completes checkout for an event.</p>
-            <div class="flex flex-wrap items-center gap-1.5">
-              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
-              <span class="badge badge-green"><i class="hgi-stroke hgi-smart-phone-01 text-[12px]"></i>SMS</span>
-            </div>
-            <div class="mt-1 flex items-center justify-between border-t border-hair pt-3">
-              <div class="flex items-center gap-2">
-                <button type="button" class="demo-toggle flex h-5 w-9 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span></button>
-                <span class="text-[12px] font-medium text-muted">Active</span>
-              </div>
-              <button class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-edit-02 text-[14px]"></i>Edit</button>
-            </div>
-          </div>
-
-          <!-- Payment receipt -->
-          <div class="card flex flex-col gap-3 p-4">
-            <div class="flex items-center gap-3">
-              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-500 dark:bg-blue-500/15 dark:text-blue-300"><i class="hgi-stroke hgi-invoice-01 text-[18px]"></i></span>
-              <p class="text-[14px] font-semibold text-ink">Payment receipt</p>
-            </div>
-            <p class="text-[12px] text-muted">Sent after a successful payment with an itemized ticket breakdown.</p>
-            <div class="flex flex-wrap items-center gap-1.5">
-              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
-            </div>
-            <div class="mt-1 flex items-center justify-between border-t border-hair pt-3">
-              <div class="flex items-center gap-2">
-                <button type="button" class="demo-toggle flex h-5 w-9 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span></button>
-                <span class="text-[12px] font-medium text-muted">Active</span>
-              </div>
-              <button class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-edit-02 text-[14px]"></i>Edit</button>
-            </div>
-          </div>
-
-          <!-- Event reminder (24h) -->
-          <div class="card flex flex-col gap-3 p-4">
-            <div class="flex items-center gap-3">
-              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-amber-50 text-amber-500 dark:bg-amber-400/15 dark:text-amber-300"><i class="hgi-stroke hgi-clock-01 text-[18px]"></i></span>
-              <p class="text-[14px] font-semibold text-ink">Event reminder (24h)</p>
-            </div>
-            <p class="text-[12px] text-muted">Sent 24 hours before an event starts to help reduce no-shows.</p>
-            <div class="flex flex-wrap items-center gap-1.5">
-              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
-              <span class="badge badge-green"><i class="hgi-stroke hgi-smart-phone-01 text-[12px]"></i>SMS</span>
-            </div>
-            <div class="mt-1 flex items-center justify-between border-t border-hair pt-3">
-              <div class="flex items-center gap-2">
-                <button type="button" class="demo-toggle flex h-5 w-9 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span></button>
-                <span class="text-[12px] font-medium text-muted">Active</span>
-              </div>
-              <button class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-edit-02 text-[14px]"></i>Edit</button>
-            </div>
-          </div>
-
-          <!-- Waitlist offer -->
-          <div class="card flex flex-col gap-3 p-4">
-            <div class="flex items-center gap-3">
-              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-purple-50 text-purple-500 dark:bg-purple-500/15 dark:text-purple-300"><i class="hgi-stroke hgi-user-check-01 text-[18px]"></i></span>
-              <p class="text-[14px] font-semibold text-ink">Waitlist offer</p>
-            </div>
-            <p class="text-[12px] text-muted">Sent automatically when a spot opens up for someone on the waitlist.</p>
-            <div class="flex flex-wrap items-center gap-1.5">
-              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
-              <span class="badge badge-green"><i class="hgi-stroke hgi-smart-phone-01 text-[12px]"></i>SMS</span>
-            </div>
-            <div class="mt-1 flex items-center justify-between border-t border-hair pt-3">
-              <div class="flex items-center gap-2">
-                <button type="button" class="demo-toggle flex h-5 w-9 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span></button>
-                <span class="text-[12px] font-medium text-muted">Active</span>
-              </div>
-              <button class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-edit-02 text-[14px]"></i>Edit</button>
-            </div>
-          </div>
-
-          <!-- Cancellation notice -->
-          <div class="card flex flex-col gap-3 p-4">
-            <div class="flex items-center gap-3">
-              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300"><i class="hgi-stroke hgi-cancel-circle text-[18px]"></i></span>
-              <p class="text-[14px] font-semibold text-ink">Cancellation notice</p>
-            </div>
-            <p class="text-[12px] text-muted">Sent when an event is cancelled or a registration is refunded.</p>
-            <div class="flex flex-wrap items-center gap-1.5">
-              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
-            </div>
-            <div class="mt-1 flex items-center justify-between border-t border-hair pt-3">
-              <div class="flex items-center gap-2">
-                <button type="button" class="demo-toggle flex h-5 w-9 items-center rounded-full bg-brand p-0.5"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span></button>
-                <span class="text-[12px] font-medium text-muted">Active</span>
-              </div>
-              <button class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-edit-02 text-[14px]"></i>Edit</button>
-            </div>
-          </div>
-
-          <!-- Post-event thank-you -->
-          <div class="card flex flex-col gap-3 p-4">
-            <div class="flex items-center gap-3">
-              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gray-100 text-gray-500 dark:bg-white/10 dark:text-gray-300"><i class="hgi-stroke hgi-star text-[18px]"></i></span>
-              <p class="text-[14px] font-semibold text-ink">Post-event thank-you</p>
-            </div>
-            <p class="text-[12px] text-muted">Sent the day after an event with a short feedback survey link.</p>
-            <div class="flex flex-wrap items-center gap-1.5">
-              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
-            </div>
-            <div class="mt-1 flex items-center justify-between border-t border-hair pt-3">
-              <div class="flex items-center gap-2">
-                <button type="button" class="demo-toggle flex h-5 w-9 items-center rounded-full bg-line p-0.5"><span class="h-4 w-4 rounded-full bg-white shadow"></span></button>
-                <span class="text-[12px] font-medium text-muted">Inactive</span>
-              </div>
-              <button class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-edit-02 text-[14px]"></i>Edit</button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- ============ ANNOUNCEMENTS ============ -->
-      <div data-tab-panel="announcements" class="hidden">
-        <div class="card p-4">
-          <div class="flex flex-wrap items-start justify-between gap-3">
-            <div>
-              <h2 class="text-[15px] font-bold tracking-tight">Sent announcements</h2>
-              <p class="mt-0.5 text-[12px] text-muted">Broadcast messages sent to registrants, checked-in attendees or your waitlist.</p>
-            </div>
-            <button type="button" class="btn btn-primary btn-sm shrink-0" data-open="announce-panel"><i class="hgi-stroke hgi-megaphone-01 text-[14px]"></i>Send announcement</button>
-          </div>
-        </div>
-
-        <div class="card mt-3 p-4">
-          <div class="flex items-center gap-3 py-3">
-            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-megaphone-01 text-[18px]"></i></span>
-            <div class="min-w-0 flex-1">
-              <p class="truncate text-[13px] font-semibold text-ink">Venue change notice</p>
-              <p class="mt-0.5 truncate text-[11px] text-muted tnum">Tech Summit 2026 · 1,340 recipients · Jul 5, 2026</p>
-            </div>
-            <div class="hidden items-center gap-1.5 sm:flex">
-              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
-              <span class="badge badge-green"><i class="hgi-stroke hgi-smart-phone-01 text-[12px]"></i>SMS</span>
-            </div>
-            <span class="badge badge-green shrink-0"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Sent</span>
-          </div>
-          <div class="flex items-center gap-3 border-t border-line py-3">
-            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-megaphone-01 text-[18px]"></i></span>
-            <div class="min-w-0 flex-1">
-              <p class="truncate text-[13px] font-semibold text-ink">Early bird ends tonight</p>
-              <p class="mt-0.5 truncate text-[11px] text-muted tnum">Bangkok Jazz Night · 860 recipients · Jul 2, 2026</p>
-            </div>
-            <div class="hidden items-center gap-1.5 sm:flex">
-              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
-            </div>
-            <span class="badge badge-green shrink-0"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Sent</span>
-          </div>
-          <div class="flex items-center gap-3 border-t border-line py-3">
-            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-megaphone-01 text-[18px]"></i></span>
-            <div class="min-w-0 flex-1">
-              <p class="truncate text-[13px] font-semibold text-ink">Parking &amp; directions</p>
-              <p class="mt-0.5 truncate text-[11px] text-muted tnum">Sunrise Yoga Retreat · 240 recipients · Jun 28, 2026</p>
-            </div>
-            <div class="hidden items-center gap-1.5 sm:flex">
-              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
-              <span class="badge badge-green"><i class="hgi-stroke hgi-smart-phone-01 text-[12px]"></i>SMS</span>
-            </div>
-            <span class="badge badge-green shrink-0"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Sent</span>
-          </div>
-          <div class="flex items-center gap-3 border-t border-line py-3">
-            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-megaphone-01 text-[18px]"></i></span>
-            <div class="min-w-0 flex-1">
-              <p class="truncate text-[13px] font-semibold text-ink">Schedule update: keynote moved to Hall B</p>
-              <p class="mt-0.5 truncate text-[11px] text-muted tnum">Tech Summit 2026 · 1,340 recipients · Jun 20, 2026</p>
-            </div>
-            <div class="hidden items-center gap-1.5 sm:flex">
-              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
-            </div>
-            <span class="badge badge-green shrink-0"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Sent</span>
-          </div>
-          <div class="flex items-center gap-3 border-t border-line py-3">
-            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-500 dark:bg-blue-500/15 dark:text-blue-300"><i class="hgi-stroke hgi-megaphone-01 text-[18px]"></i></span>
-            <div class="min-w-0 flex-1">
-              <p class="truncate text-[13px] font-semibold text-ink">Reminder: bring your ticket QR code</p>
-              <p class="mt-0.5 truncate text-[11px] text-muted tnum">Thai Street Food Festival · 512 recipients · Jul 15, 2026</p>
-            </div>
-            <div class="hidden items-center gap-1.5 sm:flex">
-              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
-              <span class="badge badge-green"><i class="hgi-stroke hgi-smart-phone-01 text-[12px]"></i>SMS</span>
-            </div>
-            <span class="badge badge-blue shrink-0"><i class="hgi-stroke hgi-time-schedule text-[12px]"></i>Scheduled</span>
-          </div>
-          <div class="flex items-center gap-3 border-t border-line py-3">
-            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-megaphone-01 text-[18px]"></i></span>
-            <div class="min-w-0 flex-1">
-              <p class="truncate text-[13px] font-semibold text-ink">Thank you for attending!</p>
-              <p class="mt-0.5 truncate text-[11px] text-muted tnum">UX Bangkok Meetup · 180 recipients · Jun 10, 2026</p>
-            </div>
-            <div class="hidden items-center gap-1.5 sm:flex">
-              <span class="badge badge-blue"><i class="hgi-stroke hgi-mail-01 text-[12px]"></i>Email</span>
-            </div>
-            <span class="badge badge-green shrink-0"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>Sent</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- ============ LOG ============ -->
-      <div data-tab-panel="log" class="hidden">
-        <section class="card p-4">
-          <div class="flex items-center justify-between">
-            <h2 class="text-[15px] font-bold tracking-tight">Delivery log</h2>
-            <p class="text-[12px] text-muted">Delivery history</p>
-          </div>
-          <div class="mt-2 overflow-x-auto">
-            <table class="data-table min-w-[820px]">
-              <thead>
-                <tr><th>Recipient</th><th>Type</th><th>Channel</th><th>Status</th><th class="text-right">Time</th></tr>
-              </thead>
-              <tbody id="notif-rows" class="text-[13px]"></tbody>
-            </table>
-          </div>
-
-          <div id="notif-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
-            <p id="notif-showing"></p>
-            <div class="flex items-center gap-3">
-              <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
-                <select id="notif-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
-                  <option>10</option><option>20</option><option>30</option><option>50</option>
-                </select>
-              </label>
-              <div class="flex gap-1">
-                <button id="notif-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
-                <button id="notif-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-    </div>
-
-    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+    <p class="mt-6 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
   </main>
 </div>
 
-<!-- Send announcement panel -->
-<aside class="panel" id="announce-panel">
-  <header class="flex items-center justify-between border-b border-hair p-4">
-    <h3 class="text-[15px] font-bold tracking-tight">Send announcement</h3>
-    <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
-  </header>
-  <div class="flex-1 space-y-4 overflow-y-auto p-4">
-    <div>
-      <label class="label">Event</label>
-      <select data-event-picker="catalog" class="select">
-        <option>All events</option>
-        <option>Tech Summit 2026</option>
-        <option>Bangkok Jazz Night</option>
-        <option>Sunrise Yoga Retreat</option>
-        <option>Thai Street Food Festival</option>
-        <option>UX Bangkok Meetup</option>
-      </select>
-    </div>
-    <div>
-      <label class="label">Audience</label>
-      <select class="select">
-        <option>All registrants</option>
-        <option>Checked-in attendees</option>
-        <option>Waitlist</option>
-      </select>
-    </div>
-    <div>
-      <label class="label">Channel</label>
-      <div class="flex gap-2">
-        <label class="flex flex-1 cursor-pointer items-center gap-2 rounded-lg border border-hair px-3 py-2 text-[13px] text-ink">
-          <input type="checkbox" class="h-3.5 w-3.5 accent-brand" checked />
-          <i class="hgi-stroke hgi-mail-01 text-[15px] text-muted"></i>Email
-        </label>
-        <label class="flex flex-1 cursor-pointer items-center gap-2 rounded-lg border border-hair px-3 py-2 text-[13px] text-ink">
-          <input type="checkbox" class="h-3.5 w-3.5 accent-brand" checked />
-          <i class="hgi-stroke hgi-smart-phone-01 text-[15px] text-muted"></i>SMS
-        </label>
-      </div>
-    </div>
-    <div>
-      <label class="label">Subject</label>
-      <input type="text" class="input" placeholder="e.g. Venue change for Tech Summit 2026" />
-    </div>
-    <div>
-      <label class="label">Message</label>
-      <textarea class="textarea" placeholder="Write your announcement…" rows="5"></textarea>
-      <p class="hint">Recipients receive this as an email and/or SMS depending on the channels selected above.</p>
-    </div>
-    <div>
-      <label class="label">Delivery</label>
-      <div class="segmented w-full" data-send-toggle>
-        <button type="button" class="active flex-1" data-mode="now">Send now</button>
-        <button type="button" class="flex-1" data-mode="schedule">Schedule</button>
-      </div>
-    </div>
-    <div id="announce-schedule-field" class="hidden">
-      <label class="label">Send date &amp; time</label>
-      <input type="datetime-local" class="input" />
-    </div>
-  </div>
-  <footer class="flex gap-2 border-t border-hair p-4">
-    <button class="btn btn-soft flex-1" data-close>Cancel</button>
-    <button class="btn btn-primary flex-1" data-close>Send</button>
-  </footer>
-</aside>
-
-<script src="../assets/shell.js?v=53"></script>
-<script>
-  // Send now / Schedule segmented control toggles the date field
-  document.querySelectorAll('[data-send-toggle]').forEach(wrap => {
-    wrap.addEventListener('click', e => {
-      const btn = e.target.closest('button'); if (!btn) return;
-      [...wrap.children].forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const field = document.getElementById('announce-schedule-field');
-      if (field) field.classList.toggle('hidden', btn.dataset.mode !== 'schedule');
-    });
-  });
-  // Generic demo toggle switches (e.g. template Active/Inactive)
-  document.querySelectorAll('.demo-toggle').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const on = btn.classList.toggle('bg-brand');
-      btn.classList.toggle('bg-line', !on);
-      const knob = btn.querySelector('span');
-      if (knob) knob.classList.toggle('translate-x-4', on);
-      const label = btn.parentElement.querySelector('span:last-child');
-      if (label) label.textContent = on ? 'Active' : 'Inactive';
-    });
-  });
-</script>
+<script src="../assets/shell.js?v=64"></script>
 <script>
 (function () {
-  var nf = function (n) { return n.toLocaleString('en-US'); };
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
-  var CHAN = {
-    email: ['badge-blue', 'hgi-mail-01', 'Email'],
-    sms: ['badge-green', 'hgi-smart-phone-01', 'SMS']
+  /* Icon tints per notification kind */
+  var TINT = {
+    registration: 'bg-brand-soft text-brand',
+    payment:      'bg-blue-50 text-blue-500 dark:bg-blue-500/15 dark:text-blue-300',
+    sales:        'bg-amber-50 text-amber-500 dark:bg-amber-400/15 dark:text-amber-300',
+    feedback:     'bg-violet-50 text-violet-500 dark:bg-violet-500/15 dark:text-violet-300',
+    payout:       'bg-brand-soft text-brand',
+    alert:        'bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300',
+    task:         'bg-gray-100 text-gray-500 dark:bg-white/10 dark:text-gray-300'
   };
-  var STAT = {
-    delivered: ['badge-green', 'hgi-tick-02', 'Delivered'],
-    opened: ['badge-purple', 'hgi-eye', 'Opened'],
-    sent: ['badge-blue', 'hgi-mail-send-01', 'Sent'],
-    failed: ['badge-red', 'hgi-alert-circle', 'Failed']
-  };
-  function badge(map, key) { var m = map[key]; return '<span class="badge ' + m[0] + '"><i class="hgi-stroke ' + m[1] + ' text-[12px]"></i>' + m[2] + '</span>'; }
 
-  /* ---------- DATA: 10 seeded rows (verbatim) + 14 more = 24 notifications ---------- */
-  var DATA = [
-    { initials: 'AP', name: 'Anong P.', email: 'anong.p@gmail.com', type: 'Registration confirmation', channel: 'email', status: 'delivered', time: 'Jul 9 · 10:24' },
-    { initials: 'ST', name: 'Somchai T.', email: 'somchai.t@hotmail.com', type: 'Payment receipt', channel: 'email', status: 'opened', time: 'Jul 9 · 10:03' },
-    { initials: 'PS', name: 'Ploy S.', email: 'ploy.s@gmail.com', type: 'Event reminder (24h)', channel: 'sms', status: 'sent', time: 'Jul 9 · 09:47' },
-    { initials: 'JW', name: 'James W.', email: 'james.wilson@gmail.com', type: 'Cancellation notice', channel: 'email', status: 'delivered', time: 'Jul 8 · 18:12' },
-    { initials: 'ML', name: 'Mei L.', email: 'mei.lin@outlook.com', type: 'Waitlist offer', channel: 'email', status: 'opened', time: 'Jul 8 · 16:30' },
-    { initials: 'NK', name: 'Nutcha K.', email: 'nutcha.k@gmail.com', type: 'Venue change notice', channel: 'sms', status: 'failed', time: 'Jul 8 · 14:05' },
-    { initials: 'DC', name: 'David C.', email: 'david.chen@gmail.com', type: 'Registration confirmation', channel: 'email', status: 'delivered', time: 'Jul 8 · 11:22' },
-    { initials: 'KR', name: 'Kanya R.', email: 'kanya.r@yahoo.com', type: 'Post-event thank-you', channel: 'email', status: 'sent', time: 'Jul 7 · 20:15' },
-    { initials: 'AB', name: 'Arthit B.', email: 'arthit.b@gmail.com', type: 'Payment receipt', channel: 'email', status: 'delivered', time: 'Jul 7 · 15:48' },
-    { initials: 'SM', name: 'Sofia M.', email: 'sofia.m@gmail.com', type: 'Event reminder (24h)', channel: 'sms', status: 'delivered', time: 'Jul 7 · 09:10' },
-    { initials: 'WC', name: 'Wichai C.', email: 'wichai.c@gmail.com', type: 'Registration confirmation', channel: 'email', status: 'delivered', time: 'Jul 6 · 22:40' },
-    { initials: 'GH', name: 'Grace H.', email: 'grace.harris@outlook.com', type: 'Waitlist offer', channel: 'email', status: 'opened', time: 'Jul 6 · 19:05' },
-    { initials: 'NP', name: 'Nattapong P.', email: 'nattapong.p@gmail.com', type: 'Event reminder (24h)', channel: 'sms', status: 'delivered', time: 'Jul 6 · 17:33' },
-    { initials: 'RK', name: 'Ravi K.', email: 'ravi.kumar@gmail.com', type: 'Payment receipt', channel: 'email', status: 'sent', time: 'Jul 6 · 12:18' },
-    { initials: 'SB', name: 'Suda B.', email: 'suda.b@yahoo.com', type: 'Cancellation notice', channel: 'email', status: 'failed', time: 'Jul 5 · 21:50' },
-    { initials: 'EM', name: 'Emma M.', email: 'emma.davies@gmail.com', type: 'Registration confirmation', channel: 'email', status: 'delivered', time: 'Jul 5 · 16:42' },
-    { initials: 'KP', name: 'Kittisak P.', email: 'kittisak.p@hotmail.com', type: 'Post-event thank-you', channel: 'email', status: 'opened', time: 'Jul 5 · 14:09' },
-    { initials: 'YN', name: 'Yuki N.', email: 'yuki.nakamura@outlook.com', type: 'Event reminder (24h)', channel: 'sms', status: 'delivered', time: 'Jul 5 · 08:55' },
-    { initials: 'PC', name: 'Preeya C.', email: 'preeya.c@gmail.com', type: 'Venue change notice', channel: 'sms', status: 'sent', time: 'Jul 4 · 20:21' },
-    { initials: 'OK', name: 'Omar K.', email: 'omar.k@gmail.com', type: 'Payment receipt', channel: 'email', status: 'delivered', time: 'Jul 4 · 15:37' },
-    { initials: 'SW', name: 'Siriporn W.', email: 'siriporn.w@yahoo.com', type: 'Waitlist offer', channel: 'email', status: 'delivered', time: 'Jul 4 · 11:14' },
-    { initials: 'LS', name: 'Lucas S.', email: 'lucas.silva@gmail.com', type: 'Registration confirmation', channel: 'email', status: 'opened', time: 'Jul 3 · 19:48' },
-    { initials: 'MK', name: 'Malee K.', email: 'malee.k@gmail.com', type: 'Cancellation notice', channel: 'email', status: 'delivered', time: 'Jul 3 · 13:26' },
-    { initials: 'DK', name: 'Daniel K.', email: 'daniel.kim@outlook.com', type: 'Event reminder (24h)', channel: 'sms', status: 'failed', time: 'Jul 3 · 09:02' }
+  /* group -> list of notifications (newest first). recent groups show by default; older reveal via "Show older". */
+  var GROUPS = [
+    { label: 'Today', recent: true, items: [
+      { kind: 'registration', icon: 'hgi-user-add-01',      title: 'New registration',        body: 'Anong Pattana joined <b class="font-semibold text-ink">Tech Summit 2026</b>',            time: '2 min ago',  unread: true },
+      { kind: 'payment',      icon: 'hgi-wallet-01',         title: 'Payment received',        body: '฿1,250 from Ploy Srisai',                                                                time: '18 min ago', unread: true },
+      { kind: 'sales',        icon: 'hgi-ticket-01',         title: 'Almost sold out',         body: 'VIP Access is <b class="font-semibold text-ink">92% sold</b> for Tech Summit 2026',      time: '1 hr ago',   unread: true },
+      { kind: 'task',         icon: 'hgi-note-edit',         title: 'Registration form needs approval', body: '3 pending registrations for Tech Summit 2026',                                 time: '2 hr ago',   unread: false },
+      { kind: 'alert',        icon: 'hgi-alert-circle',      title: 'Payment declined',        body: "Mia Thompson's payment was declined for Bangkok Jazz Night",                             time: '3 hr ago',   unread: false }
+    ]},
+    { label: 'Yesterday', recent: true, items: [
+      { kind: 'feedback',     icon: 'hgi-star',              title: 'New feedback',            body: 'Bangkok Jazz Night rated <b class="font-semibold text-ink">4.8★</b>',                     time: 'Yesterday',  unread: false },
+      { kind: 'alert',        icon: 'hgi-alert-02',          title: 'Speaker not confirmed',   body: 'Sunrise Yoga Retreat still has 1 unconfirmed speaker',                                   time: 'Yesterday',  unread: false },
+      { kind: 'task',         icon: 'hgi-message-question',  title: 'Vendor reply pending',    body: 'Awaiting catering quote for Tech Summit 2026',                                           time: 'Yesterday',  unread: false }
+    ]},
+    { label: 'Earlier this week', recent: true, items: [
+      { kind: 'payout',       icon: 'hgi-dollar-circle',     title: 'Payout completed',        body: '฿48,290 was sent to your bank account',                                                  time: 'Jul 15',     unread: false },
+      { kind: 'registration', icon: 'hgi-user-add-01',       title: '24 new registrations',    body: 'This week for <b class="font-semibold text-ink">Thai Street Food Festival</b>',           time: 'Jul 14',     unread: false }
+    ]},
+    { label: 'Last week', recent: false, items: [
+      { kind: 'payout',       icon: 'hgi-dollar-circle',     title: 'Payout completed',        body: '฿32,100 was sent to your bank account',                                                  time: 'Jul 11',     unread: false },
+      { kind: 'registration', icon: 'hgi-user-add-01',       title: '18 new registrations',    body: 'For <b class="font-semibold text-ink">Bangkok Jazz Night</b>',                           time: 'Jul 10',     unread: false },
+      { kind: 'feedback',     icon: 'hgi-star',              title: 'New feedback',            body: 'UX Bangkok Meetup rated <b class="font-semibold text-ink">4.7★</b>',                      time: 'Jul 9',      unread: false },
+      { kind: 'alert',        icon: 'hgi-alert-circle',      title: 'Low ticket inventory',    body: 'Only 8 VIP tickets left for Thai Street Food Festival',                                   time: 'Jul 8',      unread: false }
+    ]}
   ];
 
-  function rowHTML(r) {
-    return '<tr>' +
-      '<td><div class="flex items-center gap-2"><span class="avatar h-8 w-8 text-[11px]">' + esc(r.initials) + '</span><div class="min-w-0 leading-tight"><p class="font-medium text-ink">' + esc(r.name) + '</p><p class="text-[11px] text-muted">' + esc(r.email) + '</p></div></div></td>' +
-      '<td class="text-muted">' + esc(r.type) + '</td>' +
-      '<td>' + badge(CHAN, r.channel) + '</td>' +
-      '<td>' + badge(STAT, r.status) + '</td>' +
-      '<td class="text-right text-muted tnum">' + esc(r.time) + '</td>' +
-    '</tr>';
+  function itemHTML(n) {
+    var tint = TINT[n.kind] || TINT.task;
+    return '<div class="flex items-start gap-3 rounded-xl px-3 py-3 transition hover:bg-line' + (n.unread ? ' bg-brand-soft/50' : '') + '" data-unread="' + (n.unread ? '1' : '0') + '">' +
+      '<span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl ' + tint + '"><i class="hgi-stroke ' + n.icon + ' text-[18px]"></i></span>' +
+      '<div class="min-w-0 flex-1">' +
+        '<div class="flex items-center gap-2"><p class="text-[13px] font-semibold text-ink">' + esc(n.title) + '</p>' + (n.unread ? '<span class="h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>' : '') + '</div>' +
+        '<p class="mt-0.5 text-[12px] leading-snug text-muted">' + n.body + '</p>' +
+      '</div>' +
+      '<span class="shrink-0 whitespace-nowrap text-[11px] text-muted tnum">' + esc(n.time) + '</span>' +
+    '</div>';
   }
 
-  var tbody = document.getElementById('notif-rows');
-  var elShowing = document.getElementById('notif-showing');
-  var elPrev = document.getElementById('notif-prev');
-  var elNext = document.getElementById('notif-next');
-  var state = { page: 0, size: 10 };
+  var feed = document.getElementById('feed');
+  var elEmpty = document.getElementById('feed-empty');
+  var cAll = document.getElementById('count-all');
+  var cUnread = document.getElementById('count-unread');
+  var filter = 'all';
+  var showOlder = false;
+
+  function counts() {
+    var all = 0, unread = 0;
+    GROUPS.forEach(function (g) { g.items.forEach(function (n) { all++; if (n.unread) unread++; }); });
+    return { all: all, unread: unread };
+  }
+  function hasOlder() {
+    return GROUPS.some(function (g) { return !g.recent && g.items.some(function (n) { return filter === 'all' || n.unread; }); });
+  }
 
   function render() {
-    var list = DATA, total = list.length, pages = Math.max(1, Math.ceil(total / state.size));
-    if (state.page >= pages) state.page = pages - 1;
-    if (state.page < 0) state.page = 0;
-    var start = state.page * state.size, slice = list.slice(start, start + state.size);
-    tbody.innerHTML = slice.map(rowHTML).join('');
-    if (total === 0) { elShowing.textContent = 'No notifications'; }
-    else { elShowing.innerHTML = 'Showing <span class="font-semibold text-ink">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> notifications'; }
-    elPrev.disabled = total === 0 || state.page === 0;
-    elNext.disabled = total === 0 || state.page >= pages - 1;
+    var html = '';
+    GROUPS.forEach(function (g) {
+      if (!g.recent && !showOlder) return;
+      var items = g.items.filter(function (n) { return filter === 'all' || n.unread; });
+      if (!items.length) return;
+      html += '<section><h2 class="mb-2 px-3 text-[11px] font-semibold uppercase tracking-wider text-muted">' + esc(g.label) + '</h2>' +
+              '<div class="space-y-0.5">' + items.map(itemHTML).join('') + '</div></section>';
+    });
+    if (!showOlder && hasOlder()) {
+      html += '<div class="px-1 pt-1 text-center"><button id="show-older" type="button" class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-arrow-down-01 text-[14px]"></i>Show older activity</button></div>';
+    }
+    feed.innerHTML = html;
+    feed.classList.toggle('hidden', html === '');
+    var c = counts();
+    cAll.textContent = c.all;
+    cUnread.textContent = c.unread;
+    elEmpty.classList.toggle('hidden', !(filter === 'unread' && c.unread === 0));
   }
 
-  document.getElementById('notif-size').addEventListener('change', function () { state.size = +this.value; state.page = 0; render(); });
-  elPrev.addEventListener('click', function () { if (state.page > 0) { state.page--; render(); } });
-  elNext.addEventListener('click', function () { state.page++; render(); });
+  feed.addEventListener('click', function (e) {
+    if (e.target.closest('#show-older')) { showOlder = true; render(); }
+  });
+
+  document.querySelectorAll('[data-filter]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('[data-filter]').forEach(function (b) { b.classList.remove('tab-active'); });
+      btn.classList.add('tab-active');
+      filter = btn.dataset.filter; showOlder = false;
+      render();
+    });
+  });
+
+  document.getElementById('mark-all').addEventListener('click', function () {
+    GROUPS.forEach(function (g) { g.items.forEach(function (n) { n.unread = false; }); });
+    render();
+  });
 
   render();
 })();

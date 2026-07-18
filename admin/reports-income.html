@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=53"></script>
-<link rel="stylesheet" href="../assets/app.css?v=53" />
+<script src="../assets/config.js?v=64"></script>
+<link rel="stylesheet" href="../assets/app.css?v=64" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="reports-income">
 
@@ -26,8 +26,8 @@
       <div class="flex min-w-0 items-center gap-3">
         <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
         <div class="min-w-0">
-          <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Reports</p>
           <h1 class="text-[22px] font-bold tracking-tight">Income</h1>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Gross revenue, refunds &amp; fees across all events.</p>
         </div>
       </div>
       <div class="flex items-center gap-2">
@@ -37,13 +37,11 @@
       </div>
     </div>
 
-    <!-- filter bar: date range + event -->
-    <div class="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-      <div class="segmented w-fit" id="range-toggle">
-        <button data-range="7d">7 days</button>
-        <button data-range="30d">30 days</button>
-        <button data-range="90d">90 days</button>
-        <button data-range="year" class="active">Year</button>
+    <!-- filter bar: search + event -->
+    <div class="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full sm:w-64">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="inc-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search events…" />
       </div>
       <div class="relative w-full sm:w-52">
         <i class="hgi-stroke hgi-calendar-03 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-brand"></i>
@@ -90,21 +88,6 @@
       </div>
     </div>
 
-    <!-- trend chart -->
-    <section class="card mt-3 p-4">
-      <div class="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <h2 class="text-[15px] font-bold tracking-tight">Net income trend</h2>
-          <div class="mt-1 flex items-center gap-2">
-            <span id="rt-value" class="text-[24px] font-extrabold tracking-tight tnum">฿3.46M</span>
-            <span id="rt-delta" class="flex items-center gap-0.5 text-[13px] font-semibold text-brand"></span>
-            <span class="text-[12px] text-muted">vs previous period</span>
-          </div>
-        </div>
-      </div>
-      <div id="rt-chart" class="mt-2"></div>
-    </section>
-
     <!-- detailed table: income by event -->
     <section class="card mt-3 p-4">
       <div class="flex items-center justify-between">
@@ -142,37 +125,9 @@
   </main>
 </div>
 
-<script src="../assets/shell.js?v=53"></script>
-<script src="../assets/reports-chart.js?v=53"></script>
-<script src="../assets/reports-data.js?v=53"></script>
+<script src="../assets/shell.js?v=64"></script>
+<script src="../assets/reports-data.js?v=64"></script>
 <script>
-  /* ---------- trend chart (shared helper) ---------- */
-  var DATASETS = {
-    '7d':   { labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], values:[22,28,25,31,35,40,26], max:45, prefix:'฿', suffix:'k', value:'฿207k', delta:'4.8%', up:true },
-    '30d':  { labels:['1','5','10','15','20','25','30'], values:[95,100,98,110,108,115,116], max:130, prefix:'฿', suffix:'k', value:'฿742k', delta:'9.1%', up:true },
-    '90d':  { labels:['Wk1','Wk2','Wk3','Wk4','Wk5','Wk6'], values:[280,310,295,340,360,395], max:450, prefix:'฿', suffix:'k', value:'฿1.98M', delta:'15.2%', up:true },
-    'year': { labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], values:[210,225,205,250,275,260,290,350,370,360,340,325], max:400, prefix:'฿', suffix:'k', value:'฿3.46M', delta:'12.5%', up:true },
-  };
-  var curRange = 'year';
-  function renderTrend(key) {
-    curRange = key;
-    var d = DATASETS[key];
-    EventaChart('rt-chart', Object.assign({}, d, { type: 'area' }));
-    document.getElementById('rt-value').textContent = d.value;
-    var dl = document.getElementById('rt-delta');
-    dl.className = 'flex items-center gap-0.5 text-[13px] font-semibold ' + (d.up ? 'text-brand' : 'text-red-500');
-    dl.innerHTML = '<i class="hgi-stroke ' + (d.up ? 'hgi-arrow-up-right-01' : 'hgi-arrow-down-right-01') + ' text-[13px]"></i>' + d.delta;
-  }
-  var rangeToggle = document.getElementById('range-toggle');
-  rangeToggle.addEventListener('click', function (e) {
-    var btn = e.target.closest('button'); if (!btn) return;
-    Array.prototype.forEach.call(rangeToggle.children, function (b) { b.classList.remove('active'); });
-    btn.classList.add('active');
-    renderTrend(btn.dataset.range);
-  });
-  renderTrend('year');
-  window.EventaOnThemeChange = window.EventaReportRerender;
-
   /* ---------- detailed table: income by event (canonical paginator) ---------- */
   (function () {
     var ROWS = (window.REPORTS_EVENTS || []).map(function (e) {
@@ -182,16 +137,22 @@
     function nf(n) { return n.toLocaleString('en-US'); }
     function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
-    var state = { event: 'All events', page: 0, size: 10 };
+    var state = { event: 'All events', q: '', page: 0, size: 10 };
     var tbody = document.getElementById('inc-rows');
     var showing = document.getElementById('inc-showing');
     var prev = document.getElementById('inc-prev');
     var next = document.getElementById('inc-next');
     var sizeSel = document.getElementById('inc-size');
     var eventSel = document.getElementById('rpt-event');
+    var searchInp = document.getElementById('inc-search');
 
     function filtered() {
-      return ROWS.filter(function (r) { return state.event === 'All events' || r.name === state.event; });
+      var q = state.q;
+      return ROWS.filter(function (r) {
+        if (!(state.event === 'All events' || r.name === state.event)) return false;
+        if (!q) return true;
+        return (r.name + ' ' + r.meta).toLowerCase().indexOf(q) !== -1;
+      });
     }
     function rowHTML(r) {
       return '<tr>' +
@@ -222,6 +183,7 @@
     next.addEventListener('click', function () { state.page++; render(); });
     sizeSel.addEventListener('change', function () { state.size = +sizeSel.value; state.page = 0; render(); });
     eventSel.addEventListener('change', function () { state.event = eventSel.value; state.page = 0; render(); });
+    searchInp.addEventListener('input', function () { state.q = searchInp.value.trim().toLowerCase(); state.page = 0; render(); });
     render();
   })();
 </script>
