@@ -10,8 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="assets/config.js?v=36"></script>
-<link rel="stylesheet" href="assets/app.css?v=36" />
+<script src="assets/config.js?v=64"></script>
+<link rel="stylesheet" href="assets/app.css?v=64" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased">
 
@@ -21,13 +21,13 @@
   <!-- hero -->
   <header class="text-center">
     <div class="inline-flex items-center gap-2.5">
-      <span class="grid h-11 w-11 place-items-center rounded-2xl bg-brand text-white"><i class="hgi-stroke hgi-fire text-[24px]"></i></span>
+      <span class="brand-logo text-brand h-[28px] w-[52px]"></span>
       <span class="text-[26px] font-extrabold tracking-tight text-brand-dark">Eventa</span>
     </div>
     <h1 class="mx-auto mt-5 max-w-2xl text-[30px] font-extrabold leading-tight tracking-tight sm:text-[38px]">Event Registration <span class="text-brand">UI Kit</span></h1>
     <p class="mx-auto mt-3 max-w-xl text-[14px] text-muted">A complete, responsive admin &amp; attendee interface — events, registrations, tickets, check-in, payments, analytics and more. Built with HTML, Tailwind CSS, Hugeicons &amp; Motion. Light &amp; dark ready.</p>
     <div class="mt-6 flex flex-wrap items-center justify-center gap-2.5">
-      <a href="admin/dashboard.html" class="btn btn-primary"><i class="hgi-stroke hgi-dashboard-square-01 text-[16px]"></i>Open dashboard</a>
+      <a href="admin/dashboard.html" class="btn btn-primary"><i class="hgi-stroke hgi-dashboard-speed-02 text-[16px]"></i>Open dashboard</a>
       <a href="auth/login.html" class="btn btn-ghost"><i class="hgi-stroke hgi-square-lock-01 text-[16px]"></i>Sign in</a>
       <a href="portal/my-events.html" class="btn btn-ghost"><i class="hgi-stroke hgi-ticket-02 text-[16px]"></i>Attendee portal</a>
     </div>
@@ -55,13 +55,14 @@
 
   const GROUPS = [
     { title: 'Manage', items: [
-      { name: 'Dashboard', href: 'admin/dashboard.html', icon: 'hgi-dashboard-square-01', desc: 'KPIs, revenue & recent activity' },
+      { name: 'Dashboard', href: 'admin/dashboard.html', icon: 'hgi-dashboard-speed-02', desc: 'KPIs, revenue & recent activity' },
       { name: 'Events', href: 'admin/events.html', icon: 'hgi-calendar-03', desc: 'Browse & manage all events' },
       { name: 'Create event', href: 'admin/event-form.html', icon: 'hgi-calendar-add-01', desc: 'Full event builder form' },
       { name: 'Event detail', href: 'admin/event-detail.html', icon: 'hgi-calendar-check-in-01', desc: 'Overview, tickets & registrations' },
       { name: 'Registrations', href: 'admin/registrations.html', icon: 'hgi-user-add-01', desc: 'Approvals, waitlist & status' },
       { name: 'Attendees', href: 'admin/attendees.html', icon: 'hgi-user-multiple', desc: 'Directory & attendee profiles' },
       { name: 'Tickets', href: 'admin/tickets.html', icon: 'hgi-ticket-01', desc: 'Ticket types, pricing & sales' },
+      { name: 'Discounts', href: 'admin/discounts.html', icon: 'hgi-discount-tag-01', desc: 'Promo codes & coupons' },
       { name: 'Check-in', href: 'admin/check-in.html', icon: 'hgi-user-check-01', desc: 'Attendance list & status' },
       { name: 'Check-in tool', href: 'admin/check-in-tool.html', icon: 'hgi-qr-code-01', desc: 'Scan & search to check attendees in' },
       { name: 'Landing pages', href: 'admin/landing-pages.html', icon: 'hgi-browser', desc: 'Pick a website template per event' },
@@ -69,7 +70,6 @@
     { title: 'Finance', items: [
       { name: 'Payments', href: 'admin/payments.html', icon: 'hgi-wallet-01', desc: 'Transactions & refunds' },
       { name: 'Payouts', href: 'admin/payouts.html', icon: 'hgi-bank', desc: 'Balance & bank withdrawals' },
-      { name: 'Discounts', href: 'admin/discounts.html', icon: 'hgi-discount-tag-01', desc: 'Promo codes & coupons' },
     ]},
     { title: 'Engage', items: [
       { name: 'Speakers', href: 'admin/speakers.html', icon: 'hgi-mic-01', desc: 'Speaker profiles & sessions' },
@@ -80,17 +80,21 @@
     { title: 'Insights & System', items: [
       { name: 'Reports', href: 'admin/reports.html', icon: 'hgi-analytics-up', desc: 'Analytics & exports' },
       { name: 'All events', href: 'admin/reports-events.html', icon: 'hgi-calendar-03', desc: 'Full searchable events report' },
-      { name: 'Notifications', href: 'admin/notifications.html', icon: 'hgi-notification-03', desc: 'Templates & announcements' },
+      { name: 'Messaging', href: 'admin/messaging-announcements.html', icon: 'hgi-megaphone-01', desc: 'Announcements, templates & delivery log' },
+      { name: 'Notifications', href: 'admin/notifications.html', icon: 'hgi-notification-03', desc: 'Inbound alerts & activity feed' },
       { name: 'Users & Roles', href: 'admin/users.html', icon: 'hgi-user-group', desc: 'Team access & permissions' },
-      { name: 'Settings', href: 'admin/settings.html', icon: 'hgi-settings-01', desc: 'Profile, org, payments & security' },
+      { name: 'Settings', href: 'admin/settings-profile.html', icon: 'hgi-settings-01', desc: 'Profile, org, payments & security' },
     ]},
     { title: 'Event websites (dynamic landing pages)', items: [
       { name: 'Classic template', href: 'landing/aurora.html?event=tech-summit-2026', icon: 'hgi-layout-01', desc: 'All-purpose event landing page' },
       { name: 'Spotlight template', href: 'landing/noir.html?event=bangkok-jazz-night', icon: 'hgi-layout-02', desc: 'Split hero with a sticky register card' },
       { name: 'Minimal template', href: 'landing/minimal.html?event=emma-liam-wedding', icon: 'hgi-layout-03', desc: 'Centered, understated event page' },
+      { name: 'Vibrant template', href: 'landing/atlas.html?event=bangkok-jazz-night', icon: 'hgi-music-note-01', desc: 'Full-bleed poster hero for festivals & concerts' },
     ]},
     { title: 'Attendee & Auth', items: [
+      { name: 'Discover events', href: 'portal/discover.html', icon: 'hgi-search-01', desc: 'Public browse & search all events' },
       { name: 'My Events', href: 'portal/my-events.html', icon: 'hgi-ticket-02', desc: 'Attendee portal & tickets' },
+      { name: 'Register + seats', href: 'portal/register.html?event=bangkok-jazz-night', icon: 'hgi-seat-selector', desc: 'Pick a ticket & choose seats' },
       { name: 'Feedback survey', href: 'portal/survey.html?event=tech-summit-2026', icon: 'hgi-star', desc: 'Post-event survey attendees fill in' },
       { name: 'Sign in', href: 'auth/login.html', icon: 'hgi-square-lock-01', desc: 'Login screen' },
       { name: 'Create account', href: 'auth/register.html', icon: 'hgi-user-circle', desc: 'Registration screen' },

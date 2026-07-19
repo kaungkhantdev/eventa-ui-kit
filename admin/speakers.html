@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=36"></script>
-<link rel="stylesheet" href="../assets/app.css?v=36" />
+<script src="../assets/config.js?v=64"></script>
+<link rel="stylesheet" href="../assets/app.css?v=64" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="speakers">
 
@@ -40,8 +40,8 @@
         <input id="spk-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search speakers by name, company or topic…" />
       </div>
       <div class="relative w-full sm:w-56">
-        <i class="hgi-stroke hgi-calendar-03 text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
-        <select id="spk-event" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+        <i class="hgi-stroke hgi-calendar-03 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-brand"></i>
+        <select data-event-picker="catalog" id="spk-event" class="select h-10 w-full border-0 bg-surface pl-9 text-[14px] font-semibold">
           <option>All events</option>
           <option>Tech Summit 2026</option>
           <option>Bangkok Jazz Night</option>
@@ -191,7 +191,7 @@
   </div>
 </div>
 
-<script src="../assets/shell.js?v=36"></script>
+<script src="../assets/shell.js?v=64"></script>
 <script>
   (function () {
     var TONE = {

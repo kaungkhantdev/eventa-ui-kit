@@ -7,11 +7,12 @@
 <script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Titan+One&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="../assets/config.js?v=36"></script>
-<link rel="stylesheet" href="../assets/app.css?v=36" />
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<script src="../assets/config.js?v=64"></script>
+<link rel="stylesheet" href="../assets/app.css?v=64" />
 <style>
   /* toggle switch */
   .switch{position:relative;display:inline-flex;height:1.25rem;width:2.25rem;flex:none;cursor:pointer;align-items:center}
@@ -28,11 +29,11 @@
 <header class="sticky top-0 z-30 border-b border-hair bg-surface/90 backdrop-blur">
   <div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-4 lg:px-6">
     <a href="../index.html" class="flex items-center gap-2.5">
-      <span class="grid h-8 w-8 place-items-center rounded-lg bg-brand text-white"><i class="hgi-stroke hgi-ticket-star text-[18px]"></i></span>
+      <span class="brand-logo text-brand h-[17px] w-[31px]"></span>
       <span class="text-[15px] font-extrabold tracking-tight">Eventa</span>
     </a>
     <div class="flex items-center gap-1.5">
-      <a href="../index.html" class="hidden rounded-lg px-3 py-1.5 text-[13px] font-medium text-muted transition hover:bg-line hover:text-ink sm:inline-flex sm:items-center sm:gap-1.5"><i class="hgi-stroke hgi-search-01 text-[15px]"></i>Discover events</a>
+      <a href="discover.html" class="hidden rounded-lg px-3 py-1.5 text-[13px] font-medium text-muted transition hover:bg-line hover:text-ink sm:inline-flex sm:items-center sm:gap-1.5"><i class="hgi-stroke hgi-search-01 text-[15px]"></i>Discover events</a>
       <button id="theme-btn" class="btn-icon bg-surface" title="Toggle theme"><i class="hgi-stroke hgi-moon-02 text-[18px]"></i></button>
       <button type="button" data-goto-tab="profile" class="flex items-center gap-2 rounded-full py-1 pl-1 pr-2.5 transition hover:bg-line" title="Account">
         <span class="grid h-7 w-7 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[11px] font-semibold text-white">AP</span>
@@ -67,7 +68,7 @@
 
       <div class="mb-3 flex items-center justify-between">
         <h2 class="text-[15px] font-bold tracking-tight">Upcoming <span class="text-muted">· 3</span></h2>
-        <a href="../index.html" class="text-[12px] font-semibold text-brand hover:underline">Discover more →</a>
+        <a href="discover.html" class="text-[12px] font-semibold text-brand hover:underline">Discover more →</a>
       </div>
 
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -90,7 +91,7 @@
             </div>
             <div class="mt-3.5 flex items-center gap-2 border-t border-hair pt-3.5">
               <a href="../admin/event-detail.html" class="btn btn-soft btn-sm flex-1"><i class="hgi-stroke hgi-eye text-[14px]"></i>Details</a>
-              <button type="button" class="btn btn-primary btn-sm flex-1" data-open="qr-modal" data-ticket-id="EVT-TS26-00482-VIP"><i class="hgi-stroke hgi-qr-code-01 text-[14px]"></i>Ticket</button>
+              <button type="button" class="btn btn-primary btn-sm flex-1" data-open="qr-modal" data-ticket-id="EVT-TS26-00482-VIP" data-event="Tech Summit 2026" data-date="Sat, Jul 18, 2026 · 09:00" data-venue="BITEC, Bangkok" data-type="VIP"><i class="hgi-stroke hgi-qr-code-01 text-[14px]"></i>Ticket</button>
             </div>
           </div>
         </article>
@@ -113,7 +114,7 @@
             </div>
             <div class="mt-3.5 flex items-center gap-2 border-t border-hair pt-3.5">
               <a href="../admin/event-detail.html" class="btn btn-soft btn-sm flex-1"><i class="hgi-stroke hgi-eye text-[14px]"></i>Details</a>
-              <button type="button" class="btn btn-primary btn-sm flex-1" data-open="qr-modal" data-ticket-id="EVT-BJN26-01130-GA"><i class="hgi-stroke hgi-qr-code-01 text-[14px]"></i>Ticket</button>
+              <button type="button" class="btn btn-primary btn-sm flex-1" data-open="qr-modal" data-ticket-id="EVT-BJN26-01130-GA" data-event="Bangkok Jazz Night" data-date="Sun, Jul 12, 2026 · 19:30" data-venue="Sala Daeng, Bangkok" data-type="General"><i class="hgi-stroke hgi-qr-code-01 text-[14px]"></i>Ticket</button>
             </div>
           </div>
         </article>
@@ -136,7 +137,7 @@
             </div>
             <div class="mt-3.5 flex items-center gap-2 border-t border-hair pt-3.5">
               <a href="../admin/event-detail.html" class="btn btn-soft btn-sm flex-1"><i class="hgi-stroke hgi-eye text-[14px]"></i>Details</a>
-              <button type="button" class="btn btn-primary btn-sm flex-1" data-open="qr-modal" data-ticket-id="EVT-SYR26-00298-GA"><i class="hgi-stroke hgi-qr-code-01 text-[14px]"></i>Ticket</button>
+              <button type="button" class="btn btn-primary btn-sm flex-1" data-open="qr-modal" data-ticket-id="EVT-SYR26-00298-GA" data-event="Sunrise Yoga Retreat" data-date="Mon, Jul 20, 2026 · 06:00" data-venue="Lumphini Park, Bangkok" data-type="General"><i class="hgi-stroke hgi-qr-code-01 text-[14px]"></i>Ticket</button>
             </div>
           </div>
         </article>
@@ -429,21 +430,31 @@
 <div class="panel-overlay" id="overlay"></div>
 <div class="modal" id="qr-modal">
   <div class="p-5">
-    <div class="flex items-center justify-between">
-      <h3 class="text-[15px] font-bold tracking-tight">Your ticket QR</h3>
-      <button type="button" class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    <div class="flex items-start justify-between gap-2">
+      <div class="min-w-0">
+        <h3 class="text-[15px] font-bold tracking-tight">Your ticket QR</h3>
+        <p id="qr-event" class="truncate text-[12px] font-semibold text-brand">—</p>
+      </div>
+      <button type="button" class="btn-icon shrink-0" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
     </div>
     <p class="mt-1 text-[12px] text-muted">Show this code at check-in.</p>
     <div class="mt-4 grid place-items-center">
-      <div class="grid h-40 w-40 place-items-center rounded-xl bg-line">
-        <i class="hgi-stroke hgi-qr-code-01 text-[72px] text-muted"></i>
+      <div class="grid place-items-center rounded-xl bg-white p-3 ring-1 ring-hair">
+        <canvas id="qr-canvas" width="320" height="320" class="h-44 w-44"></canvas>
       </div>
     </div>
     <div class="mt-4 rounded-lg border border-hair bg-canvas px-3 py-2 text-center">
       <p class="text-[10px] font-semibold uppercase tracking-wide text-muted">Ticket ID</p>
       <p id="qr-ticket-id" class="mt-0.5 font-mono text-[13px] font-semibold text-ink">—</p>
     </div>
-    <button type="button" class="btn btn-soft mt-4 w-full" data-close>Close</button>
+    <div class="mt-4">
+      <p class="mb-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted">Ticket preview</p>
+      <img id="qr-flyer" alt="Downloadable ticket preview" class="block w-full rounded-xl border border-hair" />
+    </div>
+    <div class="mt-4 flex gap-2">
+      <button type="button" class="btn btn-soft flex-1" data-close>Close</button>
+      <button type="button" id="qr-download" class="btn btn-primary flex-1"><i class="hgi-stroke hgi-download-04 text-[15px]"></i>Download ticket</button>
+    </div>
   </div>
 </div>
 
@@ -589,6 +600,388 @@
     refreshStats();
     render();
   })();
+</script>
+
+<!-- ============ Real QR + downloadable ticket flyer ============ -->
+<script>
+(function () {
+  var currentTicket = null;
+
+  function makeQR(text) {
+    if (typeof qrcode !== 'function') return null;
+    try { var q = qrcode(0, 'M'); q.addData(text); q.make(); return q; } catch (e) { return null; }
+  }
+
+  function drawQR(ctx, qr, x, y, size, dark, light) {
+    dark = dark || '#0b1220'; light = light || '#ffffff';
+    ctx.fillStyle = light; ctx.fillRect(x, y, size, size);
+    if (!qr) return;
+    var n = qr.getModuleCount(), margin = 2, cell = size / (n + margin * 2);
+    ctx.fillStyle = dark;
+    for (var r = 0; r < n; r++) for (var c = 0; c < n; c++) {
+      if (qr.isDark(r, c)) ctx.fillRect(x + (c + margin) * cell, y + (r + margin) * cell, cell + 0.6, cell + 0.6);
+    }
+  }
+
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath(); ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+  }
+
+  function wrapText(ctx, text, x, y, maxW, lh) {
+    var words = String(text).split(' '), line = '', yy = y;
+    for (var i = 0; i < words.length; i++) {
+      var test = line ? line + ' ' + words[i] : words[i];
+      if (ctx.measureText(test).width > maxW && line) { ctx.fillText(line, x, yy); line = words[i]; yy += lh; }
+      else line = test;
+    }
+    ctx.fillText(line, x, yy); return yy;
+  }
+
+  /* text helper: font + color + align + optional letter-spacing (auto-reset) */
+  function txt(ctx, s, x, y, font, color, align, track) {
+    ctx.font = font; ctx.fillStyle = color; ctx.textAlign = align || 'left';
+    if ('letterSpacing' in ctx) ctx.letterSpacing = (track || 0) + 'px';
+    ctx.fillText(s, x, y);
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
+    ctx.textAlign = 'left';
+  }
+  var MONO = 'ui-monospace, "SF Mono", Menlo, monospace';
+
+  function tierOf(type) {
+    return /vip/i.test(type || '')
+      ? { bg: '#b4780a', fg: '#fff6e6', seam: '#8f5e00', tint: '#faf3e4' }
+      : { bg: '#1ba770', fg: '#ffffff', seam: '#148a5c', tint: '#e6f6ef' };
+  }
+
+  /* parse "Sun, Jul 12, 2026 · 19:30" → date parts + doors (start − 30 min) + kicker */
+  function parseWhen(s) {
+    var o = { wdFull: '', mon: '', day: '', year: '', time: '', doors: '', kicker: '' };
+    var parts = String(s || '').split('·');
+    o.time = (parts[1] || '').trim();
+    var toks = (parts[0] || '').replace(/,/g, ' ').split(/\s+/).filter(Boolean);
+    var WD = { Sun: 'SUNDAY', Mon: 'MONDAY', Tue: 'TUESDAY', Wed: 'WEDNESDAY', Thu: 'THURSDAY', Fri: 'FRIDAY', Sat: 'SATURDAY' };
+    o.wdFull = WD[toks[0]] || (toks[0] || '').toUpperCase();
+    o.mon = (toks[1] || '').toUpperCase(); o.day = toks[2] || ''; o.year = toks[3] || '';
+    var m = /(\d{1,2}):(\d{2})/.exec(o.time);
+    if (m) { var mins = (+m[1]) * 60 + (+m[2]) - 30; if (mins < 0) mins += 1440; o.doors = ('0' + Math.floor(mins / 60)).slice(-2) + ':' + ('0' + (mins % 60)).slice(-2); }
+    o.kicker = o.wdFull + (o.mon ? ' · ' + o.mon + ' ' + o.day : '');
+    return o;
+  }
+
+  /* derive real-ticket fields from the ticket id + type + venue */
+  function derive(t) {
+    var vip = /vip/i.test(t.type || ''), parts = String(t.id).split('-');
+    var code = parts[1] || 'EVT', seq = parts[2] || '00000', seqN = parseInt(seq, 10) || 0;
+    var vh = 0, v = String(t.venue || ''); for (var i = 0; i < v.length; i++) vh = (vh + v.charCodeAt(i)) | 0;
+    var w = parseWhen(t.date), issD = Math.max(1, (parseInt(w.day, 10) || 8) - 4);
+    var monT = w.mon ? w.mon.charAt(0) + w.mon.slice(1).toLowerCase() : 'Jul';
+    return {
+      vip: vip, when: w,
+      order: 'ORD-' + code + '-' + seq,
+      gate: 'Gate ' + (1 + (Math.abs(vh) % 6)),
+      gateNo: String(2 + (Math.abs(vh) % 28)),
+      zone: vip ? 'VIP Lounge' : 'Floor · GA',
+      zoneShort: vip ? 'Lounge' : 'Floor',
+      no: (1000 + Math.abs(vh) % 9000) + '-' + (1000 + Math.abs(seqN * 31) % 9000) + '-' + (10 + seqN % 90),
+      seat: vip ? ('R' + (1 + seqN % 9) + ' · ' + (1 + seqN % 40)) : 'GA',
+      group: 'Group ' + String.fromCharCode(65 + (seqN % 4)),
+      issued: monT + ' ' + ('0' + issD).slice(-2) + ', ' + (w.year || '2026'),
+      classWord: vip ? 'VIP ACCESS' : 'GENERAL ADMISSION',
+      admitRight: vip ? 'ADMIT ONE · PRIORITY' : 'ADMIT ONE · UNRESERVED',
+      classShort: vip ? 'VIP' : 'GENERAL'
+    };
+  }
+
+  /* deterministic faux 1D barcode that fills [x, x+w] */
+  function barcode(ctx, x, y, w, h, seed, color) {
+    ctx.fillStyle = color; var s = String(seed) || 'X', px = x, k = 0;
+    while (px < x + w) {
+      var c = s.charCodeAt(k % s.length) + k * 13;
+      var bw = 1 + (c % 4), gap = 1 + (Math.floor(c / 4) % 3);
+      if (px + bw > x + w) bw = x + w - px;
+      ctx.fillRect(px, y, bw, h); px += bw + gap; k++;
+    }
+  }
+  /* L-shaped corner ticks around a box */
+  function ticks(ctx, x, y, w, h, d, color) {
+    ctx.strokeStyle = color; ctx.lineWidth = 3; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(x, y + d); ctx.lineTo(x, y); ctx.lineTo(x + d, y); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x + w - d, y); ctx.lineTo(x + w, y); ctx.lineTo(x + w, y + d); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x, y + h - d); ctx.lineTo(x, y + h); ctx.lineTo(x + d, y + h); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x + w - d, y + h); ctx.lineTo(x + w, y + h); ctx.lineTo(x + w, y + h - d); ctx.stroke();
+    ctx.lineCap = 'butt';
+  }
+  function star(ctx, cx, cy, r, color) {
+    ctx.beginPath();
+    for (var i = 0; i < 10; i++) { var a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * 0.44 : r; var px = cx + Math.cos(a) * rr, py = cy + Math.sin(a) * rr; i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }
+    ctx.closePath(); ctx.fillStyle = color; ctx.fill();
+  }
+  function pin(ctx, cx, cy, s, color) {
+    ctx.fillStyle = color;
+    ctx.beginPath(); ctx.arc(cx, cy, s * 0.5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(cx - s * 0.32, cy + s * 0.26); ctx.lineTo(cx + s * 0.32, cy + s * 0.26); ctx.lineTo(cx, cy + s * 0.86); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(cx, cy, s * 0.17, 0, Math.PI * 2); ctx.fill();
+  }
+
+  /* pass-specific formatting */
+  function to12h(s) { var m = /(\d{1,2}):(\d{2})/.exec(s || ''); if (!m) return s || ''; var h = +m[1], ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12; return h + ':' + m[2] + ' ' + ap; }
+  function dateShort(w) { var wd = w.wdFull ? w.wdFull.charAt(0) + w.wdFull.slice(1, 3).toLowerCase() : ''; var mo = w.mon ? w.mon.charAt(0) + w.mon.slice(1).toLowerCase() : ''; return (wd ? wd + ', ' : '') + mo + ' ' + w.day; }
+  function dateHead(w) { var mo = w.mon ? w.mon.charAt(0) + w.mon.slice(1).toLowerCase() : ''; return w.day + ' ' + mo + ' ' + w.year; }
+  function clip1(ctx, s, maxW) { s = String(s); if (ctx.measureText(s).width <= maxW) return s; var r = s; while (r.length > 1 && ctx.measureText(r + '…').width > maxW) r = r.slice(0, -1); return r + '…'; }
+
+  function bigTile(ctx, x, y, w, h, label, big, sub) {
+    ctx.fillStyle = '#f3f4f6'; roundRect(ctx, x, y, w, h, 18); ctx.fill();
+    txt(ctx, label, x + 22, y + 34, '600 13px Inter, sans-serif', '#8b93a4', 'left');
+    txt(ctx, big, x + 22, y + 80, '800 27px Inter, sans-serif', '#0f1a14', 'left');
+    txt(ctx, sub, x + 22, y + 106, '600 13px Inter, sans-serif', '#8b93a4', 'left');
+  }
+  function smallTile(ctx, x, y, w, h, value, label) {
+    ctx.fillStyle = '#f3f4f6'; roundRect(ctx, x, y, w, h, 16); ctx.fill();
+    txt(ctx, value, x + 18, y + 44, '800 19px Inter, sans-serif', '#0f1a14', 'left');
+    txt(ctx, label, x + 18, y + 68, '600 12px Inter, sans-serif', '#8b93a4', 'left');
+  }
+
+  function clipF(ctx, s, maxW, font) { ctx.font = font; return clip1(ctx, s, maxW); }
+  /* 4-point concave sparkle */
+  function sparkle4(ctx, cx, cy, r, color) {
+    var k = r * 0.3; ctx.fillStyle = color; ctx.beginPath();
+    ctx.moveTo(cx, cy - r);
+    ctx.quadraticCurveTo(cx + k, cy - k, cx + r, cy);
+    ctx.quadraticCurveTo(cx + k, cy + k, cx, cy + r);
+    ctx.quadraticCurveTo(cx - k, cy + k, cx - r, cy);
+    ctx.quadraticCurveTo(cx - k, cy - k, cx, cy - r);
+    ctx.closePath(); ctx.fill();
+  }
+
+  var MONTHS = { JAN: 'JANUARY', FEB: 'FEBRUARY', MAR: 'MARCH', APR: 'APRIL', MAY: 'MAY', JUN: 'JUNE', JUL: 'JULY', AUG: 'AUGUST', SEP: 'SEPTEMBER', OCT: 'OCTOBER', NOV: 'NOVEMBER', DEC: 'DECEMBER' };
+  function ordinal(n) { n = parseInt(n, 10) || 0; var s = ['TH', 'ST', 'ND', 'RD'], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
+  function daisy(ctx, cx, cy, r, petal, center) {
+    ctx.fillStyle = petal;
+    for (var i = 0; i < 6; i++) { var a = i * Math.PI / 3; ctx.beginPath(); ctx.arc(cx + Math.cos(a) * r, cy + Math.sin(a) * r, r * 0.62, 0, Math.PI * 2); ctx.fill(); }
+    ctx.fillStyle = center; ctx.beginPath(); ctx.arc(cx, cy, r * 0.6, 0, Math.PI * 2); ctx.fill();
+  }
+  /* retro concentric-ring corner blob (drawn while card is clipped) */
+  function funkCorner(ctx, cx, cy, base, cols) {
+    for (var i = cols.length - 1; i >= 0; i--) { ctx.fillStyle = cols[i]; ctx.beginPath(); ctx.arc(cx, cy, base * (0.42 + i * 0.34), 0, Math.PI * 2); ctx.fill(); }
+  }
+  /* retro microphone */
+  /* proper handheld microphone (mesh-ball head + band + handle, sticker outline) */
+  function retroMic(ctx, cx, cy, s, rot) {
+    var GOLD = '#efb43a', HL = '#ffe0a0', DK = '#0a3325';
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(rot || 0);
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.lineWidth = Math.max(2, s * 0.045); ctx.strokeStyle = DK;
+    var hr = s * 0.34, hcy = -s * 0.30;
+    /* handle */
+    roundRect(ctx, -s * 0.15, hcy + hr * 0.35, s * 0.30, s * 0.9, s * 0.15); ctx.fillStyle = GOLD; ctx.fill(); ctx.stroke();
+    roundRect(ctx, -s * 0.055, hcy + hr * 0.7, s * 0.11, s * 0.66, s * 0.055); ctx.fillStyle = HL; ctx.fill();
+    /* band */
+    roundRect(ctx, -s * 0.19, hcy + hr * 0.5, s * 0.38, s * 0.14, s * 0.05); ctx.fillStyle = DK; ctx.fill();
+    /* head ball */
+    ctx.beginPath(); ctx.arc(0, hcy, hr, 0, Math.PI * 2); ctx.fillStyle = GOLD; ctx.fill(); ctx.stroke();
+    /* mesh grille dots */
+    ctx.save(); ctx.beginPath(); ctx.arc(0, hcy, hr - s * 0.02, 0, Math.PI * 2); ctx.clip();
+    ctx.fillStyle = DK; var g = hr * 0.36, dr = Math.max(1, s * 0.021);
+    for (var iy = -2; iy <= 2; iy++) for (var ix = -2; ix <= 2; ix++) { ctx.beginPath(); ctx.arc(ix * g, hcy + iy * g, dr, 0, Math.PI * 2); ctx.fill(); }
+    ctx.restore();
+    ctx.restore();
+  }
+
+  /* two 4-point sparkles (outlined), à la hgi-sparkles */
+  function sparkles(ctx, cx, cy, s, color) {
+    ctx.strokeStyle = color; ctx.lineJoin = 'round';
+    function one(x, y, r, lw) {
+      var k = r * 0.34;
+      ctx.beginPath(); ctx.moveTo(x, y - r);
+      ctx.quadraticCurveTo(x + k, y - k, x + r, y);
+      ctx.quadraticCurveTo(x + k, y + k, x, y + r);
+      ctx.quadraticCurveTo(x - k, y + k, x - r, y);
+      ctx.quadraticCurveTo(x - k, y - k, x, y - r);
+      ctx.closePath(); ctx.lineWidth = lw; ctx.stroke();
+    }
+    one(cx + s * 0.30, cy - s * 0.24, s * 0.80, Math.max(2.5, s * 0.13));   // big
+    one(cx - s * 0.58, cy + s * 0.52, s * 0.44, Math.max(2, s * 0.11));     // small
+  }
+
+  /* Eventa logo mark (from assets/img/logo.svg, viewBox 1332×729) drawn via path so we can recolour it */
+  var LOGO_PATH = 'M275.605 49.9045C311.006 13.3051 359.936 -3.16751 407.512 0.501198H851.159C978.946 0.501307 1058.81 138.835 994.919 249.501L773.252 633.438C762.811 655.169 747.748 674.624 729.019 690.142C694.393 719.195 650.05 731.743 607.03 727.789L166.412 728.226C38.6249 728.352 -41.3783 590.097 22.4058 479.367L245.593 91.9104C253.367 76.4996 263.488 62.2943 275.605 49.9045Z';
+  function drawLogo(ctx, x, y, w, color) {
+    var s = w / 1332;
+    ctx.save(); ctx.translate(x, y); ctx.scale(s, s); ctx.fillStyle = color;
+    ctx.fill(new Path2D(LOGO_PATH));
+    ctx.beginPath(); ctx.arc(1159.38, 556.359, 172, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+  /* brand lockup: logo mark + "Eventa" wordmark, laid out horizontally and centred on cx */
+  function drawLockup(ctx, cx, y, markW, color) {
+    var markH = markW * (729 / 1332), fs = Math.round(markH * 1.05), gap = 12;
+    ctx.font = '800 ' + fs + 'px Inter, sans-serif';
+    var tw2 = ctx.measureText('Eventa').width, startX = cx - (markW + gap + tw2) / 2;
+    drawLogo(ctx, startX, y, markW, color);
+    txt(ctx, 'Eventa', startX + markW + gap, y + markH * 0.5 + fs * 0.36, '800 ' + fs + 'px Inter, sans-serif', color, 'left', -0.2);
+  }
+
+  /* Downloadable ticket — vibrant retro-funk concert stub (purple, illustrated). QR lives in the right stub. */
+  function buildFlyer(t) {
+    var S = 2, W = 1180, H = 480, M = 13, R = 22;
+    var d = derive(t), w = d.when;
+    var PUR = '#1ba770', NAVY = '#0a3325', WHITE = '#ffffff';   /* Eventa brand green base + deep-green ink */
+    var AMBER = '#f6b93b', MINT = '#8bead0', DEEPG = '#0e8a5b', PALE = '#cdf5e4';
+    var cv = document.createElement('canvas'); cv.width = W * S; cv.height = H * S;
+    var ctx = cv.getContext('2d'); ctx.scale(S, S); ctx.textBaseline = 'alphabetic';
+    var TN = '"Titan One", Inter, sans-serif';
+
+    var tx = M, ty = M, tw = W - M * 2, th = H - M * 2, px = tx + 878;
+
+    /* ---- purple card base ---- */
+    ctx.save(); roundRect(ctx, tx, ty, tw, th, R); ctx.clip();
+    ctx.fillStyle = PUR; ctx.fillRect(tx, ty, tw, th);
+
+    /* subtle wavy pattern */
+    ctx.strokeStyle = 'rgba(255,255,255,0.06)'; ctx.lineWidth = 22;
+    for (var wv = 0; wv < 4; wv++) {
+      ctx.beginPath();
+      for (var xx = tx; xx <= tx + tw; xx += 16) { var yy = ty + 70 + wv * 120 + Math.sin((xx / 120) + wv) * 26; xx === tx ? ctx.moveTo(xx, yy) : ctx.lineTo(xx, yy); }
+      ctx.stroke();
+    }
+
+    /* funk corner blobs */
+    funkCorner(ctx, tx + 44, ty + 22, 118, [AMBER, DEEPG, PALE]);
+    funkCorner(ctx, tx + tw - 26, ty + 6, 120, [PALE, AMBER, DEEPG]);
+    funkCorner(ctx, tx + 8, ty + th - 6, 84, [AMBER, PALE, DEEPG]);
+
+    /* ===== TITLE — event name, stacked bubble words ===== */
+    var words = String(t.event || 'EVENT').toUpperCase().split(/\s+/).filter(Boolean);
+    if (words.length > 4) words = words.slice(0, 3).concat([words.slice(3).join(' ')]);
+    var maxW = 360, lh = Math.min(72, 250 / words.length), fs = Math.floor(lh * 0.92);
+    function widest() { var m = 0; for (var i = 0; i < words.length; i++) m = Math.max(m, ctx.measureText(words[i]).width); return m; }
+    ctx.font = fs + 'px ' + TN; while (widest() > maxW && fs > 26) { fs -= 2; ctx.font = fs + 'px ' + TN; }
+    lh = fs; var tX = 48, tBase = ty + 40 + fs;
+    ctx.textAlign = 'left'; ctx.lineJoin = 'round'; ctx.miterLimit = 2;
+    for (var li = 0; li < words.length; li++) {
+      var yb = tBase + li * lh; ctx.font = fs + 'px ' + TN;
+      ctx.lineWidth = fs * 0.18; ctx.strokeStyle = NAVY; ctx.strokeText(words[li], tX, yb);
+      ctx.fillStyle = WHITE; ctx.fillText(words[li], tX, yb);
+    }
+    /* sub tagline with daisies */
+    var subY = tBase + (words.length - 1) * lh + 36, subT = d.vip ? 'vip experience' : 'live concert';
+    ctx.font = '800 20px Inter, sans-serif'; var subW = ctx.measureText(subT).width;
+    daisy(ctx, tX + 8, subY - 6, 8, AMBER, NAVY);
+    txt(ctx, subT, tX + 26, subY, '800 20px Inter, sans-serif', NAVY, 'left', 0.3);
+    daisy(ctx, tX + 26 + subW + 16, subY - 6, 8, AMBER, NAVY);
+
+    /* ===== MIDDLE column ===== */
+    var mX = 452;
+    var dateStr = (MONTHS[w.mon] || w.mon || 'AUGUST') + ' ' + ordinal(w.day || 20) + ', ' + (w.year || '2026');
+    txt(ctx, dateStr, mX, ty + 96, '800 20px Inter, sans-serif', NAVY, 'left', 0.3);
+    ctx.font = '700 14px Inter, sans-serif'; ctx.fillStyle = NAVY;
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '0.4px';
+    wrapText(ctx, ('At ' + (t.venue || 'Anywhere Stadium')).toUpperCase(), mX, ty + 132, 250, 22);
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
+    txt(ctx, 'DOORS OPEN AT:', mX, ty + 200, '700 14px Inter, sans-serif', NAVY, 'left', 0.6);
+    txt(ctx, to12h(w.doors || w.time) || '6:00 PM', mX + 140, ty + 204, '400 26px ' + TN, NAVY, 'left');
+
+    /* ROW / SEAT / GATE box */
+    var boxX = mX, boxY = ty + 232, boxW = 300, boxH = 96;
+    ctx.strokeStyle = NAVY; ctx.lineWidth = 2; roundRect(ctx, boxX, boxY, boxW, boxH, 12); ctx.stroke();
+    var gate = String.fromCharCode(65 + (parseInt(d.gateNo, 10) || 0) % 6);
+    var rowV = d.vip ? String(1 + (parseInt(d.no, 10) || 4) % 20) : 'GA';
+    var seatV = d.vip ? (rowV + 'D') : 'GA';
+    var cols3 = [['ROW', rowV], ['SEAT', seatV], ['GATE', gate]];
+    for (var c = 0; c < 3; c++) {
+      var ccx = boxX + boxW * (c + 0.5) / 3;
+      if (c > 0) { ctx.strokeStyle = 'rgba(10,51,37,0.32)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(boxX + boxW * c / 3, boxY + 14); ctx.lineTo(boxX + boxW * c / 3, boxY + boxH - 14); ctx.stroke(); }
+      txt(ctx, cols3[c][0], ccx, boxY + 34, '700 12px Inter, sans-serif', 'rgba(10,51,37,0.72)', 'center', 1);
+      txt(ctx, cols3[c][1], ccx, boxY + 74, '400 28px ' + TN, NAVY, 'center');
+    }
+
+    /* red PASS/tier badge */
+    var bcx = mX + 344, bcy = ty + 74, br = 46, badgeTier = d.vip ? 'VIP' : 'GA';
+    ctx.fillStyle = AMBER; ctx.beginPath(); ctx.arc(bcx, bcy, br, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = NAVY; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(bcx, bcy, br, 0, Math.PI * 2); ctx.stroke();
+    txt(ctx, 'CLASS', bcx, bcy - 9, '800 12px Inter, sans-serif', 'rgba(10,51,37,0.72)', 'center', 1.4);
+    txt(ctx, badgeTier, bcx, bcy + 23, '400 30px ' + TN, NAVY, 'center');
+
+    /* Eventa brand lockup (mark + wordmark) — footer, centred under the seat box */
+    drawLockup(ctx, 602, ty + 372, 44, WHITE);
+
+    /* ===== PERFORATION ===== */
+    ctx.strokeStyle = NAVY; ctx.lineWidth = 2.5; ctx.setLineDash([3, 9]);
+    ctx.beginPath(); ctx.moveTo(px, ty + 12); ctx.lineTo(px, ty + th - 12); ctx.stroke(); ctx.setLineDash([]);
+
+    /* ===== STUB (QR) ===== */
+    var sMid = (px + tx + tw) / 2, boxSize = 176, sqx = sMid - boxSize / 2, sqy = ty + 54;
+    ctx.fillStyle = WHITE; roundRect(ctx, sqx, sqy, boxSize, boxSize + 40, 16); ctx.fill();
+    var QS = 148, qx = sMid - QS / 2, qy = sqy + 16;
+    drawQR(ctx, makeQR(t.payload), qx, qy, QS, NAVY, '#ffffff');
+    txt(ctx, 'ADMIT ONE', sMid, sqy + boxSize + 24, '800 15px Inter, sans-serif', NAVY, 'center', 1.5);
+    txt(ctx, 'ADMISSION NO.', sMid, sqy + boxSize + 82, '700 11px Inter, sans-serif', NAVY, 'center', 1);
+    txt(ctx, d.no, sMid, sqy + boxSize + 106, '800 15px Inter, sans-serif', NAVY, 'center', 1);
+
+    ctx.restore(); /* unclip */
+
+    /* navy card border */
+    ctx.strokeStyle = NAVY; ctx.lineWidth = 5; roundRect(ctx, tx + 2.5, ty + 2.5, tw - 5, th - 5, R - 2); ctx.stroke();
+
+    /* transparent notches + scalloped right edge */
+    ctx.save(); ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath(); ctx.arc(px, ty, 12, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(px, ty + th, 12, 0, Math.PI * 2); ctx.fill();
+    for (var sy = ty + 22; sy < ty + th - 8; sy += 30) { ctx.beginPath(); ctx.arc(tx + tw, sy, 9, 0, Math.PI * 2); ctx.fill(); }
+    ctx.restore();
+
+    return cv;
+  }
+
+  function download(t) {
+    var run = function () {
+      var a = document.createElement('a');
+      a.href = buildFlyer(t).toDataURL('image/png');
+      a.download = 'eventa-ticket-' + t.id + '.png';
+      document.body.appendChild(a); a.click(); a.remove();
+    };
+    var fonts = ['400 40px "Titan One"', '800 40px Inter'];
+    if (document.fonts && document.fonts.load) { Promise.all(fonts.map(function (f) { return document.fonts.load(f); })).then(run).catch(run); }
+    else run();
+  }
+
+  function renderModalQR(payload) {
+    var cv = document.getElementById('qr-canvas'); if (!cv) return;
+    var ctx = cv.getContext('2d');
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    drawQR(ctx, makeQR(payload), 0, 0, cv.width);
+  }
+
+  /* live preview of the downloadable flyer inside the modal (waits for the display font) */
+  function renderModalFlyer(t) {
+    var img = document.getElementById('qr-flyer'); if (!img) return;
+    var draw = function () { try { img.src = buildFlyer(t).toDataURL('image/png'); } catch (e) {} };
+    var fonts = ['400 40px "Titan One"', '800 40px Inter'];
+    if (document.fonts && document.fonts.load) { Promise.all(fonts.map(function (f) { return document.fonts.load(f); })).then(draw).catch(draw); }
+    else draw();
+  }
+
+  /* Runs alongside the page's [data-open] handler, which opens the modal + sets the ticket id */
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('#qr-download')) { if (currentTicket) download(currentTicket); return; }
+    var opener = e.target.closest('[data-open="qr-modal"]');
+    if (!opener) return;
+    var id = opener.getAttribute('data-ticket-id') || '';
+    currentTicket = {
+      id: id,
+      event: opener.getAttribute('data-event') || 'Your event',
+      date: opener.getAttribute('data-date') || '',
+      venue: opener.getAttribute('data-venue') || '',
+      type: opener.getAttribute('data-type') || 'General',
+      attendee: 'Anong Pattana',
+      payload: 'https://eventa.app/t/' + id
+    };
+    var ev = document.getElementById('qr-event'); if (ev) ev.textContent = currentTicket.event;
+    renderModalQR(currentTicket.payload);
+    renderModalFlyer(currentTicket);
+  });
+})();
 </script>
 </body>
 </html>

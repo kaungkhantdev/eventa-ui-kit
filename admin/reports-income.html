@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Income report</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets/config.js?v=64"></script>
+<link rel="stylesheet" href="../assets/app.css?v=64" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="reports-income">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidebar here -->
+
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- header -->
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <div class="min-w-0">
+          <h1 class="text-[22px] font-bold tracking-tight">Income</h1>
+          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Gross revenue, refunds &amp; fees across all events.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="btn btn-primary"><i class="hgi-stroke hgi-download-01 text-[16px]"></i><span class="hidden sm:inline">Export</span></button>
+        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
+        <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
+      </div>
+    </div>
+
+    <!-- filter bar: search + event -->
+    <div class="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full sm:w-64">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="inc-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search events…" />
+      </div>
+      <div class="relative w-full sm:w-52">
+        <i class="hgi-stroke hgi-calendar-03 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-brand"></i>
+        <select data-event-picker="catalog" id="rpt-event" class="select h-10 w-full border-0 bg-surface pl-9 text-[14px] font-semibold">
+          <option>All events</option>
+          <option>Tech Summit 2026</option>
+          <option>Bangkok Jazz Night</option>
+          <option>Sunrise Yoga Retreat</option>
+          <option>Thai Street Food Festival</option>
+          <option>UX Bangkok Meetup</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- KPI row -->
+    <div class="grid grid-cols-2 gap-3 xl:grid-cols-4">
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-money-bag-02 text-[16px]"></i>Gross revenue</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿3.64M</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>11.8%</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-delivery-return-01 text-[16px]"></i>Refunds</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿94k</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>5.1%</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-credit-card text-[16px]"></i>Processing fees</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿89k</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>0.6%</span>
+        </div>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-wallet-01 text-[16px]"></i>Net revenue</div>
+        <div class="mt-2 flex items-end justify-between">
+          <p class="text-[22px] font-bold tracking-tight tnum">฿3.46M</p>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>12.5%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- detailed table: income by event -->
+    <section class="card mt-3 p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-[15px] font-bold tracking-tight">Income by event</h2>
+          <p class="mt-0.5 text-[12px] text-muted">Gross, refunds &amp; fees per event</p>
+        </div>
+      </div>
+      <div id="inc-table" class="mt-3 overflow-x-auto">
+        <table class="data-table min-w-[720px]">
+          <thead>
+            <tr><th>Event</th><th class="text-right">Gross ฿</th><th class="text-right">Refunds ฿</th><th class="text-right">Fees ฿</th><th class="text-right">Net ฿</th></tr>
+          </thead>
+          <tbody id="inc-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+
+      <div id="inc-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="inc-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="inc-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="inc-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="inc-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  </main>
+</div>
+
+<script src="../assets/shell.js?v=64"></script>
+<script src="../assets/reports-data.js?v=64"></script>
+<script>
+  /* ---------- detailed table: income by event (canonical paginator) ---------- */
+  (function () {
+    var ROWS = (window.REPORTS_EVENTS || []).map(function (e) {
+      var gross = e.rev, refunds = Math.round(e.rev * 0.027), fees = Math.round(e.rev * 0.029);
+      return { name: e.name, meta: e.meta, gross: gross, refunds: refunds, fees: fees, net: gross - refunds - fees };
+    });
+    function nf(n) { return n.toLocaleString('en-US'); }
+    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+    var state = { event: 'All events', q: '', page: 0, size: 10 };
+    var tbody = document.getElementById('inc-rows');
+    var showing = document.getElementById('inc-showing');
+    var prev = document.getElementById('inc-prev');
+    var next = document.getElementById('inc-next');
+    var sizeSel = document.getElementById('inc-size');
+    var eventSel = document.getElementById('rpt-event');
+    var searchInp = document.getElementById('inc-search');
+
+    function filtered() {
+      var q = state.q;
+      return ROWS.filter(function (r) {
+        if (!(state.event === 'All events' || r.name === state.event)) return false;
+        if (!q) return true;
+        return (r.name + ' ' + r.meta).toLowerCase().indexOf(q) !== -1;
+      });
+    }
+    function rowHTML(r) {
+      return '<tr>' +
+        '<td><div><p class="font-semibold text-ink">' + esc(r.name) + '</p><p class="text-[11px] text-muted">' + esc(r.meta) + '</p></div></td>' +
+        '<td class="text-right text-ink tnum">฿' + nf(r.gross) + '</td>' +
+        '<td class="text-right text-muted tnum">฿' + nf(r.refunds) + '</td>' +
+        '<td class="text-right text-muted tnum">฿' + nf(r.fees) + '</td>' +
+        '<td class="text-right font-semibold text-ink tnum">฿' + nf(r.net) + '</td>' +
+      '</tr>';
+    }
+    function render() {
+      var rows = filtered();
+      var total = rows.length;
+      var pages = Math.max(1, Math.ceil(total / state.size));
+      if (state.page >= pages) state.page = pages - 1;
+      var start = state.page * state.size;
+      var slice = rows.slice(start, start + state.size);
+      tbody.innerHTML = slice.length
+        ? slice.map(rowHTML).join('')
+        : '<tr><td colspan="5" class="py-10 text-center text-[13px] text-muted">No income for this selection.</td></tr>';
+      showing.innerHTML = total
+        ? 'Showing <b class="text-ink">' + (start + 1) + '–' + (start + slice.length) + '</b> of <b class="text-ink">' + nf(total) + '</b> events'
+        : 'No results';
+      prev.disabled = state.page === 0;
+      next.disabled = state.page >= pages - 1;
+    }
+    prev.addEventListener('click', function () { if (state.page > 0) { state.page--; render(); } });
+    next.addEventListener('click', function () { state.page++; render(); });
+    sizeSel.addEventListener('change', function () { state.size = +sizeSel.value; state.page = 0; render(); });
+    eventSel.addEventListener('change', function () { state.event = eventSel.value; state.page = 0; render(); });
+    searchInp.addEventListener('input', function () { state.q = searchInp.value.trim().toLowerCase(); state.page = 0; render(); });
+    render();
+  })();
+</script>
+</body>
+</html>

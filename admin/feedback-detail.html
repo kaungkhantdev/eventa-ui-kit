@@ -11,10 +11,10 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=36"></script>
-<link rel="stylesheet" href="../assets/app.css?v=36" />
+<script src="../assets/config.js?v=64"></script>
+<link rel="stylesheet" href="../assets/app.css?v=64" />
 </head>
-<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="feedback-detail">
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="feedback">
 
 <div class="flex h-full min-h-screen" data-layout>
   <!-- shell.js injects #backdrop + #sidebar here -->
@@ -161,7 +161,7 @@
   </div>
   <footer class="flex gap-2 border-t border-hair p-4">
     <button class="btn btn-soft flex-1" data-close>Close</button>
-    <button class="btn btn-primary flex-1" data-open="survey-edit"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px]"></i>Edit survey</button>
+    <button class="btn btn-primary flex-1" data-open="survey-edit"><i class="hgi-stroke hgi-edit-02 text-[15px]"></i>Edit survey</button>
   </footer>
 </aside>
 
@@ -192,8 +192,8 @@
   </footer>
 </aside>
 
-<script src="../assets/feedback-data.js?v=36"></script>
-<script src="../assets/shell.js?v=36"></script>
+<script src="../assets/feedback-data.js?v=64"></script>
+<script src="../assets/shell.js?v=64"></script>
 <script>
   (function () {
     var F = window.FEEDBACK;
@@ -284,7 +284,7 @@
           '<td>' + badge(s.status) + '</td>' +
           '<td class="text-right"><div class="flex items-center justify-end gap-1">' +
             '<button class="btn-icon" data-open="survey-view" data-i="' + i + '" aria-label="View survey" title="View survey"><i class="hgi-stroke hgi-eye text-[16px]" aria-hidden="true"></i></button>' +
-            '<button class="btn-icon" data-open="survey-edit" data-i="' + i + '" aria-label="Edit survey" title="Edit survey"><i class="hgi-stroke hgi-pencil-edit-02 text-[16px]" aria-hidden="true"></i></button>' +
+            '<button class="btn-icon" data-open="survey-edit" data-i="' + i + '" aria-label="Edit survey" title="Edit survey"><i class="hgi-stroke hgi-edit-02 text-[16px]" aria-hidden="true"></i></button>' +
             '<button class="btn-icon js-more" data-i="' + i + '" aria-label="More actions" aria-haspopup="menu" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]" aria-hidden="true"></i></button>' +
           '</div></td></tr>';
       }).join('');

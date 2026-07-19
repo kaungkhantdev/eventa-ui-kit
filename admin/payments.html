@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=36"></script>
-<link rel="stylesheet" href="../assets/app.css?v=36" />
+<script src="../assets/config.js?v=64"></script>
+<link rel="stylesheet" href="../assets/app.css?v=64" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="payments">
 <div class="flex h-full min-h-screen" data-layout>
@@ -24,7 +24,7 @@
         <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
         <div class="min-w-0">
           <h1 class="text-[22px] font-bold tracking-tight">Payments</h1>
-          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Track ticket revenue and process refunds.</p>
+          <p class="mt-0.5 hidden text-[12px] text-muted sm:block">Every charge, refund and failed attempt. Chasing an unpaid bill? <a href="invoices.html" class="font-medium text-brand hover:underline">See Invoices</a></p>
         </div>
       </div>
       <div class="flex items-center gap-2">
@@ -102,6 +102,53 @@
   </main>
 
   <!-- refund confirm modal -->
+  <!-- Invoice preview — rendered from the transaction it belongs to, so the figures
+       (subtotal / 7% VAT / total) always reconcile with the payment's amount. -->
+  <div class="modal" id="invoice-modal">
+    <div class="p-5">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex min-w-0 items-center gap-3">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-soft text-brand"><i class="hgi-stroke hgi-invoice-01 text-[20px]"></i></span>
+          <div class="min-w-0">
+            <h3 class="text-[15px] font-bold tracking-tight">Invoice <span id="inv-no" class="font-mono">—</span></h3>
+            <p class="truncate text-[12px] text-muted">For transaction <span id="inv-txn" class="font-mono text-ink">—</span></p>
+          </div>
+        </div>
+        <span id="inv-status" class="badge badge-green shrink-0">Paid</span>
+      </div>
+
+      <div class="mt-4 rounded-xl border border-hair p-3">
+        <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Billed to</p>
+        <p id="inv-buyer" class="mt-1 text-[14px] font-semibold text-ink">—</p>
+        <p id="inv-event" class="text-[12px] text-muted">—</p>
+      </div>
+
+      <div class="mt-3 rounded-xl border border-hair">
+        <div class="flex items-center justify-between gap-3 border-b border-line p-3">
+          <div class="min-w-0">
+            <p class="text-[13px] font-medium text-ink">Event ticket</p>
+            <p id="inv-line-ev" class="truncate text-[11px] text-muted">—</p>
+          </div>
+          <span id="inv-line-amt" class="shrink-0 text-[13px] font-semibold text-ink tnum">—</span>
+        </div>
+        <div class="space-y-1.5 p-3 text-[12px]">
+          <div class="flex justify-between"><span class="text-muted">Subtotal (excl. VAT)</span><span id="inv-sub" class="text-ink tnum">—</span></div>
+          <div class="flex justify-between"><span class="text-muted">VAT 7%</span><span id="inv-vat" class="text-ink tnum">—</span></div>
+          <div class="mt-1 flex justify-between border-t border-line pt-2"><span class="font-semibold text-ink">Total</span><span id="inv-total" class="text-[14px] font-bold text-ink tnum">—</span></div>
+        </div>
+      </div>
+
+      <div class="mt-3 flex items-center justify-between text-[11px] text-muted">
+        <span>Issued <span id="inv-date" class="text-ink">—</span></span>
+        <span>Paid via <span id="inv-method" class="text-ink">—</span></span>
+      </div>
+
+      <div class="mt-4">
+        <button class="btn btn-soft w-full" data-close>Close</button>
+      </div>
+    </div>
+  </div>
+
   <div class="modal" id="refund-modal">
     <div class="p-5">
       <div class="flex items-center gap-3">
@@ -120,7 +167,7 @@
   </div>
 </div>
 
-<script src="../assets/shell.js?v=36"></script>
+<script src="../assets/shell.js?v=64"></script>
 <script>
   const badgeStatus = {
     Paid:     { cls: 'badge badge-green', icon: 'hgi-tick-02' },
@@ -171,6 +218,11 @@
     const refundBtn = refundable
       ? `<button class="btn-icon" data-open="refund-modal" data-refund data-txn="${p.txn}" data-amount="${fmtBaht(p.amt)}" title="Refund"><i class="hgi-stroke hgi-delivery-return-01 text-[16px]"></i></button>`
       : `<button class="btn-icon cursor-not-allowed opacity-30" disabled title="Not eligible for refund"><i class="hgi-stroke hgi-delivery-return-01 text-[16px]"></i></button>`;
+    // An invoice only exists once the charge went through — Pending/Failed have none yet.
+    const invoiced = p.st === 'Paid' || p.st === 'Refunded';
+    const invoiceBtn = invoiced
+      ? `<button class="btn-icon" data-open="invoice-modal" data-invoice data-txn="${p.txn}" title="View invoice"><i class="hgi-stroke hgi-invoice-01 text-[16px]"></i></button>`
+      : `<button class="btn-icon cursor-not-allowed opacity-30" disabled title="No invoice — payment not completed"><i class="hgi-stroke hgi-invoice-01 text-[16px]"></i></button>`;
     return `
     <tr>
       <td><p class="font-mono text-[12.5px] font-semibold text-ink">${p.txn}</p><p class="mt-0.5 text-[11px] text-muted">${p.date}</p></td>
@@ -182,7 +234,7 @@
       <td class="text-muted tnum">${p.time}</td>
       <td class="text-right">
         <div class="flex items-center justify-end gap-1">
-          <button class="btn-icon" title="View invoice"><i class="hgi-stroke hgi-invoice-01 text-[16px]"></i></button>
+          ${invoiceBtn}
           ${refundBtn}
         </div>
       </td>
@@ -242,6 +294,38 @@
         document.getElementById('refund-confirm-btn').textContent = 'Refund ' + btn.dataset.amount;
       });
     });
+
+    tbody.querySelectorAll('[data-invoice]').forEach(btn => {
+      btn.addEventListener('click', () => fillInvoice(btn.dataset.txn));
+    });
+  }
+
+  /* Build the invoice preview from the transaction itself. The amount charged is
+     VAT-inclusive, so we work backwards: subtotal = total / 1.07, VAT = the rest —
+     which keeps subtotal + VAT === the payment amount exactly (and matches the 7%
+     basis used by the Taxes report). */
+  function fillInvoice(txn) {
+    const p = payments.find(x => x.txn === txn);
+    if (!p) return;
+    const sub = Math.round(p.amt / 1.07);
+    const vat = p.amt - sub;
+    const set = (id, v) => { document.getElementById(id).textContent = v; };
+    set('inv-no', '#INV-' + p.txn.replace(/\D/g, ''));
+    set('inv-txn', p.txn);
+    set('inv-buyer', p.name);
+    set('inv-event', p.ev);
+    set('inv-line-ev', p.ev);
+    set('inv-line-amt', fmtBaht(p.amt));
+    set('inv-sub', fmtBaht(sub));
+    set('inv-vat', fmtBaht(vat));
+    set('inv-total', fmtBaht(p.amt));
+    set('inv-date', p.date);
+    set('inv-method', p.method);
+    // a refunded payment leaves a voided invoice behind
+    const st = p.st === 'Refunded' ? { label: 'Void', cls: 'badge badge-gray shrink-0' } : { label: 'Paid', cls: 'badge badge-green shrink-0' };
+    const badge = document.getElementById('inv-status');
+    badge.className = st.cls;
+    badge.textContent = st.label;
   }
   statusTabs.forEach(t => t.addEventListener('click', () => { currentStatus = t.dataset.status || ''; page = 0; renderRows(); }));
   [searchInput, methodSelect].forEach(el => el.addEventListener('input', () => { page = 0; renderRows(); }));

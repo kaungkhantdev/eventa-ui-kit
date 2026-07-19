@@ -76,6 +76,9 @@ html.dark .btn-soft:hover { color: #45c98f; }
 .badge-blue { background: #eff6ff; color: #2563eb; } html.dark .badge-blue { background: rgba(59,130,246,.15); color: #93c5fd; }
 .badge-purple { background: #f5f3ff; color: #7c3aed; } html.dark .badge-purple { background: rgba(139,92,246,.15); color: #c4b5fd; }
 
+/* ---------- Brand logo (assets/img/logo.svg painted in currentColor via mask) ---------- */
+.brand-logo { display: block; background-color: currentColor; -webkit-mask: url(img/logo.svg) no-repeat center / contain; mask: url(img/logo.svg) no-repeat center / contain; }
+
 /* ---------- Tables ---------- */
 .data-table { width: 100%; text-align: left; border-collapse: collapse; }
 .data-table thead th { padding: 0 .75rem .5rem 0; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: rgb(var(--muted)); }

@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=36"></script>
-<link rel="stylesheet" href="../assets/app.css?v=36" />
+<script src="../assets/config.js?v=64"></script>
+<link rel="stylesheet" href="../assets/app.css?v=64" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="events">
 
@@ -28,7 +28,7 @@
         <h1 class="text-[22px] font-bold tracking-tight">Events</h1>
         <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Create and manage your events.</p>
       </div>
-      <a href="event-form.html" class="ml-auto inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2.5 text-[13px] font-semibold text-white transition hover:bg-brand-dark"><i class="hgi-stroke hgi-add-01 text-[16px]"></i><span class="hidden sm:inline">New Event</span></a>
+      <a href="event-form.html" class="btn btn-primary shrink-0 ml-auto"><i class="hgi-stroke hgi-calendar-add-01 text-[16px]"></i><span class="hidden sm:inline">New event</span><span class="sm:hidden">New</span></a>
       <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
         <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
         <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
@@ -135,7 +135,7 @@
           </div>
           <div class="flex items-center gap-2">
             <button id="cal-today" type="button" class="btn btn-soft btn-sm">Today</button>
-            <a href="event-form.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-add-01 text-[14px]"></i><span class="hidden sm:inline">New event</span></a>
+            <a href="event-form.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-calendar-add-01 text-[14px]"></i><span class="hidden sm:inline">New event</span></a>
           </div>
         </div>
         <div class="grid gap-4 xl:grid-cols-[minmax(0,1fr)_300px]">
@@ -159,7 +159,7 @@
     <!-- shared row-actions menu (fixed so overflow-x-auto can't clip it) -->
     <div id="row-menu" class="fixed z-50 hidden w-44 rounded-xl border border-hair bg-surface p-1.5 shadow-xl">
       <a href="event-detail.html" class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><i class="hgi-stroke hgi-view text-[15px] text-muted"></i>View details</a>
-      <a href="event-form.html" class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><i class="hgi-stroke hgi-pencil-edit-02 text-[15px] text-muted"></i>Edit</a>
+      <a href="event-form.html" class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><i class="hgi-stroke hgi-edit-02 text-[15px] text-muted"></i>Edit</a>
       <button type="button" data-act="duplicate" class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-[13px] font-medium text-ink transition hover:bg-line"><i class="hgi-stroke hgi-copy-01 text-[15px] text-muted"></i>Duplicate</button>
       <div class="my-1 h-px bg-line"></div>
       <button type="button" data-act="delete" class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-[13px] font-medium text-red-500 transition hover:bg-red-50 dark:hover:bg-red-500/15"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i>Delete</button>
@@ -169,7 +169,7 @@
   </main>
 </div>
 
-<script src="../assets/shell.js?v=36"></script>
+<script src="../assets/shell.js?v=64"></script>
 <script>
   /* ---------- pill tab groups (view + manage) ---------- */
   document.querySelectorAll('[data-pill-group]').forEach(group => {

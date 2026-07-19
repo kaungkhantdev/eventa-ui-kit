@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=36"></script>
-<link rel="stylesheet" href="../assets/app.css?v=36" />
+<script src="../assets/config.js?v=64"></script>
+<link rel="stylesheet" href="../assets/app.css?v=64" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="registrations">
 
@@ -54,8 +54,8 @@
       </div>
       <div class="flex gap-2">
         <div class="relative flex-1 sm:flex-none">
-          <i class="hgi-stroke hgi-calendar-03 text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
-          <select id="reg-event-filter" class="select h-10 w-full border-0 bg-surface pl-9 font-medium sm:w-44">
+          <i class="hgi-stroke hgi-calendar-03 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-brand"></i>
+          <select data-event-picker="catalog" id="reg-event-filter" class="select h-10 w-full border-0 bg-surface pl-9 text-[14px] font-semibold sm:w-52">
             <option>All events</option>
             <option>Tech Summit 2026</option>
             <option>Bangkok Jazz Night</option>
@@ -166,7 +166,7 @@
   </aside>
 </div>
 
-<script src="../assets/shell.js?v=36"></script>
+<script src="../assets/shell.js?v=64"></script>
 <script>
   /* ---------- Registrations: data-driven, filterable, paginated ---------- */
   const DATA = [
