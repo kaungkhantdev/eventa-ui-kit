@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Components — UI Kit</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="assets/config.js?v=68"></script>
+<link rel="stylesheet" href="assets/app.css?v=68" />
+<style>
+  /* ---- Reference-site chrome (page-local; components themselves come from app.css) ---- */
+  .ds-link { display:flex; align-items:center; gap:.5rem; padding:.3rem .6rem; border-radius:.5rem; font-size:12.5px; font-weight:500; color:rgb(var(--muted)); transition:.12s; }
+  .ds-link:hover { color:rgb(var(--ink)); background:rgb(var(--line)); }
+  .ds-link.active { color:#1ba770; background:rgb(var(--brand-soft)); font-weight:600; }
+  html.dark .ds-link.active { color:#45c98f; }
+  .ds-group { margin:1.1rem .6rem .35rem; font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgb(var(--muted)); }
+  .ds-group:first-child { margin-top:0; }
+
+  .ex-label { margin:1.6rem 0 .6rem; font-size:12px; font-weight:600; color:rgb(var(--muted)); }
+  .ex-wrap { border:1px solid rgb(var(--hair)); border-radius:.9rem; overflow:hidden; background:rgb(var(--surface)); }
+  .ex-bar { display:flex; align-items:center; justify-content:space-between; padding:.4rem .5rem; border-bottom:1px solid rgb(var(--line)); }
+  .ex-seg { display:inline-flex; gap:2px; background:rgb(var(--line)); border-radius:.55rem; padding:2px; }
+  .ex-seg button { display:inline-flex; align-items:center; gap:.3rem; font-size:12px; font-weight:600; color:rgb(var(--muted)); padding:.28rem .62rem; border-radius:.42rem; transition:.12s; }
+  .ex-seg button.on { background:rgb(var(--surface)); color:rgb(var(--ink)); box-shadow:0 1px 2px rgba(0,0,0,.08); }
+  html.dark .ex-seg button.on { background:rgba(255,255,255,.1); }
+  .ex-copy { display:inline-flex; align-items:center; gap:.4rem; font-size:12px; font-weight:600; color:rgb(var(--muted)); padding:.32rem .55rem; border-radius:.45rem; transition:.12s; }
+  .ex-copy:hover { color:rgb(var(--ink)); background:rgb(var(--line)); }
+  .ex-view { padding:1.9rem 1.6rem; background:rgb(var(--canvas)); display:flex; flex-wrap:wrap; align-items:center; gap:.7rem; }
+  .ex-view.block { display:block; }
+  .ex-view.center { justify-content:center; }
+  .ex-code { margin:0; padding:1rem 1.2rem; background:#0c1512; overflow-x:auto; }
+  .ex-code code { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:12px; line-height:1.65; color:#c4d1cb; white-space:pre; display:block; }
+  .c-tag { color:#7ee0b8; }
+  .c-at  { color:#93b4ff; }
+  .c-st  { color:#e6c07b; }
+  .c-cm  { color:#5f736c; font-style:italic; }
+
+  /* colour swatches */
+  .swatch { height:66px; border-radius:.7rem; box-shadow:inset 0 0 0 1px rgb(var(--hair)); }
+</style>
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased">
+
+<!-- ───────────────── top bar ───────────────── -->
+<header class="sticky top-0 z-30 border-b border-hair bg-surface/85 backdrop-blur">
+  <div class="mx-auto flex h-14 max-w-[1200px] items-center justify-between px-5 lg:px-8">
+    <a href="index.html" class="inline-flex items-center gap-2.5">
+      <span class="brand-logo text-brand h-[22px] w-[42px]"></span>
+      <span class="text-[16px] font-extrabold tracking-tight text-brand-dark">Eventa</span>
+      <span class="hidden rounded-md bg-brand-soft px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-brand sm:inline">UI Kit</span>
+    </a>
+    <div class="flex items-center gap-1.5">
+      <a href="index.html" class="btn btn-ghost btn-sm border border-hair"><i class="hgi-stroke hgi-grid-view text-[15px]"></i><span class="hidden sm:inline">Screens</span></a>
+      <button id="theme-btn" class="btn-icon border border-hair" title="Toggle theme"><i class="hgi-stroke hgi-moon-02 text-[17px]"></i></button>
+    </div>
+  </div>
+</header>
+
+<div class="mx-auto max-w-[1200px] px-5 lg:px-8">
+  <div class="lg:grid lg:grid-cols-[196px_minmax(0,1fr)] lg:gap-10">
+
+    <!-- ───────────────── side nav ───────────────── -->
+    <aside class="hidden lg:block">
+      <nav id="ds-nav" class="sticky top-[4.5rem] max-h-[calc(100vh-6rem)] overflow-y-auto no-scrollbar py-8">
+        <p class="ds-group">Foundations</p>
+        <a class="ds-link" href="#colors"><i class="hgi-stroke hgi-colors text-[15px]"></i>Colors</a>
+        <a class="ds-link" href="#typography"><i class="hgi-stroke hgi-text-font text-[15px]"></i>Typography</a>
+        <a class="ds-link" href="#icons"><i class="hgi-stroke hgi-grid text-[15px]"></i>Icons</a>
+        <p class="ds-group">Components</p>
+        <a class="ds-link" href="#buttons"><i class="hgi-stroke hgi-cursor-01 text-[15px]"></i>Buttons</a>
+        <a class="ds-link" href="#badges"><i class="hgi-stroke hgi-tag-01 text-[15px]"></i>Badges</a>
+        <a class="ds-link" href="#inputs"><i class="hgi-stroke hgi-text-align-left text-[15px]"></i>Form inputs</a>
+        <a class="ds-link" href="#cards"><i class="hgi-stroke hgi-square text-[15px]"></i>Cards</a>
+        <a class="ds-link" href="#table"><i class="hgi-stroke hgi-table text-[15px]"></i>Table</a>
+        <a class="ds-link" href="#avatars"><i class="hgi-stroke hgi-user-circle text-[15px]"></i>Avatars</a>
+        <a class="ds-link" href="#tabs"><i class="hgi-stroke hgi-folder-02 text-[15px]"></i>Tabs</a>
+        <a class="ds-link" href="#segmented"><i class="hgi-stroke hgi-toggle-on text-[15px]"></i>Segmented</a>
+        <a class="ds-link" href="#overlays"><i class="hgi-stroke hgi-sidebar-right-01 text-[15px]"></i>Panels &amp; modals</a>
+      </nav>
+    </aside>
+
+    <!-- ───────────────── content ───────────────── -->
+    <main class="min-w-0 pb-24 pt-8 lg:pt-10">
+
+      <!-- hero -->
+      <div class="mb-12">
+        <p class="text-[12px] font-semibold uppercase tracking-wider text-brand">Design system</p>
+        <h1 class="mt-1.5 text-[30px] font-extrabold tracking-tight sm:text-[34px]">Components</h1>
+        <p class="mt-2 max-w-2xl text-[14px] leading-relaxed text-muted">Every building block in the Eventa kit — buttons, badges, inputs, cards, tables and overlays — shown live in light &amp; dark with copy-paste markup. All components are plain classes from <code class="rounded bg-line px-1 py-0.5 text-[12px] tnum">assets/app.css</code>; no build step, no framework.</p>
+        <div class="mt-5 flex flex-wrap gap-x-6 gap-y-1.5 text-[12px] text-muted">
+          <span class="inline-flex items-center gap-1.5"><i class="hgi-stroke hgi-tick-02 text-[14px] text-brand"></i>Tailwind + semantic tokens</span>
+          <span class="inline-flex items-center gap-1.5"><i class="hgi-stroke hgi-tick-02 text-[14px] text-brand"></i>Light &amp; dark</span>
+          <span class="inline-flex items-center gap-1.5"><i class="hgi-stroke hgi-tick-02 text-[14px] text-brand"></i>Copy-paste HTML</span>
+        </div>
+      </div>
+
+      <!-- ══════════ COLORS ══════════ -->
+      <section id="colors" class="ds-sec scroll-mt-20">
+        <h2 class="text-[20px] font-bold tracking-tight">Colors</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Semantic tokens are CSS variables that flip between light &amp; dark automatically — use them (<code class="rounded bg-line px-1 py-0.5 text-[11.5px]">bg-surface</code>, <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">text-muted</code>) instead of literal grays so new UI is dark-mode-ready. The brand green is a fixed hex.</p>
+
+        <p class="ex-label">Semantic tokens</p>
+        <div id="tokens-grid" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4"></div>
+
+        <p class="ex-label">Brand &amp; accents</p>
+        <div id="accents-grid" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4"></div>
+      </section>
+
+      <hr class="my-12 border-hair" />
+
+      <!-- ══════════ TYPOGRAPHY ══════════ -->
+      <section id="typography" class="ds-sec scroll-mt-20">
+        <h2 class="text-[20px] font-bold tracking-tight">Typography</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">The face is <strong class="font-semibold text-ink">Inter</strong> on a compact ~13px base. Figures use <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">tnum</code> (tabular) so numbers line up in tables and stats.</p>
+        <div class="card mt-5 divide-y divide-line border border-hair" id="type-scale"></div>
+      </section>
+
+      <hr class="my-12 border-hair" />
+
+      <!-- ══════════ ICONS ══════════ -->
+      <section id="icons" class="ds-sec scroll-mt-20">
+        <h2 class="text-[20px] font-bold tracking-tight">Icons</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Hugeicons stroke-rounded font. Drop in <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">&lt;i class="hgi-stroke hgi-name"&gt;</code>, size with <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">text-[Npx]</code>, color with <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">currentColor</code>.</p>
+        <div id="icon-grid" class="mt-5 grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6"></div>
+        <script type="text/html" class="ex">
+          <i class="hgi-stroke hgi-calendar-03 text-[20px] text-ink"></i>
+          <i class="hgi-stroke hgi-ticket-02 text-[20px] text-brand"></i>
+          <i class="hgi-stroke hgi-notification-03 text-[20px] text-muted"></i>
+        </script>
+      </section>
+
+      <hr class="my-12 border-hair" />
+
+      <!-- ══════════ BUTTONS ══════════ -->
+      <section id="buttons" class="ds-sec scroll-mt-20">
+        <h2 class="text-[20px] font-bold tracking-tight">Buttons</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Base class <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.btn</code> + a variant. Add <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.btn-sm</code> for the compact size or <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.btn-icon</code> for square icon buttons.</p>
+
+        <p class="ex-label">Variants</p>
+        <script type="text/html" class="ex">
+          <button class="btn btn-primary">Primary</button>
+          <button class="btn btn-ghost border border-hair">Ghost</button>
+          <button class="btn btn-soft">Soft</button>
+          <button class="btn btn-danger">Danger</button>
+        </script>
+
+        <p class="ex-label">With icons &amp; sizes</p>
+        <script type="text/html" class="ex">
+          <button class="btn btn-primary"><i class="hgi-stroke hgi-add-01 text-[16px]"></i>Create event</button>
+          <button class="btn btn-ghost border border-hair"><i class="hgi-stroke hgi-download-01 text-[15px]"></i>Export</button>
+          <button class="btn btn-sm btn-primary">Small</button>
+          <button class="btn-icon border border-hair"><i class="hgi-stroke hgi-settings-01 text-[17px]"></i></button>
+        </script>
+
+        <p class="ex-label">Disabled</p>
+        <script type="text/html" class="ex">
+          <button class="btn btn-primary" disabled>Primary</button>
+          <button class="btn btn-ghost border border-hair" disabled>Ghost</button>
+        </script>
+      </section>
+
+      <hr class="my-12 border-hair" />
+
+      <!-- ══════════ BADGES ══════════ -->
+      <section id="badges" class="ds-sec scroll-mt-20">
+        <h2 class="text-[20px] font-bold tracking-tight">Badges</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Pill status chips. Six accent tints, each with a tuned dark-mode variant.</p>
+
+        <p class="ex-label">Colors</p>
+        <script type="text/html" class="ex">
+          <span class="badge badge-green">Published</span>
+          <span class="badge badge-amber">Pending</span>
+          <span class="badge badge-red">Cancelled</span>
+          <span class="badge badge-blue">Draft</span>
+          <span class="badge badge-purple">VIP</span>
+          <span class="badge badge-gray">Archived</span>
+        </script>
+
+        <p class="ex-label">With dot &amp; icon</p>
+        <script type="text/html" class="ex">
+          <span class="badge badge-green"><span class="h-1.5 w-1.5 rounded-full bg-current"></span>Live</span>
+          <span class="badge badge-amber"><i class="hgi-stroke hgi-clock-01 text-[12px]"></i>Waitlist</span>
+          <span class="badge badge-red"><i class="hgi-stroke hgi-cancel-01 text-[12px]"></i>Refunded</span>
+        </script>
+      </section>
+
+      <hr class="my-12 border-hair" />
+
+      <!-- ══════════ INPUTS ══════════ -->
+      <section id="inputs" class="ds-sec scroll-mt-20">
+        <h2 class="text-[20px] font-bold tracking-tight">Form inputs</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Text fields, selects and textareas share one focus ring. Pair with <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.label</code> and <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.hint</code>.</p>
+
+        <p class="ex-label">Fields</p>
+        <script type="text/html" class="ex">
+          <div class="grid w-full gap-4 sm:grid-cols-2">
+            <div>
+              <label class="label">Event name</label>
+              <input class="input" placeholder="e.g. Tech Summit 2026" />
+              <p class="hint">Shown on the public landing page.</p>
+            </div>
+            <div>
+              <label class="label">Category</label>
+              <select class="select">
+                <option>Conference</option>
+                <option>Workshop</option>
+                <option>Concert</option>
+              </select>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="label">Description</label>
+              <textarea class="textarea" placeholder="Tell attendees what to expect…"></textarea>
+            </div>
+          </div>
+        </script>
+
+        <p class="ex-label">Search &amp; disabled</p>
+        <script type="text/html" class="ex">
+          <div class="grid w-full gap-4 sm:grid-cols-2">
+            <div class="relative">
+              <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[16px] text-muted"></i>
+              <input class="input pl-9" placeholder="Search attendees" />
+            </div>
+            <input class="input" value="Locked field" disabled />
+          </div>
+        </script>
+      </section>
+
+      <hr class="my-12 border-hair" />
+
+      <!-- ══════════ CARDS ══════════ -->
+      <section id="cards" class="ds-sec scroll-mt-20">
+        <h2 class="text-[20px] font-bold tracking-tight">Cards</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted"><code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.card</code> is a flat, bordered surface — add <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">border border-hair</code> and padding. Shadows are reserved for floating popovers.</p>
+
+        <p class="ex-label">Basic &amp; stat</p>
+        <script type="text/html" class="ex">
+          <div class="grid w-full gap-4 sm:grid-cols-2">
+            <div class="card border border-hair p-5">
+              <h3 class="text-[15px] font-semibold">Tech Summit 2026</h3>
+              <p class="mt-1 text-[13px] text-muted">Mar 14 · Bangkok · 1,240 registered</p>
+              <div class="mt-4 flex gap-2">
+                <button class="btn btn-sm btn-primary">Manage</button>
+                <button class="btn btn-sm btn-ghost border border-hair">View</button>
+              </div>
+            </div>
+            <div class="card border border-hair p-5">
+              <div class="flex items-center justify-between">
+                <span class="text-[12px] font-medium text-muted">Revenue</span>
+                <span class="grid h-8 w-8 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-wallet-01 text-[16px]"></i></span>
+              </div>
+              <p class="mt-3 text-[22px] font-bold tnum">฿842,500</p>
+              <p class="mt-1 inline-flex items-center gap-1 text-[12px] font-medium text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[14px]"></i>12.4% vs last month</p>
+            </div>
+          </div>
+        </script>
+      </section>
+
+      <hr class="my-12 border-hair" />
+
+      <!-- ══════════ TABLE ══════════ -->
+      <section id="table" class="ds-sec scroll-mt-20">
+        <h2 class="text-[20px] font-bold tracking-tight">Table</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted"><code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.data-table</code> — uppercase micro-headers, hairline row dividers, hover highlight.</p>
+        <script type="text/html" class="ex">
+          <div class="w-full overflow-x-auto">
+            <table class="data-table">
+              <thead>
+                <tr><th>Attendee</th><th>Ticket</th><th>Status</th><th class="text-right">Paid</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[12px]">AC</span>Anna Cruz</div></td>
+                  <td class="text-muted">VIP</td>
+                  <td><span class="badge badge-green">Confirmed</span></td>
+                  <td class="text-right tnum">฿3,500</td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[12px]">JD</span>James Doe</div></td>
+                  <td class="text-muted">General</td>
+                  <td><span class="badge badge-amber">Pending</span></td>
+                  <td class="text-right tnum">฿1,200</td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[12px]">MK</span>Mira Khan</div></td>
+                  <td class="text-muted">Student</td>
+                  <td><span class="badge badge-red">Refunded</span></td>
+                  <td class="text-right tnum">฿600</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </script>
+      </section>
+
+      <hr class="my-12 border-hair" />
+
+      <!-- ══════════ AVATARS ══════════ -->
+      <section id="avatars" class="ds-sec scroll-mt-20">
+        <h2 class="text-[20px] font-bold tracking-tight">Avatars</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted"><code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.avatar</code> renders tonal-brand initials. Size with height/width + text utilities; overlap for a stack.</p>
+        <script type="text/html" class="ex">
+          <span class="avatar h-8 w-8 text-[12px]">AC</span>
+          <span class="avatar h-10 w-10 text-[14px]">JD</span>
+          <span class="avatar h-12 w-12 text-[16px]">MK</span>
+          <div class="flex -space-x-2">
+            <span class="avatar h-9 w-9 text-[12px] ring-2 ring-canvas">AC</span>
+            <span class="avatar h-9 w-9 text-[12px] ring-2 ring-canvas">JD</span>
+            <span class="avatar h-9 w-9 text-[12px] ring-2 ring-canvas">MK</span>
+            <span class="avatar h-9 w-9 text-[12px] ring-2 ring-canvas">+5</span>
+          </div>
+        </script>
+      </section>
+
+      <hr class="my-12 border-hair" />
+
+      <!-- ══════════ TABS ══════════ -->
+      <section id="tabs" class="ds-sec scroll-mt-20">
+        <h2 class="text-[20px] font-bold tracking-tight">Tabs</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Declarative &amp; live — a <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">[data-tabs]</code> wrapper toggles matching <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">[data-tab-panel]</code> sections. Try them below.</p>
+
+        <p class="ex-label">Underline</p>
+        <script type="text/html" class="ex">
+          <div class="w-full">
+            <div class="flex gap-5 border-b border-hair" data-tabs="#tab-demo-1">
+              <button class="tab tab-active" data-tab="overview">Overview</button>
+              <button class="tab" data-tab="tickets">Tickets</button>
+              <button class="tab" data-tab="guests">Guests</button>
+            </div>
+            <div id="tab-demo-1" class="pt-4 text-[13px] text-muted">
+              <div data-tab-panel="overview">Overview panel — event summary &amp; KPIs.</div>
+              <div data-tab-panel="tickets" class="hidden">Tickets panel — types &amp; pricing.</div>
+              <div data-tab-panel="guests" class="hidden">Guests panel — the attendee list.</div>
+            </div>
+          </div>
+        </script>
+
+        <p class="ex-label">Pills with count</p>
+        <script type="text/html" class="ex">
+          <div class="flex flex-wrap gap-1.5" data-tabs="#tab-demo-2">
+            <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count">128</span></button>
+            <button class="pilltab" data-tab="confirmed">Confirmed <span class="pilltab-count">96</span></button>
+            <button class="pilltab" data-tab="pending">Pending <span class="pilltab-count">32</span></button>
+          </div>
+          <div id="tab-demo-2" class="hidden"></div>
+        </script>
+      </section>
+
+      <hr class="my-12 border-hair" />
+
+      <!-- ══════════ SEGMENTED ══════════ -->
+      <section id="segmented" class="ds-sec scroll-mt-20">
+        <h2 class="text-[20px] font-bold tracking-tight">Segmented control</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted"><code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.segmented</code> — a compact toggle for chart ranges or view modes. The <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.active</code> button raises. Click to switch.</p>
+        <script type="text/html" class="ex">
+          <div class="segmented">
+            <button class="active">7d</button>
+            <button>30d</button>
+            <button>90d</button>
+            <button>1y</button>
+          </div>
+        </script>
+      </section>
+
+      <hr class="my-12 border-hair" />
+
+      <!-- ══════════ OVERLAYS ══════════ -->
+      <section id="overlays" class="ds-sec scroll-mt-20">
+        <h2 class="text-[20px] font-bold tracking-tight">Panels &amp; modals</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Fully declarative — a trigger <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">[data-open="id"]</code> opens the <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.panel</code> or <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.modal</code> with that id; the overlay, <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">[data-close]</code> or <kbd class="rounded bg-line px-1 py-0.5 text-[11px]">Esc</kbd> closes it. Click a trigger to try it.</p>
+
+        <p class="ex-label">Slide-over panel</p>
+        <script type="text/html" class="ex">
+          <button class="btn btn-primary" data-open="demo-panel"><i class="hgi-stroke hgi-sidebar-right-01 text-[15px]"></i>Open panel</button>
+          <aside id="demo-panel" class="panel">
+            <div class="flex items-center justify-between border-b border-hair px-5 py-3.5">
+              <h3 class="text-[15px] font-semibold">Attendee details</h3>
+              <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+            </div>
+            <div class="flex-1 space-y-4 overflow-y-auto p-5">
+              <div class="flex items-center gap-3">
+                <span class="avatar h-12 w-12 text-[16px]">AC</span>
+                <div><p class="text-[14px] font-semibold">Anna Cruz</p><p class="text-[12px] text-muted">anna@example.com</p></div>
+              </div>
+              <div><label class="label">Ticket</label><input class="input" value="VIP · ฿3,500" readonly /></div>
+              <div><label class="label">Note</label><textarea class="textarea" placeholder="Add a note…"></textarea></div>
+            </div>
+            <div class="flex gap-2 border-t border-hair p-4">
+              <button class="btn btn-primary flex-1" data-close>Save</button>
+              <button class="btn btn-ghost border border-hair" data-close>Cancel</button>
+            </div>
+          </aside>
+        </script>
+
+        <p class="ex-label">Modal dialog</p>
+        <script type="text/html" class="ex">
+          <button class="btn btn-danger" data-open="demo-modal"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i>Delete event</button>
+          <div id="demo-modal" class="modal p-5">
+            <div class="flex items-start gap-3">
+              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-red-50 text-red-500 dark:bg-red-500/15"><i class="hgi-stroke hgi-alert-02 text-[20px]"></i></span>
+              <div>
+                <h3 class="text-[15px] font-semibold">Delete this event?</h3>
+                <p class="mt-1 text-[13px] text-muted">This removes all 1,240 registrations and cannot be undone.</p>
+              </div>
+            </div>
+            <div class="mt-5 flex justify-end gap-2">
+              <button class="btn btn-ghost border border-hair" data-close>Cancel</button>
+              <button class="btn btn-danger" data-close>Delete</button>
+            </div>
+          </div>
+        </script>
+      </section>
+
+      <p class="mt-16 border-t border-hair pt-6 text-center text-[11px] text-muted/70">Eventa UI Kit · components from <code class="text-[11px]">assets/app.css</code> · HTML, Tailwind, Hugeicons &amp; Motion</p>
+    </main>
+  </div>
+</div>
+
+<script>
+/* ───────────── theme toggle ───────────── */
+(function () {
+  var b = document.getElementById('theme-btn');
+  function set(d){ document.documentElement.classList.toggle('dark', d); try{localStorage.setItem('eventa-theme', d?'dark':'light')}catch(e){} b.querySelector('i').className = 'hgi-stroke ' + (d?'hgi-sun-03':'hgi-moon-02') + ' text-[17px]'; }
+  set(document.documentElement.classList.contains('dark'));
+  b.addEventListener('click', function(){ set(!document.documentElement.classList.contains('dark')); });
+})();
+
+/* ───────────── foundations: colors ───────────── */
+const TOKENS = [
+  { name: 'canvas',     util: 'bg-canvas',      css: '--canvas',      note: 'Page background' },
+  { name: 'surface',    util: 'bg-surface',     css: '--surface',     note: 'Cards & panels' },
+  { name: 'sidebar',    util: 'bg-sidebar',     css: '--sidebar',     note: 'Sidebar' },
+  { name: 'hair',       util: 'border-hair',    css: '--hair',        note: 'Card borders' },
+  { name: 'line',       util: 'bg-line',        css: '--line',        note: 'Dividers / hover' },
+  { name: 'ink',        util: 'text-ink',       css: '--ink',         note: 'Primary text' },
+  { name: 'muted',      util: 'text-muted',     css: '--muted',       note: 'Secondary text' },
+  { name: 'brand-soft', util: 'bg-brand-soft',  css: '--brand-soft',  note: 'Tonal brand fill' },
+];
+const ACCENTS = [
+  { name: 'brand',      util: 'bg-brand',       css: '#1ba770', fixed: true, note: 'Primary actions' },
+  { name: 'brand-dark', util: 'text-brand-dark',css: '#157e56', fixed: true, note: 'Hover / emphasis' },
+  { name: 'green',      util: 'badge-green',    css: 'accent',  note: 'Success' },
+  { name: 'amber',      util: 'badge-amber',    css: 'accent',  note: 'Warning' },
+  { name: 'red',        util: 'badge-red',      css: 'accent',  note: 'Danger' },
+  { name: 'blue',       util: 'badge-blue',     css: 'accent',  note: 'Info' },
+  { name: 'purple',     util: 'badge-purple',   css: 'accent',  note: 'Special' },
+  { name: 'gray',       util: 'badge-gray',     css: 'accent',  note: 'Neutral' },
+];
+function swatchCard(t) {
+  const bg = t.fixed ? t.css : (t.css.indexOf('accent') === 0 ? '' : `rgb(var(${t.css}))`);
+  let box;
+  if (t.name === 'brand') box = `<div class="swatch" style="background:#1ba770"></div>`;
+  else if (t.name === 'brand-dark') box = `<div class="swatch" style="background:#157e56"></div>`;
+  else if (t.css === 'accent') box = `<div class="swatch grid place-items-center"><span class="badge badge-${t.name}">${t.name}</span></div>`;
+  else box = `<div class="swatch" style="background:${bg}"></div>`;
+  return `
+    <div>
+      ${box}
+      <p class="mt-1.5 text-[12.5px] font-semibold">${t.name}</p>
+      <p class="text-[11px] text-muted">${t.note}</p>
+      <code class="mt-0.5 block text-[10.5px] text-muted/80">${t.fixed ? t.css : (t.css === 'accent' ? '.' + t.util : t.util)}</code>
+    </div>`;
+}
+document.getElementById('tokens-grid').innerHTML = TOKENS.map(swatchCard).join('');
+document.getElementById('accents-grid').innerHTML = ACCENTS.map(swatchCard).join('');
+
+/* ───────────── foundations: type scale ───────────── */
+const TYPE = [
+  { label: 'Page title',    cls: 'text-[22px] font-bold tracking-tight', sample: 'Dashboard' },
+  { label: 'Section head',  cls: 'text-[15px] font-semibold',            sample: 'Recent registrations' },
+  { label: 'Body',          cls: 'text-[13px]',                          sample: 'The quick brown fox jumps over the lazy dog.' },
+  { label: 'Label',         cls: 'label !mb-0',                          sample: 'Event name' },
+  { label: 'Muted / hint',  cls: 'text-[11px] text-muted',              sample: 'Shown on the public landing page.' },
+  { label: 'Stat value',    cls: 'text-[22px] font-bold tnum',           sample: '฿842,500' },
+];
+document.getElementById('type-scale').innerHTML = TYPE.map(t => `
+  <div class="flex items-baseline justify-between gap-4 px-5 py-3.5">
+    <span class="${t.cls}">${t.sample}</span>
+    <span class="shrink-0 text-right"><span class="block text-[12px] font-medium text-ink">${t.label}</span><code class="text-[10.5px] text-muted">${t.cls.replace(/ ?!mb-0/,'')}</code></span>
+  </div>`).join('');
+
+/* ───────────── foundations: icon grid ───────────── */
+const ICONS = ['calendar-03','ticket-02','user-multiple','wallet-01','notification-03','settings-01','search-01','check-list','qr-code-01','mic-01','chart-line-data-01','discount-tag-01','bank','mail-01','star','dashboard-speed-02'];
+document.getElementById('icon-grid').innerHTML = ICONS.map(n => `
+  <div class="flex flex-col items-center gap-1.5 rounded-lg border border-hair bg-surface py-3">
+    <i class="hgi-stroke hgi-${n} text-[20px] text-ink"></i>
+    <code class="text-[10px] text-muted">${n}</code>
+  </div>`).join('');
+
+/* ───────────── live example builder (single source → preview + code) ───────────── */
+function dedent(s) {
+  s = s.replace(/^\n+/, '').replace(/\s+$/, '');
+  const lines = s.split('\n');
+  const widths = lines.filter(l => l.trim()).map(l => l.match(/^ */)[0].length);
+  const min = widths.length ? Math.min.apply(null, widths) : 0;
+  return lines.map(l => l.slice(min)).join('\n');
+}
+function highlight(raw) {
+  // Escape first so ALL source <, >, " become &lt; &gt; &quot;. The highlight <span>s
+  // below use real < and " — keyed on the escaped forms, the regexes never touch them.
+  let s = raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  s = s.replace(/(&lt;\/?)([a-zA-Z][\w-]*)/g, '$1<span class="c-tag">$2</span>');
+  s = s.replace(/([a-zA-Z][\w-]*)(=)(&quot;[\s\S]*?&quot;)/g,
+        '<span class="c-at">$1</span>$2<span class="c-st">$3</span>');
+  return s;
+}
+document.querySelectorAll('script.ex').forEach((src, i) => {
+  const raw = dedent(src.textContent);
+  const wrap = document.createElement('div');
+  wrap.className = 'ex-wrap';
+  const layout = src.dataset.center ? 'ex-view center' : (src.dataset.block ? 'ex-view block' : 'ex-view');
+  wrap.innerHTML = `
+    <div class="ex-bar">
+      <div class="ex-seg" role="tablist">
+        <button class="on" data-view="preview">Preview</button>
+        <button data-view="code">Code</button>
+      </div>
+      <button class="ex-copy" type="button"><i class="hgi-stroke hgi-copy-01 text-[14px]"></i><span>Copy</span></button>
+    </div>
+    <div class="${layout}"></div>
+    <pre class="ex-code hidden"><code></code></pre>`;
+  wrap.querySelector('.ex-view').innerHTML = raw;
+  wrap.querySelector('.ex-code code').innerHTML = highlight(raw);
+  src.replaceWith(wrap);
+
+  const view = wrap.querySelector('.ex-view');
+  const code = wrap.querySelector('.ex-code');
+  wrap.querySelectorAll('.ex-seg button').forEach(b => b.addEventListener('click', () => {
+    const showCode = b.dataset.view === 'code';
+    wrap.querySelectorAll('.ex-seg button').forEach(x => x.classList.toggle('on', x === b));
+    view.classList.toggle('hidden', showCode);
+    code.classList.toggle('hidden', !showCode);
+  }));
+  const copyBtn = wrap.querySelector('.ex-copy');
+  copyBtn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(raw); } catch (e) {}
+    const span = copyBtn.querySelector('span'), ic = copyBtn.querySelector('i');
+    span.textContent = 'Copied'; ic.className = 'hgi-stroke hgi-tick-02 text-[14px] text-brand';
+    setTimeout(() => { span.textContent = 'Copy'; ic.className = 'hgi-stroke hgi-copy-01 text-[14px]'; }, 1300);
+  });
+});
+
+/* ───────────── delegated interactions (mirror shell.js so injected examples work) ───────────── */
+// overlay for panels/modals
+const overlay = document.createElement('div');
+overlay.className = 'panel-overlay';
+document.body.appendChild(overlay);
+function closeAll() {
+  document.querySelectorAll('.panel.open, .modal.open').forEach(p => p.classList.remove('open'));
+  overlay.classList.remove('open');
+}
+document.addEventListener('click', (e) => {
+  const opener = e.target.closest('[data-open]');
+  if (opener) {
+    const p = document.getElementById(opener.getAttribute('data-open'));
+    if (p) { closeAll(); p.classList.add('open'); overlay.classList.add('open'); }
+    return;
+  }
+  if (e.target.closest('[data-close]') || e.target === overlay) closeAll();
+  // segmented control demo
+  const seg = e.target.closest('.segmented button');
+  if (seg) seg.parentElement.querySelectorAll('button').forEach(x => x.classList.toggle('active', x === seg));
+  // declarative tabs
+  const tabBtn = e.target.closest('[data-tab]');
+  if (tabBtn) {
+    const group = tabBtn.closest('[data-tabs]');
+    if (group) {
+      const content = document.querySelector(group.getAttribute('data-tabs')) || group.parentElement;
+      const name = tabBtn.getAttribute('data-tab');
+      group.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('tab-active', b === tabBtn));
+      content.querySelectorAll('[data-tab-panel]').forEach(p => p.classList.toggle('hidden', p.getAttribute('data-tab-panel') !== name));
+    }
+  }
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+
+/* ───────────── side-nav scroll spy ───────────── */
+const navLinks = Array.from(document.querySelectorAll('#ds-nav .ds-link'));
+const spy = new IntersectionObserver((entries) => {
+  entries.forEach(en => {
+    if (en.isIntersecting) {
+      const id = '#' + en.target.id;
+      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === id));
+    }
+  });
+}, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+document.querySelectorAll('section[id]').forEach(s => spy.observe(s));
+</script>
+</body>
+</html>
