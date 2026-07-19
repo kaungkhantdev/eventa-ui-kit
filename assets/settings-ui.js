@@ -29,7 +29,8 @@
       if (input) {
         var hidden = input.type === 'password';
         input.type = hidden ? 'text' : 'password';
-        if (icon) icon.className = 'hgi-stroke ' + (hidden ? 'hgi-view-off' : 'hgi-view') + ' text-[16px]';
+        if (icon)
+          icon.className = 'hgi-stroke ' + (hidden ? 'hgi-view-off' : 'hgi-view') + ' text-[16px]';
       }
       return;
     }
@@ -40,9 +41,13 @@
   document.querySelectorAll('[data-mode-toggle] [data-mode]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var mode = btn.getAttribute('data-mode');
-      document.querySelectorAll('[data-mode-toggle] [data-mode]').forEach(function (b) { b.classList.toggle('active', b === btn); });
+      document.querySelectorAll('[data-mode-toggle] [data-mode]').forEach(function (b) {
+        b.classList.toggle('active', b === btn);
+      });
       if (banner) banner.classList.toggle('hidden', mode !== 'test');
-      document.querySelectorAll('[data-mode-label]').forEach(function (l) { l.textContent = mode === 'test' ? 'Test mode' : 'Live mode'; });
+      document.querySelectorAll('[data-mode-label]').forEach(function (l) {
+        l.textContent = mode === 'test' ? 'Test mode' : 'Live mode';
+      });
       document.querySelectorAll('[data-key-field]').forEach(function (f) {
         f.value = f.getAttribute('data-' + mode) || '';
         if (f.hasAttribute('data-secret')) f.type = 'password';
@@ -51,9 +56,10 @@
       var badge = document.getElementById('conn-badge');
       var connected = pub && pub.value.trim() !== '';
       if (badge) badge.className = 'badge ' + (connected ? 'badge-green' : 'badge-gray');
-      if (badge) badge.innerHTML = connected
-        ? '<i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Connected'
-        : '<i class="hgi-stroke hgi-alert-circle text-[12px]"></i>Not connected';
+      if (badge)
+        badge.innerHTML = connected
+          ? '<i class="hgi-stroke hgi-checkmark-badge-01 text-[12px]"></i>Connected'
+          : '<i class="hgi-stroke hgi-alert-circle text-[12px]"></i>Not connected';
     });
   });
 })();

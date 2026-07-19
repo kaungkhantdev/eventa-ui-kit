@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Upcoming events</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets/config.js?v=68"></script>
+<link rel="stylesheet" href="../assets/app.css?v=68" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="events-upcoming">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav here -->
+
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+
+    <!-- top bar -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="text-[22px] font-bold tracking-tight">Upcoming events</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Events happening soon, at a glance.</p>
+      </div>
+      <a href="event-form.html" class="btn btn-primary shrink-0 ml-auto"><i class="hgi-stroke hgi-calendar-add-01 text-[16px]"></i><span class="hidden sm:inline">New event</span><span class="sm:hidden">New</span></a>
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Harper Nelson</p>
+          <p class="text-[11px] text-muted">Event Manager</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="mb-3 flex items-center justify-between gap-3">
+      <p class="text-[13px] text-muted">Next <span id="up-count" class="font-semibold text-ink tnum">0</span> events, soonest first.</p>
+      <a href="events.html" class="text-[12px] font-semibold text-brand hover:underline">Manage all events →</a>
+    </div>
+
+    <div id="upcoming-cards" class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
+    <!-- tailwind JIT safelist for the dynamically-rendered card colors -->
+    <div aria-hidden="true" class="hidden bg-pink-50 bg-blue-50 bg-amber-50 bg-violet-50 bg-indigo-50 bg-teal-50 bg-red-50 bg-brand-soft dark:bg-pink-500/10 dark:bg-blue-500/10 dark:bg-amber-400/10 dark:bg-violet-500/10 dark:bg-indigo-500/10 dark:bg-teal-500/10 dark:bg-red-500/10 from-pink-400 to-pink-600 from-blue-400 to-blue-600 from-amber-400 to-amber-600 from-violet-400 to-violet-600 from-indigo-400 to-indigo-600 from-teal-400 to-teal-600 from-red-400 to-red-600 from-brand to-emerald-500 bg-pink-500 bg-blue-500 bg-blue-600 bg-amber-500 bg-violet-500 bg-indigo-500 bg-teal-500 bg-red-500 bg-brand ring-pink-50 ring-blue-50 ring-amber-50 ring-violet-50 ring-indigo-50 ring-teal-50 ring-red-50 ring-brand-soft dark:ring-pink-500/10 dark:ring-blue-500/10 dark:ring-amber-400/10 dark:ring-violet-500/10 dark:ring-indigo-500/10 dark:ring-teal-500/10 dark:ring-red-500/10"></div>
+
+    <p class="mt-6 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  </main>
+</div>
+
+<script src="../assets/shell.js?v=68"></script>
+<script>
+  /* ---------- Upcoming Events (card grid) ---------- */
+  const UP_TONE = {
+    pink:   { bg:'bg-pink-50 dark:bg-pink-500/10',     grad:'from-pink-400 to-pink-600',     solid:'bg-pink-500',  bar:'bg-pink-500',  ring:'ring-pink-50 dark:ring-pink-500/10' },
+    blue:   { bg:'bg-blue-50 dark:bg-blue-500/10',     grad:'from-blue-400 to-blue-600',     solid:'bg-blue-500',  bar:'bg-blue-600',  ring:'ring-blue-50 dark:ring-blue-500/10' },
+    amber:  { bg:'bg-amber-50 dark:bg-amber-400/10',   grad:'from-amber-400 to-amber-600',   solid:'bg-amber-500', bar:'bg-amber-500', ring:'ring-amber-50 dark:ring-amber-400/10' },
+    brand:  { bg:'bg-brand-soft',                      grad:'from-brand to-emerald-500',     solid:'bg-brand',     bar:'bg-brand',     ring:'ring-brand-soft' },
+    violet: { bg:'bg-violet-50 dark:bg-violet-500/10', grad:'from-violet-400 to-violet-600', solid:'bg-violet-500',bar:'bg-violet-500',ring:'ring-violet-50 dark:ring-violet-500/10' },
+    indigo: { bg:'bg-indigo-50 dark:bg-indigo-500/10', grad:'from-indigo-400 to-indigo-600', solid:'bg-indigo-500',bar:'bg-indigo-500',ring:'ring-indigo-50 dark:ring-indigo-500/10' },
+    teal:   { bg:'bg-teal-50 dark:bg-teal-500/10',     grad:'from-teal-400 to-teal-600',     solid:'bg-teal-500',  bar:'bg-teal-500',  ring:'ring-teal-50 dark:ring-teal-500/10' },
+    red:    { bg:'bg-red-50 dark:bg-red-500/10',       grad:'from-red-400 to-red-600',       solid:'bg-red-500',   bar:'bg-red-500',   ring:'ring-red-50 dark:ring-red-500/10' },
+  };
+  const upcoming = [
+    { name:'Tech Innovators Forum',     icon:'hgi-presentation-bar-chart-01', tone:'amber',  days:3,  reg:'39/50',   pct:78, seed:'evt-conference', att:39  },
+    { name:'UX Bangkok Meetup',         icon:'hgi-user-multiple',        tone:'indigo', days:5,  reg:'72/90',   pct:80, seed:'evt-networking', att:72  },
+    { name:'Cloud Builders Workshop',   icon:'hgi-briefcase-01',    tone:'teal',   days:8,  reg:'40/60',   pct:67, seed:'evt-workshop',   att:40  },
+    { name:'Hope for All Charity Gala', icon:'hgi-charity',   tone:'brand',  days:12, reg:'34/51',   pct:67, seed:'evt-charity',    att:34  },
+    { name:'Summer Music Festival',     icon:'hgi-mic-01',          tone:'violet', days:15, reg:'320/400', pct:80, seed:'evt-festival',   att:320 },
+    { name:'Sunrise Yoga Retreat',      icon:'hgi-dumbbell-01',     tone:'red',    days:18, reg:'48/60',   pct:80, seed:'evt-wellness',   att:48  },
+  ];
+  function upCard(e) {
+    const t = UP_TONE[e.tone] || UP_TONE.brand;
+    const avatars = [1, 2, 3].map(function (i) {
+      return '<span class="relative grid h-6 w-6 place-items-center overflow-hidden rounded-full ' + t.solid + ' ring-2 ' + t.ring + '">' +
+        '<img src="https://picsum.photos/seed/' + e.seed + '-a' + i + '/48/48" alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()"></span>';
+    }).join('');
+    return '' +
+    '<a href="event-detail.html" class="group block w-full overflow-hidden rounded-2xl ring-2 ring-transparent transition ' + t.bg + ' hover:ring-brand">' +
+      '<div class="relative h-24 bg-gradient-to-br ' + t.grad + '">' +
+        '<img src="https://picsum.photos/seed/' + e.seed + '/540/240" alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()">' +
+        '<span class="absolute right-2.5 top-2.5 rounded-full bg-white/85 px-2.5 py-1 text-[11px] font-semibold text-ink backdrop-blur-sm">' + e.days + ' days left</span>' +
+        '<span class="absolute -bottom-5 left-4 grid h-11 w-11 place-items-center rounded-xl ' + t.solid + ' text-white shadow-md ring-4 ' + t.ring + '"><i class="hgi-stroke ' + e.icon + ' text-[22px]"></i></span>' +
+      '</div>' +
+      '<div class="px-4 pb-4 pt-7">' +
+        '<p class="truncate text-[15px] font-bold tracking-tight text-ink">' + e.name + '</p>' +
+        '<p class="mt-0.5 text-[12px] text-muted">Registrations: <span class="font-semibold text-ink tnum">' + e.reg + '</span></p>' +
+        '<div class="mt-3">' +
+          '<div class="flex items-center justify-between text-[12px]"><span class="text-muted">Filled</span><span class="font-semibold text-ink tnum">' + e.pct + '%</span></div>' +
+          '<div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/70 dark:bg-white/10"><div class="h-full rounded-full ' + t.bar + '" style="width:' + e.pct + '%"></div></div>' +
+        '</div>' +
+        '<div class="mt-3.5 flex items-center gap-2 border-t border-black/5 pt-3 dark:border-white/10">' +
+          '<div class="flex -space-x-2">' + avatars + '</div>' +
+          '<span class="text-[12px] font-semibold text-ink"><span class="tnum">' + e.att + '</span> attendees</span>' +
+        '</div>' +
+      '</div>' +
+    '</a>';
+  }
+  document.getElementById('upcoming-cards').innerHTML = upcoming.map(upCard).join('');
+  document.getElementById('up-count').textContent = upcoming.length;
+</script>
+</body>
+</html>

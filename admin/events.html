@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=64"></script>
-<link rel="stylesheet" href="../assets/app.css?v=64" />
+<script src="../assets/config.js?v=68"></script>
+<link rel="stylesheet" href="../assets/app.css?v=68" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="events">
 
@@ -42,54 +42,39 @@
       </div>
     </header>
 
-    <!-- view tabs -->
-    <div class="mb-5 flex flex-wrap items-center gap-3">
+    <!-- view tabs + status filter -->
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
       <div data-pill-group="view" class="inline-flex items-center gap-1 rounded-xl bg-surface p-1">
         <button data-pill="overview" class="rounded-lg bg-brand-soft px-4 py-2 text-[13px] font-semibold text-brand transition">Overview</button>
         <button data-pill="calendar" class="rounded-lg px-4 py-2 text-[13px] font-semibold text-muted transition hover:text-ink">Calendar</button>
+      </div>
+      <!-- status filter (overview only) -->
+      <div data-pill-panel="view:overview" data-pill-group="manage" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+        <button data-pill="active" class="pilltab tab-active">Active <span data-manage-count="active" class="pilltab-count tnum">0</span></button>
+        <button data-pill="completed" class="pilltab">Completed <span data-manage-count="completed" class="pilltab-count tnum">0</span></button>
       </div>
     </div>
 
     <!-- ============ OVERVIEW ============ -->
     <div data-pill-panel="view:overview">
 
-      <!-- Upcoming Events -->
-      <section class="rounded-2xl bg-surface p-4 lg:p-5">
-        <div class="flex items-center justify-between">
-          <h2 class="text-[16px] font-bold tracking-tight">Upcoming Events</h2>
-          <a id="evt-see-all" href="#manage-events" class="text-[12px] font-semibold text-brand hover:underline">See all</a>
+      <!-- search + filters (out of table) -->
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+        <div class="relative w-full flex-1">
+          <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+          <input id="evt-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search events…" />
         </div>
-        <div id="upcoming-cards" class="no-scrollbar -mx-1 mt-3 flex snap-x snap-mandatory gap-4 overflow-x-auto p-1"></div>
-        <!-- tailwind JIT safelist for the dynamically-rendered card colors -->
-        <div aria-hidden="true" class="hidden bg-pink-50 bg-blue-50 bg-amber-50 bg-violet-50 bg-indigo-50 bg-teal-50 bg-red-50 bg-brand-soft dark:bg-pink-500/10 dark:bg-blue-500/10 dark:bg-amber-400/10 dark:bg-violet-500/10 dark:bg-indigo-500/10 dark:bg-teal-500/10 dark:bg-red-500/10 from-pink-400 to-pink-600 from-blue-400 to-blue-600 from-amber-400 to-amber-600 from-violet-400 to-violet-600 from-indigo-400 to-indigo-600 from-teal-400 to-teal-600 from-red-400 to-red-600 from-brand to-emerald-500 bg-pink-500 bg-blue-500 bg-blue-600 bg-amber-500 bg-violet-500 bg-indigo-500 bg-teal-500 bg-red-500 bg-brand ring-pink-50 ring-blue-50 ring-amber-50 ring-violet-50 ring-indigo-50 ring-teal-50 ring-red-50 ring-brand-soft dark:ring-pink-500/10 dark:ring-blue-500/10 dark:ring-amber-400/10 dark:ring-violet-500/10 dark:ring-indigo-500/10 dark:ring-teal-500/10 dark:ring-red-500/10"></div>
-      </section>
+        <select id="evt-sort" class="select h-10 w-full border-0 bg-surface font-medium sm:w-52" aria-label="Sort by">
+          <option value="reg">Registrations high→low</option>
+          <option value="name">Name A–Z</option>
+          <option value="date">Date</option>
+        </select>
+        <select id="evt-type" class="select h-10 w-full border-0 bg-surface font-medium sm:w-44" aria-label="Event type"></select>
+      </div>
 
-      <!-- Manage Events -->
-      <section id="manage-events" class="mt-4 scroll-mt-4 rounded-2xl bg-surface p-4 lg:p-5">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <h2 class="text-[16px] font-bold tracking-tight">Manage Events</h2>
-          <div class="flex w-full flex-wrap items-center gap-2 sm:w-auto">
-            <div class="relative w-full sm:w-56">
-              <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
-              <input id="evt-search" type="text" class="h-9 w-full rounded-lg bg-canvas pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search events…" />
-            </div>
-            <select id="evt-sort" class="select h-9 w-auto border-0 bg-canvas py-0 text-[13px] font-medium text-muted" aria-label="Sort by">
-              <option value="reg">Registrations high→low</option>
-              <option value="name">Name A–Z</option>
-              <option value="date">Date</option>
-            </select>
-            <select id="evt-type" class="select h-9 w-auto border-0 bg-canvas py-0 text-[13px] font-medium text-muted" aria-label="Event type"></select>
-          </div>
-        </div>
-
-        <!-- active/completed tabs -->
-        <div data-pill-group="manage" class="mt-4 inline-flex items-center gap-1">
-          <button data-pill="active" class="inline-flex items-center gap-1.5 rounded-lg bg-brand-soft px-3 py-1.5 text-[13px] font-semibold text-brand transition">Active<span data-manage-count="active" class="grid h-4 min-w-[16px] place-items-center rounded-full bg-brand/15 px-1 text-[10px] font-bold text-brand tnum">0</span></button>
-          <button data-pill="completed" class="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[13px] font-semibold text-muted transition hover:text-ink">Completed<span data-manage-count="completed" class="grid h-4 min-w-[16px] place-items-center rounded-full bg-line px-1 text-[10px] font-bold text-muted tnum">0</span></button>
-        </div>
-
-        <!-- events table -->
-        <div class="mt-3 overflow-x-auto">
+      <!-- events table -->
+      <section id="manage-events" class="card mt-3 scroll-mt-4 p-4">
+        <div class="overflow-x-auto">
           <table class="w-full min-w-[640px] text-left">
             <thead>
               <tr class="text-[10.5px] font-semibold uppercase tracking-wider text-muted">
@@ -169,11 +154,12 @@
   </main>
 </div>
 
-<script src="../assets/shell.js?v=64"></script>
+<script src="../assets/shell.js?v=68"></script>
 <script>
   /* ---------- pill tab groups (view + manage) ---------- */
   document.querySelectorAll('[data-pill-group]').forEach(group => {
     const name = group.dataset.pillGroup;
+    if (name === 'manage') return; // manage bucket = pilltab style, handled by setBucket + its own listener
     group.addEventListener('click', e => {
       const b = e.target.closest('[data-pill]'); if (!b) return;
       const val = b.dataset.pill;
@@ -188,54 +174,6 @@
       });
     });
   });
-
-  /* ---------- Upcoming Events (scrollable cards) ---------- */
-  const UP_TONE = {
-    pink:   { bg:'bg-pink-50 dark:bg-pink-500/10',     grad:'from-pink-400 to-pink-600',     solid:'bg-pink-500',  bar:'bg-pink-500',  ring:'ring-pink-50 dark:ring-pink-500/10' },
-    blue:   { bg:'bg-blue-50 dark:bg-blue-500/10',     grad:'from-blue-400 to-blue-600',     solid:'bg-blue-500',  bar:'bg-blue-600',  ring:'ring-blue-50 dark:ring-blue-500/10' },
-    amber:  { bg:'bg-amber-50 dark:bg-amber-400/10',   grad:'from-amber-400 to-amber-600',   solid:'bg-amber-500', bar:'bg-amber-500', ring:'ring-amber-50 dark:ring-amber-400/10' },
-    brand:  { bg:'bg-brand-soft',                      grad:'from-brand to-emerald-500',     solid:'bg-brand',     bar:'bg-brand',     ring:'ring-brand-soft' },
-    violet: { bg:'bg-violet-50 dark:bg-violet-500/10', grad:'from-violet-400 to-violet-600', solid:'bg-violet-500',bar:'bg-violet-500',ring:'ring-violet-50 dark:ring-violet-500/10' },
-    indigo: { bg:'bg-indigo-50 dark:bg-indigo-500/10', grad:'from-indigo-400 to-indigo-600', solid:'bg-indigo-500',bar:'bg-indigo-500',ring:'ring-indigo-50 dark:ring-indigo-500/10' },
-    teal:   { bg:'bg-teal-50 dark:bg-teal-500/10',     grad:'from-teal-400 to-teal-600',     solid:'bg-teal-500',  bar:'bg-teal-500',  ring:'ring-teal-50 dark:ring-teal-500/10' },
-    red:    { bg:'bg-red-50 dark:bg-red-500/10',       grad:'from-red-400 to-red-600',       solid:'bg-red-500',   bar:'bg-red-500',   ring:'ring-red-50 dark:ring-red-500/10' },
-  };
-  const upcoming = [
-    { name:'Tech Innovators Forum',     icon:'hgi-presentation-bar-chart-01', tone:'amber',  days:3,  reg:'39/50',   pct:78, seed:'evt-conference', att:39  },
-    { name:'UX Bangkok Meetup',         icon:'hgi-user-multiple',        tone:'indigo', days:5,  reg:'72/90',   pct:80, seed:'evt-networking', att:72  },
-    { name:'Cloud Builders Workshop',   icon:'hgi-briefcase-01',    tone:'teal',   days:8,  reg:'40/60',   pct:67, seed:'evt-workshop',   att:40  },
-    { name:'Hope for All Charity Gala', icon:'hgi-charity',   tone:'brand',  days:12, reg:'34/51',   pct:67, seed:'evt-charity',    att:34  },
-    { name:'Summer Music Festival',     icon:'hgi-mic-01',          tone:'violet', days:15, reg:'320/400', pct:80, seed:'evt-festival',   att:320 },
-    { name:'Sunrise Yoga Retreat',      icon:'hgi-dumbbell-01',     tone:'red',    days:18, reg:'48/60',   pct:80, seed:'evt-wellness',   att:48  },
-  ];
-  function upCard(e) {
-    const t = UP_TONE[e.tone] || UP_TONE.brand;
-    const avatars = [1, 2, 3].map(function (i) {
-      return '<span class="relative grid h-6 w-6 place-items-center overflow-hidden rounded-full ' + t.solid + ' ring-2 ' + t.ring + '">' +
-        '<img src="https://picsum.photos/seed/' + e.seed + '-a' + i + '/48/48" alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()"></span>';
-    }).join('');
-    return '' +
-    '<a href="event-detail.html" class="group block w-[268px] shrink-0 snap-start overflow-hidden rounded-2xl ring-2 ring-transparent transition ' + t.bg + ' hover:ring-brand">' +
-      '<div class="relative h-24 bg-gradient-to-br ' + t.grad + '">' +
-        '<img src="https://picsum.photos/seed/' + e.seed + '/540/240" alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()">' +
-        '<span class="absolute right-2.5 top-2.5 rounded-full bg-white/85 px-2.5 py-1 text-[11px] font-semibold text-ink backdrop-blur-sm">' + e.days + ' days left</span>' +
-        '<span class="absolute -bottom-5 left-4 grid h-11 w-11 place-items-center rounded-xl ' + t.solid + ' text-white shadow-md ring-4 ' + t.ring + '"><i class="hgi-stroke ' + e.icon + ' text-[22px]"></i></span>' +
-      '</div>' +
-      '<div class="px-4 pb-4 pt-7">' +
-        '<p class="truncate text-[15px] font-bold tracking-tight text-ink">' + e.name + '</p>' +
-        '<p class="mt-0.5 text-[12px] text-muted">Registrations: <span class="font-semibold text-ink tnum">' + e.reg + '</span></p>' +
-        '<div class="mt-3">' +
-          '<div class="flex items-center justify-between text-[12px]"><span class="text-muted">Filled</span><span class="font-semibold text-ink tnum">' + e.pct + '%</span></div>' +
-          '<div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/70 dark:bg-white/10"><div class="h-full rounded-full ' + t.bar + '" style="width:' + e.pct + '%"></div></div>' +
-        '</div>' +
-        '<div class="mt-3.5 flex items-center gap-2 border-t border-black/5 pt-3 dark:border-white/10">' +
-          '<div class="flex -space-x-2">' + avatars + '</div>' +
-          '<span class="text-[12px] font-semibold text-ink"><span class="tnum">' + e.att + '</span> attendees</span>' +
-        '</div>' +
-      '</div>' +
-    '</a>';
-  }
-  document.getElementById('upcoming-cards').innerHTML = upcoming.map(upCard).join('');
 
   /* ---------- Manage Events tables ---------- */
   const cover = {
@@ -404,10 +342,7 @@
   function setBucket(b) {
     evtState.bucket = b;
     manageGroup.querySelectorAll('[data-pill]').forEach(x => {
-      const on = x.dataset.pill === b;
-      x.classList.toggle('bg-brand-soft', on);
-      x.classList.toggle('text-brand', on);
-      x.classList.toggle('text-muted', !on);
+      x.classList.toggle('tab-active', x.dataset.pill === b);
     });
   }
 
@@ -421,17 +356,6 @@
   evtSize.addEventListener('change', () => { evtState.size = +evtSize.value; evtState.page = 0; evtRender(); });
   evtPrev.addEventListener('click', () => { if (evtState.page > 0) { evtState.page--; evtRender(); } });
   evtNext.addEventListener('click', () => { evtState.page++; evtRender(); });
-
-  /* "See all" → switch to Active, clear search/filters, then scroll (default anchor) */
-  const seeAll = document.getElementById('evt-see-all');
-  if (seeAll) seeAll.addEventListener('click', () => {
-    evtState.q = ''; evtSearch.value = '';
-    evtState.type = 'All types'; evtType.value = 'All types';
-    evtState.sort = 'reg'; evtSort.value = 'reg';
-    evtState.page = 0;
-    setBucket('active');
-    evtRender();
-  });
 
   evtRender();
 
