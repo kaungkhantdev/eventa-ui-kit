@@ -44,8 +44,15 @@
 
   /* colour swatches */
   .swatch { height:66px; border-radius:.7rem; box-shadow:inset 0 0 0 1px rgb(var(--hair)); }
+  /* inline code chip (setup wiring table) */
+  .setup-chip { display:inline-block; border-radius:.3rem; background:rgb(var(--line)); padding:.08rem .35rem; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:11px; white-space:nowrap; color:rgb(var(--ink)); }
   /* generated dropdown menu (page demo) */
   .ds-menu { box-shadow:0 8px 24px rgba(16,24,40,.14); }
+
+  /* mobile nav drawer (desktop keeps the static sticky sidebar) */
+  #ds-aside { transform:translateX(-100%); transition:transform .3s cubic-bezier(.4,0,.2,1); }
+  #ds-aside.open { transform:translateX(0); }
+  @media (min-width:1024px){ #ds-aside{ transform:none; transition:none; } }
 </style>
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased">
@@ -53,11 +60,14 @@
 <!-- ───────────────── top bar ───────────────── -->
 <header class="sticky top-0 z-30 border-b border-hair bg-surface/85 backdrop-blur">
   <div class="mx-auto flex h-14 max-w-[1240px] items-center justify-between px-5 lg:px-8">
-    <a href="index.html" class="inline-flex items-center gap-2.5">
-      <span class="brand-logo text-brand h-[22px] w-[42px]"></span>
-      <span class="text-[16px] font-extrabold tracking-tight text-brand-dark">Eventa</span>
-      <span class="hidden rounded-md bg-brand-soft px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-brand sm:inline">UI Kit</span>
-    </a>
+    <div class="flex items-center gap-1.5">
+      <button id="nav-toggle" type="button" class="btn-icon lg:hidden" aria-label="Open navigation"><i class="hgi-stroke hgi-menu-01 text-[19px]"></i></button>
+      <a href="index.html" class="inline-flex items-center gap-2.5">
+        <span class="brand-logo text-brand h-[22px] w-[42px]"></span>
+        <span class="text-[16px] font-extrabold tracking-tight text-brand-dark">Eventa</span>
+        <span class="hidden rounded-md bg-brand-soft px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-brand sm:inline">UI Kit</span>
+      </a>
+    </div>
     <div class="flex items-center gap-1.5">
       <a href="index.html" class="btn btn-ghost btn-sm border border-hair"><i class="hgi-stroke hgi-grid-view text-[15px]"></i><span class="hidden sm:inline">Screens</span></a>
       <button id="theme-btn" class="btn-icon border border-hair" title="Toggle theme"><i class="hgi-stroke hgi-moon-02 text-[17px]"></i></button>
@@ -65,12 +75,19 @@
   </div>
 </header>
 
+<!-- mobile drawer backdrop -->
+<div id="nav-backdrop" class="fixed inset-0 z-40 hidden bg-black/40 backdrop-blur-sm lg:hidden"></div>
+
 <div class="mx-auto max-w-[1240px] px-5 lg:px-8">
   <div class="lg:grid lg:grid-cols-[210px_minmax(0,1fr)] lg:gap-10">
 
-    <!-- ───────────────── side nav (auto-generated from sections) ───────────────── -->
-    <aside class="hidden lg:block">
-      <nav id="ds-nav" class="sticky top-[4.5rem] max-h-[calc(100vh-6rem)] overflow-y-auto no-scrollbar py-8"></nav>
+    <!-- ───────────────── side nav — sticky sidebar (lg+) / off-canvas drawer (<lg), auto-generated ───────────────── -->
+    <aside id="ds-aside" class="fixed inset-y-0 left-0 z-50 flex w-72 max-w-[82vw] flex-col border-r border-hair bg-surface lg:static lg:z-auto lg:block lg:w-auto lg:max-w-none lg:border-0 lg:bg-transparent">
+      <div class="flex items-center justify-between border-b border-hair px-4 py-3 lg:hidden">
+        <span class="text-[13px] font-bold tracking-tight">Components</span>
+        <button id="nav-close" type="button" class="btn-icon" aria-label="Close navigation"><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+      </div>
+      <nav id="ds-nav" class="flex-1 overflow-y-auto no-scrollbar px-4 py-5 lg:sticky lg:top-[4.5rem] lg:max-h-[calc(100vh-6rem)] lg:flex-none lg:px-0 lg:py-8"></nav>
     </aside>
 
     <!-- ───────────────── content ───────────────── -->
@@ -87,6 +104,60 @@
           <span class="inline-flex items-center gap-1.5"><i class="hgi-stroke hgi-tick-02 text-[14px] text-brand"></i>Copy-paste HTML</span>
         </div>
       </div>
+
+      <!-- ══════════════════════ GET STARTED ══════════════════════ -->
+
+      <section id="setup" data-nav="Get started" data-group="Get started" data-icon="hgi-rocket-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Get started — connecting CSS &amp; JS</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Eventa is static HTML with <strong class="font-semibold text-ink">no build step</strong>. Two shared files make every component work: <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">assets/app.css</code> supplies all the component classes &amp; color tokens, and <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">assets/shell.js</code> injects the sidebar and wires the interactive components. Copy the head, put your markup in a <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">&lt;main&gt;</code>, include the scripts — done.</p>
+
+        <p class="ex-label">What each shared file does</p>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <div class="card flex gap-3 border border-hair p-4">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-navigation-03 text-[18px]"></i></span>
+            <div><p class="text-[13px] font-semibold text-ink">config.js</p><p class="mt-0.5 text-[12px] leading-snug text-muted">Tailwind config — <code class="text-[11px]">darkMode:'class'</code> + the semantic color tokens. Load right after the Tailwind CDN.</p></div>
+          </div>
+          <div class="card flex gap-3 border border-hair p-4">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-paint-board text-[18px]"></i></span>
+            <div><p class="text-[13px] font-semibold text-ink">app.css</p><p class="mt-0.5 text-[12px] leading-snug text-muted">Every component class — <code class="text-[11px]">.btn</code>, <code class="text-[11px]">.card</code>, <code class="text-[11px]">.input</code>, <code class="text-[11px]">.badge</code>, <code class="text-[11px]">.data-table</code>, <code class="text-[11px]">.panel</code> … plus the token variables.</p></div>
+          </div>
+          <div class="card flex gap-3 border border-hair p-4">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-source-code text-[18px]"></i></span>
+            <div><p class="text-[13px] font-semibold text-ink">shell.js</p><p class="mt-0.5 text-[12px] leading-snug text-muted">Renders the double sidebar &amp; wires the declarative modals, tabs and accordions. Include once at the end of <code class="text-[11px]">&lt;body&gt;</code>.</p></div>
+          </div>
+          <div class="card flex gap-3 border border-hair p-4">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-settings-01 text-[18px]"></i></span>
+            <div><p class="text-[13px] font-semibold text-ink">settings-ui.js</p><p class="mt-0.5 text-[12px] leading-snug text-muted">Optional — wires <code class="text-[11px]">[data-toggle]</code> switches and <code class="text-[11px]">[data-reveal]</code> password fields on settings pages.</p></div>
+          </div>
+        </div>
+
+        <p class="ex-label">1 · The &lt;head&gt; — loads the CSS</p>
+        <div id="setup-head"></div>
+
+        <p class="ex-label">2 · The page skeleton — loads the JS</p>
+        <div id="setup-skeleton"></div>
+
+        <p class="ex-label">3 · Declarative wiring — no per-component JS</p>
+        <p class="mb-3 max-w-2xl text-[13px] leading-relaxed text-muted">Interactive components work through <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">data-*</code> attributes that the shared scripts pick up automatically — you never write component JS. Add the trigger, add the target, done.</p>
+        <div class="card overflow-x-auto border border-hair p-4">
+          <table class="data-table min-w-[560px]">
+            <thead><tr><th>Interaction</th><th>Attributes</th><th>Wired by</th></tr></thead>
+            <tbody>
+              <tr><td class="font-medium text-ink">Modal / slide-over</td><td><code class="setup-chip">[data-open="id"]</code> + <code class="setup-chip">[data-close]</code> <span class="text-[11px] text-muted">· overlay &amp; Esc auto</span></td><td><code class="setup-chip">shell.js</code></td></tr>
+              <tr><td class="font-medium text-ink">Tabs</td><td><code class="setup-chip">[data-tabs="#sel"]</code> <code class="setup-chip">[data-tab]</code> <code class="setup-chip">[data-tab-panel]</code></td><td><code class="setup-chip">shell.js</code></td></tr>
+              <tr><td class="font-medium text-ink">Accordion</td><td><code class="setup-chip">[data-acc]</code> <code class="setup-chip">[data-acc-toggle]</code> <code class="setup-chip">[data-acc-body]</code> <code class="setup-chip">[data-acc-chevron]</code></td><td><code class="setup-chip">shell.js</code></td></tr>
+              <tr><td class="font-medium text-ink">Toggle / switch</td><td><code class="setup-chip">[data-toggle]</code> <span class="text-[11px] text-muted">· knob = first child</span></td><td><code class="setup-chip">settings-ui.js</code></td></tr>
+              <tr><td class="font-medium text-ink">Password reveal</td><td><code class="setup-chip">[data-reveal]</code> <span class="text-[11px] text-muted">· beside the input</span></td><td><code class="setup-chip">settings-ui.js</code></td></tr>
+              <tr><td class="font-medium text-ink">Dark mode</td><td><code class="setup-chip">.dark</code> on <code class="setup-chip">&lt;html&gt;</code></td><td><span class="text-[11px] text-muted">boot script + rail toggle</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-4 flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
+          <i class="hgi-stroke hgi-information-circle mt-0.5 shrink-0 text-[16px] text-muted"></i>
+          <p class="text-[12px] leading-snug text-muted">Standalone pages (<code class="text-[11px]">auth/</code>, <code class="text-[11px]">portal/</code>) skip <code class="text-[11px]">shell.js</code> and the sidebar — they carry a tiny inline theme toggle but still pull <code class="text-[11px]">app.css</code> for the components.</p>
+        </div>
+      </section>
 
       <!-- ══════════════════════ FOUNDATIONS ══════════════════════ -->
 
@@ -764,6 +835,101 @@
 
       <!-- ══════════════════════ NAVIGATION ══════════════════════ -->
 
+      <section id="sidebar" data-nav="Double sidebar" data-group="Navigation" data-icon="hgi-sidebar-left-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Double sidebar (rail + sub-nav)</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">The app's primary navigation — a black <strong class="font-semibold text-ink">icon rail</strong> of modules plus a labeled <strong class="font-semibold text-ink">sub-nav panel</strong> holding the active module's accordion. In the app it's injected by <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">shell.js</code> from the <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">MODULES</code> model; the leaf matching <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">data-page</code> highlights. Click a rail module to swap the panel; on mobile the whole thing is an off-canvas drawer.</p>
+
+        <p class="ex-label">Desktop</p>
+        <div class="overflow-hidden rounded-xl border border-hair">
+          <div id="shell-demo" class="flex h-[460px] bg-canvas">
+            <!-- icon rail (modules) -->
+            <aside class="relative z-30 flex w-16 shrink-0 flex-col items-center bg-[#0e0f12] py-4 dark:bg-[#101613]">
+              <div class="group relative flex justify-center">
+                <span class="grid h-9 w-9 place-items-center rounded-full border border-white/40 text-[13px] font-extrabold tracking-tight text-white">EC</span>
+                <span class="rail-tip">Eventa Co., Ltd.</span>
+              </div>
+              <div data-rail-top class="mt-5 flex flex-col items-center gap-1.5"></div>
+              <div class="mt-auto flex flex-col items-center gap-2 pt-4">
+                <div data-rail-bottom class="flex flex-col items-center gap-1.5"></div>
+                <div class="group relative flex justify-center">
+                  <span class="grid h-9 w-9 place-items-center text-brand"><span class="brand-logo h-[13px] w-[24px]"></span></span>
+                  <span class="rail-tip">Eventa for Business · v1.0</span>
+                </div>
+              </div>
+            </aside>
+            <!-- labeled sub-nav panel -->
+            <aside data-panel class="flex w-60 shrink-0 flex-col border-r border-hair bg-surface">
+              <div class="mt-4 flex h-9 items-center px-4"><h2 data-panel-head class="text-[17px] font-bold tracking-tight text-ink"></h2></div>
+              <nav data-panel-nav class="no-scrollbar mt-2 flex-1 space-y-1.5 overflow-y-auto px-2.5 pb-4"></nav>
+              <div class="border-t border-hair px-4 py-3"><p class="text-[12px] font-semibold text-ink">Eventa for Business</p><p class="text-[11px] text-muted tnum">Version 1.0.0.0</p></div>
+            </aside>
+            <!-- mock main content -->
+            <div class="flex min-w-0 flex-1 flex-col">
+              <div class="flex h-12 items-center justify-between border-b border-hair px-4">
+                <p class="text-[13px] font-semibold text-ink">Attendees</p>
+                <span class="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[11px] font-semibold text-white">HN</span>
+              </div>
+              <div class="flex-1 space-y-2.5 p-4">
+                <div class="h-3 w-40 rounded bg-line"></div>
+                <div class="card border border-hair p-3"><div class="h-2.5 w-24 rounded bg-line"></div><div class="mt-2 h-2 w-full rounded bg-line/70"></div><div class="mt-1.5 h-2 w-2/3 rounded bg-line/70"></div></div>
+                <div class="card border border-hair p-3"><div class="h-2.5 w-28 rounded bg-line"></div><div class="mt-2 h-2 w-full rounded bg-line/70"></div><div class="mt-1.5 h-2 w-1/2 rounded bg-line/70"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="ex-label">Mobile (off-canvas drawer) — tap ☰</p>
+        <div class="mx-auto w-full max-w-[360px] overflow-hidden rounded-2xl border border-hair">
+          <div id="shell-demo-m" class="relative h-[560px] overflow-hidden bg-canvas">
+            <!-- mock top bar -->
+            <div class="flex h-12 items-center gap-2 border-b border-hair bg-surface px-3">
+              <button data-mtoggle type="button" class="btn-icon" aria-label="Open menu"><i class="hgi-stroke hgi-menu-01 text-[19px]"></i></button>
+              <span class="text-[13px] font-bold tracking-tight">Attendees</span>
+              <span class="ml-auto grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[11px] font-semibold text-white">HN</span>
+            </div>
+            <!-- mock content -->
+            <div class="space-y-2.5 p-4">
+              <div class="h-3 w-40 rounded bg-line"></div>
+              <div class="card border border-hair p-3"><div class="h-2.5 w-24 rounded bg-line"></div><div class="mt-2 h-2 w-full rounded bg-line/70"></div><div class="mt-1.5 h-2 w-2/3 rounded bg-line/70"></div></div>
+              <div class="card border border-hair p-3"><div class="h-2.5 w-28 rounded bg-line"></div><div class="mt-2 h-2 w-full rounded bg-line/70"></div></div>
+            </div>
+            <!-- backdrop -->
+            <div data-mbackdrop class="absolute inset-0 z-40 hidden bg-black/40"></div>
+            <!-- off-canvas drawer: rail + panel -->
+            <div data-drawer class="absolute inset-y-0 left-0 z-50 flex -translate-x-full transition-transform duration-300">
+              <aside class="relative z-30 flex w-16 shrink-0 flex-col items-center bg-[#0e0f12] py-4 dark:bg-[#101613]">
+                <div class="group relative flex justify-center">
+                  <span class="grid h-9 w-9 place-items-center rounded-full border border-white/40 text-[12px] font-extrabold tracking-tight text-white">EC</span>
+                </div>
+                <div data-rail-top class="mt-5 flex flex-col items-center gap-1.5"></div>
+                <div class="mt-auto flex flex-col items-center gap-2 pt-4">
+                  <div data-rail-bottom class="flex flex-col items-center gap-1.5"></div>
+                </div>
+              </aside>
+              <aside data-panel class="flex w-56 shrink-0 flex-col border-r border-hair bg-surface">
+                <div class="mt-4 flex h-9 items-center px-4"><h2 data-panel-head class="text-[17px] font-bold tracking-tight text-ink"></h2></div>
+                <nav data-panel-nav class="no-scrollbar mt-2 flex-1 space-y-1.5 overflow-y-auto px-2.5 pb-4"></nav>
+              </aside>
+            </div>
+          </div>
+        </div>
+
+        <p class="ex-label">How it's wired</p>
+        <script type="text/html" class="ex">
+          <!-- Each admin page = a <head> + a <main>; shell.js injects the whole sidebar. -->
+          <body data-page="attendees">
+            <div class="flex h-full min-h-screen" data-layout>
+              <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">…page…</main>
+            </div>
+            <!-- then include ../assets/shell.js at the end of <body> -->
+          </body>
+
+          <!-- The black rail (modules) + labeled panel (the active module's sub-nav) are
+               built from the MODULES array in shell.js. The leaf whose page === data-page
+               is highlighted; a module with sub-nav swaps the panel, one without hides it. -->
+        </script>
+      </section>
+
       <section id="tabs" data-nav="Tabs" data-group="Navigation" data-icon="hgi-folder-02" class="ds-sec">
         <h2 class="text-[20px] font-bold tracking-tight">Tabs</h2>
         <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Declarative &amp; live — a <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">[data-tabs]</code> wrapper toggles matching <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">[data-tab-panel]</code> sections.</p>
@@ -936,8 +1102,25 @@
 
       <section id="modal" data-nav="Modal &amp; confirm" data-group="Overlays" data-icon="hgi-square" class="ds-sec">
         <h2 class="text-[20px] font-bold tracking-tight">Modal &amp; confirm</h2>
-        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">The centered <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.modal</code>, plus the pervasive destructive-confirm variant. Click a trigger to try.</p>
-        <p class="ex-label">Confirm dialog</p>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">The centered <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.modal</code> as an “are you sure?” confirm box — a neutral Cancel / Confirm pair, and the destructive Cancel / Delete variant. Both open via <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">[data-open="id"]</code> and close on the overlay, <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">[data-close]</code> or <kbd class="rounded bg-line px-1 py-0.5 text-[11px]">Esc</kbd>. Click a trigger to try.</p>
+        <p class="ex-label">Confirm (neutral)</p>
+        <script type="text/html" class="ex">
+          <button class="btn btn-primary" data-open="confirm-publish"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px]"></i>Publish event</button>
+          <div id="confirm-publish" class="modal p-5">
+            <div class="flex items-start gap-3">
+              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-soft text-brand"><i class="hgi-stroke hgi-help-circle text-[20px]"></i></span>
+              <div>
+                <h3 class="text-[15px] font-semibold">Publish this event?</h3>
+                <p class="mt-1 text-[13px] text-muted">Attendees will be able to find and register for it right away.</p>
+              </div>
+            </div>
+            <div class="mt-5 flex justify-end gap-2">
+              <button class="btn btn-ghost border border-hair" data-close>Cancel</button>
+              <button class="btn btn-primary" data-close>Confirm</button>
+            </div>
+          </div>
+        </script>
+        <p class="ex-label">Confirm (destructive)</p>
         <script type="text/html" class="ex">
           <button class="btn btn-danger" data-open="demo-modal"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i>Delete event</button>
           <div id="demo-modal" class="modal p-5">
@@ -1139,6 +1322,70 @@ document.getElementById('icon-grid').innerHTML = ICONS.map(n => `
     <code class="text-[10px] text-muted">${n}</code>
   </div>`).join('');
 
+/* ───────────── Get-started code cards (copy-paste head + skeleton) ───────────── */
+(function () {
+  // NB: closing script tags written as <\/script> so this outer <script> isn't cut short.
+  const HEAD = `<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eventa · My page</title>
+
+  <!-- set .dark before paint — no theme flash -->
+  <script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}<\/script>
+
+  <!-- font (Inter) + icons (Hugeicons) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+
+  <!-- CSS: Tailwind + Motion, then config (tokens/dark) + the component layer -->
+  <script src="https://cdn.tailwindcss.com"><\/script>
+  <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"><\/script>
+  <script src="assets/config.js"><\/script>
+  <link rel="stylesheet" href="assets/app.css" />
+</head>`;
+
+  const SKELETON = `<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="events">
+
+  <!-- shell.js prepends the sidebar (#backdrop + #sidenav) into [data-layout] -->
+  <div class="flex h-full min-h-screen" data-layout>
+    <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+      <!-- your page: cards, tables, forms, charts … all from app.css classes -->
+    </main>
+  </div>
+
+  <!-- JS: renders the sidebar + wires modals, tabs & accordions -->
+  <script src="assets/shell.js"><\/script>
+
+  <!-- settings pages also load: <script src="assets/settings-ui.js"><\/script> -->
+</body>
+</html>`;
+
+  function codeCard(raw) {
+    const code = dedent(raw);
+    const el = document.createElement('div');
+    el.className = 'ex-wrap';
+    el.innerHTML = `
+      <div class="ex-bar">
+        <span class="pl-1.5 text-[11px] font-bold uppercase tracking-wide text-muted">HTML</span>
+        <button class="ex-copy" type="button"><i class="hgi-stroke hgi-copy-01 text-[14px]"></i><span>Copy</span></button>
+      </div>
+      <pre class="ex-code"><code></code></pre>`;
+    el.querySelector('.ex-code code').innerHTML = highlight(code);
+    const btn = el.querySelector('.ex-copy');
+    btn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(code); } catch (e) {}
+      const s = btn.querySelector('span'), ic = btn.querySelector('i');
+      s.textContent = 'Copied'; ic.className = 'hgi-stroke hgi-tick-02 text-[14px] text-brand';
+      setTimeout(() => { s.textContent = 'Copy'; ic.className = 'hgi-stroke hgi-copy-01 text-[14px]'; }, 1300);
+    });
+    return el;
+  }
+  const h = document.getElementById('setup-head'); if (h) h.appendChild(codeCard(HEAD));
+  const s = document.getElementById('setup-skeleton'); if (s) s.appendChild(codeCard(SKELETON));
+})();
+
 /* ───────────── live example builder (single source → preview + code) ───────────── */
 function dedent(s) {
   s = s.replace(/^\n+/, '').replace(/\s+$/, '');
@@ -1210,6 +1457,117 @@ document.querySelectorAll('script.ex').forEach((src) => {
   ).join('');
   const total = document.querySelectorAll('main section[data-nav]').length;
   const cc = document.getElementById('comp-count'); if (cc) cc.textContent = total + '';
+})();
+
+/* ───────────── mobile nav drawer ───────────── */
+(function () {
+  const aside = document.getElementById('ds-aside');
+  const backdrop = document.getElementById('nav-backdrop');
+  const open = () => { aside.classList.add('open'); backdrop.classList.remove('hidden'); document.body.classList.add('overflow-hidden'); };
+  const close = () => { aside.classList.remove('open'); backdrop.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); };
+  document.getElementById('nav-toggle').addEventListener('click', open);
+  document.getElementById('nav-close').addEventListener('click', close);
+  backdrop.addEventListener('click', close);
+  // tapping a section link closes the drawer (real navigation, mobile only)
+  document.getElementById('ds-nav').addEventListener('click', (e) => { if (e.target.closest('a')) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  const mq = matchMedia('(min-width:1024px)');
+  const onChange = (e) => { if (e.matches) close(); };
+  if (mq.addEventListener) mq.addEventListener('change', onChange); else mq.addListener(onChange);
+})();
+
+/* ───────────── double-sidebar demo (rail + sub-nav), self-contained mini-shell ───────────── */
+(function () {
+  const MODS = [
+    { id: 'dashboard', label: 'Dashboard', icon: 'hgi-dashboard-speed-02' },
+    { id: 'events', label: 'Events', icon: 'hgi-calendar-03', groups: [
+      { label: 'Manage', icon: 'hgi-calendar-03', items: [
+        { label: 'All events', page: 'events' }, { label: 'Upcoming', page: 'events-upcoming' }, { label: 'Create event', page: 'event-form' } ] },
+      { label: 'Ticketing', icon: 'hgi-ticket-01', items: [
+        { label: 'Tickets', page: 'tickets' }, { label: 'Discounts', page: 'discounts' } ] },
+      { label: 'Attendees', icon: 'hgi-user-multiple', items: [
+        { label: 'Registrations', page: 'registrations' }, { label: 'Attendees', page: 'attendees' }, { label: 'Check-in', page: 'checkin' } ] } ] },
+    { id: 'finance', label: 'Finance', icon: 'hgi-wallet-01', groups: [
+      { label: 'Transactions', icon: 'hgi-wallet-01', items: [
+        { label: 'Payments', page: 'payments' }, { label: 'Payouts', page: 'payouts' } ] },
+      { label: 'Tax & invoicing', icon: 'hgi-invoice-01', items: [
+        { label: 'Invoices', page: 'invoices' }, { label: 'Taxes', page: 'taxes' } ] } ] },
+    { id: 'insights', label: 'Insights', icon: 'hgi-analytics-up', groups: [
+      { label: 'Summary', icon: 'hgi-analytics-up', items: [ { label: 'Overview', page: 'reports' } ] },
+      { label: 'Financial', icon: 'hgi-wallet-01', items: [ { label: 'Income', page: 'reports-income' }, { label: 'Payouts', page: 'reports-payouts' } ] } ] },
+    { id: 'checkin-tool', label: 'Check-in tool', icon: 'hgi-qr-code-01' },
+    { id: 'settings', label: 'Settings', icon: 'hgi-settings-01', bottom: true, groups: [
+      { label: 'Workspace', icon: 'hgi-settings-01', items: [ { label: 'Profile', page: 'settings-profile' }, { label: 'Security', page: 'settings-security' } ] } ] },
+  ];
+  function railBtn(m, sel) {
+    const on = m.id === sel;
+    const cls = on
+      ? 'grid h-9 w-9 place-items-center rounded-lg bg-brand text-white shadow-sm transition'
+      : 'grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand';
+    return `<div class="group relative flex justify-center"><button type="button" data-mod="${m.id}" class="${cls}"><i class="hgi-stroke ${m.icon} text-[18px]"></i></button><span class="rail-tip">${m.label}</span></div>`;
+  }
+  function panelLeaf(it, page) {
+    const on = it.page === page;
+    const cls = on
+      ? 'block w-full rounded-lg py-1.5 pl-9 pr-2.5 text-left text-[13px] font-semibold bg-brand-soft text-brand'
+      : 'block w-full rounded-lg py-1.5 pl-9 pr-2.5 text-left text-[13px] font-medium text-muted transition hover:bg-brand-soft/60 hover:text-brand';
+    return `<li><button type="button" data-leaf="${it.page}" class="${cls}">${it.label}</button></li>`;
+  }
+  function instance(root, opts) {
+    opts = opts || {};
+    let sel = opts.module || 'events';
+    let page = opts.page || 'attendees';
+    const railTop = root.querySelector('[data-rail-top]');
+    const railBottom = root.querySelector('[data-rail-bottom]');
+    const panel = root.querySelector('[data-panel]');
+    const panelHead = root.querySelector('[data-panel-head]');
+    const panelNav = root.querySelector('[data-panel-nav]');
+    function renderRail() {
+      railTop.innerHTML = MODS.filter(m => !m.bottom).map(m => railBtn(m, sel)).join('');
+      railBottom.innerHTML = MODS.filter(m => m.bottom).map(m => railBtn(m, sel)).join('');
+    }
+    function renderPanel() {
+      const m = MODS.find(x => x.id === sel);
+      if (!m || !m.groups) { panel.classList.add('hidden'); return; }
+      panel.classList.remove('hidden');
+      panelHead.textContent = m.label;
+      panelNav.innerHTML = m.groups.map(g => `
+        <div data-acc>
+          <button type="button" data-acc-toggle class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-semibold text-ink transition hover:bg-line">
+            <i class="hgi-stroke ${g.icon} text-[17px]"></i>${g.label}
+            <i data-acc-chevron class="hgi-stroke hgi-arrow-down-01 ml-auto rotate-180 text-[15px] text-muted transition-transform duration-200"></i>
+          </button>
+          <ul data-acc-body class="mt-0.5 space-y-0.5">${g.items.map(it => panelLeaf(it, page)).join('')}</ul>
+        </div>`).join('');
+    }
+    renderRail(); renderPanel();
+    // Handle within the demo and stop bubbling so the page's global delegated
+    // handler (which also matches [data-acc-toggle]) doesn't double-fire.
+    root.addEventListener('click', (e) => {
+      const mod = e.target.closest('[data-mod]');
+      if (mod) { e.stopPropagation(); sel = mod.getAttribute('data-mod'); renderRail(); renderPanel(); return; }
+      const acc = e.target.closest('[data-acc-toggle]');
+      if (acc) {
+        e.stopPropagation();
+        const wrap = acc.closest('[data-acc]'); const body = wrap.querySelector('[data-acc-body]'); const chev = acc.querySelector('[data-acc-chevron]');
+        const open = !body.classList.contains('hidden'); body.classList.toggle('hidden', open); if (chev) chev.classList.toggle('rotate-180', !open); return;
+      }
+      const leaf = e.target.closest('[data-leaf]');
+      if (leaf) { e.stopPropagation(); page = leaf.getAttribute('data-leaf'); renderPanel(); if (opts.onLeaf) opts.onLeaf(); }
+    });
+  }
+  const d = document.getElementById('shell-demo');
+  if (d) instance(d, {});
+  const mWrap = document.getElementById('shell-demo-m');
+  if (mWrap) {
+    const drawer = mWrap.querySelector('[data-drawer]');
+    const bd = mWrap.querySelector('[data-mbackdrop]');
+    const openM = () => { drawer.classList.remove('-translate-x-full'); bd.classList.remove('hidden'); };
+    const closeM = () => { drawer.classList.add('-translate-x-full'); bd.classList.add('hidden'); };
+    mWrap.querySelector('[data-mtoggle]').addEventListener('click', openM);
+    bd.addEventListener('click', closeM);
+    instance(mWrap, { onLeaf: closeM });
+  }
 })();
 
 /* ───────────── delegated interactions ───────────── */
