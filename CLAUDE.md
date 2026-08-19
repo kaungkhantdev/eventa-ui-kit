@@ -40,7 +40,7 @@ placed straight after the page `</header>`. `shell.js` swaps them when the URL c
 (e.g. `admin/events.html?empty=1`) and drops a small pill bottom-right to get back — so a brand-new
 workspace is reviewable without duplicating pages. `.empty`/`.empty-icon`/`.empty-title`/`.empty-text`/
 `.empty-actions` live in `app.css`; both variants (first-run vs no-results) are documented in
-`components.html` → Feedback → Empty states. Copy should explain *what will fill the page* and offer
+`components.html` → Feedback → Empty states. The no-results block adds **`.empty-sm`** (tighter padding for a table cell) and a **`data-clear-filters`** button handled globally in `shell.js` — it resets the page's search boxes, filter selects and pill tabs and re-fires `input`/`change`, so no page needs its own handler. Paginator controls are deliberately skipped (page size is not a filter). Copy should explain *what will fill the page* and offer
 the one real next step — Attendees points at publishing an event, not at a non-existent "add attendee".
 `app.css` also forces `[hidden]{display:none!important}` because Tailwind's `.flex`/`.grid` would
 otherwise beat the bare `hidden` attribute and silently break the swap.

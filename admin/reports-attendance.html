@@ -187,7 +187,7 @@
       var slice = rows.slice(start, start + state.size);
       tbody.innerHTML = slice.length
         ? slice.map(rowHTML).join('')
-        : '<tr><td colspan="5" class="py-10 text-center text-[13px] text-muted">No attendance for this selection.</td></tr>';
+        : '<tr><td colspan="5"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No attendance matches</h3><p class="empty-text">No attendance match the event and search you have selected. Try another event, or clear the filters to see everything.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
       showing.innerHTML = total
         ? 'Showing <b class="text-ink">' + (start + 1) + '–' + (start + slice.length) + '</b> of <b class="text-ink">' + nf(total) + '</b> events'
         : 'No results';

@@ -96,7 +96,16 @@
         <tbody aria-hidden="true" class="hidden"><tr><td class="text-red-500"></td></tr></tbody>
         </table>
       </div>
-      <p id="inv-empty" class="hidden py-8 text-center text-[13px] text-muted">No invoices match your filters.</p>
+      <div id="inv-empty" class="hidden">
+        <div class="empty empty-sm">
+          <span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span>
+          <h3 class="empty-title">No invoices match</h3>
+          <p class="empty-text">No invoice matches the current search, event and status filters. Try a different invoice number or buyer, or widen the filters.</p>
+          <div class="empty-actions">
+            <button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button>
+          </div>
+        </div>
+      </div>
 
       <div id="inv-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
         <p id="inv-showing"></p>

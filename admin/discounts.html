@@ -359,7 +359,7 @@
       if (state.page >= pages) state.page = pages - 1;
       if (state.page < 0) state.page = 0;
       var start = state.page * state.size, slice = list.slice(start, start + state.size);
-      tbody.innerHTML = slice.length ? slice.map(rowHTML).join('') : '<tr><td colspan="7"><div class="py-10 text-center text-[13px] text-muted">No matches.</div></td></tr>';
+      tbody.innerHTML = slice.length ? slice.map(rowHTML).join('') : '<tr><td colspan="7"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No discount codes match</h3><p class="empty-text">Nothing matches the current search, status tab and event filter. Try widening them to see more codes.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
       if (total === 0) { elShowing.textContent = 'No discount codes'; }
       else { elShowing.innerHTML = 'Showing <span class="font-semibold text-ink">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> discount codes'; }
       elPrev.disabled = total === 0 || state.page === 0;

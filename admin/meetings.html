@@ -80,7 +80,16 @@
     <!-- list -->
     <section data-when-data id="mtg-card" class="card mt-3 p-2 sm:p-3">
       <div id="mtg-list" class="divide-y divide-line"></div>
-      <p id="mtg-empty" class="hidden py-12 text-center text-[13px] text-muted">No meetings match your filters.</p>
+      <div id="mtg-empty" class="hidden">
+        <div class="empty empty-sm">
+          <span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span>
+          <h3 class="empty-title">No meetings match</h3>
+          <p class="empty-text">No meeting matches the current tab, type and search. Try a different name, or widen the filters.</p>
+          <div class="empty-actions">
+            <button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button>
+          </div>
+        </div>
+      </div>
 
       <div id="mtg-pager" class="mt-1 flex flex-wrap items-center justify-between gap-3 px-2 pb-1 text-[12px] text-muted">
         <p id="mtg-showing"></p>

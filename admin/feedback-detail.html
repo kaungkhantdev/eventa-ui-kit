@@ -363,7 +363,7 @@
       var list = respFiltered(), total = list.length, pages = Math.max(1, Math.ceil(total / respState.size));
       if (respState.page >= pages) respState.page = pages - 1;
       if (!total) {
-        elList.innerHTML = '<div class="py-8 text-center text-[13px] text-muted">No responses match these filters.</div>';
+        elList.innerHTML = '<div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No responses match</h3><p class="empty-text">Nothing matches the selected survey and rating. Try widening the filters to see more responses.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div>';
         elPager.classList.add('hidden'); elPager.classList.remove('flex');
         return;
       }

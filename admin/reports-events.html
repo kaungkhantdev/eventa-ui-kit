@@ -130,7 +130,7 @@
       var list = filtered(), tot = list.length, pages = Math.max(1, Math.ceil(tot / st.size));
       if (st.page >= pages) st.page = pages - 1; if (st.page < 0) st.page = 0;
       var start = st.page * st.size, slice = list.slice(start, start + st.size);
-      tbody.innerHTML = slice.length ? slice.map(rowHTML).join('') : '<tr><td colspan="5"><div class="py-10 text-center text-[13px] text-muted">No events match your filters.</div></td></tr>';
+      tbody.innerHTML = slice.length ? slice.map(rowHTML).join('') : '<tr><td colspan="5"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No events match</h3><p class="empty-text">Nothing matches the current search and status filter. Try a different spelling, or widen them.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
       if (tot) {
         pager.classList.remove('hidden'); pager.classList.add('flex');
         showing.innerHTML = 'Showing <span class="font-semibold text-ink">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(tot) + '</span> events';

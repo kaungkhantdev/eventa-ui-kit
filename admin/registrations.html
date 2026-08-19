@@ -290,7 +290,7 @@
     const start = state.page * state.size, slice = list.slice(start, start + state.size);
     tbody.innerHTML = slice.length
       ? slice.map(rowHTML).join('')
-      : '<tr><td colspan="7"><div class="py-10 text-center text-[13px] text-muted">No matches.</div></td></tr>';
+      : '<tr><td colspan="7"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No registrations match</h3><p class="empty-text">Nothing matches the current search, status tab, event and ticket type. Try a shorter search term, or widen the filters.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
     if (total === 0) {
       showing.textContent = 'No registrations';
     } else {

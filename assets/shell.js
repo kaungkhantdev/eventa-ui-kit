@@ -698,6 +698,9 @@
           (sel.options[sel.selectedIndex] || {}).textContent || 'Select event';
       };
       setLabel();
+      // the trigger is a facade over the real <select>; anything that changes the
+      // select programmatically (Clear filters, deep links) must repaint the label
+      sel.addEventListener('change', setLabel);
       sel.classList.add('hidden');
       sel.parentNode.insertBefore(trigger, sel);
 
@@ -861,6 +864,33 @@
       epCloseOpen();
   });
   window.addEventListener('resize', epCloseOpen);
+  /* ---------- Clear filters ----------
+     The no-results block offers one action: put the page back. Rather than each
+     page wiring its own handler, this resets every search box and filter select
+     under <main> and re-fires input/change so the page's existing render runs.
+     Paginator controls are left alone — page size is not a filter. */
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-clear-filters]');
+    if (!btn) return;
+    e.preventDefault();
+    var scope = document.querySelector('main') || document;
+    scope
+      .querySelectorAll('input[type="text"], input[type="search"], input:not([type]), select')
+      .forEach(function (el) {
+        if (el.closest('[data-empty]')) return; // never the block's own controls
+        if (el.closest('[id*="pager"], [class*="pager"]')) return; // rows-per-page
+        if (el.tagName === 'SELECT') el.selectedIndex = 0;
+        else el.value = '';
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+    // reset a pill-tab group to its first tab — pages use either idiom
+    var firstPill =
+      scope.querySelector('[data-pill-group] [data-pill]') ||
+      scope.querySelector('button[data-filter]');
+    if (firstPill) firstPill.click();
+  });
+
   /* ---------- Empty-state preview ----------
      A page ships both states: its real content marked [data-when-data], and a
      first-run block marked [data-empty] that stays hidden. Loading the page with

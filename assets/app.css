@@ -532,6 +532,30 @@ html.dark .segmented button.active {
   line-height: 1.6;
   color: rgb(var(--muted));
 }
+/* Compact variant — the no-results block sits inside a table cell or a card
+   that already has padding, so it needs far less vertical room than first-run. */
+.empty-sm {
+  padding: 2.25rem 1.25rem;
+}
+.empty-sm .empty-icon {
+  height: 2.75rem;
+  width: 2.75rem;
+  border-radius: 0.75rem;
+  font-size: 20px;
+  background: rgb(var(--line));
+  color: rgb(var(--muted));
+}
+.empty-sm .empty-title {
+  margin-top: 0.75rem;
+  font-size: 14px;
+}
+.empty-sm .empty-text {
+  font-size: 12.5px;
+}
+.empty-sm .empty-actions {
+  margin-top: 0.875rem;
+}
+
 .empty-actions {
   margin-top: 1.25rem;
   display: flex;

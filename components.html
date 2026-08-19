@@ -1177,7 +1177,7 @@
           <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.card</code>. Two flavours, same block.
           <strong class="font-semibold text-ink">First run</strong> — the workspace has no data yet, so the copy
           explains what will fill the page and offers the one real next step. <strong class="font-semibold text-ink">No results</strong> —
-          data exists but a filter matched nothing, so the action is to clear the filter, never to create something.
+          data exists but a filter matched nothing, so the action is to clear the filter, never to create something — it adds <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.empty-sm</code> for the tighter padding a table cell needs, and its <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">data-clear-filters</code> button is wired globally in shell.js (it resets the page's search boxes, filter selects and pill tabs, then re-fires input/change).
           A page ships both its real content (marked <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">data-when-data</code>)
           and its first-run block (<code class="rounded bg-line px-1 py-0.5 text-[11.5px]">data-empty hidden</code>);
           <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">shell.js</code> swaps them when the URL carries
@@ -1195,12 +1195,14 @@
             </div>
           </div>
 
-          <div class="card empty">
-            <span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span>
-            <h2 class="empty-title">No registrations match</h2>
-            <p class="empty-text">No one matches “somchai” with status Pending. Try a different spelling, or widen the filters.</p>
-            <div class="empty-actions">
-              <a href="#" class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</a>
+          <div class="card">
+            <div class="empty empty-sm">
+              <span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span>
+              <h3 class="empty-title">No registrations match</h3>
+              <p class="empty-text">Nothing matches the current search and filters. Try a different spelling, or widen them.</p>
+              <div class="empty-actions">
+                <button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button>
+              </div>
             </div>
           </div>
         </script>

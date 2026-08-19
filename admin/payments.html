@@ -92,7 +92,16 @@
           <tbody id="pay-rows" class="text-[13px]"></tbody>
         </table>
       </div>
-      <p id="pay-empty" class="hidden py-8 text-center text-[13px] text-muted">No transactions match your filters.</p>
+      <div id="pay-empty" class="hidden">
+        <div class="empty empty-sm">
+          <span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span>
+          <h3 class="empty-title">No transactions match</h3>
+          <p class="empty-text">No transaction matches the current search and filters. Try a different name or reference, or widen the filters.</p>
+          <div class="empty-actions">
+            <button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button>
+          </div>
+        </div>
+      </div>
 
       <div id="pay-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
         <p id="pay-showing"></p>

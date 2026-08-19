@@ -72,10 +72,16 @@
     <p data-when-data id="cat-count" class="mb-2 mt-3 text-[12px] text-muted"></p>
 
     <div data-when-data id="category-view"></div>
-    <div id="category-empty" class="mt-2 hidden card flex flex-col items-center justify-center p-12 text-center">
-      <span class="mx-auto grid h-12 w-12 place-items-center rounded-full bg-line text-muted"><i class="hgi-stroke hgi-folder-01 text-[22px]"></i></span>
-      <p class="mt-3 text-[14px] font-semibold text-ink">No categories found</p>
-      <p class="mt-1 text-[12px] text-muted">Try a different search, or create a new category.</p>
+    <!-- no results: categories exist, the search just matched none of them -->
+    <div id="category-empty" class="mt-2 hidden card">
+      <div class="empty empty-sm">
+        <span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span>
+        <h3 class="empty-title">No categories match</h3>
+        <p class="empty-text">None of your categories match the current search. Try a different spelling, or clear it to see them all.</p>
+        <div class="empty-actions">
+          <button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button>
+        </div>
+      </div>
     </div>
 
     <!-- tailwind JIT safelist for dynamic category colours -->
