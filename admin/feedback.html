@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=68"></script>
-<link rel="stylesheet" href="../assets/app.css?v=68" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="feedback">
 
@@ -34,8 +34,19 @@
       <div class="flex shrink-0 items-center gap-2.5"><button type="button" class="btn btn-primary shrink-0" data-open="survey-panel"><i class="hgi-stroke hgi-add-01 text-[16px]"></i><span class="hidden sm:inline">New survey</span><span class="sm:hidden">New</span></button><button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button><div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div></div>
     </div>
 
+    <!-- first run: no event has finished, so nobody has been asked yet -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-star"></i></span>
+      <h2 class="empty-title">No feedback yet</h2>
+      <p class="empty-text">Ratings and survey answers come from people who have actually been to one of your events. Run your first event, then send its attendees a survey and the scores will collect here.</p>
+      <div class="empty-actions">
+        <a href="event-form.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-calendar-add-01 text-[15px]"></i>Create your first event</a>
+        <a href="events.html" class="btn btn-ghost btn-sm">See your events</a>
+      </div>
+    </section>
+
     <!-- portfolio stat cards (all events) -->
-    <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <div data-when-data class="grid grid-cols-2 gap-3 sm:grid-cols-4">
       <div class="card p-3.5">
         <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-message-01 text-[16px]"></i>Responses</div>
         <div class="mt-2 flex items-end justify-between">
@@ -67,7 +78,7 @@
     </div>
 
     <!-- feedback by event -->
-    <section class="mt-4">
+    <section data-when-data class="mt-4">
       <div class="mb-3 flex items-center justify-between">
         <div>
           <h2 class="text-[15px] font-bold tracking-tight">Feedback by event</h2>
@@ -141,8 +152,8 @@
   </footer>
 </aside>
 
-<script src="../assets/feedback-data.js?v=68"></script>
-<script src="../assets/shell.js?v=68"></script>
+<script src="../assets/feedback-data.js?v=69"></script>
+<script src="../assets/shell.js?v=69"></script>
 <script>
   (function () {
     var F = window.FEEDBACK;

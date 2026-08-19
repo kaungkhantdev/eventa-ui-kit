@@ -861,6 +861,35 @@
       epCloseOpen();
   });
   window.addEventListener('resize', epCloseOpen);
+  /* ---------- Empty-state preview ----------
+     A page ships both states: its real content marked [data-when-data], and a
+     first-run block marked [data-empty] that stays hidden. Loading the page with
+     ?empty=1 swaps them, so the kit can show what a brand-new workspace sees
+     without duplicating the page. Nothing here runs on a normal load. */
+  (function () {
+    var on = false;
+    try {
+      on = new URLSearchParams(location.search).has('empty');
+    } catch (e) {}
+    var blocks = document.querySelectorAll('[data-empty]');
+    if (!blocks.length) return;
+    document.querySelectorAll('[data-when-data]').forEach(function (el) {
+      el.hidden = on;
+    });
+    blocks.forEach(function (el) {
+      el.hidden = !on;
+    });
+    // a quiet way back to the populated view
+    if (!on) return;
+    var pill = document.createElement('a');
+    pill.href = location.pathname;
+    pill.className =
+      'fixed bottom-4 right-4 z-[60] inline-flex items-center gap-1.5 rounded-full border border-hair bg-surface px-3 py-1.5 text-[11px] font-semibold text-muted shadow-pop transition hover:text-ink';
+    pill.innerHTML =
+      '<i class="hgi-stroke hgi-database-01 text-[13px]"></i>Empty state — show data';
+    document.body.appendChild(pill);
+  })();
+
   enhanceEventPickers();
   window.EventaEnhanceEventPickers = enhanceEventPickers; // for panels/tabs that inject selects later
   // event metadata lookup for pages that headline the event (name → {date, status, dot})

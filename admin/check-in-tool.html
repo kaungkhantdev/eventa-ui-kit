@@ -12,8 +12,8 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
-<script src="../assets/config.js?v=68"></script>
-<link rel="stylesheet" href="../assets/app.css?v=68" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 <style>
   @keyframes scanmove { 0%{transform:translateY(0)} 50%{transform:translateY(220px)} 100%{transform:translateY(0)} }
   .scan-line{ animation: scanmove 2.6s ease-in-out infinite; }
@@ -78,7 +78,18 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-1 gap-3 xl:grid-cols-5">
+    <!-- first run: there are no ticket QR codes to scan until a published event sells one -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-qr-code-01"></i></span>
+      <h2 class="empty-title">No tickets to scan yet</h2>
+      <p class="empty-text">The scanner checks each QR code against this event's registrations, and a ticket only gets a QR code once it is sold. Publish an event with tickets on sale, then bring this station to the door.</p>
+      <div class="empty-actions">
+        <a href="event-form.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-calendar-add-01 text-[15px]"></i>Create an event</a>
+        <a href="check-in.html" class="btn btn-ghost btn-sm">Open the check-in list</a>
+      </div>
+    </section>
+
+    <div data-when-data class="grid grid-cols-1 gap-3 xl:grid-cols-5">
 
       <!-- ===== scanner (hero) ===== -->
       <section class="card overflow-hidden p-0 xl:col-span-3">
@@ -221,7 +232,7 @@
   </main>
 </div>
 
-<script src="../assets/shell.js?v=68"></script>
+<script src="../assets/shell.js?v=69"></script>
 <script>
   (function () {
     var n = function (x) { return x.toLocaleString('en-US'); };

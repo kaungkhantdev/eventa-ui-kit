@@ -10,8 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="assets/config.js?v=68"></script>
-<link rel="stylesheet" href="assets/app.css?v=68" />
+<script src="assets/config.js?v=69"></script>
+<link rel="stylesheet" href="assets/app.css?v=69" />
 <style>
   /* ---- Reference-site chrome (page-local; components themselves come from app.css) ---- */
   .ds-link { display:flex; align-items:center; gap:.5rem; padding:.3rem .6rem; border-radius:.5rem; font-size:12.5px; font-weight:500; color:rgb(var(--muted)); transition:.12s; }
@@ -1166,6 +1166,42 @@
           <div class="group relative inline-flex">
             <button class="btn-icon border border-hair"><i class="hgi-stroke hgi-settings-01 text-[18px]"></i></button>
             <span class="rail-tip">Settings</span>
+          </div>
+        </script>
+      </section>
+
+      <section id="empty" data-nav="Empty states" data-group="Feedback" data-icon="hgi-inbox" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Empty states</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">
+          <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.empty</code> inside a
+          <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.card</code>. Two flavours, same block.
+          <strong class="font-semibold text-ink">First run</strong> — the workspace has no data yet, so the copy
+          explains what will fill the page and offers the one real next step. <strong class="font-semibold text-ink">No results</strong> —
+          data exists but a filter matched nothing, so the action is to clear the filter, never to create something.
+          A page ships both its real content (marked <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">data-when-data</code>)
+          and its first-run block (<code class="rounded bg-line px-1 py-0.5 text-[11.5px]">data-empty hidden</code>);
+          <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">shell.js</code> swaps them when the URL carries
+          <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">?empty=1</code> — try
+          <a href="admin/events.html?empty=1" class="font-semibold text-brand hover:underline">events.html?empty=1</a>.
+        </p>
+        <script type="text/html" class="ex">
+          <div class="card empty">
+            <span class="empty-icon"><i class="hgi-stroke hgi-calendar-03"></i></span>
+            <h2 class="empty-title">No events yet</h2>
+            <p class="empty-text">Create your first event to start selling tickets. You can save it as a draft, add tickets and a programme, then publish when it's ready.</p>
+            <div class="empty-actions">
+              <a href="#" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-calendar-add-01 text-[15px]"></i>Create your first event</a>
+              <a href="#" class="btn btn-ghost btn-sm">Browse page designs</a>
+            </div>
+          </div>
+
+          <div class="card empty">
+            <span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span>
+            <h2 class="empty-title">No registrations match</h2>
+            <p class="empty-text">No one matches “somchai” with status Pending. Try a different spelling, or widen the filters.</p>
+            <div class="empty-actions">
+              <a href="#" class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</a>
+            </div>
           </div>
         </script>
       </section>

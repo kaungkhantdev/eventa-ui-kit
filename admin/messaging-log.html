@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=68"></script>
-<link rel="stylesheet" href="../assets/app.css?v=68" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="messaging-log">
 
@@ -34,8 +34,19 @@
       <div class="flex shrink-0 items-center gap-2.5"><button type="button" class="btn btn-ghost shrink-0"><i class="hgi-stroke hgi-download-04 text-[16px]"></i><span class="hidden sm:inline">Export</span></button><button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button><div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div></div>
     </div>
 
+    <!-- first run: no message has been sent from this workspace yet -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-mail-send-01"></i></span>
+      <h2 class="empty-title">No messages sent yet</h2>
+      <p class="empty-text">Every confirmation, receipt and reminder Eventa sends lands here with its delivery status. Nothing goes out until someone registers, so the log fills once your first event is live and taking bookings.</p>
+      <div class="empty-actions">
+        <a href="event-form.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-calendar-add-01 text-[15px]"></i>Create your first event</a>
+        <a href="messaging-templates.html" class="btn btn-ghost btn-sm">See what gets sent automatically</a>
+      </div>
+    </section>
+
     <!-- ============ DELIVERY LOG ============ -->
-    <section class="card p-4">
+    <section data-when-data class="card p-4">
       <div class="flex items-center justify-between">
         <h2 class="text-[15px] font-bold tracking-tight">Delivery log</h2>
         <p class="text-[12px] text-muted">Delivery history</p>
@@ -70,7 +81,7 @@
   </main>
 </div>
 
-<script src="../assets/shell.js?v=68"></script>
+<script src="../assets/shell.js?v=69"></script>
 <script>
 (function () {
   var nf = function (n) { return n.toLocaleString('en-US'); };

@@ -34,6 +34,17 @@ An admin page is just a `<head>` block + a `<main>`; **the sidebar is injected b
 
 Copy an existing page (e.g. `admin/events.html`) as the template. The nav model lives in the `MODULES` array in `shell.js` (each module → its accordion groups → leaf pages); add pages/modules there.
 
+**Empty states.** Every data-driven admin page ships *both* states. Its real content carries
+`data-when-data`; a first-run block sits alongside it as `<section data-empty hidden class="card empty">`,
+placed straight after the page `</header>`. `shell.js` swaps them when the URL carries **`?empty=1`**
+(e.g. `admin/events.html?empty=1`) and drops a small pill bottom-right to get back — so a brand-new
+workspace is reviewable without duplicating pages. `.empty`/`.empty-icon`/`.empty-title`/`.empty-text`/
+`.empty-actions` live in `app.css`; both variants (first-run vs no-results) are documented in
+`components.html` → Feedback → Empty states. Copy should explain *what will fill the page* and offer
+the one real next step — Attendees points at publishing an event, not at a non-existent "add attendee".
+`app.css` also forces `[hidden]{display:none!important}` because Tailwind's `.flex`/`.grid` would
+otherwise beat the bare `hidden` attribute and silently break the swap.
+
 **Declarative interactions (no per-page JS needed):**
 - Slide-over / modal: a trigger `[data-open="ID"]` opens the `.panel`/`.modal` with that `id`; `[data-close]` or the auto overlay (or `Esc`) closes it.
 - Tabs: `<div data-tabs="#content">` with `[data-tab="x"]` buttons + `[data-tab-panel="x"]` sections inside `#content`.

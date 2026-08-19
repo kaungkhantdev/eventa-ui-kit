@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=68"></script>
-<link rel="stylesheet" href="../assets/app.css?v=68" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="taxes">
 
@@ -38,8 +38,19 @@
       </div>
     </div>
 
+    <!-- first run: the VAT ledger stays empty until the first taxable sale -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-percent-circle"></i></span>
+      <h2 class="empty-title">No VAT recorded yet</h2>
+      <p class="empty-text">Each taxable ticket sale adds the VAT you collected to this ledger, period by period. Nothing is filed or owed until your first sale goes through.</p>
+      <div class="empty-actions">
+        <a href="settings-organization.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-taxes text-[15px]"></i>Add your tax details</a>
+        <a href="event-form.html" class="btn btn-ghost btn-sm">Create your first event</a>
+      </div>
+    </section>
+
     <!-- KPI row -->
-    <div class="grid grid-cols-2 gap-3 xl:grid-cols-4">
+    <div data-when-data class="grid grid-cols-2 gap-3 xl:grid-cols-4">
       <div class="card p-3.5">
         <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-percent-circle text-[16px]"></i>VAT collected</div>
         <div class="mt-2 flex items-end justify-between">
@@ -71,7 +82,7 @@
     </div>
 
     <!-- filter row: filing status tabs + year -->
-    <div class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+    <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
       <div data-tabs="#tax-table" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
         <button class="pilltab tab-active" data-tab="all" data-status="">All <span class="pilltab-count tnum" data-count="all">0</span></button>
         <button class="pilltab" data-tab="filed" data-status="Filed">Filed <span class="pilltab-count tnum" data-count="Filed">0</span></button>
@@ -89,7 +100,7 @@
     </div>
 
     <!-- table -->
-    <section class="card mt-3 p-4">
+    <section data-when-data class="card mt-3 p-4">
       <div id="tax-table" class="overflow-x-auto">
         <table class="data-table min-w-[820px]">
           <thead>
@@ -127,7 +138,7 @@
   </main>
 </div>
 
-<script src="../assets/shell.js?v=68"></script>
+<script src="../assets/shell.js?v=69"></script>
 <script>
   (function () {
     var VAT_RATE = 0.07;

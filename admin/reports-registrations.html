@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=68"></script>
-<link rel="stylesheet" href="../assets/app.css?v=68" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="reports-registrations">
 
@@ -38,8 +38,19 @@
       </div>
     </div>
 
+    <!-- first run: nobody can sign up until an event with tickets is published -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-user-add-01"></i></span>
+      <h2 class="empty-title">No registrations yet</h2>
+      <p class="empty-text">Sign-ups, approvals, waitlists and cancellations are counted per event. Someone has to book a ticket first, so publish an event and put tickets on sale.</p>
+      <div class="empty-actions">
+        <a href="event-form.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-calendar-add-01 text-[15px]"></i>Create your first event</a>
+        <a href="tickets.html" class="btn btn-ghost btn-sm">Set up tickets</a>
+      </div>
+    </section>
+
     <!-- filter bar: search + event -->
-    <div class="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+    <div data-when-data class="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full sm:w-64">
         <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
         <input id="regr-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search events…" />
@@ -58,7 +69,7 @@
     </div>
 
     <!-- KPI row -->
-    <div class="grid grid-cols-2 gap-3 xl:grid-cols-4">
+    <div data-when-data class="grid grid-cols-2 gap-3 xl:grid-cols-4">
       <div class="card p-3.5">
         <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-user-add-01 text-[16px]"></i>Total registrations</div>
         <div class="mt-2 flex items-end justify-between">
@@ -90,7 +101,7 @@
     </div>
 
     <!-- detailed table: registrations by event -->
-    <section class="card mt-3 p-4">
+    <section data-when-data class="card mt-3 p-4">
       <div class="flex items-center justify-between">
         <div>
           <h2 class="text-[15px] font-bold tracking-tight">Registrations by event</h2>
@@ -127,8 +138,8 @@
   </main>
 </div>
 
-<script src="../assets/shell.js?v=68"></script>
-<script src="../assets/reports-data.js?v=68"></script>
+<script src="../assets/shell.js?v=69"></script>
+<script src="../assets/reports-data.js?v=69"></script>
 <script>
   /* ---------- detailed table: registrations by event (canonical paginator) ---------- */
   (function () {

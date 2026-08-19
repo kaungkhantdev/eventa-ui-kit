@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=68"></script>
-<link rel="stylesheet" href="../assets/app.css?v=68" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="events-upcoming">
 
@@ -43,12 +43,23 @@
       </div>
     </header>
 
-    <div class="mb-3 flex items-center justify-between gap-3">
+    <!-- first run: no events are scheduled ahead of today yet -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-calendar-03"></i></span>
+      <h2 class="empty-title">Nothing coming up</h2>
+      <p class="empty-text">This is a countdown of the events still ahead of today, soonest first. Create an event and give it a date and it will appear here until the day it runs.</p>
+      <div class="empty-actions">
+        <a href="event-form.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-calendar-add-01 text-[15px]"></i>Create your first event</a>
+        <a href="events.html" class="btn btn-ghost btn-sm">Manage all events</a>
+      </div>
+    </section>
+
+    <div data-when-data class="mb-3 flex items-center justify-between gap-3">
       <p class="text-[13px] text-muted">Next <span id="up-count" class="font-semibold text-ink tnum">0</span> events, soonest first.</p>
       <a href="events.html" class="text-[12px] font-semibold text-brand hover:underline">Manage all events →</a>
     </div>
 
-    <div id="upcoming-cards" class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
+    <div data-when-data id="upcoming-cards" class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
     <!-- tailwind JIT safelist for the dynamically-rendered card colors -->
     <div aria-hidden="true" class="hidden bg-pink-50 bg-blue-50 bg-amber-50 bg-violet-50 bg-indigo-50 bg-teal-50 bg-red-50 bg-brand-soft dark:bg-pink-500/10 dark:bg-blue-500/10 dark:bg-amber-400/10 dark:bg-violet-500/10 dark:bg-indigo-500/10 dark:bg-teal-500/10 dark:bg-red-500/10 from-pink-400 to-pink-600 from-blue-400 to-blue-600 from-amber-400 to-amber-600 from-violet-400 to-violet-600 from-indigo-400 to-indigo-600 from-teal-400 to-teal-600 from-red-400 to-red-600 from-brand to-emerald-500 bg-pink-500 bg-blue-500 bg-blue-600 bg-amber-500 bg-violet-500 bg-indigo-500 bg-teal-500 bg-red-500 bg-brand ring-pink-50 ring-blue-50 ring-amber-50 ring-violet-50 ring-indigo-50 ring-teal-50 ring-red-50 ring-brand-soft dark:ring-pink-500/10 dark:ring-blue-500/10 dark:ring-amber-400/10 dark:ring-violet-500/10 dark:ring-indigo-500/10 dark:ring-teal-500/10 dark:ring-red-500/10"></div>
 
@@ -57,7 +68,7 @@
   </main>
 </div>
 
-<script src="../assets/shell.js?v=68"></script>
+<script src="../assets/shell.js?v=69"></script>
 <script>
   /* ---------- Upcoming Events (card grid) ---------- */
   const UP_TONE = {

@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=68"></script>
-<link rel="stylesheet" href="../assets/app.css?v=68" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="events">
 
@@ -43,8 +43,19 @@
       </div>
     </header>
 
+    <!-- first run: no events exist yet -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-calendar-03"></i></span>
+      <h2 class="empty-title">No events yet</h2>
+      <p class="empty-text">Create your first event to start selling tickets. You can save it as a draft, add tickets and a programme, then publish when it's ready.</p>
+      <div class="empty-actions">
+        <a href="event-form.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-calendar-add-01 text-[15px]"></i>Create your first event</a>
+        <a href="landing-pages.html" class="btn btn-ghost btn-sm">Browse page designs</a>
+      </div>
+    </section>
+
     <!-- view tabs + status filter -->
-    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+    <div data-when-data class="mb-4 flex flex-wrap items-center justify-between gap-3">
       <div data-pill-group="view" class="inline-flex items-center gap-1 rounded-xl bg-surface p-1">
         <button data-pill="overview" class="rounded-lg bg-brand-soft px-4 py-2 text-[13px] font-semibold text-brand transition">Overview</button>
         <button data-pill="calendar" class="rounded-lg px-4 py-2 text-[13px] font-semibold text-muted transition hover:text-ink">Calendar</button>
@@ -57,7 +68,7 @@
     </div>
 
     <!-- ============ OVERVIEW ============ -->
-    <div data-pill-panel="view:overview">
+    <div data-when-data data-pill-panel="view:overview">
 
       <!-- search + filters (out of table) -->
       <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
@@ -108,7 +119,7 @@
     </div>
 
     <!-- ============ CALENDAR ============ -->
-    <div data-pill-panel="view:calendar" class="hidden">
+    <div data-when-data data-pill-panel="view:calendar" class="hidden">
       <section class="rounded-2xl bg-surface p-4 lg:p-5">
         <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div class="flex items-center gap-2">
@@ -156,7 +167,7 @@
   </main>
 </div>
 
-<script src="../assets/shell.js?v=68"></script>
+<script src="../assets/shell.js?v=69"></script>
 <script>
   /* ---------- pill tab groups (view + manage) ---------- */
   document.querySelectorAll('[data-pill-group]').forEach(group => {

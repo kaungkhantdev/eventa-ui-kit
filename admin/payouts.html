@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=68"></script>
-<link rel="stylesheet" href="../assets/app.css?v=68" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="payouts">
 
@@ -34,8 +34,19 @@
       <div class="flex shrink-0 items-center gap-2.5"><button class="btn btn-primary shrink-0" data-open="payout-panel"><i class="hgi-stroke hgi-link-square-02 text-[16px]"></i><span class="hidden sm:inline">Manage on Stripe</span><span class="sm:hidden">Stripe</span></button><button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button><div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div></div>
     </div>
 
+    <!-- first run: no sales to pay out, and no payout account connected yet -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-bank"></i></span>
+      <h2 class="empty-title">No payouts yet</h2>
+      <p class="empty-text">A payout moves your ticket sales from Eventa to your bank. Connect a Stripe account first — after that your balance builds up as tickets sell, and every transfer is listed here.</p>
+      <div class="empty-actions">
+        <a href="settings-payments.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-link-square-02 text-[15px]"></i>Connect a payout account</a>
+        <a href="event-form.html" class="btn btn-ghost btn-sm">Create your first event</a>
+      </div>
+    </section>
+
     <!-- balance summary row -->
-    <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+    <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-3">
       <div class="card p-4">
         <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-wallet-01 text-[16px]"></i>Available balance</div>
         <p class="mt-2 text-[26px] font-extrabold tracking-tight tnum">฿3.19M</p>
@@ -55,11 +66,11 @@
     </div>
 
     <!-- payouts history -->
-    <div class="mt-4 flex flex-wrap items-center justify-between gap-2">
+    <div data-when-data class="mt-4 flex flex-wrap items-center justify-between gap-2">
       <h2 class="text-[15px] font-bold tracking-tight">Payouts History</h2>
       <span class="text-[12px] text-muted">Last 90 days</span>
     </div>
-    <div data-tabs="#payout-table" class="mt-2 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+    <div data-when-data data-tabs="#payout-table" class="mt-2 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
       <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count tnum">8</span></button>
       <button class="pilltab" data-tab="paid">Paid <span class="pilltab-count tnum">5</span></button>
       <button class="pilltab" data-tab="processing">Processing <span class="pilltab-count tnum">1</span></button>
@@ -68,7 +79,7 @@
     </div>
 
     <!-- table -->
-    <section class="card mt-3 p-4">
+    <section data-when-data class="card mt-3 p-4">
       <div id="payout-table" class="overflow-x-auto">
         <table class="data-table min-w-[760px]">
           <thead>
@@ -173,7 +184,7 @@
   </aside>
 </div>
 
-<script src="../assets/shell.js?v=68"></script>
+<script src="../assets/shell.js?v=69"></script>
 <script>
 (function () {
   var nf = function (n) { return n.toLocaleString('en-US'); };

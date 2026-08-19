@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=68"></script>
-<link rel="stylesheet" href="../assets/app.css?v=68" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="messaging-announcements">
 
@@ -34,8 +34,19 @@
       <div class="flex shrink-0 items-center gap-2.5"><button type="button" class="btn btn-primary shrink-0" data-open="announce-panel"><i class="hgi-stroke hgi-megaphone-01 text-[16px]"></i><span class="hidden sm:inline">Send announcement</span><span class="sm:hidden">Send</span></button><button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button><div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div></div>
     </div>
 
+    <!-- first run: no broadcast has been sent, and no audience to send one to -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-megaphone-01"></i></span>
+      <h2 class="empty-title">No announcements yet</h2>
+      <p class="empty-text">Announcements are one-off broadcasts — a venue change, a schedule update, a thank-you after the day. You need a published event with registrations first, so there is an audience to send to.</p>
+      <div class="empty-actions">
+        <a href="event-form.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-calendar-add-01 text-[15px]"></i>Create your first event</a>
+        <a href="messaging-templates.html" class="btn btn-ghost btn-sm">See what gets sent automatically</a>
+      </div>
+    </section>
+
     <!-- ============ ANNOUNCEMENTS ============ -->
-    <div class="card p-4">
+    <div data-when-data class="card p-4">
       <div class="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h2 class="text-[15px] font-bold tracking-tight">Sent announcements</h2>
@@ -45,7 +56,7 @@
       </div>
     </div>
 
-    <div class="card mt-3 p-4">
+    <div data-when-data class="card mt-3 p-4">
       <div class="flex items-center gap-3 py-3">
         <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-megaphone-01 text-[18px]"></i></span>
         <div class="min-w-0 flex-1">
@@ -188,7 +199,7 @@
   </footer>
 </aside>
 
-<script src="../assets/shell.js?v=68"></script>
+<script src="../assets/shell.js?v=69"></script>
 <script>
   // Send now / Schedule segmented control toggles the date field
   document.querySelectorAll('[data-send-toggle]').forEach(wrap => {

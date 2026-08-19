@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=68"></script>
-<link rel="stylesheet" href="../assets/app.css?v=68" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="invoices">
 <div class="flex h-full min-h-screen" data-layout>
@@ -36,8 +36,19 @@
       </div>
     </div>
 
+    <!-- first run: invoices are raised against orders, and nobody has ordered yet -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-invoice-01"></i></span>
+      <h2 class="empty-title">No invoices yet</h2>
+      <p class="empty-text">Eventa raises an invoice for every order a buyer places, so this list fills as tickets sell. Publish an event with a paid ticket to start taking orders.</p>
+      <div class="empty-actions">
+        <a href="event-form.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-calendar-add-01 text-[15px]"></i>Create your first event</a>
+        <a href="settings-organization.html" class="btn btn-ghost btn-sm">Add your billing details</a>
+      </div>
+    </section>
+
     <!-- pill tabs (out of table) -->
-    <div data-tabs="#inv-table" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+    <div data-when-data data-tabs="#inv-table" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
       <button class="pilltab tab-active" data-tab="all" data-status="">All <span class="pilltab-count tnum" data-count="all">0</span></button>
       <button class="pilltab" data-tab="paid" data-status="Paid">Paid <span class="pilltab-count tnum" data-count="Paid">0</span></button>
       <button class="pilltab" data-tab="issued" data-status="Issued">Issued <span class="pilltab-count tnum" data-count="Issued">0</span></button>
@@ -46,7 +57,7 @@
     </div>
 
     <!-- search + filter (out of table) -->
-    <div class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+    <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
         <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
         <input id="inv-search" type="text" placeholder="Search invoice no. or buyer…" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" />
@@ -65,7 +76,7 @@
     </div>
 
     <!-- table -->
-    <section class="card mt-3 p-4">
+    <section data-when-data class="card mt-3 p-4">
       <div id="inv-table" class="overflow-x-auto">
         <table class="data-table min-w-[860px]">
           <thead>
@@ -156,7 +167,7 @@
   </div>
 </div>
 
-<script src="../assets/shell.js?v=68"></script>
+<script src="../assets/shell.js?v=69"></script>
 <script>
   const badgeStatus = {
     Paid:    { cls: 'badge badge-green', icon: 'hgi-tick-02' },

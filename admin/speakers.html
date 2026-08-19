@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=68"></script>
-<link rel="stylesheet" href="../assets/app.css?v=68" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="speakers">
 
@@ -34,8 +34,19 @@
       <div class="flex shrink-0 items-center gap-2.5"><button class="btn btn-primary shrink-0" data-open="speaker-panel"><i class="hgi-stroke hgi-user-add-01 text-[16px]"></i><span class="hidden sm:inline">Add speaker</span><span class="sm:hidden">Add</span></button><button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button><div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div></div>
     </div>
 
+    <!-- first run: speakers belong to the programme, so they can be added before anyone registers -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-mic-01"></i></span>
+      <h2 class="empty-title">No speakers yet</h2>
+      <p class="empty-text">Speakers are part of an event's programme, so you can line them up well before the first ticket sells. Add a name, bio and session and they appear on the event page and in the agenda.</p>
+      <div class="empty-actions">
+        <button type="button" class="btn btn-primary btn-sm" data-open="speaker-panel"><i class="hgi-stroke hgi-user-add-01 text-[15px]"></i>Add your first speaker</button>
+        <a href="agenda.html" class="btn btn-ghost btn-sm">Build the agenda</a>
+      </div>
+    </section>
+
     <!-- toolbar (flat, on canvas) -->
-    <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+    <div data-when-data class="flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
         <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
         <input id="spk-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search speakers by name, company or topic…" />
@@ -58,17 +69,17 @@
     </div>
 
     <!-- result count -->
-    <p id="spk-count" class="mb-2 mt-3 text-[12px] text-muted"></p>
+    <p data-when-data id="spk-count" class="mb-2 mt-3 text-[12px] text-muted"></p>
 
     <!-- speakers (grid / list) -->
-    <div id="speaker-view"></div>
-    <div id="speaker-empty" class="mt-2 hidden card flex flex-col items-center justify-center p-12 text-center">
+    <div data-when-data id="speaker-view"></div>
+    <div data-when-data id="speaker-empty" class="mt-2 hidden card flex flex-col items-center justify-center p-12 text-center">
       <span class="mx-auto grid h-12 w-12 place-items-center rounded-full bg-line text-muted"><i class="hgi-stroke hgi-mic-01 text-[22px]"></i></span>
       <p class="mt-3 text-[14px] font-semibold text-ink">No speakers found</p>
       <p class="mt-1 text-[12px] text-muted">Try a different search or event filter.</p>
     </div>
 
-    <div id="spk-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+    <div data-when-data id="spk-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
       <p id="spk-showing"></p>
       <div class="flex items-center gap-3">
         <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
@@ -193,7 +204,7 @@
   </div>
 </div>
 
-<script src="../assets/shell.js?v=68"></script>
+<script src="../assets/shell.js?v=69"></script>
 <script>
   (function () {
     var TONE = {

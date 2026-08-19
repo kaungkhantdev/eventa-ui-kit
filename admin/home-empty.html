@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Home (first run)</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="home">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail; panel hidden for Home) here -->
+
+  <!-- ============ MAIN ============ -->
+  <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- top bar -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="truncate text-[22px] font-bold tracking-tight text-ink">Welcome to Eventa, Harper 👋</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Let's get your first event live — about 10 minutes, and you can stop any time.</p>
+      </div>
+      <button class="relative ml-auto grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Harper Nelson</p>
+          <p class="text-[11px] text-muted">Event Manager</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============ SETUP CHECKLIST — replaces the whole dashboard until there is data ============ -->
+    <section class="rounded-2xl bg-surface p-5 lg:p-6">
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div class="flex items-start gap-3.5">
+          <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-rocket-01 text-[22px]"></i></span>
+          <div>
+            <h2 class="text-[17px] font-bold tracking-tight text-ink">Set up your workspace</h2>
+            <p class="mt-0.5 text-[12.5px] text-muted">Finish these and you can take your first paid registration.</p>
+          </div>
+        </div>
+        <button id="btn-skip" class="btn btn-ghost btn-sm shrink-0 text-muted">Skip for now</button>
+      </div>
+
+      <!-- progress -->
+      <div class="mt-5 flex items-center gap-3">
+        <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-line">
+          <div id="bar" class="h-full rounded-full bg-brand transition-all duration-500" style="width:16.6%"></div>
+        </div>
+        <p class="shrink-0 text-[12px] font-semibold text-muted tnum"><span id="done-count">1</span> of 6 done</p>
+      </div>
+
+      <!-- steps -->
+      <ul id="steps" class="mt-5 space-y-2.5">
+
+        <!-- 1 · done -->
+        <li data-step data-done="true" class="flex items-center gap-3.5 rounded-xl border border-hair bg-canvas px-3.5 py-3 transition">
+          <button data-toggle class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand text-white transition" title="Mark as not done">
+            <i class="hgi-stroke hgi-tick-02 text-[16px]"></i>
+          </button>
+          <div class="min-w-0 flex-1">
+            <p class="truncate text-[13.5px] font-semibold text-muted line-through decoration-muted/40">Create your account</p>
+            <p class="mt-0.5 truncate text-[12px] text-muted">You're signed in as harper@eventa.co.</p>
+          </div>
+          <span class="badge badge-green shrink-0">Done</span>
+        </li>
+
+        <!-- 2 · next -->
+        <li data-step data-done="false" class="flex items-center gap-3.5 rounded-xl border border-brand/40 bg-brand-soft/50 px-3.5 py-3 ring-1 ring-brand/20 transition">
+          <button data-toggle class="grid h-8 w-8 shrink-0 place-items-center rounded-full border-2 border-brand/40 text-transparent transition hover:border-brand hover:text-brand" title="Mark as done">
+            <i class="hgi-stroke hgi-tick-02 text-[16px]"></i>
+          </button>
+          <span class="hidden h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-brand sm:grid"><i class="hgi-stroke hgi-building-03 text-[18px]"></i></span>
+          <div class="min-w-0 flex-1">
+            <p class="truncate text-[13.5px] font-semibold text-ink">Set up your organization</p>
+            <p class="mt-0.5 truncate text-[12px] text-muted">Name, tax details and branding — these appear on every ticket and invoice.</p>
+          </div>
+          <span class="hidden shrink-0 text-[11px] text-muted tnum sm:block">2 min</span>
+          <a href="settings-organization.html" class="btn btn-primary btn-sm shrink-0">Set up<i class="hgi-stroke hgi-arrow-right-01 text-[15px]"></i></a>
+        </li>
+
+        <!-- 3 -->
+        <li data-step data-done="false" class="flex items-center gap-3.5 rounded-xl border border-hair px-3.5 py-3 transition">
+          <button data-toggle class="grid h-8 w-8 shrink-0 place-items-center rounded-full border-2 border-hair text-transparent transition hover:border-brand hover:text-brand" title="Mark as done">
+            <i class="hgi-stroke hgi-tick-02 text-[16px]"></i>
+          </button>
+          <span class="hidden h-9 w-9 shrink-0 place-items-center rounded-lg bg-canvas text-muted sm:grid"><i class="hgi-stroke hgi-wallet-01 text-[18px]"></i></span>
+          <div class="min-w-0 flex-1">
+            <p class="truncate text-[13.5px] font-semibold text-ink">Connect payments</p>
+            <p class="mt-0.5 truncate text-[12px] text-muted">Card and PromptPay via Stripe — required before you can charge for a ticket.</p>
+          </div>
+          <span class="hidden shrink-0 text-[11px] text-muted tnum sm:block">3 min</span>
+          <a href="settings-payments.html" class="btn btn-soft btn-sm shrink-0">Connect</a>
+        </li>
+
+        <!-- 4 -->
+        <li data-step data-done="false" class="flex items-center gap-3.5 rounded-xl border border-hair px-3.5 py-3 transition">
+          <button data-toggle class="grid h-8 w-8 shrink-0 place-items-center rounded-full border-2 border-hair text-transparent transition hover:border-brand hover:text-brand" title="Mark as done">
+            <i class="hgi-stroke hgi-tick-02 text-[16px]"></i>
+          </button>
+          <span class="hidden h-9 w-9 shrink-0 place-items-center rounded-lg bg-canvas text-muted sm:grid"><i class="hgi-stroke hgi-calendar-add-01 text-[18px]"></i></span>
+          <div class="min-w-0 flex-1">
+            <p class="truncate text-[13.5px] font-semibold text-ink">Create your first event</p>
+            <p class="mt-0.5 truncate text-[12px] text-muted">Title, date, venue and seating — save as a draft and finish it later.</p>
+          </div>
+          <span class="hidden shrink-0 text-[11px] text-muted tnum sm:block">4 min</span>
+          <a href="event-form.html" class="btn btn-soft btn-sm shrink-0">Create</a>
+        </li>
+
+        <!-- 5 -->
+        <li data-step data-done="false" class="flex items-center gap-3.5 rounded-xl border border-hair px-3.5 py-3 transition">
+          <button data-toggle class="grid h-8 w-8 shrink-0 place-items-center rounded-full border-2 border-hair text-transparent transition hover:border-brand hover:text-brand" title="Mark as done">
+            <i class="hgi-stroke hgi-tick-02 text-[16px]"></i>
+          </button>
+          <span class="hidden h-9 w-9 shrink-0 place-items-center rounded-lg bg-canvas text-muted sm:grid"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
+          <div class="min-w-0 flex-1">
+            <p class="truncate text-[13.5px] font-semibold text-ink">Add ticket types</p>
+            <p class="mt-0.5 truncate text-[12px] text-muted">Free or paid, with capacity and a sales window. Add at least one to publish.</p>
+          </div>
+          <span class="hidden shrink-0 text-[11px] text-muted tnum sm:block">2 min</span>
+          <a href="tickets.html" class="btn btn-soft btn-sm shrink-0">Add</a>
+        </li>
+
+        <!-- 6 -->
+        <li data-step data-done="false" class="flex items-center gap-3.5 rounded-xl border border-hair px-3.5 py-3 transition">
+          <button data-toggle class="grid h-8 w-8 shrink-0 place-items-center rounded-full border-2 border-hair text-transparent transition hover:border-brand hover:text-brand" title="Mark as done">
+            <i class="hgi-stroke hgi-tick-02 text-[16px]"></i>
+          </button>
+          <span class="hidden h-9 w-9 shrink-0 place-items-center rounded-lg bg-canvas text-muted sm:grid"><i class="hgi-stroke hgi-browser text-[18px]"></i></span>
+          <div class="min-w-0 flex-1">
+            <p class="truncate text-[13.5px] font-semibold text-ink">Publish your event page</p>
+            <p class="mt-0.5 truncate text-[12px] text-muted">Pick a design, then share the link — this is where registrations come from.</p>
+          </div>
+          <span class="hidden shrink-0 text-[11px] text-muted tnum sm:block">1 min</span>
+          <a href="landing-pages.html" class="btn btn-soft btn-sm shrink-0">Publish</a>
+        </li>
+      </ul>
+
+      <!-- optional, deliberately outside the count -->
+      <div class="mt-4 flex flex-wrap items-center gap-3 border-t border-hair pt-4">
+        <span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-canvas text-muted"><i class="hgi-stroke hgi-user-multiple text-[17px]"></i></span>
+        <div class="min-w-0 flex-1">
+          <p class="text-[13px] font-semibold text-ink">Invite your team <span class="ml-1 align-middle text-[11px] font-medium text-muted">Optional</span></p>
+          <p class="mt-0.5 text-[12px] text-muted">Staff can scan tickets at the door without seeing your finances.</p>
+        </div>
+        <a href="users.html" class="btn btn-ghost btn-sm shrink-0">Invite</a>
+      </div>
+    </section>
+
+    <!-- ============ EXPLORE — real content, never an empty card ============ -->
+    <section class="mt-4 rounded-2xl bg-surface p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-[15px] font-bold tracking-tight">Pick how your event page will look</h2>
+          <p class="mt-0.5 text-[12px] text-muted">Every template fills itself in from your event — you never write the page.</p>
+        </div>
+        <a href="landing-pages.html" class="shrink-0 text-[12px] font-semibold text-brand hover:underline">See all</a>
+      </div>
+      <div class="mt-3.5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+
+        <a href="landing-pages.html" class="group rounded-xl bg-canvas p-4 transition hover:bg-line">
+          <div class="flex items-start justify-between">
+            <span class="badge badge-gray">All-purpose</span>
+            <span class="grid h-7 w-7 place-items-center rounded-full bg-brand-soft text-brand opacity-0 transition group-hover:opacity-100"><i class="hgi-stroke hgi-arrow-up-right-01 text-[14px]"></i></span>
+          </div>
+          <p class="mt-3 text-[14px] font-bold tracking-tight text-ink">Classic</p>
+          <p class="mt-1 text-[12px] leading-relaxed text-muted">Hero, highlights, agenda, speakers and tickets in one scroll.</p>
+        </a>
+
+        <a href="landing-pages.html" class="group rounded-xl bg-canvas p-4 transition hover:bg-line">
+          <div class="flex items-start justify-between">
+            <span class="badge badge-blue">Ticket-focused</span>
+            <span class="grid h-7 w-7 place-items-center rounded-full bg-brand-soft text-brand opacity-0 transition group-hover:opacity-100"><i class="hgi-stroke hgi-arrow-up-right-01 text-[14px]"></i></span>
+          </div>
+          <p class="mt-3 text-[14px] font-bold tracking-tight text-ink">Spotlight</p>
+          <p class="mt-1 text-[12px] leading-relaxed text-muted">Split hero with a sticky register card — tickets take centre stage.</p>
+        </a>
+
+        <a href="landing-pages.html" class="group rounded-xl bg-canvas p-4 transition hover:bg-line">
+          <div class="flex items-start justify-between">
+            <span class="badge badge-gray">Understated</span>
+            <span class="grid h-7 w-7 place-items-center rounded-full bg-brand-soft text-brand opacity-0 transition group-hover:opacity-100"><i class="hgi-stroke hgi-arrow-up-right-01 text-[14px]"></i></span>
+          </div>
+          <p class="mt-3 text-[14px] font-bold tracking-tight text-ink">Minimal</p>
+          <p class="mt-1 text-[12px] leading-relaxed text-muted">Centred and content-first — lots of whitespace, green only where it counts.</p>
+        </a>
+
+        <a href="landing-pages.html" class="group rounded-xl bg-canvas p-4 transition hover:bg-line">
+          <div class="flex items-start justify-between">
+            <span class="badge badge-purple">Festivals &amp; music</span>
+            <span class="grid h-7 w-7 place-items-center rounded-full bg-brand-soft text-brand opacity-0 transition group-hover:opacity-100"><i class="hgi-stroke hgi-arrow-up-right-01 text-[14px]"></i></span>
+          </div>
+          <p class="mt-3 text-[14px] font-bold tracking-tight text-ink">Vibrant</p>
+          <p class="mt-1 text-[12px] leading-relaxed text-muted">Full-bleed poster hero and a sticky ticket bar for launches.</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ LEARN — a soft landing, not a dead end ============ -->
+    <div class="mt-4 grid gap-3 sm:grid-cols-3">
+      <a href="../index.html" class="group flex items-center gap-3 rounded-2xl bg-surface p-4 transition hover:bg-line">
+        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-canvas text-brand"><i class="hgi-stroke hgi-play-circle-02 text-[20px]"></i></span>
+        <div class="min-w-0">
+          <p class="text-[13.5px] font-semibold text-ink">Take a 2-minute tour</p>
+          <p class="mt-0.5 truncate text-[12px] text-muted">See what a live event looks like</p>
+        </div>
+      </a>
+      <a href="events.html" class="group flex items-center gap-3 rounded-2xl bg-surface p-4 transition hover:bg-line">
+        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-canvas text-brand"><i class="hgi-stroke hgi-sparkles text-[20px]"></i></span>
+        <div class="min-w-0">
+          <p class="text-[13.5px] font-semibold text-ink">Load a sample event</p>
+          <p class="mt-0.5 truncate text-[12px] text-muted">Explore with demo data, remove it any time</p>
+        </div>
+      </a>
+      <a href="../index.html" class="group flex items-center gap-3 rounded-2xl bg-surface p-4 transition hover:bg-line">
+        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-canvas text-brand"><i class="hgi-stroke hgi-book-open-01 text-[20px]"></i></span>
+        <div class="min-w-0">
+          <p class="text-[13.5px] font-semibold text-ink">Read the guide</p>
+          <p class="mt-0.5 truncate text-[12px] text-muted">Pricing, payouts, VAT and check-in</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- ============ DONE STATE — hidden until every step is checked ============ -->
+    <section id="all-done" class="mt-4 hidden rounded-2xl border border-brand/30 bg-brand-soft/50 p-5">
+      <div class="flex flex-wrap items-center gap-3.5">
+        <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brand text-white"><i class="hgi-stroke hgi-checkmark-circle-02 text-[22px]"></i></span>
+        <div class="min-w-0 flex-1">
+          <p class="text-[15px] font-bold tracking-tight text-ink">You're ready to sell tickets</p>
+          <p class="mt-0.5 text-[12.5px] text-muted">This checklist disappears from Home, and your dashboard takes its place.</p>
+        </div>
+        <a href="home.html" class="btn btn-primary btn-sm shrink-0">Go to my dashboard<i class="hgi-stroke hgi-arrow-right-01 text-[15px]"></i></a>
+      </div>
+    </section>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+
+    </div>
+  </main>
+</div>
+
+<script src="../assets/shell.js?v=69"></script>
+<script>
+  /* Checklist state — demo only, so every state is visible in the kit.
+     Toggling a step recomputes the progress bar and promotes the next
+     unfinished step to the highlighted "do this now" treatment. */
+  (function () {
+    const list = document.getElementById('steps');
+    if (!list) return;
+    const steps = [...list.querySelectorAll('[data-step]')];
+    const bar = document.getElementById('bar');
+    const count = document.getElementById('done-count');
+    const allDone = document.getElementById('all-done');
+
+    const NEXT = ['border-brand/40', 'bg-brand-soft/50', 'ring-1', 'ring-brand/20'];
+
+    function paint() {
+      const done = steps.filter(s => s.dataset.done === 'true');
+      count.textContent = done.length;
+      bar.style.width = (done.length / steps.length * 100).toFixed(1) + '%';
+
+      const next = steps.find(s => s.dataset.done !== 'true');
+      steps.forEach(step => {
+        const isDone = step.dataset.done === 'true';
+        const toggle = step.querySelector('[data-toggle]');
+        const title = step.querySelector('p');
+
+        step.classList.remove(...NEXT, 'bg-canvas');
+        step.classList.toggle('border-hair', step !== next);
+        if (isDone) step.classList.add('bg-canvas');
+        if (step === next) step.classList.add(...NEXT);
+
+        toggle.className = isDone
+          ? 'grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand text-white transition'
+          : 'grid h-8 w-8 shrink-0 place-items-center rounded-full border-2 text-transparent transition hover:border-brand hover:text-brand '
+            + (step === next ? 'border-brand/40' : 'border-hair');
+        toggle.title = isDone ? 'Mark as not done' : 'Mark as done';
+
+        title.className = isDone
+          ? 'truncate text-[13.5px] font-semibold text-muted line-through decoration-muted/40'
+          : 'truncate text-[13.5px] font-semibold text-ink';
+
+        // the primary button follows the next step
+        const cta = step.querySelector('a.btn');
+        if (cta) cta.className = (step === next ? 'btn btn-primary btn-sm shrink-0' : 'btn btn-soft btn-sm shrink-0');
+      });
+
+      allDone.classList.toggle('hidden', done.length !== steps.length);
+    }
+
+    list.addEventListener('click', e => {
+      const btn = e.target.closest('[data-toggle]');
+      if (!btn) return;
+      const step = btn.closest('[data-step]');
+      step.dataset.done = step.dataset.done === 'true' ? 'false' : 'true';
+      paint();
+    });
+
+    document.getElementById('btn-skip').addEventListener('click', () => {
+      location.href = 'home.html';
+    });
+
+    paint();
+  })();
+</script>
+</body>
+</html>
