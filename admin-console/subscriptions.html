@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Subscriptions</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="subscriptions">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="text-[22px] font-bold tracking-tight">Subscriptions</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">What every workspace pays.</p>
+      </div>
+      <button class="btn btn-ghost ml-auto shrink-0" data-open="plan-panel"><i class="hgi-stroke hgi-license text-[16px]"></i><span class="hidden sm:inline">Plans &amp; pricing</span><span class="sm:hidden">Plans</span></button>
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: nobody has picked a plan yet, so there is no recurring revenue to report -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-repeat"></i></span>
+      <h2 class="empty-title">No subscriptions yet</h2>
+      <p class="empty-text">Every workspace that starts a plan lands here with its seats, monthly value, billing cycle and renewal date — and the MRR totals above are built from this list. It fills in as soon as the first workspace picks a plan.</p>
+      <div class="empty-actions">
+        <a href="workspaces.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-building-03 text-[15px]"></i>Browse workspaces</a>
+        <button type="button" data-open="plan-panel" class="btn btn-ghost btn-sm">See plans &amp; pricing</button>
+      </div>
+    </section>
+
+    <!-- KPI row — every figure below is summed from the table, not typed in -->
+    <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-money-bag-02 text-[16px]"></i>MRR</div>
+        <div class="mt-2 flex items-end justify-between"><p id="kpi-mrr" class="text-[22px] font-bold tracking-tight tnum">฿0</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>7,4 %</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-chart-line-data-01 text-[16px]"></i>Annual run rate</div>
+        <div class="mt-2 flex items-end justify-between"><p id="kpi-arr" class="text-[22px] font-bold tracking-tight tnum">฿0</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>8,1 %</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-building-03 text-[16px]"></i>Paying workspaces</div>
+        <div class="mt-2 flex items-end justify-between"><p id="kpi-paying" class="text-[22px] font-bold tracking-tight tnum">0</p><span id="kpi-arpa" class="text-[12px] text-muted tnum">฿0 avg</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-time-quarter-pass text-[16px]"></i>Trialling</div>
+        <div class="mt-2 flex items-end justify-between"><p id="kpi-trial" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="text-[12px] text-muted">no charge yet</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-alert-02 text-[16px]"></i>Past due</div>
+        <div class="mt-2 flex items-end justify-between"><p id="kpi-pastdue" class="text-[22px] font-bold tracking-tight tnum">฿0</p><span id="kpi-pastdue-n" class="flex items-center gap-1 text-[12px] font-semibold text-red-500 tnum">0</span></div>
+      </div>
+    </div>
+
+    <!-- status pill tabs -->
+    <div data-when-data data-tabs="#subs-table" class="mt-4 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count tnum" data-count="all">0</span></button>
+      <button class="pilltab" data-tab="active">Active <span class="pilltab-count tnum" data-count="active">0</span></button>
+      <button class="pilltab" data-tab="trialling">Trialling <span class="pilltab-count tnum" data-count="trialling">0</span></button>
+      <button class="pilltab" data-tab="pastdue">Past due <span class="pilltab-count tnum" data-count="pastdue">0</span></button>
+      <button class="pilltab" data-tab="cancelled">Cancelled <span class="pilltab-count tnum" data-count="cancelled">0</span></button>
+    </div>
+
+    <!-- search + plan filter -->
+    <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="subs-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search workspaces…" />
+      </div>
+      <div class="relative w-full sm:w-52">
+        <i class="hgi-stroke hgi-license text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="subs-plan-filter" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All plans</option>
+          <option>Enterprise</option>
+          <option>Growth</option>
+          <option>Starter</option>
+          <option>Free</option>
+        </select>
+      </div>
+      <div class="relative w-full sm:w-44">
+        <i class="hgi-stroke hgi-repeat text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="subs-cycle-filter" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>Any cycle</option>
+          <option>Monthly</option>
+          <option>Annual</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- table -->
+    <section data-when-data class="mt-3 rounded-2xl bg-surface p-4 lg:p-5">
+      <div id="subs-table" class="overflow-x-auto">
+        <table class="data-table min-w-[1000px]">
+          <thead>
+            <tr>
+              <th>Workspace</th>
+              <th>Plan</th>
+              <th class="text-right">Seats</th>
+              <th class="text-right">MRR</th>
+              <th>Cycle</th>
+              <th>Started</th>
+              <th>Renews</th>
+              <th>Status</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="subs-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+
+      <div id="subs-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="subs-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="subs-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="subs-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="subs-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </div>
+  </main>
+
+  <!-- subscription detail slide-over -->
+  <aside class="panel" id="sub-view">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">Subscription</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-4 overflow-y-auto p-4">
+      <div class="card p-3.5">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex min-w-0 items-center gap-2">
+            <span id="sv-initials" class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand-soft text-[11px] font-semibold text-brand-dark dark:text-brand"></span>
+            <p id="sv-name" class="truncate text-[14px] font-semibold text-ink"></p>
+          </div>
+          <span id="sv-status"></span>
+        </div>
+        <p id="sv-mrr" class="mt-3 text-[24px] font-bold tracking-tight tnum">฿0</p>
+        <p id="sv-mrr-note" class="text-[12px] text-muted">per month</p>
+      </div>
+
+      <dl class="overflow-hidden rounded-lg border border-hair">
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Plan</dt><dd id="sv-plan" class="text-[13px]"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Seats in use</dt><dd id="sv-seats" class="text-[13px] font-medium text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Billing cycle</dt><dd id="sv-cycle" class="text-[13px] text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Started</dt><dd id="sv-started" class="text-[13px] text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px] text-muted">Renews</dt><dd id="sv-renews" class="text-[13px] text-ink tnum"></dd></div>
+      </dl>
+
+      <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
+        <i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px] text-muted"></i>
+        <p id="sv-note" class="text-[12px] text-muted"></p>
+      </div>
+    </div>
+    <footer class="flex gap-2 border-t border-hair p-4">
+      <button class="btn btn-soft flex-1" data-close>Close</button>
+      <a href="billing-payments.html" class="btn btn-primary flex-1"><i class="hgi-stroke hgi-credit-card text-[16px]"></i>View payments</a>
+    </footer>
+  </aside>
+
+  <!-- plans &amp; pricing reference -->
+  <aside class="panel" id="plan-panel">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">Plans &amp; pricing</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-3 overflow-y-auto p-4">
+      <p class="text-[12.5px] leading-relaxed text-muted">List price per workspace, per month. Annual subscriptions are billed twelve months up front at the same rate. Enterprise is negotiated per contract — the figures in the table are the agreed ones.</p>
+      <div id="plan-cards" class="space-y-2.5"></div>
+    </div>
+    <footer class="flex gap-2 border-t border-hair p-4">
+      <button class="btn btn-soft flex-1" data-close>Close</button>
+      <a href="usage-limits.html" class="btn btn-primary flex-1"><i class="hgi-stroke hgi-chart-histogram text-[16px]"></i>Usage and limits</a>
+    </footer>
+  </aside>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  function nf(n) { return n.toLocaleString('en-US'); }
+  function baht(n) { return '฿' + nf(n); }
+  function compact(n) {
+    if (n >= 1000000) return '฿' + (n / 1000000).toFixed(2).replace(/\.00$/, '') + 'M';
+    if (n >= 1000) return '฿' + Math.round(n / 1000) + 'k';
+    return baht(n);
+  }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  /* ---------- Plan list price, ฿ per workspace per month ----------
+     The panel and the table read the same map, so they cannot drift apart. */
+  var PLANS = [
+    { name: 'Enterprise', price: null, from: 48000, blurb: 'Negotiated per contract. 400 events a year, 100 seats, 250k emails a month, 1,000 GB.' },
+    { name: 'Growth',     price: 9900,  blurb: '60 events a year, 25 seats, 50k emails a month, 100 GB.' },
+    { name: 'Starter',    price: 1900,  blurb: '12 events a year, 5 seats, 5k emails a month, 10 GB.' },
+    { name: 'Free',       price: 0,     blurb: '2 events a year, 2 seats, 500 emails a month, 1 GB.' },
+  ];
+
+  /* ---------- DATA: 24 subscriptions across the platform ----------
+     mrr is 0 for trialling / cancelled / free — nothing is being billed. */
+  function sub(inl, name, plan, seats, mrr, cycle, started, renews, status) {
+    return { inl: inl, name: name, plan: plan, seats: seats, mrr: mrr, cycle: cycle, started: started, renews: renews, status: status };
+  }
+  var DATA = [
+    sub('PT', 'PTT Events',            'Enterprise', 48, 96000, 'Annual',  'Mar 01, 2024', 'Mar 01, 2027', 'Active'),
+    sub('TA', 'Thai Airways Events',   'Enterprise', 36, 72000, 'Annual',  'Sep 12, 2024', 'Sep 12, 2026', 'Active'),
+    sub('CR', 'Central Retail Live',   'Enterprise', 30, 58000, 'Annual',  'Aug 20, 2024', 'Aug 20, 2026', 'Past due'),
+    sub('SC', 'Siam Conferences',      'Growth',     22,  9900, 'Monthly', 'Jan 14, 2025', 'Sep 14, 2026', 'Active'),
+    sub('BJ', 'Bangkok Jazz Co.',      'Growth',     28,  9900, 'Monthly', 'Mar 03, 2025', 'Sep 03, 2026', 'Active'),
+    sub('PM', 'Phuket Marathon',       'Growth',     12,  9900, 'Annual',  'Nov 08, 2024', 'Nov 08, 2026', 'Active'),
+    sub('IF', 'Isaan Food Festival',   'Growth',     10,  9900, 'Monthly', 'May 21, 2025', 'Sep 21, 2026', 'Active'),
+    sub('HW', 'Hua Hin Wine Fair',     'Growth',      9,  9900, 'Annual',  'Jul 30, 2025', 'Jul 30, 2027', 'Active'),
+    sub('KD', 'Krabi Dive Expo',       'Growth',      8,  9900, 'Monthly', 'Feb 11, 2026', 'Aug 11, 2026', 'Past due'),
+    sub('AH', 'Ayutthaya Heritage',    'Growth',      7,  9900, 'Monthly', 'Aug 05, 2025', 'Sep 05, 2026', 'Active'),
+    sub('RT', 'Rayong Tech Week',      'Growth',     11,     0, '—',       'Oct 17, 2025', '—',            'Cancelled'),
+    sub('LT', 'Loei Trail Series',     'Growth',      4,     0, '—',       'Aug 18, 2026', 'Trial ends Sep 01, 2026', 'Trialling'),
+    sub('CM', 'Chiang Mai Arts',       'Starter',     3,  1900, 'Monthly', 'Dec 09, 2025', 'Sep 09, 2026', 'Active'),
+    sub('NE', 'Nonthaburi Expo',       'Starter',     4,  1900, 'Monthly', 'Jan 26, 2026', 'Aug 26, 2026', 'Active'),
+    sub('KK', 'Khon Kaen Startups',    'Starter',     4,  1900, 'Annual',  'Apr 14, 2025', 'Apr 14, 2027', 'Active'),
+    sub('PB', 'Pattaya Beach Runs',    'Starter',     3,  1900, 'Monthly', 'Feb 02, 2026', 'Aug 02, 2026', 'Past due'),
+    sub('SL', 'Sukhothai Lights',      'Starter',     4,  1900, 'Monthly', 'Mar 19, 2026', 'Sep 19, 2026', 'Active'),
+    sub('BD', 'Bangkok Design Week',   'Starter',     5,  1900, 'Monthly', 'May 06, 2026', 'Sep 06, 2026', 'Active'),
+    sub('UT', 'Udon Trade Fair',       'Starter',     2,     0, '—',       'Aug 12, 2026', 'Trial ends Aug 26, 2026', 'Trialling'),
+    sub('SY', 'Samui Yoga Retreat',    'Starter',     3,     0, '—',       'Aug 15, 2026', 'Trial ends Aug 29, 2026', 'Trialling'),
+    sub('NW', 'Northern Wellness',     'Starter',     2,     0, '—',       'Jun 30, 2026', '—',            'Cancelled'),
+    sub('CA', 'Chulalongkorn Alumni',  'Free',        3,     0, '—',       'Nov 21, 2025', '—',            'Active'),
+    sub('RR', 'Rangsit Robotics Club', 'Free',        3,     0, '—',       'Feb 08, 2026', '—',            'Active'),
+    sub('HY', 'Hat Yai Craft Market',  'Free',        1,     0, '—',       'Jul 03, 2026', '—',            'Active')
+  ];
+
+  var PLAN_BADGE   = { Enterprise: 'badge-purple', Growth: 'badge-green', Starter: 'badge-blue', Free: 'badge-gray' };
+  var STATUS_BADGE = { Active: 'badge-green', Trialling: 'badge-amber', 'Past due': 'badge-red', Cancelled: 'badge-gray' };
+  var NOTE = {
+    Active:      'Billing is healthy. The next charge is raised automatically on the renewal date.',
+    Trialling:   'No card has been charged yet. The plan starts billing when the trial ends.',
+    'Past due':  'The last charge failed. Eventa retries three times over ten days before the workspace is downgraded.',
+    Cancelled:   'The workspace kept its data but no longer bills. It can restart a plan at any time.'
+  };
+
+  /* ---------- KPIs, all summed from DATA above ---------- */
+  var mrr = 0, pastDue = 0, pastDueN = 0, paying = 0, trial = 0;
+  DATA.forEach(function (s) {
+    mrr += s.mrr;
+    if (s.mrr > 0) paying++;
+    if (s.status === 'Past due') { pastDue += s.mrr; pastDueN++; }
+    if (s.status === 'Trialling') trial++;
+  });
+  document.getElementById('kpi-mrr').textContent = baht(mrr);
+  document.getElementById('kpi-arr').textContent = compact(mrr * 12);
+  document.getElementById('kpi-paying').textContent = nf(paying);
+  document.getElementById('kpi-arpa').textContent = baht(Math.round(mrr / paying)) + ' avg';
+  document.getElementById('kpi-trial').textContent = nf(trial);
+  document.getElementById('kpi-pastdue').textContent = baht(pastDue);
+  document.getElementById('kpi-pastdue-n').innerHTML = '<i class="hgi-stroke hgi-alert-02 text-[13px]"></i>' + nf(pastDueN) + (pastDueN === 1 ? ' sub' : ' subs');
+
+  /* ---------- plans &amp; pricing panel ---------- */
+  document.getElementById('plan-cards').innerHTML = PLANS.map(function (p) {
+    var price = p.price === null ? 'from ' + baht(p.from) : baht(p.price);
+    return '<div class="card p-3.5">' +
+      '<div class="flex items-center justify-between gap-2">' +
+        '<span class="badge ' + PLAN_BADGE[p.name] + '">' + esc(p.name) + '</span>' +
+        '<p class="text-[15px] font-bold tracking-tight tnum">' + price + '<span class="text-[11px] font-medium text-muted"> / mo</span></p>' +
+      '</div>' +
+      '<p class="mt-2 text-[12px] leading-relaxed text-muted">' + esc(p.blurb) + '</p>' +
+    '</div>';
+  }).join('');
+
+  /* ---------- row markup ---------- */
+  function rowHTML(s) {
+    var isTrial = s.status === 'Trialling';
+    return '<tr>' +
+      '<td><div class="flex items-center gap-2"><span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-soft text-[10px] font-semibold text-brand-dark dark:text-brand">' + esc(s.inl) + '</span><span class="font-medium text-ink">' + esc(s.name) + '</span></div></td>' +
+      '<td><span class="badge ' + PLAN_BADGE[s.plan] + '">' + esc(s.plan) + '</span></td>' +
+      '<td class="text-right text-muted tnum">' + nf(s.seats) + '</td>' +
+      '<td class="text-right font-semibold tnum ' + (s.mrr ? 'text-ink' : 'text-muted') + '">' + (s.mrr ? baht(s.mrr) : '—') + '</td>' +
+      '<td class="text-muted">' + esc(s.cycle) + '</td>' +
+      '<td class="text-muted tnum">' + esc(s.started) + '</td>' +
+      '<td class="' + (isTrial ? 'text-amber-600 dark:text-amber-400' : 'text-muted') + ' tnum">' + esc(s.renews) + '</td>' +
+      '<td><span class="badge ' + STATUS_BADGE[s.status] + '">' + esc(s.status) + '</span></td>' +
+      '<td class="text-right"><button class="btn-icon" title="View subscription" data-open="sub-view" data-view="' + esc(s.name) + '"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>' +
+    '</tr>';
+  }
+
+  /* ---------- state + filtering ---------- */
+  var state = { tab: 'all', plan: 'All plans', cycle: 'Any cycle', q: '', page: 0, size: 10 };
+  var TAB_STATUS = { active: 'Active', trialling: 'Trialling', pastdue: 'Past due', cancelled: 'Cancelled' };
+  function filtered() {
+    return DATA.filter(function (s) {
+      if (state.tab !== 'all' && s.status !== TAB_STATUS[state.tab]) return false;
+      if (state.plan !== 'All plans' && s.plan !== state.plan) return false;
+      if (state.cycle !== 'Any cycle' && s.cycle !== state.cycle) return false;
+      if (state.q && s.name.toLowerCase().indexOf(state.q.toLowerCase().trim()) === -1) return false;
+      return true;
+    });
+  }
+
+  var tbody     = document.getElementById('subs-rows');
+  var elShowing = document.getElementById('subs-showing');
+  var elPrev    = document.getElementById('subs-prev');
+  var elNext    = document.getElementById('subs-next');
+
+  (function counts() {
+    var c = { all: DATA.length, active: 0, trialling: 0, pastdue: 0, cancelled: 0 };
+    DATA.forEach(function (s) {
+      if (s.status === 'Active') c.active++;
+      else if (s.status === 'Trialling') c.trialling++;
+      else if (s.status === 'Past due') c.pastdue++;
+      else if (s.status === 'Cancelled') c.cancelled++;
+    });
+    Object.keys(c).forEach(function (k) { document.querySelector('[data-count="' + k + '"]').textContent = nf(c[k]); });
+  })();
+
+  var NO_RESULTS = '<tr><td colspan="9"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No subscriptions match</h3><p class="empty-text">Nothing matches the current search, status tab, plan and cycle filters. Try a shorter search term, or widen the filters.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
+
+  function render() {
+    var list = filtered(), total = list.length, pages = Math.max(1, Math.ceil(total / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    var start = state.page * state.size, slice = list.slice(start, start + state.size);
+    tbody.innerHTML = slice.length ? slice.map(rowHTML).join('') : NO_RESULTS;
+    if (total === 0) elShowing.textContent = 'No subscriptions';
+    else {
+      var sum = 0; list.forEach(function (s) { sum += s.mrr; });
+      elShowing.innerHTML = 'Showing <span class="font-semibold text-ink tnum">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> subscriptions · <span class="font-semibold text-ink tnum">' + baht(sum) + '</span> MRR';
+    }
+    elPrev.disabled = total === 0 || state.page === 0;
+    elNext.disabled = total === 0 || state.page >= pages - 1;
+  }
+
+  /* ---------- wire controls ---------- */
+  document.getElementById('subs-search').addEventListener('input', function () { state.q = this.value; state.page = 0; render(); });
+  document.getElementById('subs-plan-filter').addEventListener('change', function () { state.plan = this.value; state.page = 0; render(); });
+  document.getElementById('subs-cycle-filter').addEventListener('change', function () { state.cycle = this.value; state.page = 0; render(); });
+  document.getElementById('subs-size').addEventListener('change', function () { state.size = +this.value; state.page = 0; render(); });
+  elPrev.addEventListener('click', function () { if (state.page > 0) { state.page--; render(); } });
+  elNext.addEventListener('click', function () { state.page++; render(); });
+  document.querySelector('[data-tabs]').addEventListener('click', function (e) {
+    var t = e.target.closest('[data-tab]'); if (!t) return;
+    state.tab = t.getAttribute('data-tab'); state.page = 0; render();
+  });
+  // shell.js clears the text/select filters; the pill tab is ours to reset.
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('[data-clear-filters]')) return;
+    var first = document.querySelector('[data-tabs] [data-tab]');
+    if (first && state.tab !== 'all') first.click();
+  });
+
+  /* ---------- detail slide-over ---------- */
+  var sv = {
+    initials: document.getElementById('sv-initials'), name: document.getElementById('sv-name'),
+    status: document.getElementById('sv-status'), mrr: document.getElementById('sv-mrr'),
+    mrrNote: document.getElementById('sv-mrr-note'), plan: document.getElementById('sv-plan'),
+    seats: document.getElementById('sv-seats'), cycle: document.getElementById('sv-cycle'),
+    started: document.getElementById('sv-started'), renews: document.getElementById('sv-renews'),
+    note: document.getElementById('sv-note')
+  };
+  tbody.addEventListener('click', function (e) {
+    var v = e.target.closest('[data-view]'); if (!v) return;
+    var name = v.getAttribute('data-view'), s = null;
+    for (var i = 0; i < DATA.length; i++) { if (DATA[i].name === name) { s = DATA[i]; break; } }
+    if (!s) return;
+    sv.initials.textContent = s.inl;
+    sv.name.textContent = s.name;
+    sv.status.innerHTML = '<span class="badge ' + STATUS_BADGE[s.status] + '">' + esc(s.status) + '</span>';
+    sv.mrr.textContent = s.mrr ? baht(s.mrr) : '฿0';
+    sv.mrrNote.textContent = s.mrr
+      ? (s.cycle === 'Annual' ? 'per month · billed ' + baht(s.mrr * 12) + ' a year' : 'per month')
+      : 'nothing recurring on this workspace';
+    sv.plan.innerHTML = '<span class="badge ' + PLAN_BADGE[s.plan] + '">' + esc(s.plan) + '</span>';
+    sv.seats.textContent = nf(s.seats);
+    sv.cycle.textContent = s.cycle;
+    sv.started.textContent = s.started;
+    sv.renews.textContent = s.renews;
+    sv.note.textContent = NOTE[s.status] || '';
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Tickets</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="support-tickets">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="text-[22px] font-bold tracking-tight">Tickets</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Help requests from customers.</p>
+      </div>
+      <!-- stays visible in the empty state: it carries the header's ml-auto, same as
+           the range control in overview.html -->
+      <div id="tk-scope" class="ml-auto hidden items-center gap-1 rounded-lg bg-surface p-1 text-[12px] font-semibold sm:flex">
+        <button data-scope="all" class="rounded-md bg-white px-3 py-1.5 text-ink shadow-sm transition dark:bg-white/10">Everyone</button>
+        <button data-scope="mine" class="rounded-md px-3 py-1.5 text-muted transition">Assigned to me</button>
+      </div>
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: no customers, so nobody has asked for help -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-customer-support"></i></span>
+      <h2 class="empty-title">No tickets yet</h2>
+      <p class="empty-text">When someone in a customer workspace asks for help — by email or from the help widget — the request lands here with its workspace, priority and owner, and stays until it is resolved. Nothing has come in yet.</p>
+      <div class="empty-actions">
+        <a href="issues.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-alert-02 text-[15px]"></i>Review detected issues</a>
+        <a href="organizations.html" class="btn btn-ghost btn-sm">Browse organizations</a>
+      </div>
+    </section>
+
+    <!-- summary -->
+    <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-inbox text-[16px]"></i>Open</div>
+        <div class="mt-2 flex items-end justify-between"><p id="k-open" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="text-[12px] text-muted"><span id="k-unassigned" class="tnum">0</span> unassigned</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-hourglass text-[16px]"></i>Waiting on customer</div>
+        <div class="mt-2 flex items-end justify-between"><p id="k-waiting" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="text-[12px] text-muted"><span class="tnum">2</span> waiting 3 days</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i>Resolved (7 days)</div>
+        <div class="mt-2 flex items-end justify-between"><p id="k-resolved" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>16,7 %</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-clock-01 text-[16px]"></i>Median first reply</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">42 min</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>9 min</span></div>
+      </div>
+    </div>
+
+    <!-- status tabs -->
+    <div data-when-data data-tabs="#ticket-table" class="mt-4 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count tnum" data-count="all">0</span></button>
+      <button class="pilltab" data-tab="Open">Open <span class="pilltab-count tnum" data-count="Open">0</span></button>
+      <button class="pilltab" data-tab="Waiting">Waiting <span class="pilltab-count tnum" data-count="Waiting">0</span></button>
+      <button class="pilltab" data-tab="Resolved">Resolved <span class="pilltab-count tnum" data-count="Resolved">0</span></button>
+    </div>
+
+    <!-- search + priority filter -->
+    <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="tk-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search by reference, subject, workspace or requester…" />
+      </div>
+      <div class="relative w-full sm:w-52">
+        <i class="hgi-stroke hgi-flag-02 text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="tk-priority" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All priorities</option>
+          <option>Urgent</option>
+          <option>High</option>
+          <option>Normal</option>
+          <option>Low</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- table -->
+    <section data-when-data class="mt-3 rounded-2xl bg-surface p-4 lg:p-5">
+      <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+        <h2 class="text-[16px] font-bold tracking-tight">Help requests</h2>
+        <span class="text-[12px] text-muted">Newest activity first · times are Asia/Bangkok</span>
+      </div>
+      <div id="ticket-table" class="overflow-x-auto">
+        <table class="data-table min-w-[1080px]">
+          <thead>
+            <tr><th>Reference</th><th>Subject</th><th>Workspace</th><th>Requester</th><th>Priority</th><th>Status</th><th>Assignee</th><th class="text-right">Updated</th></tr>
+          </thead>
+          <tbody id="tk-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+
+      <div id="tk-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="tk-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="tk-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="tk-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="tk-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </div>
+  </main>
+
+  <!-- ticket detail slide-over -->
+  <aside class="panel" id="ticket-view">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">Ticket</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-4 overflow-y-auto p-4">
+      <div class="rounded-xl border border-hair p-3.5">
+        <div class="flex items-center justify-between gap-2">
+          <p id="tv-ref" class="font-mono text-[12px] text-muted"></p>
+          <span id="tv-priority"></span>
+        </div>
+        <h4 id="tv-subject" class="mt-2 text-[16px] font-bold leading-snug tracking-tight"></h4>
+        <p id="tv-body" class="mt-1.5 text-[12.5px] leading-relaxed text-muted"></p>
+      </div>
+
+      <dl class="overflow-hidden rounded-lg border border-hair">
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Workspace</dt><dd id="tv-ws" class="text-[13px] font-medium text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Requester</dt><dd id="tv-requester" class="text-[13px] text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Status</dt><dd id="tv-status" class="text-[13px] font-medium text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Assignee</dt><dd id="tv-assignee" class="text-[13px] text-ink"></dd></div>
+        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px] text-muted">Last update</dt><dd id="tv-updated" class="text-[13px] text-ink tnum"></dd></div>
+      </dl>
+
+      <div>
+        <label class="label" for="tv-reassign">Reassign</label>
+        <select id="tv-reassign" class="select">
+          <option>Unassigned</option>
+          <option>Rio S.</option>
+          <option>Nutcha P.</option>
+          <option>Danai K.</option>
+          <option>Praew L.</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="label" for="tv-reply">Reply</label>
+        <textarea id="tv-reply" class="textarea" rows="4" placeholder="Write a reply to the requester…"></textarea>
+        <p class="hint">Replies are sent from support@eventa.co.th and appear in the customer's inbox.</p>
+      </div>
+    </div>
+    <footer class="flex gap-2 border-t border-hair p-4">
+      <button class="btn btn-soft flex-1" data-close>Close</button>
+      <button class="btn btn-primary flex-1" data-close><i class="hgi-stroke hgi-sent text-[16px]"></i>Send reply</button>
+    </footer>
+  </aside>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  const nf = n => n.toLocaleString('en-US');
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  /* ---------- DATA ----------
+     Human help requests, unlike issues.html which lists what the platform
+     detected on its own. Ordered by most recent activity; the array order is
+     the display order. */
+  function t(ref, subject, ws, who, email, priority, status, assignee, updated, body) {
+    return { ref, subject, ws, who, email, priority, status, assignee, updated, body };
+  }
+  const DATA = [
+    t('#SUP-4821', 'Payout to our SCB account was returned', 'Siam Conferences', 'Kanya Wattana', 'kanya@siamconf.co.th', 'Urgent', 'Open', 'Rio S.', '12 min ago',
+      'Our ฿850,000 payout came back unpaid this morning and the dashboard shows the account as restricted. We have a venue invoice due Friday.'),
+    t('#SUP-4820', 'Attendees are not receiving confirmation emails', 'Bangkok Jazz Co.', 'Preecha Somsri', 'preecha@bkkjazz.co.th', 'Urgent', 'Open', 'Nutcha P.', '38 min ago',
+      'Around a third of the people who registered this week say nothing arrived. We resent from the dashboard and it did not help.'),
+    t('#SUP-4819', 'Can we bulk-refund a cancelled session?', 'Rama Medical Congress', 'Dr. Areeya Chin', 'areeya@ramacongress.org', 'High', 'Open', 'Danai K.', '1 h ago',
+      'One of our parallel sessions was cancelled. 214 registrations need refunding — is there a way to do it in one go rather than one at a time?'),
+    t('#SUP-4818', 'Google Calendar sync stopped yesterday', 'PTT Events', 'Wichai Boonmee', 'wichai@pttevents.co.th', 'High', 'Open', 'Unassigned', '2 h ago',
+      'Sessions used to appear on the team calendar within a minute. Nothing has synced since yesterday evening and reconnecting did not fix it.'),
+    t('#SUP-4817', 'Invoice shows the wrong tax ID', 'Krungthep Startups', 'Napat Srisuk', 'napat@krungthep.co', 'Normal', 'Open', 'Praew L.', '3 h ago',
+      'Our accountant cannot file the July invoice — it carries our old 13-digit tax ID. Can it be reissued with the new one?'),
+    t('#SUP-4816', 'How do I move an event to another workspace?', 'Chiang Mai Arts', 'Malee Ruangsri', 'malee@chiangmaiarts.org', 'Normal', 'Open', 'Unassigned', '5 h ago',
+      'We set up next year’s festival under the wrong workspace. It has no registrations yet, so moving it should be safe.'),
+    t('#SUP-4815', 'Check-in app crashes when scanning', 'Phuket Marathon', 'Somchai Tanakit', 'somchai@phuketmarathon.com', 'Urgent', 'Open', 'Rio S.', '6 h ago',
+      'The scanner closes itself after roughly twenty codes. Race pack pickup starts Saturday and we expect 4,000 runners.'),
+    t('#SUP-4814', 'Request: raise our attendee limit to 20,000', 'Isaan Food Festival', 'Ratchanok Pim', 'ratchanok@isaanfood.th', 'Normal', 'Open', 'Nutcha P.', '8 h ago',
+      'We are at 11,400 of a 12,000 cap and still four weeks out. What does the increase cost on our current plan?'),
+    t('#SUP-4813', 'Custom domain still shows "not secure"', 'Chiang Mai Arts', 'Malee Ruangsri', 'malee@chiangmaiarts.org', 'High', 'Open', 'Danai K.', 'Yesterday',
+      'events.chiangmaiarts.org has been verified for two days but visitors still get a certificate warning in Chrome.'),
+
+    t('#SUP-4812', 'Duplicate charge on our Growth subscription', 'Silom Design Week', 'Anong Pichai', 'anong@silomdesign.co.th', 'High', 'Waiting', 'Praew L.', 'Yesterday',
+      'We were billed twice on 1 August. Asked the customer for the two statement references before raising the refund.'),
+    t('#SUP-4811', 'Export of the attendee list times out', 'PTT Events', 'Wichai Boonmee', 'wichai@pttevents.co.th', 'Normal', 'Waiting', 'Rio S.', 'Yesterday',
+      'A 38,000-row export never finishes. Suggested the filtered export as a workaround; waiting to hear whether that works.'),
+    t('#SUP-4810', 'Need a VAT receipt for July', 'Thonglor Tech Meetup', 'Peerapat Y.', 'peerapat@thonglortech.io', 'Low', 'Waiting', 'Praew L.', '2 days ago',
+      'Receipt issued and sent. Waiting for confirmation that the company address on it is the one they need.'),
+    t('#SUP-4809', 'SMS reminders never arrived', 'Andaman Dive Expo', 'Chalisa Nak', 'chalisa@andamandive.co.th', 'High', 'Waiting', 'Nutcha P.', '2 days ago',
+      'Linked to the AIS shortcode problem under Issues. Asked for five affected numbers so the carrier can trace them.'),
+    t('#SUP-4808', 'Speaker photos fail to upload', 'Hua Hin Wine Fair', 'Kittipong R.', 'kittipong@huahinwine.co', 'Normal', 'Waiting', 'Danai K.', '3 days ago',
+      'Uploads stop at 90 %. Asked for one of the failing files — the originals are likely over the 8 MB limit.'),
+    t('#SUP-4807', 'Which plan includes the check-in app?', 'Northern Wellness', 'Suda Meesri', 'suda@northernwellness.th', 'Low', 'Waiting', 'Unassigned', '3 days ago',
+      'Answered with the plan comparison. Waiting to hear whether they want to move from Free to Starter.'),
+
+    t('#SUP-4806', 'Reset two-factor for our owner account', 'Nonthaburi Youth Sports', 'Thanet Sri', 'thanet@nysports.or.th', 'Urgent', 'Resolved', 'Rio S.', '4 days ago',
+      'Owner lost their phone. Identity confirmed against the billing contact, factor reset, new device enrolled.'),
+    t('#SUP-4805', 'Discount code not applying at checkout', 'Korat Motor Show', 'Jirapat Wong', 'jirapat@koratmotor.co.th', 'High', 'Resolved', 'Nutcha P.', '4 days ago',
+      'The code was scoped to a ticket type that had sold out. Rescoped it to the whole event.'),
+    t('#SUP-4804', 'Change our billing email', 'Siam Conferences', 'Kanya Wattana', 'kanya@siamconf.co.th', 'Low', 'Resolved', 'Praew L.', '5 days ago',
+      'Billing contact updated to finance@siamconf.co.th and the July invoice resent there.'),
+    t('#SUP-4803', 'Refund for a duplicate registration', 'Bangkok Jazz Co.', 'Preecha Somsri', 'preecha@bkkjazz.co.th', 'Normal', 'Resolved', 'Danai K.', '6 days ago',
+      'Attendee registered twice with two email addresses. Refunded ฿1,200 and cancelled the second ticket.'),
+    t('#SUP-4802', 'Add a second organizer seat', 'Krungthep Startups', 'Napat Srisuk', 'napat@krungthep.co', 'Normal', 'Resolved', 'Rio S.', '6 days ago',
+      'Seat added and prorated on the current term. Invite delivered.'),
+    t('#SUP-4801', 'Agenda page does not show in Thai', 'Isaan Food Festival', 'Ratchanok Pim', 'ratchanok@isaanfood.th', 'Normal', 'Resolved', 'Nutcha P.', '7 days ago',
+      'The event language was set to English. Switched to Thai and confirmed the agenda renders.'),
+    t('#SUP-4800', 'Cannot delete a draft event', 'Phuket Marathon', 'Somchai Tanakit', 'somchai@phuketmarathon.com', 'Low', 'Resolved', 'Danai K.', '7 days ago',
+      'The draft held one test registration, which blocks deletion. Removed the test row and the draft deleted normally.')
+  ];
+
+  /* ---------- row markup ---------- */
+  const PRI_BADGE = { Urgent: 'badge-red', High: 'badge-amber', Normal: 'badge-blue', Low: 'badge-gray' };
+  const ST_DOT = { Open: 'bg-red-500', Waiting: 'bg-amber-500', Resolved: 'bg-brand' };
+  const initials = name => name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+
+  function priBadge(p) { return '<span class="badge ' + PRI_BADGE[p] + '">' + esc(p) + '</span>'; }
+  function statusCell(s) {
+    return '<span class="inline-flex items-center gap-1.5 whitespace-nowrap text-[12.5px] font-medium text-ink">' +
+      '<span class="h-1.5 w-1.5 shrink-0 rounded-full ' + ST_DOT[s] + '"></span>' + esc(s) + '</span>';
+  }
+  function assigneeCell(a) {
+    if (a === 'Unassigned') return '<span class="text-muted">Unassigned</span>';
+    return '<div class="flex items-center gap-2 whitespace-nowrap"><span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand-soft text-[9.5px] font-semibold text-brand-dark dark:text-brand">' + esc(initials(a)) + '</span><span class="text-ink">' + esc(a) + '</span></div>';
+  }
+  function rowHTML(k) {
+    return '<tr>' +
+      '<td class="font-mono text-[12px] text-ink">' + esc(k.ref) + '</td>' +
+      '<td><button type="button" class="text-left font-medium text-ink hover:text-brand" data-open="ticket-view" data-view="' + esc(k.ref) + '">' + esc(k.subject) + '</button></td>' +
+      '<td class="whitespace-nowrap text-ink">' + esc(k.ws) + '</td>' +
+      '<td><p class="whitespace-nowrap text-ink">' + esc(k.who) + '</p><p class="text-[11.5px] text-muted">' + esc(k.email) + '</p></td>' +
+      '<td>' + priBadge(k.priority) + '</td>' +
+      '<td>' + statusCell(k.status) + '</td>' +
+      '<td>' + assigneeCell(k.assignee) + '</td>' +
+      '<td class="whitespace-nowrap text-right text-muted">' + esc(k.updated) + '</td>' +
+    '</tr>';
+  }
+
+  /* ---------- summary tiles (derived from the rows) ---------- */
+  const byStatus = s => DATA.filter(k => k.status === s);
+  document.getElementById('k-open').textContent = nf(byStatus('Open').length);
+  document.getElementById('k-unassigned').textContent = nf(byStatus('Open').filter(k => k.assignee === 'Unassigned').length);
+  document.getElementById('k-waiting').textContent = nf(byStatus('Waiting').length);
+  document.getElementById('k-resolved').textContent = nf(byStatus('Resolved').length);
+
+  document.querySelector('[data-count="all"]').textContent = nf(DATA.length);
+  ['Open', 'Waiting', 'Resolved'].forEach(s => {
+    document.querySelector('[data-count="' + s + '"]').textContent = nf(byStatus(s).length);
+  });
+
+  /* ---------- state + filtering ---------- */
+  const ME = 'Rio S.';
+  const state = { tab: 'all', q: '', priority: 'All priorities', scope: 'all', page: 0, size: 10 };
+  function filtered() {
+    const q = state.q.trim().toLowerCase();
+    return DATA.filter(k => {
+      if (state.tab !== 'all' && k.status !== state.tab) return false;
+      if (state.priority !== 'All priorities' && k.priority !== state.priority) return false;
+      if (state.scope === 'mine' && k.assignee !== ME) return false;
+      if (!q) return true;
+      return (k.ref + ' ' + k.subject + ' ' + k.ws + ' ' + k.who + ' ' + k.email).toLowerCase().indexOf(q) > -1;
+    });
+  }
+
+  const tbody = document.getElementById('tk-rows');
+  const showing = document.getElementById('tk-showing');
+  const prevBtn = document.getElementById('tk-prev');
+  const nextBtn = document.getElementById('tk-next');
+
+  function render() {
+    const list = filtered(), total = list.length, pages = Math.max(1, Math.ceil(total / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    const start = state.page * state.size, slice = list.slice(start, start + state.size);
+    tbody.innerHTML = slice.length
+      ? slice.map(rowHTML).join('')
+      : '<tr><td colspan="8"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No tickets match</h3><p class="empty-text">Nothing matches the current search, status tab and priority filter. Try widening them, or switch back to everyone’s tickets.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
+    showing.innerHTML = total === 0
+      ? 'No tickets'
+      : 'Showing <span class="font-semibold text-ink">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> tickets';
+    prevBtn.disabled = total === 0 || state.page === 0;
+    nextBtn.disabled = total === 0 || state.page >= pages - 1;
+  }
+
+  /* ---------- wire controls ---------- */
+  document.getElementById('tk-search').addEventListener('input', function () { state.q = this.value; state.page = 0; render(); });
+  document.getElementById('tk-priority').addEventListener('change', function () { state.priority = this.value; state.page = 0; render(); });
+  document.getElementById('tk-size').addEventListener('change', function () { state.size = +this.value; state.page = 0; render(); });
+  prevBtn.addEventListener('click', () => { if (state.page > 0) { state.page--; render(); } });
+  nextBtn.addEventListener('click', () => { state.page++; render(); });
+  document.querySelector('[data-tabs]').addEventListener('click', e => {
+    const t = e.target.closest('[data-tab]'); if (!t) return;
+    state.tab = t.getAttribute('data-tab'); state.page = 0; render();
+  });
+
+  const scope = document.getElementById('tk-scope');
+  scope.addEventListener('click', e => {
+    const btn = e.target.closest('button'); if (!btn) return;
+    [...scope.children].forEach(b => b.className = 'rounded-md px-3 py-1.5 text-muted transition');
+    btn.className = 'rounded-md bg-white px-3 py-1.5 text-ink shadow-sm transition dark:bg-white/10';
+    state.scope = btn.dataset.scope; state.page = 0; render();
+  });
+
+  /* ---------- detail slide-over ---------- */
+  const tv = {
+    ref: document.getElementById('tv-ref'), priority: document.getElementById('tv-priority'),
+    subject: document.getElementById('tv-subject'), body: document.getElementById('tv-body'),
+    ws: document.getElementById('tv-ws'), requester: document.getElementById('tv-requester'),
+    status: document.getElementById('tv-status'), assignee: document.getElementById('tv-assignee'),
+    updated: document.getElementById('tv-updated'), reassign: document.getElementById('tv-reassign')
+  };
+  function openView(ref) {
+    const k = DATA.find(x => x.ref === ref); if (!k) return;
+    tv.ref.textContent = k.ref;
+    tv.priority.innerHTML = priBadge(k.priority);
+    tv.subject.textContent = k.subject;
+    tv.body.textContent = k.body;
+    tv.ws.textContent = k.ws;
+    tv.requester.textContent = k.who + ' · ' + k.email;
+    tv.status.innerHTML = statusCell(k.status);
+    tv.assignee.textContent = k.assignee;
+    tv.updated.textContent = k.updated;
+    tv.reassign.value = k.assignee;
+  }
+  tbody.addEventListener('click', e => {
+    const v = e.target.closest('[data-view]');
+    if (v) openView(v.getAttribute('data-view'));
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

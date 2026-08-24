@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Users</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="users">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="text-[22px] font-bold tracking-tight">Users</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Everyone with a login, in any workspace.</p>
+      </div>
+      <button type="button" class="btn btn-soft ml-auto shrink-0"><i class="hgi-stroke hgi-download-01 text-[16px]"></i><span class="hidden sm:inline">Export CSV</span></button>
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: nobody has signed up. Accounts are created by customers, not here. -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-user-multiple"></i></span>
+      <h2 class="empty-title">No users yet</h2>
+      <p class="empty-text">Everyone who can sign in to Eventa appears here, in the one workspace their account belongs to. Accounts are created by customers as they invite their teams — there is nothing to add from this console.</p>
+      <div class="empty-actions">
+        <a href="workspaces.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-layers-01 text-[15px]"></i>Browse workspaces</a>
+        <a href="overview.html" class="btn btn-ghost btn-sm">Back to overview</a>
+      </div>
+    </section>
+
+    <!-- summary tiles: every figure is derived from the table below -->
+    <div data-when-data class="grid grid-cols-2 gap-3 xl:grid-cols-4">
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-user-multiple text-[16px]"></i>Accounts</div>
+        <div class="mt-2 flex items-end justify-between"><p id="tile-users" class="text-[22px] font-bold tracking-tight tnum">—</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>7,4 %</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-layers-01 text-[16px]"></i>Workspaces represented</div>
+        <div class="mt-2 flex items-end justify-between"><p id="tile-ws" class="text-[22px] font-bold tracking-tight tnum">—</p></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-at text-[16px]"></i>Shared email addresses</div>
+        <div class="mt-2 flex items-end justify-between"><p id="tile-shared" class="text-[22px] font-bold tracking-tight tnum">—</p></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-shield-user text-[16px]"></i>Owners</div>
+        <div class="mt-2 flex items-end justify-between"><p id="tile-owners" class="text-[22px] font-bold tracking-tight tnum">—</p></div>
+      </div>
+    </div>
+
+    <!-- How identity actually works here. Worth stating on the page: it is the one
+         thing about this table that surprises people, and it is why there is no
+         "this person's workspaces" column. -->
+    <div data-when-data class="mt-3 flex items-start gap-2.5 rounded-xl border border-hair bg-surface px-3.5 py-2.5">
+      <i class="hgi-stroke hgi-information-circle mt-0.5 shrink-0 text-[16px] text-muted"></i>
+      <p class="text-[12px] leading-relaxed text-muted">An account belongs to exactly one workspace. Somebody working in two workspaces has two separate accounts that happen to share an email address — so the hint under a row is an email match, not a linked identity.</p>
+    </div>
+
+    <!-- status pills -->
+    <div data-when-data data-tabs="#users-table" class="mt-3 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count tnum" data-count="all">0</span></button>
+      <button class="pilltab" data-tab="active">Active <span class="pilltab-count tnum" data-count="active">0</span></button>
+      <button class="pilltab" data-tab="invited">Invited <span class="pilltab-count tnum" data-count="invited">0</span></button>
+      <button class="pilltab" data-tab="suspended">Suspended <span class="pilltab-count tnum" data-count="suspended">0</span></button>
+    </div>
+
+    <!-- search + role filter -->
+    <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="users-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search by name, email or workspace…" />
+      </div>
+      <div class="relative w-full sm:w-52">
+        <i class="hgi-stroke hgi-shield-user text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="users-role" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All roles</option>
+          <option>Owner</option>
+          <option>Admin</option>
+          <option>Organizer</option>
+          <option>Staff</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- table -->
+    <section data-when-data class="card mt-3 p-4">
+      <div id="users-table" class="overflow-x-auto">
+        <table class="data-table min-w-[980px]">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Email</th>
+              <th>Workspace</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Last active</th>
+            </tr>
+          </thead>
+          <tbody id="users-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+
+      <div id="users-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="users-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="users-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="users-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="users-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </div>
+  </main>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  var nf = function (n) { return n.toLocaleString('en-US'); };
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  /* ---------- DATA: 43 accounts ----------
+     name, initials, email, workspace, role, status, last active.
+
+     One row is one login. eventa-api hangs every user off a single organization
+     (users.organizationId is NOT NULL, unique on organization + email + persona),
+     so a person working in two workspaces is two rows sharing an email — there is
+     no merged identity to show, and no query that would return one. The rows below
+     model that honestly: Somchai, Pim, Warisa and Nattapong each appear more than
+     once, and the only thing tying those rows together is the email string. */
+  function u(name, inits, email, workspace, role, status, last) {
+    return { name: name, inits: inits, email: email, workspace: workspace, role: role, status: status, last: last };
+  }
+  var DATA = [
+    u('Somchai Tanakit',    'ST', 'somchai.t@pttevents.co.th',       'PTT Corporate Events',     'Owner',     'Active',    '24 min ago'),
+    u('Somchai Tanakit',    'ST', 'somchai.t@pttevents.co.th',       'PTT Station Roadshow',     'Admin',     'Active',    '3h ago'),
+    u('Somchai Tanakit',    'ST', 'somchai.t@pttevents.co.th',       'PTT Innovation Day',       'Admin',     'Active',    'Mar 12, 2026'),
+    u('Kulap Sangchai',     'KS', 'kulap.s@pttevents.co.th',         'PTT Corporate Events',     'Staff',     'Invited',   '—'),
+    u('Anong Preecha',      'AP', 'anong.p@siamconf.co.th',          'Siam Conferences',         'Owner',     'Active',    '1h ago'),
+    u('Chaiwat Boonmee',    'CB', 'chaiwat.b@siamconf.co.th',        'Siam Medical Congress',    'Owner',     'Active',    'Yesterday'),
+    u('Malee Suwan',        'MS', 'malee.s@bkkjazz.com',             'Bangkok Jazz Co.',         'Owner',     'Active',    '5h ago'),
+    u('Nisa Kamon',         'NK', 'nisa.k@bkkjazz.com',              'Bangkok Jazz Co.',         'Staff',     'Invited',   '—'),
+    u('Ratana Chaimongkol', 'RC', 'ratana.c@cmarts.org',             'Chiang Mai Arts',          'Owner',     'Active',    '2 days ago'),
+    u('Pim Sirikul',        'PS', 'pim.s@thaibev.co.th',             'ThaiBev Trade Shows',      'Owner',     'Active',    '18 min ago'),
+    u('Pim Sirikul',        'PS', 'pim.s@thaibev.co.th',             'Chang Music Connection',   'Organizer', 'Active',    '6h ago'),
+    u('Rungnapa Deesai',    'RD', 'rungnapa.d@thaibev.co.th',        'ThaiBev Trade Shows',      'Staff',     'Invited',   '—'),
+    u('Kiattisak Wong',     'KW', 'kiattisak.w@thaibev.co.th',       'OISHI Brand Events',       'Owner',     'Active',    'Feb 28, 2026'),
+    u('Ploy Ratchada',      'PR', 'ploy.r@phuketmarine.co.th',       'Phuket Marine Expo',       'Owner',     'Active',    'Yesterday'),
+    u('Siriporn Nakhon',    'SN', 'siriporn.n@northernwellness.co',  'Northern Wellness',        'Owner',     'Active',    '2h ago'),
+    u('Thanakorn Srisai',   'TS', 'thanakorn.s@ku-alumni.ac.th',     'Kasetsart Alumni',         'Owner',     'Active',    'Jan 18, 2026'),
+    u('Nattapong Jiraporn', 'NJ', 'nattapong.j@bkkdw.org',           'Bangkok Design Week',      'Owner',     'Active',    '40 min ago'),
+    u('Nattapong Jiraporn', 'NJ', 'nattapong.j@bkkdw.org',           'BKKDW Satellite',          'Admin',     'Active',    'Apr 02, 2026'),
+    u('Napat Charoen',      'NC', 'napat.c@isaanfood.co.th',         'Isaan Food Festival',      'Owner',     'Active',    '4 days ago'),
+    u('Warisa Kittikul',    'WK', 'warisa.k@scblearning.com',        'SCB Learning Hub',         'Admin',     'Active',    '12 min ago'),
+    u('Warisa Kittikul',    'WK', 'warisa.k@scblearning.com',        'SCB Academy Bangkok',      'Owner',     'Active',    '2h ago'),
+    u('Chatchai Pongsak',   'CP', 'chatchai.p@scblearning.com',      'SCB Learning Hub',         'Staff',     'Invited',   '—'),
+    u('Duangjai Petch',     'DP', 'duangjai.p@scblearning.com',      'SCB Partner Summits',      'Owner',     'Active',    'Yesterday'),
+    u('Adisak Rungroj',     'AR', 'adisak.r@huahingolf.club',        'Hua Hin Golf Society',     'Owner',     'Active',    '3 days ago'),
+    u('Kanya Meesri',       'KM', 'kanya.m@krungthepruns.com',       'Krungthep Runners',        'Owner',     'Active',    '1h ago'),
+    u('Wichai Puangthong',  'WP', 'wichai.p@ayutthaya-trust.org',    'Ayutthaya Heritage Trust', 'Owner',     'Active',    '5h ago'),
+    u('Suchada Kaewkla',    'SK', 'suchada.k@pattayamusic.co.th',    'Pattaya Music Festival',   'Owner',     'Active',    'Yesterday'),
+    u('Teerapat Insom',     'TI', 'teerapat.i@pattayamusic.co.th',   'Jomtien Beach Sessions',   'Organizer', 'Suspended', 'May 09, 2026'),
+    u('Jirawat Somsak',     'JS', 'jirawat.s@truedigitalpark.com',   'True Digital Park',        'Owner',     'Active',    '8 min ago'),
+    u('Areeya Chotiwat',    'AC', 'areeya.c@truedigitalpark.com',    'TDPK Startup Club',        'Organizer', 'Active',    '4h ago'),
+    u('Peerapong Sae-Lim',  'PL', 'peerapong.s@kktech.dev',          'Khon Kaen Tech Meetup',    'Owner',     'Active',    'Feb 04, 2026'),
+    u('Lalita Nan',         'LN', 'lalita.n@samuiyoga.com',          'Samui Yoga Retreats',      'Owner',     'Active',    'Yesterday'),
+    u('Krit Anuwat',        'KA', 'krit.a@bkkstartupweek.co',        'Bangkok Startup Week',     'Owner',     'Active',    '3h ago'),
+    u('Pornthip Wattana',   'PW', 'pornthip.w@mahidolmed.ac.th',     'Mahidol Med Conferences',  'Owner',     'Active',    '2 days ago'),
+    u('Anucha Wongdee',     'AW', 'anucha.w@mahidolmed.ac.th',       'Siriraj CME',              'Owner',     'Active',    '6h ago'),
+    u('Sarawut Meechai',    'SM', 'sarawut.m@mahidolmed.ac.th',      'Siriraj CME',              'Staff',     'Invited',   '—'),
+    u('Benjawan Rojana',    'BR', 'benjawan.r@centralretail.events', 'Central Retail Events',    'Owner',     'Active',    '31 min ago'),
+    u('Nopadol Thavorn',    'NT', 'nopadol.t@centralretail.events',  'CentralWorld Activations', 'Organizer', 'Active',    'Yesterday'),
+    u('Chalerm Boonrueang', 'CH', 'chalerm.b@npfair.co.th',          'Nakhon Pathom Fair',       'Owner',     'Suspended', 'Jun 21, 2026'),
+    u('Waraporn Tulsi',     'WT', 'waraporn.t@chaophrayacruise.com', 'Chao Phraya Cruises',      'Owner',     'Active',    '4h ago'),
+    u('Ekachai Somboon',    'ES', 'ekachai.s@loeitrail.run',         'Loei Trail Series',        'Owner',     'Active',    'Yesterday'),
+    u('Manop Chaisiri',     'MC', 'manop.c@rayongforum.org',         'Rayong Industrial Forum',  'Owner',     'Active',    '2 days ago'),
+    u('Supaporn Yimyai',    'SY', 'supaporn.y@udonexpo.co.th',       'Udon Expo Center',         'Owner',     'Suspended', 'Jul 03, 2026')
+  ];
+
+  var ROLE_BADGE = { Owner: 'badge-purple', Admin: 'badge-blue', Organizer: 'badge-green', Staff: 'badge-gray' };
+  var STATUS_BADGE = { Active: 'badge-green', Invited: 'badge-blue', Suspended: 'badge-red' };
+
+  /* how many rows share each email — the only cross-workspace link that exists */
+  var BY_EMAIL = {};
+  DATA.forEach(function (r) { BY_EMAIL[r.email] = (BY_EMAIL[r.email] || 0) + 1; });
+
+  /* ---------- summary tiles, derived from DATA ---------- */
+  (function tiles() {
+    var spaces = {}, shared = 0, owners = 0;
+    DATA.forEach(function (r) { spaces[r.workspace] = 1; if (r.role === 'Owner') owners++; });
+    Object.keys(BY_EMAIL).forEach(function (e) { if (BY_EMAIL[e] > 1) shared++; });
+    document.getElementById('tile-users').textContent = nf(DATA.length);
+    document.getElementById('tile-ws').textContent = nf(Object.keys(spaces).length);
+    document.getElementById('tile-shared').textContent = nf(shared);
+    document.getElementById('tile-owners').textContent = nf(owners);
+  })();
+
+  /* ---------- row markup ---------- */
+  function rowHTML(r) {
+    var others = (BY_EMAIL[r.email] || 1) - 1;
+    var hint = others
+      ? '<a href="users.html?q=' + encodeURIComponent(r.email) + '" class="mt-0.5 block truncate text-[11px] text-muted underline decoration-dotted underline-offset-2 hover:text-ink" title="Search every workspace for ' + esc(r.email) + '">same email in ' + others + ' other workspace' + (others === 1 ? '' : 's') + '</a>'
+      : '';
+    return '<tr>' +
+      '<td>' +
+        '<div class="flex items-center gap-2.5">' +
+          '<span class="avatar h-8 w-8 shrink-0 text-[10.5px]">' + esc(r.inits) + '</span>' +
+          '<span class="truncate font-medium text-ink">' + esc(r.name) + '</span>' +
+        '</div>' +
+      '</td>' +
+      '<td class="text-muted">' + esc(r.email) + '</td>' +
+      '<td>' +
+        '<span class="block leading-tight">' +
+          '<a class="block truncate text-ink hover:underline" href="workspaces.html?q=' + encodeURIComponent(r.workspace) + '">' + esc(r.workspace) + '</a>' +
+          hint +
+        '</span>' +
+      '</td>' +
+      '<td><span class="badge ' + (ROLE_BADGE[r.role] || 'badge-gray') + '">' + esc(r.role) + '</span></td>' +
+      '<td><span class="badge ' + (STATUS_BADGE[r.status] || 'badge-gray') + '">' + esc(r.status) + '</span></td>' +
+      '<td class="text-muted tnum">' + esc(r.last) + '</td>' +
+    '</tr>';
+  }
+
+  /* ---------- state + filtering ---------- */
+  var state = { tab: 'all', q: '', role: 'All roles', page: 0, size: 10 };
+  var TAB_STATUS = { active: 'Active', invited: 'Invited', suspended: 'Suspended' };
+  function byTab(r) { return state.tab === 'all' || r.status === TAB_STATUS[state.tab]; }
+  function byRole(r) { return state.role === 'All roles' || r.role === state.role; }
+  function byQuery(r) {
+    if (!state.q) return true;
+    var q = state.q.toLowerCase();
+    return r.name.toLowerCase().indexOf(q) > -1 || r.email.toLowerCase().indexOf(q) > -1 || r.workspace.toLowerCase().indexOf(q) > -1;
+  }
+  function filtered() { return DATA.filter(function (r) { return byTab(r) && byRole(r) && byQuery(r); }); }
+
+  var tbody = document.getElementById('users-rows');
+  var elShowing = document.getElementById('users-showing');
+  var elPrev = document.getElementById('users-prev');
+  var elNext = document.getElementById('users-next');
+
+  (function counts() {
+    var c = { all: DATA.length, active: 0, invited: 0, suspended: 0 };
+    DATA.forEach(function (r) { for (var k in TAB_STATUS) if (TAB_STATUS[k] === r.status) c[k]++; });
+    Object.keys(c).forEach(function (k) {
+      var el = document.querySelector('[data-count="' + k + '"]');
+      if (el) el.textContent = nf(c[k]);
+    });
+  })();
+
+  var NO_RESULTS = '<tr><td colspan="6"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span>' +
+    '<h3 class="empty-title">No users match</h3>' +
+    '<p class="empty-text">Nothing matches the current search, status tab and role filter. Try widening them to see more accounts.</p>' +
+    '<div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
+
+  function render() {
+    var list = filtered(), total = list.length, pages = Math.max(1, Math.ceil(total / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    var start = state.page * state.size, slice = list.slice(start, start + state.size);
+    tbody.innerHTML = slice.length ? slice.map(rowHTML).join('') : NO_RESULTS;
+    if (total === 0) elShowing.textContent = 'No users';
+    else elShowing.innerHTML = 'Showing <span class="font-semibold text-ink">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> accounts';
+    elPrev.disabled = total === 0 || state.page === 0;
+    elNext.disabled = total === 0 || state.page >= pages - 1;
+  }
+
+  /* ---------- wire controls ---------- */
+  var elSearch = document.getElementById('users-search');
+  elSearch.addEventListener('input', function () { state.q = this.value.trim(); state.page = 0; render(); });
+  document.getElementById('users-role').addEventListener('change', function () { state.role = this.value; state.page = 0; render(); });
+  document.getElementById('users-size').addEventListener('change', function () { state.size = +this.value; state.page = 0; render(); });
+  elPrev.addEventListener('click', function () { if (state.page > 0) { state.page--; render(); } });
+  elNext.addEventListener('click', function () { state.page++; render(); });
+
+  var pills = document.querySelector('[data-tabs]');
+  pills.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-tab]'); if (!t) return;
+    state.tab = t.getAttribute('data-tab'); state.page = 0; render();
+  });
+
+  /* shell.js clears the inputs for [data-clear-filters]; the pill row is this
+     page's own idiom, so reset it here too. */
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('[data-clear-filters]')) return;
+    var first = pills.querySelector('[data-tab]');
+    if (first) first.click();
+  });
+
+  /* ---------- arriving with ?q=… ----------
+     Both the "same email in N other workspaces" hint and the workspace slide-over
+     link here. The term goes into the search box so the filter is visible and can
+     be cleared, rather than hiding in the URL. */
+  (function scope() {
+    var q = '';
+    try { q = new URLSearchParams(location.search).get('q') || ''; } catch (e) {}
+    if (!q) return;
+    elSearch.value = q;
+    state.q = q;
+  })();
+
+  render();
+})();
+</script>
+</body>
+</html>

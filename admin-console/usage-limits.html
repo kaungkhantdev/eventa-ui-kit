@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Usage and limits</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="usage-limits">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="text-[22px] font-bold tracking-tight">Usage and limits</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Who is close to a plan ceiling.</p>
+      </div>
+      <button class="btn btn-ghost ml-auto shrink-0" data-open="ceiling-panel"><i class="hgi-stroke hgi-license text-[16px]"></i><span class="hidden sm:inline">Plan ceilings</span><span class="sm:hidden">Ceilings</span></button>
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: no workspace is metered yet, so nothing can be near a ceiling -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-chart-histogram"></i></span>
+      <h2 class="empty-title">Nothing near a limit</h2>
+      <p class="empty-text">Every workspace is metered against its plan on four ceilings — events, seats, emails and storage. Anyone past a ceiling appears here in red, sorted to the top, with the upgrade that would clear it. It stays empty while everyone is comfortably inside their plan.</p>
+      <div class="empty-actions">
+        <button type="button" data-open="ceiling-panel" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-license text-[15px]"></i>See plan ceilings</button>
+        <a href="subscriptions.html" class="btn btn-ghost btn-sm">View subscriptions</a>
+      </div>
+    </section>
+
+    <!-- KPI row — every figure below is counted from the table, not typed in -->
+    <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-alert-02 text-[16px]"></i>Over a ceiling</div>
+        <div class="mt-2 flex items-end justify-between"><p id="kpi-over" class="text-[22px] font-bold tracking-tight tnum">0</p><span id="kpi-over-n" class="flex items-center gap-1 text-[12px] font-semibold text-red-500 tnum">0</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-time-quarter-pass text-[16px]"></i>Near a ceiling</div>
+        <div class="mt-2 flex items-end justify-between"><p id="kpi-near" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="text-[12px] text-muted tnum">80 – 100 % used</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i>Within limits</div>
+        <div class="mt-2 flex items-end justify-between"><p id="kpi-ok" class="text-[22px] font-bold tracking-tight tnum">0</p><span id="kpi-total" class="text-[12px] text-muted tnum">of 0 checks</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-money-bag-02 text-[16px]"></i>Upgrade opportunity</div>
+        <div class="mt-2 flex items-end justify-between"><p id="kpi-uplift" class="text-[22px] font-bold tracking-tight tnum">฿0</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>MRR / mo</span></div>
+      </div>
+    </div>
+
+    <!-- who needs a bigger plan, answerable at a glance -->
+    <section data-when-data class="mt-3 rounded-2xl bg-surface p-4 lg:p-5">
+      <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <h2 class="text-[16px] font-bold tracking-tight">Who needs a bigger plan</h2>
+          <p class="mt-0.5 text-[12px] text-muted">Workspaces past a ceiling, with the upgrade that clears it</p>
+        </div>
+        <span id="upsell-total" class="text-[12px] font-semibold text-brand tnum"></span>
+      </div>
+      <div id="upsell-cards" class="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-3"></div>
+    </section>
+
+    <!-- status pill tabs -->
+    <div data-when-data data-tabs="#usage-table" class="mt-4 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count tnum" data-count="all">0</span></button>
+      <button class="pilltab" data-tab="over">Over limit <span class="pilltab-count tnum" data-count="over">0</span></button>
+      <button class="pilltab" data-tab="near">Near limit <span class="pilltab-count tnum" data-count="near">0</span></button>
+      <button class="pilltab" data-tab="ok">Within limits <span class="pilltab-count tnum" data-count="ok">0</span></button>
+    </div>
+
+    <!-- search + limit + plan filters -->
+    <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="usage-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search workspaces…" />
+      </div>
+      <div class="relative w-full sm:w-52">
+        <i class="hgi-stroke hgi-chart-histogram text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="usage-limit-filter" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All limits</option>
+          <option>Events</option>
+          <option>Seats</option>
+          <option>Emails</option>
+          <option>Storage</option>
+        </select>
+      </div>
+      <div class="relative w-full sm:w-44">
+        <i class="hgi-stroke hgi-license text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="usage-plan-filter" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All plans</option>
+          <option>Enterprise</option>
+          <option>Growth</option>
+          <option>Starter</option>
+          <option>Free</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- table -->
+    <section data-when-data class="mt-3 rounded-2xl bg-surface p-4 lg:p-5">
+      <div id="usage-table" class="overflow-x-auto">
+        <table class="data-table min-w-[1040px]">
+          <thead>
+            <tr>
+              <th>Workspace</th>
+              <th>Plan</th>
+              <th>Limit</th>
+              <th class="w-[260px]">Usage</th>
+              <th class="text-right">Used</th>
+              <th>Status</th>
+              <th class="text-right">Upgrade</th>
+            </tr>
+          </thead>
+          <tbody id="usage-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+
+      <div id="usage-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="usage-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="usage-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="usage-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="usage-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </div>
+  </main>
+
+  <!-- plan ceilings reference -->
+  <aside class="panel" id="ceiling-panel">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">Plan ceilings</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-3 overflow-y-auto p-4">
+      <p class="text-[12.5px] leading-relaxed text-muted">The allowances every workspace is metered against. Events reset each calendar year, emails each month; seats and storage are measured live. The table on this page reads these same numbers.</p>
+      <div id="ceiling-cards" class="space-y-2.5"></div>
+    </div>
+    <footer class="flex gap-2 border-t border-hair p-4">
+      <button class="btn btn-soft flex-1" data-close>Close</button>
+      <a href="subscriptions.html" class="btn btn-primary flex-1"><i class="hgi-stroke hgi-repeat text-[16px]"></i>Subscriptions</a>
+    </footer>
+  </aside>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  function nf(n) { return n.toLocaleString('en-US'); }
+  function baht(n) { return '฿' + nf(n); }
+  function pctText(p) { return p.toFixed(1).replace('.', ',') + ' %'; }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  /* ---------- The plan model: one source for the ceilings and the price steps.
+     The rows below only carry `used`; `allowed` is looked up here, so the table,
+     the KPI row and the Plan ceilings panel can never disagree. ---------- */
+  var LIMITS = {
+    Free:       { events: 2,   seats: 2,   emails: 500,    storage: 1 },
+    Starter:    { events: 12,  seats: 5,   emails: 5000,   storage: 10 },
+    Growth:     { events: 60,  seats: 25,  emails: 50000,  storage: 100 },
+    Enterprise: { events: 400, seats: 100, emails: 250000, storage: 1000 }
+  };
+  var PRICE = { Free: 0, Starter: 1900, Growth: 9900, Enterprise: 48000 };
+  var NEXT  = { Free: 'Starter', Starter: 'Growth', Growth: 'Enterprise', Enterprise: null };
+  var ORDER = ['Free', 'Starter', 'Growth', 'Enterprise'];
+  var METRIC = {
+    events:  { label: 'Events / year',   short: 'Events',  icon: 'hgi-calendar-03',    unit: '' },
+    seats:   { label: 'Seats',           short: 'Seats',   icon: 'hgi-user-multiple',  unit: '' },
+    emails:  { label: 'Emails / month',  short: 'Emails',  icon: 'hgi-mail-01',        unit: '' },
+    storage: { label: 'Storage',         short: 'Storage', icon: 'hgi-database',       unit: ' GB' }
+  };
+  var PLAN_BADGE = { Enterprise: 'badge-purple', Growth: 'badge-green', Starter: 'badge-blue', Free: 'badge-gray' };
+
+  /* ---------- DATA: 24 metered checks across the platform ---------- */
+  function row(inl, ws, plan, metric, used) {
+    var allowed = LIMITS[plan][metric];
+    return { inl: inl, ws: ws, plan: plan, metric: metric, used: used, allowed: allowed, pct: (used / allowed) * 100 };
+  }
+  var DATA = [
+    row('SC', 'Siam Conferences',      'Growth',     'emails',  61400),
+    row('BJ', 'Bangkok Jazz Co.',      'Growth',     'seats',   28),
+    row('CM', 'Chiang Mai Arts',       'Starter',    'events',  15),
+    row('NE', 'Nonthaburi Expo',       'Starter',    'emails',  6240),
+    row('HY', 'Hat Yai Craft Market',  'Free',       'events',  3),
+    row('RR', 'Rangsit Robotics Club', 'Free',       'seats',   3),
+    row('PM', 'Phuket Marathon',       'Growth',     'storage', 94),
+    row('IF', 'Isaan Food Festival',   'Growth',     'emails',  46800),
+    row('AH', 'Ayutthaya Heritage',    'Growth',     'events',  55),
+    row('SL', 'Sukhothai Lights',      'Starter',    'storage', 9),
+    row('PB', 'Pattaya Beach Runs',    'Starter',    'emails',  4420),
+    row('CR', 'Central Retail Live',   'Enterprise', 'emails',  214000),
+    row('BD', 'Bangkok Design Week',   'Starter',    'events',  10),
+    row('KK', 'Khon Kaen Startups',    'Starter',    'seats',   4),
+    row('SC', 'Siam Conferences',      'Growth',     'storage', 64),
+    row('PT', 'PTT Events',            'Enterprise', 'storage', 612),
+    row('CM', 'Chiang Mai Arts',       'Starter',    'seats',   3),
+    row('PT', 'PTT Events',            'Enterprise', 'seats',   48),
+    row('TA', 'Thai Airways Events',   'Enterprise', 'emails',  118500),
+    row('KK', 'Khon Kaen Startups',    'Starter',    'events',  5),
+    row('BJ', 'Bangkok Jazz Co.',      'Growth',     'storage', 37),
+    row('CA', 'Chulalongkorn Alumni',  'Free',       'emails',  180),
+    row('HW', 'Hua Hin Wine Fair',     'Growth',     'seats',   9),
+    row('KD', 'Krabi Dive Expo',       'Growth',     'events',  21)
+  ];
+  // Anything over 100 % sorts to the top — this page is read from the first row down.
+  DATA.sort(function (a, b) { return b.pct - a.pct; });
+
+  function bucket(r) { return r.pct > 100 ? 'over' : (r.pct >= 80 ? 'near' : 'ok'); }
+  function uplift(r) {
+    var n = NEXT[r.plan];
+    return n ? PRICE[n] - PRICE[r.plan] : 0;
+  }
+
+  /* ---------- KPIs, all counted from DATA above ---------- */
+  var counts = { all: DATA.length, over: 0, near: 0, ok: 0 };
+  var upliftTotal = 0, overWs = {};
+  DATA.forEach(function (r) {
+    var b = bucket(r);
+    counts[b]++;
+    if (b === 'over' && !overWs[r.ws]) { overWs[r.ws] = true; upliftTotal += uplift(r); }
+  });
+  var overWsCount = Object.keys(overWs).length;
+  document.getElementById('kpi-over').textContent   = nf(counts.over);
+  document.getElementById('kpi-over-n').innerHTML   = '<i class="hgi-stroke hgi-alert-02 text-[13px]"></i>' + nf(overWsCount) + ' workspaces';
+  document.getElementById('kpi-near').textContent   = nf(counts.near);
+  document.getElementById('kpi-ok').textContent     = nf(counts.ok);
+  document.getElementById('kpi-total').textContent  = 'of ' + nf(counts.all) + ' checks';
+  document.getElementById('kpi-uplift').textContent = baht(upliftTotal);
+  Object.keys(counts).forEach(function (k) { document.querySelector('[data-count="' + k + '"]').textContent = nf(counts[k]); });
+
+  /* ---------- Plan ceilings panel ---------- */
+  document.getElementById('ceiling-cards').innerHTML = ORDER.slice().reverse().map(function (plan) {
+    var l = LIMITS[plan];
+    var cell = function (m, v) {
+      return '<div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke ' + METRIC[m].icon + ' text-[14px]"></i>' +
+        '<span class="text-ink tnum">' + nf(v) + METRIC[m].unit + '</span> ' + esc(METRIC[m].short.toLowerCase()) + '</div>';
+    };
+    return '<div class="card p-3.5">' +
+      '<div class="flex items-center justify-between gap-2">' +
+        '<span class="badge ' + PLAN_BADGE[plan] + '">' + esc(plan) + '</span>' +
+        '<p class="text-[13px] font-semibold tnum">' + (plan === 'Enterprise' ? 'from ' : '') + baht(PRICE[plan]) + '<span class="text-[11px] font-medium text-muted"> / mo</span></p>' +
+      '</div>' +
+      '<div class="mt-2.5 grid grid-cols-2 gap-1.5">' + cell('events', l.events) + cell('seats', l.seats) + cell('emails', l.emails) + cell('storage', l.storage) + '</div>' +
+    '</div>';
+  }).join('');
+
+  /* ---------- Who needs a bigger plan ---------- */
+  var overRows = DATA.filter(function (r) { return bucket(r) === 'over'; });
+  document.getElementById('upsell-total').textContent = '+' + baht(upliftTotal) + ' MRR if all upgrade';
+  document.getElementById('upsell-cards').innerHTML = overRows.map(function (r) {
+    var n = NEXT[r.plan], u = uplift(r);
+    return '<div class="rounded-xl border border-red-200 bg-red-50/60 p-3 dark:border-red-500/25 dark:bg-red-500/10">' +
+      '<div class="flex items-center gap-2">' +
+        '<span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-soft text-[10px] font-semibold text-brand-dark dark:text-brand">' + esc(r.inl) + '</span>' +
+        '<span class="min-w-0 flex-1 truncate text-[13px] font-semibold text-ink">' + esc(r.ws) + '</span>' +
+        '<span class="text-[12px] font-bold text-red-600 tnum dark:text-red-400">' + pctText(r.pct) + '</span>' +
+      '</div>' +
+      '<p class="mt-2 text-[11.5px] text-muted tnum">' + esc(METRIC[r.metric].label) + ' · ' + nf(r.used) + METRIC[r.metric].unit + ' of ' + nf(r.allowed) + METRIC[r.metric].unit + '</p>' +
+      '<div class="mt-2 flex items-center justify-between gap-2">' +
+        (n ? '<span class="flex items-center gap-1.5 text-[12px] text-muted">' + esc(r.plan) + ' <i class="hgi-stroke hgi-arrow-right-01 text-[13px]"></i> <span class="badge ' + PLAN_BADGE[n] + '">' + esc(n) + '</span></span>' +
+             '<span class="text-[13px] font-bold text-brand tnum">+' + baht(u) + '</span>'
+           : '<span class="text-[12px] text-muted">Contact the account team</span>') +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  /* ---------- row markup ---------- */
+  var BAR   = { over: 'bg-red-500', near: 'bg-amber-400', ok: 'bg-brand' };
+  var PCTC  = { over: 'text-red-600 dark:text-red-400', near: 'text-amber-600 dark:text-amber-400', ok: 'text-muted' };
+  var BADGE = { over: '<span class="badge badge-red">Over</span>', near: '<span class="badge badge-amber">Near limit</span>', ok: '<span class="badge badge-gray">Within</span>' };
+
+  function rowHTML(r) {
+    var b = bucket(r), m = METRIC[r.metric], n = NEXT[r.plan], u = uplift(r);
+    var t = b === 'over' ? ' bg-red-50 dark:bg-red-500/10' : '';
+    var w = Math.min(r.pct, 100);
+    var next = b !== 'over'
+      ? '<span class="text-muted">—</span>'
+      : (n ? '<span class="inline-flex items-center gap-1.5"><span class="badge ' + PLAN_BADGE[n] + '">' + esc(n) + '</span><span class="font-semibold text-brand tnum">+' + baht(u) + '</span></span>'
+           : '<span class="text-muted">Account team</span>');
+    return '<tr>' +
+      '<td class="' + t + '"><div class="flex items-center gap-2"><span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-soft text-[10px] font-semibold text-brand-dark dark:text-brand">' + esc(r.inl) + '</span><span class="font-medium text-ink">' + esc(r.ws) + '</span></div></td>' +
+      '<td class="' + t + '"><span class="badge ' + PLAN_BADGE[r.plan] + '">' + esc(r.plan) + '</span></td>' +
+      '<td class="text-muted' + t + '"><span class="flex items-center gap-1.5"><i class="hgi-stroke ' + m.icon + ' text-[15px]"></i>' + esc(m.label) + '</span></td>' +
+      '<td class="' + t + '">' +
+        '<div class="h-1.5 w-full min-w-[140px] overflow-hidden rounded-full bg-line"><div class="h-1.5 rounded-full ' + BAR[b] + '" style="width:' + w + '%"></div></div>' +
+        '<p class="mt-1 text-[11px] text-muted tnum">' + nf(r.used) + m.unit + ' of ' + nf(r.allowed) + m.unit + '</p>' +
+      '</td>' +
+      '<td class="text-right font-semibold tnum ' + PCTC[b] + t + '">' + pctText(r.pct) + '</td>' +
+      '<td class="' + t + '">' + BADGE[b] + '</td>' +
+      '<td class="text-right' + t + '">' + next + '</td>' +
+    '</tr>';
+  }
+
+  /* ---------- state + filtering ---------- */
+  var state = { tab: 'all', limit: 'All limits', plan: 'All plans', q: '', page: 0, size: 10 };
+  function filtered() {
+    return DATA.filter(function (r) {
+      if (state.tab !== 'all' && bucket(r) !== state.tab) return false;
+      if (state.limit !== 'All limits' && METRIC[r.metric].short !== state.limit) return false;
+      if (state.plan !== 'All plans' && r.plan !== state.plan) return false;
+      if (state.q && r.ws.toLowerCase().indexOf(state.q.toLowerCase().trim()) === -1) return false;
+      return true;
+    });
+  }
+
+  var tbody     = document.getElementById('usage-rows');
+  var elShowing = document.getElementById('usage-showing');
+  var elPrev    = document.getElementById('usage-prev');
+  var elNext    = document.getElementById('usage-next');
+
+  var NO_RESULTS = '<tr><td colspan="7"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No workspaces match</h3><p class="empty-text">Nothing matches the current search, status tab, limit and plan filters. Try a shorter search term, or widen the filters.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
+
+  function render() {
+    var list = filtered(), total = list.length, pages = Math.max(1, Math.ceil(total / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    var start = state.page * state.size, slice = list.slice(start, start + state.size);
+    tbody.innerHTML = slice.length ? slice.map(rowHTML).join('') : NO_RESULTS;
+    if (total === 0) elShowing.textContent = 'No metered limits';
+    else {
+      var over = list.filter(function (r) { return bucket(r) === 'over'; }).length;
+      elShowing.innerHTML = 'Showing <span class="font-semibold text-ink tnum">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> checks · <span class="font-semibold text-ink tnum">' + nf(over) + '</span> over a ceiling';
+    }
+    elPrev.disabled = total === 0 || state.page === 0;
+    elNext.disabled = total === 0 || state.page >= pages - 1;
+  }
+
+  /* ---------- wire controls ---------- */
+  document.getElementById('usage-search').addEventListener('input', function () { state.q = this.value; state.page = 0; render(); });
+  document.getElementById('usage-limit-filter').addEventListener('change', function () { state.limit = this.value; state.page = 0; render(); });
+  document.getElementById('usage-plan-filter').addEventListener('change', function () { state.plan = this.value; state.page = 0; render(); });
+  document.getElementById('usage-size').addEventListener('change', function () { state.size = +this.value; state.page = 0; render(); });
+  elPrev.addEventListener('click', function () { if (state.page > 0) { state.page--; render(); } });
+  elNext.addEventListener('click', function () { state.page++; render(); });
+  document.querySelector('[data-tabs]').addEventListener('click', function (e) {
+    var t = e.target.closest('[data-tab]'); if (!t) return;
+    state.tab = t.getAttribute('data-tab'); state.page = 0; render();
+  });
+  // shell.js clears the text/select filters; the pill tab is ours to reset.
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('[data-clear-filters]')) return;
+    var first = document.querySelector('[data-tabs] [data-tab]');
+    if (first && state.tab !== 'all') first.click();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

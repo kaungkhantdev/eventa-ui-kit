@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Usage</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="usage">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="text-[22px] font-bold tracking-tight">Usage</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">What the platform is being asked to do.</p>
+      </div>
+      <div id="us-range" class="ml-auto hidden items-center gap-1 rounded-lg bg-surface p-1 text-[12px] font-semibold sm:flex">
+        <button data-range="week" class="rounded-md px-3 py-1.5 text-muted transition">Week</button>
+        <button data-range="month" class="rounded-md px-3 py-1.5 text-muted transition">Month</button>
+        <button data-range="year" class="rounded-md bg-white px-3 py-1.5 text-ink shadow-sm transition dark:bg-white/10">Year</button>
+      </div>
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: nothing is calling the platform yet, so every meter reads zero -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-analytics-01"></i></span>
+      <h2 class="empty-title">Nothing has been metered yet</h2>
+      <p class="empty-text">This page counts what workspaces actually consume — API calls, emails, storage, webhook deliveries and seats — and shows which of them consume the most. Meters start filling the moment the first workspace goes live.</p>
+      <div class="empty-actions">
+        <a href="organizations.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-building-03 text-[15px]"></i>Browse organizations</a>
+        <a href="usage-limits.html" class="btn btn-ghost btn-sm">Review plan limits</a>
+      </div>
+    </section>
+
+    <!-- meters -->
+    <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-api text-[16px]"></i>API calls · 30d</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">48.2M</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>11,4 %</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-mail-01 text-[16px]"></i>Emails sent · 30d</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">1.94M</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>7,2 %</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-database-01 text-[16px]"></i>Storage used</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">3.8 TB</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>5,6 %</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-connect text-[16px]"></i>Webhooks · 30d</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">2.36M</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>2,9 %</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-user-group text-[16px]"></i>Seats in use</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">4,180</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>3,1 %</span></div>
+      </div>
+    </div>
+
+    <!-- usage over time + where the calls come from -->
+    <div data-when-data class="mt-3 grid gap-3 xl:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+      <section class="rounded-2xl bg-surface p-4 lg:p-5">
+        <div class="mb-4 flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h2 class="text-[16px] font-bold tracking-tight">API calls over time</h2>
+            <div class="mt-1 flex items-center gap-2">
+              <p id="usage-value" class="text-[22px] font-bold tracking-tight tnum">424.6M</p>
+              <span id="usage-delta" class="flex items-center gap-0.5 text-[13px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>38,1 %</span>
+              <span id="usage-period" class="text-[12px] text-muted">total this year</span>
+            </div>
+          </div>
+        </div>
+        <div id="usage-chart"></div>
+      </section>
+
+      <section class="rounded-2xl bg-surface p-4 lg:p-5">
+        <h2 class="text-[16px] font-bold tracking-tight">Where the calls come from</h2>
+        <p class="mt-0.5 text-[12px] text-muted">Share of API calls in the last 30 days</p>
+        <div id="usage-mix" class="mt-4 space-y-3.5"></div>
+        <div class="mt-4 flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
+          <i class="hgi-stroke hgi-information-circle mt-0.5 shrink-0 text-[16px] text-muted"></i>
+          <p class="text-[12px] text-muted">Public event pages are unauthenticated reads. They are metered but never billed against a workspace's plan limit.</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- top workspaces by usage -->
+    <div data-when-data class="mt-4 flex flex-wrap items-end justify-between gap-2">
+      <div>
+        <h2 class="text-[15px] font-bold tracking-tight">Top workspaces by usage</h2>
+        <p id="tw-caption" class="mt-0.5 text-[12px] text-muted"></p>
+      </div>
+      <span class="text-[12px] text-muted">Last 30 days</span>
+    </div>
+
+    <!-- search + plan filter (out of table) -->
+    <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="tw-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search workspaces…" />
+      </div>
+      <div class="relative w-full sm:w-52">
+        <i class="hgi-stroke hgi-credit-card text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="tw-plan" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All plans</option>
+          <option>Enterprise</option>
+          <option>Growth</option>
+          <option>Starter</option>
+          <option>Free</option>
+        </select>
+      </div>
+      <div class="relative w-full sm:w-52">
+        <i class="hgi-stroke hgi-filter-horizontal text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="tw-sort" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>Sort by API calls</option>
+          <option>Sort by emails</option>
+          <option>Sort by storage</option>
+          <option>Sort by webhooks</option>
+        </select>
+      </div>
+    </div>
+
+    <section data-when-data class="card mt-3 p-4">
+      <div class="overflow-x-auto">
+        <table class="data-table min-w-[900px]">
+          <thead>
+            <tr>
+              <th>Workspace</th>
+              <th>Plan</th>
+              <th class="text-right">API calls</th>
+              <th class="text-right">Emails</th>
+              <th class="text-right">Storage</th>
+              <th class="text-right">Webhooks</th>
+              <th class="text-right">Share of calls</th>
+            </tr>
+          </thead>
+          <tbody id="tw-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+
+      <div id="tw-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="tw-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="tw-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="tw-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="tw-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p data-when-data class="mt-4 text-center text-[11px] text-muted/70">Eventa · Internal console · HTML, Tailwind CSS &amp; Hugeicons</p>
+    </div>
+  </main>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  /* ---------- API calls over time: smooth area chart ----------
+     Same machinery as the console Overview (see AGENTS.md → Charts): the colours
+     are read per theme, so any theme flip must re-render — hence
+     window.EventaOnThemeChange at the bottom. */
+  var datasets = {
+    week:  { labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], values: [1.42,1.51,1.58,1.55,1.63,1.12,0.98], max: 2,  value: '9.79M',  delta: '3,4 %',  up: true, period: 'total this week' },
+    month: { labels: ['Wk 1','Wk 2','Wk 3','Wk 4'],               values: [10.4,11.1,12.2,14.5],                max: 16, value: '48.2M',  delta: '11,4 %', up: true, period: 'total this month' },
+    year:  { labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], values: [22.1,24.6,26.9,29.4,31.8,34.2,36.9,39.4,41.2,43.8,46.1,48.2], max: 60, value: '424.6M', delta: '38,1 %', up: true, period: 'total this year' },
+  };
+  function fmtAxis(v) { return (v >= 10 ? v.toFixed(0) : v.toFixed(1)) + 'M'; }
+  function fmtTip(v)  { return (v >= 10 ? v.toFixed(1) : v.toFixed(2)) + 'M'; }
+
+  function smoothPath(pts) {
+    var d = 'M ' + pts[0][0] + ' ' + pts[0][1];
+    for (var i = 0; i < pts.length - 1; i++) {
+      var p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+      var c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
+      var c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
+      d += ' C ' + c1x + ' ' + c1y + ' ' + c2x + ' ' + c2y + ' ' + p2[0] + ' ' + p2[1];
+    }
+    return d;
+  }
+
+  var currentRange = 'year';
+  function renderChart(key) {
+    var d = datasets[key]; currentRange = key;
+    var dark = document.documentElement.classList.contains('dark');
+    var cGrid = dark ? 'rgba(255,255,255,0.08)' : '#eef0f3', cAxis = dark ? '#8b96a0' : '#8b93a4';
+    var cRing = dark ? '#171d1a' : '#ffffff', cTipBg = dark ? '#e6ebe8' : '#132a22', cTipFg = dark ? '#0e1311' : '#ffffff';
+    var W = 640, H = 280, PL = 52, PR = 14, PT = 24, PB = 36;
+    var plotW = W - PL - PR, plotH = H - PT - PB, n = d.values.length;
+    var xFor = function (i) { return PL + (i / (n - 1)) * plotW; };
+    var yFor = function (v) { return PT + (1 - v / d.max) * plotH; };
+    var pts = d.values.map(function (v, i) { return [xFor(i), yFor(v)]; });
+    var line = smoothPath(pts);
+    var area = line + ' L ' + xFor(n - 1) + ' ' + (PT + plotH) + ' L ' + xFor(0) + ' ' + (PT + plotH) + ' Z';
+    var grid = '';
+    for (var k = 0; k <= 4; k++) {
+      var val = d.max * k / 4, y = yFor(val);
+      grid += '<line x1="' + PL + '" y1="' + y + '" x2="' + (W - PR) + '" y2="' + y + '" stroke="' + cGrid + '" stroke-width="1"/>';
+      grid += '<text x="' + (PL - 10) + '" y="' + (y + 4) + '" text-anchor="end" font-size="12" fill="' + cAxis + '">' + fmtAxis(val) + '</text>';
+    }
+    var xl = '';
+    d.labels.forEach(function (lb, i) { xl += '<text x="' + xFor(i) + '" y="' + (PT + plotH + 24) + '" text-anchor="middle" font-size="12" fill="' + cAxis + '">' + lb + '</text>'; });
+    var last = pts[n - 1], lv = d.values[n - 1];
+    var tip = fmtTip(lv), tw = 66, th = 27;
+    var tx = Math.min(Math.max(last[0] - tw / 2, PL), W - PR - tw);
+    var ty = last[1] - th - 14;
+    document.getElementById('usage-chart').innerHTML =
+      '<svg viewBox="0 0 ' + W + ' ' + H + '" class="w-full" style="height:auto" font-family="Inter, sans-serif">' +
+        '<defs><linearGradient id="usagefill" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#1ba770" stop-opacity="0.28"/><stop offset="100%" stop-color="#1ba770" stop-opacity="0"/></linearGradient></defs>' +
+        grid +
+        '<path d="' + area + '" fill="url(#usagefill)"/>' +
+        '<path d="' + line + '" fill="none" stroke="#1ba770" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>' +
+        xl +
+        '<line x1="' + last[0] + '" y1="' + PT + '" x2="' + last[0] + '" y2="' + (PT + plotH) + '" stroke="#1ba770" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>' +
+        '<circle cx="' + last[0] + '" cy="' + last[1] + '" r="6" fill="#1ba770" stroke="' + cRing + '" stroke-width="2.5"/>' +
+        '<rect x="' + tx + '" y="' + ty + '" width="' + tw + '" height="' + th + '" rx="7" fill="' + cTipBg + '"/>' +
+        '<text x="' + (tx + tw / 2) + '" y="' + (ty + th / 2 + 4) + '" text-anchor="middle" font-size="13" font-weight="700" fill="' + cTipFg + '">' + tip + '</text>' +
+      '</svg>';
+    document.getElementById('usage-value').textContent = d.value;
+    document.getElementById('usage-period').textContent = d.period;
+    var dl = document.getElementById('usage-delta');
+    dl.className = 'flex items-center gap-0.5 text-[13px] font-semibold ' + (d.up ? 'text-brand' : 'text-red-500');
+    dl.innerHTML = '<i class="hgi-stroke ' + (d.up ? 'hgi-arrow-up-right-01' : 'hgi-arrow-down-right-01') + ' text-[13px]"></i>' + d.delta;
+  }
+  var usRange = document.getElementById('us-range');
+  usRange.addEventListener('click', function (e) {
+    var btn = e.target.closest('button'); if (!btn) return;
+    [].slice.call(usRange.children).forEach(function (b) { b.className = 'rounded-md px-3 py-1.5 text-muted transition'; });
+    btn.className = 'rounded-md bg-white px-3 py-1.5 text-ink shadow-sm transition dark:bg-white/10';
+    renderChart(btn.dataset.range);
+  });
+  renderChart('year');
+  window.EventaOnThemeChange = function () { renderChart(currentRange); };
+
+  /* ---------- Where the calls come from (shares add to 100) ---------- */
+  var mix = [
+    { name: 'Public event pages',    pct: 34, c: '#1ba770' },
+    { name: 'Registrations & tickets', pct: 27, c: '#3bb488' },
+    { name: 'Check-in',              pct: 14, c: '#68c8a5' },
+    { name: 'Reporting & exports',   pct: 13, c: '#9fe0cd' },
+    { name: 'Webhooks out',          pct: 8,  c: '#c6ece0' },
+    { name: 'Everything else',       pct: 4,  c: '#d1d5db' },
+  ];
+  document.getElementById('usage-mix').innerHTML = mix.map(function (m) {
+    return '<div>' +
+      '<div class="flex items-center justify-between text-[12.5px]">' +
+        '<span class="font-medium text-ink">' + m.name + '</span>' +
+        '<span class="font-bold tnum">' + m.pct + '%</span>' +
+      '</div>' +
+      '<div class="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-line">' +
+        '<div class="h-full rounded-full" style="width:' + m.pct + '%;background:' + m.c + '"></div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  /* ---------- Top workspaces by usage ----------
+     Every derived figure is computed, never typed twice: the share column is
+     calls / PLATFORM_CALLS, and the caption's total is the sum of the rows. */
+  var PLATFORM_CALLS = 48.2; // millions, last 30 days — matches the meter above
+  var PLATFORM_COUNT = 312;  // workspaces on the platform — matches Overview
+
+  function ws(initials, name, plan, calls, emails, storage, hooks) {
+    return { in: initials, name: name, plan: plan, calls: calls, emails: emails, storage: storage, hooks: hooks };
+  }
+  // calls in millions · emails in thousands · storage in GB · webhooks in thousands
+  var DATA = [
+    ws('PT', 'PTT Events',                'Enterprise', 6.42, 214, 412, 236),
+    ws('SC', 'Siam Conferences',          'Enterprise', 4.18, 148, 268, 171),
+    ws('BJ', 'Bangkok Jazz Co.',          'Growth',     3.05, 102, 184, 118),
+    ws('TE', 'Thai Expo Group',           'Enterprise', 2.61,  94, 226,  96),
+    ws('CM', 'Chiang Mai Arts',           'Growth',     2.24,  78, 131,  84),
+    ws('PM', 'Phuket Marine Summit',      'Growth',     1.96,  66, 109,  71),
+    ws('NT', 'Nimman Tech Meetup',        'Growth',     1.72,  58,  92,  66),
+    ws('BR', 'Bangkok Runners Club',      'Starter',    1.48,  51,  74,  39),
+    ws('IF', 'Isaan Food Festival',       'Growth',     1.31,  44,  81,  33),
+    ws('RO', 'Royal Orchid Weddings',     'Starter',    1.12,  38,  57,  24),
+    ws('KK', 'Khon Kaen University Events','Growth',    0.98,  36,  69,  21),
+    ws('AD', 'Andaman Dive Expo',         'Starter',    0.86,  29,  41,  18),
+    ws('NW', 'Northern Wellness',         'Free',       0.74,  24,  22,   9),
+    ws('HH', 'Hua Hin Beach Fest',        'Starter',    0.63,  21,  34,  14),
+    ws('SS', 'Silom Startup Nights',      'Free',       0.58,  19,  17,   7),
+  ];
+
+  var planBadge = { Enterprise: 'badge-purple', Growth: 'badge-green', Starter: 'badge-blue', Free: 'badge-gray' };
+  var sortKey = { 'Sort by API calls': 'calls', 'Sort by emails': 'emails', 'Sort by storage': 'storage', 'Sort by webhooks': 'hooks' };
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function nf(n) { return n.toLocaleString('en-US'); }
+  function gb(v) { return v >= 1024 ? (v / 1024).toFixed(2) + ' TB' : nf(v) + ' GB'; }
+
+  var state = { q: '', plan: 'All plans', sort: 'calls', page: 0, size: 10 };
+  var tbody = document.getElementById('tw-rows');
+  var elShowing = document.getElementById('tw-showing');
+  var elPrev = document.getElementById('tw-prev');
+  var elNext = document.getElementById('tw-next');
+  var elCaption = document.getElementById('tw-caption');
+
+  // caption is derived from the rows, so it can never drift from the table
+  (function caption() {
+    var sum = DATA.reduce(function (a, r) { return a + r.calls; }, 0);
+    elCaption.textContent =
+      'The ' + DATA.length + ' heaviest of ' + nf(PLATFORM_COUNT) + ' workspaces — together ' +
+      sum.toFixed(2) + 'M calls, ' + (sum / PLATFORM_CALLS * 100).toFixed(1) + ' % of the platform.';
+  })();
+
+  function filtered() {
+    var q = state.q.trim().toLowerCase();
+    return DATA.filter(function (r) {
+      if (state.plan !== 'All plans' && r.plan !== state.plan) return false;
+      if (q && r.name.toLowerCase().indexOf(q) === -1) return false;
+      return true;
+    }).sort(function (a, b) { return b[state.sort] - a[state.sort]; });
+  }
+
+  function rowHTML(r) {
+    var share = r.calls / PLATFORM_CALLS * 100;
+    return '<tr>' +
+      '<td><div class="flex items-center gap-2"><span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-soft text-[10px] font-semibold text-brand-dark dark:text-brand">' + esc(r.in) + '</span><span class="font-medium text-ink">' + esc(r.name) + '</span></div></td>' +
+      '<td><span class="badge ' + planBadge[r.plan] + '">' + esc(r.plan) + '</span></td>' +
+      '<td class="text-right font-semibold text-ink tnum">' + r.calls.toFixed(2) + 'M</td>' +
+      '<td class="text-right text-muted tnum">' + nf(r.emails) + 'k</td>' +
+      '<td class="text-right text-muted tnum">' + gb(r.storage) + '</td>' +
+      '<td class="text-right text-muted tnum">' + nf(r.hooks) + 'k</td>' +
+      '<td class="text-right">' +
+        '<div class="flex items-center justify-end gap-2">' +
+          '<span class="hidden h-1.5 w-16 overflow-hidden rounded-full bg-line sm:block"><span class="block h-full rounded-full bg-brand" style="width:' + Math.min(share / 15 * 100, 100) + '%"></span></span>' +
+          '<span class="w-11 text-right font-semibold text-ink tnum">' + share.toFixed(1) + '%</span>' +
+        '</div>' +
+      '</td>' +
+    '</tr>';
+  }
+
+  var NO_RESULTS = '<tr><td colspan="7"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No workspaces match</h3><p class="empty-text">Nothing matches the current search and plan filter. Try a shorter search term, or widen the filters.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
+
+  function render() {
+    var list = filtered(), total = list.length, pages = Math.max(1, Math.ceil(total / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    var start = state.page * state.size, slice = list.slice(start, start + state.size);
+    tbody.innerHTML = slice.length ? slice.map(rowHTML).join('') : NO_RESULTS;
+    if (total === 0) elShowing.textContent = 'No workspaces';
+    else elShowing.innerHTML = 'Showing <span class="font-semibold text-ink tnum">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> workspaces';
+    elPrev.disabled = total === 0 || state.page === 0;
+    elNext.disabled = total === 0 || state.page >= pages - 1;
+  }
+
+  var searchEl = document.getElementById('tw-search');
+  var planEl = document.getElementById('tw-plan');
+  var sortEl = document.getElementById('tw-sort');
+  searchEl.addEventListener('input', function () { state.q = searchEl.value; state.page = 0; render(); });
+  planEl.addEventListener('change', function () { state.plan = planEl.value; state.page = 0; render(); });
+  sortEl.addEventListener('change', function () { state.sort = sortKey[sortEl.value] || 'calls'; state.page = 0; render(); });
+  document.getElementById('tw-size').addEventListener('change', function () { state.size = +this.value; state.page = 0; render(); });
+  elPrev.addEventListener('click', function () { state.page--; render(); });
+  elNext.addEventListener('click', function () { state.page++; render(); });
+  render();
+})();
+</script>
+</body>
+</html>

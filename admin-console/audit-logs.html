@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Audit logs</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="audit-logs">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header — export is the only write action this page has, by design -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="text-[22px] font-bold tracking-tight">Audit logs</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Who did what, and when.</p>
+      </div>
+      <button class="btn btn-primary ml-auto shrink-0" data-open="export-panel"><i class="hgi-stroke hgi-download-01 text-[16px]"></i><span class="hidden sm:inline">Export</span></button>
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: nobody has signed in, so nothing has been recorded -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-security-lock"></i></span>
+      <h2 class="empty-title">Nothing recorded yet</h2>
+      <p class="empty-text">Every action taken by Eventa staff and by people inside customer workspaces is written here — who did it, what it touched, and from which address. The log starts filling the moment the first person signs in. Entries are append-only and kept for 24 months.</p>
+      <div class="empty-actions">
+        <a href="organizations.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-building-03 text-[15px]"></i>Browse organizations</a>
+        <a href="console-settings.html" class="btn btn-ghost btn-sm">Review retention settings</a>
+      </div>
+    </section>
+
+    <!-- summary — 30-day aggregates, not a count of the rows below -->
+    <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-list-view text-[16px]"></i>Entries (30 days)</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">48,210</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>7,4 %</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-shield-user text-[16px]"></i>Staff actions (30 days)</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">1,284</p><span class="text-[12px] text-muted">2,7 % of all</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-lock-key text-[16px]"></i>Failed sign-ins (30 days)</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">96</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>18,6 %</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-archive text-[16px]"></i>Retention</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">24 months</p><span class="text-[12px] text-muted">then purged</span></div>
+      </div>
+    </div>
+
+    <!-- immutability notice: this is the compliance surface, so say so plainly -->
+    <div data-when-data class="mt-3 flex items-start gap-2.5 rounded-xl border border-hair bg-surface p-3.5">
+      <i class="hgi-stroke hgi-security-lock mt-0.5 shrink-0 text-[16px] text-muted"></i>
+      <p class="text-[12.5px] leading-relaxed text-muted">This log is append-only. Entries cannot be edited or removed by anyone, Eventa staff included — they are written once and purged automatically after 24 months. Take a copy with <span class="font-semibold text-ink">Export</span> before you need it.</p>
+    </div>
+
+    <!-- actor tabs -->
+    <div data-when-data data-tabs="#audit-table" class="mt-4 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count tnum" data-count="all">0</span></button>
+      <button class="pilltab" data-tab="Staff">Eventa staff <span class="pilltab-count tnum" data-count="Staff">0</span></button>
+      <button class="pilltab" data-tab="Customer">Customers <span class="pilltab-count tnum" data-count="Customer">0</span></button>
+    </div>
+
+    <!-- search + area filter -->
+    <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="au-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search by actor, action, target, workspace or IP…" />
+      </div>
+      <div class="relative w-full sm:w-52">
+        <i class="hgi-stroke hgi-filter text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="au-area" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All areas</option>
+          <option>Access</option>
+          <option>Billing</option>
+          <option>Integrations</option>
+          <option>Payments</option>
+          <option>Support</option>
+          <option>Workspace</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- table -->
+    <section data-when-data class="mt-3 rounded-2xl bg-surface p-4 lg:p-5">
+      <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+        <h2 class="text-[16px] font-bold tracking-tight">Recorded activity</h2>
+        <span class="text-[12px] text-muted">Latest 24 entries · times are Asia/Bangkok</span>
+      </div>
+      <div id="audit-table" class="overflow-x-auto">
+        <table class="data-table min-w-[1000px]">
+          <thead>
+            <tr><th>Timestamp</th><th>Actor</th><th>Action</th><th>Target</th><th>Workspace</th><th>IP address</th><th class="text-right">Entry</th></tr>
+          </thead>
+          <tbody id="au-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+
+      <div id="au-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="au-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="au-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="au-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="au-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </div>
+  </main>
+
+  <!-- read-only entry detail: no field here is editable -->
+  <aside class="panel" id="entry-view">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">Log entry</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-4 overflow-y-auto p-4">
+      <div class="rounded-xl border border-hair p-3.5">
+        <div class="flex items-center justify-between gap-2">
+          <span id="ev-kind"></span>
+          <p id="ev-id" class="font-mono text-[12px] text-muted"></p>
+        </div>
+        <h4 id="ev-action" class="mt-2 text-[16px] font-bold tracking-tight"></h4>
+        <p id="ev-code" class="mt-1 font-mono text-[12px] text-muted"></p>
+      </div>
+
+      <dl class="overflow-hidden rounded-lg border border-hair">
+        <div class="flex items-center justify-between gap-3 border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Timestamp</dt><dd id="ev-ts" class="text-right text-[13px] text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between gap-3 border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Actor</dt><dd id="ev-actor" class="text-right text-[13px] font-medium text-ink"></dd></div>
+        <div class="flex items-center justify-between gap-3 border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Target</dt><dd id="ev-target" class="text-right text-[13px] text-ink"></dd></div>
+        <div class="flex items-center justify-between gap-3 border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Workspace</dt><dd id="ev-ws" class="text-right text-[13px] text-ink"></dd></div>
+        <div class="flex items-center justify-between gap-3 border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Area</dt><dd id="ev-area" class="text-right text-[13px] text-ink"></dd></div>
+        <div class="flex items-center justify-between gap-3 px-3.5 py-2.5"><dt class="text-[12px] text-muted">IP address</dt><dd id="ev-ip" class="text-right font-mono text-[12px] text-ink tnum"></dd></div>
+      </dl>
+
+      <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
+        <i class="hgi-stroke hgi-security-lock mt-0.5 text-[16px] text-muted"></i>
+        <p class="text-[12px] text-muted">Read-only. This entry was written when the action happened and cannot be changed or deleted.</p>
+      </div>
+    </div>
+    <footer class="border-t border-hair p-4">
+      <button class="btn btn-soft w-full" data-close>Close</button>
+    </footer>
+  </aside>
+
+  <!-- export slide-over -->
+  <aside class="panel" id="export-panel">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">Export audit log</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-4 overflow-y-auto p-4">
+      <div class="flex flex-col items-center rounded-xl border border-hair bg-canvas p-5 text-center">
+        <span class="grid h-12 w-12 place-items-center rounded-2xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-file-export text-[24px]"></i></span>
+        <h4 class="mt-3 text-[15px] font-bold tracking-tight">Take a copy, change nothing</h4>
+        <p class="mt-1 text-[12.5px] leading-relaxed text-muted">An export is a snapshot of entries already written. Exporting neither alters nor removes anything from the log.</p>
+      </div>
+      <div>
+        <label class="label" for="ex-range">Period</label>
+        <select id="ex-range" class="select">
+          <option>Last 7 days</option>
+          <option selected>Last 30 days</option>
+          <option>Last 90 days</option>
+          <option>Last 12 months</option>
+          <option>Everything retained (24 months)</option>
+        </select>
+      </div>
+      <div>
+        <label class="label" for="ex-actor">Actors</label>
+        <select id="ex-actor" class="select">
+          <option>Everyone</option>
+          <option>Eventa staff only</option>
+          <option>Customers only</option>
+        </select>
+      </div>
+      <div>
+        <label class="label" for="ex-format">Format</label>
+        <select id="ex-format" class="select">
+          <option>CSV</option>
+          <option>JSON Lines</option>
+        </select>
+      </div>
+      <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
+        <i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px] text-muted"></i>
+        <p class="text-[12px] text-muted">Exports over 50,000 entries are prepared in the background — you will get an email with a download link that expires after 24 hours. The export itself is recorded in this log.</p>
+      </div>
+    </div>
+    <footer class="flex gap-2 border-t border-hair p-4">
+      <button class="btn btn-soft flex-1" data-close>Cancel</button>
+      <button class="btn btn-primary flex-1" data-close><i class="hgi-stroke hgi-download-01 text-[16px]"></i>Prepare export</button>
+    </footer>
+  </aside>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  const nf = n => n.toLocaleString('en-US');
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  /* ---------- DATA ----------
+     Append-only record, newest first. Actors are either Eventa staff working
+     across tenants or people inside a customer workspace; the console never
+     offers a way to change a row, which is the whole point of the page. */
+  function e(id, ts, who, kind, action, code, target, ws, area, ip) {
+    return { id, ts, who, kind, action, code, target, ws, area, ip };
+  }
+  const DATA = [
+    e('EVT-9f21a4', 'Aug 24, 2026 · 09:41', 'Rio S.', 'Staff', 'Support session started', 'staff.support_session.started', 'Workspace owner account', 'Siam Conferences', 'Access', '203.0.113.24'),
+    e('EVT-9f2193', 'Aug 24, 2026 · 09:38', 'Kanya Wattana', 'Customer', 'Payout retried', 'payout.retried', '#PO-2043 · ฿850,000', 'Siam Conferences', 'Payments', '171.96.44.10'),
+    e('EVT-9f2180', 'Aug 24, 2026 · 09:26', 'Nutcha P.', 'Staff', 'Feature flag enabled', 'feature_flag.enabled', 'check-in-offline', 'PTT Events', 'Workspace', '203.0.113.31'),
+    e('EVT-9f2174', 'Aug 24, 2026 · 09:04', 'Wichai Boonmee', 'Customer', 'Integration reconnected', 'integration.reconnected', 'Google Calendar', 'PTT Events', 'Integrations', '58.10.72.5'),
+    e('EVT-9f2166', 'Aug 24, 2026 · 08:52', 'Praew L.', 'Staff', 'Invoice voided', 'invoice.voided', 'INV-2026-0714 · ฿18,900', 'Krungthep Startups', 'Billing', '203.0.113.18'),
+    e('EVT-9f2159', 'Aug 24, 2026 · 08:47', 'Napat Srisuk', 'Customer', 'Billing email changed', 'billing.email.updated', 'billing@krungthep.co', 'Krungthep Startups', 'Billing', '184.22.19.140'),
+    e('EVT-9f2141', 'Aug 24, 2026 · 08:31', 'Danai K.', 'Staff', 'Plan changed', 'subscription.plan.changed', 'Starter → Growth', 'Chiang Mai Arts', 'Billing', '203.0.113.44'),
+    e('EVT-9f2130', 'Aug 24, 2026 · 08:15', 'Malee Ruangsri', 'Customer', 'Custom domain verified', 'domain.verified', 'events.chiangmaiarts.org', 'Chiang Mai Arts', 'Workspace', '110.169.8.221'),
+    e('EVT-9f2118', 'Aug 24, 2026 · 07:58', 'Rio S.', 'Staff', 'Data export approved', 'export.approved', 'Attendee export · 18,402 rows', 'Phuket Marathon', 'Access', '203.0.113.24'),
+    e('EVT-9f2107', 'Aug 24, 2026 · 07:44', 'Somchai Tanakit', 'Customer', 'API key created', 'api_key.created', 'key_live_••••8f21', 'Phuket Marathon', 'Integrations', '49.228.101.7'),
+    e('EVT-9f20f3', 'Aug 24, 2026 · 07:30', 'Nutcha P.', 'Staff', 'Ticket reassigned', 'support_ticket.reassigned', '#SUP-4820 → Nutcha P.', 'Bangkok Jazz Co.', 'Support', '203.0.113.31'),
+    e('EVT-9f20e6', 'Aug 24, 2026 · 07:12', 'Preecha Somsri', 'Customer', 'Sender domain added', 'email.domain.added', 'mail.bkkjazz.co.th', 'Bangkok Jazz Co.', 'Integrations', '125.24.63.88'),
+    e('EVT-9f20d1', 'Aug 24, 2026 · 06:55', 'Praew L.', 'Staff', 'Refund issued', 'payment.refunded', '฿4,800 · 2 registrations', 'Silom Design Week', 'Payments', '203.0.113.18'),
+    e('EVT-9f20c4', 'Aug 24, 2026 · 06:39', 'Anong Pichai', 'Customer', 'Team member invited', 'user.invited', 'pim@silomdesign.co.th', 'Silom Design Week', 'Access', '27.55.72.19'),
+    e('EVT-9f20b0', 'Aug 24, 2026 · 06:20', 'Danai K.', 'Staff', 'Rate limit raised', 'rate_limit.updated', '600 → 1,200 req/min', 'Rama Medical Congress', 'Integrations', '203.0.113.44'),
+    e('EVT-9f209a', 'Aug 24, 2026 · 06:02', 'Dr. Areeya Chin', 'Customer', 'Event published', 'event.published', 'Thai Cardiology Congress 2026', 'Rama Medical Congress', 'Workspace', '202.28.180.6'),
+    e('EVT-9f2085', 'Aug 23, 2026 · 23:48', 'Rio S.', 'Staff', 'Workspace suspended', 'workspace.suspended', 'Non-payment · 3rd notice', 'Northern Wellness', 'Workspace', '203.0.113.24'),
+    e('EVT-9f2072', 'Aug 23, 2026 · 22:31', 'Suda Meesri', 'Customer', 'Sign-in failed', 'auth.sign_in.failed', 'suda@northernwellness.th · 3rd attempt', 'Northern Wellness', 'Access', '183.88.240.33'),
+    e('EVT-9f2061', 'Aug 23, 2026 · 21:15', 'Nutcha P.', 'Staff', 'Feature flag disabled', 'feature_flag.disabled', 'new-checkout', 'Hua Hin Wine Fair', 'Workspace', '203.0.113.31'),
+    e('EVT-9f2050', 'Aug 23, 2026 · 20:40', 'Kittipong R.', 'Customer', 'Webhook endpoint updated', 'webhook.updated', 'https://hooks.huahinwine.co/eventa', 'Hua Hin Wine Fair', 'Integrations', '171.7.11.204'),
+    e('EVT-9f203c', 'Aug 23, 2026 · 19:22', 'Praew L.', 'Staff', 'Tax rate corrected', 'tax_rate.updated', 'VAT 7 % · applied from Aug 01', 'Isaan Food Festival', 'Billing', '203.0.113.18'),
+    e('EVT-9f202b', 'Aug 23, 2026 · 18:07', 'Ratchanok Pim', 'Customer', 'Payout account connected', 'payout_account.connected', 'KBank •••• 7712', 'Isaan Food Festival', 'Payments', '101.51.9.66'),
+    e('EVT-9f2019', 'Aug 23, 2026 · 17:35', 'Danai K.', 'Staff', 'Role changed', 'user.role.changed', 'Organizer → Admin', 'Thonglor Tech Meetup', 'Access', '203.0.113.44'),
+    e('EVT-9f2004', 'Aug 23, 2026 · 16:58', 'Peerapat Y.', 'Customer', 'Two-factor enabled', 'mfa.enabled', 'peerapat@thonglortech.io', 'Thonglor Tech Meetup', 'Access', '223.24.155.12')
+  ];
+
+  /* ---------- row markup ---------- */
+  const initials = name => name.replace(/^Dr\.\s+/, '').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+  function actorChip(k) {
+    const tint = k.kind === 'Staff'
+      ? 'bg-brand-soft text-brand-dark dark:text-brand'
+      : 'bg-line text-muted';
+    return '<div class="flex items-center gap-2 whitespace-nowrap">' +
+      '<span class="grid h-7 w-7 shrink-0 place-items-center rounded-full ' + tint + ' text-[10px] font-semibold">' + esc(initials(k.who)) + '</span>' +
+      '<span class="leading-tight"><span class="block font-medium text-ink">' + esc(k.who) + '</span>' +
+      '<span class="block text-[11px] text-muted">' + (k.kind === 'Staff' ? 'Eventa staff' : 'Customer') + '</span></span></div>';
+  }
+  // rows show the short stamp ("Aug 24, 09:41"), matching issues.html; the entry
+  // panel prints the full one with the year
+  const shortTs = ts => ts.replace(', 2026 ·', ',');
+  function rowHTML(k) {
+    return '<tr>' +
+      '<td class="whitespace-nowrap text-muted tnum">' + esc(shortTs(k.ts)) + '</td>' +
+      '<td>' + actorChip(k) + '</td>' +
+      '<td><p class="whitespace-nowrap font-medium text-ink">' + esc(k.action) + '</p><p class="font-mono text-[11px] text-muted">' + esc(k.code) + '</p></td>' +
+      '<td class="max-w-[240px] truncate text-muted" title="' + esc(k.target) + '">' + esc(k.target) + '</td>' +
+      '<td class="whitespace-nowrap text-ink">' + esc(k.ws) + '</td>' +
+      '<td class="whitespace-nowrap font-mono text-[12px] text-muted tnum">' + esc(k.ip) + '</td>' +
+      '<td class="text-right"><button class="btn-icon" title="View entry" data-open="entry-view" data-view="' + esc(k.id) + '"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>' +
+    '</tr>';
+  }
+
+  /* ---------- tab counts (derived from the rows) ---------- */
+  document.querySelector('[data-count="all"]').textContent = nf(DATA.length);
+  ['Staff', 'Customer'].forEach(k => {
+    document.querySelector('[data-count="' + k + '"]').textContent = nf(DATA.filter(x => x.kind === k).length);
+  });
+
+  /* ---------- state + filtering ---------- */
+  const state = { tab: 'all', q: '', area: 'All areas', page: 0, size: 10 };
+  function filtered() {
+    const q = state.q.trim().toLowerCase();
+    return DATA.filter(k => {
+      if (state.tab !== 'all' && k.kind !== state.tab) return false;
+      if (state.area !== 'All areas' && k.area !== state.area) return false;
+      if (!q) return true;
+      return (k.who + ' ' + k.action + ' ' + k.code + ' ' + k.target + ' ' + k.ws + ' ' + k.ip).toLowerCase().indexOf(q) > -1;
+    });
+  }
+
+  const tbody = document.getElementById('au-rows');
+  const showing = document.getElementById('au-showing');
+  const prevBtn = document.getElementById('au-prev');
+  const nextBtn = document.getElementById('au-next');
+
+  function render() {
+    const list = filtered(), total = list.length, pages = Math.max(1, Math.ceil(total / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    const start = state.page * state.size, slice = list.slice(start, start + state.size);
+    tbody.innerHTML = slice.length
+      ? slice.map(rowHTML).join('')
+      : '<tr><td colspan="7"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No entries match</h3><p class="empty-text">Nothing in this window matches the current search, actor tab and area filter. Widen them, or export a longer period to search further back.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
+    showing.innerHTML = total === 0
+      ? 'No entries'
+      : 'Showing <span class="font-semibold text-ink">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> entries';
+    prevBtn.disabled = total === 0 || state.page === 0;
+    nextBtn.disabled = total === 0 || state.page >= pages - 1;
+  }
+
+  /* ---------- wire controls ---------- */
+  document.getElementById('au-search').addEventListener('input', function () { state.q = this.value; state.page = 0; render(); });
+  document.getElementById('au-area').addEventListener('change', function () { state.area = this.value; state.page = 0; render(); });
+  document.getElementById('au-size').addEventListener('change', function () { state.size = +this.value; state.page = 0; render(); });
+  prevBtn.addEventListener('click', () => { if (state.page > 0) { state.page--; render(); } });
+  nextBtn.addEventListener('click', () => { state.page++; render(); });
+  document.querySelector('[data-tabs]').addEventListener('click', ev => {
+    const t = ev.target.closest('[data-tab]'); if (!t) return;
+    state.tab = t.getAttribute('data-tab'); state.page = 0; render();
+  });
+
+  /* ---------- read-only entry detail ---------- */
+  const view = {
+    kind: document.getElementById('ev-kind'), id: document.getElementById('ev-id'),
+    action: document.getElementById('ev-action'), code: document.getElementById('ev-code'),
+    ts: document.getElementById('ev-ts'), actor: document.getElementById('ev-actor'),
+    target: document.getElementById('ev-target'), ws: document.getElementById('ev-ws'),
+    area: document.getElementById('ev-area'), ip: document.getElementById('ev-ip')
+  };
+  function openView(id) {
+    const k = DATA.find(x => x.id === id); if (!k) return;
+    view.kind.innerHTML = '<span class="badge ' + (k.kind === 'Staff' ? 'badge-purple' : 'badge-gray') + '">' + (k.kind === 'Staff' ? 'Eventa staff' : 'Customer') + '</span>';
+    view.id.textContent = k.id;
+    view.action.textContent = k.action;
+    view.code.textContent = k.code;
+    view.ts.textContent = k.ts;
+    view.actor.textContent = k.who;
+    view.target.textContent = k.target;
+    view.ws.textContent = k.ws;
+    view.area.textContent = k.area;
+    view.ip.textContent = k.ip;
+  }
+  tbody.addEventListener('click', ev => {
+    const v = ev.target.closest('[data-view]');
+    if (v) openView(v.getAttribute('data-view'));
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

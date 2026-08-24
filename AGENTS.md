@@ -104,10 +104,17 @@ different data.
   a ticket sale), System → Settings is `console-settings`.
 - `moduleOfPage()` falls back to `MODULES[0].id`, not a hard-coded page name, so an unknown
   `data-page` still lights a real rail tile.
+- **The header identity is fixed across the console** (`RS · Platform admin`). The organizer app
+  shows whichever member is signed in; this one is always the same staff person, so a page that
+  invents a different name reads as a different product.
+- **Money here is Eventa's revenue, not the organizer's.** MRR, subscriptions and plan charges —
+  never ticket sales. The two meanings collide on the word "payments", which is why the page id is
+  `billing-payments`.
 
-**State: the nav is built, the pages are not.** `admin-console/dashboard.html` is still a byte-copy of
-`admin/dashboard.html` — organizer content wearing the console's sidebar — and 25 of the 26 nav links
-404. Treat it as a scaffold, not a design. Neither `admin-console/` nor `assets-console/` is committed.
+**`overview.html` is the reference page** — copy it when adding a console page, the way `admin/events.html`
+is the template for the organizer app. It carries the console's head block (`../assets-console/…`), the
+staff header (one identity, unchanged per page), both empty states, and the chart machinery. The
+organizer dashboard that originally seeded this folder has been replaced by it.
 
 **Before designing these screens, know the backend constraint.** Cross-workspace views cannot be built
 on eventa-api as it stands: there is no platform-staff identity (no role above an organization), every
@@ -122,7 +129,14 @@ exists. Designing a screen that implies otherwise commits the API to work nobody
 
 ## Design conventions to preserve
 
-- **Flat/bordered, not shadowed:** `.card` = `border border-hair` on `bg-surface`; page is `bg-canvas`, sidebar `bg-sidebar`. Only intentional shadows: floating popovers/panels.
+- **Flat, not shadowed.** Surfaces are separated by *colour*, not by elevation: page is `bg-canvas`,
+  cards and tiles are `bg-surface`, sidebar is `bg-sidebar`. The only intentional shadows are floating
+  popovers and slide-over panels.
+  - `.card` is **`border-radius: 1rem` + `bg-surface` and nothing else** — it carries no border, in
+    either stylesheet. Most sections are written as raw `rounded-2xl bg-surface p-4 lg:p-5` rather
+    than `.card`; both are the same thing. Add `border border-hair` deliberately when a nested
+    element needs to read as separate from the card it sits in (a clickable row, an inner panel) —
+    it is an accent, not the default.
 - **Compact scale:** ~13px base, 11px labels, 15px section headings, 22px page titles & stat values; `tnum` on all figures.
 - Currency **Thai Baht (฿)**.
 - Percentage deltas pair `hgi-arrow-up-right-01` (green `text-brand`) with positive, `hgi-arrow-down-right-01` (`text-red-500`) with negative.

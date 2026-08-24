@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · System health</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="system-health">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="text-[22px] font-bold tracking-tight">System health</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Is Eventa up?</p>
+      </div>
+      <div id="sh-range" class="ml-auto hidden items-center gap-1 rounded-lg bg-surface p-1 text-[12px] font-semibold sm:flex">
+        <button data-range="hour" class="rounded-md bg-white px-3 py-1.5 text-ink shadow-sm transition dark:bg-white/10">1 h</button>
+        <button data-range="day" class="rounded-md px-3 py-1.5 text-muted transition">24 h</button>
+        <button data-range="week" class="rounded-md px-3 py-1.5 text-muted transition">7 d</button>
+      </div>
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: the probes have never reported, so there is nothing to be healthy or unhealthy -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-pulse-01"></i></span>
+      <h2 class="empty-title">No services reporting yet</h2>
+      <p class="empty-text">Every Eventa service — eventa-api, eventa-worker, eventa-relay, Postgres and Redis — posts a health check on a fixed interval. Uptime, response times, error rates and incidents appear here the moment the first check lands.</p>
+      <div class="empty-actions">
+        <a href="console-settings.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-settings-02 text-[15px]"></i>Set alerting thresholds</a>
+        <a href="jobs.html" class="btn btn-ghost btn-sm">See background jobs</a>
+      </div>
+    </section>
+
+    <!-- overall status banner: one thing is wrong, and it says which -->
+    <section data-when-data class="flex flex-wrap items-center gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-3.5 dark:border-amber-400/25 dark:bg-amber-400/10">
+      <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-amber-100 text-amber-600 dark:bg-amber-400/15 dark:text-amber-300"><i class="hgi-stroke hgi-alert-02 text-[19px]"></i></span>
+      <div class="min-w-0 flex-1">
+        <p class="text-[14px] font-bold tracking-tight text-ink">Partial degradation — 1 of 5 services</p>
+        <p class="mt-0.5 text-[12px] text-muted"><span class="font-mono">eventa-relay</span> is behind on the outbox by 4 min 12 s. Webhooks and check-in pushes are delayed; nothing is being dropped. Everything else is operational.</p>
+      </div>
+      <div class="flex shrink-0 items-center gap-2">
+        <button type="button" class="btn btn-soft btn-sm" data-open="inc-view" data-view="INC-118"><i class="hgi-stroke hgi-eye text-[15px]"></i>View incident</button>
+        <a href="jobs.html" class="btn btn-ghost btn-sm">Open jobs</a>
+      </div>
+    </section>
+
+    <!-- one card per real service -->
+    <div data-when-data class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5" id="svc-cards"></div>
+
+    <!-- latency chart + live counters -->
+    <div data-when-data class="mt-3 grid gap-3 xl:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+      <section class="rounded-2xl bg-surface p-4 lg:p-5">
+        <div class="mb-4 flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h2 class="text-[16px] font-bold tracking-tight">API response time</h2>
+            <div class="mt-1 flex items-center gap-2">
+              <p id="lat-value" class="text-[22px] font-bold tracking-tight tnum">142 ms</p>
+              <span id="lat-delta" class="flex items-center gap-0.5 text-[13px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>3,1 %</span>
+              <span class="text-[12px] text-muted">p95 · <span class="font-mono">eventa-api</span></span>
+            </div>
+          </div>
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-canvas px-2.5 py-1 text-[11px] font-semibold text-muted"><i class="hgi-stroke hgi-clock-01 text-[13px]"></i>Target 150 ms</span>
+        </div>
+        <div id="lat-chart"></div>
+      </section>
+
+      <section class="rounded-2xl bg-surface p-4 lg:p-5">
+        <h2 class="text-[16px] font-bold tracking-tight">Right now</h2>
+        <p class="mt-0.5 text-[12px] text-muted">Sampled every 30 seconds · Asia/Bangkok</p>
+        <dl id="now-rows" class="mt-4 divide-y divide-line text-[13px]"></dl>
+      </section>
+    </div>
+
+    <!-- incidents -->
+    <div data-when-data class="mt-5 flex flex-wrap items-center justify-between gap-2">
+      <h2 class="text-[15px] font-bold tracking-tight">Incidents</h2>
+      <span class="text-[12px] text-muted">Last 30 days</span>
+    </div>
+    <div data-when-data data-tabs="#inc-table" class="mt-2 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button class="pilltab tab-active" data-tab="all" data-filter="all">All <span class="pilltab-count tnum">6</span></button>
+      <button class="pilltab" data-tab="open" data-filter="open">Open <span class="pilltab-count tnum">1</span></button>
+      <button class="pilltab" data-tab="resolved" data-filter="resolved">Resolved <span class="pilltab-count tnum">5</span></button>
+    </div>
+    <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="inc-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search incidents…" />
+      </div>
+      <div class="relative w-full sm:w-56">
+        <i class="hgi-stroke hgi-cloud-server text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="inc-service" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All services</option>
+          <option>eventa-api</option>
+          <option>eventa-worker</option>
+          <option>eventa-relay</option>
+          <option>Postgres</option>
+          <option>Redis</option>
+        </select>
+      </div>
+    </div>
+
+    <section data-when-data class="card mt-3 p-4">
+      <div id="inc-table" class="overflow-x-auto">
+        <table class="data-table min-w-[880px]">
+          <thead>
+            <tr><th>Incident</th><th>Service</th><th>Severity</th><th>Started</th><th>Duration</th><th>Status</th><th class="text-right">Actions</th></tr>
+          </thead>
+          <tbody id="inc-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+      <p id="inc-showing" class="mt-3 text-[12px] text-muted"></p>
+    </section>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa Console · Internal · HTML, Tailwind CSS &amp; Hugeicons</p>
+    </div>
+  </main>
+
+  <!-- incident detail slide-over -->
+  <aside class="panel" id="inc-view">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">Incident</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-4 overflow-y-auto p-4">
+      <div class="card p-3.5">
+        <div class="flex items-center justify-between gap-2">
+          <p id="iv-id" class="font-mono text-[12px] text-muted"></p>
+          <span id="iv-badge"></span>
+        </div>
+        <p id="iv-title" class="mt-1.5 text-[16px] font-bold tracking-tight"></p>
+        <p id="iv-service" class="mt-0.5 font-mono text-[12px] text-muted"></p>
+      </div>
+      <dl class="overflow-hidden rounded-lg border border-hair">
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Severity</dt><dd id="iv-sev" class="text-[13px] font-medium text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Started</dt><dd id="iv-started" class="text-[13px] text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Duration</dt><dd id="iv-duration" class="text-[13px] text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px] text-muted">Workspaces affected</dt><dd id="iv-impact" class="text-[13px] text-ink tnum"></dd></div>
+      </dl>
+      <div>
+        <p class="mb-2.5 text-[11px] font-semibold uppercase tracking-wider text-muted">Timeline</p>
+        <div id="iv-timeline" class="space-y-3"></div>
+      </div>
+      <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
+        <i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px] text-muted"></i>
+        <p id="iv-note" class="text-[12px] text-muted"></p>
+      </div>
+    </div>
+    <footer class="flex gap-2 border-t border-hair p-4">
+      <button class="btn btn-soft flex-1" data-close>Close</button>
+      <a href="logs.html" class="btn btn-primary flex-1"><i class="hgi-stroke hgi-console text-[16px]"></i>Open logs</a>
+    </footer>
+  </aside>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  /* ---------- Services ----------
+     The five real processes in this system. Uptime is the 30-day figure; the
+     platform number in "Right now" is their mean, so the two stay in step. */
+  var SERVICES = [
+    { name: 'eventa-api',    role: 'HTTP API',        icon: 'hgi-cloud-server', state: 'Operational', uptime: '99,98 %', p95: '142 ms',  err: '0,04 %' },
+    { name: 'eventa-worker', role: 'Job runner',      icon: 'hgi-cpu',          state: 'Operational', uptime: '99,95 %', p95: '310 ms',  err: '0,11 %' },
+    { name: 'eventa-relay',  role: 'Outbox relay',    icon: 'hgi-share-08',     state: 'Degraded',    uptime: '99,62 %', p95: '4 200 ms', err: '1,80 %' },
+    { name: 'Postgres',      role: 'Primary database',icon: 'hgi-database-01',  state: 'Operational', uptime: '100,0 %', p95: '8 ms',    err: '0,00 %' },
+    { name: 'Redis',         role: 'Cache and queues',icon: 'hgi-layers-01',    state: 'Operational', uptime: '99,99 %', p95: '1,2 ms',  err: '0,00 %' }
+  ];
+  document.getElementById('svc-cards').innerHTML = SERVICES.map(function (s) {
+    var bad = s.state === 'Degraded';
+    var chip = bad
+      ? 'bg-amber-50 text-amber-600 dark:bg-amber-400/15 dark:text-amber-300'
+      : 'bg-brand-soft text-brand';
+    var tone = bad ? 'text-amber-600 dark:text-amber-300' : 'text-ink';
+    return '<div class="rounded-2xl bg-surface p-3.5">' +
+      '<div class="flex items-center justify-between gap-2">' +
+        '<span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg ' + chip + '"><i class="hgi-stroke ' + s.icon + ' text-[16px]"></i></span>' +
+        '<span class="badge ' + (bad ? 'badge-amber' : 'badge-green') + '">' + esc(s.state) + '</span>' +
+      '</div>' +
+      '<p class="mt-2.5 truncate font-mono text-[12.5px] font-semibold text-ink">' + esc(s.name) + '</p>' +
+      '<p class="truncate text-[11px] text-muted">' + esc(s.role) + '</p>' +
+      '<dl class="mt-3 grid grid-cols-3 gap-1 border-t border-line pt-3 text-center">' +
+        '<div><dt class="text-[10px] font-semibold uppercase tracking-wider text-muted">Uptime</dt><dd class="mt-0.5 whitespace-nowrap text-[13px] font-bold text-ink tnum">' + esc(s.uptime) + '</dd></div>' +
+        '<div><dt class="text-[10px] font-semibold uppercase tracking-wider text-muted">p95</dt><dd class="mt-0.5 whitespace-nowrap text-[13px] font-bold ' + tone + ' tnum">' + esc(s.p95) + '</dd></div>' +
+        '<div><dt class="text-[10px] font-semibold uppercase tracking-wider text-muted">Errors</dt><dd class="mt-0.5 whitespace-nowrap text-[13px] font-bold ' + tone + ' tnum">' + esc(s.err) + '</dd></div>' +
+      '</dl>' +
+    '</div>';
+  }).join('');
+
+  /* ---------- Right now ---------- */
+  var NOW = [
+    { label: 'Requests / min',        value: '1 240',    tone: '' },
+    { label: 'Error rate (5 min)',    value: '0,09 %',   tone: '' },
+    { label: 'Platform uptime (30 d)',value: '99,91 %',  tone: '' },
+    { label: 'Redis queue depth',     value: '37 jobs',  tone: '' },
+    { label: 'Outbox lag',            value: '4 min 12 s', tone: 'text-amber-600 dark:text-amber-300' },
+    { label: 'Postgres connections',  value: '84 / 200', tone: '' },
+    { label: 'Active workspaces',     value: '218',      tone: '' }
+  ];
+  document.getElementById('now-rows').innerHTML = NOW.map(function (r) {
+    return '<div class="flex items-center justify-between py-2.5">' +
+      '<dt class="text-muted">' + esc(r.label) + '</dt>' +
+      '<dd class="font-semibold ' + (r.tone || 'text-ink') + ' tnum">' + esc(r.value) + '</dd></div>';
+  }).join('');
+
+  /* ---------- API response time: smooth area chart ----------
+     Same machinery as overview.html (see AGENTS.md → Charts): colours are read
+     per theme, so a theme flip must re-render — window.EventaOnThemeChange below.
+     Latency going up is bad, so the delta carries its own good/bad flag rather
+     than inferring colour from the arrow direction. */
+  var datasets = {
+    hour: { labels: ['14:00','14:10','14:20','14:30','14:40','14:50','15:00'], values: [128,134,141,152,147,139,142], max: 200, value: '142 ms', delta: '3,1 %', dir: 'up', good: false },
+    day:  { labels: ['00:00','04:00','08:00','12:00','16:00','20:00','Now'],   values: [96,88,112,168,181,156,142],  max: 200, value: '156 ms', delta: '8,4 %', dir: 'up', good: false },
+    week: { labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],               values: [131,127,140,149,162,151,156], max: 200, value: '149 ms', delta: '2,6 %', dir: 'down', good: true }
+  };
+  function smoothPath(pts) {
+    var d = 'M ' + pts[0][0] + ' ' + pts[0][1];
+    for (var i = 0; i < pts.length - 1; i++) {
+      var p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+      var c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
+      var c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
+      d += ' C ' + c1x + ' ' + c1y + ' ' + c2x + ' ' + c2y + ' ' + p2[0] + ' ' + p2[1];
+    }
+    return d;
+  }
+  var currentRange = 'hour';
+  function renderChart(key) {
+    var d = datasets[key]; currentRange = key;
+    var dark = document.documentElement.classList.contains('dark');
+    var cGrid = dark ? 'rgba(255,255,255,0.08)' : '#eef0f3', cAxis = dark ? '#8b96a0' : '#8b93a4';
+    var cRing = dark ? '#171d1a' : '#ffffff', cTipBg = dark ? '#e6ebe8' : '#132a22', cTipFg = dark ? '#0e1311' : '#ffffff';
+    var W = 640, H = 280, PL = 52, PR = 14, PT = 24, PB = 36;
+    var plotW = W - PL - PR, plotH = H - PT - PB, n = d.values.length;
+    var xFor = function (i) { return PL + (i / (n - 1)) * plotW; };
+    var yFor = function (v) { return PT + (1 - v / d.max) * plotH; };
+    var pts = d.values.map(function (v, i) { return [xFor(i), yFor(v)]; });
+    var line = smoothPath(pts);
+    var area = line + ' L ' + xFor(n - 1) + ' ' + (PT + plotH) + ' L ' + xFor(0) + ' ' + (PT + plotH) + ' Z';
+    var grid = '';
+    for (var k = 0; k <= 4; k++) {
+      var val = d.max * k / 4, y = yFor(val);
+      grid += '<line x1="' + PL + '" y1="' + y + '" x2="' + (W - PR) + '" y2="' + y + '" stroke="' + cGrid + '" stroke-width="1"/>';
+      grid += '<text x="' + (PL - 10) + '" y="' + (y + 4) + '" text-anchor="end" font-size="12" fill="' + cAxis + '">' + Math.round(val) + ' ms</text>';
+    }
+    var xl = '';
+    d.labels.forEach(function (lb, i) { xl += '<text x="' + xFor(i) + '" y="' + (PT + plotH + 24) + '" text-anchor="middle" font-size="12" fill="' + cAxis + '">' + lb + '</text>'; });
+    // the response-time budget, drawn so a breach would be obvious
+    var budgetY = yFor(150);
+    var last = pts[n - 1], lv = d.values[n - 1];
+    var tip = lv + ' ms', tw = 66, th = 27;
+    var tx = Math.min(Math.max(last[0] - tw / 2, PL), W - PR - tw);
+    var ty = last[1] - th - 14;
+    document.getElementById('lat-chart').innerHTML =
+      '<svg viewBox="0 0 ' + W + ' ' + H + '" class="w-full" style="height:auto" font-family="Inter, sans-serif">' +
+        '<defs><linearGradient id="latfill" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#1ba770" stop-opacity="0.28"/><stop offset="100%" stop-color="#1ba770" stop-opacity="0"/></linearGradient></defs>' +
+        grid +
+        '<line x1="' + PL + '" y1="' + budgetY + '" x2="' + (W - PR) + '" y2="' + budgetY + '" stroke="#f59e0b" stroke-width="1" stroke-dasharray="5 4" opacity="0.7"/>' +
+        '<text x="' + (W - PR) + '" y="' + (budgetY - 6) + '" text-anchor="end" font-size="11" font-weight="600" fill="#f59e0b">target 150 ms</text>' +
+        '<path d="' + area + '" fill="url(#latfill)"/>' +
+        '<path d="' + line + '" fill="none" stroke="#1ba770" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>' +
+        xl +
+        '<line x1="' + last[0] + '" y1="' + PT + '" x2="' + last[0] + '" y2="' + (PT + plotH) + '" stroke="#1ba770" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>' +
+        '<circle cx="' + last[0] + '" cy="' + last[1] + '" r="6" fill="#1ba770" stroke="' + cRing + '" stroke-width="2.5"/>' +
+        '<rect x="' + tx + '" y="' + ty + '" width="' + tw + '" height="' + th + '" rx="7" fill="' + cTipBg + '"/>' +
+        '<text x="' + (tx + tw / 2) + '" y="' + (ty + th / 2 + 4) + '" text-anchor="middle" font-size="13" font-weight="700" fill="' + cTipFg + '">' + tip + '</text>' +
+      '</svg>';
+    document.getElementById('lat-value').textContent = d.value;
+    var dl = document.getElementById('lat-delta');
+    dl.className = 'flex items-center gap-0.5 text-[13px] font-semibold ' + (d.good ? 'text-brand' : 'text-red-500');
+    dl.innerHTML = '<i class="hgi-stroke ' + (d.dir === 'up' ? 'hgi-arrow-up-right-01' : 'hgi-arrow-down-right-01') + ' text-[13px]"></i>' + d.delta;
+  }
+  var shRange = document.getElementById('sh-range');
+  shRange.addEventListener('click', function (e) {
+    var btn = e.target.closest('button'); if (!btn) return;
+    [].slice.call(shRange.children).forEach(function (b) { b.className = 'rounded-md px-3 py-1.5 text-muted transition'; });
+    btn.className = 'rounded-md bg-white px-3 py-1.5 text-ink shadow-sm transition dark:bg-white/10';
+    renderChart(btn.dataset.range);
+  });
+  renderChart('hour');
+  window.EventaOnThemeChange = function () { renderChart(currentRange); };
+
+  /* ---------- Incidents ---------- */
+  var INCIDENTS = [
+    { id: 'INC-118', title: 'Outbox relay falling behind',            svc: 'eventa-relay',  sev: 'Major',       started: 'Aug 24, 13:58', dur: '34 min · ongoing', status: 'Investigating', impact: '312 (all)', note: 'The relay is dispatching, just slowly — no outbox row has been dropped. Backlog drains once the retry storm on the webhook target clears.' },
+    { id: 'INC-117', title: 'Elevated 5xx on ticket checkout',        svc: 'eventa-api',    sev: 'Minor',       started: 'Aug 21, 09:12', dur: '22 min',           status: 'Resolved',      impact: '46', note: 'A slow query on the discount lookup exhausted the connection pool. An index on (event_id, code) fixed it.' },
+    { id: 'INC-116', title: 'Redis failover during maintenance',      svc: 'Redis',         sev: 'Minor',       started: 'Aug 17, 02:40', dur: '6 min',            status: 'Resolved',      impact: '312 (all)', note: 'Planned node replacement. Queued jobs were retried automatically; nothing was lost.' },
+    { id: 'INC-115', title: 'Email queue backlog',                    svc: 'eventa-worker', sev: 'Major',       started: 'Aug 11, 18:05', dur: '1 h 48 min',       status: 'Resolved',      impact: '128', note: 'A single workspace bulk-sent 40k reminders and starved the shared queue. Per-workspace rate limiting was added afterwards.' },
+    { id: 'INC-114', title: 'Postgres replica lag',                   svc: 'Postgres',      sev: 'Minor',       started: 'Aug 04, 22:30', dur: '41 min',           status: 'Resolved',      impact: '312 (all)', note: 'Reports read from the replica and briefly served stale figures. Writes were never affected.' },
+    { id: 'INC-113', title: 'Scheduled maintenance — Postgres 16',    svc: 'Postgres',      sev: 'Maintenance', started: 'Jul 28, 01:00', dur: '2 h 05 min',       status: 'Resolved',      impact: '312 (all)', note: 'Announced upgrade window. The platform was read-only for the duration.' }
+  ];
+  var sevBadge = { Major: 'badge-red', Minor: 'badge-amber', Maintenance: 'badge-blue' };
+  var statusBadge = { Investigating: 'badge-amber', Monitoring: 'badge-blue', Resolved: 'badge-green' };
+
+  var state = { tab: 'all', q: '', svc: 'All services' };
+  function matches(i) {
+    if (state.tab === 'open' && i.status === 'Resolved') return false;
+    if (state.tab === 'resolved' && i.status !== 'Resolved') return false;
+    if (state.svc !== 'All services' && i.svc !== state.svc) return false;
+    if (state.q) {
+      var hay = (i.id + ' ' + i.title + ' ' + i.svc + ' ' + i.sev).toLowerCase();
+      if (hay.indexOf(state.q.toLowerCase()) === -1) return false;
+    }
+    return true;
+  }
+  var tbody = document.getElementById('inc-rows');
+  var showing = document.getElementById('inc-showing');
+  function rowHTML(i) {
+    return '<tr>' +
+      '<td><div class="leading-tight"><p class="font-semibold text-ink">' + esc(i.title) + '</p><p class="font-mono text-[11px] text-muted">' + esc(i.id) + '</p></div></td>' +
+      '<td class="font-mono text-[12px] text-muted">' + esc(i.svc) + '</td>' +
+      '<td><span class="badge ' + sevBadge[i.sev] + '">' + esc(i.sev) + '</span></td>' +
+      '<td class="text-muted tnum">' + esc(i.started) + '</td>' +
+      '<td class="text-muted tnum">' + esc(i.dur) + '</td>' +
+      '<td><span class="badge ' + statusBadge[i.status] + '">' + esc(i.status) + '</span></td>' +
+      '<td class="text-right"><button class="btn-icon" title="View incident" data-open="inc-view" data-view="' + esc(i.id) + '"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>' +
+    '</tr>';
+  }
+  function render() {
+    var list = INCIDENTS.filter(matches);
+    tbody.innerHTML = list.length
+      ? list.map(rowHTML).join('')
+      : '<tr><td colspan="7"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No incidents match</h3><p class="empty-text">Nothing matches the current search, status tab and service filter. Try widening them to see more incidents.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
+    showing.innerHTML = list.length
+      ? 'Showing <span class="font-semibold text-ink tnum">' + list.length + '</span> of <span class="font-semibold text-ink tnum">' + INCIDENTS.length + '</span> incidents'
+      : 'No incidents';
+  }
+  document.getElementById('inc-search').addEventListener('input', function () { state.q = this.value.trim(); render(); });
+  document.getElementById('inc-service').addEventListener('change', function () { state.svc = this.value; render(); });
+  var tabsGroup = document.querySelector('[data-tabs]');
+  if (tabsGroup) tabsGroup.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-tab]'); if (!t) return;
+    state.tab = t.getAttribute('data-tab'); render();
+  });
+  render();
+
+  /* ---------- Incident slide-over ---------- */
+  function step(icon, color, label, when) {
+    return '<div class="flex items-center gap-2.5">' +
+      '<i class="hgi-stroke ' + icon + ' ' + color + ' text-[16px]"></i>' +
+      '<p class="min-w-0 flex-1 text-[13px] font-medium text-ink">' + label + '</p>' +
+      '<span class="text-[11px] text-muted tnum">' + esc(when) + '</span></div>';
+  }
+  function timelineHTML(i) {
+    var done = 'text-brand', cur = 'text-amber-500', pend = 'text-muted/40';
+    if (i.status === 'Resolved') {
+      return step('hgi-checkmark-circle-02', done, 'Detected', i.started) +
+             step('hgi-checkmark-circle-02', done, 'Mitigated', 'During window') +
+             step('hgi-checkmark-circle-02', done, 'Resolved', 'After ' + i.dur);
+    }
+    return step('hgi-checkmark-circle-02', done, 'Detected', i.started) +
+           step('hgi-loading-03', cur, 'Investigating', 'In progress') +
+           step('hgi-circle', pend, 'Resolved', 'Pending');
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-view]'); if (!t) return;
+    var id = t.getAttribute('data-view'), inc = null;
+    for (var k = 0; k < INCIDENTS.length; k++) { if (INCIDENTS[k].id === id) { inc = INCIDENTS[k]; break; } }
+    if (!inc) return;
+    document.getElementById('iv-id').textContent = inc.id;
+    document.getElementById('iv-title').textContent = inc.title;
+    document.getElementById('iv-service').textContent = inc.svc;
+    document.getElementById('iv-badge').innerHTML = '<span class="badge ' + statusBadge[inc.status] + '">' + esc(inc.status) + '</span>';
+    document.getElementById('iv-sev').innerHTML = '<span class="badge ' + sevBadge[inc.sev] + '">' + esc(inc.sev) + '</span>';
+    document.getElementById('iv-started').textContent = inc.started;
+    document.getElementById('iv-duration').textContent = inc.dur;
+    document.getElementById('iv-impact').textContent = inc.impact;
+    document.getElementById('iv-timeline').innerHTML = timelineHTML(inc);
+    document.getElementById('iv-note').textContent = inc.note;
+  });
+})();
+</script>
+</body>
+</html>

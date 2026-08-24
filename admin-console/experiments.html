@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Experiments</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="experiments">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="truncate text-[22px] font-bold tracking-tight">Experiments</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">What is being tested.</p>
+      </div>
+      <!-- like the exemplar's range control, the page action drops out below sm;
+           the bell then carries ml-auto so the right-hand group stays pinned -->
+      <button type="button" class="btn btn-soft hidden shrink-0 sm:ml-auto sm:inline-flex" data-open="exp-method"><i class="hgi-stroke hgi-help-circle text-[16px]"></i>How we read a result</button>
+      <button class="relative ml-auto grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink sm:ml-0" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: an experiment needs a recommendation to test and enough traffic
+         to split, so nothing can run on an empty platform -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-test-tube-01"></i></span>
+      <h2 class="empty-title">Nothing running yet</h2>
+      <p class="empty-text">An experiment splits traffic between the product as it is and one accepted recommendation, then reports whether the difference is real. It needs a recommendation to test and enough workspaces to split, so this list starts once both exist.</p>
+      <div class="empty-actions">
+        <a href="recommendations.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-idea-01 text-[15px]"></i>See accepted recommendations</a>
+        <button type="button" class="btn btn-ghost btn-sm" data-open="exp-method">How we read a result</button>
+      </div>
+    </section>
+
+    <!-- summary -->
+    <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-play text-[16px]"></i>Running</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">2</p><span class="text-[11.5px] text-muted">both under sample</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-checkmark-badge-01 text-[16px]"></i>Concluded</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">3</p><span class="text-[11.5px] text-muted">2 winners · 1 flat</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-pause text-[16px]"></i>Stopped early</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">1</p><span class="text-[11.5px] text-muted">guardrail breach</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-rocket-01 text-[16px]"></i>Shipped from a win</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">2</p><span class="text-[11.5px] text-muted">of 6 experiments</span></div>
+      </div>
+    </div>
+
+    <!-- an honest reading of the record above -->
+    <p data-when-data class="mt-2.5 flex items-start gap-1.5 text-[11.5px] text-muted">
+      <i class="hgi-stroke hgi-information-circle mt-px text-[13px]"></i>
+      Two of the three concluded tests produced a winner. The third moved nothing we could distinguish from noise, and the recommendation behind it was declined.
+    </p>
+
+    <!-- search + verdict filter -->
+    <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="exp-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search experiments, metrics or hypotheses…" />
+      </div>
+      <div class="relative w-full sm:w-56">
+        <i class="hgi-stroke hgi-medal-first-place text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="exp-verdict" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All verdicts</option>
+          <option>Winner</option>
+          <option>Inconclusive</option>
+          <option>Too early to call</option>
+          <option>Guardrail breach</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- status tabs — data-pill-group / data-pill let the shell's
+         [data-clear-filters] button reset the tab along with search and select -->
+    <div data-when-data data-pill-group data-tabs="#exp-list" class="mt-3 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button class="pilltab tab-active" data-pill data-tab="all">All <span class="pilltab-count tnum" data-count="all">6</span></button>
+      <button class="pilltab" data-pill data-tab="Running">Running <span class="pilltab-count tnum" data-count="Running">2</span></button>
+      <button class="pilltab" data-pill data-tab="Concluded">Concluded <span class="pilltab-count tnum" data-count="Concluded">3</span></button>
+      <button class="pilltab" data-pill data-tab="Stopped">Stopped <span class="pilltab-count tnum" data-count="Stopped">1</span></button>
+    </div>
+
+    <!-- cards -->
+    <div data-when-data class="mt-3">
+      <div class="mb-2.5 flex flex-wrap items-center justify-between gap-2">
+        <h2 class="text-[15px] font-bold tracking-tight">Running first, then most recently concluded</h2>
+        <span id="exp-showing" class="text-[12px] text-muted"></span>
+      </div>
+      <div id="exp-list" class="grid gap-3 xl:grid-cols-2"></div>
+    </div>
+
+    </div>
+  </main>
+
+  <!-- how we read a result -->
+  <aside class="panel" id="exp-method">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">How we read a result</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-4 overflow-y-auto p-4">
+      <div class="flex flex-col items-center rounded-xl border border-hair bg-canvas p-5 text-center">
+        <span class="grid h-12 w-12 place-items-center rounded-2xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-test-tube-01 text-[24px]"></i></span>
+        <h4 class="mt-3 text-[15px] font-bold tracking-tight">The interval decides, not the number</h4>
+        <p class="mt-1 text-[12.5px] leading-relaxed text-muted">Every result on this page is a point estimate with a 95 % confidence interval. If the interval contains zero, the test did not find an effect — however good the headline number looks.</p>
+      </div>
+      <div>
+        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted">Reading the bar</p>
+        <div class="space-y-2.5">
+          <div class="flex items-start gap-2.5"><span class="mt-1 h-2 w-8 shrink-0 rounded-full bg-brand/35"></span><span class="text-[12.5px] leading-relaxed text-muted"><span class="font-semibold text-ink">Clear of zero, good side.</span> The change helped. Ship it.</span></div>
+          <div class="flex items-start gap-2.5"><span class="mt-1 h-2 w-8 shrink-0 rounded-full bg-amber-500/35"></span><span class="text-[12.5px] leading-relaxed text-muted"><span class="font-semibold text-ink">Crossing zero.</span> No effect was found. That is a result, not a failure to finish.</span></div>
+          <div class="flex items-start gap-2.5"><span class="mt-1 h-2 w-8 shrink-0 rounded-full bg-red-500/35"></span><span class="text-[12.5px] leading-relaxed text-muted"><span class="font-semibold text-ink">Clear of zero, bad side.</span> The change hurt. Roll it back and write down why.</span></div>
+        </div>
+      </div>
+      <div>
+        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted">The rules we hold to</p>
+        <ul class="space-y-2 text-[12.5px] leading-relaxed text-ink">
+          <li class="flex gap-2.5"><i class="hgi-stroke hgi-checkmark-circle-02 mt-px shrink-0 text-[15px] text-brand"></i><span>The metric and the sample size are fixed before the split is turned on.</span></li>
+          <li class="flex gap-2.5"><i class="hgi-stroke hgi-checkmark-circle-02 mt-px shrink-0 text-[15px] text-brand"></i><span>A running test shows its interim number, and it is labelled as too early.</span></li>
+          <li class="flex gap-2.5"><i class="hgi-stroke hgi-checkmark-circle-02 mt-px shrink-0 text-[15px] text-brand"></i><span>Nothing is called a win after the fact by swapping to a metric that moved.</span></li>
+          <li class="flex gap-2.5"><i class="hgi-stroke hgi-checkmark-circle-02 mt-px shrink-0 text-[15px] text-brand"></i><span>Guardrails can stop a test on their own, even when the primary metric is up.</span></li>
+        </ul>
+      </div>
+      <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
+        <i class="hgi-stroke hgi-shield-01 mt-0.5 text-[16px] text-muted"></i>
+        <p class="text-[12px] leading-relaxed text-muted">Guardrails are the metrics a test is not allowed to damage — events created, checkout completion, support contacts. They are checked daily and breach ends the test.</p>
+      </div>
+    </div>
+    <footer class="flex gap-2 border-t border-hair p-4">
+      <button class="btn btn-soft flex-1" data-close>Close</button>
+      <a href="recommendations.html" class="btn btn-primary flex-1"><i class="hgi-stroke hgi-idea-01 text-[16px]"></i>Recommendations</a>
+    </footer>
+  </aside>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function nf(n) { return n.toLocaleString('en-US'); }
+  /* comma decimals + a space before the unit, matching the exemplar's "9,3 %" */
+  function pt(v) { return (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1).replace('.', ',') + ' pt'; }
+
+  /* ---------- DATA ----------
+     Six experiments: Running 2 · Concluded 3 · Stopped 1.
+     Arm splits sum to 100 % and arm sizes sum to the stated sample.
+     Point estimates equal the difference between the two arm values. */
+  var DATA = [
+    {
+      id: 'EXP-018', name: 'Guided first event during trial', status: 'Running',
+      hypothesis: 'A three-step guided setup during the trial will get more workspaces to a published event, and more of those trials onto a paid plan.',
+      rec: { id: 'REC-037', label: 'Guided first event during trial' },
+      metric: 'Trial converts to paid within 30 days', goodDir: 'up',
+      unit: 'trials', window: 'Aug 12 – Sep 02, 2026',
+      arms: [
+        { name: 'A · Control', split: 50, n: 59, value: '22,0 %' },
+        { name: 'B · Guided setup', split: 50, n: 59, value: '28,8 %' }
+      ],
+      sample: { have: 118, target: 190, day: 12, days: 21 },
+      results: [{ label: 'B vs control', point: 6.8, lo: -4.1, hi: 17.7 }],
+      verdict: 'Too early to call',
+      verdictNote: 'The interval still contains zero. Nothing will be decided before the full 190 trials.'
+    },
+    {
+      id: 'EXP-019', name: 'Sender-domain verification prompt', status: 'Running',
+      hypothesis: 'Asking for a verified sending domain before the first attendee email will cut the share of messages that land in spam.',
+      rec: { id: 'REC-036', label: 'Verify a sender domain in three clicks' },
+      metric: 'Message placed in the spam folder', goodDir: 'down',
+      unit: 'first campaigns', window: 'Aug 15 – Sep 12, 2026',
+      arms: [
+        { name: 'A · Control', split: 34, n: 208, value: '12,1 %' },
+        { name: 'B · Inline verify', split: 33, n: 202, value: '8,4 %' },
+        { name: 'C · Verify with a skip link', split: 33, n: 202, value: '9,6 %' }
+      ],
+      sample: { have: 612, target: 900, day: 9, days: 28 },
+      results: [
+        { label: 'B vs control', point: -3.7, lo: -7.0, hi: -0.4 },
+        { label: 'C vs control', point: -2.5, lo: -5.9, hi: 0.9 }
+      ],
+      verdict: 'Too early to call',
+      verdictNote: 'B is already clear of zero, C is not. Both arms run to the full sample before either is called.'
+    },
+    {
+      id: 'EXP-017', name: 'Upgrade nudge on the events list', status: 'Stopped',
+      hypothesis: 'A persistent plan-limit nudge above the events list will move Starter workspaces onto Growth.',
+      rec: null,
+      metric: 'Upgrade to Growth within 30 days', goodDir: 'up',
+      unit: 'workspaces', window: 'Aug 04 – Aug 10, 2026 · stopped on day 6',
+      arms: [
+        { name: 'A · Control', split: 50, n: 48, value: '6,3 %' },
+        { name: 'B · Persistent nudge', split: 50, n: 48, value: '7,4 %' }
+      ],
+      sample: { have: 96, target: 250, day: 6, days: 30 },
+      results: [{ label: 'B vs control', point: 1.1, lo: -3.2, hi: 5.4 }],
+      verdict: 'Guardrail breach',
+      verdictNote: 'Ended at 38 % of the planned sample, so the primary metric was never going to resolve.',
+      guardrail: 'Events created per workspace fell 22 % in variant B (CI −34 % to −9 %). The nudge was sitting on top of the create button.'
+    },
+    {
+      id: 'EXP-015', name: 'Check-in readiness check', status: 'Concluded',
+      hypothesis: 'A readiness check the day before doors will cut the number of organizers who abandon the check-in app for a printed list.',
+      rec: { id: 'REC-038', label: 'Readiness check 24 hours before doors' },
+      metric: 'CSV fallback within 2 hours of doors', goodDir: 'down',
+      unit: 'events', window: 'Jun 16 – Jul 14, 2026',
+      arms: [
+        { name: 'A · Control', split: 50, n: 122, value: '41,0 %' },
+        { name: 'B · Readiness email and banner', split: 50, n: 122, value: '30,3 %' }
+      ],
+      sample: { have: 244, target: 244, day: 28, days: 28 },
+      results: [{ label: 'B vs control', point: -10.7, lo: -18.1, hi: -3.3 }],
+      verdict: 'Winner',
+      winner: 'Variant B',
+      verdictNote: 'Clear of zero on the good side, p = 0,005. Shipped to everyone on Aug 05.'
+    },
+    {
+      id: 'EXP-016', name: 'Publish without payouts', status: 'Concluded',
+      hypothesis: 'Letting an organizer publish before connecting a payout account will raise the publish rate without hurting payout connection.',
+      rec: { id: 'REC-040', label: 'Let organizers publish before connecting payouts' },
+      metric: 'Event published within 14 days', goodDir: 'up',
+      unit: 'new workspaces', window: 'Jul 07 – Jul 28, 2026',
+      arms: [
+        { name: 'A · Control', split: 50, n: 86, value: '44,2 %' },
+        { name: 'B · Publish first, banner after', split: 50, n: 86, value: '47,7 %' }
+      ],
+      sample: { have: 172, target: 172, day: 21, days: 21 },
+      results: [{ label: 'B vs control', point: 3.5, lo: -6.9, hi: 13.9 }],
+      verdict: 'Inconclusive',
+      verdictNote: 'Ran to full sample and the interval still crosses zero. No winner — REC-040 was declined on this result.'
+    },
+    {
+      id: 'EXP-014', name: 'Payout setup inside onboarding', status: 'Concluded',
+      hypothesis: 'Asking for a payout account during onboarding, before the first event, will raise the share of workspaces that can take money at all.',
+      rec: { id: 'REC-041', label: 'Ask for payouts during onboarding' },
+      metric: 'Payout account connected within 7 days', goodDir: 'up',
+      unit: 'new workspaces', window: 'Jun 02 – Jun 23, 2026',
+      arms: [
+        { name: 'A · Control', split: 50, n: 93, value: '31,2 %' },
+        { name: 'B · Payout step in onboarding', split: 50, n: 93, value: '49,5 %' }
+      ],
+      sample: { have: 186, target: 186, day: 21, days: 21 },
+      results: [{ label: 'B vs control', point: 18.3, lo: 7.4, hi: 29.2 }],
+      verdict: 'Winner',
+      winner: 'Variant B',
+      verdictNote: 'The largest effect measured this year, p = 0,001. Shipped to everyone on Aug 12.'
+    }
+  ];
+
+  var statusBadgeCls = { Running: 'badge-blue', Concluded: 'badge-gray', Stopped: 'badge-red' };
+  var verdictBadgeCls = { 'Winner': 'badge-green', 'Inconclusive': 'badge-amber', 'Too early to call': 'badge-blue', 'Guardrail breach': 'badge-red' };
+  var verdictIcon = { 'Winner': 'hgi-medal-first-place', 'Inconclusive': 'hgi-equal-sign', 'Too early to call': 'hgi-hourglass', 'Guardrail breach': 'hgi-alert-02' };
+  var ARM_COLORS = ['#d1d5db', '#1ba770', '#4cbd96'];
+
+  /* The interval bar is drawn on a fixed ±32 pt scale so every card is
+     comparable at a glance; values outside it are clamped. */
+  var SCALE = 32;
+  function posOf(v) { return Math.min(100, Math.max(0, ((Math.max(-SCALE, Math.min(SCALE, v)) + SCALE) / (2 * SCALE)) * 100)); }
+  function toneOf(r, goodDir) {
+    if (r.lo < 0 && r.hi > 0) return 'flat';
+    var positive = r.lo > 0;
+    var good = goodDir === 'up' ? positive : !positive;
+    return good ? 'good' : 'bad';
+  }
+  var TONE = {
+    good: { bar: 'bg-brand/35', dot: 'bg-brand', text: 'text-brand' },
+    flat: { bar: 'bg-amber-500/35', dot: 'bg-amber-500', text: 'text-amber-600 dark:text-amber-400' },
+    bad: { bar: 'bg-red-500/35', dot: 'bg-red-500', text: 'text-red-500' }
+  };
+
+  function ciHTML(r, goodDir) {
+    var t = TONE[toneOf(r, goodDir)];
+    var l = posOf(r.lo), w = Math.max(posOf(r.hi) - l, 1.2), p = posOf(r.point);
+    return '<div class="mt-2.5">' +
+      '<div class="flex items-baseline justify-between gap-2">' +
+        '<span class="text-[12px] text-muted">' + esc(r.label) + '</span>' +
+        '<span class="text-[13px] font-semibold tnum ' + t.text + '">' + pt(r.point) + '</span>' +
+      '</div>' +
+      '<div class="relative mt-1.5 h-5">' +
+        '<span class="absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-line"></span>' +
+        '<span class="absolute bottom-0 top-0 w-px bg-muted/40" style="left:50%"></span>' +
+        '<span class="absolute top-1/2 h-2 -translate-y-1/2 rounded-full ' + t.bar + '" style="left:' + l.toFixed(2) + '%;width:' + w.toFixed(2) + '%"></span>' +
+        '<span class="absolute top-1/2 h-3.5 w-[3px] -translate-y-1/2 rounded-full ' + t.dot + '" style="left:' + p.toFixed(2) + '%"></span>' +
+      '</div>' +
+      '<div class="mt-1 flex items-center justify-between text-[10.5px] text-muted">' +
+        '<span class="tnum">−32 pt</span>' +
+        '<span>95 % CI ' + pt(r.lo) + ' to ' + pt(r.hi) + '</span>' +
+        '<span class="tnum">+32 pt</span>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function armsHTML(e) {
+    var stack = e.arms.map(function (a, i) {
+      return '<span class="block h-full" style="width:' + a.split + '%;background:' + ARM_COLORS[i % ARM_COLORS.length] + '"></span>';
+    }).join('');
+    var rows = e.arms.map(function (a, i) {
+      return '<div class="flex items-center gap-2.5">' +
+        '<span class="h-2.5 w-2.5 shrink-0 rounded-sm" style="background:' + ARM_COLORS[i % ARM_COLORS.length] + '"></span>' +
+        '<span class="min-w-0 flex-1 truncate text-[12.5px] font-medium text-ink">' + esc(a.name) + '</span>' +
+        '<span class="shrink-0 text-[11.5px] text-muted tnum">' + a.split + ' % · ' + nf(a.n) + '</span>' +
+        '<span class="w-[52px] shrink-0 text-right text-[13px] font-semibold text-ink tnum">' + esc(a.value) + '</span>' +
+      '</div>';
+    }).join('');
+    return '<div class="mt-3">' +
+      '<div class="flex h-2 overflow-hidden rounded-full bg-line">' + stack + '</div>' +
+      '<div class="mt-2.5 space-y-1.5">' + rows + '</div>' +
+    '</div>';
+  }
+
+  function sampleHTML(e) {
+    var pct = Math.round((e.sample.have / e.sample.target) * 100);
+    var line = e.status === 'Running'
+      ? nf(e.sample.have) + ' of ' + nf(e.sample.target) + ' ' + e.unit + ' · day ' + e.sample.day + ' of ' + e.sample.days
+      : e.status === 'Stopped'
+        ? nf(e.sample.have) + ' of ' + nf(e.sample.target) + ' ' + e.unit + ' · stopped on day ' + e.sample.day
+        : nf(e.sample.have) + ' ' + e.unit + ' · full sample over ' + e.sample.days + ' days';
+    var barTone = e.status === 'Stopped' ? 'bg-red-500' : e.status === 'Running' ? 'bg-brand' : 'bg-brand';
+    return '<div class="mt-3">' +
+      '<div class="flex items-baseline justify-between gap-2">' +
+        '<span class="text-[11px] font-semibold uppercase tracking-wider text-muted">Sample</span>' +
+        '<span class="text-[11.5px] text-muted tnum">' + esc(line) + '</span>' +
+      '</div>' +
+      '<div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-line"><span class="block h-full rounded-full ' + barTone + '" style="width:' + Math.min(pct, 100) + '%"></span></div>' +
+    '</div>';
+  }
+
+  function cardHTML(e) {
+    var vCls = verdictBadgeCls[e.verdict], vIcon = verdictIcon[e.verdict];
+    return '<article class="card p-4">' +
+      '<div class="flex items-start justify-between gap-3">' +
+        '<div class="min-w-0">' +
+          '<h3 class="text-[15px] font-bold tracking-tight">' + esc(e.name) + '</h3>' +
+          '<p class="mt-0.5 font-mono text-[11px] text-muted">' + esc(e.id) + ' · ' + esc(e.window) + '</p>' +
+        '</div>' +
+        '<span class="badge ' + statusBadgeCls[e.status] + ' shrink-0">' + esc(e.status) + '</span>' +
+      '</div>' +
+
+      '<div class="mt-3 flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">' +
+        '<i class="hgi-stroke hgi-note-01 mt-px shrink-0 text-[15px] text-muted"></i>' +
+        '<p class="text-[12px] leading-relaxed text-muted"><span class="font-semibold text-ink">Hypothesis</span> · ' + esc(e.hypothesis) + '</p>' +
+      '</div>' +
+
+      '<p class="mt-3 flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-chart-average text-[14px]"></i><span class="font-semibold text-ink">Metric</span> · ' + esc(e.metric) + ' <span class="text-muted">(' + (e.goodDir === 'up' ? 'higher is better' : 'lower is better') + ')</span></p>' +
+
+      armsHTML(e) +
+      sampleHTML(e) +
+
+      '<div class="mt-3 border-t border-line pt-3">' +
+        '<div class="flex flex-wrap items-center gap-2">' +
+          '<span class="badge ' + vCls + '"><i class="hgi-stroke ' + vIcon + ' text-[12px]"></i>' + esc(e.verdict) + (e.winner ? ' · ' + esc(e.winner) : '') + '</span>' +
+        '</div>' +
+        e.results.map(function (r) { return ciHTML(r, e.goodDir); }).join('') +
+        '<p class="mt-2 text-[11.5px] leading-relaxed text-muted">' + esc(e.verdictNote) + '</p>' +
+        (e.guardrail
+          ? '<div class="mt-2.5 flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-500/30 dark:bg-red-500/10">' +
+            '<i class="hgi-stroke hgi-alert-02 mt-px shrink-0 text-[15px] text-red-500"></i>' +
+            '<p class="text-[12px] leading-relaxed text-red-700 dark:text-red-300"><span class="font-semibold">Guardrail</span> · ' + esc(e.guardrail) + '</p></div>'
+          : '') +
+      '</div>' +
+
+      '<div class="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-line pt-3">' +
+        (e.rec
+          ? '<a href="recommendations.html" class="flex min-w-0 items-center gap-1.5 text-[12px] font-semibold text-brand hover:underline"><i class="hgi-stroke hgi-idea-01 text-[14px]"></i><span class="truncate">' + esc(e.rec.id) + ' · ' + esc(e.rec.label) + '</span></a>'
+          : '<span class="flex min-w-0 items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-unavailable text-[14px]"></i><span class="truncate">No recommendation — came out of the pricing review</span></span>') +
+        '<span class="shrink-0 text-[11.5px] text-muted tnum">' + e.arms.length + ' arms</span>' +
+      '</div>' +
+    '</article>';
+  }
+
+  /* ---------- state + filtering ---------- */
+  var state = { tab: 'all', q: '', verdict: 'All verdicts' };
+  var list = document.getElementById('exp-list');
+  var showing = document.getElementById('exp-showing');
+
+  function matches(e) {
+    if (state.tab !== 'all' && e.status !== state.tab) return false;
+    if (state.verdict !== 'All verdicts' && e.verdict !== state.verdict) return false;
+    if (state.q) {
+      var hay = (e.id + ' ' + e.name + ' ' + e.hypothesis + ' ' + e.metric + ' ' + e.verdict).toLowerCase();
+      if (hay.indexOf(state.q) === -1) return false;
+    }
+    return true;
+  }
+
+  var NO_RESULTS = '<div class="card"><div class="empty empty-sm">' +
+    '<span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span>' +
+    '<h3 class="empty-title">No experiments match</h3>' +
+    '<p class="empty-text">Nothing matches the current search, status tab and verdict filter. Try widening them to see the rest of the record, including the tests that found nothing.</p>' +
+    '<div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div>' +
+    '</div></div>';
+
+  function render() {
+    var rows = DATA.filter(matches);
+    if (!rows.length) {
+      list.className = 'grid gap-3';
+      list.innerHTML = NO_RESULTS;
+      showing.textContent = 'No experiments';
+      return;
+    }
+    list.className = 'grid gap-3 xl:grid-cols-2';
+    list.innerHTML = rows.map(cardHTML).join('');
+    var running = rows.filter(function (e) { return e.status === 'Running'; }).length;
+    showing.innerHTML = 'Showing <span class="font-semibold text-ink tnum">' + rows.length + '</span> of <span class="font-semibold text-ink tnum">' + DATA.length + '</span> · <span class="font-semibold text-ink tnum">' + running + '</span> still running';
+  }
+
+  function refreshCounts() {
+    document.querySelector('[data-count="all"]').textContent = DATA.length;
+    ['Running', 'Concluded', 'Stopped'].forEach(function (s) {
+      document.querySelector('[data-count="' + s + '"]').textContent = DATA.filter(function (e) { return e.status === s; }).length;
+    });
+  }
+
+  document.getElementById('exp-search').addEventListener('input', function () { state.q = this.value.trim().toLowerCase(); render(); });
+  document.getElementById('exp-verdict').addEventListener('change', function () { state.verdict = this.value; render(); });
+  document.querySelector('[data-tabs]').addEventListener('click', function (e) {
+    var t = e.target.closest('[data-tab]'); if (!t) return;
+    state.tab = t.getAttribute('data-tab'); render();
+  });
+
+  refreshCounts();
+  render();
+})();
+</script>
+</body>
+</html>

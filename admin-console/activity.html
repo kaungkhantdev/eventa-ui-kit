@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Activity</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="activity">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="text-[22px] font-bold tracking-tight">Activity</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">What happened, most recent first.</p>
+      </div>
+      <div class="ml-auto hidden shrink-0 sm:block">
+        <a href="audit-logs.html" class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-legal-document-01 text-[15px]"></i>Audit logs</a>
+      </div>
+      <button class="relative ml-auto grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink sm:ml-0" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: nothing has happened on the platform yet -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-activity-01"></i></span>
+      <h2 class="empty-title">Nothing has happened yet</h2>
+      <p class="empty-text">Every workspace change, subscription charge, support reply and platform event lands here the moment it happens — newest first, with the person and the workspace behind it.</p>
+      <div class="empty-actions">
+        <a href="organizations.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-building-03 text-[15px]"></i>Browse organizations</a>
+        <a href="audit-logs.html" class="btn btn-ghost btn-sm">Open audit logs</a>
+      </div>
+    </section>
+
+    <!-- filter pills -->
+    <div data-when-data id="ac-pills" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button type="button" class="pilltab tab-active" data-filter="all">All <span class="pilltab-count tnum" data-count="all">0</span></button>
+      <button type="button" class="pilltab" data-filter="workspaces">Workspaces <span class="pilltab-count tnum" data-count="workspaces">0</span></button>
+      <button type="button" class="pilltab" data-filter="billing">Billing <span class="pilltab-count tnum" data-count="billing">0</span></button>
+      <button type="button" class="pilltab" data-filter="support">Support <span class="pilltab-count tnum" data-count="support">0</span></button>
+      <button type="button" class="pilltab" data-filter="system">System <span class="pilltab-count tnum" data-count="system">0</span></button>
+    </div>
+
+    <div data-when-data class="mt-3 grid gap-3 xl:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]">
+
+      <!-- the feed -->
+      <div>
+        <div class="relative">
+          <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+          <input id="ac-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search by person, action or workspace…" />
+        </div>
+
+        <section class="card mt-3 p-4 lg:p-5">
+          <div id="ac-feed"></div>
+          <div id="ac-more-wrap" class="mt-4 flex flex-col items-center gap-2 border-t border-line pt-4">
+            <button id="ac-more" type="button" class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-arrow-down-01 text-[15px]"></i>Show older activity</button>
+            <p id="ac-count" class="text-[11px] text-muted"></p>
+          </div>
+        </section>
+      </div>
+
+      <!-- side rail -->
+      <div class="space-y-3">
+        <section class="rounded-2xl bg-surface p-4 lg:p-5">
+          <h2 class="text-[16px] font-bold tracking-tight">Today at a glance</h2>
+          <p class="mt-0.5 text-[12px] text-muted">Mon 24 Aug 2026 · Asia/Bangkok</p>
+          <div id="ac-today" class="mt-4 space-y-2.5"></div>
+        </section>
+
+        <section class="rounded-2xl bg-surface p-4 lg:p-5">
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="text-[16px] font-bold tracking-tight">Busiest workspaces</h2>
+            <a href="workspaces.html" class="text-[12px] font-semibold text-brand hover:underline">All workspaces</a>
+          </div>
+          <div id="ac-busy" class="space-y-2.5"></div>
+          <p class="mt-3 text-[11px] text-muted">Counted across the events on this page.</p>
+        </section>
+
+        <section class="rounded-2xl bg-surface p-4 lg:p-5">
+          <div class="flex items-start gap-2">
+            <i class="hgi-stroke hgi-information-circle mt-0.5 shrink-0 text-[16px] text-muted"></i>
+            <p class="text-[12px] leading-relaxed text-muted">This feed keeps four weeks. Anything older, and anything you need with the full before-and-after record, is in <a href="audit-logs.html" class="font-semibold text-brand hover:underline">Audit logs</a>.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <p data-when-data class="mt-4 text-center text-[11px] text-muted/70">Eventa · Internal console · HTML, Tailwind CSS &amp; Hugeicons</p>
+    </div>
+  </main>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function nf(n) { return n.toLocaleString('en-US'); }
+  // *emphasis* becomes a bold run — escaped first, so the data can never inject markup
+  function rich(s) { return esc(s).replace(/\*(.+?)\*/g, '<span class="font-semibold text-ink">$1</span>'); }
+
+  var DAYS = [
+    { key: 'd0', label: 'Today',     date: 'Mon 24 Aug 2026' },
+    { key: 'd1', label: 'Yesterday', date: 'Sun 23 Aug 2026' },
+    { key: 'd2', label: '22 Aug',    date: 'Sat 22 Aug 2026' },
+    { key: 'd3', label: '21 Aug',    date: 'Fri 21 Aug 2026' },
+    { key: 'd4', label: '20 Aug',    date: 'Thu 20 Aug 2026' },
+    { key: 'd5', label: '19 Aug',    date: 'Wed 19 Aug 2026' },
+  ];
+  var KINDS = [
+    { key: 'workspaces', label: 'Workspaces', badge: 'badge-green'  },
+    { key: 'billing',    label: 'Billing',    badge: 'badge-blue'   },
+    { key: 'support',    label: 'Support',    badge: 'badge-purple' },
+    { key: 'system',     label: 'System',     badge: 'badge-gray'   },
+  ];
+  var KIND = {};
+  KINDS.forEach(function (k) { KIND[k.key] = k; });
+
+  /* day · time · kind · icon · tone · actor · what they did · workspace
+     "Platform" is the console's own name for a platform-wide event — it belongs
+     to no tenant, so it never counts towards a workspace. */
+  function e(day, time, kind, icon, tone, actor, text, ws) {
+    return { day: day, time: time, kind: kind, icon: icon, tone: tone, actor: actor, text: text, ws: ws };
+  }
+  var DATA = [
+    e('d0','16:42','workspaces','hgi-rocket-01',        'text-brand',     'Somchai Tanakit',      'published *Bangkok Jazz Nights 2026*',                       'Bangkok Jazz Co.'),
+    e('d0','16:05','billing',   'hgi-credit-card',      'text-brand',     'Eventa Billing',       'charged *฿12,900* for the Growth plan',                      'Chiang Mai Arts'),
+    e('d0','15:20','support',   'hgi-customer-support', 'text-muted',     'Napat Chai',           'replied to ticket *#4821* — payout not received',            'Phuket Marine Summit'),
+    e('d0','14:58','system',    'hgi-connect',          'text-red-500',   'Eventa',               'disabled a webhook endpoint after *20* consecutive failures','Thai Expo Group'),
+    e('d0','13:31','workspaces','hgi-user-add-01',      'text-brand',     'Preeda Wong',          'invited *4 teammates*',                                      'PTT Events'),
+    e('d0','11:47','billing',   'hgi-money-receive-01', 'text-brand',     'Rio S.',               'moved the workspace to *Enterprise*',                        'Siam Conferences'),
+    e('d0','10:12','system',    'hgi-mail-send-01',     'text-muted',     'Eventa',               'email relay caught up — outbox lag back under *30 s*',       'Platform'),
+    e('d0','09:38','workspaces','hgi-link-square-02',   'text-brand',     'Kanya Srisuk',         'connected a *Stripe* account',                               'Isaan Food Festival'),
+    e('d0','08:55','support',   'hgi-inbox',            'text-amber-500', 'Malee Pong',           'opened ticket *#4826* — duplicate attendee emails',          'Bangkok Runners Club'),
+
+    e('d1','22:14','system',    'hgi-time-schedule',    'text-muted',     'Eventa',               'nightly report job finished in *4 min 12 s*',                'Platform'),
+    e('d1','19:03','workspaces','hgi-calendar-add-01',  'text-brand',     'Anucha Meesri',        'created *Nimman Tech Meetup #24*',                           'Nimman Tech Meetup'),
+    e('d1','17:40','billing',   'hgi-invoice-01',       'text-amber-500', 'Eventa Billing',       'invoice *INV-2026-0418* went overdue · ฿24,600',             'Royal Orchid Weddings'),
+    e('d1','16:22','support',   'hgi-checkmark-circle-02','text-brand',   'Napat Chai',           'closed ticket *#4809* — refund processed',                   'Hua Hin Beach Fest'),
+    e('d1','14:07','workspaces','hgi-user-remove-01',   'text-red-500',   'Rio S.',               'suspended the workspace after a *chargeback review*',        'Andaman Dive Expo'),
+    e('d1','12:35','system',    'hgi-toggle-on',        'text-brand',     'Eventa',               'enabled the *seatmap-v2* flag for 12 workspaces',            'Platform'),
+    e('d1','10:58','billing',   'hgi-credit-card',      'text-brand',     'Eventa Billing',       'charged *฿4,900* for the Starter plan',                      'Khon Kaen University Events'),
+    e('d1','09:11','workspaces','hgi-building-03',      'text-brand',     'Thida Bunnag',         'signed up',                                                  'Silom Startup Nights'),
+
+    e('d2','21:26','system',    'hgi-pulse-01',         'text-amber-500', 'Eventa',               'API p95 latency crossed *800 ms* for 6 minutes',             'Platform'),
+    e('d2','18:44','workspaces','hgi-file-export',      'text-muted',     'Somchai Tanakit',      'exported *3,140 attendees*',                                 'Bangkok Jazz Co.'),
+    e('d2','15:09','support',   'hgi-inbox',            'text-amber-500', 'Ploy Rattana',         'opened ticket *#4801* — check-in app stuck offline',         'Chiang Mai Arts'),
+    e('d2','13:52','billing',   'hgi-money-send-01',    'text-brand',     'Rio S.',               'issued a *฿8,200* credit note',                              'Northern Wellness'),
+    e('d2','11:30','workspaces','hgi-rocket-01',        'text-brand',     'Kittipong Sae',        'published *Phuket Marine Summit 2026*',                      'Phuket Marine Summit'),
+    e('d2','08:20','system',    'hgi-wrench-01',        'text-muted',     'Eventa',               'scheduled maintenance window closed',                        'Platform'),
+
+    e('d3','20:15','billing',   'hgi-credit-card',      'text-brand',     'Eventa Billing',       'Growth plan renewed · *฿12,900*',                            'Nimman Tech Meetup'),
+    e('d3','17:33','workspaces','hgi-ticket-01',        'text-brand',     'Preeda Wong',          'sold the first ticket for *PTT Innovation Day*',             'PTT Events'),
+    e('d3','14:48','support',   'hgi-alert-02',         'text-red-500',   'Napat Chai',           'escalated ticket *#4795* to engineering',                    'Thai Expo Group'),
+    e('d3','12:02','system',    'hgi-connect',          'text-amber-500', 'Eventa',               'Google Calendar integration degraded · *12 %* error rate',   'Platform'),
+    e('d3','09:26','workspaces','hgi-building-03',      'text-brand',     'Duangjai Noi',         'signed up',                                                  'Trang Seafood Festival'),
+
+    e('d4','19:41','workspaces','hgi-calendar-add-01',  'text-brand',     'Chalermchai Ing',      'created *Isaan Food Festival 2026*',                         'Isaan Food Festival'),
+    e('d4','16:18','system',    'hgi-database-01',      'text-amber-500', 'Eventa',               'storage crossed *3.5 TB* — 92 % of the current tier',        'Platform'),
+    e('d4','14:02','billing',   'hgi-credit-card',      'text-red-500',   'Eventa Billing',       'card declined · *฿4,900* · retry in 3 days',                 'Pattaya Music Week'),
+    e('d4','11:25','support',   'hgi-checkmark-circle-02','text-brand',   'Napat Chai',           'closed ticket *#4788* — CSV import fixed',                   'Sukhothai Lantern Fest'),
+    e('d4','09:07','workspaces','hgi-building-03',      'text-muted',     'Rio S.',               'merged two duplicate organizations',                         'Thai Expo Group'),
+
+    e('d5','21:12','system',    'hgi-connect',          'text-brand',     'Eventa',               'webhook retry queue drained · *41k* deliveries',             'Platform'),
+    e('d5','18:36','workspaces','hgi-building-03',      'text-brand',     'Sunisa Kaew',          'signed up',                                                  'Chiang Rai Coffee Summit'),
+    e('d5','15:50','billing',   'hgi-hourglass',        'text-brand',     'Rio S.',               'extended the trial by *14 days*',                            'Ayutthaya Heritage Days'),
+    e('d5','13:14','support',   'hgi-inbox',            'text-amber-500', 'Wichai Rung',          'opened ticket *#4780* — badge printing misaligned',          'Korat Motor Show'),
+    e('d5','10:28','workspaces','hgi-shield-key',       'text-brand',     'Anucha Meesri',        'enabled two-factor for all admins',                          'Nimman Tech Meetup'),
+  ];
+
+  /* ---------- pill counts: straight off the data, so they cannot drift ---------- */
+  (function counts() {
+    var tally = { all: DATA.length };
+    DATA.forEach(function (r) { tally[r.kind] = (tally[r.kind] || 0) + 1; });
+    document.querySelectorAll('[data-count]').forEach(function (el) {
+      el.textContent = nf(tally[el.dataset.count] || 0);
+    });
+  })();
+
+  /* ---------- Today at a glance ---------- */
+  (function today() {
+    var mine = DATA.filter(function (r) { return r.day === 'd0'; });
+    var tally = {};
+    mine.forEach(function (r) { tally[r.kind] = (tally[r.kind] || 0) + 1; });
+    document.getElementById('ac-today').innerHTML =
+      '<div class="flex items-baseline justify-between border-b border-line pb-2.5">' +
+        '<p class="text-[13px] font-semibold text-ink">All events</p>' +
+        '<p class="text-[22px] font-bold tracking-tight tnum">' + nf(mine.length) + '</p>' +
+      '</div>' +
+      KINDS.map(function (k) {
+        return '<div class="flex items-center justify-between">' +
+          '<span class="badge ' + k.badge + '">' + k.label + '</span>' +
+          '<span class="text-[15px] font-bold tnum">' + nf(tally[k.key] || 0) + '</span>' +
+        '</div>';
+      }).join('');
+  })();
+
+  /* ---------- Busiest workspaces ---------- */
+  function initials(name) {
+    var words = name.replace(/[^A-Za-z0-9 ]/g, ' ').split(/\s+/).filter(Boolean);
+    return ((words[0] || '?')[0] + (words[1] ? words[1][0] : (words[0] || '?')[1] || '')).toUpperCase();
+  }
+  (function busiest() {
+    var tally = {};
+    DATA.forEach(function (r) { if (r.ws !== 'Platform') tally[r.ws] = (tally[r.ws] || 0) + 1; });
+    var rows = Object.keys(tally).map(function (name) { return { name: name, n: tally[name] }; });
+    rows.sort(function (a, b) { return b.n - a.n || a.name.localeCompare(b.name); });
+    var top = rows.slice(0, 5), max = top[0].n;
+    document.getElementById('ac-busy').innerHTML = top.map(function (r) {
+      return '<div class="flex items-center gap-3">' +
+        '<span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-soft text-[10px] font-semibold text-brand-dark dark:text-brand">' + esc(initials(r.name)) + '</span>' +
+        '<div class="min-w-0 flex-1">' +
+          '<div class="flex items-baseline justify-between gap-2">' +
+            '<p class="truncate text-[13px] font-medium text-ink">' + esc(r.name) + '</p>' +
+            '<p class="shrink-0 text-[13px] font-bold tnum">' + nf(r.n) + '</p>' +
+          '</div>' +
+          '<div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:' + (r.n / max * 100) + '%"></div></div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  })();
+
+  /* ---------- the feed ---------- */
+  var FIRST_PAGE = 23; // through Saturday 22 Aug — "show older" reveals the rest
+  var state = { kind: 'all', q: '', limit: FIRST_PAGE };
+
+  var feed = document.getElementById('ac-feed');
+  var moreWrap = document.getElementById('ac-more-wrap');
+  var moreBtn = document.getElementById('ac-more');
+  var countEl = document.getElementById('ac-count');
+
+  function matches(r) {
+    var q = state.q.trim().toLowerCase();
+    if (state.kind !== 'all' && r.kind !== state.kind) return false;
+    if (!q) return true;
+    return (r.actor + ' ' + r.text + ' ' + r.ws).toLowerCase().indexOf(q) !== -1;
+  }
+
+  function entryHTML(r) {
+    var k = KIND[r.kind];
+    var wsIcon = r.ws === 'Platform' ? 'hgi-cloud-server' : 'hgi-building-03';
+    var wsHref = r.ws === 'Platform' ? 'system-health.html' : 'workspaces.html';
+    return '<li class="flex gap-3 py-3">' +
+      '<span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-canvas ' + r.tone + '"><i class="hgi-stroke ' + r.icon + ' text-[16px]"></i></span>' +
+      '<div class="min-w-0 flex-1">' +
+        '<p class="text-[13px] leading-snug text-ink"><span class="font-semibold">' + esc(r.actor) + '</span> ' + rich(r.text) + '</p>' +
+        '<div class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px] text-muted">' +
+          '<a href="' + wsHref + '" class="inline-flex items-center gap-1 font-medium transition hover:text-ink"><i class="hgi-stroke ' + wsIcon + ' text-[12px]"></i>' + esc(r.ws) + '</a>' +
+          '<span class="h-1 w-1 rounded-full bg-hair"></span>' +
+          '<span class="tnum">' + esc(r.time) + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<span class="badge ' + k.badge + ' hidden shrink-0 self-start sm:inline-flex">' + k.label + '</span>' +
+    '</li>';
+  }
+
+  var NO_RESULTS = '<div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No activity matches</h3><p class="empty-text">Nothing in the last four weeks matches the current search and kind filter. Try a shorter search term, or widen the filters.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div>';
+
+  function render() {
+    var hits = DATA.filter(matches);
+    var total = hits.length;
+    var shown = hits.slice(0, state.limit);
+
+    if (!total) {
+      feed.innerHTML = NO_RESULTS;
+      moreWrap.hidden = true;
+      return;
+    }
+    moreWrap.hidden = false;
+
+    var html = '';
+    DAYS.forEach(function (d) {
+      var group = shown.filter(function (r) { return r.day === d.key; });
+      if (!group.length) return;
+      html +=
+        '<div class="flex items-center gap-3 pb-1 pt-4 first:pt-0">' +
+          '<h3 class="text-[11px] font-semibold uppercase tracking-wider text-muted">' + d.label + '</h3>' +
+          '<span class="text-[11px] text-muted tnum">' + d.date + '</span>' +
+          '<span class="h-px flex-1 bg-hair"></span>' +
+          '<span class="text-[11px] text-muted tnum">' + nf(group.length) + (group.length === 1 ? ' event' : ' events') + '</span>' +
+        '</div>' +
+        '<ul class="divide-y divide-line">' + group.map(entryHTML).join('') + '</ul>';
+    });
+    feed.innerHTML = html;
+
+    moreBtn.hidden = shown.length >= total;
+    countEl.textContent = 'Showing ' + nf(shown.length) + ' of ' + nf(total) + (total === 1 ? ' event' : ' events') + ' from the last 6 days';
+  }
+
+  var pills = document.getElementById('ac-pills');
+  pills.addEventListener('click', function (ev) {
+    var btn = ev.target.closest('[data-filter]'); if (!btn) return;
+    pills.querySelectorAll('[data-filter]').forEach(function (b) { b.classList.toggle('tab-active', b === btn); });
+    state.kind = btn.dataset.filter; state.limit = FIRST_PAGE; render();
+  });
+  var searchEl = document.getElementById('ac-search');
+  searchEl.addEventListener('input', function () { state.q = searchEl.value; state.limit = FIRST_PAGE; render(); });
+  moreBtn.addEventListener('click', function () { state.limit = DATA.length; render(); });
+  render();
+})();
+</script>
+</body>
+</html>

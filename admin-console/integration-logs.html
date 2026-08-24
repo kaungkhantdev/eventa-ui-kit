@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Integration logs</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="integration-logs">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="text-[22px] font-bold tracking-tight">Integration logs</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Every call in and out.</p>
+      </div>
+      <button type="button" class="btn btn-soft ml-auto shrink-0"><i class="hgi-stroke hgi-file-export text-[16px]"></i><span class="hidden sm:inline">Export window</span><span class="sm:hidden">Export</span></button>
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: no traffic has ever passed through -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-list-view"></i></span>
+      <h2 class="empty-title">No calls logged yet</h2>
+      <p class="empty-text">Every request between Eventa and a connected service is recorded here — outbound calls and incoming webhooks alike, with the workspace they belong to, the HTTP status and how long they took. The tail starts as soon as the first app is connected.</p>
+      <div class="empty-actions">
+        <a href="connected-apps.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-connect text-[15px]"></i>See connected apps</a>
+        <a href="integration-health.html" class="btn btn-ghost btn-sm">Check integration health</a>
+      </div>
+    </section>
+
+    <!-- summary tiles: the 24-hour window the log is drawn from -->
+    <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-arrow-data-transfer-horizontal text-[16px]"></i>Calls (24 h)</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">201,000</p><span class="text-[12px] text-muted tnum">vs 193k</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-alert-02 text-[16px]"></i>Errors (24 h)</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight text-red-500 tnum">7,637</p><span class="text-[12px] text-muted tnum">3,8 % of calls</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-stop-watch text-[16px]"></i>Slow (over 2 s)</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight text-amber-500 tnum">1,284</p><span class="text-[12px] text-muted tnum">0,6 % of calls</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-timer-01 text-[16px]"></i>p95 latency</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">1,420 ms</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>62 %</span></div>
+      </div>
+    </div>
+
+    <!-- filter pills -->
+    <div data-when-data class="mt-4 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button class="pilltab tab-active" data-filter="all">All <span class="pilltab-count tnum" id="c-all">0</span></button>
+      <button class="pilltab" data-filter="errors">Errors <span class="pilltab-count tnum" id="c-errors">0</span></button>
+      <button class="pilltab" data-filter="slow">Slow <span class="pilltab-count tnum" id="c-slow">0</span></button>
+    </div>
+
+    <!-- search + provider filter -->
+    <div data-when-data class="mt-2 flex w-full flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="logs-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search endpoint, workspace or status…" />
+      </div>
+      <div class="relative w-full sm:w-56">
+        <i class="hgi-stroke hgi-connect text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="logs-provider" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All providers</option>
+          <option>Stripe</option>
+          <option>PromptPay</option>
+          <option>Mailgun</option>
+          <option>Google Calendar</option>
+          <option>LINE Notify</option>
+          <option>Twilio</option>
+          <option>Zoom</option>
+          <option>Google Meet</option>
+          <option>Zapier</option>
+        </select>
+      </div>
+      <div class="relative w-full sm:w-44">
+        <i class="hgi-stroke hgi-arrow-data-transfer-horizontal text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="logs-dir" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All directions</option>
+          <option>Outbound</option>
+          <option>Inbound</option>
+        </select>
+      </div>
+    </div>
+
+    <div data-when-data class="mt-4 flex flex-wrap items-center justify-between gap-2">
+      <h2 class="text-[15px] font-bold tracking-tight">Live tail</h2>
+      <span class="text-[12px] text-muted">24 Aug 2026 · times in Asia/Bangkok (UTC+7)</span>
+    </div>
+
+    <!-- table -->
+    <section data-when-data class="card mt-2 p-4">
+      <div class="overflow-x-auto">
+        <table class="data-table min-w-[1000px]">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Provider</th>
+              <th>Direction</th>
+              <th>Endpoint</th>
+              <th>Workspace</th>
+              <th>Status</th>
+              <th class="text-right">Duration</th>
+              <th class="text-right">Detail</th>
+            </tr>
+          </thead>
+          <tbody id="log-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+
+      <div id="log-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="log-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="log-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option selected>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="log-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="log-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </div>
+  </main>
+
+  <!-- call detail slide-over -->
+  <aside class="panel" id="log-view">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">Call detail</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-4 overflow-y-auto p-4">
+      <div class="card p-3.5">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-connect text-[16px]"></i><span id="lv-provider"></span></div>
+          <span id="lv-badge"></span>
+        </div>
+        <p id="lv-endpoint" class="mt-1.5 break-all font-mono text-[13px] font-semibold text-ink"></p>
+        <p id="lv-id" class="mt-0.5 font-mono text-[11.5px] text-muted"></p>
+      </div>
+
+      <dl class="overflow-hidden rounded-lg border border-hair">
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Time</dt><dd id="lv-time" class="text-[13px] text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Direction</dt><dd id="lv-dir" class="text-[13px] text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Workspace</dt><dd id="lv-ws" class="text-[13px] text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Duration</dt><dd id="lv-dur" class="text-[13px] text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px] text-muted">Retries</dt><dd id="lv-retry" class="text-[13px] text-ink"></dd></div>
+      </dl>
+
+      <div>
+        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted">Response body</p>
+        <pre id="lv-body" class="overflow-x-auto rounded-lg border border-hair bg-canvas p-3 font-mono text-[11.5px] leading-relaxed text-muted"></pre>
+      </div>
+
+      <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
+        <i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px] text-muted"></i>
+        <p id="lv-note" class="text-[12px] text-muted"></p>
+      </div>
+    </div>
+    <footer class="flex gap-2 border-t border-hair p-4">
+      <button class="btn btn-soft flex-1" data-close>Close</button>
+      <a href="integration-health.html" class="btn btn-primary flex-1"><i class="hgi-stroke hgi-pulse-01 text-[16px]"></i>Provider health</a>
+    </footer>
+  </aside>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  var nf = function (n) { return n.toLocaleString('en-US'); };
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  /* ---------- DATA ----------
+     A 40-call tail from the same nine providers as connected-apps.html and
+     integration-health.html, in the twenty seconds to 14:41:58 — so Twilio's
+     503s and Calendar's expired grants show up here exactly as the health page
+     reports them. Pill counts are derived from these rows, never typed. */
+  var PROV = {
+    stripe:    { name:'Stripe',          icon:'hgi-credit-card' },
+    promptpay: { name:'PromptPay',       icon:'hgi-qr-code' },
+    mailgun:   { name:'Mailgun',         icon:'hgi-mail-01' },
+    gcal:      { name:'Google Calendar', icon:'hgi-calendar-03' },
+    line:      { name:'LINE Notify',     icon:'hgi-bubble-chat' },
+    twilio:    { name:'Twilio',          icon:'hgi-sms-code' },
+    zoom:      { name:'Zoom',            icon:'hgi-camera-video' },
+    gmeet:     { name:'Google Meet',     icon:'hgi-video-01' },
+    zapier:    { name:'Zapier',          icon:'hgi-workflow-square-01' }
+  };
+
+  function L(t, p, d, ep, ws, s, ms) { return { t:t, p:p, d:d, ep:ep, ws:ws, s:s, ms:ms }; }
+  var DATA = [
+    L('14:41:58','mailgun',  'out','POST /v3/messages',                 'Siam Conferences',      202, 148),
+    L('14:41:57','stripe',   'in', 'POST /hooks/stripe',                'Bangkok Jazz Co.',      200, 62),
+    L('14:41:56','promptpay','out','POST /qr/generate',                 'PTT Events',            201, 214),
+    L('14:41:55','twilio',   'out','POST /2010-04-01/Messages.json',    'Thai Tech Summit',      503, 8940),
+    L('14:41:54','gcal',     'out','PATCH /calendar/v3/events/8f2a',    'Chiang Mai Arts',       200, 486),
+    L('14:41:53','mailgun',  'in', 'POST /hooks/mailgun/delivered',     'Northern Wellness',     200, 41),
+    L('14:41:52','stripe',   'out','POST /v1/payment_intents',          'Siam Conferences',      201, 268),
+    L('14:41:51','zoom',     'out','POST /v2/users/me/meetings',        'Phuket Marine Expo',    201, 3480),
+    L('14:41:50','line',     'out','POST /v2/notify',                   'Isaan Food Fest',       200, 512),
+    L('14:41:49','gcal',     'out','POST /oauth2/token',                'Krabi Wellness Retreat',403, 322),
+    L('14:41:48','mailgun',  'out','POST /v3/messages',                 'CP Group Events',       202, 133),
+    L('14:41:47','promptpay','in', 'POST /hooks/promptpay',             'PTT Events',            200, 55),
+    L('14:41:46','stripe',   'out','GET /v1/balance',                   'Bangkok Jazz Co.',      200, 191),
+    L('14:41:45','gmeet',    'out','POST /v1/spaces',                   'Thai Tech Summit',      201, 604),
+    L('14:41:44','twilio',   'out','POST /2010-04-01/Messages.json',    'Siam Conferences',      503, 9120),
+    L('14:41:43','mailgun',  'out','POST /v3/messages',                 'Chiang Mai Arts',       202, 126),
+    L('14:41:42','gcal',     'out','POST /calendar/v3/events',          'Siam Conferences',      200, 1180),
+    L('14:41:41','zapier',   'out','POST /hooks/catch/1849302',         'Northern Wellness',     200, 742),
+    L('14:41:40','stripe',   'out','POST /v1/refunds',                  'Phuket Marine Expo',    200, 337),
+    L('14:41:39','promptpay','out','GET /txn/status',                   'Isaan Food Fest',       200, 168),
+    L('14:41:38','gcal',     'out','PATCH /calendar/v3/events/1c04',    'CP Group Events',       403, 298),
+    L('14:41:37','mailgun',  'out','POST /v3/messages',                 'PTT Events',            202, 141),
+    L('14:41:36','line',     'out','POST /v2/notify',                   'Bangkok Jazz Co.',      200, 498),
+    L('14:41:35','zoom',     'out','GET /v2/meetings/8823140',          'Thai Tech Summit',      200, 2960),
+    L('14:41:34','stripe',   'in', 'POST /hooks/stripe',                'Krabi Wellness Retreat',200, 58),
+    L('14:41:33','mailgun',  'out','POST /v3/messages',                 'Siam Conferences',      202, 119),
+    L('14:41:32','twilio',   'out','POST /2010-04-01/Messages.json',    'Chiang Mai Arts',       504, 10000),
+    L('14:41:31','promptpay','out','POST /qr/generate',                 'CP Group Events',       201, 205),
+    L('14:41:30','gcal',     'out','POST /calendar/v3/events',          'Isaan Food Fest',       200, 1310),
+    L('14:41:29','zapier',   'in', 'POST /hooks/zapier',                'Phuket Marine Expo',    200, 88),
+    L('14:41:28','mailgun',  'out','POST /v3/messages',                 'Northern Wellness',     202, 137),
+    L('14:41:27','stripe',   'out','POST /v1/payment_intents',          'Thai Tech Summit',      201, 254),
+    L('14:41:26','line',     'out','POST /v2/notify',                   'Krabi Wellness Retreat',429, 611),
+    L('14:41:25','gmeet',    'out','POST /v1/spaces',                   'Bangkok Jazz Co.',      201, 588),
+    L('14:41:24','mailgun',  'in', 'POST /hooks/mailgun/delivered',     'Siam Conferences',      200, 44),
+    L('14:41:23','promptpay','in', 'POST /hooks/promptpay',             'Chiang Mai Arts',       200, 61),
+    L('14:41:22','stripe',   'out','GET /v1/balance',                   'CP Group Events',       200, 176),
+    L('14:41:21','zoom',     'out','POST /v2/users/me/meetings',        'Isaan Food Fest',       201, 4120),
+    L('14:41:20','gcal',     'out','POST /oauth2/token',                'Phuket Marine Expo',    200, 402),
+    L('14:41:19','mailgun',  'out','POST /v3/messages',                 'Thai Tech Summit',      202, 152)
+  ];
+
+  var SLOW_MS = 2000;
+  function isErr(r) { return r.s >= 400; }
+  function isSlow(r) { return r.ms >= SLOW_MS; }
+  function statusBadge(s) { return s >= 500 ? 'badge-red' : s >= 400 ? 'badge-amber' : 'badge-green'; }
+  function durTone(ms) { return ms >= 5000 ? 'text-red-500 font-semibold' : ms >= SLOW_MS ? 'text-amber-500 font-semibold' : 'text-muted'; }
+  function dur(ms) { return ms >= 1000 ? (ms / 1000).toFixed(2).replace('.', ',') + ' s' : ms + ' ms'; }
+  function reqId(i) { return 'req_' + ('0000' + (98421 - i * 7)).slice(-5) + 'kx'; }
+
+  var BODIES = {
+    200: '{\n  "ok": true,\n  "id": "evt_8f21c4a9",\n  "status": "accepted"\n}',
+    201: '{\n  "ok": true,\n  "id": "obj_5c73b118",\n  "created": 1787654499\n}',
+    202: '{\n  "id": "<20260824.144158@mg.eventa.co.th>",\n  "message": "Queued. Thank you."\n}',
+    403: '{\n  "error": "invalid_grant",\n  "error_description": "Token has been expired or revoked."\n}',
+    429: '{\n  "message": "Too many requests",\n  "retry_after": 30\n}',
+    503: '{\n  "code": 21610,\n  "message": "Service unavailable — carrier gateway rejected the message"\n}',
+    504: '{\n  "error": "upstream_timeout",\n  "detail": "No response within 10 000 ms"\n}'
+  };
+  var NOTES = {
+    ok:  'Completed on the first attempt. Payload and headers are retained for 30 days, then dropped.',
+    403: 'The workspace’s OAuth grant is no longer valid — the organizer has to reconnect the app before these calls succeed.',
+    429: 'The provider rate-limited this workspace. Eventa backs off and retries automatically.',
+    503: 'The provider refused the call. Retries continue with backoff; the incident is open on the health page.',
+    504: 'No response before the timeout. The call is retried, and a duplicate may reach the provider.'
+  };
+
+  /* ---------- state + filtering ---------- */
+  var state = { filter: 'all', page: 0, size: 20 };
+  var searchEl = document.getElementById('logs-search');
+  var provEl = document.getElementById('logs-provider');
+  var dirEl = document.getElementById('logs-dir');
+  var tbody = document.getElementById('log-rows');
+  var elShowing = document.getElementById('log-showing');
+  var elPrev = document.getElementById('log-prev');
+  var elNext = document.getElementById('log-next');
+  var elSize = document.getElementById('log-size');
+
+  function matches(r) {
+    if (state.filter === 'errors' && !isErr(r)) return false;
+    if (state.filter === 'slow' && !isSlow(r)) return false;
+    if (provEl.selectedIndex > 0 && PROV[r.p].name !== provEl.value) return false;
+    if (dirEl.selectedIndex === 1 && r.d !== 'out') return false;
+    if (dirEl.selectedIndex === 2 && r.d !== 'in') return false;
+    var q = searchEl.value.trim().toLowerCase();
+    if (q) {
+      var hay = (r.ep + ' ' + r.ws + ' ' + PROV[r.p].name + ' ' + r.s + ' ' + r.t).toLowerCase();
+      if (hay.indexOf(q) === -1) return false;
+    }
+    return true;
+  }
+
+  /* pill counts come from the data, so they can never drift from the table */
+  document.getElementById('c-all').textContent = nf(DATA.length);
+  document.getElementById('c-errors').textContent = nf(DATA.filter(isErr).length);
+  document.getElementById('c-slow').textContent = nf(DATA.filter(isSlow).length);
+
+  function rowHTML(r, i) {
+    var p = PROV[r.p];
+    var arrow = r.d === 'out' ? 'hgi-arrow-up-right-01' : 'hgi-arrow-down-left-01';
+    var dirLabel = r.d === 'out' ? 'Outbound' : 'Inbound';
+    return '<tr>' +
+      '<td class="whitespace-nowrap font-mono text-[12px] text-muted tnum">' + r.t + '</td>' +
+      '<td><div class="flex items-center gap-2"><span class="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-canvas text-ink"><i class="hgi-stroke ' + p.icon + ' text-[13px]"></i></span><span class="whitespace-nowrap font-medium text-ink">' + esc(p.name) + '</span></div></td>' +
+      '<td><span class="inline-flex items-center gap-1 whitespace-nowrap text-[12px] text-muted"><i class="hgi-stroke ' + arrow + ' text-[13px]"></i>' + dirLabel + '</span></td>' +
+      '<td><span class="font-mono text-[12px] text-ink">' + esc(r.ep) + '</span></td>' +
+      '<td class="text-muted">' + esc(r.ws) + '</td>' +
+      '<td><span class="badge ' + statusBadge(r.s) + ' font-mono">' + r.s + '</span></td>' +
+      '<td class="whitespace-nowrap text-right tnum ' + durTone(r.ms) + '">' + dur(r.ms) + '</td>' +
+      '<td class="text-right"><button class="btn-icon" title="View call" data-open="log-view" data-log="' + i + '"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>' +
+      '</tr>';
+  }
+
+  var NO_RESULTS = '<tr><td colspan="8"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No calls match</h3><p class="empty-text">Nothing matches the current search, tab, provider and direction. Try a shorter search term, or widen the filters.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
+
+  function render() {
+    var list = [];
+    for (var i = 0; i < DATA.length; i++) if (matches(DATA[i])) list.push({ r: DATA[i], i: i });
+    var total = list.length, pages = Math.max(1, Math.ceil(total / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    var start = state.page * state.size, slice = list.slice(start, start + state.size);
+    tbody.innerHTML = slice.length ? slice.map(function (x) { return rowHTML(x.r, x.i); }).join('') : NO_RESULTS;
+    if (total === 0) elShowing.textContent = 'No calls';
+    else elShowing.innerHTML = 'Showing <span class="font-semibold text-ink tnum">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> calls';
+    elPrev.disabled = total === 0 || state.page === 0;
+    elNext.disabled = total === 0 || state.page >= pages - 1;
+  }
+
+  /* ---------- wire controls ---------- */
+  searchEl.addEventListener('input', function () { state.page = 0; render(); });
+  provEl.addEventListener('change', function () { state.page = 0; render(); });
+  dirEl.addEventListener('change', function () { state.page = 0; render(); });
+  elSize.addEventListener('change', function () { state.size = +this.value; state.page = 0; render(); });
+  elPrev.addEventListener('click', function () { if (state.page > 0) { state.page--; render(); } });
+  elNext.addEventListener('click', function () { state.page++; render(); });
+  document.querySelectorAll('[data-filter]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('[data-filter]').forEach(function (x) { x.classList.toggle('tab-active', x === b); });
+      state.filter = b.dataset.filter;
+      state.page = 0;
+      render();
+    });
+  });
+  render();
+
+  /* ---------- call detail slide-over (shell.js does the opening) ---------- */
+  var lv = {
+    provider: document.getElementById('lv-provider'),
+    badge: document.getElementById('lv-badge'),
+    endpoint: document.getElementById('lv-endpoint'),
+    id: document.getElementById('lv-id'),
+    time: document.getElementById('lv-time'),
+    dir: document.getElementById('lv-dir'),
+    ws: document.getElementById('lv-ws'),
+    dur: document.getElementById('lv-dur'),
+    retry: document.getElementById('lv-retry'),
+    body: document.getElementById('lv-body'),
+    note: document.getElementById('lv-note')
+  };
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-log]');
+    if (!t) return;
+    var i = +t.getAttribute('data-log'), r = DATA[i];
+    if (!r) return;
+    lv.provider.textContent = PROV[r.p].name;
+    lv.badge.className = 'badge ' + statusBadge(r.s);
+    lv.badge.textContent = r.s + (r.s >= 500 ? ' Server error' : r.s >= 400 ? ' Client error' : ' OK');
+    lv.endpoint.textContent = r.ep;
+    lv.id.textContent = reqId(i);
+    lv.time.textContent = '24 Aug 2026 · ' + r.t;
+    lv.dir.textContent = r.d === 'out' ? 'Outbound · Eventa → provider' : 'Inbound · provider → Eventa';
+    lv.ws.textContent = r.ws;
+    lv.dur.textContent = dur(r.ms);
+    lv.retry.textContent = isErr(r) ? '2 of 3 · next in 40 s' : 'None';
+    lv.body.textContent = BODIES[r.s] || '{}';
+    lv.note.textContent = NOTES[r.s] || NOTES.ok;
+  });
+})();
+</script>
+</body>
+</html>

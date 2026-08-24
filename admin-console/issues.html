@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Issues</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="issues">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="text-[22px] font-bold tracking-tight">Issues</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Things wrong right now.</p>
+      </div>
+      <button class="relative ml-auto grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: nothing is being monitored yet, because nobody has signed up -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-alert-02"></i></span>
+      <h2 class="empty-title">Nothing is failing</h2>
+      <p class="empty-text">Eventa watches every workspace on its own — failing payouts, restricted payment accounts, bouncing sender domains, webhook endpoints returning errors. Anything it detects lands here, worst first. Nobody has to raise it.</p>
+      <div class="empty-actions">
+        <a href="system-health.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-pulse-01 text-[15px]"></i>Check system health</a>
+        <a href="support-tickets.html" class="btn btn-ghost btn-sm">See customer tickets</a>
+      </div>
+    </section>
+
+    <!-- summary -->
+    <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-alert-02 text-[16px]"></i>Open</div>
+        <div class="mt-2 flex items-end justify-between"><p id="k-open" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="text-[12px] text-muted">of <span id="k-total" class="tnum">0</span> tracked</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-alert-diamond text-[16px]"></i>Critical or high, open</div>
+        <div class="mt-2 flex items-end justify-between"><p id="k-severe" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>2 today</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-building-03 text-[16px]"></i>Workspaces impacted</div>
+        <div class="mt-2 flex items-end justify-between"><p id="k-ws" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="text-[12px] text-muted">of 312</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i>Resolved (30 days)</div>
+        <div class="mt-2 flex items-end justify-between"><p id="k-resolved" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>1,6 h median</span></div>
+      </div>
+    </div>
+
+    <!-- severity tabs -->
+    <div data-when-data data-tabs="#issue-table" class="mt-4 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count tnum" data-count="all">0</span></button>
+      <button class="pilltab" data-tab="Critical">Critical <span class="pilltab-count tnum" data-count="Critical">0</span></button>
+      <button class="pilltab" data-tab="High">High <span class="pilltab-count tnum" data-count="High">0</span></button>
+      <button class="pilltab" data-tab="Medium">Medium <span class="pilltab-count tnum" data-count="Medium">0</span></button>
+      <button class="pilltab" data-tab="Low">Low <span class="pilltab-count tnum" data-count="Low">0</span></button>
+    </div>
+
+    <!-- search + status filter -->
+    <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="iss-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search issues or workspaces…" />
+      </div>
+      <div class="relative w-full sm:w-52">
+        <i class="hgi-stroke hgi-filter text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="iss-status" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All statuses</option>
+          <option>Open</option>
+          <option>Acknowledged</option>
+          <option>Resolved</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- table -->
+    <section data-when-data class="mt-3 rounded-2xl bg-surface p-4 lg:p-5">
+      <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+        <h2 class="text-[16px] font-bold tracking-tight">Detected issues</h2>
+        <span class="text-[12px] text-muted">Worst first · times are Asia/Bangkok</span>
+      </div>
+      <div id="issue-table" class="overflow-x-auto">
+        <table class="data-table min-w-[940px]">
+          <thead>
+            <tr><th>Severity</th><th>Issue</th><th>Workspaces</th><th>First seen</th><th>Status</th><th class="text-right">Details</th></tr>
+          </thead>
+          <tbody id="iss-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+
+      <div id="iss-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="iss-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="iss-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="iss-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="iss-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </div>
+  </main>
+
+  <!-- issue detail slide-over -->
+  <aside class="panel" id="issue-view">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">Issue detail</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-4 overflow-y-auto p-4">
+      <div class="rounded-xl border border-hair p-3.5">
+        <div class="flex items-center justify-between gap-2">
+          <span id="iv-sev"></span>
+          <p id="iv-id" class="font-mono text-[12px] text-muted"></p>
+        </div>
+        <h4 id="iv-title" class="mt-2 text-[16px] font-bold tracking-tight"></h4>
+        <p id="iv-detail" class="mt-1 text-[12.5px] leading-relaxed text-muted"></p>
+      </div>
+
+      <dl class="overflow-hidden rounded-lg border border-hair">
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Detected by</dt><dd id="iv-source" class="text-[13px] font-medium text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">First seen</dt><dd id="iv-first" class="text-[13px] text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Last seen</dt><dd id="iv-last" class="text-[13px] text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px] text-muted">Status</dt><dd id="iv-status" class="text-[13px] font-medium text-ink"></dd></div>
+      </dl>
+
+      <div>
+        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted">Affected workspaces (<span id="iv-wscount" class="tnum">0</span>)</p>
+        <div id="iv-ws" class="flex flex-wrap gap-1.5"></div>
+      </div>
+
+      <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
+        <i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px] text-muted"></i>
+        <p id="iv-next" class="text-[12px] text-muted"></p>
+      </div>
+
+      <a id="iv-link" href="#" class="btn btn-soft w-full"><i class="hgi-stroke hgi-arrow-right-01 text-[16px]"></i><span id="iv-link-label">Open</span></a>
+    </div>
+    <footer class="flex gap-2 border-t border-hair p-4">
+      <button class="btn btn-soft flex-1" data-close>Close</button>
+      <button id="iv-action" class="btn btn-primary flex-1"></button>
+    </footer>
+  </aside>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  const nf = n => n.toLocaleString('en-US');
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  /* ---------- DATA ----------
+     Platform-detected problems, not human reports. The four rows Overview's
+     "Needs attention" block links to are the first four here, with the same
+     numbers: payouts failing (3 workspaces), Google Calendar at 12 % errors,
+     7 overdue subscriptions worth ฿82,400, and the outbox relay 4 min behind.
+     Ordering is status (Open → Acknowledged → Resolved) then severity, so the
+     array below is already in display order and Array.sort keeps it stable. */
+  const DATA = [
+    { id: 'ISS-1042', sev: 'Critical', status: 'Open', title: 'Payouts failing',
+      detail: 'Stripe account restricted — 3 payouts returned unpaid.', source: 'Payments monitor',
+      first: 'Aug 24, 09:12', last: 'Aug 24, 10:04',
+      ws: ['Siam Conferences', 'Phuket Marathon', 'Korat Motor Show'],
+      next: 'Each account needs its verification documents re-submitted to Stripe before payouts resume. Contact the workspace owners.',
+      link: { label: 'Open billing payments', href: 'billing-payments.html' } },
+
+    { id: 'ISS-1041', sev: 'Critical', status: 'Open', title: 'Webhook endpoint returning 5xx',
+      detail: 'registration.siamconf.co.th — 502 on 40 of the last 40 deliveries.', source: 'Integration health',
+      first: 'Aug 24, 07:48', last: 'Aug 24, 10:11',
+      ws: ['Siam Conferences'],
+      next: 'Deliveries retry for 24 h and then drop. The endpoint is the customer’s, so this needs an outbound note rather than a platform fix.',
+      link: { label: 'Open integration health', href: 'integration-health.html' } },
+
+    { id: 'ISS-1040', sev: 'High', status: 'Open', title: 'Integration degraded — Google Calendar',
+      detail: '12 % error rate on token refresh over the last hour.', source: 'Integration health',
+      first: 'Aug 23, 22:05', last: 'Aug 24, 10:09',
+      ws: ['Bangkok Jazz Co.', 'PTT Events', 'Chiang Mai Arts', 'Thonglor Tech Meetup', 'Silom Design Week', 'Hua Hin Wine Fair'],
+      next: 'Errors are concentrated on refresh tokens older than 90 days. A forced reconnect clears it per workspace.',
+      link: { label: 'Open integration health', href: 'integration-health.html' } },
+
+    { id: 'ISS-1039', sev: 'High', status: 'Open', title: 'Invoices overdue',
+      detail: '7 subscriptions past due — ฿82,400 outstanding.', source: 'Billing',
+      first: 'Aug 21, 06:00', last: 'Aug 24, 06:00',
+      ws: ['Northern Wellness', 'Isaan Food Festival', 'Rama Medical Congress', 'Krungthep Startups', 'Andaman Dive Expo', 'Nonthaburi Youth Sports', 'Korat Motor Show'],
+      next: 'Dunning has run three times on each. The next step is a manual reach-out before the workspaces are downgraded.',
+      link: { label: 'Open billing payments', href: 'billing-payments.html' } },
+
+    { id: 'ISS-1037', sev: 'Medium', status: 'Open', title: 'Outbox lag',
+      detail: 'Relay behind by 4 min — 1,840 messages queued.', source: 'Outbox monitor',
+      first: 'Aug 24, 08:30', last: 'Aug 24, 10:12',
+      ws: [],
+      next: 'Platform-wide, not tenant-specific. Confirmation emails still send, they just arrive late.',
+      link: { label: 'Open system health', href: 'system-health.html' } },
+
+    { id: 'ISS-1036', sev: 'Medium', status: 'Open', title: 'SMS delivery failing on one carrier',
+      detail: 'AIS shortcode rejected 118 messages in 24 h.', source: 'Messaging monitor',
+      first: 'Aug 22, 19:40', last: 'Aug 24, 09:55',
+      ws: ['PTT Events', 'Phuket Marathon', 'Krungthep Startups', 'Isaan Food Festival'],
+      next: 'The shortcode registration is under review with the carrier. Email reminders are unaffected.',
+      link: { label: 'Open system health', href: 'system-health.html' } },
+
+    { id: 'ISS-1034', sev: 'Medium', status: 'Open', title: 'Card payments declining at 3-D Secure',
+      detail: '9 % of attempts abandon at the bank challenge step.', source: 'Payments monitor',
+      first: 'Aug 22, 11:05', last: 'Aug 24, 09:30',
+      ws: ['Siam Conferences', 'Silom Design Week', 'Andaman Dive Expo', 'Hua Hin Wine Fair', 'Chiang Mai Arts'],
+      next: 'Declines cluster on one issuing bank. Worth confirming with Stripe before treating it as a checkout problem.',
+      link: { label: 'Open billing payments', href: 'billing-payments.html' } },
+
+    { id: 'ISS-1033', sev: 'Low', status: 'Open', title: 'Custom domain certificate expiring',
+      detail: 'events.chiangmaiarts.org — 12 days left, renewal not yet confirmed.', source: 'Platform monitor',
+      first: 'Aug 19, 09:00', last: 'Aug 24, 09:00',
+      ws: ['Chiang Mai Arts'],
+      next: 'Renewal is automatic at 7 days. This only becomes an issue if the DNS record has moved.',
+      link: { label: 'Open system health', href: 'system-health.html' } },
+
+    { id: 'ISS-1032', sev: 'Low', status: 'Open', title: 'Zoom refresh token expiring',
+      detail: 'OAuth refresh token expires in 9 days.', source: 'Integration health',
+      first: 'Aug 18, 14:20', last: 'Aug 24, 08:20',
+      ws: ['Thonglor Tech Meetup'],
+      next: 'The workspace is prompted to reconnect on its next sign-in. No action needed unless it lapses.',
+      link: { label: 'Open connected apps', href: 'connected-apps.html' } },
+
+    { id: 'ISS-1038', sev: 'High', status: 'Acknowledged', title: 'Sender domain bouncing',
+      detail: 'mail.bkkjazz.co.th — 34 % hard bounce rate.', source: 'Email delivery',
+      first: 'Aug 23, 15:30', last: 'Aug 24, 07:40',
+      ws: ['Bangkok Jazz Co.'],
+      next: 'Acknowledged by Nutcha P. The DKIM record is missing a selector; the workspace has been asked to fix it.',
+      link: { label: 'Open customer tickets', href: 'support-tickets.html' } },
+
+    { id: 'ISS-1035', sev: 'Medium', status: 'Acknowledged', title: 'Storage over plan limit',
+      detail: 'Event media at 118 % of the Enterprise allowance.', source: 'Usage monitor',
+      first: 'Aug 20, 10:15', last: 'Aug 24, 04:00',
+      ws: ['PTT Events'],
+      next: 'Acknowledged by Praew L. Overage is billed monthly; a limit increase is being quoted.',
+      link: { label: 'Open usage and limits', href: 'usage-limits.html' } },
+
+    { id: 'ISS-1031', sev: 'Low', status: 'Acknowledged', title: 'Report exports running slow',
+      detail: 'p95 export time 42 s against a 15 s target.', source: 'Platform monitor',
+      first: 'Aug 17, 08:45', last: 'Aug 23, 18:12',
+      ws: ['Rama Medical Congress', 'Nonthaburi Youth Sports'],
+      next: 'Acknowledged by Danai K. Both workspaces export very large attendee sets; a queued export is planned.',
+      link: { label: 'Open jobs', href: 'jobs.html' } },
+
+    { id: 'ISS-1029', sev: 'High', status: 'Resolved', title: 'Ticket emails delayed',
+      detail: 'Queue backlog of 22,000 messages cleared after a relay restart.', source: 'Outbox monitor',
+      first: 'Aug 16, 13:10', last: 'Aug 16, 17:55',
+      ws: ['Siam Conferences', 'Bangkok Jazz Co.', 'PTT Events', 'Chiang Mai Arts', 'Phuket Marathon', 'Isaan Food Festival', 'Krungthep Startups', 'Silom Design Week', 'Korat Motor Show'],
+      next: 'Resolved after 4 h 45 m. Relay capacity was doubled to keep the backlog from recurring.',
+      link: { label: 'Open system health', href: 'system-health.html' } },
+
+    { id: 'ISS-1026', sev: 'High', status: 'Resolved', title: 'Refunds stuck in pending',
+      detail: '12 refunds sat unsettled for over 48 h.', source: 'Payments monitor',
+      first: 'Aug 12, 09:35', last: 'Aug 13, 11:20',
+      ws: ['Siam Conferences', 'PTT Events', 'Phuket Marathon'],
+      next: 'Resolved after 25 h 45 m. A Stripe webhook replay settled every pending refund.',
+      link: { label: 'Open billing payments', href: 'billing-payments.html' } },
+
+    { id: 'ISS-1028', sev: 'Medium', status: 'Resolved', title: 'Check-in API latency spike',
+      detail: 'p95 1.9 s during a 4,000-attendee door opening.', source: 'Platform monitor',
+      first: 'Aug 15, 20:02', last: 'Aug 15, 21:38',
+      ws: ['Rama Medical Congress'],
+      next: 'Resolved after 1 h 36 m. Check-in reads now go to a read replica.',
+      link: { label: 'Open system health', href: 'system-health.html' } },
+
+    { id: 'ISS-1025', sev: 'Medium', status: 'Resolved', title: 'Bulk import job failed',
+      detail: 'Attendee CSV rejected — 1,204 rows with a malformed date column.', source: 'Jobs',
+      first: 'Aug 11, 16:28', last: 'Aug 11, 18:02',
+      ws: ['Isaan Food Festival'],
+      next: 'Resolved after 1 h 34 m. The importer now reports the first bad row instead of failing silently.',
+      link: { label: 'Open jobs', href: 'jobs.html' } },
+
+    { id: 'ISS-1027', sev: 'Low', status: 'Resolved', title: 'Nightly analytics job retried',
+      detail: 'Two retries before completing; no data was lost.', source: 'Jobs',
+      first: 'Aug 14, 03:15', last: 'Aug 14, 04:02',
+      ws: [],
+      next: 'Resolved after 47 m. Platform-wide job, no tenant impact.',
+      link: { label: 'Open jobs', href: 'jobs.html' } },
+
+    { id: 'ISS-1024', sev: 'Low', status: 'Resolved', title: 'Duplicate webhook deliveries',
+      detail: '38 events delivered twice inside one minute.', source: 'Integration health',
+      first: 'Aug 10, 12:50', last: 'Aug 10, 13:40',
+      ws: ['Silom Design Week', 'Thonglor Tech Meetup'],
+      next: 'Resolved after 50 m. Both endpoints are idempotent, so nothing was double-counted.',
+      link: { label: 'Open integration logs', href: 'integration-logs.html' } }
+  ];
+
+  const SEV_RANK = { Critical: 0, High: 1, Medium: 2, Low: 3 };
+  const ST_RANK = { Open: 0, Acknowledged: 1, Resolved: 2 };
+  DATA.sort((a, b) => (ST_RANK[a.status] - ST_RANK[b.status]) || (SEV_RANK[a.sev] - SEV_RANK[b.sev]));
+
+  /* ---------- row markup ---------- */
+  const SEV_BADGE = { Critical: 'badge-red', High: 'badge-amber', Medium: 'badge-blue', Low: 'badge-gray' };
+  const ST_DOT = { Open: 'bg-red-500', Acknowledged: 'bg-amber-500', Resolved: 'bg-brand' };
+
+  function sevBadge(s) { return '<span class="badge ' + SEV_BADGE[s] + '">' + esc(s) + '</span>'; }
+  function statusCell(s) {
+    return '<span class="inline-flex items-center gap-1.5 whitespace-nowrap text-[12.5px] font-medium text-ink">' +
+      '<span class="h-1.5 w-1.5 shrink-0 rounded-full ' + ST_DOT[s] + '"></span>' + esc(s) + '</span>';
+  }
+  function wsCell(ws) {
+    if (!ws.length) return '<span class="text-muted">Platform-wide</span>';
+    if (ws.length === 1) return '<span class="text-ink">' + esc(ws[0]) + '</span>';
+    return '<span class="text-ink">' + esc(ws[0]) + '</span> <span class="text-muted tnum">+' + (ws.length - 1) + '</span>';
+  }
+  function rowHTML(i) {
+    return '<tr>' +
+      '<td>' + sevBadge(i.sev) + '</td>' +
+      '<td><p class="font-medium text-ink">' + esc(i.title) + '</p><p class="mt-0.5 text-[11.5px] text-muted">' + esc(i.detail) + '</p></td>' +
+      '<td>' + wsCell(i.ws) + '</td>' +
+      '<td class="whitespace-nowrap text-muted tnum">' + esc(i.first) + '</td>' +
+      '<td>' + statusCell(i.status) + '</td>' +
+      '<td class="text-right"><button class="btn-icon" title="View issue" data-open="issue-view" data-view="' + esc(i.id) + '"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>' +
+    '</tr>';
+  }
+
+  /* ---------- summary tiles (derived, so they always match the rows) ---------- */
+  const open = DATA.filter(i => i.status === 'Open');
+  const resolved = DATA.filter(i => i.status === 'Resolved');
+  const impacted = new Set();
+  DATA.forEach(i => { if (i.status !== 'Resolved') i.ws.forEach(w => impacted.add(w)); });
+  document.getElementById('k-open').textContent = nf(open.length);
+  document.getElementById('k-total').textContent = nf(DATA.length);
+  document.getElementById('k-severe').textContent = nf(open.filter(i => i.sev === 'Critical' || i.sev === 'High').length);
+  document.getElementById('k-ws').textContent = nf(impacted.size);
+  document.getElementById('k-resolved').textContent = nf(resolved.length);
+
+  document.querySelector('[data-count="all"]').textContent = nf(DATA.length);
+  ['Critical', 'High', 'Medium', 'Low'].forEach(s => {
+    document.querySelector('[data-count="' + s + '"]').textContent = nf(DATA.filter(i => i.sev === s).length);
+  });
+
+  /* ---------- state + filtering ---------- */
+  const state = { tab: 'all', q: '', status: 'All statuses', page: 0, size: 10 };
+  function filtered() {
+    const q = state.q.trim().toLowerCase();
+    return DATA.filter(i => {
+      if (state.tab !== 'all' && i.sev !== state.tab) return false;
+      if (state.status !== 'All statuses' && i.status !== state.status) return false;
+      if (!q) return true;
+      return (i.title + ' ' + i.detail + ' ' + i.id + ' ' + i.source + ' ' + i.ws.join(' ')).toLowerCase().indexOf(q) > -1;
+    });
+  }
+
+  const tbody = document.getElementById('iss-rows');
+  const showing = document.getElementById('iss-showing');
+  const prevBtn = document.getElementById('iss-prev');
+  const nextBtn = document.getElementById('iss-next');
+
+  function render() {
+    const list = filtered(), total = list.length, pages = Math.max(1, Math.ceil(total / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    const start = state.page * state.size, slice = list.slice(start, start + state.size);
+    tbody.innerHTML = slice.length
+      ? slice.map(rowHTML).join('')
+      : '<tr><td colspan="6"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No issues match</h3><p class="empty-text">Nothing matches the current search, severity tab and status filter. Try widening them to see more issues.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
+    showing.innerHTML = total === 0
+      ? 'No issues'
+      : 'Showing <span class="font-semibold text-ink">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> issues';
+    prevBtn.disabled = total === 0 || state.page === 0;
+    nextBtn.disabled = total === 0 || state.page >= pages - 1;
+  }
+
+  /* ---------- wire controls ---------- */
+  document.getElementById('iss-search').addEventListener('input', function () { state.q = this.value; state.page = 0; render(); });
+  document.getElementById('iss-status').addEventListener('change', function () { state.status = this.value; state.page = 0; render(); });
+  document.getElementById('iss-size').addEventListener('change', function () { state.size = +this.value; state.page = 0; render(); });
+  prevBtn.addEventListener('click', () => { if (state.page > 0) { state.page--; render(); } });
+  nextBtn.addEventListener('click', () => { state.page++; render(); });
+  document.querySelector('[data-tabs]').addEventListener('click', e => {
+    const t = e.target.closest('[data-tab]'); if (!t) return;
+    state.tab = t.getAttribute('data-tab'); state.page = 0; render();
+  });
+
+  /* ---------- detail slide-over ---------- */
+  const iv = {
+    sev: document.getElementById('iv-sev'), id: document.getElementById('iv-id'),
+    title: document.getElementById('iv-title'), detail: document.getElementById('iv-detail'),
+    source: document.getElementById('iv-source'), first: document.getElementById('iv-first'),
+    last: document.getElementById('iv-last'), status: document.getElementById('iv-status'),
+    ws: document.getElementById('iv-ws'), wscount: document.getElementById('iv-wscount'),
+    next: document.getElementById('iv-next'), link: document.getElementById('iv-link'),
+    linkLabel: document.getElementById('iv-link-label'), action: document.getElementById('iv-action')
+  };
+  function openView(id) {
+    const i = DATA.find(x => x.id === id); if (!i) return;
+    iv.sev.innerHTML = sevBadge(i.sev);
+    iv.id.textContent = i.id;
+    iv.title.textContent = i.title;
+    iv.detail.textContent = i.detail;
+    iv.source.textContent = i.source;
+    iv.first.textContent = i.first;
+    iv.last.textContent = i.last;
+    iv.status.innerHTML = statusCell(i.status);
+    iv.wscount.textContent = nf(i.ws.length);
+    iv.ws.innerHTML = i.ws.length
+      ? i.ws.map(w => '<span class="rounded-lg border border-hair px-2 py-1 text-[12px] font-medium text-ink">' + esc(w) + '</span>').join('')
+      : '<span class="text-[12.5px] text-muted">Platform-wide — no single workspace is the cause.</span>';
+    iv.next.textContent = i.next;
+    iv.link.href = i.link.href;
+    iv.linkLabel.textContent = i.link.label;
+    if (i.status === 'Open') {
+      iv.action.className = 'btn btn-primary flex-1';
+      iv.action.innerHTML = '<i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i>Acknowledge';
+    } else if (i.status === 'Acknowledged') {
+      iv.action.className = 'btn btn-primary flex-1';
+      iv.action.innerHTML = '<i class="hgi-stroke hgi-tick-double-01 text-[16px]"></i>Mark resolved';
+    } else {
+      iv.action.className = 'hidden';
+    }
+  }
+  tbody.addEventListener('click', e => {
+    const v = e.target.closest('[data-view]');
+    if (v) openView(v.getAttribute('data-view'));
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

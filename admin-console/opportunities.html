@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Opportunities</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="opportunities">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="truncate text-[22px] font-bold tracking-tight">Opportunities</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Where the product is losing people.</p>
+      </div>
+      <!-- like the exemplar's range control, the page action drops out below sm;
+           the bell then carries ml-auto so the right-hand group stays pinned -->
+      <button type="button" class="btn btn-soft hidden shrink-0 sm:ml-auto sm:inline-flex" data-open="opp-method"><i class="hgi-stroke hgi-help-circle text-[16px]"></i>How impact is estimated</button>
+      <button class="relative ml-auto grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink sm:ml-0" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: an opportunity is derived from product usage, so nothing exists
+         until workspaces have been using Eventa for long enough to measure -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-target-02"></i></span>
+      <h2 class="empty-title">No opportunities yet</h2>
+      <p class="empty-text">An opportunity is a place where workspaces drop out — a step nobody finishes, a feature nobody finds. They are derived from usage across every tenant, so this list fills itself once there are 30 days of activity to read.</p>
+      <div class="empty-actions">
+        <a href="adoption.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-chart-line-data-01 text-[15px]"></i>See adoption</a>
+        <a href="recommendations.html" class="btn btn-ghost btn-sm">Browse recommendations</a>
+      </div>
+    </section>
+
+    <!-- summary -->
+    <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-target-02 text-[16px]"></i>Open opportunities</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">6</p><span class="text-[11.5px] text-muted">2 new this month</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-building-03 text-[16px]"></i>Workspaces affected</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">241</p><span class="text-[11.5px] text-muted">of 312 · distinct</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-money-bag-02 text-[16px]"></i>Revenue impact (annual)</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">฿4.64M</p><span class="text-[11.5px] text-muted">sum of all six</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-checkmark-badge-01 text-[16px]"></i>High confidence</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">3</p><span class="text-[11.5px] text-muted">2 medium · 1 low</span></div>
+      </div>
+    </div>
+
+    <!-- one workspace can sit inside several opportunities, so the per-card counts
+         add up to more than the 241 distinct workspaces in the tile above -->
+    <p data-when-data class="mt-2.5 flex items-start gap-1.5 text-[11.5px] text-muted">
+      <i class="hgi-stroke hgi-information-circle mt-px text-[13px]"></i>
+      A workspace can appear in more than one opportunity, so the counts below sum to more than 241.
+    </p>
+
+    <!-- search + area filter -->
+    <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="opp-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search opportunities…" />
+      </div>
+      <div class="relative w-full sm:w-52">
+        <i class="hgi-stroke hgi-checkmark-badge-01 text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="opp-confidence" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All confidence</option>
+          <option>High</option>
+          <option>Medium</option>
+          <option>Low</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- area tabs -->
+    <!-- data-pill-group / data-pill let the shell's global [data-clear-filters]
+         button reset the tab back to "All" along with the search and select -->
+    <div data-when-data data-pill-group data-tabs="#opp-list" class="mt-3 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button class="pilltab tab-active" data-pill data-tab="all">All <span class="pilltab-count tnum" data-count="all">6</span></button>
+      <button class="pilltab" data-pill data-tab="Activation">Activation <span class="pilltab-count tnum" data-count="Activation">2</span></button>
+      <button class="pilltab" data-pill data-tab="Retention">Retention <span class="pilltab-count tnum" data-count="Retention">2</span></button>
+      <button class="pilltab" data-pill data-tab="Reliability">Reliability <span class="pilltab-count tnum" data-count="Reliability">2</span></button>
+    </div>
+
+    <!-- ranked cards -->
+    <div data-when-data class="mt-3">
+      <div class="mb-2.5 flex flex-wrap items-center justify-between gap-2">
+        <h2 class="text-[15px] font-bold tracking-tight">Ranked by annual revenue impact</h2>
+        <span id="opp-showing" class="text-[12px] text-muted"></span>
+      </div>
+      <div id="opp-list" class="grid gap-3 xl:grid-cols-2"></div>
+    </div>
+
+    </div>
+  </main>
+
+  <!-- opportunity detail slide-over -->
+  <aside class="panel" id="opp-view">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">Opportunity</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-4 overflow-y-auto p-4">
+      <div>
+        <div class="flex flex-wrap items-center gap-2">
+          <span id="ov-id" class="font-mono text-[12px] text-muted"></span>
+          <span id="ov-area"></span>
+        </div>
+        <h4 id="ov-title" class="mt-1.5 text-[16px] font-bold leading-snug tracking-tight"></h4>
+        <p id="ov-summary" class="mt-1.5 text-[12.5px] leading-relaxed text-muted"></p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2">
+        <div class="rounded-xl border border-hair bg-canvas p-3">
+          <p class="text-[11px] text-muted">Workspaces affected</p>
+          <p id="ov-ws" class="mt-1 text-[18px] font-bold tracking-tight tnum"></p>
+        </div>
+        <div class="rounded-xl border border-hair bg-canvas p-3">
+          <p class="text-[11px] text-muted">Revenue impact / yr</p>
+          <p id="ov-impact" class="mt-1 text-[18px] font-bold tracking-tight tnum"></p>
+        </div>
+      </div>
+
+      <div>
+        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted">Evidence</p>
+        <ul id="ov-evidence" class="space-y-2 text-[12.5px] leading-relaxed text-ink"></ul>
+      </div>
+
+      <div>
+        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted">Affected workspaces by plan</p>
+        <div id="ov-segments" class="space-y-2"></div>
+      </div>
+
+      <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
+        <i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px] text-muted"></i>
+        <p id="ov-note" class="text-[12px] leading-relaxed text-muted"></p>
+      </div>
+    </div>
+    <footer class="flex gap-2 border-t border-hair p-4">
+      <button class="btn btn-soft flex-1" data-close>Close</button>
+      <a id="ov-rec" href="recommendations.html" class="btn btn-primary flex-1"><i class="hgi-stroke hgi-idea-01 text-[16px]"></i>Recommendation</a>
+    </footer>
+  </aside>
+
+  <!-- method slide-over -->
+  <aside class="panel" id="opp-method">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">How impact is estimated</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-4 overflow-y-auto p-4">
+      <div class="flex flex-col items-center rounded-xl border border-hair bg-canvas p-5 text-center">
+        <span class="grid h-12 w-12 place-items-center rounded-2xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-target-02 text-[24px]"></i></span>
+        <h4 class="mt-3 text-[15px] font-bold tracking-tight">An estimate, not a forecast</h4>
+        <p class="mt-1 text-[12.5px] leading-relaxed text-muted">Every figure on this page is a modelled upper bound on what could be recovered — it is what the loss is worth if the friction disappeared entirely, which it never does.</p>
+      </div>
+      <div>
+        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted">The three inputs</p>
+        <ol class="space-y-2.5 text-[12.5px] leading-relaxed text-ink">
+          <li class="flex gap-2.5"><span class="mt-px grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand-soft text-[11px] font-bold text-brand tnum">1</span><span><span class="font-semibold">Reach.</span> Distinct workspaces that hit the step, over the last 90 days.</span></li>
+          <li class="flex gap-2.5"><span class="mt-px grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand-soft text-[11px] font-bold text-brand tnum">2</span><span><span class="font-semibold">Drop.</span> The share of them that never get past it, compared with the workspaces that do.</span></li>
+          <li class="flex gap-2.5"><span class="mt-px grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand-soft text-[11px] font-bold text-brand tnum">3</span><span><span class="font-semibold">Value.</span> Subscription plus take-rate difference between the two groups, annualised.</span></li>
+        </ol>
+      </div>
+      <div>
+        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted">What confidence means</p>
+        <div class="space-y-2 text-[12.5px] text-ink">
+          <div class="flex items-start gap-2.5"><span class="badge badge-green shrink-0">High</span><span class="text-muted">Behaviour reproduced in a holdout and the value gap survives a plan-size control.</span></div>
+          <div class="flex items-start gap-2.5"><span class="badge badge-amber shrink-0">Medium</span><span class="text-muted">Pattern is clear, but the drop and the value could share a common cause.</span></div>
+          <div class="flex items-start gap-2.5"><span class="badge badge-gray shrink-0">Low</span><span class="text-muted">Small sample, or the signal only shows up in one plan tier.</span></div>
+        </div>
+      </div>
+      <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
+        <i class="hgi-stroke hgi-alert-02 mt-0.5 text-[16px] text-amber-500"></i>
+        <p class="text-[12px] leading-relaxed text-muted">Impact figures overlap. Fixing two opportunities that affect the same workspaces does not recover the sum of both — treat the total as a ceiling for the whole list, not a budget to divide up.</p>
+      </div>
+    </div>
+    <footer class="flex gap-2 border-t border-hair p-4">
+      <button class="btn btn-soft flex-1" data-close>Close</button>
+      <a href="experiments.html" class="btn btn-primary flex-1"><i class="hgi-stroke hgi-test-tube-01 text-[16px]"></i>See what is being tested</a>
+    </footer>
+  </aside>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function nf(n) { return n.toLocaleString('en-US'); }
+  /* ฿ magnitudes follow the exemplar: dot for the magnitude, comma for decimals in percentages */
+  function baht(n) {
+    if (n >= 1000000) return '฿' + (n / 1000000).toFixed(2).replace(/\.?0+$/, '') + 'M';
+    if (n >= 1000) return '฿' + Math.round(n / 1000) + 'k';
+    return '฿' + nf(n);
+  }
+
+  /* ---------- DATA ----------
+     Six opportunities. impact values sum to ฿4,640,000 (= the ฿4.64M tile);
+     each segments[] sums to the card's workspace count and to 100 %. */
+  var DATA = [
+    {
+      id: 'OPP-01', area: 'Activation', confidence: 'High',
+      title: 'Payments are never connected',
+      summary: '62 % of workspaces never connect a payout account, so nothing they publish can take money.',
+      headline: '193 of 312 workspaces have never finished Stripe onboarding.',
+      ws: 193, impact: 1920000,
+      rec: { id: 'REC-041', label: 'Ask for payouts during onboarding' },
+      evidence: [
+        'Of the 193, 143 published at least one event anyway and sold nothing through Eventa.',
+        'Median time from signup to the payout screen is 11 days; median time spent on it is 40 seconds.',
+        'Workspaces that connect within the first week reach their first paid ticket 6× more often.'
+      ],
+      segments: [
+        { plan: 'Free', n: 96, pct: 50 },
+        { plan: 'Starter', n: 62, pct: 32 },
+        { plan: 'Growth', n: 31, pct: 16 },
+        { plan: 'Enterprise', n: 4, pct: 2 }
+      ],
+      note: 'Value is the take-rate a connected workspace produces in year one, applied to the events these workspaces already published.'
+    },
+    {
+      id: 'OPP-02', area: 'Retention', confidence: 'High',
+      title: 'Check-in is abandoned on the day',
+      summary: 'On large events, organizers give up on the check-in app within two hours of doors and fall back to a printed list.',
+      headline: '41 % of events over 200 attendees export a CSV during doors.',
+      ws: 68, impact: 840000,
+      rec: { id: 'REC-039', label: 'Offline check-in with a local queue' },
+      evidence: [
+        'CSV exports spike in the 30 minutes after doors open, then check-in scans stop entirely.',
+        'Venue Wi-Fi drops are the common factor: 84 % of fallbacks follow a 4xx/5xx burst from one IP.',
+        'A workspace that falls back once is 3× more likely to run its next event off-platform.'
+      ],
+      segments: [
+        { plan: 'Growth', n: 30, pct: 44 },
+        { plan: 'Enterprise', n: 21, pct: 31 },
+        { plan: 'Starter', n: 15, pct: 22 },
+        { plan: 'Free', n: 2, pct: 3 }
+      ],
+      note: 'These are the largest workspaces on the platform, which is why 68 workspaces carry ฿840k — the loss is churn risk on paid plans, not lost tickets.'
+    },
+    {
+      id: 'OPP-03', area: 'Activation', confidence: 'High',
+      title: 'Trials end without a published event',
+      summary: 'More than half of trials expire before the workspace has published anything at all.',
+      headline: '54 of 96 trials in the last quarter reached day 14 with zero published events.',
+      ws: 54, impact: 760000,
+      rec: { id: 'REC-037', label: 'Guided first event during trial' },
+      evidence: [
+        'Trials that publish in the first 72 hours convert to paid at 61 %; the rest convert at 9 %.',
+        'The drop is concentrated on the ticket-types step — 38 of the 54 never opened it.',
+        'No support ticket was raised by 49 of the 54: they left quietly.'
+      ],
+      segments: [
+        { plan: 'Starter', n: 34, pct: 63 },
+        { plan: 'Growth', n: 15, pct: 28 },
+        { plan: 'Free', n: 4, pct: 7 },
+        { plan: 'Enterprise', n: 1, pct: 2 }
+      ],
+      note: 'Value is the first-year subscription of the plan each trial selected, at the conversion rate of trials that do publish.'
+    },
+    {
+      id: 'OPP-04', area: 'Reliability', confidence: 'Medium',
+      title: 'Attendee email lands in spam',
+      summary: 'Workspaces sending from an unverified domain see one message in eight filtered before an attendee reads it.',
+      headline: '87 workspaces send attendee email from a domain they never verified.',
+      ws: 87, impact: 520000,
+      rec: { id: 'REC-036', label: 'Verify a sender domain in three clicks' },
+      evidence: [
+        'Spam placement is 12,1 % on unverified domains against 2,4 % on verified ones.',
+        'Order confirmations are the worst affected, which turns into refund requests and support load.',
+        'Verification exists today but sits three levels deep in messaging settings.'
+      ],
+      segments: [
+        { plan: 'Free', n: 38, pct: 44 },
+        { plan: 'Starter', n: 29, pct: 33 },
+        { plan: 'Growth', n: 16, pct: 18 },
+        { plan: 'Enterprise', n: 4, pct: 5 }
+      ],
+      note: 'Medium confidence: undelivered mail correlates with lower renewal, but small workspaces both send less and renew less, and the two are hard to separate.'
+    },
+    {
+      id: 'OPP-05', area: 'Retention', confidence: 'Medium',
+      title: 'The second event never happens',
+      summary: 'Almost half of the workspaces that run one event never run another, and the plan lapses.',
+      headline: '46 % of one-event workspaces have not started a second within 90 days.',
+      ws: 71, impact: 410000,
+      rec: { id: 'REC-035', label: 'Prompt to clone into a next event' },
+      evidence: [
+        'The last action in 58 of the 71 is downloading the attendee list — then nothing.',
+        'Cloning an event exists, but it is only reachable from the event row menu.',
+        'Workspaces that run a second event within 90 days renew at 88 %; the rest at 31 %.'
+      ],
+      segments: [
+        { plan: 'Free', n: 32, pct: 45 },
+        { plan: 'Starter', n: 25, pct: 35 },
+        { plan: 'Growth', n: 12, pct: 17 },
+        { plan: 'Enterprise', n: 2, pct: 3 }
+      ],
+      note: 'Medium confidence: a one-off conference is a legitimate use of Eventa, and some share of these 71 was never going to come back.'
+    },
+    {
+      id: 'OPP-06', area: 'Reliability', confidence: 'Low',
+      title: 'Calendar sync fails silently',
+      summary: 'When the Google Calendar integration errors, nobody is told — the organizer finds out when a speaker misses a session.',
+      headline: 'Google Calendar is running a 12 % error rate with no user-facing signal.',
+      ws: 34, impact: 190000,
+      rec: { id: 'REC-034', label: 'Surface integration errors to organizers' },
+      evidence: [
+        'Failed syncs are retried three times and then dropped without a notification.',
+        '9 support tickets in 60 days trace back to a session that never reached a calendar.',
+        'Errors cluster on workspaces with more than 40 agenda items.'
+      ],
+      segments: [
+        { plan: 'Growth', n: 16, pct: 47 },
+        { plan: 'Enterprise', n: 9, pct: 26 },
+        { plan: 'Starter', n: 8, pct: 24 },
+        { plan: 'Free', n: 1, pct: 3 }
+      ],
+      note: 'Low confidence: 34 workspaces is a thin sample and the revenue link runs through support cost and goodwill rather than a measurable loss.'
+    }
+  ];
+
+  var areaBadge = { Activation: 'badge-blue', Retention: 'badge-purple', Reliability: 'badge-amber' };
+  var confBadge = { High: 'badge-green', Medium: 'badge-amber', Low: 'badge-gray' };
+  var confBars = { High: 3, Medium: 2, Low: 1 };
+
+  function confidenceHTML(level) {
+    var filled = confBars[level], tone = level === 'High' ? 'bg-brand' : level === 'Medium' ? 'bg-amber-500' : 'bg-muted/50';
+    var bars = '';
+    for (var i = 1; i <= 3; i++) bars += '<span class="h-1.5 w-3.5 rounded-full ' + (i <= filled ? tone : 'bg-line') + '"></span>';
+    return '<span class="flex items-center gap-1">' + bars + '</span><span class="mt-1 block text-[13px] font-semibold text-ink">' + level + '</span>';
+  }
+
+  function cardHTML(o, rank) {
+    return '<article class="card p-4">' +
+      '<div class="flex items-start gap-3">' +
+        '<span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brand-soft text-[13px] font-bold text-brand-dark tnum dark:text-brand">' + (rank < 10 ? '0' + rank : rank) + '</span>' +
+        '<div class="min-w-0 flex-1">' +
+          '<div class="flex flex-wrap items-center gap-2">' +
+            '<h3 class="text-[15px] font-bold tracking-tight">' + esc(o.title) + '</h3>' +
+            '<span class="badge ' + areaBadge[o.area] + '">' + esc(o.area) + '</span>' +
+          '</div>' +
+          '<p class="mt-1 text-[12.5px] leading-relaxed text-muted">' + esc(o.summary) + '</p>' +
+        '</div>' +
+      '</div>' +
+      '<div class="mt-3 flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">' +
+        '<i class="hgi-stroke hgi-chart-line-data-01 mt-px shrink-0 text-[15px] text-muted"></i>' +
+        '<p class="text-[12px] leading-relaxed text-muted"><span class="font-semibold text-ink">Evidence</span> · ' + esc(o.headline) + '</p>' +
+      '</div>' +
+      '<dl class="mt-3 grid grid-cols-3 gap-3">' +
+        '<div><dt class="text-[11px] text-muted">Workspaces</dt><dd class="mt-1 text-[15px] font-bold tracking-tight tnum">' + nf(o.ws) + '</dd></div>' +
+        '<div><dt class="text-[11px] text-muted">Impact / yr</dt><dd class="mt-1 text-[15px] font-bold tracking-tight tnum">' + baht(o.impact) + '</dd></div>' +
+        '<div><dt class="text-[11px] text-muted">Confidence</dt><dd class="mt-1 leading-none">' + confidenceHTML(o.confidence) + '</dd></div>' +
+      '</dl>' +
+      '<div class="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-line pt-3">' +
+        '<a href="recommendations.html" class="flex min-w-0 items-center gap-1.5 text-[12px] font-semibold text-brand hover:underline">' +
+          '<i class="hgi-stroke hgi-idea-01 text-[14px]"></i><span class="truncate">' + esc(o.rec.id) + ' · ' + esc(o.rec.label) + '</span>' +
+        '</a>' +
+        '<button type="button" class="btn btn-soft btn-sm shrink-0" data-open="opp-view" data-opp="' + esc(o.id) + '"><i class="hgi-stroke hgi-eye text-[14px]"></i>Evidence</button>' +
+      '</div>' +
+    '</article>';
+  }
+
+  /* ---------- state + filtering ---------- */
+  var state = { tab: 'all', q: '', conf: 'All confidence' };
+  var list = document.getElementById('opp-list');
+  var showing = document.getElementById('opp-showing');
+  var searchEl = document.getElementById('opp-search');
+  var confEl = document.getElementById('opp-confidence');
+
+  function matches(o) {
+    if (state.tab !== 'all' && o.area !== state.tab) return false;
+    if (state.conf !== 'All confidence' && o.confidence !== state.conf) return false;
+    if (state.q) {
+      var hay = (o.id + ' ' + o.title + ' ' + o.summary + ' ' + o.area + ' ' + o.headline).toLowerCase();
+      if (hay.indexOf(state.q) === -1) return false;
+    }
+    return true;
+  }
+
+  var NO_RESULTS = '<div class="card"><div class="empty empty-sm">' +
+    '<span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span>' +
+    '<h3 class="empty-title">No opportunities match</h3>' +
+    '<p class="empty-text">Nothing matches the current search, area tab and confidence filter. Try widening them to see the rest of the list.</p>' +
+    '<div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div>' +
+    '</div></div>';
+
+  function render() {
+    var rows = [], i;
+    for (i = 0; i < DATA.length; i++) if (matches(DATA[i])) rows.push({ o: DATA[i], rank: i + 1 });
+    if (!rows.length) {
+      list.className = 'grid gap-3';
+      list.innerHTML = NO_RESULTS;
+      showing.textContent = 'No opportunities';
+      return;
+    }
+    list.className = 'grid gap-3 xl:grid-cols-2';
+    list.innerHTML = rows.map(function (r) { return cardHTML(r.o, r.rank); }).join('');
+    var sum = rows.reduce(function (a, r) { return a + r.o.impact; }, 0);
+    showing.innerHTML = 'Showing <span class="font-semibold text-ink tnum">' + rows.length + '</span> of <span class="font-semibold text-ink tnum">' + DATA.length + '</span> · <span class="font-semibold text-ink tnum">' + baht(sum) + '</span> a year';
+  }
+
+  function refreshCounts() {
+    document.querySelector('[data-count="all"]').textContent = DATA.length;
+    ['Activation', 'Retention', 'Reliability'].forEach(function (a) {
+      document.querySelector('[data-count="' + a + '"]').textContent = DATA.filter(function (o) { return o.area === a; }).length;
+    });
+  }
+
+  searchEl.addEventListener('input', function () { state.q = this.value.trim().toLowerCase(); render(); });
+  confEl.addEventListener('change', function () { state.conf = this.value; render(); });
+  var tabsGroup = document.querySelector('[data-tabs]');
+  tabsGroup.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-tab]'); if (!t) return;
+    state.tab = t.getAttribute('data-tab'); render();
+  });
+
+  /* ---------- detail slide-over ---------- */
+  var ov = {
+    id: document.getElementById('ov-id'),
+    area: document.getElementById('ov-area'),
+    title: document.getElementById('ov-title'),
+    summary: document.getElementById('ov-summary'),
+    ws: document.getElementById('ov-ws'),
+    impact: document.getElementById('ov-impact'),
+    evidence: document.getElementById('ov-evidence'),
+    segments: document.getElementById('ov-segments'),
+    note: document.getElementById('ov-note'),
+    rec: document.getElementById('ov-rec')
+  };
+  function openView(id) {
+    var o = null, i;
+    for (i = 0; i < DATA.length; i++) if (DATA[i].id === id) { o = DATA[i]; break; }
+    if (!o) return;
+    ov.id.textContent = o.id;
+    ov.area.innerHTML = '<span class="badge ' + areaBadge[o.area] + '">' + esc(o.area) + '</span><span class="badge ' + confBadge[o.confidence] + ' ml-1.5">' + esc(o.confidence) + ' confidence</span>';
+    ov.title.textContent = o.title;
+    ov.summary.textContent = o.summary;
+    ov.ws.textContent = nf(o.ws);
+    ov.impact.textContent = baht(o.impact);
+    ov.evidence.innerHTML = o.evidence.map(function (e) {
+      return '<li class="flex gap-2.5"><i class="hgi-stroke hgi-checkmark-circle-02 mt-px shrink-0 text-[15px] text-brand"></i><span>' + esc(e) + '</span></li>';
+    }).join('');
+    ov.segments.innerHTML = o.segments.map(function (s) {
+      return '<div class="flex items-center gap-3">' +
+        '<span class="w-[86px] shrink-0 text-[12px] font-medium text-ink">' + esc(s.plan) + '</span>' +
+        '<span class="h-2 flex-1 overflow-hidden rounded-full bg-line"><span class="block h-full rounded-full bg-brand" style="width:' + s.pct + '%"></span></span>' +
+        '<span class="w-[74px] shrink-0 text-right text-[12px] text-muted tnum">' + nf(s.n) + ' · ' + s.pct + ' %</span>' +
+        '</div>';
+    }).join('');
+    ov.note.textContent = o.note;
+    ov.rec.innerHTML = '<i class="hgi-stroke hgi-idea-01 text-[16px]"></i>' + esc(o.rec.id);
+  }
+  list.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-opp]');
+    if (b) openView(b.getAttribute('data-opp'));
+  });
+
+  refreshCounts();
+  render();
+})();
+</script>
+</body>
+</html>
