@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=64"></script>
-<link rel="stylesheet" href="../assets/app.css?v=64" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="registrations">
 
@@ -20,6 +20,7 @@
   <!-- shell.js injects #backdrop + #sidebar here -->
 
   <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
 
     <!-- header -->
     <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
@@ -38,8 +39,19 @@
       </div>
     </div>
 
+    <!-- first run: nothing registers until a published event has tickets on sale -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-ticket-01"></i></span>
+      <h2 class="empty-title">No registrations yet</h2>
+      <p class="empty-text">A registration is created the moment someone buys a ticket, so this page stays empty until you have a published event with a ticket type on sale.</p>
+      <div class="empty-actions">
+        <a href="event-form.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-calendar-add-01 text-[15px]"></i>Create an event</a>
+        <a href="tickets.html" class="btn btn-ghost btn-sm">Set up ticket types</a>
+      </div>
+    </section>
+
     <!-- pill tabs (out of table) -->
-    <div data-tabs="#reg-table" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+    <div data-when-data data-tabs="#reg-table" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
       <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count tnum" data-count="all">30</span></button>
       <button class="pilltab" data-tab="pending">Pending <span class="pilltab-count tnum" data-count="pending">5</span></button>
       <button class="pilltab" data-tab="waitlist">Waitlist <span class="pilltab-count tnum" data-count="waitlist">5</span></button>
@@ -47,7 +59,7 @@
     </div>
 
     <!-- search + filters (out of table) -->
-    <div class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+    <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
         <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
         <input id="reg-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search attendee, email or order ID…" />
@@ -79,7 +91,7 @@
     </div>
 
     <!-- table -->
-    <section class="card mt-3 p-4">
+    <section data-when-data class="card mt-3 p-4">
       <div id="reg-table" class="overflow-x-auto">
         <table class="data-table min-w-[820px]">
           <thead>
@@ -106,6 +118,7 @@
     </section>
 
     <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+    </div>
   </main>
 
   <!-- Add registration slide-over -->
@@ -166,7 +179,7 @@
   </aside>
 </div>
 
-<script src="../assets/shell.js?v=64"></script>
+<script src="../assets/shell.js?v=69"></script>
 <script>
   /* ---------- Registrations: data-driven, filterable, paginated ---------- */
   const DATA = [
@@ -277,7 +290,7 @@
     const start = state.page * state.size, slice = list.slice(start, start + state.size);
     tbody.innerHTML = slice.length
       ? slice.map(rowHTML).join('')
-      : '<tr><td colspan="7"><div class="py-10 text-center text-[13px] text-muted">No matches.</div></td></tr>';
+      : '<tr><td colspan="7"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No registrations match</h3><p class="empty-text">Nothing matches the current search, status tab, event and ticket type. Try a shorter search term, or widen the filters.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
     if (total === 0) {
       showing.textContent = 'No registrations';
     } else {

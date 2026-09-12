@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Adoption</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="adoption">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="text-[22px] font-bold tracking-tight">Adoption</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">How far new workspaces get.</p>
+      </div>
+      <button class="relative ml-auto grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: no one has signed up, so there is no funnel to measure -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-filter"></i></span>
+      <h2 class="empty-title">No one has been through the funnel yet</h2>
+      <p class="empty-text">This page follows every workspace from signup to its first ticket sold, and shows where they stop. The funnel and the stalled list build themselves as soon as workspaces start arriving.</p>
+      <div class="empty-actions">
+        <a href="organizations.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-building-03 text-[15px]"></i>Browse organizations</a>
+        <a href="usage.html" class="btn btn-ghost btn-sm">See platform usage</a>
+      </div>
+    </section>
+
+    <!-- headline figures (all time) -->
+    <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-user-add-01 text-[16px]"></i>Signed up (all time)</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">312</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>6,8 %</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-ticket-01 text-[16px]"></i>Sold a first ticket</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">149 <span class="text-[13px] font-semibold text-muted">· 47.8 %</span></p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>2,1 pt</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-hourglass text-[16px]"></i>Median time to first event</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">7 days</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>1,4 days</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-time-schedule text-[16px]"></i>Stalled right now</div>
+        <div class="mt-2 flex items-end justify-between"><p id="kpi-stalled" class="text-[22px] font-bold tracking-tight tnum">—</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>3</span></div>
+      </div>
+    </div>
+
+    <!-- the funnel -->
+    <section data-when-data class="mt-3 rounded-2xl bg-surface p-4 lg:p-5">
+      <div class="mb-4 flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h2 class="text-[16px] font-bold tracking-tight">Signup to first ticket</h2>
+          <p id="fn-sub" class="mt-1 text-[12px] text-muted"></p>
+        </div>
+        <div id="fn-cohort" class="flex items-center gap-1 rounded-lg bg-canvas p-1 text-[12px] font-semibold">
+          <button data-cohort="d30" class="rounded-md px-3 py-1.5 text-muted transition">30 days</button>
+          <button data-cohort="d90" class="rounded-md px-3 py-1.5 text-muted transition">90 days</button>
+          <button data-cohort="all" class="rounded-md bg-white px-3 py-1.5 text-ink shadow-sm transition dark:bg-white/10">All time</button>
+        </div>
+      </div>
+      <div id="fn-steps"></div>
+      <div class="mt-4 flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
+        <i class="hgi-stroke hgi-information-circle mt-0.5 shrink-0 text-[16px] text-muted"></i>
+        <p id="fn-note" class="text-[12px] text-muted"></p>
+      </div>
+    </section>
+
+    <!-- stalled workspaces -->
+    <div data-when-data class="mt-4 flex flex-wrap items-end justify-between gap-2">
+      <div>
+        <h2 class="text-[15px] font-bold tracking-tight">Stalled right now</h2>
+        <p class="mt-0.5 text-[12px] text-muted">Workspaces that have not reached their next step in over a week, but were active in the last 30 days.</p>
+      </div>
+    </div>
+
+    <div data-when-data id="st-pills" class="mt-3 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button type="button" class="pilltab tab-active" data-filter="all">All <span class="pilltab-count tnum" data-count="all">0</span></button>
+      <button type="button" class="pilltab" data-filter="org">Organization set up <span class="pilltab-count tnum" data-count="org">0</span></button>
+      <button type="button" class="pilltab" data-filter="payments">Payments connected <span class="pilltab-count tnum" data-count="payments">0</span></button>
+      <button type="button" class="pilltab" data-filter="created">First event created <span class="pilltab-count tnum" data-count="created">0</span></button>
+      <button type="button" class="pilltab" data-filter="published">First event published <span class="pilltab-count tnum" data-count="published">0</span></button>
+      <button type="button" class="pilltab" data-filter="sold">First ticket sold <span class="pilltab-count tnum" data-count="sold">0</span></button>
+    </div>
+
+    <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="st-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search workspaces…" />
+      </div>
+      <div class="relative w-full sm:w-52">
+        <i class="hgi-stroke hgi-credit-card text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="st-plan" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All plans</option>
+          <option>Growth</option>
+          <option>Starter</option>
+          <option>Free</option>
+        </select>
+      </div>
+    </div>
+
+    <section data-when-data class="card mt-3 p-4">
+      <div class="overflow-x-auto">
+        <table class="data-table min-w-[860px]">
+          <thead>
+            <tr>
+              <th>Workspace</th>
+              <th>Plan</th>
+              <th>Stalled at</th>
+              <th class="text-right">Stuck for</th>
+              <th class="text-right">Last active</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="st-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+
+      <div id="st-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="st-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="st-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="st-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="st-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p data-when-data class="mt-4 text-center text-[11px] text-muted/70">Eventa · Internal console · HTML, Tailwind CSS &amp; Hugeicons</p>
+    </div>
+  </main>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function nf(n) { return n.toLocaleString('en-US'); }
+
+  /* ---------- The funnel ----------
+     Only the six raw counts are typed per cohort. Percentages, drop-offs and
+     step-to-step conversion are all derived, so a row can never contradict the
+     row above it. The all-time cohort starts at 312 — the same workspace count
+     the Overview page reports. */
+  var STEPS = [
+    { key: 'signup',    label: 'Signed up',             icon: 'hgi-user-add-01' },
+    { key: 'org',       label: 'Organization set up',   icon: 'hgi-building-03' },
+    { key: 'payments',  label: 'Payments connected',    icon: 'hgi-credit-card' },
+    { key: 'created',   label: 'First event created',   icon: 'hgi-calendar-add-01' },
+    { key: 'published', label: 'First event published', icon: 'hgi-rocket-01' },
+    { key: 'sold',      label: 'First ticket sold',     icon: 'hgi-ticket-01' },
+  ];
+  var COHORTS = {
+    d30: { label: 'signed up in the last 30 days', counts: [46, 43, 31, 28, 24, 19] },
+    d90: { label: 'signed up in the last 90 days', counts: [128, 119, 88, 81, 71, 61] },
+    all: { label: 'signed up all time',            counts: [312, 287, 214, 198, 173, 149] },
+  };
+
+  var elSteps = document.getElementById('fn-steps');
+  var elSub = document.getElementById('fn-sub');
+  var elNote = document.getElementById('fn-note');
+
+  function renderFunnel(key) {
+    var c = COHORTS[key], counts = c.counts, base = counts[0];
+    var pct = counts.map(function (n) { return n / base * 100; });
+    var drops = [];
+    for (var i = 1; i < counts.length; i++) {
+      drops.push({ i: i, lost: counts[i - 1] - counts[i], pt: pct[i - 1] - pct[i], kept: counts[i] / counts[i - 1] * 100 });
+    }
+    var worst = drops.reduce(function (a, b) { return b.lost > a.lost ? b : a; }, drops[0]);
+
+    var html = '';
+    counts.forEach(function (n, i) {
+      if (i > 0) {
+        var d = drops[i - 1], bad = d === worst;
+        var tone = bad ? 'text-red-500' : 'text-muted';
+        html +=
+          '<div class="flex flex-wrap items-center gap-x-2 gap-y-1 py-2 pl-3 text-[11.5px] sm:pl-[18px]">' +
+            '<span class="hidden h-6 w-px bg-hair sm:block"></span>' +
+            '<i class="hgi-stroke hgi-arrow-down-01 ml-0 text-[13px] ' + tone + ' sm:ml-2.5"></i>' +
+            '<span class="font-semibold tnum ' + tone + '">−' + nf(d.lost) + '</span>' +
+            '<span class="text-muted tnum">dropped · ' + d.pt.toFixed(1) + ' pt · ' + d.kept.toFixed(1) + ' % continued</span>' +
+            (bad ? '<span class="badge badge-red">Biggest drop-off</span>' : '') +
+          '</div>';
+      }
+      html +=
+        '<div class="flex items-center gap-3">' +
+          '<span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand-dark dark:text-brand"><i class="hgi-stroke ' + STEPS[i].icon + ' text-[17px]"></i></span>' +
+          '<div class="min-w-0 flex-1">' +
+            '<div class="flex items-baseline justify-between gap-3">' +
+              '<p class="truncate text-[13px] font-semibold text-ink">' + STEPS[i].label + '</p>' +
+              '<p class="shrink-0 whitespace-nowrap"><span class="text-[15px] font-bold tracking-tight tnum">' + nf(n) + '</span> <span class="text-[12px] text-muted tnum">' + pct[i].toFixed(1) + ' %</span></p>' +
+            '</div>' +
+            '<div class="mt-1.5 h-2.5 w-full overflow-hidden rounded-full bg-line">' +
+              '<div class="h-full rounded-full bg-brand" style="width:' + pct[i].toFixed(2) + '%"></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+    });
+    elSteps.innerHTML = html;
+
+    var done = counts[counts.length - 1];
+    elSub.innerHTML =
+      '<span class="font-semibold text-ink tnum">' + nf(done) + '</span> of <span class="font-semibold text-ink tnum">' + nf(base) + '</span> workspaces ' + c.label +
+      ' reached a first ticket sale — <span class="font-semibold text-ink tnum">' + (done / base * 100).toFixed(1) + ' %</span>.';
+    var after = drops.slice(worst.i).map(function (d) { return d.kept; });
+    elNote.innerHTML =
+      'The wall is <span class="font-semibold text-ink">' + STEPS[worst.i].label + '</span>: ' +
+      '<span class="font-semibold text-ink tnum">' + nf(worst.lost) + '</span> workspaces stop there, ' +
+      '<span class="font-semibold text-ink tnum">' + worst.pt.toFixed(1) + ' pt</span> of the funnel — ' +
+      (after.length
+        ? 'every step after it converts above ' + Math.min.apply(null, after).toFixed(0) + ' %.'
+        : 'it is the last step, so nothing downstream can recover it.');
+  }
+
+  var cohortBar = document.getElementById('fn-cohort');
+  cohortBar.addEventListener('click', function (e) {
+    var btn = e.target.closest('button'); if (!btn) return;
+    [].slice.call(cohortBar.children).forEach(function (b) { b.className = 'rounded-md px-3 py-1.5 text-muted transition'; });
+    btn.className = 'rounded-md bg-white px-3 py-1.5 text-ink shadow-sm transition dark:bg-white/10';
+    renderFunnel(btn.dataset.cohort);
+  });
+  renderFunnel('all');
+
+  /* ---------- Stalled workspaces ----------
+     The pill counts and the "stalled right now" tile are counted from these
+     rows, so the header, the pills and the table can never disagree. */
+  function w(initials, name, plan, at, days, seen) {
+    return { in: initials, name: name, plan: plan, at: at, days: days, seen: seen };
+  }
+  var DATA = [
+    w('CR', 'Chiang Rai Coffee Summit',  'Growth',  'sold',      22, 'Yesterday'),
+    w('KY', 'Krabi Yoga Retreats',       'Free',    'payments',  21, '3 days ago'),
+    w('AH', 'Ayutthaya Heritage Days',   'Growth',  'created',   19, '2 days ago'),
+    w('SS', 'Silom Startup Nights',      'Free',    'payments',  18, 'Yesterday'),
+    w('PF', 'Pai Film Nights',           'Free',    'published', 17, '5 days ago'),
+    w('PM', 'Pattaya Music Week',        'Starter', 'payments',  16, '2 days ago'),
+    w('SL', 'Sukhothai Lantern Fest',    'Starter', 'created',   15, 'Today'),
+    w('RI', 'Rayong Industry Forum',     'Growth',  'payments',  14, 'Today'),
+    w('PD', 'Phetchaburi Dessert Fair',  'Starter', 'sold',      14, '3 days ago'),
+    w('BD', 'Bangkok Dev Guild',         'Free',    'org',       13, '8 days ago'),
+    w('TC', 'Thonburi Craft Market',     'Starter', 'published', 13, 'Today'),
+    w('NS', 'Nakhon Sawan Trade Fair',   'Starter', 'payments',  12, '4 days ago'),
+    w('NV', 'Nan Valley Cycling',        'Free',    'sold',      12, 'Today'),
+    w('UT', 'Udon Thani Expo',           'Starter', 'payments',  11, 'Yesterday'),
+    w('HY', 'Hat Yai Business Club',     'Growth',  'created',   11, '3 days ago'),
+    w('KM', 'Korat Motor Show',          'Starter', 'org',       10, '4 days ago'),
+    w('KR', 'Kanchanaburi River Run',    'Growth',  'published', 10, '2 days ago'),
+    w('SW', 'Samui Wellness Collective', 'Free',    'payments',   9, '5 days ago'),
+    w('LC', 'Lampang Ceramics Fair',     'Free',    'payments',   9, 'Today'),
+    w('SB', 'Songkhla Book Fair',        'Starter', 'published',  9, '6 days ago'),
+    w('UC', 'Ubon Candle Festival',      'Growth',  'sold',        9, '4 days ago'),
+    w('TS', 'Trang Seafood Festival',    'Starter', 'payments',    8, '6 days ago'),
+    w('MH', 'Mae Hong Son Trekking',     'Free',    'org',         8, 'Yesterday'),
+    w('CB', 'Chonburi Robotics Cup',     'Starter', 'created',     8, 'Yesterday'),
+  ];
+
+  var STEP_LABEL = {};
+  STEPS.forEach(function (s) { STEP_LABEL[s.key] = s.label; });
+  var STEP_ICON = {};
+  STEPS.forEach(function (s) { STEP_ICON[s.key] = s.icon; });
+  var planBadge = { Enterprise: 'badge-purple', Growth: 'badge-green', Starter: 'badge-blue', Free: 'badge-gray' };
+
+  var state = { at: 'all', q: '', plan: 'All plans', page: 0, size: 10 };
+  var tbody = document.getElementById('st-rows');
+  var elShowing = document.getElementById('st-showing');
+  var elPrev = document.getElementById('st-prev');
+  var elNext = document.getElementById('st-next');
+
+  // counts on the pills and the KPI tile, straight off the data
+  (function counts() {
+    var tally = { all: DATA.length };
+    DATA.forEach(function (r) { tally[r.at] = (tally[r.at] || 0) + 1; });
+    document.querySelectorAll('[data-count]').forEach(function (el) {
+      el.textContent = nf(tally[el.dataset.count] || 0);
+    });
+    document.getElementById('kpi-stalled').textContent = nf(DATA.length);
+  })();
+
+  function filtered() {
+    var q = state.q.trim().toLowerCase();
+    return DATA.filter(function (r) {
+      if (state.at !== 'all' && r.at !== state.at) return false;
+      if (state.plan !== 'All plans' && r.plan !== state.plan) return false;
+      if (q && r.name.toLowerCase().indexOf(q) === -1) return false;
+      return true;
+    });
+  }
+
+  function rowHTML(r) {
+    var tone = r.days >= 14 ? 'text-red-500' : 'text-ink';
+    return '<tr>' +
+      '<td><div class="flex items-center gap-2"><span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-soft text-[10px] font-semibold text-brand-dark dark:text-brand">' + esc(r.in) + '</span><span class="font-medium text-ink">' + esc(r.name) + '</span></div></td>' +
+      '<td><span class="badge ' + planBadge[r.plan] + '">' + esc(r.plan) + '</span></td>' +
+      '<td><span class="flex items-center gap-1.5 text-muted"><i class="hgi-stroke ' + STEP_ICON[r.at] + ' text-[15px]"></i>' + esc(STEP_LABEL[r.at]) + '</span></td>' +
+      '<td class="text-right font-semibold tnum ' + tone + '">' + r.days + ' days</td>' +
+      '<td class="text-right text-muted">' + esc(r.seen) + '</td>' +
+      '<td class="text-right"><a href="workspaces.html" class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-eye text-[14px]"></i>Open</a></td>' +
+    '</tr>';
+  }
+
+  var NO_RESULTS = '<tr><td colspan="6"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No stalled workspaces match</h3><p class="empty-text">Nothing matches the current search, step tab and plan filter. Try a shorter search term, or widen the filters.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
+
+  function render() {
+    var list = filtered(), total = list.length, pages = Math.max(1, Math.ceil(total / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    var start = state.page * state.size, slice = list.slice(start, start + state.size);
+    tbody.innerHTML = slice.length ? slice.map(rowHTML).join('') : NO_RESULTS;
+    if (total === 0) elShowing.textContent = 'No stalled workspaces';
+    else elShowing.innerHTML = 'Showing <span class="font-semibold text-ink tnum">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> stalled workspaces';
+    elPrev.disabled = total === 0 || state.page === 0;
+    elNext.disabled = total === 0 || state.page >= pages - 1;
+  }
+
+  var pills = document.getElementById('st-pills');
+  pills.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-filter]'); if (!btn) return;
+    pills.querySelectorAll('[data-filter]').forEach(function (b) { b.classList.toggle('tab-active', b === btn); });
+    state.at = btn.dataset.filter; state.page = 0; render();
+  });
+  var searchEl = document.getElementById('st-search');
+  var planEl = document.getElementById('st-plan');
+  searchEl.addEventListener('input', function () { state.q = searchEl.value; state.page = 0; render(); });
+  planEl.addEventListener('change', function () { state.plan = planEl.value; state.page = 0; render(); });
+  document.getElementById('st-size').addEventListener('change', function () { state.size = +this.value; state.page = 0; render(); });
+  elPrev.addEventListener('click', function () { state.page--; render(); });
+  elNext.addEventListener('click', function () { state.page++; render(); });
+  render();
+})();
+</script>
+</body>
+</html>

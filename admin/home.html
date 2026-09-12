@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=64"></script>
-<link rel="stylesheet" href="../assets/app.css?v=64" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="home">
 
@@ -21,6 +21,7 @@
 
   <!-- ============ MAIN ============ -->
   <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
 
     <!-- top bar -->
     <header class="mb-5 flex items-center gap-3">
@@ -87,7 +88,7 @@
             <h2 class="text-[15px] font-bold tracking-tight">Today's Meetings</h2>
             <span class="grid h-5 min-w-[20px] place-items-center rounded-full bg-line px-1.5 text-[11px] font-semibold text-muted">5</span>
           </div>
-          <a href="#" class="text-[12px] font-semibold text-brand hover:underline">See all</a>
+          <a href="meetings.html" class="text-[12px] font-semibold text-brand hover:underline">See all</a>
         </div>
         <div class="mt-3.5 space-y-4">
           <div class="flex gap-3">
@@ -107,7 +108,7 @@
             </div>
           </div>
         </div>
-        <button class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-brand hover:text-brand-dark"><i class="hgi-stroke hgi-add-01 text-[15px]"></i>Schedule meeting</button>
+        <a href="meetings.html" class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-brand hover:text-brand-dark"><i class="hgi-stroke hgi-add-01 text-[15px]"></i>Schedule meeting</a>
       </section>
 
       <!-- Active events -->
@@ -262,10 +263,11 @@
     </section>
 
     <p class="mt-6 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+    </div>
   </main>
 </div>
 
-<script src="../assets/shell.js?v=64"></script>
+<script src="../assets/shell.js?v=69"></script>
 <script>
   /* ---------- Active-events donut ---------- */
   const projects = [

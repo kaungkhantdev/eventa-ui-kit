@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Logs</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="logs">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0 flex-1">
+        <h1 class="text-[22px] font-bold tracking-tight">Logs</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Application logs across services.</p>
+      </div>
+      <button type="button" data-when-data class="btn btn-soft shrink-0"><i class="hgi-stroke hgi-download-04 text-[16px]"></i><span class="hidden sm:inline">Export window</span><span class="sm:hidden">Export</span></button>
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: nothing is shipping logs to the collector yet -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-console"></i></span>
+      <h2 class="empty-title">No logs received</h2>
+      <p class="empty-text">eventa-api, eventa-worker, eventa-relay, Postgres and Redis stream their application logs here — every line with its level, service and trace id, so one request can be followed across all of them. The stream starts as soon as a service comes up.</p>
+      <div class="empty-actions">
+        <a href="system-health.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-pulse-01 text-[15px]"></i>Check system health</a>
+        <a href="console-settings.html" class="btn btn-ghost btn-sm">Set log retention</a>
+      </div>
+    </section>
+
+    <!-- level tabs -->
+    <div data-when-data data-tabs="#logs-table" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button class="pilltab tab-active" data-tab="all" data-filter="all">All <span class="pilltab-count tnum">32</span></button>
+      <button class="pilltab" data-tab="ERROR" data-filter="ERROR">Error <span class="pilltab-count tnum">3</span></button>
+      <button class="pilltab" data-tab="WARN" data-filter="WARN">Warn <span class="pilltab-count tnum">6</span></button>
+      <button class="pilltab" data-tab="INFO" data-filter="INFO">Info <span class="pilltab-count tnum">17</span></button>
+      <button class="pilltab" data-tab="DEBUG" data-filter="DEBUG">Debug <span class="pilltab-count tnum">6</span></button>
+    </div>
+
+    <!-- search + service + tail -->
+    <div data-when-data class="mt-3 flex flex-col gap-2 lg:flex-row lg:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="lg-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 font-mono text-[12.5px] text-ink placeholder:font-sans placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search message or trace id…" />
+      </div>
+      <div class="relative w-full lg:w-56">
+        <i class="hgi-stroke hgi-cloud-server text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="lg-service" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All services</option>
+          <option>eventa-api</option>
+          <option>eventa-worker</option>
+          <option>eventa-relay</option>
+          <option>postgres</option>
+          <option>redis</option>
+        </select>
+      </div>
+      <button id="lg-tail" type="button" class="btn btn-soft shrink-0" data-live="1"><span class="h-2 w-2 rounded-full bg-brand"></span>Live tail</button>
+    </div>
+
+    <!-- log table -->
+    <section data-when-data class="card mt-3 p-4">
+      <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+        <h2 class="text-[15px] font-bold tracking-tight">Aug 24, 2026 · 14:30–14:33</h2>
+        <span class="text-[12px] text-muted">Timestamps are Asia/Bangkok (UTC+7)</span>
+      </div>
+      <div id="logs-table" class="overflow-x-auto">
+        <table class="data-table min-w-[1000px]">
+          <thead>
+            <tr><th class="w-[112px]">Time</th><th class="w-[76px]">Level</th><th class="w-[132px]">Service</th><th>Message</th><th class="w-[112px] text-right">Trace</th></tr>
+          </thead>
+          <tbody id="lg-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+
+      <div id="lg-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="lg-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="lg-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>25</option><option>50</option><option>100</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="lg-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="lg-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa Console · Internal · HTML, Tailwind CSS &amp; Hugeicons</p>
+    </div>
+  </main>
+
+  <!-- log entry slide-over -->
+  <aside class="panel" id="log-view">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">Log entry</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-4 overflow-y-auto p-4">
+      <div class="card p-3.5">
+        <div class="flex items-center justify-between gap-2">
+          <span id="ev-level"></span>
+          <p id="ev-time" class="font-mono text-[12px] text-muted tnum"></p>
+        </div>
+        <p id="ev-message" class="mt-2 break-words font-mono text-[12.5px] leading-relaxed text-ink"></p>
+      </div>
+      <dl class="overflow-hidden rounded-lg border border-hair">
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Service</dt><dd id="ev-service" class="font-mono text-[12.5px] text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Trace id</dt><dd id="ev-trace" class="font-mono text-[12.5px] text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Workspace</dt><dd id="ev-org" class="text-[13px] text-ink"></dd></div>
+        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px] text-muted">Host</dt><dd id="ev-host" class="font-mono text-[12.5px] text-ink"></dd></div>
+      </dl>
+      <div>
+        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted">Structured context</p>
+        <pre id="ev-json" class="overflow-x-auto rounded-lg border border-hair bg-canvas p-3 font-mono text-[11.5px] leading-relaxed text-ink"></pre>
+      </div>
+      <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
+        <i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px] text-muted"></i>
+        <p class="text-[12px] text-muted">Every service stamps the same trace id on a request, so filtering by it reassembles the whole path through eventa-api, eventa-worker and eventa-relay.</p>
+      </div>
+    </div>
+    <footer class="flex gap-2 border-t border-hair p-4">
+      <button class="btn btn-soft flex-1" data-close>Close</button>
+      <button id="ev-trace-filter" class="btn btn-primary flex-1" data-close><i class="hgi-stroke hgi-filter text-[16px]"></i>Filter by trace</button>
+    </footer>
+  </aside>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  /* ---------- Lines ----------
+     32 entries: 3 ERROR, 6 WARN, 17 INFO, 6 DEBUG — the pill counts are read off
+     this list. They narrate one real two-minute window: the relay falling behind
+     (see system-health.html) and the two failing jobs from jobs.html. */
+  function L(t, lvl, svc, msg, trace, org, host) {
+    return { t: t, lvl: lvl, svc: svc, msg: msg, trace: trace, org: org || '—', host: host };
+  }
+  var LOGS = [
+    L('14:32:58.412','ERROR','eventa-relay','outbox dispatch failed: POST https://hooks.siam-conferences.co.th/eventa 504 Gateway Timeout (attempt 2 of 5)','9c41a7e2','Siam Conferences','relay-2'),
+    L('14:32:57.883','INFO','eventa-relay','outbox batch claimed size=250 oldest_age=252s','9c41a7e2','—','relay-2'),
+    L('14:32:55.104','WARN','eventa-relay','outbox lag 252s exceeds alert threshold 120s','7b03de55','—','relay-1'),
+    L('14:32:51.669','INFO','eventa-api','POST /v1/registrations 201 in 138ms','4f2a9c1e','Siam Conferences','api-3'),
+    L('14:32:49.318','DEBUG','eventa-api','jwt verified sub=usr_8341 scope=organizer exp=1756032000','4f2a9c1e','Bangkok Jazz Co.','api-3'),
+    L('14:32:44.902','INFO','eventa-worker','job email-queue-drain finished sent=48 failed=0 in 1.2s','c18d5a30','—','worker-1'),
+    L('14:32:41.208','INFO','eventa-api','GET /v1/events?status=published 200 in 41ms','a55f3b71','PTT Events','api-1'),
+    L('14:32:38.760','WARN','postgres','slow query 1842ms: SELECT * FROM registrations WHERE event_id = $1 ORDER BY created_at DESC','a55f3b71','PTT Events','pg-primary'),
+    L('14:32:33.517','ERROR','eventa-api','job payment-webhook-reconcile failed: StripeConnectionError timeout after 30000ms','2e7c04af','—','api-2'),
+    L('14:32:30.045','INFO','eventa-api','POST /v1/payments/webhook 200 in 88ms provider=stripe','2e7c04af','Chiang Mai Arts','api-2'),
+    L('14:32:27.611','DEBUG','redis','queue eventa:jobs depth=37 oldest=14s','61b9ac82','—','redis-1'),
+    L('14:32:22.394','INFO','eventa-worker','job usage-rollup-hourly claimed window=2026-08-24T14:00+07:00','3d80f7c6','—','worker-2'),
+    L('14:32:19.008','INFO','eventa-api','POST /v1/checkins 201 in 63ms event=evt_2291 gate=A','88e14d0b','Siam Conferences','api-1'),
+    L('14:32:14.775','WARN','eventa-worker','mail provider returned 429, backing off 30s','c18d5a30','—','worker-1'),
+    L('14:32:11.230','INFO','eventa-relay','dispatched 231 of 250 outbox rows, 19 requeued','9c41a7e2','—','relay-2'),
+    L('14:32:06.918','DEBUG','eventa-api','rate limit bucket remaining=487/500 window=60s','d47a1c53','Chiang Mai Arts','api-3'),
+    L('14:32:02.441','INFO','eventa-api','GET /v1/attendees 200 in 57ms','d47a1c53','Northern Wellness','api-3'),
+    L('14:31:58.226','ERROR','eventa-api','job audit-log-archive failed: S3PutObjectError 403 AccessDenied key=audit/2026-08-23.jsonl.gz','5a6f2210','—','api-2'),
+    L('14:31:54.780','WARN','redis','evicted 1204 keys under maxmemory policy allkeys-lru','61b9ac82','—','redis-1'),
+    L('14:31:50.312','INFO','eventa-worker','job session-cache-evict finished removed=612 in 0.4s','7f2b6e94','—','worker-2'),
+    L('14:31:46.093','INFO','postgres','checkpoint complete: wrote 4812 buffers in 2.1s','e0c37d18','—','pg-primary'),
+    L('14:31:41.557','DEBUG','eventa-relay','retry schedule set for 19 rows, next attempt in 20s','9c41a7e2','—','relay-2'),
+    L('14:31:37.204','INFO','eventa-worker','job survey-dispatch queued for 3 events','2b95cd47','—','worker-1'),
+    L('14:31:33.860','WARN','eventa-api','deprecated endpoint GET /v1/events/list called, use GET /v1/events','f3419eab','PTT Events','api-1'),
+    L('14:31:29.415','INFO','eventa-api','POST /v1/orders 201 in 212ms amount=450000 currency=THB','6c72d9f0','Siam Conferences','api-3'),
+    L('14:31:24.902','DEBUG','eventa-worker','claimed job id=job_88213 queue=default attempt=1','3d80f7c6','—','worker-2'),
+    L('14:31:20.338','INFO','eventa-relay','outbox batch committed offset=48219','7b03de55','—','relay-1'),
+    L('14:31:16.771','INFO','eventa-api','GET /v1/reports/income 200 in 318ms','b214e7c9','PTT Events','api-1'),
+    L('14:31:12.507','WARN','eventa-api','connection pool at 84/100, mean queue wait 42ms','b214e7c9','—','api-1'),
+    L('14:31:08.163','INFO','eventa-worker','job checkin-sync-push queued device=kiosk-04','2b95cd47','Bangkok Jazz Co.','worker-1'),
+    L('14:31:03.849','INFO','eventa-api','DELETE /v1/discounts/dsc_1182 204 in 29ms','0af5b632','Chiang Mai Arts','api-2'),
+    L('14:30:59.220','DEBUG','postgres','autovacuum started on public.outbox_events','e0c37d18','—','pg-primary')
+  ];
+
+  var LEVEL_CHIP = {
+    ERROR: 'bg-red-50 text-red-600 dark:bg-red-500/15 dark:text-red-300',
+    WARN:  'bg-amber-50 text-amber-600 dark:bg-amber-400/15 dark:text-amber-300',
+    INFO:  'bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300',
+    DEBUG: 'bg-line text-muted'
+  };
+  function chip(lvl) {
+    return '<span class="inline-flex w-[54px] justify-center rounded px-1.5 py-0.5 font-mono text-[10.5px] font-bold tracking-wide ' + LEVEL_CHIP[lvl] + '">' + lvl + '</span>';
+  }
+
+  function rowHTML(e, i) {
+    var loud = e.lvl === 'ERROR';
+    return '<tr class="cursor-pointer" data-open="log-view" data-view="' + i + '">' +
+      '<td class="font-mono text-[12px] text-muted tnum">' + esc(e.t) + '</td>' +
+      '<td>' + chip(e.lvl) + '</td>' +
+      '<td class="font-mono text-[12px] text-muted">' + esc(e.svc) + '</td>' +
+      '<td class="font-mono text-[12px] ' + (loud ? 'font-semibold text-red-600 dark:text-red-300' : 'text-ink') + '">' + esc(e.msg) + '</td>' +
+      '<td class="text-right font-mono text-[11.5px] text-muted">' + esc(e.trace) + '</td>' +
+    '</tr>';
+  }
+
+  var state = { tab: 'all', q: '', svc: 'All services', page: 0, size: 25 };
+  function matches(e) {
+    if (state.tab !== 'all' && e.lvl !== state.tab) return false;
+    if (state.svc !== 'All services' && e.svc !== state.svc) return false;
+    if (state.q && (e.msg + ' ' + e.trace + ' ' + e.svc + ' ' + e.org).toLowerCase().indexOf(state.q.toLowerCase()) === -1) return false;
+    return true;
+  }
+
+  var tbody = document.getElementById('lg-rows');
+  var elShowing = document.getElementById('lg-showing');
+  var elPrev = document.getElementById('lg-prev');
+  var elNext = document.getElementById('lg-next');
+
+  function render() {
+    var idx = [];
+    LOGS.forEach(function (e, i) { if (matches(e)) idx.push(i); });
+    var total = idx.length, pages = Math.max(1, Math.ceil(total / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    var start = state.page * state.size, slice = idx.slice(start, start + state.size);
+    tbody.innerHTML = slice.length
+      ? slice.map(function (i) { return rowHTML(LOGS[i], i); }).join('')
+      : '<tr><td colspan="5"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No log lines match</h3><p class="empty-text">Nothing in this window matches the current search, level tab and service filter. Try a shorter search term, or widen the filters.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
+    elShowing.innerHTML = total
+      ? 'Showing <span class="font-semibold text-ink tnum">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + total + '</span> lines'
+      : 'No lines';
+    elPrev.disabled = total === 0 || state.page === 0;
+    elNext.disabled = total === 0 || state.page >= pages - 1;
+  }
+
+  var search = document.getElementById('lg-search');
+  search.addEventListener('input', function () { state.q = this.value.trim(); state.page = 0; render(); });
+  document.getElementById('lg-service').addEventListener('change', function () { state.svc = this.value; state.page = 0; render(); });
+  document.getElementById('lg-size').addEventListener('change', function () { state.size = +this.value; state.page = 0; render(); });
+  elPrev.addEventListener('click', function () { if (state.page > 0) { state.page--; render(); } });
+  elNext.addEventListener('click', function () { state.page++; render(); });
+  var tabsGroup = document.querySelector('[data-tabs]');
+  if (tabsGroup) tabsGroup.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-tab]'); if (!t) return;
+    state.tab = t.getAttribute('data-tab'); state.page = 0; render();
+  });
+
+  // live tail is a state, not a stream: the button shows which one you are in
+  var tail = document.getElementById('lg-tail');
+  tail.addEventListener('click', function () {
+    var live = this.dataset.live === '1';
+    this.dataset.live = live ? '0' : '1';
+    this.innerHTML = live
+      ? '<i class="hgi-stroke hgi-pause text-[15px]"></i>Paused'
+      : '<span class="h-2 w-2 rounded-full bg-brand"></span>Live tail';
+  });
+  render();
+
+  /* ---------- Entry slide-over ---------- */
+  var currentTrace = '';
+  document.addEventListener('click', function (ev) {
+    var t = ev.target.closest('[data-view]'); if (!t) return;
+    var e = LOGS[+t.getAttribute('data-view')]; if (!e) return;
+    currentTrace = e.trace;
+    document.getElementById('ev-level').innerHTML = chip(e.lvl);
+    document.getElementById('ev-time').textContent = 'Aug 24, 2026 ' + e.t + ' +07';
+    document.getElementById('ev-message').textContent = e.msg;
+    document.getElementById('ev-service').textContent = e.svc;
+    document.getElementById('ev-trace').textContent = e.trace;
+    document.getElementById('ev-org').textContent = e.org;
+    document.getElementById('ev-host').textContent = e.host;
+    document.getElementById('ev-json').textContent =
+      '{\n' +
+      '  "ts": "2026-08-24T' + e.t + '+07:00",\n' +
+      '  "level": "' + e.lvl.toLowerCase() + '",\n' +
+      '  "service": "' + e.svc + '",\n' +
+      '  "host": "' + e.host + '",\n' +
+      '  "trace_id": "' + e.trace + '",\n' +
+      '  "workspace": "' + e.org + '",\n' +
+      '  "msg": "' + e.msg.replace(/"/g, '\\"') + '"\n' +
+      '}';
+  });
+  document.getElementById('ev-trace-filter').addEventListener('click', function () {
+    if (!currentTrace) return;
+    search.value = currentTrace;
+    state.q = currentTrace;
+    state.tab = 'all';
+    var allPill = document.querySelector('[data-tab="all"]');
+    if (allPill) allPill.click();
+    state.page = 0;
+    render();
+  });
+})();
+</script>
+</body>
+</html>

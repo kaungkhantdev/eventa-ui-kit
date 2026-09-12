@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Recommendations</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="recommendations">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="truncate text-[22px] font-bold tracking-tight">Recommendations</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">What to do about it.</p>
+      </div>
+      <!-- like the exemplar's range control, the page action drops out below sm;
+           the bell then carries ml-auto so the right-hand group stays pinned -->
+      <button type="button" class="btn btn-primary hidden shrink-0 sm:ml-auto sm:inline-flex" data-open="rec-new"><i class="hgi-stroke hgi-add-01 text-[16px]"></i>Propose a change</button>
+      <button class="relative ml-auto grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink sm:ml-0" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: a recommendation always answers an opportunity, so the list
+         stays empty until there is something to answer -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-idea-01"></i></span>
+      <h2 class="empty-title">Nothing proposed yet</h2>
+      <p class="empty-text">A recommendation is a proposed change that answers one opportunity — what to build, how big it is, and what lift it should produce. Once an opportunity has been observed, anyone on the platform team can propose the fix here.</p>
+      <div class="empty-actions">
+        <a href="opportunities.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-target-02 text-[15px]"></i>Start from an opportunity</a>
+        <button type="button" class="btn btn-ghost btn-sm" data-open="rec-new">Propose a change</button>
+      </div>
+    </section>
+
+    <!-- summary -->
+    <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-idea-01 text-[16px]"></i>In flight</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">5</p><span class="text-[11.5px] text-muted">2 proposed · 2 accepted · 1 scheduled</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-rocket-01 text-[16px]"></i>Shipped this quarter</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">2</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>1 vs Q2</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-cancel-circle text-[16px]"></i>Declined</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">1</p><span class="text-[11.5px] text-muted">test came back flat</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-target-02 text-[16px]"></i>Opportunities covered</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">6 of 6</p><span class="text-[11.5px] text-muted">every one has an answer</span></div>
+      </div>
+    </div>
+
+    <!-- search + filters -->
+    <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="rec-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search recommendations or opportunities…" />
+      </div>
+      <div class="relative w-full sm:w-44">
+        <i class="hgi-stroke hgi-sorting-05 text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="rec-effort" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All efforts</option>
+          <option>S — under a week</option>
+          <option>M — 2–4 weeks</option>
+          <option>L — a quarter</option>
+        </select>
+      </div>
+      <div class="relative w-full sm:w-48">
+        <i class="hgi-stroke hgi-user-check-01 text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="rec-owner" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All owners</option>
+          <option>Nan T.</option>
+          <option>Krit P.</option>
+          <option>June W.</option>
+          <option>Mai S.</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- status tabs — the page is meant to be read by status first.
+         data-pill-group / data-pill let the shell's [data-clear-filters] reset it. -->
+    <div data-when-data data-pill-group data-tabs="#rec-table" class="mt-3 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button class="pilltab tab-active" data-pill data-tab="all">All <span class="pilltab-count tnum" data-count="all">8</span></button>
+      <button class="pilltab" data-pill data-tab="Proposed">Proposed <span class="pilltab-count tnum" data-count="Proposed">2</span></button>
+      <button class="pilltab" data-pill data-tab="Accepted">Accepted <span class="pilltab-count tnum" data-count="Accepted">2</span></button>
+      <button class="pilltab" data-pill data-tab="Scheduled">Scheduled <span class="pilltab-count tnum" data-count="Scheduled">1</span></button>
+      <button class="pilltab" data-pill data-tab="Shipped">Shipped <span class="pilltab-count tnum" data-count="Shipped">2</span></button>
+      <button class="pilltab" data-pill data-tab="Declined">Declined <span class="pilltab-count tnum" data-count="Declined">1</span></button>
+    </div>
+
+    <!-- table -->
+    <section data-when-data class="card mt-3 p-4">
+      <div id="rec-table" class="overflow-x-auto">
+        <table class="data-table min-w-[1000px]">
+          <thead>
+            <tr><th>Recommendation</th><th>Opportunity</th><th>Effort</th><th>Expected lift</th><th>Owner</th><th>Status</th><th>Updated</th><th class="text-right">Actions</th></tr>
+          </thead>
+          <tbody id="rec-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+
+      <div id="rec-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="rec-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="rec-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="rec-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="rec-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </div>
+  </main>
+
+  <!-- recommendation detail slide-over -->
+  <aside class="panel" id="rec-view">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">Recommendation</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-4 overflow-y-auto p-4">
+      <div>
+        <div class="flex flex-wrap items-center gap-2">
+          <span id="rv-id" class="font-mono text-[12px] text-muted"></span>
+          <span id="rv-status"></span>
+        </div>
+        <h4 id="rv-title" class="mt-1.5 text-[16px] font-bold leading-snug tracking-tight"></h4>
+        <p id="rv-detail" class="mt-1.5 text-[12.5px] leading-relaxed text-muted"></p>
+      </div>
+
+      <a id="rv-opp" href="opportunities.html" class="flex items-start gap-3 rounded-xl border border-hair bg-canvas p-3 transition hover:bg-line/40">
+        <span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-target-02 text-[16px]"></i></span>
+        <span class="min-w-0 flex-1 leading-tight">
+          <span class="block text-[11px] text-muted">Answers</span>
+          <span id="rv-opp-label" class="mt-0.5 block text-[13px] font-semibold text-ink"></span>
+        </span>
+        <i class="hgi-stroke hgi-arrow-right-01 mt-1 shrink-0 text-[15px] text-muted"></i>
+      </a>
+
+      <dl class="overflow-hidden rounded-lg border border-hair">
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Effort</dt><dd id="rv-effort" class="text-[13px] font-medium text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Expected lift</dt><dd id="rv-lift" class="text-[13px] font-medium text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Owner</dt><dd id="rv-owner" class="text-[13px] font-medium text-ink"></dd></div>
+        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px] text-muted">Last updated</dt><dd id="rv-updated" class="text-[13px] text-ink tnum"></dd></div>
+      </dl>
+
+      <div>
+        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted">What changes</p>
+        <ul id="rv-changes" class="space-y-2 text-[12.5px] leading-relaxed text-ink"></ul>
+      </div>
+
+      <div>
+        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted">Evidence it works</p>
+        <div id="rv-experiment"></div>
+      </div>
+    </div>
+    <footer class="flex gap-2 border-t border-hair p-4">
+      <button class="btn btn-soft flex-1" data-close>Close</button>
+      <a id="rv-link" href="experiments.html" class="btn btn-primary flex-1"><i class="hgi-stroke hgi-test-tube-01 text-[16px]"></i>Experiments</a>
+    </footer>
+  </aside>
+
+  <!-- propose a change slide-over -->
+  <aside class="panel" id="rec-new">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">Propose a change</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-4 overflow-y-auto p-4">
+      <div>
+        <label class="label" for="rn-title">Title</label>
+        <input id="rn-title" class="input" placeholder="Ask for payouts during onboarding" />
+        <p class="hint">One sentence, written as the change — not as the problem.</p>
+      </div>
+      <div>
+        <label class="label" for="rn-opp">Opportunity it answers</label>
+        <select id="rn-opp" class="select">
+          <option>OPP-01 · Payments are never connected</option>
+          <option>OPP-02 · Check-in is abandoned on the day</option>
+          <option>OPP-03 · Trials end without a published event</option>
+          <option>OPP-04 · Attendee email lands in spam</option>
+          <option>OPP-05 · The second event never happens</option>
+          <option>OPP-06 · Calendar sync fails silently</option>
+        </select>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="label" for="rn-effort">Effort</label>
+          <select id="rn-effort" class="select">
+            <option>S — under a week</option>
+            <option>M — 2–4 weeks</option>
+            <option>L — a quarter</option>
+          </select>
+        </div>
+        <div>
+          <label class="label" for="rn-owner">Owner</label>
+          <select id="rn-owner" class="select">
+            <option>Nan T.</option>
+            <option>Krit P.</option>
+            <option>June W.</option>
+            <option>Mai S.</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label class="label" for="rn-lift">Expected lift</label>
+        <input id="rn-lift" class="input" placeholder="+12 pt trial to paid" />
+        <p class="hint">Name the metric and the size of the move you expect, so the experiment has something to disagree with.</p>
+      </div>
+      <div>
+        <label class="label" for="rn-notes">What changes</label>
+        <textarea id="rn-notes" class="textarea" rows="4" placeholder="One line per change an organizer would notice."></textarea>
+      </div>
+      <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
+        <i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px] text-muted"></i>
+        <p class="text-[12px] leading-relaxed text-muted">A proposal starts at <span class="font-semibold text-ink">Proposed</span>. It moves to Accepted at the weekly review, and to Scheduled once it has a place in a release.</p>
+      </div>
+    </div>
+    <footer class="flex gap-2 border-t border-hair p-4">
+      <button class="btn btn-soft flex-1" data-close>Cancel</button>
+      <button class="btn btn-primary flex-1" data-close><i class="hgi-stroke hgi-idea-01 text-[16px]"></i>Propose</button>
+    </footer>
+  </aside>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function nf(n) { return n.toLocaleString('en-US'); }
+
+  /* ---------- DATA ----------
+     Eight recommendations answering the six opportunities on opportunities.html.
+     Status split: Proposed 2 · Accepted 2 · Scheduled 1 · Shipped 2 · Declined 1 = 8.
+     Effort split: S 3 · M 4 · L 1 = 8. */
+  var DATA = [
+    {
+      id: 'REC-041', title: 'Ask for payouts during onboarding',
+      opp: 'OPP-01', oppLabel: 'Payments are never connected',
+      effort: 'M', lift: '+18 pt payout connection', owner: 'Nan T.', initials: 'NT',
+      status: 'Shipped', updated: 'Aug 12, 2026',
+      detail: 'Move the payout step into the signup flow, before the first event, and block nothing — a workspace can skip it, but it has to see it.',
+      changes: [
+        'A payout step is added between workspace details and the first event.',
+        'Skipping it leaves a persistent banner on the events list until it is done.',
+        'The old settings route stays, so nothing existing breaks.'
+      ],
+      exp: { id: 'EXP-014', label: 'Payout setup inside onboarding', verdict: 'Winner: variant B', result: '31,2 % → 49,5 % · +18,3 pt (CI +7,4 to +29,2)', tone: 'good' }
+    },
+    {
+      id: 'REC-040', title: 'Let organizers publish before connecting payouts',
+      opp: 'OPP-01', oppLabel: 'Payments are never connected',
+      effort: 'S', lift: '+6 pt publish rate', owner: 'Nan T.', initials: 'NT',
+      status: 'Declined', updated: 'Jul 29, 2026',
+      detail: 'Drop the payout requirement from publishing entirely and warn instead. Tested against REC-041 and did not move the metric it was proposed for.',
+      changes: [
+        'Publish would no longer check for a connected payout account.',
+        'A warning would sit on the public event page until payouts are live.'
+      ],
+      exp: { id: 'EXP-016', label: 'Publish without payouts', verdict: 'Inconclusive', result: '44,2 % → 47,7 % · +3,5 pt (CI −6,9 to +13,9)', tone: 'flat' }
+    },
+    {
+      id: 'REC-039', title: 'Offline check-in with a local queue',
+      opp: 'OPP-02', oppLabel: 'Check-in is abandoned on the day',
+      effort: 'L', lift: '−70 % CSV fallbacks', owner: 'Krit P.', initials: 'KP',
+      status: 'Scheduled', updated: 'Aug 18, 2026',
+      detail: 'Let the check-in screen keep working with no network: scans queue locally and reconcile when the connection returns, with duplicate detection on the server.',
+      changes: [
+        'Attendee list is cached on the device when the event is opened.',
+        'Scans queue offline and show a pending count instead of an error.',
+        'Server reconciles the queue and flags any double check-in for review.'
+      ],
+      exp: null
+    },
+    {
+      id: 'REC-038', title: 'Readiness check 24 hours before doors',
+      opp: 'OPP-02', oppLabel: 'Check-in is abandoned on the day',
+      effort: 'S', lift: '−25 % CSV fallbacks', owner: 'Krit P.', initials: 'KP',
+      status: 'Shipped', updated: 'Aug 05, 2026',
+      detail: 'Email the organizer the day before with everything that has to be true for check-in to work, and repeat it as a banner on the event page.',
+      changes: [
+        'A readiness email goes out 24 hours before doors open.',
+        'It lists device access, staff invitations and unassigned tickets.',
+        'The same list appears as a dismissible banner on the event.'
+      ],
+      exp: { id: 'EXP-015', label: 'Check-in readiness check', verdict: 'Winner: variant B', result: '41,0 % → 30,3 % · −10,7 pt (CI −18,1 to −3,3)', tone: 'good' }
+    },
+    {
+      id: 'REC-037', title: 'Guided first event during trial',
+      opp: 'OPP-03', oppLabel: 'Trials end without a published event',
+      effort: 'M', lift: '+12 pt trial to paid', owner: 'June W.', initials: 'JW',
+      status: 'Accepted', updated: 'Aug 20, 2026',
+      detail: 'Replace the empty events list on a fresh trial with a three-step setup that ends in a published event, with sensible defaults for ticket types.',
+      changes: [
+        'A trial workspace opens on a guided setup instead of an empty list.',
+        'Ticket types default to one free and one paid tier, both editable.',
+        'The last step publishes; the guide disappears once an event exists.'
+      ],
+      exp: { id: 'EXP-018', label: 'Guided first event during trial', verdict: 'Running · too early to call', result: '22,0 % → 28,8 % · +6,8 pt (CI −4,1 to +17,7)', tone: 'flat' }
+    },
+    {
+      id: 'REC-036', title: 'Verify a sender domain in three clicks',
+      opp: 'OPP-04', oppLabel: 'Attendee email lands in spam',
+      effort: 'M', lift: '−8 pt spam placement', owner: 'Mai S.', initials: 'MS',
+      status: 'Accepted', updated: 'Aug 19, 2026',
+      detail: 'Ask for the sending domain before the first attendee email rather than burying verification in messaging settings, and generate the DNS records to paste.',
+      changes: [
+        'First send prompts for a domain and shows the exact DNS records.',
+        'Verification state is polled and reported without a page reload.',
+        'Unverified workspaces keep sending — from the Eventa domain.'
+      ],
+      exp: { id: 'EXP-019', label: 'Sender-domain verification prompt', verdict: 'Running · variant B ahead', result: '12,1 % → 8,4 % · −3,7 pt (CI −7,0 to −0,4)', tone: 'good' }
+    },
+    {
+      id: 'REC-035', title: 'Prompt to clone into a next event',
+      opp: 'OPP-05', oppLabel: 'The second event never happens',
+      effort: 'S', lift: '+9 pt 90-day repeat', owner: 'June W.', initials: 'JW',
+      status: 'Proposed', updated: 'Aug 21, 2026',
+      detail: 'When an event closes, offer to clone it with new dates from the wrap-up screen — the moment the organizer is already looking at what worked.',
+      changes: [
+        'The post-event summary gains a primary "Run this again" action.',
+        'Cloning carries agenda, ticket types and discounts, not attendees.'
+      ],
+      exp: null
+    },
+    {
+      id: 'REC-034', title: 'Surface integration errors to organizers',
+      opp: 'OPP-06', oppLabel: 'Calendar sync fails silently',
+      effort: 'M', lift: '−40 % silent failures', owner: 'Krit P.', initials: 'KP',
+      status: 'Proposed', updated: 'Aug 14, 2026',
+      detail: 'Stop swallowing integration errors. Show the last sync result on the integration card, and notify the organizer when a retry chain is exhausted.',
+      changes: [
+        'Each connected app shows its last sync time and outcome.',
+        'An exhausted retry chain raises a notification with a retry action.',
+        'Errors are grouped so one bad token is one message, not forty.'
+      ],
+      exp: null
+    }
+  ];
+
+  var statusBadgeCls = { Proposed: 'badge-gray', Accepted: 'badge-blue', Scheduled: 'badge-purple', Shipped: 'badge-green', Declined: 'badge-red' };
+  var effortWord = { S: 'under a week', M: '2–4 weeks', L: 'a quarter' };
+
+  function statusBadge(s) { return '<span class="badge ' + statusBadgeCls[s] + '">' + esc(s) + '</span>'; }
+  function effortCell(e) {
+    return '<div class="flex items-center gap-2">' +
+      '<span class="grid h-5 w-5 shrink-0 place-items-center rounded-md bg-line text-[11px] font-bold text-ink">' + e + '</span>' +
+      '<span class="whitespace-nowrap text-[12px] text-muted">' + effortWord[e] + '</span></div>';
+  }
+  function rowHTML(r) {
+    return '<tr>' +
+      '<td><div class="min-w-0"><p class="font-semibold text-ink">' + esc(r.title) + '</p><p class="font-mono text-[11px] text-muted">' + esc(r.id) + '</p></div></td>' +
+      '<td><a href="opportunities.html" class="flex items-center gap-1.5 text-[12.5px] text-muted hover:text-brand hover:underline"><i class="hgi-stroke hgi-target-02 text-[14px]"></i>' + esc(r.oppLabel) + '</a></td>' +
+      '<td>' + effortCell(r.effort) + '</td>' +
+      '<td class="font-medium text-ink tnum">' + esc(r.lift) + '</td>' +
+      '<td><div class="flex items-center gap-2"><span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-soft text-[10px] font-semibold text-brand-dark dark:text-brand">' + esc(r.initials) + '</span><span class="whitespace-nowrap text-muted">' + esc(r.owner) + '</span></div></td>' +
+      '<td>' + statusBadge(r.status) + '</td>' +
+      '<td class="whitespace-nowrap text-muted tnum">' + esc(r.updated) + '</td>' +
+      '<td class="text-right"><button class="btn-icon" title="View" data-open="rec-view" data-rec="' + esc(r.id) + '"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>' +
+    '</tr>';
+  }
+
+  /* ---------- state + filtering ---------- */
+  var state = { tab: 'all', q: '', effort: 'All efforts', owner: 'All owners', page: 0, size: 10 };
+  function byTab(r) { return state.tab === 'all' || r.status === state.tab; }
+  function byEffort(r) { return state.effort === 'All efforts' || r.effort === state.effort.charAt(0); }
+  function byOwner(r) { return state.owner === 'All owners' || r.owner === state.owner; }
+  function bySearch(r) {
+    if (!state.q) return true;
+    return (r.id + ' ' + r.title + ' ' + r.oppLabel + ' ' + r.lift + ' ' + r.owner).toLowerCase().indexOf(state.q) !== -1;
+  }
+  function filtered() { return DATA.filter(byTab).filter(byEffort).filter(byOwner).filter(bySearch); }
+
+  var tbody = document.getElementById('rec-rows');
+  var elShowing = document.getElementById('rec-showing');
+  var elPrev = document.getElementById('rec-prev');
+  var elNext = document.getElementById('rec-next');
+
+  var NO_RESULTS = '<tr><td colspan="8"><div class="empty empty-sm">' +
+    '<span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span>' +
+    '<h3 class="empty-title">No recommendations match</h3>' +
+    '<p class="empty-text">Nothing matches the current search, status tab, effort and owner. Try widening them to see the rest of the backlog.</p>' +
+    '<div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div>' +
+    '</div></td></tr>';
+
+  function refreshCounts() {
+    document.querySelector('[data-count="all"]').textContent = nf(DATA.length);
+    ['Proposed', 'Accepted', 'Scheduled', 'Shipped', 'Declined'].forEach(function (s) {
+      document.querySelector('[data-count="' + s + '"]').textContent = nf(DATA.filter(function (r) { return r.status === s; }).length);
+    });
+  }
+
+  function render() {
+    var list = filtered(), total = list.length, pages = Math.max(1, Math.ceil(total / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    var start = state.page * state.size, slice = list.slice(start, start + state.size);
+    tbody.innerHTML = slice.length ? slice.map(rowHTML).join('') : NO_RESULTS;
+    if (total === 0) elShowing.textContent = 'No recommendations';
+    else elShowing.innerHTML = 'Showing <span class="font-semibold text-ink">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(total) + '</span> recommendations';
+    elPrev.disabled = total === 0 || state.page === 0;
+    elNext.disabled = total === 0 || state.page >= pages - 1;
+  }
+
+  /* ---------- wire controls ---------- */
+  document.getElementById('rec-search').addEventListener('input', function () { state.q = this.value.trim().toLowerCase(); state.page = 0; render(); });
+  document.getElementById('rec-effort').addEventListener('change', function () { state.effort = this.value; state.page = 0; render(); });
+  document.getElementById('rec-owner').addEventListener('change', function () { state.owner = this.value; state.page = 0; render(); });
+  document.getElementById('rec-size').addEventListener('change', function () { state.size = +this.value; state.page = 0; render(); });
+  elPrev.addEventListener('click', function () { if (state.page > 0) { state.page--; render(); } });
+  elNext.addEventListener('click', function () { state.page++; render(); });
+  var tabsGroup = document.querySelector('[data-tabs]');
+  tabsGroup.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-tab]'); if (!t) return;
+    state.tab = t.getAttribute('data-tab'); state.page = 0; render();
+  });
+
+  /* ---------- detail slide-over ---------- */
+  var rv = {
+    id: document.getElementById('rv-id'),
+    status: document.getElementById('rv-status'),
+    title: document.getElementById('rv-title'),
+    detail: document.getElementById('rv-detail'),
+    oppLabel: document.getElementById('rv-opp-label'),
+    effort: document.getElementById('rv-effort'),
+    lift: document.getElementById('rv-lift'),
+    owner: document.getElementById('rv-owner'),
+    updated: document.getElementById('rv-updated'),
+    changes: document.getElementById('rv-changes'),
+    experiment: document.getElementById('rv-experiment'),
+    link: document.getElementById('rv-link')
+  };
+  var expTone = {
+    good: { cls: 'text-brand', icon: 'hgi-medal-first-place' },
+    flat: { cls: 'text-muted', icon: 'hgi-equal-sign' }
+  };
+  function openView(id) {
+    var r = null, i;
+    for (i = 0; i < DATA.length; i++) if (DATA[i].id === id) { r = DATA[i]; break; }
+    if (!r) return;
+    rv.id.textContent = r.id;
+    rv.status.innerHTML = statusBadge(r.status);
+    rv.title.textContent = r.title;
+    rv.detail.textContent = r.detail;
+    rv.oppLabel.textContent = r.opp + ' · ' + r.oppLabel;
+    rv.effort.textContent = r.effort + ' — ' + effortWord[r.effort];
+    rv.lift.textContent = r.lift;
+    rv.owner.textContent = r.owner;
+    rv.updated.textContent = r.updated;
+    rv.changes.innerHTML = r.changes.map(function (c) {
+      return '<li class="flex gap-2.5"><i class="hgi-stroke hgi-checkmark-circle-02 mt-px shrink-0 text-[15px] text-brand"></i><span>' + esc(c) + '</span></li>';
+    }).join('');
+    if (r.exp) {
+      var tone = expTone[r.exp.tone] || expTone.flat;
+      rv.experiment.innerHTML = '<a href="experiments.html" class="flex items-start gap-3 rounded-xl border border-hair bg-canvas p-3 transition hover:bg-line/40">' +
+        '<span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-surface ' + tone.cls + '"><i class="hgi-stroke ' + tone.icon + ' text-[16px]"></i></span>' +
+        '<span class="min-w-0 flex-1 leading-tight">' +
+          '<span class="block text-[13px] font-semibold text-ink">' + esc(r.exp.id) + ' · ' + esc(r.exp.verdict) + '</span>' +
+          '<span class="mt-0.5 block text-[11.5px] text-muted tnum">' + esc(r.exp.result) + '</span>' +
+        '</span>' +
+        '<i class="hgi-stroke hgi-arrow-right-01 mt-1 shrink-0 text-[15px] text-muted"></i></a>';
+      rv.link.innerHTML = '<i class="hgi-stroke hgi-test-tube-01 text-[16px]"></i>' + esc(r.exp.id);
+    } else {
+      rv.experiment.innerHTML = '<div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">' +
+        '<i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px] text-muted"></i>' +
+        '<p class="text-[12px] leading-relaxed text-muted">No experiment yet. Nothing about this recommendation has been measured — the expected lift above is a claim, not a result.</p></div>';
+      rv.link.innerHTML = '<i class="hgi-stroke hgi-test-tube-01 text-[16px]"></i>Experiments';
+    }
+  }
+  tbody.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-rec]');
+    if (b) openView(b.getAttribute('data-rec'));
+  });
+
+  refreshCounts();
+  render();
+})();
+</script>
+</body>
+</html>

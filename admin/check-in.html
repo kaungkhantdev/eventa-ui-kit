@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=64"></script>
-<link rel="stylesheet" href="../assets/app.css?v=64" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="checkin">
 
@@ -20,6 +20,7 @@
   <!-- shell.js injects #backdrop + #sidebar here -->
 
   <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
 
     <!-- header -->
     <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
@@ -47,8 +48,19 @@
       </div>
     </div>
 
+    <!-- first run: the check-in list is drawn from registrations, which need a published event -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-checkmark-badge-01"></i></span>
+      <h2 class="empty-title">Nobody to check in yet</h2>
+      <p class="empty-text">This list is drawn from confirmed registrations for the selected event, so it fills up as tickets sell. Publish an event with tickets on sale to start the chain.</p>
+      <div class="empty-actions">
+        <a href="event-form.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-calendar-add-01 text-[15px]"></i>Create an event</a>
+        <a href="registrations.html" class="btn btn-ghost btn-sm">See registrations</a>
+      </div>
+    </section>
+
     <!-- progress strip -->
-    <div class="card p-4">
+    <div data-when-data class="card p-4">
       <div class="flex items-baseline justify-between gap-2">
         <p class="text-[13px] text-muted"><span id="p-checked" class="text-[17px] font-bold text-ink tnum">0</span> / <span id="p-total" class="tnum">0</span> attendees checked in</p>
         <p id="p-rate" class="text-[13px] font-bold text-brand tnum">0%</p>
@@ -57,7 +69,7 @@
     </div>
 
     <!-- tabs (left) + search & filter (right) -->
-    <div class="mt-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+    <div data-when-data class="mt-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
       <!-- pill tabs (status) -->
       <div class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
         <button class="pilltab tab-active" data-filter="all">All <span class="pilltab-count tnum" id="c-all">0</span></button>
@@ -85,7 +97,7 @@
     </div>
 
     <!-- table -->
-    <section class="card mt-3 p-4">
+    <section data-when-data class="card mt-3 p-4">
       <div class="overflow-x-auto">
         <table class="data-table min-w-[760px]">
           <thead>
@@ -94,7 +106,17 @@
           <tbody id="checkin-rows" class="text-[13px]"></tbody>
         </table>
       </div>
-      <p id="list-empty" class="hidden py-10 text-center text-[13px] text-muted">No attendees match your filters.</p>
+      <!-- no results: data exists, the search / ticket type / status tab just filtered it all out -->
+      <div id="list-empty" class="hidden">
+        <div class="empty empty-sm">
+          <span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span>
+          <h3 class="empty-title">No attendees match</h3>
+          <p class="empty-text">Nobody on this event's check-in list matches the current search and ticket type. Try a different spelling, or widen the filters.</p>
+          <div class="empty-actions">
+            <button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button>
+          </div>
+        </div>
+      </div>
 
       <div id="ci-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
         <p id="ci-showing"></p>
@@ -113,10 +135,11 @@
     </section>
 
     <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+    </div>
   </main>
 </div>
 
-<script src="../assets/shell.js?v=64"></script>
+<script src="../assets/shell.js?v=69"></script>
 <script>
   (function () {
     var TONE = {

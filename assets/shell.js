@@ -20,95 +20,225 @@
   const MODULES = [
     { id: 'home', label: 'Home', icon: 'hgi-home-01', href: 'home.html' },
     { id: 'dashboard', label: 'Dashboard', icon: 'hgi-dashboard-speed-02', href: 'dashboard.html' },
-    { id: 'events', label: 'Events', icon: 'hgi-calendar-03', href: 'events.html', groups: [
-      { label: 'Manage', icon: 'hgi-calendar-03', items: [
-        { label: 'All events',   page: 'events',     href: 'events.html' },
-        { label: 'Create event', page: 'event-form', href: 'event-form.html' },
-      ]},
-      { label: 'Ticketing', icon: 'hgi-ticket-01', items: [
-        { label: 'Tickets',   page: 'tickets',   href: 'tickets.html' },
-        { label: 'Discounts', page: 'discounts', href: 'discounts.html' },
-      ]},
-      { label: 'Program', icon: 'hgi-mic-01', items: [
-        { label: 'Agenda',    page: 'agenda',   href: 'agenda.html' },
-        { label: 'Speakers',  page: 'speakers', href: 'speakers.html' },
-      ]},
-      { label: 'Content', icon: 'hgi-browser', items: [
-        { label: 'Landing pages',  page: 'landing-pages',    href: 'landing-pages.html' },
-        { label: 'Categories',     page: 'event-categories', href: 'event-categories.html' },
-      ]},
-      { label: 'Attendees', icon: 'hgi-user-multiple', items: [
-        { label: 'Registrations', page: 'registrations', href: 'registrations.html' },
-        { label: 'Attendees',     page: 'attendees',     href: 'attendees.html' },
-        { label: 'Check-in',      page: 'checkin',       href: 'check-in.html' },
-      ]},
-    ]},
-    { id: 'checkin-tool', label: 'Check-in tool', icon: 'hgi-qr-code-01', href: 'check-in-tool.html' },
-    { id: 'finance', label: 'Finance', icon: 'hgi-wallet-01', href: 'payments.html', groups: [
-      { label: 'Transactions', icon: 'hgi-wallet-01', items: [
-        { label: 'Payments', page: 'payments', href: 'payments.html' },
-        { label: 'Payouts',  page: 'payouts',  href: 'payouts.html' },
-      ]},
-      { label: 'Tax & invoicing', icon: 'hgi-invoice-01', items: [
-        { label: 'Invoices', page: 'invoices', href: 'invoices.html' },
-        { label: 'Taxes',    page: 'taxes',    href: 'taxes.html' },
-      ]},
-    ]},
-    { id: 'reports', label: 'Insights', icon: 'hgi-analytics-up', href: 'reports.html', groups: [
-      { label: 'Summary', icon: 'hgi-analytics-up', items: [
-        { label: 'Overview', page: 'reports', href: 'reports.html' },
-      ]},
-      { label: 'Financial', icon: 'hgi-wallet-01', items: [
-        { label: 'Income',       page: 'reports-income',       href: 'reports-income.html' },
-        { label: 'Transactions', page: 'reports-transactions', href: 'reports-transactions.html' },
-        { label: 'Payouts',      page: 'reports-payouts',      href: 'reports-payouts.html' },
-      ]},
-      { label: 'Attendees', icon: 'hgi-user-multiple', items: [
-        { label: 'Registrations', page: 'reports-registrations', href: 'reports-registrations.html' },
-        { label: 'Attendance',    page: 'reports-attendance',    href: 'reports-attendance.html' },
-      ]},
-      { label: 'Marketing', icon: 'hgi-discount-tag-01', items: [
-        { label: 'Discounts', page: 'reports-discounts', href: 'reports-discounts.html' },
-      ]},
-      { label: 'Events', icon: 'hgi-calendar-03', items: [
-        { label: 'Event performance', page: 'reports-events', href: 'reports-events.html' },
-      ]},
-    ]},
-    { id: 'engagement', label: 'Engagement', icon: 'hgi-megaphone-01', href: 'notifications.html', groups: [
-      { label: 'Activity', icon: 'hgi-notification-03', items: [
-        { label: 'Notifications', page: 'notifications', href: 'notifications.html' },
-      ]},
-      { label: 'Messaging', icon: 'hgi-mail-01', items: [
-        { label: 'Templates',     page: 'messaging-templates',     href: 'messaging-templates.html' },
-        { label: 'Announcements', page: 'messaging-announcements', href: 'messaging-announcements.html' },
-        { label: 'Delivery log',  page: 'messaging-log',           href: 'messaging-log.html' },
-      ]},
-      { label: 'Feedback', icon: 'hgi-comment-01', items: [
-        { label: 'Overview', page: 'feedback', href: 'feedback.html' },
-      ]},
-    ]},
-    { id: 'settings', label: 'Settings', icon: 'hgi-settings-01', href: 'settings-profile.html', bottom: true, groups: [
-      { label: 'Account', icon: 'hgi-user-circle', items: [
-        { label: 'Profile',      page: 'settings-profile',       href: 'settings-profile.html' },
-        { label: 'Security',     page: 'settings-security',      href: 'settings-security.html' },
-        { label: 'Notification preferences', page: 'settings-notifications', href: 'settings-notifications.html' },
-      ]},
-      { label: 'Workspace', icon: 'hgi-building-03', items: [
-        { label: 'Organization', page: 'settings-organization', href: 'settings-organization.html' },
-        { label: 'Payments',     page: 'settings-payments',     href: 'settings-payments.html' },
-      ]},
-      { label: 'Access', icon: 'hgi-shield-user', items: [
-        { label: 'Users', page: 'users', href: 'users.html' },
-        { label: 'Roles', page: 'roles', href: 'roles.html' },
-      ]},
-    ]},
+    {
+      id: 'events',
+      label: 'Events',
+      icon: 'hgi-calendar-03',
+      href: 'events.html',
+      groups: [
+        {
+          label: 'Manage',
+          icon: 'hgi-calendar-03',
+          items: [
+            { label: 'All events', page: 'events', href: 'events.html' },
+            { label: 'Upcoming', page: 'events-upcoming', href: 'events-upcoming.html' },
+            { label: 'Create event', page: 'event-form', href: 'event-form.html' },
+          ],
+        },
+        {
+          label: 'Ticketing',
+          icon: 'hgi-ticket-01',
+          items: [
+            { label: 'Tickets', page: 'tickets', href: 'tickets.html' },
+            { label: 'Discounts', page: 'discounts', href: 'discounts.html' },
+          ],
+        },
+        {
+          label: 'Program',
+          icon: 'hgi-mic-01',
+          items: [
+            { label: 'Agenda', page: 'agenda', href: 'agenda.html' },
+            { label: 'Speakers', page: 'speakers', href: 'speakers.html' },
+          ],
+        },
+        {
+          label: 'Content',
+          icon: 'hgi-browser',
+          items: [
+            { label: 'Landing pages', page: 'landing-pages', href: 'landing-pages.html' },
+            { label: 'Categories', page: 'event-categories', href: 'event-categories.html' },
+          ],
+        },
+        {
+          label: 'Attendees',
+          icon: 'hgi-user-multiple',
+          items: [
+            { label: 'Registrations', page: 'registrations', href: 'registrations.html' },
+            { label: 'Attendees', page: 'attendees', href: 'attendees.html' },
+            { label: 'Check-in', page: 'checkin', href: 'check-in.html' },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'checkin-tool',
+      label: 'Check-in tool',
+      icon: 'hgi-qr-code-01',
+      href: 'check-in-tool.html',
+    },
+    {
+      id: 'meetings',
+      label: 'Meetings',
+      icon: 'hgi-meeting-room',
+      href: 'meetings.html',
+    },
+    {
+      id: 'finance',
+      label: 'Finance',
+      icon: 'hgi-wallet-01',
+      href: 'payments.html',
+      groups: [
+        {
+          label: 'Transactions',
+          icon: 'hgi-wallet-01',
+          items: [
+            { label: 'Payments', page: 'payments', href: 'payments.html' },
+            { label: 'Payouts', page: 'payouts', href: 'payouts.html' },
+          ],
+        },
+        {
+          label: 'Tax & invoicing',
+          icon: 'hgi-invoice-01',
+          items: [
+            { label: 'Invoices', page: 'invoices', href: 'invoices.html' },
+            { label: 'Taxes', page: 'taxes', href: 'taxes.html' },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'reports',
+      label: 'Insights',
+      icon: 'hgi-analytics-up',
+      href: 'reports.html',
+      groups: [
+        {
+          label: 'Summary',
+          icon: 'hgi-analytics-up',
+          items: [{ label: 'Overview', page: 'reports', href: 'reports.html' }],
+        },
+        {
+          label: 'Financial',
+          icon: 'hgi-wallet-01',
+          items: [
+            { label: 'Income', page: 'reports-income', href: 'reports-income.html' },
+            {
+              label: 'Transactions',
+              page: 'reports-transactions',
+              href: 'reports-transactions.html',
+            },
+            { label: 'Payouts', page: 'reports-payouts', href: 'reports-payouts.html' },
+          ],
+        },
+        {
+          label: 'Attendees',
+          icon: 'hgi-user-multiple',
+          items: [
+            {
+              label: 'Registrations',
+              page: 'reports-registrations',
+              href: 'reports-registrations.html',
+            },
+            { label: 'Attendance', page: 'reports-attendance', href: 'reports-attendance.html' },
+          ],
+        },
+        {
+          label: 'Marketing',
+          icon: 'hgi-discount-tag-01',
+          items: [
+            { label: 'Discounts', page: 'reports-discounts', href: 'reports-discounts.html' },
+          ],
+        },
+        {
+          label: 'Events',
+          icon: 'hgi-calendar-03',
+          items: [
+            { label: 'Event performance', page: 'reports-events', href: 'reports-events.html' },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'engagement',
+      label: 'Engagement',
+      icon: 'hgi-megaphone-01',
+      href: 'notifications.html',
+      groups: [
+        {
+          label: 'Activity',
+          icon: 'hgi-notification-03',
+          items: [{ label: 'Notifications', page: 'notifications', href: 'notifications.html' }],
+        },
+        {
+          label: 'Messaging',
+          icon: 'hgi-mail-01',
+          items: [
+            { label: 'Templates', page: 'messaging-templates', href: 'messaging-templates.html' },
+            {
+              label: 'Announcements',
+              page: 'messaging-announcements',
+              href: 'messaging-announcements.html',
+            },
+            { label: 'Delivery log', page: 'messaging-log', href: 'messaging-log.html' },
+          ],
+        },
+        {
+          label: 'Feedback',
+          icon: 'hgi-comment-01',
+          items: [{ label: 'Overview', page: 'feedback', href: 'feedback.html' }],
+        },
+      ],
+    },
+    {
+      id: 'settings',
+      label: 'Settings',
+      icon: 'hgi-settings-01',
+      href: 'settings-profile.html',
+      bottom: true,
+      groups: [
+        {
+          label: 'Account',
+          icon: 'hgi-user-circle',
+          items: [
+            { label: 'Profile', page: 'settings-profile', href: 'settings-profile.html' },
+            { label: 'Security', page: 'settings-security', href: 'settings-security.html' },
+            {
+              label: 'Notification preferences',
+              page: 'settings-notifications',
+              href: 'settings-notifications.html',
+            },
+          ],
+        },
+        {
+          label: 'Workspace',
+          icon: 'hgi-building-03',
+          items: [
+            {
+              label: 'Organization',
+              page: 'settings-organization',
+              href: 'settings-organization.html',
+            },
+            { label: 'Payments', page: 'settings-payments', href: 'settings-payments.html' },
+          ],
+        },
+        {
+          label: 'Access',
+          icon: 'hgi-shield-user',
+          items: [
+            { label: 'Users', page: 'users', href: 'users.html' },
+            { label: 'Roles', page: 'roles', href: 'roles.html' },
+          ],
+        },
+      ],
+    },
   ];
 
   const activePage = document.body.dataset.page || 'dashboard';
   function moduleOfPage(pg) {
     for (const m of MODULES) {
       if (m.id === pg) return m.id;
-      if (m.groups) for (const g of m.groups) for (const it of g.items) if (it.page === pg) return m.id;
+      if (m.groups)
+        for (const g of m.groups) for (const it of g.items) if (it.page === pg) return m.id;
     }
     return 'dashboard';
   }
@@ -148,7 +278,10 @@
       </aside>
     </div>`;
 
-  const layout = document.querySelector('[data-layout]') || document.querySelector('.flex.min-h-screen') || document.body.firstElementChild;
+  const layout =
+    document.querySelector('[data-layout]') ||
+    document.querySelector('.flex.min-h-screen') ||
+    document.body.firstElementChild;
   layout.insertAdjacentHTML('afterbegin', sidenavHTML);
 
   const backdrop = document.getElementById('backdrop');
@@ -173,8 +306,12 @@
     return `<div class="group relative flex justify-center">${control}<span class="rail-tip">${m.label}</span></div>`;
   }
   function renderRail() {
-    railTop.innerHTML = MODULES.filter(m => !m.bottom).map(railBtn).join('');
-    railBottom.innerHTML = MODULES.filter(m => m.bottom).map(railBtn).join('');
+    railTop.innerHTML = MODULES.filter((m) => !m.bottom)
+      .map(railBtn)
+      .join('');
+    railBottom.innerHTML = MODULES.filter((m) => m.bottom)
+      .map(railBtn)
+      .join('');
   }
 
   /* ---------------- Render: labeled panel (sub-nav) ---------------- */
@@ -186,7 +323,7 @@
     return `<li><a href="${it.href}" class="${cls}">${it.label}</a></li>`;
   }
   function wireAccordion() {
-    panelNav.querySelectorAll('[data-acc]').forEach(acc => {
+    panelNav.querySelectorAll('[data-acc]').forEach((acc) => {
       const btn = acc.querySelector('[data-acc-toggle]');
       const body = acc.querySelector('[data-acc-body]');
       const chev = acc.querySelector('[data-acc-chevron]');
@@ -198,29 +335,43 @@
     });
   }
   function renderPanel() {
-    const m = MODULES.find(x => x.id === selectedModule);
-    if (!m || !m.groups || !m.groups.length) { panel.classList.add('hidden'); return; }
+    const m = MODULES.find((x) => x.id === selectedModule);
+    if (!m || !m.groups || !m.groups.length) {
+      panel.classList.add('hidden');
+      return;
+    }
     panel.classList.remove('hidden');
     panelHead.textContent = m.label;
-    panelNav.innerHTML = m.groups.map(g => `
+    panelNav.innerHTML = m.groups
+      .map(
+        (g) => `
       <div data-acc>
         <button type="button" data-acc-toggle class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-semibold text-ink transition hover:bg-line">
           <i class="hgi-stroke ${g.icon} text-[17px]"></i>${g.label}
           <i data-acc-chevron class="hgi-stroke hgi-arrow-down-01 text-[15px] ml-auto rotate-180 text-muted transition-transform duration-200"></i>
         </button>
         <ul data-acc-body class="mt-0.5 space-y-0.5">${g.items.map(panelLeaf).join('')}</ul>
-      </div>`).join('');
+      </div>`,
+      )
+      .join('');
     wireAccordion();
   }
-  function selectModule(id) { selectedModule = id; renderRail(); renderPanel(); }
+  function selectModule(id) {
+    selectedModule = id;
+    renderRail();
+    renderPanel();
+  }
 
   renderRail();
   renderPanel();
 
   // rail: module buttons switch the panel; Home / Dashboard links navigate
-  rail.addEventListener('click', e => {
+  rail.addEventListener('click', (e) => {
     const b = e.target.closest('[data-mod]');
-    if (b) { e.preventDefault(); selectModule(b.dataset.mod); }
+    if (b) {
+      e.preventDefault();
+      selectModule(b.dataset.mod);
+    }
   });
 
   /* ---------------- Mobile drawer ---------------- */
@@ -231,15 +382,19 @@
   }
   function closeDrawer() {
     sidenav.classList.add('-translate-x-full');
-    if (M && !reduce) { M.animate(backdrop, { opacity: [1, 0] }, { duration: 0.22 }); setTimeout(() => backdrop.classList.add('hidden'), 230); }
-    else backdrop.classList.add('hidden');
+    if (M && !reduce) {
+      M.animate(backdrop, { opacity: [1, 0] }, { duration: 0.22 });
+      setTimeout(() => backdrop.classList.add('hidden'), 230);
+    } else backdrop.classList.add('hidden');
   }
   const menuBtn = document.getElementById('btn-menu');
   if (menuBtn) menuBtn.addEventListener('click', openDrawer);
   backdrop.addEventListener('click', closeDrawer);
   // close on a real navigation link (leaf / logo / avatar), not on a module-switch button
-  sidenav.addEventListener('click', e => { if (!isDesktop() && e.target.closest('a[href]:not([href="#"])')) closeDrawer(); });
-  window.matchMedia('(min-width: 1024px)').addEventListener('change', e => {
+  sidenav.addEventListener('click', (e) => {
+    if (!isDesktop() && e.target.closest('a[href]:not([href="#"])')) closeDrawer();
+  });
+  window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
     if (e.matches) sidenav.classList.remove('-translate-x-full');
     else sidenav.classList.add('-translate-x-full');
     backdrop.classList.add('hidden');
@@ -251,7 +406,9 @@
     document.documentElement.classList.toggle('dark', dark);
     const ic = document.querySelector('#rail-theme i');
     if (ic) ic.className = 'hgi-stroke ' + (dark ? 'hgi-sun-03' : 'hgi-moon-02') + ' text-[20px]';
-    try { localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light'); } catch (e) {}
+    try {
+      localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
+    } catch (e) {}
     if (typeof window.EventaOnThemeChange === 'function') window.EventaOnThemeChange(dark);
   }
   function toggleTheme(origin) {
@@ -259,7 +416,7 @@
     const oldBg = isDark ? 'rgb(13 17 15)' : 'rgb(255 255 255)';
     applyTheme(!isDark);
     if (!M || reduce || !M.animate) return;
-    document.querySelectorAll('.theme-reveal').forEach(e => e.remove());
+    document.querySelectorAll('.theme-reveal').forEach((e) => e.remove());
     const r = origin.getBoundingClientRect();
     const ov = document.createElement('div');
     ov.className = 'theme-reveal';
@@ -278,29 +435,47 @@
   overlay.className = 'panel-overlay';
   document.body.appendChild(overlay);
   function closeAll() {
-    document.querySelectorAll('.panel.open, .modal.open').forEach(p => p.classList.remove('open'));
+    document
+      .querySelectorAll('.panel.open, .modal.open')
+      .forEach((p) => p.classList.remove('open'));
     overlay.classList.remove('open');
   }
-  document.addEventListener('click', e => {
+  document.addEventListener('click', (e) => {
     const opener = e.target.closest('[data-open]');
-    if (opener) { const p = document.getElementById(opener.getAttribute('data-open')); if (p) { closeAll(); p.classList.add('open'); overlay.classList.add('open'); } return; }
+    if (opener) {
+      const p = document.getElementById(opener.getAttribute('data-open'));
+      if (p) {
+        closeAll();
+        p.classList.add('open');
+        overlay.classList.add('open');
+      }
+      return;
+    }
     if (e.target.closest('[data-close]') || e.target === overlay) closeAll();
   });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAll(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAll();
+  });
 
   /* ---------------- Declarative tabs ([data-tabs] wrapper, [data-tab]/[data-tab-panel]) ---------------- */
-  document.querySelectorAll('[data-tabs]').forEach(group => {
+  document.querySelectorAll('[data-tabs]').forEach((group) => {
     const content = document.querySelector(group.getAttribute('data-tabs')) || group.parentElement;
-    group.addEventListener('click', e => {
-      const t = e.target.closest('[data-tab]'); if (!t) return;
+    group.addEventListener('click', (e) => {
+      const t = e.target.closest('[data-tab]');
+      if (!t) return;
       const name = t.getAttribute('data-tab');
-      group.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('tab-active', b === t));
-      content.querySelectorAll('[data-tab-panel]').forEach(p => p.classList.toggle('hidden', p.getAttribute('data-tab-panel') !== name));
+      group
+        .querySelectorAll('[data-tab]')
+        .forEach((b) => b.classList.toggle('tab-active', b === t));
+      content
+        .querySelectorAll('[data-tab-panel]')
+        .forEach((p) => p.classList.toggle('hidden', p.getAttribute('data-tab-panel') !== name));
     });
   });
 
   /* ---------------- Header popovers: notifications + profile ---------------- */
-  const popCls = 'pop hidden fixed z-[70] max-w-[calc(100vw-16px)] overflow-hidden rounded-2xl bg-surface shadow-xl ring-1 ring-black/5 dark:ring-white/10';
+  const popCls =
+    'pop hidden fixed z-[70] max-w-[calc(100vw-16px)] overflow-hidden rounded-2xl bg-surface shadow-xl ring-1 ring-black/5 dark:ring-white/10';
   const notifItem = (icon, tint, title, body, time, unread) => `
     <a href="notifications.html" class="flex gap-3 px-4 py-2.5 transition hover:bg-line">
       <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg ${tint}"><i class="hgi-stroke ${icon} text-[17px]"></i></span>
@@ -352,42 +527,59 @@
   const notifPop = document.getElementById('eventa-notif-pop');
   const profilePop = document.getElementById('eventa-profile-pop');
   const pops = [notifPop, profilePop].filter(Boolean);
-  const closePops = () => pops.forEach(p => p.classList.add('hidden'));
+  const closePops = () => pops.forEach((p) => p.classList.add('hidden'));
   function togglePop(pop, trigger) {
     const isOpen = !pop.classList.contains('hidden');
     closePops();
     if (!isOpen) {
       const r = trigger.getBoundingClientRect();
-      pop.style.top = (r.bottom + 8) + 'px';
+      pop.style.top = r.bottom + 8 + 'px';
       pop.style.right = Math.max(8, window.innerWidth - r.right) + 'px';
       pop.classList.remove('hidden');
     }
   }
-  document.querySelectorAll('button[title="Notifications"]').forEach(bell => {
-    bell.addEventListener('click', e => { e.stopPropagation(); if (notifPop) togglePop(notifPop, bell); });
+  document.querySelectorAll('button[title="Notifications"]').forEach((bell) => {
+    bell.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (notifPop) togglePop(notifPop, bell);
+    });
     const profile = bell.nextElementSibling;
     if (profile && profilePop) {
       profile.classList.add('cursor-pointer');
-      profile.addEventListener('click', e => { e.stopPropagation(); togglePop(profilePop, profile); });
+      profile.addEventListener('click', (e) => {
+        e.stopPropagation();
+        togglePop(profilePop, profile);
+      });
     }
   });
   if (profilePop) {
     const bt = profilePop.querySelector('[data-toggle]');
-    if (bt) bt.addEventListener('click', e => {
-      e.stopPropagation();
-      const on = bt.classList.toggle('bg-brand'); bt.classList.toggle('bg-line', !on);
-      bt.firstElementChild.classList.toggle('translate-x-4', on);
-    });
+    if (bt)
+      bt.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const on = bt.classList.toggle('bg-brand');
+        bt.classList.toggle('bg-line', !on);
+        bt.firstElementChild.classList.toggle('translate-x-4', on);
+      });
   }
-  pops.forEach(p => p.addEventListener('click', e => {
-    if (e.target.closest('[data-toggle]')) return;
-    const link = e.target.closest('a');
-    if (!link) return;
-    const href = link.getAttribute('href');
-    if (!href || href === '#') { e.preventDefault(); closePops(); }
-  }));
-  document.addEventListener('click', e => { if (!e.target.closest('.pop')) closePops(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePops(); });
+  pops.forEach((p) =>
+    p.addEventListener('click', (e) => {
+      if (e.target.closest('[data-toggle]')) return;
+      const link = e.target.closest('a');
+      if (!link) return;
+      const href = link.getAttribute('href');
+      if (!href || href === '#') {
+        e.preventDefault();
+        closePops();
+      }
+    }),
+  );
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.pop')) closePops();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closePops();
+  });
 
   /* ---------------- Searchable event picker ----------------
      A plain <select> can't scale to thousands of events (no search, whole list in
@@ -399,67 +591,98 @@
      preserved for filter selects. At real scale, swap the local filter for a
      debounced server query — same UI. */
   const EVENT_CATALOG = [
-    { name: 'Tech Summit 2026',          date: 'Jul 18, 2026', status: 'Live' },
-    { name: 'Bangkok Jazz Night',        date: 'Jul 12, 2026', status: 'Live' },
-    { name: 'Thai Street Food Festival', date: 'Aug 3, 2026',  status: 'Upcoming' },
-    { name: 'UX Bangkok Meetup',         date: 'Aug 20, 2026', status: 'Upcoming' },
-    { name: 'Sunrise Yoga Retreat',      date: 'Sep 11, 2026', status: 'Upcoming' },
-    { name: 'DevOps World Bangkok',      date: 'Sep 3, 2026',  status: 'Upcoming' },
-    { name: 'Founders Coffee Connect',   date: 'Sep 5, 2026',  status: 'Upcoming' },
-    { name: 'AI Prototyping Bootcamp',   date: 'Sep 9, 2026',  status: 'Upcoming' },
-    { name: 'Green Future Art Expo',     date: 'Sep 14, 2026', status: 'Upcoming' },
-    { name: 'Marathon for Mangroves',    date: 'Sep 18, 2026', status: 'Upcoming' },
-    { name: 'Indie Sound Night',         date: 'Sep 21, 2026', status: 'Live' },
+    { name: 'Tech Summit 2026', date: 'Jul 18, 2026', status: 'Live' },
+    { name: 'Bangkok Jazz Night', date: 'Jul 12, 2026', status: 'Live' },
+    { name: 'Thai Street Food Festival', date: 'Aug 3, 2026', status: 'Upcoming' },
+    { name: 'UX Bangkok Meetup', date: 'Aug 20, 2026', status: 'Upcoming' },
+    { name: 'Sunrise Yoga Retreat', date: 'Sep 11, 2026', status: 'Upcoming' },
+    { name: 'DevOps World Bangkok', date: 'Sep 3, 2026', status: 'Upcoming' },
+    { name: 'Founders Coffee Connect', date: 'Sep 5, 2026', status: 'Upcoming' },
+    { name: 'AI Prototyping Bootcamp', date: 'Sep 9, 2026', status: 'Upcoming' },
+    { name: 'Green Future Art Expo', date: 'Sep 14, 2026', status: 'Upcoming' },
+    { name: 'Marathon for Mangroves', date: 'Sep 18, 2026', status: 'Upcoming' },
+    { name: 'Indie Sound Night', date: 'Sep 21, 2026', status: 'Live' },
     { name: 'Product Strategy Masterclass', date: 'Sep 24, 2026', status: 'Upcoming' },
-    { name: 'Startup Pitch Arena',       date: 'Sep 27, 2026', status: 'Upcoming' },
-    { name: 'Cloud Security Summit',     date: 'Oct 1, 2026',  status: 'Upcoming' },
-    { name: 'Watercolor Weekend',        date: 'Oct 4, 2026',  status: 'Upcoming' },
-    { name: 'Hearts United Benefit Ball',date: 'Oct 8, 2026',  status: 'Upcoming' },
-    { name: 'Sunset Trail Run',          date: 'Oct 11, 2026', status: 'Upcoming' },
-    { name: 'Bangkok Design Biennale',   date: 'Oct 15, 2026', status: 'Live' },
-    { name: 'Jazz on the Rooftop',       date: 'Oct 18, 2026', status: 'Upcoming' },
-    { name: 'Data Science Forum',        date: 'Oct 22, 2026', status: 'Upcoming' },
-    { name: 'UX Research Roundtable',    date: 'Oct 25, 2026', status: 'Upcoming' },
-    { name: 'Women in Tech Mixer',       date: 'Oct 29, 2026', status: 'Upcoming' },
-    { name: 'Mindful Movement Retreat',  date: 'Nov 2, 2026',  status: 'Upcoming' },
-    { name: 'Rapid Prototyping Lab',     date: 'Nov 6, 2026',  status: 'Upcoming' },
+    { name: 'Startup Pitch Arena', date: 'Sep 27, 2026', status: 'Upcoming' },
+    { name: 'Cloud Security Summit', date: 'Oct 1, 2026', status: 'Upcoming' },
+    { name: 'Watercolor Weekend', date: 'Oct 4, 2026', status: 'Upcoming' },
+    { name: 'Hearts United Benefit Ball', date: 'Oct 8, 2026', status: 'Upcoming' },
+    { name: 'Sunset Trail Run', date: 'Oct 11, 2026', status: 'Upcoming' },
+    { name: 'Bangkok Design Biennale', date: 'Oct 15, 2026', status: 'Live' },
+    { name: 'Jazz on the Rooftop', date: 'Oct 18, 2026', status: 'Upcoming' },
+    { name: 'Data Science Forum', date: 'Oct 22, 2026', status: 'Upcoming' },
+    { name: 'UX Research Roundtable', date: 'Oct 25, 2026', status: 'Upcoming' },
+    { name: 'Women in Tech Mixer', date: 'Oct 29, 2026', status: 'Upcoming' },
+    { name: 'Mindful Movement Retreat', date: 'Nov 2, 2026', status: 'Upcoming' },
+    { name: 'Rapid Prototyping Lab', date: 'Nov 6, 2026', status: 'Upcoming' },
     { name: 'Charity Gala Under the Stars', date: 'Nov 9, 2026', status: 'Upcoming' },
-    { name: 'Neon Nights Festival',      date: 'Nov 13, 2026', status: 'Live' },
-    { name: 'Enterprise Cloud Expo',     date: 'Nov 17, 2026', status: 'Upcoming' },
-    { name: 'Leadership in Practice',    date: 'Nov 20, 2026', status: 'Upcoming' },
+    { name: 'Neon Nights Festival', date: 'Nov 13, 2026', status: 'Live' },
+    { name: 'Enterprise Cloud Expo', date: 'Nov 17, 2026', status: 'Upcoming' },
+    { name: 'Leadership in Practice', date: 'Nov 20, 2026', status: 'Upcoming' },
     { name: 'Corporate Leadership Summit', date: 'Dec 20, 2025', status: 'Completed' },
-    { name: 'Summer Music Festival',     date: 'Jun 15, 2025', status: 'Completed' },
-    { name: 'Product Launch Mixer',      date: 'May 2, 2025',  status: 'Completed' },
-    { name: 'Winter Code Conference',    date: 'Jan 18, 2025', status: 'Completed' },
-    { name: 'Design Systems Workshop',   date: 'Feb 12, 2025', status: 'Completed' },
-    { name: 'Love & Give Charity Dinner',date: 'Feb 14, 2025', status: 'Completed' },
-    { name: 'Spring Wellness Retreat',   date: 'Mar 8, 2025',  status: 'Completed' },
+    { name: 'Summer Music Festival', date: 'Jun 15, 2025', status: 'Completed' },
+    { name: 'Product Launch Mixer', date: 'May 2, 2025', status: 'Completed' },
+    { name: 'Winter Code Conference', date: 'Jan 18, 2025', status: 'Completed' },
+    { name: 'Design Systems Workshop', date: 'Feb 12, 2025', status: 'Completed' },
+    { name: 'Love & Give Charity Dinner', date: 'Feb 14, 2025', status: 'Completed' },
+    { name: 'Spring Wellness Retreat', date: 'Mar 8, 2025', status: 'Completed' },
     { name: 'Contemporary Art Showcase', date: 'Mar 22, 2025', status: 'Completed' },
-    { name: 'Frontend Masters Seminar',  date: 'Apr 5, 2025',  status: 'Completed' },
-    { name: 'Startup Growth Summit',     date: 'Apr 19, 2025', status: 'Completed' },
+    { name: 'Frontend Masters Seminar', date: 'Apr 5, 2025', status: 'Completed' },
+    { name: 'Startup Growth Summit', date: 'Apr 19, 2025', status: 'Completed' },
     { name: 'Investor Networking Night', date: 'May 16, 2025', status: 'Completed' },
-    { name: 'Summer Beats Block Party',  date: 'Jul 19, 2025', status: 'Completed' },
+    { name: 'Summer Beats Block Party', date: 'Jul 19, 2025', status: 'Completed' },
   ];
-  const CAT_META = {}; EVENT_CATALOG.forEach(e => { CAT_META[e.name] = e; });
-  const STATUS_DOT = { Live: 'bg-brand', Upcoming: 'bg-blue-500', Completed: 'bg-gray-400', Draft: 'bg-amber-500' };
-  function epEsc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+  const CAT_META = {};
+  EVENT_CATALOG.forEach((e) => {
+    CAT_META[e.name] = e;
+  });
+  const STATUS_DOT = {
+    Live: 'bg-brand',
+    Upcoming: 'bg-blue-500',
+    Completed: 'bg-gray-400',
+    Draft: 'bg-amber-500',
+  };
+  function epEsc(s) {
+    return String(s == null ? '' : s).replace(
+      /[&<>"]/g,
+      (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c],
+    );
+  }
 
   let epOpenPop = null;
-  function epCloseOpen() { if (epOpenPop) { epOpenPop.remove(); epOpenPop = null; } }
+  function epCloseOpen() {
+    if (epOpenPop) {
+      epOpenPop.remove();
+      epOpenPop = null;
+    }
+  }
 
   function enhanceEventPickers() {
     document.querySelectorAll('select[data-event-picker]').forEach(function (sel) {
-      if (sel.dataset.epReady) return; sel.dataset.epReady = '1';
+      if (sel.dataset.epReady) return;
+      sel.dataset.epReady = '1';
 
       const first = sel.options[0];
-      const allOpt = first && (first.value === '' || /all events/i.test(first.textContent)) ? first.cloneNode(true) : null;
+      const allOpt =
+        first && (first.value === '' || /all events/i.test(first.textContent))
+          ? first.cloneNode(true)
+          : null;
 
       if (sel.dataset.eventPicker === 'catalog') {
         const keep = sel.value || (sel.options[sel.selectedIndex] || {}).textContent;
-        sel.innerHTML = (allOpt ? '<option value="' + epEsc(allOpt.value) + '">' + epEsc(allOpt.textContent) + '</option>' : '') +
-          EVENT_CATALOG.map(e => '<option>' + epEsc(e.name) + '</option>').join('');
-        const match = Array.prototype.find.call(sel.options, o => o.value === keep || o.textContent === keep);
-        sel.value = match ? match.value : (allOpt ? allOpt.value : sel.options[0].textContent);
+        sel.innerHTML =
+          (allOpt
+            ? '<option value="' +
+              epEsc(allOpt.value) +
+              '">' +
+              epEsc(allOpt.textContent) +
+              '</option>'
+            : '') + EVENT_CATALOG.map((e) => '<option>' + epEsc(e.name) + '</option>').join('');
+        const match = Array.prototype.find.call(
+          sel.options,
+          (o) => o.value === keep || o.textContent === keep,
+        );
+        sel.value = match ? match.value : allOpt ? allOpt.value : sel.options[0].textContent;
       }
 
       // trigger button reuses the select's own classes for visual parity
@@ -470,15 +693,26 @@
       const epLabelSpan = document.createElement('span');
       epLabelSpan.className = 'truncate';
       trigger.appendChild(epLabelSpan);
-      const setLabel = () => { epLabelSpan.textContent = (sel.options[sel.selectedIndex] || {}).textContent || 'Select event'; };
+      const setLabel = () => {
+        epLabelSpan.textContent =
+          (sel.options[sel.selectedIndex] || {}).textContent || 'Select event';
+      };
       setLabel();
+      // the trigger is a facade over the real <select>; anything that changes the
+      // select programmatically (Clear filters, deep links) must repaint the label
+      sel.addEventListener('change', setLabel);
       sel.classList.add('hidden');
       sel.parentNode.insertBefore(trigger, sel);
 
       function optionRows() {
         return Array.prototype.map.call(sel.options, function (o) {
           const meta = CAT_META[o.textContent];
-          return { label: o.textContent, value: o.value, isAll: allOpt && o.value === allOpt.value && o.textContent === allOpt.textContent, meta: meta };
+          return {
+            label: o.textContent,
+            value: o.value,
+            isAll: allOpt && o.value === allOpt.value && o.textContent === allOpt.textContent,
+            meta: meta,
+          };
         });
       }
 
@@ -486,18 +720,20 @@
         epCloseOpen();
         const rows = optionRows();
         const pop = document.createElement('div');
-        pop.className = 'fixed z-[70] w-[300px] max-w-[calc(100vw-24px)] overflow-hidden rounded-xl border border-hair bg-surface shadow-xl';
+        pop.className =
+          'fixed z-[70] w-[300px] max-w-[calc(100vw-24px)] overflow-hidden rounded-xl border border-hair bg-surface shadow-xl';
         pop.innerHTML =
           '<div class="border-b border-hair p-2">' +
-            '<div class="relative"><i class="hgi-stroke hgi-search-01 text-[15px] pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-muted"></i>' +
-            '<input data-ep-search type="text" placeholder="Search events…" class="h-9 w-full rounded-lg bg-canvas pl-8 pr-2.5 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15"></div>' +
+          '<div class="relative"><i class="hgi-stroke hgi-search-01 text-[15px] pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-muted"></i>' +
+          '<input data-ep-search type="text" placeholder="Search events…" class="h-9 w-full rounded-lg bg-canvas pl-8 pr-2.5 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15"></div>' +
           '</div>' +
           '<div data-ep-list class="max-h-[280px] overflow-y-auto p-1.5"></div>';
         document.body.appendChild(pop);
         epOpenPop = pop;
 
         const r = trigger.getBoundingClientRect();
-        let left = r.left; if (left + 300 > window.innerWidth - 12) left = window.innerWidth - 12 - 300;
+        let left = r.left;
+        if (left + 300 > window.innerWidth - 12) left = window.innerWidth - 12 - 300;
         pop.style.left = Math.max(12, left) + 'px';
         let top = r.bottom + 6;
         if (top + 340 > window.innerHeight && r.top - 340 > 0) top = r.top - 6 - pop.offsetHeight;
@@ -505,59 +741,192 @@
 
         const listEl = pop.querySelector('[data-ep-list]');
         const searchEl = pop.querySelector('[data-ep-search]');
-        let active = -1, view = rows;
+        let active = -1,
+          view = rows;
 
         function paint(q) {
           const s = (q || '').trim().toLowerCase();
-          view = rows.filter(r => !s || r.label.toLowerCase().indexOf(s) !== -1);
-          active = view.findIndex(r => r.value === sel.value && r.label === (sel.options[sel.selectedIndex] || {}).textContent);
+          view = rows.filter((r) => !s || r.label.toLowerCase().indexOf(s) !== -1);
+          active = view.findIndex(
+            (r) =>
+              r.value === sel.value &&
+              r.label === (sel.options[sel.selectedIndex] || {}).textContent,
+          );
           if (active < 0) active = view.length ? 0 : -1;
-          listEl.innerHTML = view.length ? view.map(function (r, i) {
-            const on = r.value === sel.value && r.label === (sel.options[sel.selectedIndex] || {}).textContent;
-            const meta = r.meta ? '<span class="ml-auto flex shrink-0 items-center gap-1.5 whitespace-nowrap pl-2 text-[11px] text-muted"><span class="tnum">' + epEsc(r.meta.date) + '</span><span class="h-1.5 w-1.5 rounded-full ' + (STATUS_DOT[r.meta.status] || 'bg-gray-400') + '"></span></span>' : '';
-            return '<button type="button" data-ep-i="' + i + '" class="ep-row flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-[13px] ' + (on ? 'bg-brand-soft font-semibold text-brand' : 'font-medium text-ink hover:bg-line') + '">' +
-              '<i class="hgi-stroke hgi-tick-02 text-[14px] ' + (on ? 'text-brand' : 'invisible') + '"></i>' +
-              '<span class="truncate">' + epEsc(r.label) + '</span>' + meta + '</button>';
-          }).join('') : '<div class="px-2.5 py-6 text-center text-[13px] text-muted">No events match.</div>';
+          listEl.innerHTML = view.length
+            ? view
+                .map(function (r, i) {
+                  const on =
+                    r.value === sel.value &&
+                    r.label === (sel.options[sel.selectedIndex] || {}).textContent;
+                  const meta = r.meta
+                    ? '<span class="ml-auto flex shrink-0 items-center gap-1.5 whitespace-nowrap pl-2 text-[11px] text-muted"><span class="tnum">' +
+                      epEsc(r.meta.date) +
+                      '</span><span class="h-1.5 w-1.5 rounded-full ' +
+                      (STATUS_DOT[r.meta.status] || 'bg-gray-400') +
+                      '"></span></span>'
+                    : '';
+                  return (
+                    '<button type="button" data-ep-i="' +
+                    i +
+                    '" class="ep-row flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-[13px] ' +
+                    (on
+                      ? 'bg-brand-soft font-semibold text-brand'
+                      : 'font-medium text-ink hover:bg-line') +
+                    '">' +
+                    '<i class="hgi-stroke hgi-tick-02 text-[14px] ' +
+                    (on ? 'text-brand' : 'invisible') +
+                    '"></i>' +
+                    '<span class="truncate">' +
+                    epEsc(r.label) +
+                    '</span>' +
+                    meta +
+                    '</button>'
+                  );
+                })
+                .join('')
+            : '<div class="px-2.5 py-6 text-center text-[13px] text-muted">No events match.</div>';
           highlight();
         }
         function highlight() {
           Array.prototype.forEach.call(listEl.querySelectorAll('.ep-row'), function (el, i) {
-            el.classList.toggle('ring-2', i === active); el.classList.toggle('ring-inset', i === active); el.classList.toggle('ring-brand/40', i === active);
+            el.classList.toggle('ring-2', i === active);
+            el.classList.toggle('ring-inset', i === active);
+            el.classList.toggle('ring-brand/40', i === active);
           });
         }
         function choose(i) {
-          const row = view[i]; if (!row) return;
-          const idx = Array.prototype.findIndex.call(sel.options, o => o.value === row.value && o.textContent === row.label);
+          const row = view[i];
+          if (!row) return;
+          const idx = Array.prototype.findIndex.call(
+            sel.options,
+            (o) => o.value === row.value && o.textContent === row.label,
+          );
           if (idx >= 0) sel.selectedIndex = idx;
           setLabel();
           sel.dispatchEvent(new Event('change', { bubbles: true }));
-          epCloseOpen(); trigger.focus();
+          epCloseOpen();
+          trigger.focus();
         }
-        listEl.addEventListener('click', e => { const b = e.target.closest('[data-ep-i]'); if (b) choose(+b.dataset.epI); });
-        listEl.addEventListener('mousemove', e => { const b = e.target.closest('[data-ep-i]'); if (b) { active = +b.dataset.epI; highlight(); } });
-        searchEl.addEventListener('input', () => paint(searchEl.value));
-        searchEl.addEventListener('keydown', e => {
-          if (e.key === 'ArrowDown') { e.preventDefault(); active = Math.min(view.length - 1, active + 1); highlight(); scrollActive(); }
-          else if (e.key === 'ArrowUp') { e.preventDefault(); active = Math.max(0, active - 1); highlight(); scrollActive(); }
-          else if (e.key === 'Enter') { e.preventDefault(); choose(active); }
-          else if (e.key === 'Escape') { e.preventDefault(); epCloseOpen(); trigger.focus(); }
+        listEl.addEventListener('click', (e) => {
+          const b = e.target.closest('[data-ep-i]');
+          if (b) choose(+b.dataset.epI);
         });
-        function scrollActive() { const el = listEl.querySelectorAll('.ep-row')[active]; if (el) el.scrollIntoView({ block: 'nearest' }); }
+        listEl.addEventListener('mousemove', (e) => {
+          const b = e.target.closest('[data-ep-i]');
+          if (b) {
+            active = +b.dataset.epI;
+            highlight();
+          }
+        });
+        searchEl.addEventListener('input', () => paint(searchEl.value));
+        searchEl.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            active = Math.min(view.length - 1, active + 1);
+            highlight();
+            scrollActive();
+          } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            active = Math.max(0, active - 1);
+            highlight();
+            scrollActive();
+          } else if (e.key === 'Enter') {
+            e.preventDefault();
+            choose(active);
+          } else if (e.key === 'Escape') {
+            e.preventDefault();
+            epCloseOpen();
+            trigger.focus();
+          }
+        });
+        function scrollActive() {
+          const el = listEl.querySelectorAll('.ep-row')[active];
+          if (el) el.scrollIntoView({ block: 'nearest' });
+        }
         paint('');
         searchEl.focus();
       }
 
-      trigger.addEventListener('click', function (e) { e.stopPropagation(); if (epOpenPop) epCloseOpen(); else openPop(); });
+      trigger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (epOpenPop) epCloseOpen();
+        else openPop();
+      });
     });
   }
-  document.addEventListener('click', e => { if (epOpenPop && !e.target.closest('.fixed.z-\\[70\\]') && !e.target.closest('[data-ep-trigger]')) epCloseOpen(); });
+  document.addEventListener('click', (e) => {
+    if (
+      epOpenPop &&
+      !e.target.closest('.fixed.z-\\[70\\]') &&
+      !e.target.closest('[data-ep-trigger]')
+    )
+      epCloseOpen();
+  });
   window.addEventListener('resize', epCloseOpen);
+  /* ---------- Clear filters ----------
+     The no-results block offers one action: put the page back. Rather than each
+     page wiring its own handler, this resets every search box and filter select
+     under <main> and re-fires input/change so the page's existing render runs.
+     Paginator controls are left alone — page size is not a filter. */
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-clear-filters]');
+    if (!btn) return;
+    e.preventDefault();
+    var scope = document.querySelector('main') || document;
+    scope
+      .querySelectorAll('input[type="text"], input[type="search"], input:not([type]), select')
+      .forEach(function (el) {
+        if (el.closest('[data-empty]')) return; // never the block's own controls
+        if (el.closest('[id*="pager"], [class*="pager"]')) return; // rows-per-page
+        if (el.tagName === 'SELECT') el.selectedIndex = 0;
+        else el.value = '';
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+    // reset a pill-tab group to its first tab — pages use either idiom
+    var firstPill =
+      scope.querySelector('[data-pill-group] [data-pill]') ||
+      scope.querySelector('button[data-filter]');
+    if (firstPill) firstPill.click();
+  });
+
+  /* ---------- Empty-state preview ----------
+     A page ships both states: its real content marked [data-when-data], and a
+     first-run block marked [data-empty] that stays hidden. Loading the page with
+     ?empty=1 swaps them, so the kit can show what a brand-new workspace sees
+     without duplicating the page. Nothing here runs on a normal load. */
+  (function () {
+    var on = false;
+    try {
+      on = new URLSearchParams(location.search).has('empty');
+    } catch (e) {}
+    var blocks = document.querySelectorAll('[data-empty]');
+    if (!blocks.length) return;
+    document.querySelectorAll('[data-when-data]').forEach(function (el) {
+      el.hidden = on;
+    });
+    blocks.forEach(function (el) {
+      el.hidden = !on;
+    });
+    // a quiet way back to the populated view
+    if (!on) return;
+    var pill = document.createElement('a');
+    pill.href = location.pathname;
+    pill.className =
+      'fixed bottom-4 right-4 z-[60] inline-flex items-center gap-1.5 rounded-full border border-hair bg-surface px-3 py-1.5 text-[11px] font-semibold text-muted shadow-pop transition hover:text-ink';
+    pill.innerHTML =
+      '<i class="hgi-stroke hgi-database-01 text-[13px]"></i>Empty state — show data';
+    document.body.appendChild(pill);
+  })();
+
   enhanceEventPickers();
   window.EventaEnhanceEventPickers = enhanceEventPickers; // for panels/tabs that inject selects later
   // event metadata lookup for pages that headline the event (name → {date, status, dot})
   window.EventaEventMeta = function (name) {
     const m = CAT_META[name];
-    return m ? { name: m.name, date: m.date, status: m.status, dot: STATUS_DOT[m.status] || 'bg-gray-400' } : null;
+    return m
+      ? { name: m.name, date: m.date, status: m.status, dot: STATUS_DOT[m.status] || 'bg-gray-400' }
+      : null;
   };
 })();

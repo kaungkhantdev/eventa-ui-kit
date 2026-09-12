@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=64"></script>
-<link rel="stylesheet" href="../assets/app.css?v=64" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="feedback">
 
@@ -20,6 +20,7 @@
   <!-- shell.js injects #backdrop + #sidebar here -->
 
   <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
 
     <!-- header -->
     <div class="mb-4 flex items-center gap-3">
@@ -119,6 +120,7 @@
     </section>
 
     <p class="mt-6 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+    </div>
   </main>
 </div>
 
@@ -192,8 +194,8 @@
   </footer>
 </aside>
 
-<script src="../assets/feedback-data.js?v=64"></script>
-<script src="../assets/shell.js?v=64"></script>
+<script src="../assets/feedback-data.js?v=69"></script>
+<script src="../assets/shell.js?v=69"></script>
 <script>
   (function () {
     var F = window.FEEDBACK;
@@ -361,7 +363,7 @@
       var list = respFiltered(), total = list.length, pages = Math.max(1, Math.ceil(total / respState.size));
       if (respState.page >= pages) respState.page = pages - 1;
       if (!total) {
-        elList.innerHTML = '<div class="py-8 text-center text-[13px] text-muted">No responses match these filters.</div>';
+        elList.innerHTML = '<div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No responses match</h3><p class="empty-text">Nothing matches the selected survey and rating. Try widening the filters to see more responses.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div>';
         elPager.classList.add('hidden'); elPager.classList.remove('flex');
         return;
       }

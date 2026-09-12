@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Overview</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="overview">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="text-[22px] font-bold tracking-tight">Overview</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Every workspace on Eventa, at a glance.</p>
+      </div>
+      <div id="ov-range" class="ml-auto hidden items-center gap-1 rounded-lg bg-surface p-1 text-[12px] font-semibold sm:flex">
+        <button data-range="week" class="rounded-md px-3 py-1.5 text-muted transition">Week</button>
+        <button data-range="month" class="rounded-md px-3 py-1.5 text-muted transition">Month</button>
+        <button data-range="year" class="rounded-md bg-white px-3 py-1.5 text-ink shadow-sm transition dark:bg-white/10">Year</button>
+      </div>
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: nothing has signed up yet, so every figure here is zero -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-dashboard-square-01"></i></span>
+      <h2 class="empty-title">No workspaces yet</h2>
+      <p class="empty-text">This console reports on every organization using Eventa — signups, revenue, adoption and health. It fills in on its own as soon as the first workspace is created.</p>
+      <div class="empty-actions">
+        <a href="organizations.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-building-03 text-[15px]"></i>Browse organizations</a>
+        <a href="system-health.html" class="btn btn-ghost btn-sm">Check system health</a>
+      </div>
+    </section>
+
+    <!-- stat cards -->
+    <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-building-03 text-[16px]"></i>Workspaces</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">312</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>6,8 %</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-pulse-01 text-[16px]"></i>Active (30d)</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">218</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>4,1 %</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-money-bag-02 text-[16px]"></i>MRR</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">฿486k</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>9,3 %</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-exchange-01 text-[16px]"></i>Platform GMV</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">฿12.4M</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>14,2 %</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-user-remove-01 text-[16px]"></i>Churn (30d)</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">1,8 %</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>0,4 pt</span></div>
+      </div>
+    </div>
+
+    <!-- revenue + plan mix row -->
+    <div data-when-data class="mt-3 grid gap-3 xl:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+      <section class="rounded-2xl bg-surface p-4 lg:p-5">
+        <div class="mb-4 flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h2 class="text-[16px] font-bold tracking-tight">Recurring revenue</h2>
+            <div class="mt-1 flex items-center gap-2">
+              <p id="rev-value" class="text-[22px] font-bold tracking-tight tnum">฿486k</p>
+              <span id="rev-delta" class="flex items-center gap-0.5 text-[13px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>9,3 %</span>
+              <span class="text-[12px] text-muted">vs previous period</span>
+            </div>
+          </div>
+        </div>
+        <div id="rev-chart"></div>
+      </section>
+
+      <section class="rounded-2xl bg-surface p-4 lg:p-5">
+        <h2 class="text-[16px] font-bold tracking-tight">Workspaces by plan</h2>
+        <p class="mt-0.5 text-[12px] text-muted">Share of all paying and free workspaces</p>
+        <div class="relative mx-auto mt-4 w-[190px]">
+          <svg viewBox="0 0 42 42" class="w-full -rotate-90"><g id="donut"></g></svg>
+          <div class="pointer-events-none absolute inset-0 grid place-items-center text-center">
+            <div>
+              <p class="text-[22px] font-bold tracking-tight tnum">312</p>
+              <p class="text-[11px] text-muted">workspaces</p>
+            </div>
+          </div>
+        </div>
+        <div id="plan-legend" class="mt-4 space-y-2.5"></div>
+      </section>
+    </div>
+
+    <!-- attention + recent signups row -->
+    <div data-when-data class="mt-3 grid gap-3 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)]">
+      <section class="rounded-2xl bg-surface p-4 lg:p-5">
+        <div class="mb-3 flex items-center justify-between">
+          <h2 class="text-[16px] font-bold tracking-tight">Needs attention</h2>
+          <a href="issues.html" class="text-[12px] font-semibold text-brand hover:underline">All issues</a>
+        </div>
+        <div id="attention-rows" class="space-y-2.5"></div>
+      </section>
+
+      <section class="rounded-2xl bg-surface p-4 lg:p-5">
+        <div class="mb-3 flex items-center justify-between">
+          <h2 class="text-[16px] font-bold tracking-tight">Recent signups</h2>
+          <a href="workspaces.html" class="text-[12px] font-semibold text-brand hover:underline">All workspaces</a>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[520px] text-left">
+            <thead>
+              <tr class="text-[10.5px] font-semibold uppercase tracking-wider text-muted">
+                <th class="pb-2 pr-3 font-semibold">Workspace</th>
+                <th class="pb-2 pr-3 font-semibold">Plan</th>
+                <th class="pb-2 pr-3 font-semibold">Events</th>
+                <th class="pb-2 pr-3 font-semibold">Status</th>
+                <th class="pb-2 text-right font-semibold">Joined</th>
+              </tr>
+            </thead>
+            <tbody id="signup-rows" class="text-[13px]"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+  /* ---------- Recurring revenue: smooth area chart ----------
+     Same machinery as the organizer dashboard (see AGENTS.md → Charts): the
+     colours are read per theme, so any theme flip must re-render — hence
+     window.EventaOnThemeChange at the bottom. */
+  const datasets = {
+    week:  { labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], values:[402,410,415,419,424,430,438], max:500, value:'฿438k', delta:'2,1 %', up:true },
+    month: { labels:['1','5','10','15','20','25','30'],          values:[441,449,455,462,470,478,486], max:500, value:'฿486k', delta:'9,3 %', up:true },
+    year:  { labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], values:[188,206,229,248,276,301,330,358,382,414,450,486], max:500, value:'฿486k', delta:'9,3 %', up:true },
+  };
+  function smoothPath(pts) {
+    let d = `M ${pts[0][0]} ${pts[0][1]}`;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+      const c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
+      const c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
+      d += ` C ${c1x} ${c1y} ${c2x} ${c2y} ${p2[0]} ${p2[1]}`;
+    }
+    return d;
+  }
+  let currentRange = 'year';
+  function renderChart(key) {
+    const d = datasets[key]; currentRange = key;
+    const dark = document.documentElement.classList.contains('dark');
+    const cGrid = dark ? 'rgba(255,255,255,0.08)' : '#eef0f3', cAxis = dark ? '#8b96a0' : '#8b93a4';
+    const cRing = dark ? '#171d1a' : '#ffffff', cTipBg = dark ? '#e6ebe8' : '#132a22', cTipFg = dark ? '#0e1311' : '#ffffff';
+    const W = 640, H = 280, PL = 48, PR = 14, PT = 24, PB = 36;
+    const plotW = W - PL - PR, plotH = H - PT - PB, n = d.values.length;
+    const xFor = i => PL + (i / (n - 1)) * plotW, yFor = v => PT + (1 - v / d.max) * plotH;
+    const pts = d.values.map((v, i) => [xFor(i), yFor(v)]);
+    const line = smoothPath(pts);
+    const area = `${line} L ${xFor(n - 1)} ${PT + plotH} L ${xFor(0)} ${PT + plotH} Z`;
+    let grid = '';
+    for (let k = 0; k <= 4; k++) {
+      const val = d.max * k / 4, y = yFor(val);
+      grid += `<line x1="${PL}" y1="${y}" x2="${W - PR}" y2="${y}" stroke="${cGrid}" stroke-width="1"/>`;
+      grid += `<text x="${PL - 10}" y="${y + 4}" text-anchor="end" font-size="12" fill="${cAxis}">฿${Math.round(val)}k</text>`;
+    }
+    let xl = '';
+    d.labels.forEach((lb, i) => { xl += `<text x="${xFor(i)}" y="${PT + plotH + 24}" text-anchor="middle" font-size="12" fill="${cAxis}">${lb}</text>`; });
+    const last = pts[n - 1], lv = d.values[n - 1];
+    const tip = `฿${lv}k`;
+    const tw = 58, th = 27;
+    const tx = Math.min(Math.max(last[0] - tw / 2, PL), W - PR - tw);
+    const ty = last[1] - th - 14;
+    document.getElementById('rev-chart').innerHTML = `
+      <svg viewBox="0 0 ${W} ${H}" class="w-full" style="height:auto" font-family="Inter, sans-serif">
+        <defs><linearGradient id="revfill" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#1ba770" stop-opacity="0.28"/><stop offset="100%" stop-color="#1ba770" stop-opacity="0"/></linearGradient></defs>
+        ${grid}
+        <path d="${area}" fill="url(#revfill)"/>
+        <path d="${line}" fill="none" stroke="#1ba770" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+        ${xl}
+        <line x1="${last[0]}" y1="${PT}" x2="${last[0]}" y2="${PT + plotH}" stroke="#1ba770" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+        <circle cx="${last[0]}" cy="${last[1]}" r="6" fill="#1ba770" stroke="${cRing}" stroke-width="2.5"/>
+        <rect x="${tx}" y="${ty}" width="${tw}" height="${th}" rx="7" fill="${cTipBg}"/>
+        <text x="${tx + tw / 2}" y="${ty + th / 2 + 4}" text-anchor="middle" font-size="13" font-weight="700" fill="${cTipFg}">${tip}</text>
+      </svg>`;
+    document.getElementById('rev-value').textContent = d.value;
+    const dl = document.getElementById('rev-delta');
+    dl.className = 'flex items-center gap-0.5 text-[13px] font-semibold ' + (d.up ? 'text-brand' : 'text-red-500');
+    dl.innerHTML = `<i class="hgi-stroke ${d.up ? 'hgi-arrow-up-right-01' : 'hgi-arrow-down-right-01'} text-[13px]"></i>${d.delta}`;
+  }
+  const ovRange = document.getElementById('ov-range');
+  ovRange.addEventListener('click', e => {
+    const btn = e.target.closest('button'); if (!btn) return;
+    [...ovRange.children].forEach(b => b.className = 'rounded-md px-3 py-1.5 text-muted transition');
+    btn.className = 'rounded-md bg-white px-3 py-1.5 text-ink shadow-sm transition dark:bg-white/10';
+    renderChart(btn.dataset.range);
+  });
+  renderChart('year');
+  window.EventaOnThemeChange = () => renderChart(currentRange);
+
+  /* ---------- Workspaces by plan (donut) ---------- */
+  const plans = [
+    { name: 'Growth',     pct: 34, n: 106, c: '#1ba770' },
+    { name: 'Starter',    pct: 29, n: 90,  c: '#4cbd96' },
+    { name: 'Free',       pct: 26, n: 81,  c: '#9fe0cd' },
+    { name: 'Enterprise', pct: 11, n: 35,  c: '#d1d5db' },
+  ];
+  const R = 15.915, GAP = 2.2, SW = 4.5;
+  let start = 0;
+  document.getElementById('donut').innerHTML = plans.map(p => {
+    const len = Math.max(p.pct - GAP, 0.4);
+    const arc = `<circle cx="21" cy="21" r="${R}" fill="none" stroke="${p.c}" stroke-width="${SW}" stroke-linecap="round" stroke-dasharray="${len} ${100 - len}" stroke-dashoffset="${25 - start}" />`;
+    start += p.pct; return arc;
+  }).join('');
+  document.getElementById('plan-legend').innerHTML = plans.map(p => `
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2.5"><span class="h-3.5 w-3.5 rounded" style="background:${p.c}"></span><div class="leading-tight"><p class="text-[13px] font-semibold text-ink">${p.name}</p><p class="text-[11px] text-muted tnum">${p.n} workspaces</p></div></div>
+      <span class="text-[15px] font-bold tnum">${p.pct}%</span>
+    </div>`).join('');
+
+  /* ---------- Needs attention ---------- */
+  const attention = [
+    { icon: 'hgi-alert-02',      tone: 'text-red-500',    title: 'Payouts failing',        detail: '3 workspaces · Stripe account restricted', href: 'issues.html' },
+    { icon: 'hgi-connect',       tone: 'text-amber-500',  title: 'Integration degraded',   detail: 'Google Calendar · 12 % error rate',        href: 'integration-health.html' },
+    { icon: 'hgi-invoice-01',    tone: 'text-amber-500',  title: 'Invoices overdue',       detail: '7 subscriptions · ฿82,400 outstanding',    href: 'billing-payments.html' },
+    { icon: 'hgi-time-schedule', tone: 'text-muted',      title: 'Outbox lag',             detail: 'relay behind by 4 min',                    href: 'system-health.html' },
+  ];
+  document.getElementById('attention-rows').innerHTML = attention.map(a => `
+    <a href="${a.href}" class="flex items-start gap-3 rounded-xl border border-hair p-3 transition hover:bg-line/40">
+      <span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-canvas ${a.tone}"><i class="hgi-stroke ${a.icon} text-[16px]"></i></span>
+      <span class="min-w-0 flex-1 leading-tight">
+        <span class="block text-[13px] font-semibold text-ink">${a.title}</span>
+        <span class="mt-0.5 block truncate text-[11.5px] text-muted">${a.detail}</span>
+      </span>
+      <i class="hgi-stroke hgi-arrow-right-01 mt-1 shrink-0 text-[15px] text-muted"></i>
+    </a>`).join('');
+
+  /* ---------- Recent signups ---------- */
+  const planBadge = {
+    Enterprise: 'badge-purple',
+    Growth:     'badge-green',
+    Starter:    'badge-blue',
+    Free:       'badge-gray',
+  };
+  const statusBadge = {
+    Active:    'badge-green',
+    Trialling: 'badge-amber',
+    Onboarding:'badge-blue',
+  };
+  const signups = [
+    { in: 'SC', name: 'Siam Conferences',  plan: 'Growth',     ev: 12, st: 'Active',     when: '2h ago' },
+    { in: 'BJ', name: 'Bangkok Jazz Co.',  plan: 'Starter',    ev: 4,  st: 'Active',     when: '6h ago' },
+    { in: 'NW', name: 'Northern Wellness', plan: 'Free',       ev: 1,  st: 'Onboarding', when: 'Yesterday' },
+    { in: 'PT', name: 'PTT Events',        plan: 'Enterprise', ev: 38, st: 'Active',     when: '2 days ago' },
+    { in: 'CM', name: 'Chiang Mai Arts',   plan: 'Starter',    ev: 0,  st: 'Trialling',  when: '3 days ago' },
+  ];
+  document.getElementById('signup-rows').innerHTML = signups.map(s => `
+    <tr class="border-t border-line">
+      <td class="py-2.5 pr-3"><div class="flex items-center gap-2"><span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-soft text-[10px] font-semibold text-brand-dark dark:text-brand">${s.in}</span><span class="font-medium text-ink">${s.name}</span></div></td>
+      <td class="pr-3"><span class="badge ${planBadge[s.plan]}">${s.plan}</span></td>
+      <td class="pr-3 text-muted tnum">${s.ev}</td>
+      <td class="pr-3"><span class="badge ${statusBadge[s.st]}">${s.st}</span></td>
+      <td class="text-right text-muted">${s.when}</td>
+    </tr>`).join('');
+</script>
+</body>
+</html>

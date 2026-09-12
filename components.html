@@ -1,0 +1,1860 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa · Components — UI Kit</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="assets/config.js?v=69"></script>
+<link rel="stylesheet" href="assets/app.css?v=69" />
+<style>
+  /* ---- Reference-site chrome (page-local; components themselves come from app.css) ---- */
+  .ds-link { display:flex; align-items:center; gap:.5rem; padding:.3rem .6rem; border-radius:.5rem; font-size:12.5px; font-weight:500; color:rgb(var(--muted)); transition:.12s; }
+  .ds-link:hover { color:rgb(var(--ink)); background:rgb(var(--line)); }
+  .ds-link.active { color:#1ba770; background:rgb(var(--brand-soft)); font-weight:600; }
+  html.dark .ds-link.active { color:#45c98f; }
+  .ds-group { margin:1.1rem .6rem .35rem; font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgb(var(--muted)); }
+  .ds-group:first-child { margin-top:0; }
+
+  .ds-sec { scroll-margin-top:5rem; padding-top:2.75rem; margin-top:2.75rem; border-top:1px solid rgb(var(--hair)); }
+
+  .ex-label { margin:1.6rem 0 .6rem; font-size:12px; font-weight:600; color:rgb(var(--muted)); }
+  .ex-wrap { border:1px solid rgb(var(--hair)); border-radius:.9rem; overflow:hidden; background:rgb(var(--surface)); }
+  .ex-bar { display:flex; align-items:center; justify-content:space-between; padding:.4rem .5rem; border-bottom:1px solid rgb(var(--line)); }
+  .ex-seg { display:inline-flex; gap:2px; background:rgb(var(--line)); border-radius:.55rem; padding:2px; }
+  .ex-seg button { display:inline-flex; align-items:center; gap:.3rem; font-size:12px; font-weight:600; color:rgb(var(--muted)); padding:.28rem .62rem; border-radius:.42rem; transition:.12s; }
+  .ex-seg button.on { background:rgb(var(--surface)); color:rgb(var(--ink)); box-shadow:0 1px 2px rgba(0,0,0,.08); }
+  html.dark .ex-seg button.on { background:rgba(255,255,255,.1); }
+  .ex-copy { display:inline-flex; align-items:center; gap:.4rem; font-size:12px; font-weight:600; color:rgb(var(--muted)); padding:.32rem .55rem; border-radius:.45rem; transition:.12s; }
+  .ex-copy:hover { color:rgb(var(--ink)); background:rgb(var(--line)); }
+  .ex-view { padding:1.9rem 1.6rem; background:rgb(var(--canvas)); display:flex; flex-wrap:wrap; align-items:center; gap:.7rem; }
+  .ex-view.block { display:block; }
+  .ex-view.center { justify-content:center; }
+  .ex-view.tall { min-height:15rem; align-items:flex-start; }
+  .ex-code { margin:0; padding:1rem 1.2rem; background:#0c1512; overflow-x:auto; }
+  .ex-code code { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:12px; line-height:1.65; color:#c4d1cb; white-space:pre; display:block; }
+  .c-tag { color:#7ee0b8; }
+  .c-at  { color:#93b4ff; }
+  .c-st  { color:#e6c07b; }
+
+  /* colour swatches */
+  .swatch { height:66px; border-radius:.7rem; box-shadow:inset 0 0 0 1px rgb(var(--hair)); }
+  /* inline code chip (setup wiring table) */
+  .setup-chip { display:inline-block; border-radius:.3rem; background:rgb(var(--line)); padding:.08rem .35rem; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:11px; white-space:nowrap; color:rgb(var(--ink)); }
+  /* generated dropdown menu (page demo) */
+  .ds-menu { box-shadow:0 8px 24px rgba(16,24,40,.14); }
+
+  /* mobile nav drawer (desktop keeps the static sticky sidebar) */
+  #ds-aside { transform:translateX(-100%); transition:transform .3s cubic-bezier(.4,0,.2,1); }
+  #ds-aside.open { transform:translateX(0); }
+  @media (min-width:1024px){ #ds-aside{ transform:none; transition:none; } }
+</style>
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased">
+
+<!-- ───────────────── top bar ───────────────── -->
+<header class="sticky top-0 z-30 border-b border-hair bg-surface/85 backdrop-blur">
+  <div class="mx-auto flex h-14 max-w-[1240px] items-center justify-between px-5 lg:px-8">
+    <div class="flex items-center gap-1.5">
+      <button id="nav-toggle" type="button" class="btn-icon lg:hidden" aria-label="Open navigation"><i class="hgi-stroke hgi-menu-01 text-[19px]"></i></button>
+      <a href="index.html" class="inline-flex items-center gap-2.5">
+        <span class="brand-logo text-brand h-[22px] w-[42px]"></span>
+        <span class="text-[16px] font-extrabold tracking-tight text-brand-dark">Eventa</span>
+        <span class="hidden rounded-md bg-brand-soft px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-brand sm:inline">UI Kit</span>
+      </a>
+    </div>
+    <div class="flex items-center gap-1.5">
+      <a href="index.html" class="btn btn-ghost btn-sm border border-hair"><i class="hgi-stroke hgi-grid-view text-[15px]"></i><span class="hidden sm:inline">Screens</span></a>
+      <button id="theme-btn" class="btn-icon border border-hair" title="Toggle theme"><i class="hgi-stroke hgi-moon-02 text-[17px]"></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- mobile drawer backdrop -->
+<div id="nav-backdrop" class="fixed inset-0 z-40 hidden bg-black/40 backdrop-blur-sm lg:hidden"></div>
+
+<div class="mx-auto max-w-[1240px] px-5 lg:px-8">
+  <div class="lg:grid lg:grid-cols-[210px_minmax(0,1fr)] lg:gap-10">
+
+    <!-- ───────────────── side nav — sticky sidebar (lg+) / off-canvas drawer (<lg), auto-generated ───────────────── -->
+    <aside id="ds-aside" class="fixed inset-y-0 left-0 z-50 flex w-72 max-w-[82vw] flex-col border-r border-hair bg-surface lg:static lg:z-auto lg:block lg:w-auto lg:max-w-none lg:border-0 lg:bg-transparent">
+      <div class="flex items-center justify-between border-b border-hair px-4 py-3 lg:hidden">
+        <span class="text-[13px] font-bold tracking-tight">Components</span>
+        <button id="nav-close" type="button" class="btn-icon" aria-label="Close navigation"><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+      </div>
+      <nav id="ds-nav" class="flex-1 overflow-y-auto no-scrollbar px-4 py-5 lg:sticky lg:top-[4.5rem] lg:max-h-[calc(100vh-6rem)] lg:flex-none lg:px-0 lg:py-8"></nav>
+    </aside>
+
+    <!-- ───────────────── content ───────────────── -->
+    <main class="min-w-0 pb-24 pt-8 lg:pt-10">
+
+      <!-- hero -->
+      <div class="mb-4">
+        <p class="text-[12px] font-semibold uppercase tracking-wider text-brand">Design system</p>
+        <h1 class="mt-1.5 text-[30px] font-extrabold tracking-tight sm:text-[34px]">Components</h1>
+        <p class="mt-2 max-w-2xl text-[14px] leading-relaxed text-muted">Every building block in the Eventa kit — foundations, forms, feedback, data display, navigation, overlays and charts — shown live in light &amp; dark with copy-paste markup. All components are plain classes from <code class="rounded bg-line px-1 py-0.5 text-[12px] tnum">assets/app.css</code>; no build step, no framework.</p>
+        <div class="mt-5 flex flex-wrap gap-x-6 gap-y-1.5 text-[12px] text-muted">
+          <span class="inline-flex items-center gap-1.5"><i class="hgi-stroke hgi-tick-02 text-[14px] text-brand"></i><b class="font-semibold text-ink tnum" id="comp-count">40+</b>&nbsp;components</span>
+          <span class="inline-flex items-center gap-1.5"><i class="hgi-stroke hgi-tick-02 text-[14px] text-brand"></i>Light &amp; dark</span>
+          <span class="inline-flex items-center gap-1.5"><i class="hgi-stroke hgi-tick-02 text-[14px] text-brand"></i>Copy-paste HTML</span>
+        </div>
+      </div>
+
+      <!-- ══════════════════════ GET STARTED ══════════════════════ -->
+
+      <section id="setup" data-nav="Get started" data-group="Get started" data-icon="hgi-rocket-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Get started — connecting CSS &amp; JS</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Eventa is static HTML with <strong class="font-semibold text-ink">no build step</strong>. Two shared files make every component work: <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">assets/app.css</code> supplies all the component classes &amp; color tokens, and <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">assets/shell.js</code> injects the sidebar and wires the interactive components. Copy the head, put your markup in a <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">&lt;main&gt;</code>, include the scripts — done.</p>
+
+        <p class="ex-label">What each shared file does</p>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <div class="card flex gap-3 border border-hair p-4">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-navigation-03 text-[18px]"></i></span>
+            <div><p class="text-[13px] font-semibold text-ink">config.js</p><p class="mt-0.5 text-[12px] leading-snug text-muted">Tailwind config — <code class="text-[11px]">darkMode:'class'</code> + the semantic color tokens. Load right after the Tailwind CDN.</p></div>
+          </div>
+          <div class="card flex gap-3 border border-hair p-4">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-paint-board text-[18px]"></i></span>
+            <div><p class="text-[13px] font-semibold text-ink">app.css</p><p class="mt-0.5 text-[12px] leading-snug text-muted">Every component class — <code class="text-[11px]">.btn</code>, <code class="text-[11px]">.card</code>, <code class="text-[11px]">.input</code>, <code class="text-[11px]">.badge</code>, <code class="text-[11px]">.data-table</code>, <code class="text-[11px]">.panel</code> … plus the token variables.</p></div>
+          </div>
+          <div class="card flex gap-3 border border-hair p-4">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-source-code text-[18px]"></i></span>
+            <div><p class="text-[13px] font-semibold text-ink">shell.js</p><p class="mt-0.5 text-[12px] leading-snug text-muted">Renders the double sidebar &amp; wires the declarative modals, tabs and accordions. Include once at the end of <code class="text-[11px]">&lt;body&gt;</code>.</p></div>
+          </div>
+          <div class="card flex gap-3 border border-hair p-4">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-settings-01 text-[18px]"></i></span>
+            <div><p class="text-[13px] font-semibold text-ink">settings-ui.js</p><p class="mt-0.5 text-[12px] leading-snug text-muted">Optional — wires <code class="text-[11px]">[data-toggle]</code> switches and <code class="text-[11px]">[data-reveal]</code> password fields on settings pages.</p></div>
+          </div>
+        </div>
+
+        <p class="ex-label">1 · The &lt;head&gt; — loads the CSS</p>
+        <div id="setup-head"></div>
+
+        <p class="ex-label">2 · The page skeleton — loads the JS</p>
+        <div id="setup-skeleton"></div>
+
+        <p class="ex-label">3 · Declarative wiring — no per-component JS</p>
+        <p class="mb-3 max-w-2xl text-[13px] leading-relaxed text-muted">Interactive components work through <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">data-*</code> attributes that the shared scripts pick up automatically — you never write component JS. Add the trigger, add the target, done.</p>
+        <div class="card overflow-x-auto border border-hair p-4">
+          <table class="data-table min-w-[560px]">
+            <thead><tr><th>Interaction</th><th>Attributes</th><th>Wired by</th></tr></thead>
+            <tbody>
+              <tr><td class="font-medium text-ink">Modal / slide-over</td><td><code class="setup-chip">[data-open="id"]</code> + <code class="setup-chip">[data-close]</code> <span class="text-[11px] text-muted">· overlay &amp; Esc auto</span></td><td><code class="setup-chip">shell.js</code></td></tr>
+              <tr><td class="font-medium text-ink">Tabs</td><td><code class="setup-chip">[data-tabs="#sel"]</code> <code class="setup-chip">[data-tab]</code> <code class="setup-chip">[data-tab-panel]</code></td><td><code class="setup-chip">shell.js</code></td></tr>
+              <tr><td class="font-medium text-ink">Accordion</td><td><code class="setup-chip">[data-acc]</code> <code class="setup-chip">[data-acc-toggle]</code> <code class="setup-chip">[data-acc-body]</code> <code class="setup-chip">[data-acc-chevron]</code></td><td><code class="setup-chip">shell.js</code></td></tr>
+              <tr><td class="font-medium text-ink">Toggle / switch</td><td><code class="setup-chip">[data-toggle]</code> <span class="text-[11px] text-muted">· knob = first child</span></td><td><code class="setup-chip">settings-ui.js</code></td></tr>
+              <tr><td class="font-medium text-ink">Password reveal</td><td><code class="setup-chip">[data-reveal]</code> <span class="text-[11px] text-muted">· beside the input</span></td><td><code class="setup-chip">settings-ui.js</code></td></tr>
+              <tr><td class="font-medium text-ink">Dark mode</td><td><code class="setup-chip">.dark</code> on <code class="setup-chip">&lt;html&gt;</code></td><td><span class="text-[11px] text-muted">boot script + rail toggle</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-4 flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
+          <i class="hgi-stroke hgi-information-circle mt-0.5 shrink-0 text-[16px] text-muted"></i>
+          <p class="text-[12px] leading-snug text-muted">Standalone pages (<code class="text-[11px]">auth/</code>, <code class="text-[11px]">portal/</code>) skip <code class="text-[11px]">shell.js</code> and the sidebar — they carry a tiny inline theme toggle but still pull <code class="text-[11px]">app.css</code> for the components.</p>
+        </div>
+      </section>
+
+      <!-- ══════════════════════ FOUNDATIONS ══════════════════════ -->
+
+      <section id="colors" data-nav="Colors" data-group="Foundations" data-icon="hgi-colors" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Colors</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Semantic tokens are CSS variables that flip between light &amp; dark automatically — use them (<code class="rounded bg-line px-1 py-0.5 text-[11.5px]">bg-surface</code>, <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">text-muted</code>) instead of literal grays so new UI is dark-mode-ready. The brand green is a fixed hex.</p>
+        <p class="ex-label">Semantic tokens</p>
+        <div id="tokens-grid" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4"></div>
+        <p class="ex-label">Brand &amp; accents</p>
+        <div id="accents-grid" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4"></div>
+      </section>
+
+      <section id="typography" data-nav="Typography" data-group="Foundations" data-icon="hgi-text-font" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Typography</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">The face is <strong class="font-semibold text-ink">Inter</strong> on a compact ~13px base. Figures use <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">tnum</code> (tabular) so numbers line up in tables and stats.</p>
+        <div class="card mt-5 divide-y divide-line border border-hair" id="type-scale"></div>
+      </section>
+
+      <section id="icons" data-nav="Icons" data-group="Foundations" data-icon="hgi-grid" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Icons</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Hugeicons stroke-rounded font. Drop in <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">&lt;i class="hgi-stroke hgi-name"&gt;</code>, size with <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">text-[Npx]</code>, color with <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">currentColor</code>.</p>
+        <div id="icon-grid" class="mt-5 grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6"></div>
+        <script type="text/html" class="ex">
+          <i class="hgi-stroke hgi-calendar-03 text-[20px] text-ink"></i>
+          <i class="hgi-stroke hgi-ticket-02 text-[20px] text-brand"></i>
+          <i class="hgi-stroke hgi-notification-03 text-[20px] text-muted"></i>
+        </script>
+      </section>
+
+      <section id="icon-tiles" data-nav="Icon tiles" data-group="Foundations" data-icon="hgi-dashboard-square-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Icon tiles</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">The kit's most-reused visual atom — a rounded square holding a Hugeicon in a semantic color pair. It leads list rows, notifications, settings rows, stat callouts and empty states.</p>
+        <p class="ex-label">Tint set</p>
+        <script type="text/html" class="ex">
+          <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-user-add-01 text-[18px]"></i></span>
+          <span class="grid h-10 w-10 place-items-center rounded-xl bg-amber-50 text-amber-500 dark:bg-amber-400/15 dark:text-amber-300"><i class="hgi-stroke hgi-ticket-star text-[18px]"></i></span>
+          <span class="grid h-10 w-10 place-items-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300"><i class="hgi-stroke hgi-mail-01 text-[18px]"></i></span>
+          <span class="grid h-10 w-10 place-items-center rounded-xl bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300"><i class="hgi-stroke hgi-alert-01 text-[18px]"></i></span>
+          <span class="grid h-10 w-10 place-items-center rounded-xl bg-violet-50 text-violet-600 dark:bg-violet-500/15 dark:text-violet-300"><i class="hgi-stroke hgi-star text-[18px]"></i></span>
+        </script>
+        <p class="ex-label">Size ramp</p>
+        <script type="text/html" class="ex">
+          <span class="grid h-8 w-8 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-calendar-03 text-[15px]"></i></span>
+          <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-calendar-03 text-[18px]"></i></span>
+          <span class="grid h-12 w-12 place-items-center rounded-2xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-calendar-03 text-[22px]"></i></span>
+          <span class="grid h-16 w-16 place-items-center rounded-2xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-calendar-03 text-[28px]"></i></span>
+        </script>
+      </section>
+
+      <!-- ══════════════════════ FORMS ══════════════════════ -->
+
+      <section id="buttons" data-nav="Buttons" data-group="Forms" data-icon="hgi-cursor-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Buttons</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Base class <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.btn</code> + a variant. Add <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.btn-sm</code> for the compact size or <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.btn-icon</code> for square icon buttons.</p>
+        <p class="ex-label">Variants</p>
+        <script type="text/html" class="ex">
+          <button class="btn btn-primary">Primary</button>
+          <button class="btn btn-ghost border border-hair">Ghost</button>
+          <button class="btn btn-soft">Soft</button>
+          <button class="btn btn-danger">Danger</button>
+        </script>
+        <p class="ex-label">With icons &amp; sizes</p>
+        <script type="text/html" class="ex">
+          <button class="btn btn-primary"><i class="hgi-stroke hgi-add-01 text-[16px]"></i>Create event</button>
+          <button class="btn btn-ghost border border-hair"><i class="hgi-stroke hgi-download-01 text-[15px]"></i>Export</button>
+          <button class="btn btn-sm btn-primary">Small</button>
+          <button class="btn-icon border border-hair"><i class="hgi-stroke hgi-settings-01 text-[17px]"></i></button>
+        </script>
+        <p class="ex-label">Disabled</p>
+        <script type="text/html" class="ex">
+          <button class="btn btn-primary" disabled>Primary</button>
+          <button class="btn btn-ghost border border-hair" disabled>Ghost</button>
+        </script>
+      </section>
+
+      <section id="inputs" data-nav="Text inputs" data-group="Forms" data-icon="hgi-text-align-left" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Text inputs</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Text fields, selects and textareas share one focus ring. Pair with <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.label</code> and <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.hint</code>.</p>
+        <p class="ex-label">Fields</p>
+        <script type="text/html" class="ex">
+          <div class="grid w-full gap-4 sm:grid-cols-2">
+            <div>
+              <label class="label">Event name</label>
+              <input class="input" placeholder="e.g. Tech Summit 2026" />
+              <p class="hint">Shown on the public landing page.</p>
+            </div>
+            <div>
+              <label class="label">Category</label>
+              <select class="select">
+                <option>Conference</option>
+                <option>Workshop</option>
+                <option>Concert</option>
+              </select>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="label">Description</label>
+              <textarea class="textarea" placeholder="Tell attendees what to expect…"></textarea>
+            </div>
+          </div>
+        </script>
+        <p class="ex-label">Search &amp; disabled</p>
+        <script type="text/html" class="ex">
+          <div class="grid w-full gap-4 sm:grid-cols-2">
+            <div class="relative">
+              <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[16px] text-muted"></i>
+              <input class="input pl-9" placeholder="Search attendees" />
+            </div>
+            <input class="input" value="Locked field" disabled />
+          </div>
+        </script>
+        <p class="ex-label">Prefix / suffix affix</p>
+        <script type="text/html" class="ex">
+          <div class="grid w-full gap-4 sm:grid-cols-2">
+            <div class="relative">
+              <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[13px] text-muted">฿</span>
+              <input type="number" class="input pl-8 tnum" placeholder="200" />
+            </div>
+            <div class="relative">
+              <input type="number" class="input pr-8 tnum" placeholder="25" />
+              <span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[13px] text-muted">%</span>
+            </div>
+          </div>
+        </script>
+        <p class="ex-label">Character counter</p>
+        <script type="text/html" class="ex">
+          <div class="w-full max-w-md" data-counter-wrap>
+            <div class="mb-1.5 flex items-center justify-between">
+              <label class="label" style="margin-bottom:0">Description</label>
+              <span class="text-[11px] font-medium text-muted tnum" data-counter-out>0/120</span>
+            </div>
+            <textarea class="textarea" data-counter data-max="120" placeholder="What will this session cover…"></textarea>
+          </div>
+        </script>
+        <p class="ex-label">OTP / verification code</p>
+        <script type="text/html" class="ex">
+          <input type="text" inputmode="numeric" maxlength="6" class="input w-48 text-center text-[16px] font-semibold tracking-[0.4em] tnum" placeholder="000000" />
+        </script>
+      </section>
+
+      <section id="toggle" data-nav="Toggle &amp; switch" data-group="Forms" data-icon="hgi-toggle-on" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Toggle &amp; switch</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">The kit's binary on/off control — a utility-composed pill (no named class): a <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">rounded-full</code> track that flips <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">bg-brand</code>&nbsp;/&nbsp;<code class="rounded bg-line px-1 py-0.5 text-[11.5px]">bg-line</code> with a knob translated by <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">translate-x-4</code>. Click to try.</p>
+        <p class="ex-label">On &amp; off</p>
+        <script type="text/html" class="ex">
+          <button type="button" data-toggle class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5 transition-colors" aria-label="Email notifications">
+            <span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition-transform"></span>
+          </button>
+          <button type="button" data-toggle class="flex h-5 w-9 shrink-0 items-center rounded-full bg-line p-0.5 transition-colors" aria-label="SMS notifications">
+            <span class="h-4 w-4 rounded-full bg-white shadow transition-transform"></span>
+          </button>
+        </script>
+        <p class="ex-label">Settings row</p>
+        <script type="text/html" class="ex">
+          <div class="flex w-full max-w-md items-center justify-between gap-3 rounded-lg border border-hair bg-canvas px-3.5 py-3">
+            <span><span class="block text-[13px] font-medium text-ink">Two-factor authentication</span><span class="block text-[11px] text-muted">Require a code at sign-in</span></span>
+            <button type="button" data-toggle class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5 transition-colors"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition-transform"></span></button>
+          </div>
+        </script>
+      </section>
+
+      <section id="checkbox" data-nav="Checkbox" data-group="Forms" data-icon="hgi-checkmark-square-02" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Checkbox</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Native checkbox recolored to brand via <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">accent-brand</code> — bare, or as a full clickable row.</p>
+        <script type="text/html" class="ex">
+          <div class="flex w-full flex-col gap-3">
+            <label class="flex cursor-pointer items-start gap-2 text-[13px] text-muted">
+              <input type="checkbox" class="mt-0.5 h-3.5 w-3.5 shrink-0 rounded border-hair accent-brand" checked />
+              I agree to the <a href="#" class="font-semibold text-brand hover:underline">Terms &amp; Conditions</a>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg bg-canvas p-3">
+              <input type="checkbox" class="h-4 w-4 accent-brand" checked />
+              <span class="text-[13px] font-medium text-ink">Mark this event as “Popular”</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 rounded-lg bg-canvas p-3">
+              <input type="checkbox" class="h-4 w-4 accent-brand" />
+              <span class="text-[13px] font-medium text-ink">Send a reminder email 24h before</span>
+            </label>
+          </div>
+        </script>
+      </section>
+
+      <section id="radio" data-nav="Radio cards" data-group="Forms" data-icon="hgi-radio" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Radio cards</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">The kit's dominant single-select pattern. Two mechanisms: a CSS-only <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">peer-checked</code> list (no JS), and JS-selected cards with a check indicator.</p>
+        <p class="ex-label">CSS-only (peer-checked)</p>
+        <script type="text/html" class="ex">
+          <div class="grid w-full max-w-md gap-2">
+            <label class="block cursor-pointer">
+              <input type="radio" name="hear" value="social" class="peer sr-only" checked />
+              <span class="block rounded-lg border border-hair px-3.5 py-3 text-[13px] font-medium text-ink transition hover:bg-line/60 peer-checked:border-brand peer-checked:bg-brand-soft/50 peer-checked:font-semibold peer-checked:text-brand">Social media</span>
+            </label>
+            <label class="block cursor-pointer">
+              <input type="radio" name="hear" value="friend" class="peer sr-only" />
+              <span class="block rounded-lg border border-hair px-3.5 py-3 text-[13px] font-medium text-ink transition hover:bg-line/60 peer-checked:border-brand peer-checked:bg-brand-soft/50 peer-checked:font-semibold peer-checked:text-brand">Friend or colleague</span>
+            </label>
+            <label class="block cursor-pointer">
+              <input type="radio" name="hear" value="email" class="peer sr-only" />
+              <span class="block rounded-lg border border-hair px-3.5 py-3 text-[13px] font-medium text-ink transition hover:bg-line/60 peer-checked:border-brand peer-checked:bg-brand-soft/50 peer-checked:font-semibold peer-checked:text-brand">Email newsletter</span>
+            </label>
+          </div>
+        </script>
+        <p class="ex-label">Selectable cards (with check)</p>
+        <script type="text/html" class="ex">
+          <div class="grid w-full max-w-md gap-2" data-radio-group>
+            <button type="button" data-radio-card class="flex items-center justify-between rounded-xl border border-brand bg-brand-soft p-3.5 text-left ring-1 ring-brand transition">
+              <span><span class="block text-[14px] font-bold text-ink">VIP</span><span class="block text-[12px] text-muted">Front rows · priority entry</span></span>
+              <span class="flex items-center gap-2"><span class="text-[15px] font-bold text-brand tnum">฿1,200</span><span data-radio-check class="grid h-5 w-5 place-items-center rounded-full border border-brand bg-brand text-white"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i></span></span>
+            </button>
+            <button type="button" data-radio-card class="flex items-center justify-between rounded-xl border border-hair p-3.5 text-left transition hover:bg-line/50">
+              <span><span class="block text-[14px] font-bold text-ink">General admission</span><span class="block text-[12px] text-muted">Open seating</span></span>
+              <span class="flex items-center gap-2"><span class="text-[15px] font-bold text-ink tnum">฿600</span><span data-radio-check class="grid h-5 w-5 place-items-center rounded-full border border-hair text-transparent"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i></span></span>
+            </button>
+          </div>
+        </script>
+      </section>
+
+      <section id="password" data-nav="Password field" data-group="Forms" data-icon="hgi-security-lock" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Password field</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">A password input with a reveal toggle (<code class="rounded bg-line px-1 py-0.5 text-[11.5px]">[data-reveal]</code> flips the type + icon), plus a live strength meter. Type below to see both react.</p>
+        <p class="ex-label">Reveal toggle</p>
+        <script type="text/html" class="ex">
+          <div class="relative w-full max-w-sm">
+            <input class="input pr-10" type="password" value="s3cr3t-pa55" data-strength data-reveal-target />
+            <button type="button" data-reveal class="btn-icon absolute right-1 top-1/2 -translate-y-1/2" title="Show"><i class="hgi-stroke hgi-view text-[16px]"></i></button>
+          </div>
+        </script>
+        <p class="ex-label">Strength meter</p>
+        <script type="text/html" class="ex">
+          <div class="w-full max-w-sm" data-strength-wrap>
+            <input class="input" type="text" data-strength placeholder="Type a password…" />
+            <div class="mt-2 flex items-center gap-2">
+              <div class="flex h-1 flex-1 gap-1">
+                <span data-strength-bar class="h-full flex-1 rounded-full bg-line transition-colors"></span>
+                <span data-strength-bar class="h-full flex-1 rounded-full bg-line transition-colors"></span>
+                <span data-strength-bar class="h-full flex-1 rounded-full bg-line transition-colors"></span>
+              </div>
+              <span data-strength-label class="w-24 shrink-0 text-right text-[11px] font-medium text-muted">Use 8+ chars</span>
+            </div>
+          </div>
+        </script>
+      </section>
+
+      <section id="selects" data-nav="Filter selects" data-group="Forms" data-icon="hgi-navigation-03" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Filter selects</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">A borderless <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.select</code> on <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">bg-surface</code> with a leading icon — the standard list-toolbar filter.</p>
+        <script type="text/html" class="ex">
+          <div class="relative w-full sm:w-56">
+            <i class="hgi-stroke hgi-calendar-03 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[16px] text-brand"></i>
+            <select class="select h-10 w-full border-0 bg-surface pl-9 text-[14px] font-semibold">
+              <option>All events</option>
+              <option>Tech Summit 2026</option>
+              <option>Bangkok Jazz Night</option>
+            </select>
+          </div>
+          <div class="relative w-full sm:w-44">
+            <i class="hgi-stroke hgi-user-circle pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[16px] text-muted"></i>
+            <select class="select h-10 w-full border-0 bg-surface pl-9 text-[14px] font-medium">
+              <option>All roles</option>
+              <option>Admin</option>
+              <option>Organizer</option>
+            </select>
+          </div>
+        </script>
+      </section>
+
+      <section id="quantity" data-nav="Quantity stepper" data-group="Forms" data-icon="hgi-add-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Quantity stepper</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Minus/plus icon-buttons flanking a large tabular count, clamped to a range. Click to change.</p>
+        <script type="text/html" class="ex">
+          <div class="inline-flex items-center gap-5" data-qty>
+            <button type="button" data-qty-dec class="btn-icon bg-line" aria-label="Fewer"><i class="hgi-stroke hgi-minus-sign text-[18px]"></i></button>
+            <span data-qty-val class="w-12 text-center text-[26px] font-extrabold tnum">1</span>
+            <button type="button" data-qty-inc class="btn-icon bg-line" aria-label="More"><i class="hgi-stroke hgi-add-01 text-[18px]"></i></button>
+          </div>
+        </script>
+      </section>
+
+      <section id="upload" data-nav="File upload" data-group="Forms" data-icon="hgi-image-upload-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">File upload</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">A dashed dropzone wrapping a hidden file input, and an avatar/logo editor with upload + remove.</p>
+        <p class="ex-label">Dropzone</p>
+        <script type="text/html" class="ex">
+          <label class="flex w-full max-w-md cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-hair p-8 text-center transition-colors hover:border-brand">
+            <span class="grid h-11 w-11 place-items-center rounded-full bg-brand-soft text-brand"><i class="hgi-stroke hgi-image-upload-01 text-[20px]"></i></span>
+            <p class="text-[13px] font-semibold text-ink">Drag &amp; drop or <span class="text-brand">browse</span></p>
+            <p class="text-[11px] text-muted">Recommended 1600×900px · PNG or JPG · up to 5MB</p>
+            <input type="file" class="hidden" accept="image/*" />
+          </label>
+        </script>
+        <p class="ex-label">Avatar / logo editor</p>
+        <script type="text/html" class="ex">
+          <div class="flex items-center gap-4">
+            <span class="grid h-20 w-20 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-brand to-emerald-400 text-[26px] font-bold text-white">HN</span>
+            <div class="min-w-0">
+              <div class="flex flex-wrap items-center gap-2">
+                <button type="button" class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-image-upload-01 text-[15px]"></i>Upload</button>
+                <button type="button" class="text-[12px] font-medium text-muted transition hover:text-red-500">Remove</button>
+              </div>
+              <p class="mt-2 text-[11px] leading-snug text-muted">JPG or PNG · Max 5MB</p>
+            </div>
+          </div>
+        </script>
+      </section>
+
+      <section id="repeatable" data-nav="Repeatable rows" data-group="Forms" data-icon="hgi-more-horizontal" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Repeatable rows</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">A dynamic stack of input rows with an “Add” button that appends a fresh row; the last row can't be removed. Try it.</p>
+        <script type="text/html" class="ex">
+          <div class="w-full max-w-lg" data-repeat>
+            <div class="space-y-2" data-rows>
+              <div class="flex items-center gap-2" data-row>
+                <input type="text" class="input flex-1" placeholder="Question" value="How likely are you to return?" />
+                <select class="select w-[8.5rem] shrink-0"><option>Rating</option><option>Text</option></select>
+                <button type="button" data-remove-row class="btn-icon shrink-0"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+              </div>
+              <div class="flex items-center gap-2" data-row>
+                <input type="text" class="input flex-1" placeholder="Question" />
+                <select class="select w-[8.5rem] shrink-0"><option>Rating</option><option>Text</option></select>
+                <button type="button" data-remove-row class="btn-icon shrink-0"><i class="hgi-stroke hgi-delete-02 text-[16px]"></i></button>
+              </div>
+            </div>
+            <button type="button" data-add-row class="btn btn-soft btn-sm mt-2"><i class="hgi-stroke hgi-add-01 text-[14px]"></i>Add question</button>
+          </div>
+        </script>
+      </section>
+
+      <section id="rating" data-nav="Star rating" data-group="Forms" data-icon="hgi-star" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Star rating</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">A read-only display and an interactive input. Click a star to set the score.</p>
+        <p class="ex-label">Read-only</p>
+        <script type="text/html" class="ex">
+          <div class="flex items-center gap-2">
+            <div class="flex">
+              <i class="hgi-stroke hgi-star text-[16px] text-amber-400"></i><i class="hgi-stroke hgi-star text-[16px] text-amber-400"></i><i class="hgi-stroke hgi-star text-[16px] text-amber-400"></i><i class="hgi-stroke hgi-star text-[16px] text-amber-400"></i><i class="hgi-stroke hgi-star text-[16px] text-gray-300 dark:text-gray-600"></i>
+            </div>
+            <span class="text-[12px] font-semibold text-muted tnum">4.0</span>
+          </div>
+        </script>
+        <p class="ex-label">Interactive</p>
+        <script type="text/html" class="ex">
+          <div class="flex items-center gap-1" data-rating>
+            <button type="button" class="star-btn p-0.5 transition hover:scale-110" aria-label="1 star"><i class="hgi-stroke hgi-star text-[28px] text-gray-300 dark:text-gray-600"></i></button>
+            <button type="button" class="star-btn p-0.5 transition hover:scale-110" aria-label="2 stars"><i class="hgi-stroke hgi-star text-[28px] text-gray-300 dark:text-gray-600"></i></button>
+            <button type="button" class="star-btn p-0.5 transition hover:scale-110" aria-label="3 stars"><i class="hgi-stroke hgi-star text-[28px] text-gray-300 dark:text-gray-600"></i></button>
+            <button type="button" class="star-btn p-0.5 transition hover:scale-110" aria-label="4 stars"><i class="hgi-stroke hgi-star text-[28px] text-gray-300 dark:text-gray-600"></i></button>
+            <button type="button" class="star-btn p-0.5 transition hover:scale-110" aria-label="5 stars"><i class="hgi-stroke hgi-star text-[28px] text-gray-300 dark:text-gray-600"></i></button>
+            <span data-rating-label class="ml-2 text-[13px] font-semibold text-muted">Tap to rate</span>
+          </div>
+        </script>
+      </section>
+
+      <section id="copysecure" data-nav="Copy &amp; secure" data-group="Forms" data-icon="hgi-copy-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Copy &amp; secure</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">A read-only value with a copy affordance that confirms, and a sensitive-codes block. Click copy to try.</p>
+        <p class="ex-label">Copy field</p>
+        <script type="text/html" class="ex">
+          <div class="flex w-full max-w-md items-center gap-2 rounded-lg border border-hair bg-canvas px-3 py-2" data-copy-row>
+            <i class="hgi-stroke hgi-link-01 shrink-0 text-[14px] text-muted"></i>
+            <code class="min-w-0 flex-1 select-all truncate text-[12.5px] font-semibold text-ink">eventa.co/e/tech-summit-2026</code>
+            <button type="button" data-copy class="btn-icon" title="Copy"><i class="hgi-stroke hgi-copy-01 text-[16px]"></i></button>
+          </div>
+        </script>
+        <p class="ex-label">Recovery codes</p>
+        <script type="text/html" class="ex">
+          <div class="w-full max-w-sm rounded-lg border border-hair bg-canvas p-3">
+            <p class="text-[12px] font-semibold text-ink">Recovery codes</p>
+            <p class="mt-0.5 text-[11px] text-muted">Save these somewhere safe. Each can be used once.</p>
+            <div class="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 font-mono text-[12px] text-ink tnum">
+              <span>3f9a-2b71</span><span>a4c0-91de</span><span>7e21-0cb4</span><span>d5f8-6a03</span>
+            </div>
+            <button type="button" class="btn btn-soft btn-sm mt-2.5"><i class="hgi-stroke hgi-download-01 text-[14px]"></i>Download codes</button>
+          </div>
+        </script>
+      </section>
+
+      <!-- ══════════════════════ FEEDBACK ══════════════════════ -->
+
+      <section id="alerts" data-nav="Alerts" data-group="Feedback" data-icon="hgi-alert-circle" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Alerts &amp; callouts</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Inline messages in four tints — neutral note, brand success, amber warning and a solid-red error.</p>
+        <script type="text/html" class="ex">
+          <div class="grid w-full max-w-lg gap-3">
+            <div class="flex items-start gap-2 rounded-lg bg-brand-soft px-3 py-2.5 text-[12px] text-brand-dark dark:text-brand">
+              <i class="hgi-stroke hgi-checkmark-circle-02 mt-0.5 shrink-0 text-[15px]"></i><span>Check your inbox — a reset link is on its way.</span>
+            </div>
+            <div class="flex items-center gap-2.5 rounded-xl border border-amber-300/60 bg-amber-50 px-3.5 py-2.5 text-[12px] font-medium text-amber-700 dark:border-amber-400/25 dark:bg-amber-400/10 dark:text-amber-300">
+              <i class="hgi-stroke hgi-alert-circle shrink-0 text-[16px]"></i><span>You're using <b>Test keys</b> — no real charges are processed.</span>
+            </div>
+            <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
+              <i class="hgi-stroke hgi-security-lock mt-0.5 shrink-0 text-[16px] text-muted"></i><p class="text-[12px] text-muted">Eventa is PCI-compliant and never sees your bank or card numbers.</p>
+            </div>
+            <div class="flex items-center gap-2 rounded-lg bg-red-600 px-3 py-2 text-[12px] font-medium text-white shadow-lg ring-1 ring-black/10">
+              <i class="hgi-stroke hgi-alert-02 shrink-0 text-[15px]"></i><span>Card declined — please try another payment method.</span>
+            </div>
+          </div>
+        </script>
+      </section>
+
+      <section id="progress" data-nav="Progress &amp; meters" data-group="Feedback" data-icon="hgi-analytics-up" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Progress &amp; meters</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">The most-reused primitive: a rounded track (<code class="rounded bg-line px-1 py-0.5 text-[11.5px]">bg-line</code>) with an inline-width fill. Powers capacity meters, sold %, and check-in progress.</p>
+        <p class="ex-label">Bar &amp; labeled</p>
+        <script type="text/html" class="ex">
+          <div class="w-full max-w-xs space-y-4">
+            <div class="h-1.5 w-full overflow-hidden rounded-full bg-line">
+              <div class="h-full rounded-full bg-brand transition-all" style="width:64%"></div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-[12px]"><span class="text-muted">Tickets sold</span><span class="font-semibold text-ink tnum">78%</span></div>
+              <div class="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-line">
+                <div class="h-full rounded-full bg-brand transition-all" style="width:78%"></div>
+              </div>
+            </div>
+          </div>
+        </script>
+      </section>
+
+      <section id="status" data-nav="Status indicator" data-group="Feedback" data-icon="hgi-clock-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Status indicator</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">A colored dot + label. The live variant adds an <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">animate-ping</code> halo.</p>
+        <script type="text/html" class="ex">
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-brand">
+            <span class="relative flex h-2 w-2">
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-60"></span>
+              <span class="relative inline-flex h-2 w-2 rounded-full bg-brand"></span>
+            </span>
+            Live
+          </span>
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-muted"><span class="h-1.5 w-1.5 rounded-full bg-muted"></span>Offline</span>
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-amber-500 dark:text-amber-300"><span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>Pending</span>
+        </script>
+      </section>
+
+      <section id="empty" data-nav="Empty state" data-group="Feedback" data-icon="hgi-search-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Empty state</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Centered no-data block: an icon medallion over a bold headline and a muted subline.</p>
+        <script type="text/html" class="ex">
+          <div class="card flex w-full max-w-md flex-col items-center justify-center border border-hair p-10 text-center">
+            <span class="mx-auto grid h-12 w-12 place-items-center rounded-full bg-brand-soft text-brand"><i class="hgi-stroke hgi-search-01 text-[22px]"></i></span>
+            <p class="mt-3 text-[14px] font-semibold text-ink">No events found</p>
+            <p class="mt-1 text-[12px] text-muted">Try a different search, or create a new event.</p>
+            <button class="btn btn-primary btn-sm mt-4"><i class="hgi-stroke hgi-add-01 text-[14px]"></i>New event</button>
+          </div>
+        </script>
+      </section>
+
+      <section id="checklist" data-nav="Checklist" data-group="Feedback" data-icon="hgi-checkmark-circle-02" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Readiness checklist</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Satisfied items show a brand check-circle; outstanding ones an amber alert — a lightweight validation summary.</p>
+        <script type="text/html" class="ex">
+          <ul class="w-full max-w-sm space-y-2">
+            <li class="flex items-center gap-2 text-[13px] text-ink"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px] text-brand"></i>Title &amp; description added</li>
+            <li class="flex items-center gap-2 text-[13px] text-ink"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px] text-brand"></i>Ticket type created</li>
+            <li class="flex items-center gap-2 text-[13px] text-muted"><i class="hgi-stroke hgi-alert-circle text-[15px] text-amber-500 dark:text-amber-300"></i>Cover image not uploaded</li>
+            <li class="flex items-center gap-2 text-[13px] text-muted"><i class="hgi-stroke hgi-alert-circle text-[15px] text-amber-500 dark:text-amber-300"></i>Payout account not linked</li>
+          </ul>
+        </script>
+      </section>
+
+      <section id="danger" data-nav="Danger zone" data-group="Feedback" data-icon="hgi-alert-02" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Danger zone</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">A red-bordered card with a destructive outline button for irreversible actions.</p>
+        <script type="text/html" class="ex">
+          <div class="card w-full max-w-md border border-red-200 p-5 dark:border-red-500/30">
+            <h3 class="flex items-center gap-2 text-[14px] font-bold text-red-600 dark:text-red-400"><i class="hgi-stroke hgi-alert-02 text-[16px]"></i>Danger zone</h3>
+            <p class="mt-2 text-[12px] text-muted">Permanently remove your account and all associated data.</p>
+            <button class="btn btn-sm mt-4 border border-red-300 bg-red-50 text-red-600 hover:bg-red-100 dark:border-red-500/40 dark:bg-red-500/10 dark:text-red-400"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i>Delete account</button>
+          </div>
+        </script>
+      </section>
+
+      <!-- ══════════════════════ DATA DISPLAY ══════════════════════ -->
+
+      <section id="badges" data-nav="Badges" data-group="Data display" data-icon="hgi-tag-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Badges</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Pill status chips. Six accent tints, each with a tuned dark-mode variant.</p>
+        <p class="ex-label">Colors</p>
+        <script type="text/html" class="ex">
+          <span class="badge badge-green">Published</span>
+          <span class="badge badge-amber">Pending</span>
+          <span class="badge badge-red">Cancelled</span>
+          <span class="badge badge-blue">Draft</span>
+          <span class="badge badge-purple">VIP</span>
+          <span class="badge badge-gray">Archived</span>
+        </script>
+        <p class="ex-label">With dot &amp; icon</p>
+        <script type="text/html" class="ex">
+          <span class="badge badge-green"><span class="h-1.5 w-1.5 rounded-full bg-current"></span>Live</span>
+          <span class="badge badge-amber"><i class="hgi-stroke hgi-clock-01 text-[12px]"></i>Waitlist</span>
+          <span class="badge badge-red"><i class="hgi-stroke hgi-cancel-01 text-[12px]"></i>Refunded</span>
+        </script>
+      </section>
+
+      <section id="chips" data-nav="Chips &amp; deltas" data-group="Data display" data-icon="hgi-tag-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Chips &amp; deltas</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Non-status tags, numeric count pills, trend deltas, and card-brand chips.</p>
+        <p class="ex-label">Tags &amp; count pills</p>
+        <script type="text/html" class="ex">
+          <span class="rounded-md bg-line px-2 py-1 text-[11px] font-medium text-muted">All-purpose</span>
+          <span class="rounded-full bg-brand-soft px-2 py-0.5 text-[10px] font-semibold text-brand">New</span>
+          <span class="rounded-full bg-canvas px-2.5 py-1 text-[11px] font-medium text-muted">General Admission</span>
+          <span class="grid h-5 min-w-[20px] place-items-center rounded-full bg-brand-soft px-1.5 text-[11px] font-semibold text-brand-dark dark:text-brand">48</span>
+          <span class="grid h-5 min-w-[20px] place-items-center rounded-full bg-line px-1.5 text-[11px] font-semibold text-muted">5</span>
+        </script>
+        <p class="ex-label">Trend delta &amp; card brands</p>
+        <script type="text/html" class="ex">
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>12.4%</span>
+          <span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>1.4%</span>
+          <span class="ml-3 rounded bg-line px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-ink">VISA</span>
+          <span class="rounded bg-line px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-ink">MC</span>
+          <span class="rounded bg-line px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-ink">AMEX</span>
+          <span class="rounded bg-line px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-ink">JCB</span>
+        </script>
+      </section>
+
+      <section id="cards" data-nav="Cards" data-group="Data display" data-icon="hgi-square" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Cards</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted"><code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.card</code> is a flat, bordered surface — add <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">border border-hair</code> and padding.</p>
+        <script type="text/html" class="ex">
+          <div class="grid w-full gap-4 sm:grid-cols-2">
+            <div class="card border border-hair p-5">
+              <h3 class="text-[15px] font-semibold">Tech Summit 2026</h3>
+              <p class="mt-1 text-[13px] text-muted">Mar 14 · Bangkok · 1,240 registered</p>
+              <div class="mt-4 flex gap-2">
+                <button class="btn btn-sm btn-primary">Manage</button>
+                <button class="btn btn-sm btn-ghost border border-hair">View</button>
+              </div>
+            </div>
+            <div class="card border border-hair p-5">
+              <div class="flex items-center justify-between">
+                <span class="text-[12px] font-medium text-muted">Revenue</span>
+                <span class="grid h-8 w-8 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-wallet-01 text-[16px]"></i></span>
+              </div>
+              <p class="mt-3 text-[22px] font-bold tnum">฿842,500</p>
+              <p class="mt-1 inline-flex items-center gap-1 text-[12px] font-medium text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[14px]"></i>12.4% vs last month</p>
+            </div>
+          </div>
+        </script>
+      </section>
+
+      <section id="table" data-nav="Table" data-group="Data display" data-icon="hgi-table" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Table</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted"><code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.data-table</code> — uppercase micro-headers, hairline row dividers, hover highlight.</p>
+        <script type="text/html" class="ex">
+          <div class="w-full overflow-x-auto">
+            <table class="data-table">
+              <thead>
+                <tr><th>Attendee</th><th>Ticket</th><th>Status</th><th class="text-right">Paid</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[12px]">AC</span>Anna Cruz</div></td>
+                  <td class="text-muted">VIP</td>
+                  <td><span class="badge badge-green">Confirmed</span></td>
+                  <td class="text-right tnum">฿3,500</td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[12px]">JD</span>James Doe</div></td>
+                  <td class="text-muted">General</td>
+                  <td><span class="badge badge-amber">Pending</span></td>
+                  <td class="text-right tnum">฿1,200</td>
+                </tr>
+                <tr>
+                  <td><div class="flex items-center gap-2.5"><span class="avatar h-8 w-8 text-[12px]">MK</span>Mira Khan</div></td>
+                  <td class="text-muted">Student</td>
+                  <td><span class="badge badge-red">Refunded</span></td>
+                  <td class="text-right tnum">฿600</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </script>
+      </section>
+
+      <section id="avatars" data-nav="Avatars" data-group="Data display" data-icon="hgi-user-circle" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Avatars</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted"><code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.avatar</code> renders tonal-brand initials. Size with height/width + text utilities; overlap for a stack.</p>
+        <script type="text/html" class="ex">
+          <span class="avatar h-8 w-8 text-[12px]">AC</span>
+          <span class="avatar h-10 w-10 text-[14px]">JD</span>
+          <span class="avatar h-12 w-12 text-[16px]">MK</span>
+          <div class="flex -space-x-2">
+            <span class="avatar h-9 w-9 text-[12px] ring-2 ring-canvas">AC</span>
+            <span class="avatar h-9 w-9 text-[12px] ring-2 ring-canvas">JD</span>
+            <span class="avatar h-9 w-9 text-[12px] ring-2 ring-canvas">MK</span>
+            <span class="avatar h-9 w-9 text-[12px] ring-2 ring-canvas">+5</span>
+          </div>
+        </script>
+      </section>
+
+      <section id="lists" data-nav="Lists &amp; rows" data-group="Data display" data-icon="hgi-list-view" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Lists &amp; rows</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">A generic feed row (icon tile + two-line body + trailing value), a section header with an action, and an “or” divider.</p>
+        <p class="ex-label">List rows</p>
+        <script type="text/html" class="ex">
+          <div class="w-full max-w-md divide-y divide-line">
+            <div class="flex items-center gap-3 py-3">
+              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300"><i class="hgi-stroke hgi-ticket-star text-[18px]"></i></span>
+              <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">Bangkok Jazz Night</p><p class="truncate text-[11px] text-muted">Jul 12 · Sala Daeng</p></div>
+              <span class="shrink-0 text-[13px] font-semibold text-red-500">3 left</span>
+            </div>
+            <div class="flex items-center gap-3 py-3">
+              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-user-add-01 text-[18px]"></i></span>
+              <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">New registration</p><p class="truncate text-[11px] text-muted">Anna Cruz · VIP</p></div>
+              <span class="shrink-0 text-[11px] text-muted tnum">2m ago</span>
+            </div>
+          </div>
+        </script>
+        <p class="ex-label">Section header</p>
+        <script type="text/html" class="ex">
+          <div class="card w-full border border-hair p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-[15px] font-bold tracking-tight">Top events</h2>
+                <p class="mt-0.5 text-[12px] text-muted">Ranked by registrations this period</p>
+              </div>
+              <a href="#" class="inline-flex items-center gap-1 text-[12px] font-semibold text-brand hover:underline">View all<i class="hgi-stroke hgi-arrow-right-01 text-[13px]"></i></a>
+            </div>
+          </div>
+        </script>
+        <p class="ex-label">“Or” divider</p>
+        <script type="text/html" class="ex">
+          <div class="flex w-full max-w-xs items-center gap-3">
+            <div class="h-px flex-1 bg-hair"></div>
+            <span class="text-[11px] font-medium uppercase tracking-wide text-muted">or</span>
+            <div class="h-px flex-1 bg-hair"></div>
+          </div>
+        </script>
+      </section>
+
+      <section id="keyval" data-nav="Detail list" data-group="Data display" data-icon="hgi-layout-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Detail list</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">A vertical fact list — a muted leading icon beside a bold value + subtext, rows split by hairlines.</p>
+        <script type="text/html" class="ex">
+          <div class="w-full max-w-sm space-y-3 text-[13px]">
+            <div class="flex items-start gap-2.5">
+              <i class="hgi-stroke hgi-calendar-03 mt-0.5 shrink-0 text-[16px] text-muted"></i>
+              <div><p class="font-semibold text-ink">Jul 18–19, 2026</p><p class="text-[12px] text-muted">09:00 – 18:00 · GMT+7</p></div>
+            </div>
+            <div class="flex items-start gap-2.5 border-t border-line pt-3">
+              <i class="hgi-stroke hgi-location-01 mt-0.5 shrink-0 text-[16px] text-muted"></i>
+              <div><p class="font-semibold text-ink">BITEC</p><p class="text-[12px] text-muted">Bang Na, Bangkok</p></div>
+            </div>
+            <div class="flex items-start gap-2.5 border-t border-line pt-3">
+              <i class="hgi-stroke hgi-ticket-01 mt-0.5 shrink-0 text-[16px] text-muted"></i>
+              <div><p class="font-semibold text-ink">1,240 registered</p><p class="text-[12px] text-muted">of 1,500 capacity</p></div>
+            </div>
+          </div>
+        </script>
+      </section>
+
+      <section id="timeline" data-nav="Timeline" data-group="Data display" data-icon="hgi-navigation-03" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Timeline &amp; activity</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">A vertical timeline with a left rail and per-node dots — the first is an active brand dot with a ring.</p>
+        <script type="text/html" class="ex">
+          <div class="w-full max-w-sm space-y-4 border-l border-line pl-4">
+            <div class="relative">
+              <span class="absolute -left-[21px] top-0.5 h-2.5 w-2.5 rounded-full bg-brand ring-4 ring-brand-soft"></span>
+              <p class="text-[13px] font-medium text-ink">Checked in at Tech Summit 2026</p>
+              <p class="text-[11px] text-muted tnum">Jul 15, 2026 · 10:24</p>
+            </div>
+            <div class="relative">
+              <span class="absolute -left-[21px] top-0.5 h-2.5 w-2.5 rounded-full bg-line"></span>
+              <p class="text-[13px] font-medium text-ink">Registered for Bangkok Jazz Night</p>
+              <p class="text-[11px] text-muted tnum">Jul 12, 2026</p>
+            </div>
+            <div class="relative">
+              <span class="absolute -left-[21px] top-0.5 h-2.5 w-2.5 rounded-full bg-line"></span>
+              <p class="text-[13px] font-medium text-ink">Account created</p>
+              <p class="text-[11px] text-muted tnum">Jul 01, 2026</p>
+            </div>
+          </div>
+        </script>
+      </section>
+
+      <!-- ══════════════════════ NAVIGATION ══════════════════════ -->
+
+      <section id="sidebar" data-nav="Double sidebar" data-group="Navigation" data-icon="hgi-sidebar-left-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Double sidebar (rail + sub-nav)</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">The app's primary navigation — a black <strong class="font-semibold text-ink">icon rail</strong> of modules plus a labeled <strong class="font-semibold text-ink">sub-nav panel</strong> holding the active module's accordion. In the app it's injected by <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">shell.js</code> from the <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">MODULES</code> model; the leaf matching <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">data-page</code> highlights. Click a rail module to swap the panel; on mobile the whole thing is an off-canvas drawer.</p>
+
+        <p class="ex-label">Desktop</p>
+        <div class="overflow-hidden rounded-xl border border-hair">
+          <div id="shell-demo" class="flex h-[460px] bg-canvas">
+            <!-- icon rail (modules) -->
+            <aside class="relative z-30 flex w-16 shrink-0 flex-col items-center bg-[#0e0f12] py-4 dark:bg-[#101613]">
+              <div class="group relative flex justify-center">
+                <span class="grid h-9 w-9 place-items-center rounded-full border border-white/40 text-[13px] font-extrabold tracking-tight text-white">EC</span>
+                <span class="rail-tip">Eventa Co., Ltd.</span>
+              </div>
+              <div data-rail-top class="mt-5 flex flex-col items-center gap-1.5"></div>
+              <div class="mt-auto flex flex-col items-center gap-2 pt-4">
+                <div data-rail-bottom class="flex flex-col items-center gap-1.5"></div>
+                <div class="group relative flex justify-center">
+                  <span class="grid h-9 w-9 place-items-center text-brand"><span class="brand-logo h-[13px] w-[24px]"></span></span>
+                  <span class="rail-tip">Eventa for Business · v1.0</span>
+                </div>
+              </div>
+            </aside>
+            <!-- labeled sub-nav panel -->
+            <aside data-panel class="flex w-60 shrink-0 flex-col border-r border-hair bg-surface">
+              <div class="mt-4 flex h-9 items-center px-4"><h2 data-panel-head class="text-[17px] font-bold tracking-tight text-ink"></h2></div>
+              <nav data-panel-nav class="no-scrollbar mt-2 flex-1 space-y-1.5 overflow-y-auto px-2.5 pb-4"></nav>
+              <div class="border-t border-hair px-4 py-3"><p class="text-[12px] font-semibold text-ink">Eventa for Business</p><p class="text-[11px] text-muted tnum">Version 1.0.0.0</p></div>
+            </aside>
+            <!-- mock main content -->
+            <div class="flex min-w-0 flex-1 flex-col">
+              <div class="flex h-12 items-center justify-between border-b border-hair px-4">
+                <p class="text-[13px] font-semibold text-ink">Attendees</p>
+                <span class="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[11px] font-semibold text-white">HN</span>
+              </div>
+              <div class="flex-1 space-y-2.5 p-4">
+                <div class="h-3 w-40 rounded bg-line"></div>
+                <div class="card border border-hair p-3"><div class="h-2.5 w-24 rounded bg-line"></div><div class="mt-2 h-2 w-full rounded bg-line/70"></div><div class="mt-1.5 h-2 w-2/3 rounded bg-line/70"></div></div>
+                <div class="card border border-hair p-3"><div class="h-2.5 w-28 rounded bg-line"></div><div class="mt-2 h-2 w-full rounded bg-line/70"></div><div class="mt-1.5 h-2 w-1/2 rounded bg-line/70"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="ex-label">Mobile (off-canvas drawer) — tap ☰</p>
+        <div class="mx-auto w-full max-w-[360px] overflow-hidden rounded-2xl border border-hair">
+          <div id="shell-demo-m" class="relative h-[560px] overflow-hidden bg-canvas">
+            <!-- mock top bar -->
+            <div class="flex h-12 items-center gap-2 border-b border-hair bg-surface px-3">
+              <button data-mtoggle type="button" class="btn-icon" aria-label="Open menu"><i class="hgi-stroke hgi-menu-01 text-[19px]"></i></button>
+              <span class="text-[13px] font-bold tracking-tight">Attendees</span>
+              <span class="ml-auto grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[11px] font-semibold text-white">HN</span>
+            </div>
+            <!-- mock content -->
+            <div class="space-y-2.5 p-4">
+              <div class="h-3 w-40 rounded bg-line"></div>
+              <div class="card border border-hair p-3"><div class="h-2.5 w-24 rounded bg-line"></div><div class="mt-2 h-2 w-full rounded bg-line/70"></div><div class="mt-1.5 h-2 w-2/3 rounded bg-line/70"></div></div>
+              <div class="card border border-hair p-3"><div class="h-2.5 w-28 rounded bg-line"></div><div class="mt-2 h-2 w-full rounded bg-line/70"></div></div>
+            </div>
+            <!-- backdrop -->
+            <div data-mbackdrop class="absolute inset-0 z-40 hidden bg-black/40"></div>
+            <!-- off-canvas drawer: rail + panel -->
+            <div data-drawer class="absolute inset-y-0 left-0 z-50 flex -translate-x-full transition-transform duration-300">
+              <aside class="relative z-30 flex w-16 shrink-0 flex-col items-center bg-[#0e0f12] py-4 dark:bg-[#101613]">
+                <div class="group relative flex justify-center">
+                  <span class="grid h-9 w-9 place-items-center rounded-full border border-white/40 text-[12px] font-extrabold tracking-tight text-white">EC</span>
+                </div>
+                <div data-rail-top class="mt-5 flex flex-col items-center gap-1.5"></div>
+                <div class="mt-auto flex flex-col items-center gap-2 pt-4">
+                  <div data-rail-bottom class="flex flex-col items-center gap-1.5"></div>
+                </div>
+              </aside>
+              <aside data-panel class="flex w-56 shrink-0 flex-col border-r border-hair bg-surface">
+                <div class="mt-4 flex h-9 items-center px-4"><h2 data-panel-head class="text-[17px] font-bold tracking-tight text-ink"></h2></div>
+                <nav data-panel-nav class="no-scrollbar mt-2 flex-1 space-y-1.5 overflow-y-auto px-2.5 pb-4"></nav>
+              </aside>
+            </div>
+          </div>
+        </div>
+
+        <p class="ex-label">How it's wired</p>
+        <script type="text/html" class="ex">
+          <!-- Each admin page = a <head> + a <main>; shell.js injects the whole sidebar. -->
+          <body data-page="attendees">
+            <div class="flex h-full min-h-screen" data-layout>
+              <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">…page…</main>
+            </div>
+            <!-- then include ../assets/shell.js at the end of <body> -->
+          </body>
+
+          <!-- The black rail (modules) + labeled panel (the active module's sub-nav) are
+               built from the MODULES array in shell.js. The leaf whose page === data-page
+               is highlighted; a module with sub-nav swaps the panel, one without hides it. -->
+        </script>
+      </section>
+
+      <section id="tabs" data-nav="Tabs" data-group="Navigation" data-icon="hgi-folder-02" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Tabs</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Declarative &amp; live — a <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">[data-tabs]</code> wrapper toggles matching <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">[data-tab-panel]</code> sections.</p>
+        <p class="ex-label">Underline</p>
+        <script type="text/html" class="ex">
+          <div class="w-full">
+            <div class="flex gap-5 border-b border-hair" data-tabs="#tab-demo-1">
+              <button class="tab tab-active" data-tab="overview">Overview</button>
+              <button class="tab" data-tab="tickets">Tickets</button>
+              <button class="tab" data-tab="guests">Guests</button>
+            </div>
+            <div id="tab-demo-1" class="pt-4 text-[13px] text-muted">
+              <div data-tab-panel="overview">Overview panel — event summary &amp; KPIs.</div>
+              <div data-tab-panel="tickets" class="hidden">Tickets panel — types &amp; pricing.</div>
+              <div data-tab-panel="guests" class="hidden">Guests panel — the attendee list.</div>
+            </div>
+          </div>
+        </script>
+        <p class="ex-label">Pills with count</p>
+        <script type="text/html" class="ex">
+          <div class="flex flex-wrap gap-1.5" data-tabs="#tab-demo-2">
+            <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count">128</span></button>
+            <button class="pilltab" data-tab="confirmed">Confirmed <span class="pilltab-count">96</span></button>
+            <button class="pilltab" data-tab="pending">Pending <span class="pilltab-count">32</span></button>
+          </div>
+          <div id="tab-demo-2" class="hidden"></div>
+        </script>
+      </section>
+
+      <section id="segmented" data-nav="Segmented" data-group="Navigation" data-icon="hgi-dashboard-square-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Segmented control</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted"><code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.segmented</code> — a compact toggle for chart ranges or view modes. Click to switch.</p>
+        <script type="text/html" class="ex">
+          <div class="segmented">
+            <button class="active">7d</button>
+            <button>30d</button>
+            <button>90d</button>
+            <button>1y</button>
+          </div>
+        </script>
+      </section>
+
+      <section id="breadcrumb" data-nav="Breadcrumb" data-group="Navigation" data-icon="hgi-arrow-right-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Breadcrumb</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">A compact trail with chevron separators; ancestors are muted links, the current crumb is <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">text-ink</code>.</p>
+        <script type="text/html" class="ex">
+          <nav class="flex items-center gap-1.5 text-[12px] font-medium text-muted">
+            <a href="#" class="transition hover:text-ink">Events</a>
+            <i class="hgi-stroke hgi-arrow-right-01 text-[13px]"></i>
+            <a href="#" class="transition hover:text-ink">Tech Summit 2026</a>
+            <i class="hgi-stroke hgi-arrow-right-01 text-[13px]"></i>
+            <span class="text-ink">Edit</span>
+          </nav>
+        </script>
+      </section>
+
+      <section id="pagination" data-nav="Pagination" data-group="Navigation" data-icon="hgi-more-horizontal" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Pagination</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">The canonical table footer: a “Showing X–Y of N” summary, a rows-per-page select, and soft Prev/Next buttons that disable at the ends.</p>
+        <script type="text/html" class="ex">
+          <div class="flex w-full flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+            <p>Showing <b class="text-ink tnum">1–10</b> of <b class="text-ink tnum">128</b></p>
+            <div class="flex items-center gap-3">
+              <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+                <select class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink"><option>10</option><option>20</option><option>30</option></select>
+              </label>
+              <div class="flex gap-1">
+                <button class="btn btn-soft btn-sm" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+                <button class="btn btn-soft btn-sm"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+              </div>
+            </div>
+          </div>
+        </script>
+      </section>
+
+      <section id="accordion" data-nav="Accordion" data-group="Navigation" data-icon="hgi-arrow-down-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Accordion</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">A disclosure group — a header button with a trailing chevron that rotates when the body reveals. Click to expand.</p>
+        <script type="text/html" class="ex">
+          <div class="w-full max-w-sm" data-acc>
+            <button data-acc-toggle class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-semibold text-ink transition hover:bg-line">
+              <i class="hgi-stroke hgi-calendar-03 text-[17px] text-muted"></i>Manage events
+              <i data-acc-chevron class="hgi-stroke hgi-arrow-down-01 ml-auto text-[15px] text-muted transition-transform"></i>
+            </button>
+            <ul data-acc-body class="mt-0.5 hidden space-y-0.5 pl-9 text-[13px] text-muted">
+              <li class="cursor-pointer rounded-lg px-2.5 py-1.5 hover:bg-line">All events</li>
+              <li class="cursor-pointer rounded-lg px-2.5 py-1.5 hover:bg-line">Categories</li>
+              <li class="cursor-pointer rounded-lg px-2.5 py-1.5 hover:bg-line">Create event</li>
+            </ul>
+          </div>
+        </script>
+      </section>
+
+      <section id="wizard" data-nav="Wizard stepper" data-group="Navigation" data-icon="hgi-navigation-03" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Wizard stepper</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">A vertical numbered step list: completed steps show a filled brand tick, the active step a ringed number on a brand-soft row, pending steps a hair-bordered number.</p>
+        <script type="text/html" class="ex">
+          <div class="card w-full max-w-xs space-y-1 border border-hair p-2.5">
+            <button type="button" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition hover:bg-line">
+              <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand text-white"><i class="hgi-stroke hgi-tick-02 text-[13px]"></i></span>
+              <span class="text-[13px] font-semibold text-ink">Basics</span>
+            </button>
+            <button type="button" class="flex w-full items-center gap-3 rounded-xl bg-brand-soft px-3 py-2.5 text-left">
+              <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full border-2 border-brand text-[11px] font-bold text-brand">2</span>
+              <span class="text-[13px] font-semibold text-ink">Date &amp; location</span>
+            </button>
+            <button type="button" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition hover:bg-line">
+              <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-hair text-[11px] font-bold text-muted">3</span>
+              <span class="text-[13px] font-semibold text-ink">Tickets</span>
+            </button>
+          </div>
+        </script>
+      </section>
+
+      <section id="navctrls" data-nav="Nav controls" data-group="Navigation" data-icon="hgi-menu-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Nav controls</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Header affordances: a notification bell with an unread dot, a back button, brand text links, a grid/list view switcher, and a sticky action bar.</p>
+        <p class="ex-label">Bell · back · links · view switch</p>
+        <script type="text/html" class="ex">
+          <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink ring-1 ring-hair" title="Notifications">
+            <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+            <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+          </button>
+          <a href="#" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink ring-1 ring-hair" title="Back"><i class="hgi-stroke hgi-arrow-left-01 text-[20px]"></i></a>
+          <a href="#" class="text-[12px] font-semibold text-brand hover:underline">Manage</a>
+          <a href="#" class="inline-flex items-center gap-1 text-[12px] font-semibold text-brand hover:underline">View all<i class="hgi-stroke hgi-arrow-right-01 text-[13px]"></i></a>
+          <div class="inline-flex items-center gap-1 rounded-lg bg-surface p-1 ring-1 ring-hair" data-view-group>
+            <button type="button" data-view-btn class="grid h-8 w-8 place-items-center rounded-md bg-brand-soft text-brand" title="Grid view"><i class="hgi-stroke hgi-grid-view text-[16px]"></i></button>
+            <button type="button" data-view-btn class="grid h-8 w-8 place-items-center rounded-md text-muted transition hover:text-ink" title="List view"><i class="hgi-stroke hgi-list-view text-[16px]"></i></button>
+          </div>
+        </script>
+        <p class="ex-label">Sticky action bar</p>
+        <script type="text/html" class="ex">
+          <div class="w-full max-w-lg rounded-xl border border-hair bg-surface p-3">
+            <div class="flex items-center justify-between gap-3">
+              <div class="min-w-0"><p class="truncate text-[13px] font-semibold text-ink">2 seats selected</p><p class="text-[12px] text-muted tnum">฿2,400 total</p></div>
+              <button class="btn btn-primary shrink-0"><i class="hgi-stroke hgi-ticket-02 text-[16px]"></i>Confirm registration</button>
+            </div>
+          </div>
+        </script>
+      </section>
+
+      <!-- ══════════════════════ OVERLAYS ══════════════════════ -->
+
+      <section id="panel" data-nav="Slide-over panel" data-group="Overlays" data-icon="hgi-sidebar-right-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Slide-over panel</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">A trigger <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">[data-open="id"]</code> opens the <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.panel</code>; the overlay, <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">[data-close]</code> or <kbd class="rounded bg-line px-1 py-0.5 text-[11px]">Esc</kbd> closes it.</p>
+        <script type="text/html" class="ex">
+          <button class="btn btn-primary" data-open="demo-panel"><i class="hgi-stroke hgi-sidebar-right-01 text-[15px]"></i>Open panel</button>
+          <aside id="demo-panel" class="panel">
+            <div class="flex items-center justify-between border-b border-hair px-5 py-3.5">
+              <h3 class="text-[15px] font-semibold">Attendee details</h3>
+              <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+            </div>
+            <div class="flex-1 space-y-4 overflow-y-auto p-5">
+              <div class="flex items-center gap-3">
+                <span class="avatar h-12 w-12 text-[16px]">AC</span>
+                <div><p class="text-[14px] font-semibold">Anna Cruz</p><p class="text-[12px] text-muted">anna@example.com</p></div>
+              </div>
+              <div><label class="label">Ticket</label><input class="input" value="VIP · ฿3,500" readonly /></div>
+              <div><label class="label">Note</label><textarea class="textarea" placeholder="Add a note…"></textarea></div>
+            </div>
+            <div class="flex gap-2 border-t border-hair p-4">
+              <button class="btn btn-primary flex-1" data-close>Save</button>
+              <button class="btn btn-ghost border border-hair" data-close>Cancel</button>
+            </div>
+          </aside>
+        </script>
+      </section>
+
+      <section id="modal" data-nav="Modal &amp; confirm" data-group="Overlays" data-icon="hgi-square" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Modal &amp; confirm</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">The centered <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.modal</code> as an “are you sure?” confirm box — a neutral Cancel / Confirm pair, and the destructive Cancel / Delete variant. Both open via <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">[data-open="id"]</code> and close on the overlay, <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">[data-close]</code> or <kbd class="rounded bg-line px-1 py-0.5 text-[11px]">Esc</kbd>. Click a trigger to try.</p>
+        <p class="ex-label">Confirm (neutral)</p>
+        <script type="text/html" class="ex">
+          <button class="btn btn-primary" data-open="confirm-publish"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px]"></i>Publish event</button>
+          <div id="confirm-publish" class="modal p-5">
+            <div class="flex items-start gap-3">
+              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-soft text-brand"><i class="hgi-stroke hgi-help-circle text-[20px]"></i></span>
+              <div>
+                <h3 class="text-[15px] font-semibold">Publish this event?</h3>
+                <p class="mt-1 text-[13px] text-muted">Attendees will be able to find and register for it right away.</p>
+              </div>
+            </div>
+            <div class="mt-5 flex justify-end gap-2">
+              <button class="btn btn-ghost border border-hair" data-close>Cancel</button>
+              <button class="btn btn-primary" data-close>Confirm</button>
+            </div>
+          </div>
+        </script>
+        <p class="ex-label">Confirm (destructive)</p>
+        <script type="text/html" class="ex">
+          <button class="btn btn-danger" data-open="demo-modal"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i>Delete event</button>
+          <div id="demo-modal" class="modal p-5">
+            <div class="flex items-start gap-3">
+              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-red-50 text-red-500 dark:bg-red-500/15"><i class="hgi-stroke hgi-alert-02 text-[20px]"></i></span>
+              <div>
+                <h3 class="text-[15px] font-semibold">Delete this event?</h3>
+                <p class="mt-1 text-[13px] text-muted">This removes all 1,240 registrations and cannot be undone.</p>
+              </div>
+            </div>
+            <div class="mt-5 flex justify-end gap-2">
+              <button class="btn btn-ghost border border-hair" data-close>Cancel</button>
+              <button class="btn btn-danger" data-close>Delete</button>
+            </div>
+          </div>
+        </script>
+      </section>
+
+      <section id="dropdown" data-nav="Dropdown menu" data-group="Overlays" data-icon="hgi-more-horizontal" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Dropdown menu</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">A floating menu of rows (leading icon + label), a hairline divider and an optional destructive item. Click to open; click away or <kbd class="rounded bg-line px-1 py-0.5 text-[11px]">Esc</kbd> to close.</p>
+        <script type="text/html" class="ex" data-tall>
+          <div class="relative inline-block">
+            <button type="button" class="btn btn-ghost border border-hair" data-menu-toggle>Actions<i class="hgi-stroke hgi-arrow-down-01 text-[14px]"></i></button>
+            <div class="ds-menu hidden absolute left-0 z-20 mt-1 w-48 rounded-xl border border-hair bg-surface p-1.5">
+              <a href="#" class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><i class="hgi-stroke hgi-view text-[15px] text-muted"></i>View details</a>
+              <button class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-[13px] font-medium text-ink transition hover:bg-line"><i class="hgi-stroke hgi-copy-01 text-[15px] text-muted"></i>Duplicate</button>
+              <div class="my-1 h-px bg-line"></div>
+              <button class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-[13px] font-medium text-red-500 transition hover:bg-red-50 dark:hover:bg-red-500/15"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i>Delete</button>
+            </div>
+          </div>
+        </script>
+      </section>
+
+      <section id="tooltip" data-nav="Tooltip" data-group="Overlays" data-icon="hgi-message-multiple-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Tooltip</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">The CSS-only <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.rail-tip</code> — a dark pill that fades in on a <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.group</code> parent's hover. Hover the button.</p>
+        <script type="text/html" class="ex">
+          <div class="group relative inline-flex">
+            <button class="btn-icon border border-hair"><i class="hgi-stroke hgi-calendar-03 text-[18px]"></i></button>
+            <span class="rail-tip">Events</span>
+          </div>
+          <div class="group relative inline-flex">
+            <button class="btn-icon border border-hair"><i class="hgi-stroke hgi-settings-01 text-[18px]"></i></button>
+            <span class="rail-tip">Settings</span>
+          </div>
+        </script>
+      </section>
+
+      <section id="empty" data-nav="Empty states" data-group="Feedback" data-icon="hgi-inbox" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Empty states</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">
+          <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.empty</code> inside a
+          <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.card</code>. Two flavours, same block.
+          <strong class="font-semibold text-ink">First run</strong> — the workspace has no data yet, so the copy
+          explains what will fill the page and offers the one real next step. <strong class="font-semibold text-ink">No results</strong> —
+          data exists but a filter matched nothing, so the action is to clear the filter, never to create something — it adds <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">.empty-sm</code> for the tighter padding a table cell needs, and its <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">data-clear-filters</code> button is wired globally in shell.js (it resets the page's search boxes, filter selects and pill tabs, then re-fires input/change).
+          A page ships both its real content (marked <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">data-when-data</code>)
+          and its first-run block (<code class="rounded bg-line px-1 py-0.5 text-[11.5px]">data-empty hidden</code>);
+          <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">shell.js</code> swaps them when the URL carries
+          <code class="rounded bg-line px-1 py-0.5 text-[11.5px]">?empty=1</code> — try
+          <a href="admin/events.html?empty=1" class="font-semibold text-brand hover:underline">events.html?empty=1</a>.
+        </p>
+        <script type="text/html" class="ex">
+          <div class="card empty">
+            <span class="empty-icon"><i class="hgi-stroke hgi-calendar-03"></i></span>
+            <h2 class="empty-title">No events yet</h2>
+            <p class="empty-text">Create your first event to start selling tickets. You can save it as a draft, add tickets and a programme, then publish when it's ready.</p>
+            <div class="empty-actions">
+              <a href="#" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-calendar-add-01 text-[15px]"></i>Create your first event</a>
+              <a href="#" class="btn btn-ghost btn-sm">Browse page designs</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="empty empty-sm">
+              <span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span>
+              <h3 class="empty-title">No registrations match</h3>
+              <p class="empty-text">Nothing matches the current search and filters. Try a different spelling, or widen them.</p>
+              <div class="empty-actions">
+                <button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button>
+              </div>
+            </div>
+          </div>
+        </script>
+      </section>
+
+      <!-- ══════════════════════ CHARTS ══════════════════════ -->
+
+      <section id="chart-line" data-nav="Area line chart" data-group="Charts" data-icon="hgi-chart-line-data-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Area line chart</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">A dependency-free trend chart — a hand-built SVG with Catmull-Rom smoothing, gridlines, a gradient area fill and a ringed last point. It reads the dark class, so it repaints on theme flip.</p>
+        <script type="text/html" class="ex" data-block>
+          <div class="card border border-hair p-4">
+            <div class="flex items-center justify-between">
+              <div><h3 class="text-[15px] font-bold tracking-tight">Registrations</h3><p class="text-[12px] text-muted">Last 12 weeks</p></div>
+              <span class="badge badge-green"><i class="hgi-stroke hgi-arrow-up-right-01 text-[12px]"></i>18%</span>
+            </div>
+            <div id="demo-line" class="mt-3 w-full"></div>
+          </div>
+        </script>
+      </section>
+
+      <section id="chart-donut" data-nav="Donut chart" data-group="Charts" data-icon="hgi-pie-chart" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Donut chart</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Percentage donut from stacked SVG arcs (radius 15.915 so the dash length equals the percentage), with a centered total overlay and a legend.</p>
+        <script type="text/html" class="ex" data-block>
+          <div class="card border border-hair p-5">
+            <div class="flex flex-wrap items-center gap-6">
+              <div class="relative grid h-40 w-40 shrink-0 place-items-center">
+                <svg id="demo-donut" viewBox="0 0 42 42" class="h-full w-full"></svg>
+                <div class="pointer-events-none absolute inset-0 grid place-items-center text-center">
+                  <div><p class="text-[24px] font-bold leading-none text-ink tnum">1,340</p><p class="mt-1 text-[11px] text-muted">total</p></div>
+                </div>
+              </div>
+              <div class="space-y-3">
+                <div class="flex items-center justify-between gap-8"><div class="flex items-center gap-2.5"><span class="h-3.5 w-3.5 rounded" style="background:#1ba770"></span><p class="text-[13px] font-semibold text-ink">General</p></div><span class="text-[14px] font-bold tnum">42%</span></div>
+                <div class="flex items-center justify-between gap-8"><div class="flex items-center gap-2.5"><span class="h-3.5 w-3.5 rounded" style="background:#34d399"></span><p class="text-[13px] font-semibold text-ink">VIP</p></div><span class="text-[14px] font-bold tnum">28%</span></div>
+                <div class="flex items-center justify-between gap-8"><div class="flex items-center gap-2.5"><span class="h-3.5 w-3.5 rounded" style="background:#6ee7b7"></span><p class="text-[13px] font-semibold text-ink">Student</p></div><span class="text-[14px] font-bold tnum">18%</span></div>
+                <div class="flex items-center justify-between gap-8"><div class="flex items-center gap-2.5"><span class="h-3.5 w-3.5 rounded" style="background:#a7f3d0"></span><p class="text-[13px] font-semibold text-ink">Press</p></div><span class="text-[14px] font-bold tnum">12%</span></div>
+              </div>
+            </div>
+          </div>
+        </script>
+      </section>
+
+      <section id="chart-bars" data-nav="Bar meters" data-group="Charts" data-icon="hgi-analytics-up" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">Bar meters</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">Labeled progress-bar rows for a chart-library-free horizontal bar chart — a truncating label, a flex-1 track and a right-aligned value.</p>
+        <script type="text/html" class="ex" data-block>
+          <div class="w-full max-w-md space-y-3.5">
+            <div class="flex items-center gap-3">
+              <p class="w-36 shrink-0 truncate text-[13px] font-medium text-ink sm:w-44">Tech Summit 2026</p>
+              <div class="h-2 flex-1 overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:100%"></div></div>
+              <span class="w-10 shrink-0 text-right text-[13px] font-semibold tnum">412</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <p class="w-36 shrink-0 truncate text-[13px] font-medium text-ink sm:w-44">Bangkok Jazz Night</p>
+              <div class="h-2 flex-1 overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:64%"></div></div>
+              <span class="w-10 shrink-0 text-right text-[13px] font-semibold tnum">264</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <p class="w-36 shrink-0 truncate text-[13px] font-medium text-ink sm:w-44">Design Workshop</p>
+              <div class="h-2 flex-1 overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:38%"></div></div>
+              <span class="w-10 shrink-0 text-right text-[13px] font-semibold tnum">157</span>
+            </div>
+          </div>
+        </script>
+      </section>
+
+      <!-- ══════════════════════ MEDIA ══════════════════════ -->
+
+      <section id="qr" data-nav="QR code" data-group="Media" data-icon="hgi-qr-code-01" class="ds-sec">
+        <h2 class="text-[20px] font-bold tracking-tight">QR code</h2>
+        <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-muted">A white, hair-bordered frame wrapping an aspect-square code — the white background is forced so it stays scannable in dark mode.</p>
+        <script type="text/html" class="ex">
+          <div class="w-full max-w-[190px] rounded-2xl border border-hair bg-white p-3">
+            <div class="aspect-square w-full overflow-hidden rounded-lg">
+              <svg viewBox="0 0 29 29" class="h-full w-full" shape-rendering="crispEdges" id="demo-qr"></svg>
+            </div>
+          </div>
+        </script>
+      </section>
+
+      <p class="mt-16 border-t border-hair pt-6 text-center text-[11px] text-muted/70">Eventa UI Kit · components from <code class="text-[11px]">assets/app.css</code> · HTML, Tailwind, Hugeicons &amp; Motion</p>
+    </main>
+  </div>
+</div>
+
+<script>
+/* ───────────── theme toggle (repaints charts on flip) ───────────── */
+(function () {
+  var b = document.getElementById('theme-btn');
+  function set(d){ document.documentElement.classList.toggle('dark', d); try{localStorage.setItem('eventa-theme', d?'dark':'light')}catch(e){} b.querySelector('i').className = 'hgi-stroke ' + (d?'hgi-sun-03':'hgi-moon-02') + ' text-[17px]'; if(window.__repaintCharts) window.__repaintCharts(); }
+  set(document.documentElement.classList.contains('dark'));
+  b.addEventListener('click', function(){ set(!document.documentElement.classList.contains('dark')); });
+})();
+
+/* ───────────── foundations: colors ───────────── */
+const TOKENS = [
+  { name: 'canvas',     util: 'bg-canvas',      css: '--canvas',      note: 'Page background' },
+  { name: 'surface',    util: 'bg-surface',     css: '--surface',     note: 'Cards & panels' },
+  { name: 'sidebar',    util: 'bg-sidebar',     css: '--sidebar',     note: 'Sidebar' },
+  { name: 'hair',       util: 'border-hair',    css: '--hair',        note: 'Card borders' },
+  { name: 'line',       util: 'bg-line',        css: '--line',        note: 'Dividers / hover' },
+  { name: 'ink',        util: 'text-ink',       css: '--ink',         note: 'Primary text' },
+  { name: 'muted',      util: 'text-muted',     css: '--muted',       note: 'Secondary text' },
+  { name: 'brand-soft', util: 'bg-brand-soft',  css: '--brand-soft',  note: 'Tonal brand fill' },
+];
+const ACCENTS = [
+  { name: 'brand',      util: 'bg-brand',       css: '#1ba770', fixed: true, note: 'Primary actions' },
+  { name: 'brand-dark', util: 'text-brand-dark',css: '#157e56', fixed: true, note: 'Hover / emphasis' },
+  { name: 'green',      util: 'badge-green',    css: 'accent',  note: 'Success' },
+  { name: 'amber',      util: 'badge-amber',    css: 'accent',  note: 'Warning' },
+  { name: 'red',        util: 'badge-red',      css: 'accent',  note: 'Danger' },
+  { name: 'blue',       util: 'badge-blue',     css: 'accent',  note: 'Info' },
+  { name: 'purple',     util: 'badge-purple',   css: 'accent',  note: 'Special' },
+  { name: 'gray',       util: 'badge-gray',     css: 'accent',  note: 'Neutral' },
+];
+function swatchCard(t) {
+  let box;
+  if (t.name === 'brand') box = `<div class="swatch" style="background:#1ba770"></div>`;
+  else if (t.name === 'brand-dark') box = `<div class="swatch" style="background:#157e56"></div>`;
+  else if (t.css === 'accent') box = `<div class="swatch grid place-items-center"><span class="badge badge-${t.name}">${t.name}</span></div>`;
+  else box = `<div class="swatch" style="background:rgb(var(${t.css}))"></div>`;
+  return `
+    <div>
+      ${box}
+      <p class="mt-1.5 text-[12.5px] font-semibold">${t.name}</p>
+      <p class="text-[11px] text-muted">${t.note}</p>
+      <code class="mt-0.5 block text-[10.5px] text-muted/80">${t.fixed ? t.css : (t.css === 'accent' ? '.' + t.util : t.util)}</code>
+    </div>`;
+}
+document.getElementById('tokens-grid').innerHTML = TOKENS.map(swatchCard).join('');
+document.getElementById('accents-grid').innerHTML = ACCENTS.map(swatchCard).join('');
+
+/* ───────────── foundations: type scale ───────────── */
+const TYPE = [
+  { label: 'Page title',    cls: 'text-[22px] font-bold tracking-tight', sample: 'Dashboard' },
+  { label: 'Section head',  cls: 'text-[15px] font-semibold',            sample: 'Recent registrations' },
+  { label: 'Body',          cls: 'text-[13px]',                          sample: 'The quick brown fox jumps over the lazy dog.' },
+  { label: 'Label',         cls: 'label !mb-0',                          sample: 'Event name' },
+  { label: 'Muted / hint',  cls: 'text-[11px] text-muted',              sample: 'Shown on the public landing page.' },
+  { label: 'Stat value',    cls: 'text-[22px] font-bold tnum',           sample: '฿842,500' },
+];
+document.getElementById('type-scale').innerHTML = TYPE.map(t => `
+  <div class="flex items-baseline justify-between gap-4 px-5 py-3.5">
+    <span class="${t.cls}">${t.sample}</span>
+    <span class="shrink-0 text-right"><span class="block text-[12px] font-medium text-ink">${t.label}</span><code class="text-[10.5px] text-muted">${t.cls.replace(/ ?!mb-0/,'')}</code></span>
+  </div>`).join('');
+
+/* ───────────── foundations: icon grid ───────────── */
+const ICONS = ['calendar-03','ticket-02','user-multiple','wallet-01','notification-03','settings-01','search-01','check-list','qr-code-01','mic-01','chart-line-data-01','discount-tag-01','bank','mail-01','star','dashboard-speed-02'];
+document.getElementById('icon-grid').innerHTML = ICONS.map(n => `
+  <div class="flex flex-col items-center gap-1.5 rounded-lg border border-hair bg-surface py-3">
+    <i class="hgi-stroke hgi-${n} text-[20px] text-ink"></i>
+    <code class="text-[10px] text-muted">${n}</code>
+  </div>`).join('');
+
+/* ───────────── Get-started code cards (copy-paste head + skeleton) ───────────── */
+(function () {
+  // NB: closing script tags written as <\/script> so this outer <script> isn't cut short.
+  const HEAD = `<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eventa · My page</title>
+
+  <!-- set .dark before paint — no theme flash -->
+  <script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}<\/script>
+
+  <!-- font (Inter) + icons (Hugeicons) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+
+  <!-- CSS: Tailwind + Motion, then config (tokens/dark) + the component layer -->
+  <script src="https://cdn.tailwindcss.com"><\/script>
+  <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"><\/script>
+  <script src="assets/config.js"><\/script>
+  <link rel="stylesheet" href="assets/app.css" />
+</head>`;
+
+  const SKELETON = `<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="events">
+
+  <!-- shell.js prepends the sidebar (#backdrop + #sidenav) into [data-layout] -->
+  <div class="flex h-full min-h-screen" data-layout>
+    <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+      <!-- your page: cards, tables, forms, charts … all from app.css classes -->
+    </main>
+  </div>
+
+  <!-- JS: renders the sidebar + wires modals, tabs & accordions -->
+  <script src="assets/shell.js"><\/script>
+
+  <!-- settings pages also load: <script src="assets/settings-ui.js"><\/script> -->
+</body>
+</html>`;
+
+  function codeCard(raw) {
+    const code = dedent(raw);
+    const el = document.createElement('div');
+    el.className = 'ex-wrap';
+    el.innerHTML = `
+      <div class="ex-bar">
+        <span class="pl-1.5 text-[11px] font-bold uppercase tracking-wide text-muted">HTML</span>
+        <button class="ex-copy" type="button"><i class="hgi-stroke hgi-copy-01 text-[14px]"></i><span>Copy</span></button>
+      </div>
+      <pre class="ex-code"><code></code></pre>`;
+    el.querySelector('.ex-code code').innerHTML = highlight(code);
+    const btn = el.querySelector('.ex-copy');
+    btn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(code); } catch (e) {}
+      const s = btn.querySelector('span'), ic = btn.querySelector('i');
+      s.textContent = 'Copied'; ic.className = 'hgi-stroke hgi-tick-02 text-[14px] text-brand';
+      setTimeout(() => { s.textContent = 'Copy'; ic.className = 'hgi-stroke hgi-copy-01 text-[14px]'; }, 1300);
+    });
+    return el;
+  }
+  const h = document.getElementById('setup-head'); if (h) h.appendChild(codeCard(HEAD));
+  const s = document.getElementById('setup-skeleton'); if (s) s.appendChild(codeCard(SKELETON));
+})();
+
+/* ───────────── live example builder (single source → preview + code) ───────────── */
+function dedent(s) {
+  s = s.replace(/^\n+/, '').replace(/\s+$/, '');
+  const lines = s.split('\n');
+  const widths = lines.filter(l => l.trim()).map(l => l.match(/^ */)[0].length);
+  const min = widths.length ? Math.min.apply(null, widths) : 0;
+  return lines.map(l => l.slice(min)).join('\n');
+}
+function highlight(raw) {
+  // Escape first so ALL source <, >, " become &lt; &gt; &quot;. The highlight <span>s
+  // below use real < and " — keyed on the escaped forms, the regexes never touch them.
+  let s = raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  s = s.replace(/(&lt;\/?)([a-zA-Z][\w-]*)/g, '$1<span class="c-tag">$2</span>');
+  s = s.replace(/([a-zA-Z][\w-]*)(=)(&quot;[\s\S]*?&quot;)/g,
+        '<span class="c-at">$1</span>$2<span class="c-st">$3</span>');
+  return s;
+}
+document.querySelectorAll('script.ex').forEach((src) => {
+  const raw = dedent(src.textContent);
+  const wrap = document.createElement('div');
+  wrap.className = 'ex-wrap';
+  let layout = 'ex-view';
+  if (src.hasAttribute('data-center')) layout += ' center';
+  if (src.hasAttribute('data-block')) layout += ' block';
+  if (src.hasAttribute('data-tall')) layout += ' tall';
+  wrap.innerHTML = `
+    <div class="ex-bar">
+      <div class="ex-seg" role="tablist">
+        <button class="on" data-view="preview">Preview</button>
+        <button data-view="code">Code</button>
+      </div>
+      <button class="ex-copy" type="button"><i class="hgi-stroke hgi-copy-01 text-[14px]"></i><span>Copy</span></button>
+    </div>
+    <div class="${layout}"></div>
+    <pre class="ex-code hidden"><code></code></pre>`;
+  wrap.querySelector('.ex-view').innerHTML = raw;
+  wrap.querySelector('.ex-code code').innerHTML = highlight(raw);
+  src.replaceWith(wrap);
+
+  const view = wrap.querySelector('.ex-view');
+  const code = wrap.querySelector('.ex-code');
+  wrap.querySelectorAll('.ex-seg button').forEach(b => b.addEventListener('click', () => {
+    const showCode = b.dataset.view === 'code';
+    wrap.querySelectorAll('.ex-seg button').forEach(x => x.classList.toggle('on', x === b));
+    view.classList.toggle('hidden', showCode);
+    code.classList.toggle('hidden', !showCode);
+  }));
+  const copyBtn = wrap.querySelector('.ex-copy');
+  copyBtn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(raw); } catch (e) {}
+    const span = copyBtn.querySelector('span'), ic = copyBtn.querySelector('i');
+    span.textContent = 'Copied'; ic.className = 'hgi-stroke hgi-tick-02 text-[14px] text-brand';
+    setTimeout(() => { span.textContent = 'Copy'; ic.className = 'hgi-stroke hgi-copy-01 text-[14px]'; }, 1300);
+  });
+});
+
+/* ───────────── side-nav: auto-build from sections ───────────── */
+(function buildNav(){
+  const nav = document.getElementById('ds-nav');
+  const order = []; const groups = {};
+  document.querySelectorAll('main section[data-nav]').forEach(s => {
+    const g = s.getAttribute('data-group') || 'Components';
+    if (!groups[g]) { groups[g] = []; order.push(g); }
+    groups[g].push({ id: s.id, label: s.getAttribute('data-nav'), icon: s.getAttribute('data-icon') || 'hgi-square' });
+  });
+  nav.innerHTML = order.map(g =>
+    `<p class="ds-group">${g}</p>` +
+    groups[g].map(it => `<a class="ds-link" href="#${it.id}"><i class="hgi-stroke ${it.icon} text-[15px]"></i>${it.label}</a>`).join('')
+  ).join('');
+  const total = document.querySelectorAll('main section[data-nav]').length;
+  const cc = document.getElementById('comp-count'); if (cc) cc.textContent = total + '';
+})();
+
+/* ───────────── mobile nav drawer ───────────── */
+(function () {
+  const aside = document.getElementById('ds-aside');
+  const backdrop = document.getElementById('nav-backdrop');
+  const open = () => { aside.classList.add('open'); backdrop.classList.remove('hidden'); document.body.classList.add('overflow-hidden'); };
+  const close = () => { aside.classList.remove('open'); backdrop.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); };
+  document.getElementById('nav-toggle').addEventListener('click', open);
+  document.getElementById('nav-close').addEventListener('click', close);
+  backdrop.addEventListener('click', close);
+  // tapping a section link closes the drawer (real navigation, mobile only)
+  document.getElementById('ds-nav').addEventListener('click', (e) => { if (e.target.closest('a')) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  const mq = matchMedia('(min-width:1024px)');
+  const onChange = (e) => { if (e.matches) close(); };
+  if (mq.addEventListener) mq.addEventListener('change', onChange); else mq.addListener(onChange);
+})();
+
+/* ───────────── double-sidebar demo (rail + sub-nav), self-contained mini-shell ───────────── */
+(function () {
+  const MODS = [
+    { id: 'dashboard', label: 'Dashboard', icon: 'hgi-dashboard-speed-02' },
+    { id: 'events', label: 'Events', icon: 'hgi-calendar-03', groups: [
+      { label: 'Manage', icon: 'hgi-calendar-03', items: [
+        { label: 'All events', page: 'events' }, { label: 'Upcoming', page: 'events-upcoming' }, { label: 'Create event', page: 'event-form' } ] },
+      { label: 'Ticketing', icon: 'hgi-ticket-01', items: [
+        { label: 'Tickets', page: 'tickets' }, { label: 'Discounts', page: 'discounts' } ] },
+      { label: 'Attendees', icon: 'hgi-user-multiple', items: [
+        { label: 'Registrations', page: 'registrations' }, { label: 'Attendees', page: 'attendees' }, { label: 'Check-in', page: 'checkin' } ] } ] },
+    { id: 'finance', label: 'Finance', icon: 'hgi-wallet-01', groups: [
+      { label: 'Transactions', icon: 'hgi-wallet-01', items: [
+        { label: 'Payments', page: 'payments' }, { label: 'Payouts', page: 'payouts' } ] },
+      { label: 'Tax & invoicing', icon: 'hgi-invoice-01', items: [
+        { label: 'Invoices', page: 'invoices' }, { label: 'Taxes', page: 'taxes' } ] } ] },
+    { id: 'insights', label: 'Insights', icon: 'hgi-analytics-up', groups: [
+      { label: 'Summary', icon: 'hgi-analytics-up', items: [ { label: 'Overview', page: 'reports' } ] },
+      { label: 'Financial', icon: 'hgi-wallet-01', items: [ { label: 'Income', page: 'reports-income' }, { label: 'Payouts', page: 'reports-payouts' } ] } ] },
+    { id: 'checkin-tool', label: 'Check-in tool', icon: 'hgi-qr-code-01' },
+    { id: 'settings', label: 'Settings', icon: 'hgi-settings-01', bottom: true, groups: [
+      { label: 'Workspace', icon: 'hgi-settings-01', items: [ { label: 'Profile', page: 'settings-profile' }, { label: 'Security', page: 'settings-security' } ] } ] },
+  ];
+  function railBtn(m, sel) {
+    const on = m.id === sel;
+    const cls = on
+      ? 'grid h-9 w-9 place-items-center rounded-lg bg-brand text-white shadow-sm transition'
+      : 'grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand';
+    return `<div class="group relative flex justify-center"><button type="button" data-mod="${m.id}" class="${cls}"><i class="hgi-stroke ${m.icon} text-[18px]"></i></button><span class="rail-tip">${m.label}</span></div>`;
+  }
+  function panelLeaf(it, page) {
+    const on = it.page === page;
+    const cls = on
+      ? 'block w-full rounded-lg py-1.5 pl-9 pr-2.5 text-left text-[13px] font-semibold bg-brand-soft text-brand'
+      : 'block w-full rounded-lg py-1.5 pl-9 pr-2.5 text-left text-[13px] font-medium text-muted transition hover:bg-brand-soft/60 hover:text-brand';
+    return `<li><button type="button" data-leaf="${it.page}" class="${cls}">${it.label}</button></li>`;
+  }
+  function instance(root, opts) {
+    opts = opts || {};
+    let sel = opts.module || 'events';
+    let page = opts.page || 'attendees';
+    const railTop = root.querySelector('[data-rail-top]');
+    const railBottom = root.querySelector('[data-rail-bottom]');
+    const panel = root.querySelector('[data-panel]');
+    const panelHead = root.querySelector('[data-panel-head]');
+    const panelNav = root.querySelector('[data-panel-nav]');
+    function renderRail() {
+      railTop.innerHTML = MODS.filter(m => !m.bottom).map(m => railBtn(m, sel)).join('');
+      railBottom.innerHTML = MODS.filter(m => m.bottom).map(m => railBtn(m, sel)).join('');
+    }
+    function renderPanel() {
+      const m = MODS.find(x => x.id === sel);
+      if (!m || !m.groups) { panel.classList.add('hidden'); return; }
+      panel.classList.remove('hidden');
+      panelHead.textContent = m.label;
+      panelNav.innerHTML = m.groups.map(g => `
+        <div data-acc>
+          <button type="button" data-acc-toggle class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-semibold text-ink transition hover:bg-line">
+            <i class="hgi-stroke ${g.icon} text-[17px]"></i>${g.label}
+            <i data-acc-chevron class="hgi-stroke hgi-arrow-down-01 ml-auto rotate-180 text-[15px] text-muted transition-transform duration-200"></i>
+          </button>
+          <ul data-acc-body class="mt-0.5 space-y-0.5">${g.items.map(it => panelLeaf(it, page)).join('')}</ul>
+        </div>`).join('');
+    }
+    renderRail(); renderPanel();
+    // Handle within the demo and stop bubbling so the page's global delegated
+    // handler (which also matches [data-acc-toggle]) doesn't double-fire.
+    root.addEventListener('click', (e) => {
+      const mod = e.target.closest('[data-mod]');
+      if (mod) { e.stopPropagation(); sel = mod.getAttribute('data-mod'); renderRail(); renderPanel(); return; }
+      const acc = e.target.closest('[data-acc-toggle]');
+      if (acc) {
+        e.stopPropagation();
+        const wrap = acc.closest('[data-acc]'); const body = wrap.querySelector('[data-acc-body]'); const chev = acc.querySelector('[data-acc-chevron]');
+        const open = !body.classList.contains('hidden'); body.classList.toggle('hidden', open); if (chev) chev.classList.toggle('rotate-180', !open); return;
+      }
+      const leaf = e.target.closest('[data-leaf]');
+      if (leaf) { e.stopPropagation(); page = leaf.getAttribute('data-leaf'); renderPanel(); if (opts.onLeaf) opts.onLeaf(); }
+    });
+  }
+  const d = document.getElementById('shell-demo');
+  if (d) instance(d, {});
+  const mWrap = document.getElementById('shell-demo-m');
+  if (mWrap) {
+    const drawer = mWrap.querySelector('[data-drawer]');
+    const bd = mWrap.querySelector('[data-mbackdrop]');
+    const openM = () => { drawer.classList.remove('-translate-x-full'); bd.classList.remove('hidden'); };
+    const closeM = () => { drawer.classList.add('-translate-x-full'); bd.classList.add('hidden'); };
+    mWrap.querySelector('[data-mtoggle]').addEventListener('click', openM);
+    bd.addEventListener('click', closeM);
+    instance(mWrap, { onLeaf: closeM });
+  }
+})();
+
+/* ───────────── delegated interactions ───────────── */
+const overlay = document.createElement('div');
+overlay.className = 'panel-overlay';
+document.body.appendChild(overlay);
+function closeAll() {
+  document.querySelectorAll('.panel.open, .modal.open').forEach(p => p.classList.remove('open'));
+  overlay.classList.remove('open');
+}
+function closeMenus(except) {
+  document.querySelectorAll('.ds-menu').forEach(m => { if (m !== except) m.classList.add('hidden'); });
+}
+document.addEventListener('click', (e) => {
+  // panels / modals
+  const opener = e.target.closest('[data-open]');
+  if (opener) {
+    const p = document.getElementById(opener.getAttribute('data-open'));
+    if (p) { closeAll(); p.classList.add('open'); overlay.classList.add('open'); }
+    return;
+  }
+  if (e.target.closest('[data-close]') || e.target === overlay) closeAll();
+
+  // dropdown menus
+  const menuBtn = e.target.closest('[data-menu-toggle]');
+  if (menuBtn) { const m = menuBtn.parentElement.querySelector('.ds-menu'); closeMenus(m); if (m) m.classList.toggle('hidden'); }
+  else if (!e.target.closest('.ds-menu')) closeMenus();
+
+  // segmented control
+  const seg = e.target.closest('.segmented button');
+  if (seg) seg.parentElement.querySelectorAll('button').forEach(x => x.classList.toggle('active', x === seg));
+
+  // declarative tabs
+  const tabBtn = e.target.closest('[data-tab]');
+  if (tabBtn) {
+    const group = tabBtn.closest('[data-tabs]');
+    if (group) {
+      const content = document.querySelector(group.getAttribute('data-tabs')) || group.parentElement;
+      const name = tabBtn.getAttribute('data-tab');
+      group.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('tab-active', b === tabBtn));
+      content.querySelectorAll('[data-tab-panel]').forEach(p => p.classList.toggle('hidden', p.getAttribute('data-tab-panel') !== name));
+    }
+  }
+
+  // toggle / switch
+  const tg = e.target.closest('[data-toggle]');
+  if (tg) {
+    const on = tg.classList.contains('bg-brand');
+    tg.classList.toggle('bg-brand', !on); tg.classList.toggle('bg-line', on);
+    const k = tg.firstElementChild; if (k) k.classList.toggle('translate-x-4', !on);
+  }
+
+  // password reveal
+  const rv = e.target.closest('[data-reveal]');
+  if (rv) {
+    const inp = rv.parentElement.querySelector('input');
+    const ic = rv.querySelector('i');
+    if (inp) { const show = inp.type === 'password'; inp.type = show ? 'text' : 'password'; if (ic) ic.className = 'hgi-stroke ' + (show ? 'hgi-view-off' : 'hgi-view') + ' text-[16px]'; }
+  }
+
+  // accordion
+  const ac = e.target.closest('[data-acc-toggle]');
+  if (ac) {
+    const wrap = ac.closest('[data-acc]');
+    const body = wrap.querySelector('[data-acc-body]');
+    const chev = ac.querySelector('[data-acc-chevron]');
+    const open = !body.classList.contains('hidden');
+    body.classList.toggle('hidden', open);
+    if (chev) chev.classList.toggle('rotate-180', !open);
+  }
+
+  // quantity stepper
+  const qDec = e.target.closest('[data-qty-dec]'), qInc = e.target.closest('[data-qty-inc]');
+  if (qDec || qInc) {
+    const w = (qDec || qInc).closest('[data-qty]');
+    const out = w.querySelector('[data-qty-val]');
+    let n = parseInt(out.textContent, 10) || 0;
+    n = Math.max(1, Math.min(20, n + (qInc ? 1 : -1)));
+    out.textContent = n;
+  }
+
+  // star rating
+  const st = e.target.closest('.star-btn');
+  if (st) {
+    const w = st.closest('[data-rating]');
+    const btns = [...w.querySelectorAll('.star-btn')];
+    const idx = btns.indexOf(st);
+    btns.forEach((b, i) => { b.querySelector('i').className = 'hgi-stroke hgi-star text-[28px] ' + (i <= idx ? 'text-amber-400' : 'text-gray-300 dark:text-gray-600'); });
+    const lbl = w.querySelector('[data-rating-label]');
+    if (lbl) lbl.textContent = ['Terrible', 'Poor', 'Okay', 'Good', 'Excellent'][idx] || '';
+  }
+
+  // grid/list view switcher
+  const vb = e.target.closest('[data-view-btn]');
+  if (vb) {
+    const g = vb.closest('[data-view-group]');
+    g.querySelectorAll('[data-view-btn]').forEach(b => {
+      const on = b === vb;
+      b.classList.toggle('bg-brand-soft', on); b.classList.toggle('text-brand', on); b.classList.toggle('text-muted', !on);
+    });
+  }
+
+  // radio cards
+  const rc = e.target.closest('[data-radio-card]');
+  if (rc) {
+    const g = rc.closest('[data-radio-group]');
+    g.querySelectorAll('[data-radio-card]').forEach(c => {
+      const on = c === rc;
+      c.classList.toggle('border-brand', on); c.classList.toggle('bg-brand-soft', on);
+      c.classList.toggle('ring-1', on); c.classList.toggle('ring-brand', on); c.classList.toggle('border-hair', !on);
+      const chk = c.querySelector('[data-radio-check]');
+      if (chk) {
+        chk.classList.toggle('border-brand', on); chk.classList.toggle('bg-brand', on); chk.classList.toggle('text-white', on);
+        chk.classList.toggle('border-hair', !on); chk.classList.toggle('text-transparent', !on);
+      }
+    });
+  }
+
+  // copy field
+  const cp = e.target.closest('[data-copy]');
+  if (cp) {
+    const row = cp.closest('[data-copy-row]') || cp.parentElement;
+    const val = row.querySelector('code, [data-copy-val]');
+    const ic = cp.querySelector('i');
+    if (val && navigator.clipboard) navigator.clipboard.writeText(val.textContent.trim());
+    if (ic) { ic.className = 'hgi-stroke hgi-tick-02 text-[16px] text-brand'; setTimeout(() => ic.className = 'hgi-stroke hgi-copy-01 text-[16px]', 1200); }
+  }
+
+  // repeatable rows
+  const addRow = e.target.closest('[data-add-row]');
+  if (addRow) {
+    const rows = addRow.closest('[data-repeat]').querySelector('[data-rows]');
+    const clone = rows.lastElementChild.cloneNode(true);
+    clone.querySelectorAll('input').forEach(i => i.value = '');
+    rows.appendChild(clone);
+  }
+  const rmRow = e.target.closest('[data-remove-row]');
+  if (rmRow) {
+    const rows = rmRow.closest('[data-rows]');
+    const row = rmRow.closest('[data-row]');
+    if (rows.querySelectorAll('[data-row]').length > 1) row.remove();
+  }
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeAll(); closeMenus(); } });
+
+/* ───────────── delegated input listeners (counter + password strength) ───────────── */
+document.addEventListener('input', (e) => {
+  const f = e.target.closest('[data-counter]');
+  if (f) {
+    const max = +f.getAttribute('data-max') || 250;
+    if (f.value.length > max) f.value = f.value.slice(0, max);
+    const w = f.closest('[data-counter-wrap]') || f.parentElement;
+    const out = w.querySelector('[data-counter-out]');
+    if (out) { out.textContent = f.value.length + '/' + max; out.classList.toggle('text-red-500', f.value.length >= max); out.classList.toggle('text-muted', f.value.length < max); }
+  }
+  const p = e.target.closest('[data-strength]');
+  if (p) {
+    const v = p.value; let score = 0;
+    if (v.length >= 8) score++;
+    if (/[A-Z]/.test(v) && /[a-z]/.test(v)) score++;
+    if (/\d/.test(v) || /[^A-Za-z0-9]/.test(v)) score++;
+    if (v.length === 0) score = 0;
+    const w = p.closest('[data-strength-wrap]');
+    if (w) {
+      const colors = ['bg-red-500', 'bg-amber-500', 'bg-brand'];
+      w.querySelectorAll('[data-strength-bar]').forEach((b, i) => { b.className = 'h-full flex-1 rounded-full transition-colors ' + (i < score ? colors[score - 1] : 'bg-line'); });
+      const lbl = w.querySelector('[data-strength-label]');
+      if (lbl) lbl.textContent = ['Use 8+ chars', 'Weak', 'Fair', 'Strong'][score];
+    }
+  }
+});
+
+/* ───────────── charts (theme-aware, repaint on flip) ───────────── */
+function smoothPath(pts) {
+  if (pts.length < 2) return '';
+  let d = `M ${pts[0][0]} ${pts[0][1]}`;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+    const c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
+    const c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
+    d += ` C ${c1x.toFixed(1)} ${c1y.toFixed(1)} ${c2x.toFixed(1)} ${c2y.toFixed(1)} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`;
+  }
+  return d;
+}
+function renderLine() {
+  const el = document.getElementById('demo-line'); if (!el) return;
+  const dark = document.documentElement.classList.contains('dark');
+  const grid = dark ? '#222a26' : '#eef0f3', ringC = dark ? '#171d1a' : '#ffffff';
+  const data = [12, 18, 15, 26, 22, 30, 27, 38, 33, 44, 40, 52];
+  const W = 640, H = 240, pl = 6, pr = 6, pt = 12, pb = 12;
+  const iw = W - pl - pr, ih = H - pt - pb, max = Math.max.apply(null, data) * 1.12;
+  const pts = data.map((v, i) => [pl + iw * i / (data.length - 1), pt + ih * (1 - v / max)]);
+  const line = smoothPath(pts);
+  const area = `${line} L ${pts[pts.length - 1][0].toFixed(1)} ${pt + ih} L ${pts[0][0].toFixed(1)} ${pt + ih} Z`;
+  let grids = '';
+  for (let g = 0; g <= 3; g++) { const y = pt + ih * g / 3; grids += `<line x1="${pl}" y1="${y}" x2="${W - pr}" y2="${y}" stroke="${grid}" stroke-width="1"/>`; }
+  const last = pts[pts.length - 1];
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" class="w-full" style="height:auto">
+    <defs><linearGradient id="lc-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1ba770" stop-opacity="0.28"/><stop offset="100%" stop-color="#1ba770" stop-opacity="0"/></linearGradient></defs>
+    ${grids}
+    <path d="${area}" fill="url(#lc-fill)"/>
+    <path d="${line}" fill="none" stroke="#1ba770" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="4.5" fill="#1ba770" stroke="${ringC}" stroke-width="2.5"/>
+  </svg>`;
+}
+function renderDonut() {
+  const el = document.getElementById('demo-donut'); if (!el) return;
+  const segs = [{ v: 42, c: '#1ba770' }, { v: 28, c: '#34d399' }, { v: 18, c: '#6ee7b7' }, { v: 12, c: '#a7f3d0' }];
+  const GAP = 1.4; let start = 0;
+  el.innerHTML = segs.map(s => {
+    const dash = Math.max(0, s.v - GAP);
+    const c = `<circle cx="21" cy="21" r="15.915" fill="none" stroke="${s.c}" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="${dash} ${100 - dash}" stroke-dashoffset="${-start}" transform="rotate(-90 21 21)"/>`;
+    start += s.v; return c;
+  }).join('');
+}
+function renderQR() {
+  const el = document.getElementById('demo-qr'); if (!el) return;
+  // Deterministic pseudo-QR (decorative) — fixed pattern so it never changes between paints.
+  const N = 29; let cells = '';
+  function finder(x, y) {
+    let s = '';
+    s += `<rect x="${x}" y="${y}" width="7" height="7" fill="#0b0f0d"/>`;
+    s += `<rect x="${x + 1}" y="${y + 1}" width="5" height="5" fill="#fff"/>`;
+    s += `<rect x="${x + 2}" y="${y + 2}" width="3" height="3" fill="#0b0f0d"/>`;
+    return s;
+  }
+  const seedA = 1103515245, seedB = 12345; let state = 987654321;
+  function rnd() { state = (state * seedA + seedB) & 0x7fffffff; return (state >>> 8) & 1; }
+  for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+    const inFinder = (x < 8 && y < 8) || (x > N - 9 && y < 8) || (x < 8 && y > N - 9);
+    if (inFinder) continue;
+    if (rnd()) cells += `<rect x="${x}" y="${y}" width="1" height="1" fill="#0b0f0d"/>`;
+  }
+  el.innerHTML = `<rect width="29" height="29" fill="#fff"/>${cells}${finder(0, 0)}${finder(22, 0)}${finder(0, 22)}`;
+}
+window.__repaintCharts = function () { renderLine(); renderDonut(); };
+renderLine(); renderDonut(); renderQR();
+
+/* ───────────── side-nav scroll spy ───────────── */
+const navLinks = Array.from(document.querySelectorAll('#ds-nav .ds-link'));
+const spy = new IntersectionObserver((entries) => {
+  entries.forEach(en => {
+    if (en.isIntersecting) {
+      const id = '#' + en.target.id;
+      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === id));
+    }
+  });
+}, { rootMargin: '-12% 0px -80% 0px', threshold: 0 });
+document.querySelectorAll('main section[data-nav]').forEach(s => spy.observe(s));
+</script>
+</body>
+</html>

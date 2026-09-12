@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Settings</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="console-settings">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0 flex-1">
+        <h1 class="text-[22px] font-bold tracking-tight">Settings</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">How this console behaves.</p>
+      </div>
+      <button type="button" class="btn btn-primary shrink-0"><i class="hgi-stroke hgi-tick-02 text-[16px]"></i><span class="hidden sm:inline">Save changes</span><span class="sm:hidden">Save</span></button>
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Staff access -->
+    <section class="card p-4 lg:p-5">
+      <div class="flex flex-wrap items-start justify-between gap-3">
+        <div class="flex min-w-0 flex-1 items-start gap-3">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-user-group text-[17px]"></i></span>
+          <div>
+            <h2 class="text-[16px] font-bold tracking-tight">Staff access</h2>
+            <p class="mt-0.5 text-[12px] text-muted">Six people can sign in to this console — 2 platform admins, 2 support, 1 billing, 1 read-only. Everyone here can see data belonging to every workspace on Eventa.</p>
+          </div>
+        </div>
+        <button type="button" class="btn btn-soft btn-sm shrink-0" data-open="invite-panel"><i class="hgi-stroke hgi-user-add-01 text-[15px]"></i>Invite staff</button>
+      </div>
+
+      <div class="mt-4 overflow-x-auto">
+        <table class="data-table min-w-[760px]">
+          <thead>
+            <tr><th>Person</th><th>Role</th><th>Two-factor</th><th>Last active</th><th class="text-right">Actions</th></tr>
+          </thead>
+          <tbody id="staff-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="mt-3 grid gap-3 xl:grid-cols-2">
+      <!-- Sign-in policy -->
+      <section class="card p-4 lg:p-5">
+        <div class="flex items-start gap-3">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-shield-key text-[17px]"></i></span>
+          <div>
+            <h2 class="text-[16px] font-bold tracking-tight">Sign-in policy</h2>
+            <p class="mt-0.5 text-[12px] text-muted">Applies to console staff only — organizer workspaces keep their own settings.</p>
+          </div>
+        </div>
+
+        <div class="mt-4 divide-y divide-line">
+          <div class="flex items-center justify-between gap-3 pb-3">
+            <div class="min-w-0">
+              <p class="text-[13px] font-semibold text-ink">Require Google Workspace SSO</p>
+              <p class="mt-0.5 text-[11px] text-muted">Passwords are disabled; only <span class="font-mono">@eventa.co.th</span> accounts can sign in.</p>
+            </div>
+            <button data-toggle type="button" class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5" title="Require SSO"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span></button>
+          </div>
+          <div class="flex items-center justify-between gap-3 py-3">
+            <div class="min-w-0">
+              <p class="text-[13px] font-semibold text-ink">Require two-factor</p>
+              <p class="mt-0.5 text-[11px] text-muted">One staff account has not enrolled yet and will be locked out when this is enforced.</p>
+            </div>
+            <button data-toggle type="button" class="flex h-5 w-9 shrink-0 items-center rounded-full bg-line p-0.5" title="Require two-factor"><span class="h-4 w-4 rounded-full bg-white shadow"></span></button>
+          </div>
+          <div class="pt-3">
+            <label class="label" for="cs-session">Session timeout</label>
+            <select id="cs-session" class="select">
+              <option>1 hour</option>
+              <option selected>8 hours</option>
+              <option>24 hours</option>
+              <option>7 days</option>
+            </select>
+            <p class="hint">Idle sessions are signed out. Shorter is safer for a console that reads every tenant's data.</p>
+          </div>
+          <div class="pt-3">
+            <label class="label" for="cs-ip">IP allowlist</label>
+            <textarea id="cs-ip" rows="2" class="textarea font-mono text-[12px]">203.0.113.0/24
+198.51.100.17</textarea>
+            <p class="hint">One CIDR range or address per line. Leave empty to allow any address.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Alert routing -->
+      <section class="card p-4 lg:p-5">
+        <div class="flex items-start gap-3">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-mail-send-01 text-[17px]"></i></span>
+          <div>
+            <h2 class="text-[16px] font-bold tracking-tight">Where alerts go</h2>
+            <p class="mt-0.5 text-[12px] text-muted">A breach of any threshold below fires to every enabled destination.</p>
+          </div>
+        </div>
+
+        <div class="mt-4 space-y-3">
+          <div>
+            <label class="label" for="cs-email">Email</label>
+            <input id="cs-email" type="email" class="input" value="ops@eventa.co.th" />
+            <p class="hint">Use a shared alias, not a person — alerts should outlive anyone's holiday.</p>
+          </div>
+          <div>
+            <label class="label" for="cs-slack">Slack channel</label>
+            <input id="cs-slack" type="text" class="input font-mono text-[12.5px]" value="#eventa-alerts" />
+          </div>
+          <div>
+            <label class="label" for="cs-hook">HTTP endpoint</label>
+            <input id="cs-hook" type="text" class="input font-mono text-[12.5px]" value="https://oncall.eventa.co.th/hooks/platform" />
+            <p class="hint">Signed with the console's shared secret. Rotate it in the danger zone below.</p>
+          </div>
+        </div>
+
+        <div class="mt-4 divide-y divide-line border-t border-line">
+          <div class="flex items-center justify-between gap-3 py-2.5">
+            <p class="text-[13px] text-ink">Page on-call for <span class="badge badge-red">Major</span> incidents</p>
+            <button data-toggle type="button" class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5" title="Page on Major"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span></button>
+          </div>
+          <div class="flex items-center justify-between gap-3 py-2.5">
+            <p class="text-[13px] text-ink">Page on-call for <span class="badge badge-amber">Minor</span> incidents</p>
+            <button data-toggle type="button" class="flex h-5 w-9 shrink-0 items-center rounded-full bg-line p-0.5" title="Page on Minor"><span class="h-4 w-4 rounded-full bg-white shadow"></span></button>
+          </div>
+          <div class="flex items-center justify-between gap-3 py-2.5">
+            <p class="text-[13px] text-ink">Daily digest of failed jobs at 08:00</p>
+            <button data-toggle type="button" class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5" title="Daily digest"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span></button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="mt-3 grid gap-3 xl:grid-cols-2">
+      <!-- Alerting thresholds -->
+      <section class="card p-4 lg:p-5">
+        <div class="flex items-start gap-3">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-alert-02 text-[17px]"></i></span>
+          <div>
+            <h2 class="text-[16px] font-bold tracking-tight">Alerting thresholds</h2>
+            <p class="mt-0.5 text-[12px] text-muted">The lines System health measures every service against.</p>
+          </div>
+        </div>
+
+        <div class="mt-4 grid gap-3 sm:grid-cols-2">
+          <div>
+            <label class="label" for="cs-p95">Response time (p95)</label>
+            <div class="relative">
+              <input id="cs-p95" type="text" class="input pr-12 tnum" value="150" />
+              <span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[12px] text-muted">ms</span>
+            </div>
+            <p class="hint">Currently 142 ms on <span class="font-mono">eventa-api</span>.</p>
+          </div>
+          <div>
+            <label class="label" for="cs-err">Error rate</label>
+            <div class="relative">
+              <input id="cs-err" type="text" class="input pr-12 tnum" value="0,50" />
+              <span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[12px] text-muted">%</span>
+            </div>
+            <p class="hint">Currently 0,09 % across the platform.</p>
+          </div>
+          <div>
+            <label class="label" for="cs-lag">Outbox lag</label>
+            <div class="relative">
+              <input id="cs-lag" type="text" class="input pr-12 tnum" value="120" />
+              <span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[12px] text-muted">s</span>
+            </div>
+            <p class="hint text-amber-600 dark:text-amber-300">Breached — <span class="font-mono">eventa-relay</span> is at 252 s.</p>
+          </div>
+          <div>
+            <label class="label" for="cs-uptime">Uptime target</label>
+            <div class="relative">
+              <input id="cs-uptime" type="text" class="input pr-12 tnum" value="99,90" />
+              <span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[12px] text-muted">%</span>
+            </div>
+            <p class="hint">Rolling 30 days. Currently 99,91 %.</p>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <label class="label" for="cs-window">Evaluation window</label>
+          <select id="cs-window" class="select">
+            <option>1 minute</option>
+            <option selected>5 minutes</option>
+            <option>15 minutes</option>
+            <option>1 hour</option>
+          </select>
+          <p class="hint">A threshold must be breached for this long before an alert fires, so a single slow request stays quiet.</p>
+        </div>
+      </section>
+
+      <!-- Data retention -->
+      <section class="card p-4 lg:p-5">
+        <div class="flex items-start gap-3">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-archive-01 text-[17px]"></i></span>
+          <div>
+            <h2 class="text-[16px] font-bold tracking-tight">Data retention</h2>
+            <p class="mt-0.5 text-[12px] text-muted">How long the console keeps what it collects, before it is deleted for good.</p>
+          </div>
+        </div>
+
+        <div class="mt-4 grid gap-3 sm:grid-cols-2">
+          <div>
+            <label class="label" for="cs-logs">Application logs</label>
+            <select id="cs-logs" class="select">
+              <option>7 days</option>
+              <option>14 days</option>
+              <option selected>30 days</option>
+              <option>90 days</option>
+            </select>
+            <p class="hint">Currently 412 GB across five services.</p>
+          </div>
+          <div>
+            <label class="label" for="cs-jobs">Job run history</label>
+            <select id="cs-jobs" class="select">
+              <option>30 days</option>
+              <option selected>90 days</option>
+              <option>180 days</option>
+              <option>1 year</option>
+            </select>
+            <p class="hint">Keeps the last-run and duration columns on Jobs honest.</p>
+          </div>
+          <div>
+            <label class="label" for="cs-audit">Audit records</label>
+            <select id="cs-audit" class="select">
+              <option>1 year</option>
+              <option>2 years</option>
+              <option>5 years</option>
+              <option selected>7 years</option>
+            </select>
+            <p class="hint">Thai accounting rules put the floor at five years; seven is the safe default.</p>
+          </div>
+          <div>
+            <label class="label" for="cs-purge">Purge deleted workspaces</label>
+            <select id="cs-purge" class="select">
+              <option>Immediately</option>
+              <option selected>After 30 days</option>
+              <option>After 90 days</option>
+              <option>Never</option>
+            </select>
+            <p class="hint">The grace period during which a deletion can still be undone.</p>
+          </div>
+        </div>
+
+        <div class="mt-4 divide-y divide-line border-t border-line">
+          <div class="flex items-center justify-between gap-3 py-2.5">
+            <div class="min-w-0">
+              <p class="text-[13px] font-semibold text-ink">Redact personal data in exports</p>
+              <p class="mt-0.5 text-[11px] text-muted">Attendee names and emails are masked in any log or report leaving the console.</p>
+            </div>
+            <button data-toggle type="button" class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5" title="Redact personal data"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span></button>
+          </div>
+          <div class="flex items-center justify-between gap-3 py-2.5">
+            <div class="min-w-0">
+              <p class="text-[13px] font-semibold text-ink">Record console reads in the audit log</p>
+              <p class="mt-0.5 text-[11px] text-muted">Every time staff open a workspace's data, it is written down.</p>
+            </div>
+            <button data-toggle type="button" class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5" title="Record reads"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow"></span></button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Danger zone -->
+    <section class="mt-3 rounded-2xl border border-red-200 bg-red-50 p-4 dark:border-red-500/25 dark:bg-red-500/5 lg:p-5">
+      <div class="flex items-start gap-3">
+        <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-red-100 text-red-600 dark:bg-red-500/15 dark:text-red-300"><i class="hgi-stroke hgi-danger text-[17px]"></i></span>
+        <div>
+          <h2 class="text-[16px] font-bold tracking-tight">Danger zone</h2>
+          <p class="mt-0.5 text-[12px] text-muted">These affect every workspace on Eventa at once, and none of them can be undone from this screen.</p>
+        </div>
+      </div>
+
+      <div class="mt-4 divide-y divide-red-200 rounded-xl bg-surface dark:divide-red-500/20">
+        <div class="flex flex-wrap items-center justify-between gap-3 p-3.5">
+          <div class="min-w-0">
+            <p class="text-[13px] font-semibold text-ink">Maintenance mode</p>
+            <p class="mt-0.5 text-[11.5px] text-muted">Puts the whole platform read-only. Attendees can browse; nobody can register, pay or check in.</p>
+          </div>
+          <button type="button" class="btn btn-danger btn-sm shrink-0" data-open="danger-modal" data-danger="maintenance"><i class="hgi-stroke hgi-lock-key text-[15px]"></i>Enable maintenance mode</button>
+        </div>
+        <div class="flex flex-wrap items-center justify-between gap-3 p-3.5">
+          <div class="min-w-0">
+            <p class="text-[13px] font-semibold text-ink">Purge log storage now</p>
+            <p class="mt-0.5 text-[11.5px] text-muted">Deletes all 412 GB of application logs immediately, ahead of the 30-day retention window.</p>
+          </div>
+          <button type="button" class="btn btn-danger btn-sm shrink-0" data-open="danger-modal" data-danger="purge"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i>Purge logs</button>
+        </div>
+        <div class="flex flex-wrap items-center justify-between gap-3 p-3.5">
+          <div class="min-w-0">
+            <p class="text-[13px] font-semibold text-ink">Rotate console API keys</p>
+            <p class="mt-0.5 text-[11.5px] text-muted">Invalidates the alerting secret and every internal token. Integrations must be re-pointed by hand.</p>
+          </div>
+          <button type="button" class="btn btn-danger btn-sm shrink-0" data-open="danger-modal" data-danger="rotate"><i class="hgi-stroke hgi-key-01 text-[15px]"></i>Rotate keys</button>
+        </div>
+      </div>
+    </section>
+
+    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa Console · Internal · HTML, Tailwind CSS &amp; Hugeicons</p>
+    </div>
+  </main>
+
+  <!-- invite staff slide-over -->
+  <aside class="panel" id="invite-panel">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">Invite staff</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-4 overflow-y-auto p-4">
+      <div>
+        <label class="label" for="inv-email">Work email</label>
+        <input id="inv-email" type="email" class="input" placeholder="name@eventa.co.th" />
+        <p class="hint">Only <span class="font-mono">@eventa.co.th</span> addresses can be invited while SSO is required.</p>
+      </div>
+      <div>
+        <label class="label" for="inv-role">Role</label>
+        <select id="inv-role" class="select">
+          <option>Read-only — can look, cannot change anything</option>
+          <option selected>Support — can read every workspace and answer tickets</option>
+          <option>Billing — support, plus subscriptions and invoices</option>
+          <option>Platform admin — everything, including this page</option>
+        </select>
+      </div>
+      <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
+        <i class="hgi-stroke hgi-security-lock mt-0.5 text-[16px] text-muted"></i>
+        <p class="text-[12px] text-muted">Console staff can read data belonging to every organization on Eventa. Invite the smallest role that does the job, and expect the invitation to be recorded in the audit log.</p>
+      </div>
+    </div>
+    <footer class="flex gap-2 border-t border-hair p-4">
+      <button class="btn btn-soft flex-1" data-close>Cancel</button>
+      <button class="btn btn-primary flex-1" data-close><i class="hgi-stroke hgi-mail-send-01 text-[16px]"></i>Send invitation</button>
+    </footer>
+  </aside>
+
+  <!-- confirm a dangerous action -->
+  <div class="modal" id="danger-modal">
+    <div class="flex items-start gap-3 p-4">
+      <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300"><i class="hgi-stroke hgi-danger text-[18px]"></i></div>
+      <div class="min-w-0">
+        <h3 id="dm-title" class="text-[15px] font-bold tracking-tight">Are you sure?</h3>
+        <p id="dm-text" class="mt-1 text-[12.5px] leading-relaxed text-muted"></p>
+      </div>
+    </div>
+    <div class="px-4 pb-2">
+      <label class="label" for="dm-confirm">Type <span id="dm-word" class="font-mono text-ink"></span> to confirm</label>
+      <input id="dm-confirm" type="text" class="input font-mono" placeholder="" />
+    </div>
+    <div class="flex gap-2 p-4">
+      <button class="btn btn-soft flex-1" data-close>Cancel</button>
+      <button id="dm-go" class="btn btn-danger flex-1" data-close>Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script src="../assets-console/settings-ui.js?v=69"></script>
+<script>
+(function () {
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  /* ---------- Staff ----------
+     Six rows, matching the role breakdown in the section subtitle. */
+  var STAFF = [
+    { in: 'RS', name: 'Rio S.',        email: 'rio@eventa.co.th',       role: 'Platform admin', mfa: true,  seen: 'Active now',  self: true },
+    { in: 'KP', name: 'Kanya P.',      email: 'kanya@eventa.co.th',     role: 'Platform admin', mfa: true,  seen: '2 h ago' },
+    { in: 'ST', name: 'Somchai T.',    email: 'somchai@eventa.co.th',   role: 'Support',        mfa: true,  seen: '18 min ago' },
+    { in: 'PW', name: 'Ploy W.',       email: 'ploy@eventa.co.th',      role: 'Support',        mfa: true,  seen: 'Yesterday' },
+    { in: 'NR', name: 'Nattapong R.',  email: 'nattapong@eventa.co.th', role: 'Billing',        mfa: false, seen: '3 days ago' },
+    { in: 'IL', name: 'Ingrid L.',     email: 'ingrid@eventa.co.th',    role: 'Read-only',      mfa: true,  seen: '2 weeks ago' }
+  ];
+  var roleBadge = { 'Platform admin': 'badge-purple', Support: 'badge-blue', Billing: 'badge-green', 'Read-only': 'badge-gray' };
+  document.getElementById('staff-rows').innerHTML = STAFF.map(function (s) {
+    var mfa = s.mfa
+      ? '<span class="inline-flex items-center gap-1 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-checkmark-badge-01 text-[14px]"></i>On</span>'
+      : '<span class="inline-flex items-center gap-1 text-[12px] font-semibold text-amber-600 dark:text-amber-300"><i class="hgi-stroke hgi-alert-02 text-[14px]"></i>Not enrolled</span>';
+    var action = s.self
+      ? '<span class="badge badge-gray">You</span>'
+      : '<button class="grid h-8 w-8 place-items-center rounded-lg text-muted transition hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-500/15" title="Remove access"><i class="hgi-stroke hgi-delete-02 text-[15px]"></i></button>';
+    return '<tr>' +
+      '<td><div class="flex items-center gap-2.5">' +
+        '<span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-soft text-[10px] font-semibold text-brand-dark dark:text-brand">' + esc(s.in) + '</span>' +
+        '<div class="leading-tight"><p class="font-medium text-ink">' + esc(s.name) + '</p><p class="text-[11px] text-muted">' + esc(s.email) + '</p></div>' +
+      '</div></td>' +
+      '<td><span class="badge ' + roleBadge[s.role] + '">' + esc(s.role) + '</span></td>' +
+      '<td>' + mfa + '</td>' +
+      '<td class="text-muted">' + esc(s.seen) + '</td>' +
+      '<td class="text-right">' + action + '</td>' +
+    '</tr>';
+  }).join('');
+
+  /* ---------- Danger-zone confirmation ----------
+     Each action gets its own words and its own confirmation phrase, so a stray
+     click on the wrong button cannot be finished by muscle memory. */
+  var DANGER = {
+    maintenance: {
+      title: 'Enable maintenance mode?',
+      text: 'Every workspace goes read-only immediately. Registrations, payments and check-ins stop for all 312 organizations until someone turns this off again.',
+      word: 'MAINTENANCE'
+    },
+    purge: {
+      title: 'Purge all log storage?',
+      text: '412 GB of application logs across eventa-api, eventa-worker, eventa-relay, Postgres and Redis are deleted now. Anything not yet exported is gone, including the evidence for any open incident.',
+      word: 'PURGE LOGS'
+    },
+    rotate: {
+      title: 'Rotate console API keys?',
+      text: 'The alerting secret and every internal token are replaced at once. Alerts stop reaching Slack and the on-call endpoint until each integration is re-pointed by hand.',
+      word: 'ROTATE'
+    }
+  };
+  var go = document.getElementById('dm-go');
+  var confirmInput = document.getElementById('dm-confirm');
+  var wanted = '';
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-danger]'); if (!t) return;
+    var d = DANGER[t.getAttribute('data-danger')]; if (!d) return;
+    document.getElementById('dm-title').textContent = d.title;
+    document.getElementById('dm-text').textContent = d.text;
+    document.getElementById('dm-word').textContent = d.word;
+    confirmInput.value = '';
+    confirmInput.placeholder = d.word;
+    wanted = d.word;
+    go.disabled = true;
+  });
+  confirmInput.addEventListener('input', function () { go.disabled = this.value.trim() !== wanted; });
+  go.disabled = true;
+})();
+</script>
+</body>
+</html>

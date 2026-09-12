@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=64"></script>
-<link rel="stylesheet" href="../assets/app.css?v=64" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="reports-events">
 
@@ -20,6 +20,7 @@
   <!-- shell.js injects #backdrop + #sidebar here -->
 
   <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
 
     <!-- header -->
     <div class="mb-4 flex items-center gap-3">
@@ -27,7 +28,7 @@
       <a href="reports.html" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink" title="Back to Reports"><i class="hgi-stroke hgi-arrow-left-01 text-[20px]"></i></a>
       <div class="min-w-0">
         <h1 class="truncate text-[22px] font-bold tracking-tight">All events</h1>
-        <p class="mt-0.5 truncate text-[12px] text-muted">Ranked by registrations · <span id="ev-total" class="tnum">—</span> events this period</p>
+        <p data-when-data class="mt-0.5 truncate text-[12px] text-muted">Ranked by registrations · <span id="ev-total" class="tnum">—</span> events this period</p>
       </div>
       <div class="ml-auto flex shrink-0 items-center gap-2.5">
         <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
@@ -35,8 +36,19 @@
       </div>
     </div>
 
+    <!-- first run: no events exist, so there is nothing to rank -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-calendar-03"></i></span>
+      <h2 class="empty-title">No events to rank yet</h2>
+      <p class="empty-text">This league table sorts your events by registrations, revenue and attendance. It fills in once you have published an event and the first tickets have sold.</p>
+      <div class="empty-actions">
+        <a href="event-form.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-calendar-add-01 text-[15px]"></i>Create your first event</a>
+        <a href="events.html" class="btn btn-ghost btn-sm">Manage events</a>
+      </div>
+    </section>
+
     <!-- search + status filter -->
-    <div class="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+    <div data-when-data class="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
         <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
         <input id="ev-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search events…" />
@@ -53,7 +65,7 @@
     </div>
 
     <!-- table -->
-    <section class="card p-4">
+    <section data-when-data class="card p-4">
       <div class="overflow-x-auto">
         <table class="data-table min-w-[720px]">
           <thead>
@@ -81,11 +93,12 @@
     </section>
 
     <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+    </div>
   </main>
 </div>
 
-<script src="../assets/reports-data.js?v=64"></script>
-<script src="../assets/shell.js?v=64"></script>
+<script src="../assets/reports-data.js?v=69"></script>
+<script src="../assets/shell.js?v=69"></script>
 <script>
   (function () {
     function nf(n) { return n.toLocaleString('en-US'); }
@@ -117,7 +130,7 @@
       var list = filtered(), tot = list.length, pages = Math.max(1, Math.ceil(tot / st.size));
       if (st.page >= pages) st.page = pages - 1; if (st.page < 0) st.page = 0;
       var start = st.page * st.size, slice = list.slice(start, start + st.size);
-      tbody.innerHTML = slice.length ? slice.map(rowHTML).join('') : '<tr><td colspan="5"><div class="py-10 text-center text-[13px] text-muted">No events match your filters.</div></td></tr>';
+      tbody.innerHTML = slice.length ? slice.map(rowHTML).join('') : '<tr><td colspan="5"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No events match</h3><p class="empty-text">Nothing matches the current search and status filter. Try a different spelling, or widen them.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
       if (tot) {
         pager.classList.remove('hidden'); pager.classList.add('flex');
         showing.innerHTML = 'Showing <span class="font-semibold text-ink">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + nf(tot) + '</span> events';

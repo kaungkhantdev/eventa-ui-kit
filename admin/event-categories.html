@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=64"></script>
-<link rel="stylesheet" href="../assets/app.css?v=64" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="event-categories">
 
@@ -20,6 +20,7 @@
   <!-- shell.js injects #backdrop + #sidebar here -->
 
   <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
 
     <!-- header -->
     <div class="mb-4 flex items-center justify-between gap-3">
@@ -37,11 +38,30 @@
       </div>
     </div>
 
+    <!-- first run: no categories have been created yet -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-folder-01"></i></span>
+      <h2 class="empty-title">No categories yet</h2>
+      <p class="empty-text">Categories sort your events into groups — conferences, workshops, weddings — each with its own icon and colour. Add a few now and you can pick one on every event you create.</p>
+      <div class="empty-actions">
+        <button type="button" class="btn btn-primary btn-sm" data-open="category-panel"><i class="hgi-stroke hgi-add-01 text-[15px]"></i>Create your first category</button>
+        <a href="event-form.html" class="btn btn-ghost btn-sm">Create an event</a>
+      </div>
+    </section>
+
     <!-- toolbar -->
-    <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+    <div data-when-data class="flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
         <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
         <input id="cat-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search categories…" />
+      </div>
+      <div class="relative w-full sm:w-52">
+        <i class="hgi-stroke hgi-arrow-up-down text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="cat-sort" class="select h-10 w-full border-0 bg-surface pl-9 font-medium" aria-label="Sort categories">
+          <option value="name">Name A–Z</option>
+          <option value="count-desc">Most events</option>
+          <option value="count-asc">Fewest events</option>
+        </select>
       </div>
       <div class="flex shrink-0 items-center gap-1 self-start rounded-lg bg-surface p-1 sm:self-auto">
         <button type="button" data-view="grid" class="view-btn grid h-8 w-8 place-items-center rounded-md text-muted transition hover:text-ink" title="Grid view"><i class="hgi-stroke hgi-grid-view text-[16px]"></i></button>
@@ -49,19 +69,26 @@
       </div>
     </div>
 
-    <p id="cat-count" class="mb-2 mt-3 text-[12px] text-muted"></p>
+    <p data-when-data id="cat-count" class="mb-2 mt-3 text-[12px] text-muted"></p>
 
-    <div id="category-view"></div>
-    <div id="category-empty" class="mt-2 hidden card flex flex-col items-center justify-center p-12 text-center">
-      <span class="mx-auto grid h-12 w-12 place-items-center rounded-full bg-line text-muted"><i class="hgi-stroke hgi-folder-01 text-[22px]"></i></span>
-      <p class="mt-3 text-[14px] font-semibold text-ink">No categories found</p>
-      <p class="mt-1 text-[12px] text-muted">Try a different search, or create a new category.</p>
+    <div data-when-data id="category-view"></div>
+    <!-- no results: categories exist, the search just matched none of them -->
+    <div id="category-empty" class="mt-2 hidden card">
+      <div class="empty empty-sm">
+        <span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span>
+        <h3 class="empty-title">No categories match</h3>
+        <p class="empty-text">None of your categories match the current search. Try a different spelling, or clear it to see them all.</p>
+        <div class="empty-actions">
+          <button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button>
+        </div>
+      </div>
     </div>
 
     <!-- tailwind JIT safelist for dynamic category colours -->
     <div aria-hidden="true" class="hidden bg-pink-500 bg-blue-500 bg-amber-500 bg-brand bg-violet-500 bg-indigo-500 bg-teal-500 bg-red-500 bg-orange-500 bg-cyan-500"></div>
 
     <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+    </div>
   </main>
 </div>
 
@@ -102,7 +129,7 @@
   </footer>
 </aside>
 
-<script src="../assets/shell.js?v=64"></script>
+<script src="../assets/shell.js?v=69"></script>
 <script>
   (function () {
     var COLORS = { pink:'bg-pink-500', blue:'bg-blue-500', amber:'bg-amber-500', brand:'bg-brand', violet:'bg-violet-500', indigo:'bg-indigo-500', teal:'bg-teal-500', red:'bg-red-500' };
@@ -124,6 +151,7 @@
     var emptyEl = document.getElementById('category-empty');
     var countEl = document.getElementById('cat-count');
     var search  = document.getElementById('cat-search');
+    var sortEl  = document.getElementById('cat-sort');
 
     function actions(i) {
       return '<div class="flex shrink-0 items-center gap-0.5">' +
@@ -154,6 +182,12 @@
       var q = (search.value || '').trim().toLowerCase();
       var list = CATEGORIES.map(function (c, i) { return { c: c, i: i }; })
         .filter(function (x) { return !q || (x.c.name + ' ' + x.c.desc).toLowerCase().indexOf(q) !== -1; });
+      var sort = sortEl.value;
+      list.sort(function (a, b) {
+        if (sort === 'count-desc') return b.c.count - a.c.count;
+        if (sort === 'count-asc') return a.c.count - b.c.count;
+        return a.c.name.localeCompare(b.c.name);
+      });
       countEl.textContent = list.length + (list.length === 1 ? ' category' : ' categories');
       if (!list.length) { viewEl.innerHTML = ''; viewEl.className = ''; emptyEl.classList.remove('hidden'); return; }
       emptyEl.classList.add('hidden');
@@ -177,6 +211,7 @@
     }
     document.querySelectorAll('.view-btn').forEach(function (b) { b.addEventListener('click', function () { setView(b.dataset.view); }); });
     search.addEventListener('input', render);
+    sortEl.addEventListener('change', render);
 
     // delete
     viewEl.addEventListener('click', function (e) {

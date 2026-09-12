@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=64"></script>
-<link rel="stylesheet" href="../assets/app.css?v=64" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="landing-pages">
 
@@ -20,6 +20,7 @@
   <!-- shell.js injects #backdrop + #sidenav here -->
 
   <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
 
     <!-- header -->
     <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
@@ -33,6 +34,16 @@
       <div class="flex shrink-0 items-center gap-2.5"><a href="event-form.html" class="btn btn-primary shrink-0"><i class="hgi-stroke hgi-calendar-add-01 text-[16px]"></i><span class="hidden sm:inline">New event</span><span class="sm:hidden">New</span></a><button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button><div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div></div>
     </div>
 
+    <!-- first run: templates are ready, but there is no event to build a page from -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-browser"></i></span>
+      <h2 class="empty-title">No event pages yet</h2>
+      <p class="empty-text">Every event you create gets its own page, built from one of the four templates below — title, date, venue, agenda and tickets all fill in from the event itself. Pick a design now, or create an event and preview it with real details.</p>
+      <div class="empty-actions">
+        <a href="event-form.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-calendar-add-01 text-[15px]"></i>Create your first event</a>
+      </div>
+    </section>
+
     <!-- how it works + sample switcher -->
     <div class="rounded-2xl bg-surface p-4 lg:p-5">
       <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -43,7 +54,7 @@
             <p class="mt-0.5 max-w-xl text-[12.5px] leading-snug text-muted">Choose a template once. The event title, date, venue, agenda, speakers and tickets all pull straight from the event — so the same design works for every event you run.</p>
           </div>
         </div>
-        <div class="shrink-0">
+        <div data-when-data class="shrink-0">
           <p class="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted">Preview with</p>
           <div id="sample-toggle" class="inline-flex rounded-lg bg-canvas p-0.5 text-[12px] font-semibold">
             <button data-event="tech-summit-2026" class="rounded-md bg-surface px-3 py-1.5 text-ink shadow-sm transition">Conference</button>
@@ -185,10 +196,11 @@
     </div>
 
     <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+    </div>
   </main>
 </div>
 
-<script src="../assets/shell.js?v=64"></script>
+<script src="../assets/shell.js?v=69"></script>
 <script>
   /* preview a template with the currently-selected sample event */
   let sampleEvent = 'tech-summit-2026';

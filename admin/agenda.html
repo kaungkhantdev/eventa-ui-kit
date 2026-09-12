@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
-<script src="../assets/config.js?v=64"></script>
-<link rel="stylesheet" href="../assets/app.css?v=64" />
+<script src="../assets/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased" data-page="agenda">
 
@@ -20,6 +20,7 @@
   <!-- shell.js injects #backdrop + #sidebar here -->
 
   <main class="min-w-0 flex-1 overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
 
     <!-- header -->
     <div class="mb-4 flex items-center justify-between gap-3">
@@ -45,8 +46,19 @@
       </div>
     </div>
 
+    <!-- first run: the programme is authored by hand, so it can be built before registration opens -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-time-schedule"></i></span>
+      <h2 class="empty-title">No sessions scheduled yet</h2>
+      <p class="empty-text">The agenda is your event's programme — talks, workshops and breaks laid out by time slot. Build it whenever you like; it does not wait on registrations, and attendees see it on the event page.</p>
+      <div class="empty-actions">
+        <button type="button" class="btn btn-primary btn-sm" data-open="session-panel"><i class="hgi-stroke hgi-add-01 text-[15px]"></i>Add the first session</button>
+        <a href="speakers.html" class="btn btn-ghost btn-sm">Add speakers</a>
+      </div>
+    </section>
+
     <!-- calendar toolbar -->
-    <div class="mb-4 flex flex-wrap items-center gap-3">
+    <div data-when-data class="mb-4 flex flex-wrap items-center gap-3">
       <div class="flex items-center gap-1">
         <button class="grid h-9 w-9 place-items-center rounded-lg text-muted transition hover:bg-line hover:text-ink" title="Previous week"><i class="hgi-stroke hgi-arrow-left-01 text-[18px]"></i></button>
         <h2 id="agenda-month" class="px-1 text-[17px] font-bold tracking-tight">July 2026</h2>
@@ -74,7 +86,7 @@
     </div>
 
     <!-- calendar -->
-    <div class="card overflow-hidden p-0">
+    <div data-when-data class="card overflow-hidden p-0">
       <div id="week-view" class="overflow-x-auto">
         <div class="min-w-[880px]">
           <div id="week-head" class="grid grid-cols-[56px_repeat(7,minmax(0,1fr))] border-b border-hair"></div>
@@ -89,6 +101,7 @@
     </div>
 
     <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+    </div>
   </main>
 </div>
 
@@ -167,7 +180,7 @@
   </div>
 </div>
 
-<script src="../assets/shell.js?v=64"></script>
+<script src="../assets/shell.js?v=69"></script>
 <script>
   (function () {
     const HS = 9, HE = 16, HH = 64;               // 09:00–16:00, 64px per hour

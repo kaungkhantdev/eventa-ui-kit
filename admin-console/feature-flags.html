@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Feature flags</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="feature-flags">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="text-[22px] font-bold tracking-tight">Feature flags</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Roll features out gradually.</p>
+      </div>
+      <button class="btn btn-primary ml-auto shrink-0" data-open="flag-panel"><i class="hgi-stroke hgi-plus-sign text-[16px]"></i><span class="hidden sm:inline">New flag</span></button>
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: nothing has been registered by engineering yet -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-toggle-on"></i></span>
+      <h2 class="empty-title">No feature flags yet</h2>
+      <p class="empty-text">A flag ships a feature to a slice of workspaces before everyone gets it — start at a few percent, watch it, then open it up. Every flag registered by engineering lands here with its rollout, environment and owner.</p>
+      <div class="empty-actions">
+        <button type="button" data-open="flag-panel" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-plus-sign text-[15px]"></i>Create a flag</button>
+        <a href="experiments.html" class="btn btn-ghost btn-sm">See running experiments</a>
+      </div>
+    </section>
+
+    <!-- stat cards -->
+    <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-toggle-on text-[16px]"></i>Flags</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">12</p><span class="text-[11.5px] text-muted">registered</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-tick-02 text-[16px]"></i>Fully rolled out</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">5</p><span class="text-[11.5px] text-muted">ready to retire</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-flow text-[16px]"></i>Rolling out</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">4</p><span class="text-[11.5px] text-muted">partial exposure</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-test-tube-01 text-[16px]"></i>Off</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">3</p><span class="text-[11.5px] text-muted">nobody sees them</span></div>
+      </div>
+    </div>
+
+    <!-- pill tabs -->
+    <div data-when-data data-tabs="#flags-table" class="mt-4 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <button class="pilltab tab-active" data-tab="all" data-filter="all">All <span class="pilltab-count tnum">12</span></button>
+      <button class="pilltab" data-tab="live" data-filter="live">Fully rolled out <span class="pilltab-count tnum">5</span></button>
+      <button class="pilltab" data-tab="rolling" data-filter="rolling">Rolling out <span class="pilltab-count tnum">4</span></button>
+      <button class="pilltab" data-tab="off" data-filter="off">Off <span class="pilltab-count tnum">3</span></button>
+    </div>
+
+    <!-- search + filter -->
+    <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="ff-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search by key, description or owner…" />
+      </div>
+      <div class="relative w-full sm:w-52">
+        <i class="hgi-stroke hgi-cloud-server text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="ff-env" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All environments</option>
+          <option>Production</option>
+          <option>Staging</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- table -->
+    <section data-when-data class="card mt-3 p-4">
+      <div id="flags-table" class="overflow-x-auto">
+        <table class="data-table min-w-[960px]">
+          <thead>
+            <tr><th>Flag</th><th>Rollout</th><th>Environment</th><th>Workspaces</th><th>Owner</th><th>Last changed</th><th class="text-right">Enabled</th></tr>
+          </thead>
+          <tbody id="ff-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+
+      <div id="ff-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="ff-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="ff-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="ff-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="ff-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- New flag panel -->
+<aside class="panel" id="flag-panel">
+  <header class="flex items-center justify-between border-b border-hair p-4">
+    <h3 class="text-[15px] font-bold tracking-tight">New feature flag</h3>
+    <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+  </header>
+  <div class="flex-1 space-y-4 overflow-y-auto p-4">
+    <div>
+      <label class="label">Key</label>
+      <input type="text" class="input tnum" placeholder="area.feature_name" />
+      <p class="hint">Lower case, dot-separated. The key is permanent once the flag ships.</p>
+    </div>
+    <div>
+      <label class="label">Description</label>
+      <textarea class="textarea" rows="2" placeholder="What does this flag turn on?"></textarea>
+    </div>
+    <div>
+      <label class="label">Environment</label>
+      <select class="select">
+        <option>Staging</option>
+        <option>Production</option>
+      </select>
+    </div>
+    <div>
+      <p class="label mb-1.5">Start at</p>
+      <div class="segmented w-full" id="flag-start">
+        <button type="button" class="flex-1 active" data-start="off">Off</button>
+        <button type="button" class="flex-1" data-start="percent">A percentage</button>
+        <button type="button" class="flex-1" data-start="all">Everyone</button>
+      </div>
+      <div id="flag-percent" class="mt-3 hidden">
+        <label class="label">Rollout</label>
+        <input type="text" class="input tnum" value="10 %" />
+        <p class="hint">Workspaces are bucketed by id, so the same ones keep the feature as you raise the number.</p>
+      </div>
+    </div>
+    <div>
+      <label class="label">Owner</label>
+      <select class="select">
+        <option>Rio S.</option>
+        <option>Somchai T.</option>
+        <option>Nok P.</option>
+        <option>Siriporn L.</option>
+        <option>Wanida C.</option>
+        <option>Arthit K.</option>
+      </select>
+    </div>
+  </div>
+  <footer class="flex gap-2 border-t border-hair p-4">
+    <button class="btn btn-soft flex-1" data-close>Cancel</button>
+    <button class="btn btn-primary flex-1" data-close><i class="hgi-stroke hgi-tick-02 text-[16px]"></i>Create flag</button>
+  </footer>
+</aside>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  /* ---------- Flags ----------
+     `ws` is the count the rollout currently reaches, out of the 312 workspaces
+     on the platform: 45 % → 140, 25 % → 78, 12 % → 37, 60 % → 187. A flag at
+     100 % reads "Everyone"; a flag at 0 % reads "Off" and reaches nobody.
+     Tab counts: 5 at 100 %, 4 in between, 3 at zero. */
+  var FLAGS = [
+    { key: 'checkin.offline_mode',        desc: 'Queue scans on the door app and sync when the signal returns', pct: 100, env: 'Production', ws: '312',      owner: 'Nok P.',      in: 'NP', changed: '12 Aug 2026' },
+    { key: 'payments.promptpay_v2',       desc: 'New PromptPay QR flow with a shorter expiry window',           pct: 100, env: 'Production', ws: '312',      owner: 'Arthit K.',   in: 'AK', changed: '3 Aug 2026' },
+    { key: 'integrations.zoom_sync',      desc: 'Two-way sync of Zoom sessions with the event agenda',          pct: 100, env: 'Production', ws: '312',      owner: 'Rio S.',      in: 'RS', changed: '1 Aug 2026' },
+    { key: 'reports.export_v2',           desc: 'Streaming CSV export for reports over 50k rows',               pct: 100, env: 'Production', ws: '312',      owner: 'Somchai T.',  in: 'ST', changed: '28 Jul 2026' },
+    { key: 'console.cross_tenant_search', desc: 'Search every workspace from this console',                     pct: 100, env: 'Staging',    ws: '18 staff', owner: 'Rio S.',      in: 'RS', changed: '19 Aug 2026' },
+    { key: 'messaging.line_notify',       desc: 'Broadcast event updates to a LINE official account',           pct: 60,  env: 'Production', ws: '187',      owner: 'Wanida C.',   in: 'WC', changed: '20 Aug 2026' },
+    { key: 'events.recurring_series',     desc: 'Publish a weekly or monthly series as one event',              pct: 45,  env: 'Production', ws: '140',      owner: 'Siriporn L.', in: 'SL', changed: '21 Aug 2026' },
+    { key: 'portal.new_discover',         desc: 'Redesigned discover page in the attendee portal',              pct: 25,  env: 'Production', ws: '78',       owner: 'Nok P.',      in: 'NP', changed: '22 Aug 2026' },
+    { key: 'billing.usage_metering',      desc: 'Meter overage by registration instead of by event',            pct: 12,  env: 'Production', ws: '37',       owner: 'Arthit K.',   in: 'AK', changed: '23 Aug 2026' },
+    { key: 'tickets.reserved_seating',    desc: 'Seat maps, holds and released seats for numbered venues',      pct: 0,   env: 'Staging',    ws: '—',        owner: 'Wanida C.',   in: 'WC', changed: '15 Jul 2026' },
+    { key: 'auth.passkeys',               desc: 'Passkey sign-in as an alternative to a password',              pct: 0,   env: 'Staging',    ws: '—',        owner: 'Somchai T.',  in: 'ST', changed: '11 Aug 2026' },
+    { key: 'landing.noir_template',       desc: 'Noir template on the public event page picker',                pct: 0,   env: 'Production', ws: '—',        owner: 'Siriporn L.', in: 'SL', changed: '6 Aug 2026' },
+  ];
+  FLAGS.forEach(function (f) { f.on = f.pct > 0; });
+
+  var tbody   = document.getElementById('ff-rows');
+  var elQ     = document.getElementById('ff-search');
+  var elEnv   = document.getElementById('ff-env');
+  var elShow  = document.getElementById('ff-showing');
+  var elPrev  = document.getElementById('ff-prev');
+  var elNext  = document.getElementById('ff-next');
+  var tabs    = document.querySelector('[data-tabs="#flags-table"]');
+  var state = { page: 0, size: 10 };
+
+  function bucket(f) { return f.pct === 100 ? 'live' : (f.pct === 0 ? 'off' : 'rolling'); }
+
+  function filtered() {
+    var q = elQ.value.trim().toLowerCase();
+    var env = elEnv.value;
+    var active = tabs.querySelector('.tab-active');
+    var tab = active ? active.getAttribute('data-tab') : 'all';
+    return FLAGS.filter(function (f) {
+      if (tab !== 'all' && bucket(f) !== tab) return false;
+      if (env !== 'All environments' && f.env !== env) return false;
+      if (!q) return true;
+      return (f.key + ' ' + f.desc + ' ' + f.owner).toLowerCase().indexOf(q) > -1;
+    });
+  }
+
+  /* A full rollout must not read like a 12 % one — so 100 % drops the bar
+     percentage for a plain "Everyone", and 0 % shows an empty track. */
+  function rollout(f) {
+    if (f.pct === 100) {
+      return '<div class="flex items-center gap-2.5">' +
+        '<span class="block h-1.5 w-20 shrink-0 rounded-full bg-brand"></span>' +
+        '<span class="flex items-center gap-1 text-[12.5px] font-semibold text-brand"><i class="hgi-stroke hgi-tick-02 text-[13px]"></i>Everyone</span></div>';
+    }
+    if (f.pct === 0) {
+      return '<div class="flex items-center gap-2.5">' +
+        '<span class="block h-1.5 w-20 shrink-0 rounded-full bg-line"></span>' +
+        '<span class="text-[12.5px] text-muted">Off</span></div>';
+    }
+    return '<div class="flex items-center gap-2.5">' +
+      '<span class="block h-1.5 w-20 shrink-0 overflow-hidden rounded-full bg-line"><span class="block h-full rounded-full bg-brand" style="width:' + f.pct + '%"></span></span>' +
+      '<span class="text-[12.5px] font-semibold text-ink tnum">' + f.pct + ' %</span></div>';
+  }
+
+  function switchHTML(f, i) {
+    var on = f.on;
+    return '<button type="button" role="switch" aria-checked="' + on + '" data-switch="' + i + '" title="' + (on ? 'Disable flag' : 'Enable flag') + '" ' +
+      'class="ml-auto flex h-5 w-9 items-center rounded-full p-0.5 transition-colors ' + (on ? 'bg-brand' : 'bg-line') + '">' +
+      '<span class="h-4 w-4 rounded-full bg-white shadow transition-transform ' + (on ? 'translate-x-4' : '') + '"></span></button>';
+  }
+
+  function rowHTML(f) {
+    var i = FLAGS.indexOf(f);
+    return '<tr>' +
+      '<td><p class="font-medium text-ink tnum">' + f.key + '</p><p class="mt-0.5 text-[11.5px] text-muted">' + f.desc + '</p></td>' +
+      '<td>' + rollout(f) + '</td>' +
+      '<td><span class="badge ' + (f.env === 'Production' ? 'badge-gray' : 'badge-blue') + '">' + f.env + '</span></td>' +
+      '<td class="text-muted tnum">' + f.ws + '</td>' +
+      '<td><span class="flex items-center gap-2"><span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-soft text-[10px] font-semibold text-brand-dark dark:text-brand">' + f.in + '</span><span class="text-muted">' + f.owner + '</span></span></td>' +
+      '<td class="text-muted tnum">' + f.changed + '</td>' +
+      '<td><div class="flex justify-end">' + switchHTML(f, i) + '</div></td>' +
+    '</tr>';
+  }
+
+  var NO_RESULTS = '<tr><td colspan="7"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No flags match</h3><p class="empty-text">Nothing matches the current search, rollout tab and environment. Try widening them to see more flags.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
+
+  function render() {
+    var list = filtered(), total = list.length, pages = Math.max(1, Math.ceil(total / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    var start = state.page * state.size, slice = list.slice(start, start + state.size);
+    tbody.innerHTML = slice.length ? slice.map(rowHTML).join('') : NO_RESULTS;
+    if (total === 0) elShow.textContent = 'No flags';
+    else elShow.innerHTML = 'Showing <span class="font-semibold text-ink tnum">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + total + '</span> flags';
+    elPrev.disabled = total === 0 || state.page === 0;
+    elNext.disabled = total === 0 || state.page >= pages - 1;
+  }
+
+  /* Flipping the switch is the one bit of state this demo keeps: turning a flag
+     off drops its rollout to zero, turning it back on restores what it was. */
+  tbody.addEventListener('click', function (e) {
+    var sw = e.target.closest('[data-switch]');
+    if (!sw) return;
+    var f = FLAGS[+sw.getAttribute('data-switch')];
+    if (!f) return;
+    if (f.on) { f.wasPct = f.pct; f.wasWs = f.ws; f.pct = 0; f.ws = '—'; f.on = false; }
+    else { f.pct = f.wasPct || 100; f.ws = f.wasWs || '312'; f.on = true; }
+    render();
+  });
+
+  elQ.addEventListener('input', function () { state.page = 0; render(); });
+  elEnv.addEventListener('change', function () { state.page = 0; render(); });
+  tabs.addEventListener('click', function (e) { if (e.target.closest('[data-tab]')) { state.page = 0; render(); } });
+  document.getElementById('ff-size').addEventListener('change', function () { state.size = +this.value; state.page = 0; render(); });
+  elPrev.addEventListener('click', function () { if (state.page > 0) { state.page--; render(); } });
+  elNext.addEventListener('click', function () { state.page++; render(); });
+  render();
+
+  /* Panel: the "Start at" segmented control reveals the percentage field. */
+  var seg = document.getElementById('flag-start');
+  var pctBox = document.getElementById('flag-percent');
+  seg.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-start]');
+    if (!b) return;
+    seg.querySelectorAll('[data-start]').forEach(function (x) { x.classList.toggle('active', x === b); });
+    pctBox.classList.toggle('hidden', b.getAttribute('data-start') !== 'percent');
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Connected apps</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="connected-apps">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="text-[22px] font-bold tracking-tight">Connected apps</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Third-party services workspaces have linked.</p>
+      </div>
+      <a href="integration-health.html" class="btn btn-soft ml-auto shrink-0"><i class="hgi-stroke hgi-pulse-01 text-[16px]"></i><span class="hidden sm:inline">Integration health</span><span class="sm:hidden">Health</span></a>
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: no workspace has linked anything yet -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-connect"></i></span>
+      <h2 class="empty-title">No apps connected yet</h2>
+      <p class="empty-text">Every service a workspace links — payments, email, calendars, video, messaging — is listed here with how many workspaces use it, whether it is healthy and when it last synced. The list fills as soon as the first workspace connects something.</p>
+      <div class="empty-actions">
+        <a href="organizations.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-building-03 text-[15px]"></i>Browse organizations</a>
+        <a href="integration-health.html" class="btn btn-ghost btn-sm">Check integration health</a>
+      </div>
+    </section>
+
+    <!-- summary tiles -->
+    <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-connect text-[16px]"></i>Providers available</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">9</p><span class="text-[12px] text-muted">7 categories</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-link-01 text-[16px]"></i>Live connections</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">1,150</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>5,2 %</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-building-03 text-[16px]"></i>Workspaces connected</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">294</p><span class="text-[12px] text-muted tnum">of 312</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-alert-02 text-[16px]"></i>Needs attention</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight text-red-500 tnum">3</p><span class="text-[12px] text-muted">2 degraded · 1 down</span></div>
+      </div>
+    </div>
+
+    <!-- search + filters -->
+    <div data-when-data class="mt-4 flex w-full flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="apps-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search provider or capability…" />
+      </div>
+      <div class="relative w-full sm:w-48">
+        <i class="hgi-stroke hgi-pulse-01 text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="apps-status" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All statuses</option>
+          <option>Operational</option>
+          <option>Degraded</option>
+          <option>Down</option>
+        </select>
+      </div>
+      <div class="relative w-full sm:w-48">
+        <i class="hgi-stroke hgi-cube text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="apps-cat" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All categories</option>
+          <option>Payments</option>
+          <option>Email</option>
+          <option>Messaging</option>
+          <option>SMS</option>
+          <option>Calendar</option>
+          <option>Video</option>
+          <option>Automation</option>
+        </select>
+      </div>
+    </div>
+
+    <div data-when-data class="mt-4 flex flex-wrap items-center justify-between gap-2">
+      <h2 class="text-[15px] font-bold tracking-tight">Providers</h2>
+      <p id="apps-count" class="text-[12px] text-muted"></p>
+    </div>
+
+    <!-- provider cards + the no-results block they swap with. The wrapper carries
+         data-when-data so the ?empty=1 swap owns one node, not two that page JS
+         also toggles. -->
+    <div data-when-data class="mt-2">
+      <div id="apps-grid" class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3"></div>
+      <div id="apps-none" hidden class="card">
+        <div class="empty empty-sm">
+          <span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span>
+          <h3 class="empty-title">No apps match</h3>
+          <p class="empty-text">Nothing matches the current search, status and category. Try a shorter search term, or widen the filters.</p>
+          <div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </main>
+
+  <!-- provider detail slide-over -->
+  <aside class="panel" id="app-view">
+    <header class="flex items-center justify-between border-b border-hair p-4">
+      <h3 class="text-[15px] font-bold tracking-tight">Provider</h3>
+      <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
+    </header>
+    <div class="flex-1 space-y-4 overflow-y-auto p-4">
+      <div class="flex items-start gap-3">
+        <span id="av-icon" class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-connect text-[24px]"></i></span>
+        <div class="min-w-0 flex-1">
+          <div class="flex flex-wrap items-center gap-2">
+            <h4 id="av-name" class="text-[16px] font-bold tracking-tight"></h4>
+            <span id="av-badge"></span>
+          </div>
+          <p id="av-cat" class="mt-0.5 text-[11px] uppercase tracking-wider text-muted"></p>
+        </div>
+      </div>
+      <p id="av-desc" class="text-[12.5px] leading-relaxed text-muted"></p>
+
+      <dl class="overflow-hidden rounded-lg border border-hair">
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Workspaces connected</dt><dd id="av-ws" class="text-[13px] font-medium text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Authentication</dt><dd id="av-auth" class="text-[13px] text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Available since</dt><dd id="av-added" class="text-[13px] text-ink"></dd></div>
+        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px] text-muted">Last sync</dt><dd id="av-sync" class="text-[13px] text-ink"></dd></div>
+      </dl>
+
+      <div>
+        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted">Last 24 hours</p>
+        <div class="grid grid-cols-3 gap-2">
+          <div class="rounded-lg border border-hair p-2.5"><p class="text-[11px] text-muted">Calls</p><p id="av-calls" class="mt-0.5 text-[15px] font-bold tracking-tight tnum"></p></div>
+          <div class="rounded-lg border border-hair p-2.5"><p class="text-[11px] text-muted">Success</p><p id="av-succ" class="mt-0.5 text-[15px] font-bold tracking-tight tnum"></p></div>
+          <div class="rounded-lg border border-hair p-2.5"><p class="text-[11px] text-muted">p95</p><p id="av-p95" class="mt-0.5 text-[15px] font-bold tracking-tight tnum"></p></div>
+        </div>
+      </div>
+
+      <div>
+        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted">Scopes requested</p>
+        <ul id="av-scopes" class="space-y-1.5"></ul>
+      </div>
+
+      <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
+        <i class="hgi-stroke hgi-shield-key mt-0.5 text-[16px] text-muted"></i>
+        <p class="text-[12px] text-muted">Credentials are held per workspace and are never readable from this console — only the connection state, counts and timings are.</p>
+      </div>
+    </div>
+    <footer class="flex gap-2 border-t border-hair p-4">
+      <button class="btn btn-soft flex-1" data-close>Close</button>
+      <a id="av-logs" href="integration-logs.html" class="btn btn-primary flex-1"><i class="hgi-stroke hgi-list-view text-[16px]"></i>View logs</a>
+    </footer>
+  </aside>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  var nf = function (n) { return n.toLocaleString('en-US'); };
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  /* ---------- DATA ----------
+     One provider list shared, figure for figure, with integration-health.html
+     and integration-logs.html: 9 providers, 1,150 live connections across 294
+     of the platform's 312 workspaces, 3 of them unhealthy. */
+  var TOTAL_WS = 312;
+  var APPS = [
+    { key:'stripe',    name:'Stripe',          cat:'Payments',   icon:'hgi-credit-card',        ws:214, status:'Operational', sync:'2 min ago',            added:'Mar 2024',
+      desc:'Card payments, refunds and payouts for ticket sales.',
+      auth:'OAuth · Stripe Connect', scopes:['charges:write','refunds:write','payouts:read','balance:read'],
+      calls:42860, succ:'99,9 %', p95:'290 ms' },
+    { key:'promptpay', name:'PromptPay',       cat:'Payments',   icon:'hgi-qr-code',            ws:198, status:'Operational', sync:'1 min ago',            added:'Jun 2024',
+      desc:'Thai QR bank transfers, reconciled against registrations.',
+      auth:'API key · per merchant ID', scopes:['qr:create','txn:read'],
+      calls:31470, succ:'99,8 %', p95:'380 ms' },
+    { key:'mailgun',   name:'Mailgun',         cat:'Email',      icon:'hgi-mail-01',            ws:287, status:'Operational', sync:'Under a minute ago',   added:'Mar 2024',
+      desc:'Delivers confirmations, reminders and receipts.',
+      auth:'API key · per sending domain', scopes:['messages:send','events:read','domains:read'],
+      calls:58900, succ:'99,4 %', p95:'410 ms' },
+    { key:'gcal',      name:'Google Calendar', cat:'Calendar',   icon:'hgi-calendar-03',        ws:142, status:'Degraded',    sync:'18 min ago',           added:'Sep 2024',
+      desc:'Pushes sessions and agendas into organizer calendars.',
+      auth:'OAuth 2.0 · offline access', scopes:['calendar.events','calendar.readonly'],
+      calls:26480, succ:'88,1 %', p95:'1,240 ms' },
+    { key:'line',      name:'LINE Notify',     cat:'Messaging',  icon:'hgi-bubble-chat',        ws:121, status:'Operational', sync:'3 min ago',            added:'Nov 2024',
+      desc:'Broadcasts reminders to attendees on LINE.',
+      auth:'OAuth 2.0 · per channel', scopes:['notify:send'],
+      calls:18240, succ:'99,5 %', p95:'530 ms' },
+    { key:'twilio',    name:'Twilio',          cat:'SMS',        icon:'hgi-sms-code',           ws:64,  status:'Down',        sync:'Failing since 09:12',  added:'Jan 2025',
+      desc:'SMS reminders and one-time codes at check-in.',
+      auth:'API key · account SID', scopes:['messages:send','lookup:read'],
+      calls:4120, succ:'12,4 %', p95:'8,940 ms' },
+    { key:'zoom',      name:'Zoom',            cat:'Video',      icon:'hgi-camera-video',       ws:58,  status:'Degraded',    sync:'6 min ago',            added:'Feb 2025',
+      desc:'Creates and updates meeting links for virtual sessions.',
+      auth:'OAuth 2.0 · server-to-server', scopes:['meeting:write','meeting:read','user:read'],
+      calls:9310, succ:'97,2 %', p95:'3 480 ms' },
+    { key:'gmeet',     name:'Google Meet',     cat:'Video',      icon:'hgi-video-01',           ws:39,  status:'Operational', sync:'11 min ago',           added:'Apr 2025',
+      desc:'Creates Meet links for virtual and hybrid sessions.',
+      auth:'OAuth 2.0 · offline access', scopes:['meetings.space.created'],
+      calls:3980, succ:'99,6 %', p95:'640 ms' },
+    { key:'zapier',    name:'Zapier',          cat:'Automation', icon:'hgi-workflow-square-01', ws:27,  status:'Operational', sync:'24 min ago',           added:'Jul 2025',
+      desc:'Pipes registrations and payments into a workspace’s own tools.',
+      auth:'API key · per Zap', scopes:['events:read','registrations:read','payments:read'],
+      calls:5640, succ:'99,1 %', p95:'720 ms' }
+  ];
+
+  var BADGE = { Operational: 'badge-green', Degraded: 'badge-amber', Down: 'badge-red' };
+
+  /* ---------- render ---------- */
+  var grid = document.getElementById('apps-grid');
+  var none = document.getElementById('apps-none');
+  var countEl = document.getElementById('apps-count');
+  var searchEl = document.getElementById('apps-search');
+  var statusEl = document.getElementById('apps-status');
+  var catEl = document.getElementById('apps-cat');
+
+  function cardHTML(a) {
+    var pct = Math.round((a.ws / TOTAL_WS) * 1000) / 10;
+    var syncTone = a.status === 'Down' ? 'text-red-500' : 'text-ink';
+    return '' +
+      '<button type="button" data-open="app-view" data-app="' + esc(a.key) + '" class="flex h-full w-full flex-col rounded-2xl bg-surface p-4 text-left transition hover:ring-2 hover:ring-brand/20">' +
+        '<div class="flex items-start gap-3">' +
+          '<span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-canvas text-ink"><i class="hgi-stroke ' + esc(a.icon) + ' text-[19px]"></i></span>' +
+          '<div class="min-w-0 flex-1">' +
+            '<div class="flex flex-wrap items-center gap-2"><p class="truncate text-[14px] font-bold tracking-tight text-ink">' + esc(a.name) + '</p><span class="badge ' + BADGE[a.status] + '">' + esc(a.status) + '</span></div>' +
+            '<p class="mt-0.5 text-[11px] uppercase tracking-wider text-muted">' + esc(a.cat) + '</p>' +
+          '</div>' +
+        '</div>' +
+        '<p class="mt-3 text-[12.5px] leading-relaxed text-muted">' + esc(a.desc) + '</p>' +
+        '<div class="mt-auto flex items-center justify-between pt-3.5 text-[11px]"><span class="text-muted">Connected workspaces</span><span class="font-semibold text-ink tnum">' + nf(a.ws) + ' / ' + nf(TOTAL_WS) + '</span></div>' +
+        '<div class="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-line"><div class="h-full rounded-full bg-brand" style="width:' + pct + '%"></div></div>' +
+        '<div class="mt-3 flex items-center justify-between border-t border-line pt-3 text-[12px]"><span class="text-muted">Last sync</span><span class="font-medium ' + syncTone + '">' + esc(a.sync) + '</span></div>' +
+      '</button>';
+  }
+
+  function matches(a) {
+    var q = searchEl.value.trim().toLowerCase();
+    if (q && (a.name + ' ' + a.cat + ' ' + a.desc).toLowerCase().indexOf(q) === -1) return false;
+    if (statusEl.selectedIndex > 0 && a.status !== statusEl.value) return false;
+    if (catEl.selectedIndex > 0 && a.cat !== catEl.value) return false;
+    return true;
+  }
+
+  function render() {
+    var list = APPS.filter(matches);
+    grid.innerHTML = list.map(cardHTML).join('');
+    grid.hidden = list.length === 0;
+    none.hidden = list.length !== 0;
+    countEl.textContent = list.length
+      ? 'Showing ' + list.length + ' of ' + APPS.length + ' providers'
+      : 'No providers match';
+  }
+
+  searchEl.addEventListener('input', render);
+  statusEl.addEventListener('change', render);
+  catEl.addEventListener('change', render);
+  render();
+
+  /* ---------- provider slide-over ----------
+     shell.js opens the panel from [data-open]; this only fills it. */
+  var av = {
+    icon: document.getElementById('av-icon'),
+    name: document.getElementById('av-name'),
+    badge: document.getElementById('av-badge'),
+    cat: document.getElementById('av-cat'),
+    desc: document.getElementById('av-desc'),
+    ws: document.getElementById('av-ws'),
+    auth: document.getElementById('av-auth'),
+    added: document.getElementById('av-added'),
+    sync: document.getElementById('av-sync'),
+    calls: document.getElementById('av-calls'),
+    succ: document.getElementById('av-succ'),
+    p95: document.getElementById('av-p95'),
+    scopes: document.getElementById('av-scopes')
+  };
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-app]');
+    if (!t) return;
+    var a = APPS.filter(function (x) { return x.key === t.getAttribute('data-app'); })[0];
+    if (!a) return;
+    av.icon.innerHTML = '<i class="hgi-stroke ' + esc(a.icon) + ' text-[24px]"></i>';
+    av.name.textContent = a.name;
+    av.badge.className = 'badge ' + BADGE[a.status];
+    av.badge.textContent = a.status;
+    av.cat.textContent = a.cat;
+    av.desc.textContent = a.desc;
+    av.ws.textContent = nf(a.ws) + ' of ' + nf(TOTAL_WS);
+    av.auth.textContent = a.auth;
+    av.added.textContent = a.added;
+    av.sync.textContent = a.sync;
+    av.calls.textContent = nf(a.calls);
+    av.succ.textContent = a.succ;
+    av.p95.textContent = a.p95;
+    av.scopes.innerHTML = a.scopes.map(function (s) {
+      return '<li class="flex items-center gap-2 text-[12.5px] text-ink"><i class="hgi-stroke hgi-key-01 text-[14px] text-muted"></i><span class="font-mono text-[12px]">' + esc(s) + '</span></li>';
+    }).join('');
+  });
+})();
+</script>
+</body>
+</html>

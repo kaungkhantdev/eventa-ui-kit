@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Features</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="features">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="text-[22px] font-bold tracking-tight">Features</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">What each plan includes.</p>
+      </div>
+      <a href="subscriptions.html" class="btn btn-soft ml-auto shrink-0"><i class="hgi-stroke hgi-credit-card text-[16px]"></i><span class="hidden sm:inline">Subscriptions</span></a>
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: the matrix is fixed config, but nobody is on a plan yet -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-layers-01"></i></span>
+      <h2 class="empty-title">No plans in use yet</h2>
+      <p class="empty-text">This is the entitlement reference — what Free, Starter, Growth and Enterprise each unlock, area by area. The matrix is ready; the per-plan workspace counts fill in as the first organizations sign up.</p>
+      <div class="empty-actions">
+        <a href="organizations.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-building-03 text-[15px]"></i>Browse organizations</a>
+        <a href="subscriptions.html" class="btn btn-ghost btn-sm">See subscriptions</a>
+      </div>
+    </section>
+
+    <!-- plan columns -->
+    <div id="plan-cards" data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4"></div>
+
+    <!-- matrix -->
+    <div data-when-data class="mt-5 flex flex-wrap items-center justify-between gap-2">
+      <h2 class="text-[15px] font-bold tracking-tight">Plan matrix</h2>
+      <span class="text-[12px] text-muted tnum">25 features across 5 areas</span>
+    </div>
+
+    <div data-when-data class="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="fx-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search features…" />
+      </div>
+      <div class="relative w-full sm:w-52">
+        <i class="hgi-stroke hgi-filter text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="fx-area" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All areas</option>
+          <option>Events</option>
+          <option>Ticketing</option>
+          <option>Payments</option>
+          <option>Team</option>
+          <option>Support</option>
+        </select>
+      </div>
+    </div>
+
+    <section data-when-data class="card mt-3 p-4">
+      <div id="fx-table" class="overflow-x-auto">
+        <table class="data-table min-w-[880px]">
+          <thead>
+            <tr>
+              <th class="w-[38%]">Feature</th>
+              <th class="text-center">Free</th>
+              <th class="text-center">Starter</th>
+              <th class="text-center">Growth</th>
+              <th class="text-center">Enterprise</th>
+            </tr>
+          </thead>
+          <tbody id="fx-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+
+      <div class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line pt-3 text-[11.5px] text-muted">
+        <span class="flex items-center gap-1.5"><i class="hgi-stroke hgi-tick-02 text-[14px] text-brand"></i>Included</span>
+        <span class="flex items-center gap-1.5"><span class="w-3 text-center">—</span>Not on this plan</span>
+        <span class="flex items-center gap-1.5"><i class="hgi-stroke hgi-percent text-[13px]"></i>A value shows the limit or rate that applies</span>
+      </div>
+    </section>
+
+    </div>
+  </main>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  /* ---------- Plans ----------
+     Workspace counts match the plan mix on Overview and add up to 312.
+     `has` is counted from the matrix below, so the two can never drift. */
+  var PLANS = [
+    { key: 'free',  name: 'Free',       price: '฿0',     per: 'forever',   ws: 81,  tone: 'badge-gray',   icon: 'hgi-star',        note: 'Two events a year, Eventa branding' },
+    { key: 'start', name: 'Starter',    price: '฿1,900', per: 'per month', ws: 90,  tone: 'badge-blue',   icon: 'hgi-rocket-01',   note: '12 events a year, 5 seats' },
+    { key: 'grow',  name: 'Growth',     price: '฿9,900', per: 'per month', ws: 106, tone: 'badge-green',  icon: 'hgi-target-02',   note: '60 events a year, own domain, 25 seats' },
+    { key: 'ent',   name: 'Enterprise', price: 'From ฿48,000', per: 'billed annually', ws: 35, tone: 'badge-purple', icon: 'hgi-crown', note: 'SSO, seating, a named CSM' },
+  ];
+
+  /* ---------- The matrix ----------
+     true = included · false = not on the plan · a string = the limit that applies. */
+  var AREAS = [
+    { name: 'Events', icon: 'hgi-calendar-01', rows: [
+      { f: 'Events published',        hint: 'Per year',                         free: '2',        start: '12',       grow: '60',        ent: '400' },
+      { f: 'Event page templates',    hint: 'Atlas, Aurora, Minimal, Noir',     free: '1',        start: '4',        grow: '4',         ent: '4 + custom' },
+      { f: 'Custom domain',           hint: '',                                 free: false,      start: false,      grow: true,        ent: true },
+      { f: 'Agenda and speakers',     hint: '',                                 free: false,      start: true,       grow: true,        ent: true },
+      { f: 'Recurring series',        hint: '',                                 free: false,      start: false,      grow: true,        ent: true },
+      { f: 'Remove Eventa branding',  hint: '',                                 free: false,      start: false,      grow: true,        ent: true },
+    ]},
+    { name: 'Ticketing', icon: 'hgi-ticket-01', rows: [
+      { f: 'Ticket types per event',  hint: '',                                 free: '2',        start: '10',       grow: 'Unlimited', ent: 'Unlimited' },
+      { f: 'Discount codes',          hint: '',                                 free: false,      start: true,       grow: true,        ent: true },
+      { f: 'Waitlist',                hint: 'Auto-release when a seat frees up', free: false,     start: false,      grow: true,        ent: true },
+      { f: 'Reserved seating',        hint: 'Seat maps and holds',              free: false,      start: false,      grow: false,       ent: true },
+      { f: 'QR check-in',             hint: '',                                 free: true,       start: true,       grow: true,        ent: true },
+      { f: 'Offline check-in',        hint: 'Scanner works without a signal',   free: false,      start: false,      grow: true,        ent: true },
+    ]},
+    { name: 'Payments', icon: 'hgi-credit-card', rows: [
+      { f: 'Platform fee',            hint: 'Taken from each paid ticket',      free: '5 %',      start: '3 %',      grow: '1,5 %',     ent: 'Negotiated' },
+      { f: 'PromptPay and cards',     hint: '',                                 free: true,       start: true,       grow: true,        ent: true },
+      { f: 'Invoices and tax receipts', hint: '',                               free: false,      start: true,       grow: true,        ent: true },
+      { f: 'Multi-currency',          hint: '',                                 free: false,      start: false,      grow: true,        ent: true },
+      { f: 'Payout schedule',         hint: '',                                 free: 'Monthly',  start: 'Weekly',   grow: 'Daily',     ent: 'Daily' },
+    ]},
+    { name: 'Team', icon: 'hgi-user-multiple', rows: [
+      { f: 'Team seats',              hint: '',                                 free: '2',        start: '5',        grow: '25',        ent: '100' },
+      { f: 'Roles and permissions',   hint: '',                                 free: false,      start: false,      grow: true,        ent: true },
+      { f: 'Audit log',               hint: '',                                 free: false,      start: false,      grow: true,        ent: true },
+      { f: 'SSO (SAML)',              hint: '',                                 free: false,      start: false,      grow: false,       ent: true },
+    ]},
+    { name: 'Support', icon: 'hgi-customer-support', rows: [
+      { f: 'Help centre',             hint: '',                                 free: true,       start: true,       grow: true,        ent: true },
+      { f: 'Email support',           hint: 'One business day',                 free: false,      start: true,       grow: true,        ent: true },
+      { f: 'Priority queue',          hint: 'First response within 4 h',        free: false,      start: false,      grow: true,        ent: true },
+      { f: 'Dedicated CSM',           hint: '',                                 free: false,      start: false,      grow: false,       ent: true },
+    ]},
+  ];
+
+  var TOTAL_FEATURES = AREAS.reduce(function (n, a) { return n + a.rows.length; }, 0);
+  var TOTAL_WS = PLANS.reduce(function (n, p) { return n + p.ws; }, 0);
+
+  /* ---------- Plan cards ---------- */
+  document.getElementById('plan-cards').innerHTML = PLANS.map(function (p) {
+    var has = 0;
+    AREAS.forEach(function (a) { a.rows.forEach(function (r) { if (r[p.key] !== false) has++; }); });
+    var share = Math.round((p.ws / TOTAL_WS) * 100);
+    return '<div class="rounded-2xl bg-surface p-4">' +
+      '<div class="flex items-center gap-2">' +
+        '<i class="hgi-stroke ' + p.icon + ' text-[16px] text-muted"></i>' +
+        '<h2 class="text-[15px] font-bold tracking-tight text-ink">' + p.name + '</h2>' +
+        (p.key === 'grow' ? '<span class="badge badge-green ml-auto">Most workspaces</span>' : '') +
+      '</div>' +
+      '<div class="mt-2 flex items-end gap-1.5"><p class="text-[22px] font-bold tracking-tight tnum">' + p.price + '</p><span class="pb-1 text-[11.5px] text-muted">' + p.per + '</span></div>' +
+      '<p class="mt-1 text-[11.5px] leading-snug text-muted">' + p.note + '</p>' +
+      '<dl class="mt-3 grid grid-cols-2 gap-3 border-t border-line pt-3">' +
+        '<div><dt class="text-[11px] text-muted">Workspaces</dt><dd class="mt-0.5 text-[15px] font-semibold text-ink tnum">' + p.ws + ' <span class="text-[11.5px] font-normal text-muted">· ' + share + ' %</span></dd></div>' +
+        '<div><dt class="text-[11px] text-muted">Features</dt><dd class="mt-0.5 text-[15px] font-semibold text-ink tnum">' + has + ' <span class="text-[11.5px] font-normal text-muted">of ' + TOTAL_FEATURES + '</span></dd></div>' +
+      '</dl>' +
+    '</div>';
+  }).join('');
+
+  /* ---------- Matrix rows ---------- */
+  var elSearch = document.getElementById('fx-search');
+  var elArea   = document.getElementById('fx-area');
+  var tbody    = document.getElementById('fx-rows');
+
+  function cell(v) {
+    if (v === true)  return '<td class="text-center"><i class="hgi-stroke hgi-tick-02 text-[16px] text-brand" title="Included"></i><span class="sr-only">Included</span></td>';
+    if (v === false) return '<td class="text-center text-muted" title="Not on this plan">—</td>';
+    return '<td class="text-center text-[12.5px] font-medium text-ink tnum">' + v + '</td>';
+  }
+
+  function groupRow(a, n) {
+    return '<tr><td colspan="5" class="bg-canvas">' +
+      '<span class="flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-wider text-muted">' +
+      '<i class="hgi-stroke ' + a.icon + ' text-[14px]"></i>' + a.name +
+      '<span class="text-muted/70 tnum">· ' + n + '</span></span></td></tr>';
+  }
+
+  function featureRow(r) {
+    return '<tr>' +
+      '<td><p class="font-medium text-ink">' + r.f + '</p>' +
+      (r.hint ? '<p class="mt-0.5 text-[11.5px] text-muted">' + r.hint + '</p>' : '') + '</td>' +
+      cell(r.free) + cell(r.start) + cell(r.grow) + cell(r.ent) +
+    '</tr>';
+  }
+
+  var NO_RESULTS = '<tr><td colspan="5"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No features match</h3><p class="empty-text">Nothing matches the current search and area filter. Try widening them to see more of the plan matrix.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
+
+  function render() {
+    var q = elSearch.value.trim().toLowerCase();
+    var area = elArea.value;
+    var html = '', shown = 0;
+    AREAS.forEach(function (a) {
+      if (area !== 'All areas' && a.name !== area) return;
+      var rows = a.rows.filter(function (r) {
+        return !q || (r.f + ' ' + r.hint).toLowerCase().indexOf(q) > -1;
+      });
+      if (!rows.length) return;
+      shown += rows.length;
+      html += groupRow(a, rows.length) + rows.map(featureRow).join('');
+    });
+    tbody.innerHTML = shown ? html : NO_RESULTS;
+  }
+
+  elSearch.addEventListener('input', render);
+  elArea.addEventListener('change', render);
+  render();
+})();
+</script>
+</body>
+</html>

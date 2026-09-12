@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eventa Console · Apps</title>
+<script>try{var t=localStorage.getItem('eventa-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script src="../assets-console/config.js?v=69"></script>
+<link rel="stylesheet" href="../assets-console/app.css?v=69" />
+</head>
+<body class="h-full bg-canvas font-sans text-ink antialiased" data-page="apps">
+
+<div class="flex h-full min-h-screen" data-layout>
+  <!-- shell.js injects #backdrop + #sidenav (icon rail + labeled panel) here -->
+
+  <main class="min-w-0 flex-1 scroll-smooth overflow-y-auto px-5 py-4 lg:px-7">
+    <div class="mx-auto w-full max-w-[1600px]">
+
+    <!-- header -->
+    <header class="mb-5 flex items-center gap-3">
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <div class="min-w-0">
+        <h1 class="text-[22px] font-bold tracking-tight">Apps</h1>
+        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">The surfaces Eventa ships.</p>
+      </div>
+      <a href="system-health.html" class="btn btn-soft ml-auto shrink-0"><i class="hgi-stroke hgi-pulse-01 text-[16px]"></i><span class="hidden sm:inline">System health</span></a>
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+        <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
+        <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
+      </button>
+      <div class="flex shrink-0 items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
+        <div class="hidden leading-tight sm:block">
+          <p class="text-[13px] font-semibold text-ink">Rio S.</p>
+          <p class="text-[11px] text-muted">Platform admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- first run: no build has ever reported in, so there is nothing to describe -->
+    <section data-empty hidden class="card empty">
+      <span class="empty-icon"><i class="hgi-stroke hgi-cube"></i></span>
+      <h2 class="empty-title">No surfaces reporting yet</h2>
+      <p class="empty-text">Every app Eventa ships — the organizer console, the attendee portal, public event pages, the check-in scanner and this console — reports its build, uptime and deploy history here. The first release to reach production starts the list.</p>
+      <div class="empty-actions">
+        <a href="system-health.html" class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-pulse-01 text-[15px]"></i>Check system health</a>
+        <a href="logs.html" class="btn btn-ghost btn-sm">Open system logs</a>
+      </div>
+    </section>
+
+    <!-- stat cards -->
+    <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-cube text-[16px]"></i>Surfaces</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">5</p><span class="text-[11.5px] text-muted">shipped</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-checkmark-badge-01 text-[16px]"></i>Operational</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">4</p><span class="text-[11.5px] text-muted">of 5</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-alert-02 text-[16px]"></i>Degraded</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">1</p><span class="text-[11.5px] font-semibold text-amber-600 dark:text-amber-400">Check-in scanner</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-pulse-01 text-[16px]"></i>Avg uptime (30d)</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">99,97 %</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>0,03 pt</span></div>
+      </div>
+      <div class="rounded-2xl bg-surface p-3.5">
+        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-rocket-01 text-[16px]"></i>Deploys (30d)</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">34</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>21,4 %</span></div>
+      </div>
+    </div>
+
+    <!-- the surfaces -->
+    <div data-when-data class="mt-4 flex flex-wrap items-center justify-between gap-2">
+      <h2 class="text-[15px] font-bold tracking-tight">Surfaces</h2>
+      <span class="text-[12px] text-muted">Build, uptime and reach per app</span>
+    </div>
+    <div id="app-cards" data-when-data class="mt-2 grid gap-3 sm:grid-cols-2 xl:grid-cols-3"></div>
+
+    <!-- releases -->
+    <div data-when-data class="mt-5 flex flex-wrap items-center justify-between gap-2">
+      <h2 class="text-[15px] font-bold tracking-tight">Recent releases</h2>
+      <span class="text-[12px] text-muted">Newest first</span>
+    </div>
+
+    <div data-when-data class="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <div class="relative w-full flex-1">
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="rel-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search by version or change…" />
+      </div>
+      <div class="relative w-full sm:w-60">
+        <i class="hgi-stroke hgi-cube text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <select id="rel-app" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
+          <option>All surfaces</option>
+          <option>Organizer console</option>
+          <option>Attendee portal</option>
+          <option>Public event pages</option>
+          <option>Check-in scanner</option>
+          <option>Admin console</option>
+        </select>
+      </div>
+    </div>
+
+    <section data-when-data class="card mt-3 p-4">
+      <div id="rel-table" class="overflow-x-auto">
+        <table class="data-table min-w-[880px]">
+          <thead>
+            <tr><th>Release</th><th>Surface</th><th>What changed</th><th>Shipped by</th><th>Status</th><th class="text-right">Date</th></tr>
+          </thead>
+          <tbody id="rel-rows" class="text-[13px]"></tbody>
+        </table>
+      </div>
+
+      <div id="rel-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+        <p id="rel-showing"></p>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
+            <select id="rel-size" class="select h-8 w-auto min-w-[3.75rem] py-0 pl-2.5 pr-7 text-[12px] font-medium text-ink">
+              <option>10</option><option>20</option><option>30</option><option>50</option>
+            </select>
+          </label>
+          <div class="flex gap-1">
+            <button id="rel-prev" class="btn btn-soft btn-sm" type="button" aria-label="Previous page" disabled><i class="hgi-stroke hgi-arrow-left-01 text-[14px]"></i><span class="hidden sm:inline">Prev</span></button>
+            <button id="rel-next" class="btn btn-soft btn-sm" type="button" aria-label="Next page"><span class="hidden sm:inline">Next</span><i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </div>
+  </main>
+</div>
+
+<script src="../assets-console/shell.js?v=69"></script>
+<script>
+(function () {
+  /* ---------- The five surfaces ----------
+     Deploys sum to the 34 in the stat strip; the uptimes average to 99,97 %;
+     every `version` matches that surface's newest row in RELEASES below. */
+  var APPS = [
+    { name: 'Organizer console', icon: 'hgi-dashboard-square-01', blurb: 'Where organizers build events, sell tickets and run the day.',
+      status: 'Operational', tone: 'badge-green', version: '4.8.2', uptime: '99,98 %', reach: '312', reachLabel: 'Workspaces', deploys: 11, last: '24 Aug, 09:12', by: 'Somchai T.' },
+    { name: 'Attendee portal', icon: 'hgi-user-group', blurb: 'Discover events, register and keep your tickets in one place.',
+      status: 'Operational', tone: 'badge-green', version: '3.2.0', uptime: '99,96 %', reach: '298', reachLabel: 'Workspaces', deploys: 8, last: '23 Aug, 18:40', by: 'Nok P.' },
+    { name: 'Public event pages', icon: 'hgi-globe-02', blurb: 'The four hosted templates an event is published on.',
+      status: 'Operational', tone: 'badge-green', version: '2.6.4', uptime: '99,99 %', reach: '274', reachLabel: 'Workspaces', deploys: 6, last: '22 Aug, 11:05', by: 'Siriporn L.' },
+    { name: 'Check-in scanner', icon: 'hgi-qr-code', blurb: 'The on-site iOS and Android app that scans tickets at the door.',
+      status: 'Degraded', tone: 'badge-amber', version: '1.9.3', uptime: '99,91 %', reach: '156', reachLabel: 'Workspaces', deploys: 4, last: '21 Aug, 07:30', by: 'Wanida C.',
+      note: 'Scan sync retrying in the TH-South region since 06:10 (Asia/Bangkok).' },
+    { name: 'Admin console', icon: 'hgi-shield-01', blurb: 'This console — Eventa staff looking across every workspace.',
+      status: 'Operational', tone: 'badge-green', version: '0.4.1', uptime: '100,00 %', reach: '18', reachLabel: 'Staff seats', deploys: 5, last: '24 Aug, 08:02', by: 'Rio S.' },
+  ];
+
+  function metric(label, value) {
+    return '<div><dt class="text-[11px] text-muted">' + label + '</dt>' +
+           '<dd class="mt-0.5 text-[15px] font-semibold tracking-tight text-ink tnum">' + value + '</dd></div>';
+  }
+
+  document.getElementById('app-cards').innerHTML = APPS.map(function (a) {
+    return '<article class="rounded-2xl bg-surface p-4 lg:p-5">' +
+      '<div class="flex items-start gap-3">' +
+        '<span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke ' + a.icon + ' text-[19px]"></i></span>' +
+        '<div class="min-w-0 flex-1">' +
+          '<div class="flex flex-wrap items-center gap-2"><h3 class="text-[15px] font-bold tracking-tight text-ink">' + a.name + '</h3><span class="badge ' + a.tone + '">' + a.status + '</span></div>' +
+          '<p class="mt-1 text-[12px] leading-snug text-muted">' + a.blurb + '</p>' +
+        '</div>' +
+      '</div>' +
+      '<dl class="mt-4 grid grid-cols-2 gap-3">' +
+        metric('Version', 'v' + a.version) +
+        metric('Uptime (30d)', a.uptime) +
+        metric(a.reachLabel, a.reach) +
+        metric('Deploys (30d)', a.deploys) +
+      '</dl>' +
+      (a.note ? '<p class="mt-3 flex items-start gap-1.5 rounded-lg bg-amber-50 p-2.5 text-[11.5px] leading-snug text-amber-700 dark:bg-amber-500/10 dark:text-amber-300"><i class="hgi-stroke hgi-alert-02 mt-px shrink-0 text-[13px]"></i>' + a.note + '</p>' : '') +
+      '<p class="mt-4 flex items-center gap-1.5 border-t border-line pt-3 text-[11.5px] text-muted"><i class="hgi-stroke hgi-rocket-01 text-[13px]"></i>Last deploy ' + a.last + ' · by ' + a.by + '</p>' +
+    '</article>';
+  }).join('');
+
+  /* ---------- Releases ---------- */
+  var RELEASES = [
+    { app: 'Organizer console',  v: '4.8.2', what: 'Bulk attendee import accepts Thai ID columns',   by: 'Somchai T.',  st: 'Shipped',     date: '24 Aug 2026, 09:12' },
+    { app: 'Admin console',      v: '0.4.1', what: 'Cross-workspace overview and plan mix',          by: 'Rio S.',      st: 'Shipped',     date: '24 Aug 2026, 08:02' },
+    { app: 'Attendee portal',    v: '3.2.0', what: 'Wallet passes for Apple and Google',             by: 'Nok P.',      st: 'Rolling out', date: '23 Aug 2026, 18:40' },
+    { app: 'Public event pages', v: '2.6.4', what: 'Noir template loads its hero image faster',      by: 'Siriporn L.', st: 'Shipped',     date: '22 Aug 2026, 11:05' },
+    { app: 'Check-in scanner',   v: '1.9.3', what: 'Offline scan queue survives an app restart',     by: 'Wanida C.',   st: 'Rolling out', date: '21 Aug 2026, 07:30' },
+    { app: 'Organizer console',  v: '4.8.1', what: 'Payout filter no longer resets the date range',  by: 'Somchai T.',  st: 'Shipped',     date: '19 Aug 2026, 16:20' },
+    { app: 'Attendee portal',    v: '3.1.6', what: 'PromptPay QR refreshes on the register step',    by: 'Nok P.',      st: 'Shipped',     date: '18 Aug 2026, 10:55' },
+    { app: 'Check-in scanner',   v: '1.9.2', what: 'Camera permission prompt on Android 15',         by: 'Wanida C.',   st: 'Rolled back', date: '15 Aug 2026, 09:15' },
+    { app: 'Organizer console',  v: '4.8.0', what: 'Agenda builder with speaker slots',              by: 'Somchai T.',  st: 'Shipped',     date: '14 Aug 2026, 13:45' },
+    { app: 'Public event pages', v: '2.6.3', what: 'Custom domain certificates renew automatically', by: 'Siriporn L.', st: 'Shipped',     date: '12 Aug 2026, 15:10' },
+    { app: 'Admin console',      v: '0.4.0', what: 'Support tickets and the audit log',              by: 'Rio S.',      st: 'Shipped',     date: '11 Aug 2026, 09:40' },
+    { app: 'Attendee portal',    v: '3.1.5', what: 'Survey step remembers partial answers',          by: 'Nok P.',      st: 'Shipped',     date: '8 Aug 2026, 17:25' },
+  ];
+  var ST_TONE = { 'Shipped': 'badge-green', 'Rolling out': 'badge-blue', 'Rolled back': 'badge-red' };
+  var APP_ICON = {};
+  APPS.forEach(function (a) { APP_ICON[a.name] = a.icon; });
+
+  var elSearch = document.getElementById('rel-search');
+  var elApp    = document.getElementById('rel-app');
+  var tbody    = document.getElementById('rel-rows');
+  var elShow   = document.getElementById('rel-showing');
+  var elPrev   = document.getElementById('rel-prev');
+  var elNext   = document.getElementById('rel-next');
+  var state = { page: 0, size: 10 };
+
+  function filtered() {
+    var q = elSearch.value.trim().toLowerCase();
+    var app = elApp.value;
+    return RELEASES.filter(function (r) {
+      if (app !== 'All surfaces' && r.app !== app) return false;
+      if (!q) return true;
+      return (r.v + ' ' + r.what + ' ' + r.app + ' ' + r.by).toLowerCase().indexOf(q) > -1;
+    });
+  }
+
+  function rowHTML(r) {
+    return '<tr>' +
+      '<td class="font-semibold text-ink tnum">v' + r.v + '</td>' +
+      '<td><span class="flex items-center gap-2 text-muted"><i class="hgi-stroke ' + APP_ICON[r.app] + ' text-[15px]"></i>' + r.app + '</span></td>' +
+      '<td class="text-ink">' + r.what + '</td>' +
+      '<td class="text-muted">' + r.by + '</td>' +
+      '<td><span class="badge ' + ST_TONE[r.st] + '">' + r.st + '</span></td>' +
+      '<td class="text-right text-muted tnum">' + r.date + '</td>' +
+    '</tr>';
+  }
+
+  var NO_RESULTS = '<tr><td colspan="6"><div class="empty empty-sm"><span class="empty-icon"><i class="hgi-stroke hgi-search-01"></i></span><h3 class="empty-title">No releases match</h3><p class="empty-text">Nothing matches the current search and surface filter. Try widening them to see more releases.</p><div class="empty-actions"><button type="button" data-clear-filters class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-refresh text-[15px]"></i>Clear filters</button></div></div></td></tr>';
+
+  function render() {
+    var list = filtered(), total = list.length, pages = Math.max(1, Math.ceil(total / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    var start = state.page * state.size, slice = list.slice(start, start + state.size);
+    tbody.innerHTML = slice.length ? slice.map(rowHTML).join('') : NO_RESULTS;
+    if (total === 0) elShow.textContent = 'No releases';
+    else elShow.innerHTML = 'Showing <span class="font-semibold text-ink tnum">' + (start + 1) + '–' + (start + slice.length) + '</span> of <span class="font-semibold text-ink tnum">' + total + '</span> releases';
+    elPrev.disabled = total === 0 || state.page === 0;
+    elNext.disabled = total === 0 || state.page >= pages - 1;
+  }
+
+  elSearch.addEventListener('input', function () { state.page = 0; render(); });
+  elApp.addEventListener('change', function () { state.page = 0; render(); });
+  document.getElementById('rel-size').addEventListener('change', function () { state.size = +this.value; state.page = 0; render(); });
+  elPrev.addEventListener('click', function () { if (state.page > 0) { state.page--; render(); } });
+  elNext.addEventListener('click', function () { state.page++; render(); });
+  render();
+})();
+</script>
+</body>
+</html>

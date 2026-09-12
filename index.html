@@ -10,8 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="assets/config.js?v=64"></script>
-<link rel="stylesheet" href="assets/app.css?v=64" />
+<script src="assets/config.js?v=69"></script>
+<link rel="stylesheet" href="assets/app.css?v=69" />
 </head>
 <body class="h-full bg-canvas font-sans text-ink antialiased">
 
@@ -27,7 +27,8 @@
     <h1 class="mx-auto mt-5 max-w-2xl text-[30px] font-extrabold leading-tight tracking-tight sm:text-[38px]">Event Registration <span class="text-brand">UI Kit</span></h1>
     <p class="mx-auto mt-3 max-w-xl text-[14px] text-muted">A complete, responsive admin &amp; attendee interface — events, registrations, tickets, check-in, payments, analytics and more. Built with HTML, Tailwind CSS, Hugeicons &amp; Motion. Light &amp; dark ready.</p>
     <div class="mt-6 flex flex-wrap items-center justify-center gap-2.5">
-      <a href="admin/dashboard.html" class="btn btn-primary"><i class="hgi-stroke hgi-dashboard-speed-02 text-[16px]"></i>Open dashboard</a>
+      <a href="components.html" class="btn btn-primary"><i class="hgi-stroke hgi-grid-view text-[16px]"></i>Components</a>
+      <a href="admin/dashboard.html" class="btn btn-ghost"><i class="hgi-stroke hgi-dashboard-speed-02 text-[16px]"></i>Open dashboard</a>
       <a href="auth/login.html" class="btn btn-ghost"><i class="hgi-stroke hgi-square-lock-01 text-[16px]"></i>Sign in</a>
       <a href="portal/my-events.html" class="btn btn-ghost"><i class="hgi-stroke hgi-ticket-02 text-[16px]"></i>Attendee portal</a>
     </div>
@@ -54,7 +55,12 @@
   })();
 
   const GROUPS = [
+    { title: 'Design system', items: [
+      { name: 'Components', href: 'components.html', icon: 'hgi-grid-view', desc: 'Live reference — buttons, badges, inputs, tables & more' },
+    ]},
     { title: 'Manage', items: [
+      { name: 'Home', href: 'admin/home.html', icon: 'hgi-home-01', desc: 'Daily operations home — today at a glance' },
+      { name: 'Home · first run', href: 'admin/home-empty.html', icon: 'hgi-rocket-01', desc: 'New workspace with no data — setup checklist, not empty cards' },
       { name: 'Dashboard', href: 'admin/dashboard.html', icon: 'hgi-dashboard-speed-02', desc: 'KPIs, revenue & recent activity' },
       { name: 'Events', href: 'admin/events.html', icon: 'hgi-calendar-03', desc: 'Browse & manage all events' },
       { name: 'Create event', href: 'admin/event-form.html', icon: 'hgi-calendar-add-01', desc: 'Full event builder form' },
