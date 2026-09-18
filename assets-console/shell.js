@@ -6,8 +6,11 @@
        current page) is highlighted (bg-brand-soft text-brand); clicking a module
        navigates to its landing page (whose panel then opens). A module without
        an href instead swaps the panel client-side (fallback).
-     • Panel = the selected module's grouped, collapsible sub-nav; the leaf
-       matching data-page is highlighted. Modules with no groups hide the panel.
+     • Panel = the selected module's sub-nav; the leaf matching data-page is
+       highlighted and carries a green marker. This console's modules are two
+       levels deep, so they declare a flat `items` list rather than the
+       organizer's collapsible `groups`. A module with no children hides the
+       panel.
    Also wires: mobile drawer, dark mode (circular reveal), and the declarative
    slide-over panels / modals / tabs. Exposes window.EventaOnThemeChange(dark).
    ============================================================ */
@@ -16,7 +19,6 @@
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isDesktop = () => window.matchMedia('(min-width: 1024px)').matches;
 
-  /* ---------------- Navigation model ---------------- */
   /* ---------------- Navigation model ----------------
      The internal admin console's IA. Deliberately NOT the organizer's nav:
      this console looks *across* tenants (workspaces, adoption, billing,
@@ -209,13 +211,25 @@
   /* `pl-9` indents a leaf under its accordion header. A flat module has no
      header to sit under, so its leaves start at the panel's own gutter —
      otherwise the whole list looks indented from nothing. */
+  /* The active leaf carries a green marker at its own left edge, inside the
+     rounded pill, as well as the soft-green fill.
+
+     Absolutely positioned on purpose: a border or an inline element would
+     widen the active leaf and shift its label sideways, so every row would
+     move as you navigated between pages. Kept in step with assets/shell.js;
+     the two shells do not share code. */
+  const LEAF_MARKER =
+    '<span class="absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full bg-brand"></span>';
+  /* Leaves are text only. `pl-9` indents a grouped leaf so its label sits
+     flush under its group *label*; a flat leaf has no header above it, so it
+     only needs enough room to clear the marker inside the pill. */
   function panelLeaf(it, flat) {
     const on = it.page === activePage;
-    const pad = flat ? 'pl-2.5' : 'pl-9';
+    const pad = flat ? 'pl-3.5' : 'pl-9';
     const cls = on
-      ? `block rounded-lg py-1.5 ${pad} pr-2.5 text-[13px] font-semibold bg-brand-soft text-brand`
-      : `block rounded-lg py-1.5 ${pad} pr-2.5 text-[13px] font-medium text-muted transition hover:bg-brand-soft/60 hover:text-brand`;
-    return `<li><a href="${it.href}" class="${cls}">${it.label}</a></li>`;
+      ? `relative block rounded-lg py-1.5 ${pad} pr-2.5 text-[13px] font-semibold bg-brand-soft text-brand`
+      : `relative block rounded-lg py-1.5 ${pad} pr-2.5 text-[13px] font-medium text-muted transition hover:bg-brand-soft/60 hover:text-brand`;
+    return `<li><a href="${it.href}" class="${cls}">${on ? LEAF_MARKER : ''}${it.label}</a></li>`;
   }
   function wireAccordion() {
     panelNav.querySelectorAll('[data-acc]').forEach((acc) => {

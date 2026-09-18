@@ -315,12 +315,20 @@
   }
 
   /* ---------------- Render: labeled panel (sub-nav) ---------------- */
+  /* The active leaf carries a green marker at its own left edge, inside the
+     rounded pill, as well as the soft-green fill.
+
+     Absolutely positioned on purpose: a border or an inline element would
+     widen the active leaf and shift its label sideways, so every row would
+     move as you navigated between pages. */
+  const LEAF_MARKER =
+    '<span class="absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full bg-brand"></span>';
   function panelLeaf(it) {
     const on = it.page === activePage;
     const cls = on
-      ? 'block rounded-lg py-1.5 pl-9 pr-2.5 text-[13px] font-semibold bg-brand-soft text-brand'
-      : 'block rounded-lg py-1.5 pl-9 pr-2.5 text-[13px] font-medium text-muted transition hover:bg-brand-soft/60 hover:text-brand';
-    return `<li><a href="${it.href}" class="${cls}">${it.label}</a></li>`;
+      ? 'relative block rounded-lg py-1.5 pl-9 pr-2.5 text-[13px] font-semibold bg-brand-soft text-brand'
+      : 'relative block rounded-lg py-1.5 pl-9 pr-2.5 text-[13px] font-medium text-muted transition hover:bg-brand-soft/60 hover:text-brand';
+    return `<li><a href="${it.href}" class="${cls}">${on ? LEAF_MARKER : ''}${it.label}</a></li>`;
   }
   function wireAccordion() {
     panelNav.querySelectorAll('[data-acc]').forEach((acc) => {
