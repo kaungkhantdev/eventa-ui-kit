@@ -237,13 +237,13 @@
     var ty = last[1] - th - 14;
     document.getElementById('usage-chart').innerHTML =
       '<svg viewBox="0 0 ' + W + ' ' + H + '" class="w-full" style="height:auto" font-family="Inter, sans-serif">' +
-        '<defs><linearGradient id="usagefill" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#1ba770" stop-opacity="0.28"/><stop offset="100%" stop-color="#1ba770" stop-opacity="0"/></linearGradient></defs>' +
+        '<defs><linearGradient id="usagefill" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#00c066" stop-opacity="0.28"/><stop offset="100%" stop-color="#00c066" stop-opacity="0"/></linearGradient></defs>' +
         grid +
         '<path d="' + area + '" fill="url(#usagefill)"/>' +
-        '<path d="' + line + '" fill="none" stroke="#1ba770" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>' +
+        '<path d="' + line + '" fill="none" stroke="#00c066" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>' +
         xl +
-        '<line x1="' + last[0] + '" y1="' + PT + '" x2="' + last[0] + '" y2="' + (PT + plotH) + '" stroke="#1ba770" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>' +
-        '<circle cx="' + last[0] + '" cy="' + last[1] + '" r="6" fill="#1ba770" stroke="' + cRing + '" stroke-width="2.5"/>' +
+        '<line x1="' + last[0] + '" y1="' + PT + '" x2="' + last[0] + '" y2="' + (PT + plotH) + '" stroke="#00c066" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>' +
+        '<circle cx="' + last[0] + '" cy="' + last[1] + '" r="6" fill="#00c066" stroke="' + cRing + '" stroke-width="2.5"/>' +
         '<rect x="' + tx + '" y="' + ty + '" width="' + tw + '" height="' + th + '" rx="7" fill="' + cTipBg + '"/>' +
         '<text x="' + (tx + tw / 2) + '" y="' + (ty + th / 2 + 4) + '" text-anchor="middle" font-size="13" font-weight="700" fill="' + cTipFg + '">' + tip + '</text>' +
       '</svg>';
@@ -265,11 +265,11 @@
 
   /* ---------- Where the calls come from (shares add to 100) ---------- */
   var mix = [
-    { name: 'Public event pages',    pct: 34, c: '#1ba770' },
-    { name: 'Registrations & tickets', pct: 27, c: '#3bb488' },
-    { name: 'Check-in',              pct: 14, c: '#68c8a5' },
-    { name: 'Reporting & exports',   pct: 13, c: '#9fe0cd' },
-    { name: 'Webhooks out',          pct: 8,  c: '#c6ece0' },
+    { name: 'Public event pages',    pct: 34, c: '#00c066' },
+    { name: 'Registrations & tickets', pct: 27, c: '#27ca7d' },
+    { name: 'Check-in',              pct: 14, c: '#5cd79d' },
+    { name: 'Reporting & exports',   pct: 13, c: '#a0e7c6' },
+    { name: 'Webhooks out',          pct: 8,  c: '#c5f1dc' },
     { name: 'Everything else',       pct: 4,  c: '#d1d5db' },
   ];
   document.getElementById('usage-mix').innerHTML = mix.map(function (m) {

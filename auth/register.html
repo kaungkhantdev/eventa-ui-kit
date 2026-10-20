@@ -119,7 +119,7 @@
       var pw = document.getElementById('password');
       var bars = [document.getElementById('pw-bar-1'), document.getElementById('pw-bar-2'), document.getElementById('pw-bar-3')];
       var label = document.getElementById('pw-label');
-      var colors = { 1: '#ef4444', 2: '#d97706', 3: '#1ba770' };
+      var colors = { 1: '#ef4444', 2: '#d97706', 3: '#00c066' };
       var texts = { 0: 'Use 8+ characters', 1: 'Weak password', 2: 'Fair password', 3: 'Strong password' };
       pw.addEventListener('input', function(){
         var v = pw.value;
@@ -143,7 +143,7 @@
         if (!cpw.value) { hint.classList.add('hidden'); cpw.style.borderColor = ''; return; }
         var match = cpw.value === pw.value;
         hint.textContent = match ? 'Passwords match' : 'Passwords do not match';
-        hint.style.color = match ? '#1ba770' : '#ef4444';
+        hint.style.color = match ? '#00c066' : '#ef4444';
         hint.classList.remove('hidden');
       }
       cpw.addEventListener('input', check);

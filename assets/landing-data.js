@@ -26,7 +26,7 @@
       seatsLeft: 88,
       capacity: 400,
       attendeesText: '1,500+ attendees',
-      accent: '#1ba770',
+      accent: '#00c066',
       organizer: 'Eventa Co.',
       contactEmail: 'hello@eventa.co',
       registerUrl: '../portal/register.html?event=tech-summit-2026',
@@ -366,7 +366,7 @@
       agendaTitle: 'Schedule',
       speakersTitle: 'Speakers',
       ticketsTitle: 'Tickets',
-      accent: '#1ba770',
+      accent: '#00c066',
       registerUrl: '../portal/register.html?event=sunrise-yoga-retreat',
       contactEmail: 'hello@eventa.co',
       socials: {
@@ -510,7 +510,7 @@
       agendaTitle: 'Schedule',
       speakersTitle: 'Speakers',
       ticketsTitle: 'Tickets',
-      accent: '#1ba770',
+      accent: '#00c066',
       registerUrl: '../portal/register.html?event=thai-street-food-festival',
       contactEmail: 'hello@eventa.co',
       socials: {
@@ -638,7 +638,7 @@
       agendaTitle: 'Schedule',
       speakersTitle: 'Speakers',
       ticketsTitle: 'Tickets',
-      accent: '#1ba770',
+      accent: '#00c066',
       registerUrl: '../portal/register.html?event=ux-bangkok-meetup',
       contactEmail: 'hello@eventa.co',
       socials: {
@@ -787,7 +787,7 @@
       agendaTitle: 'Schedule',
       speakersTitle: 'Speakers',
       ticketsTitle: 'Tickets',
-      accent: '#1ba770',
+      accent: '#00c066',
       registerUrl: '../portal/register.html?event=startup-pitch-night',
       contactEmail: 'hello@eventa.co',
       socials: {
@@ -922,7 +922,7 @@
       agendaTitle: 'Schedule',
       speakersTitle: 'Speakers',
       ticketsTitle: 'Tickets',
-      accent: '#1ba770',
+      accent: '#00c066',
       registerUrl: '../portal/register.html?event=bangkok-art-fair',
       contactEmail: 'hello@eventa.co',
       socials: {
@@ -1067,7 +1067,7 @@
       agendaTitle: 'Schedule',
       speakersTitle: 'Speakers',
       ticketsTitle: 'Tickets',
-      accent: '#1ba770',
+      accent: '#00c066',
       registerUrl: '../portal/register.html?event=marathon-for-mangroves',
       contactEmail: 'hello@eventa.co',
       socials: {

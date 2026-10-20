@@ -6,8 +6,8 @@ tailwind.config = {
       fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
       colors: {
         brand: {
-          DEFAULT: '#1ba770',
-          dark: '#157e56',
+          DEFAULT: '#00c066',
+          dark: '#00924e',
           soft: 'rgb(var(--brand-soft) / <alpha-value>)',
         },
         ink: 'rgb(var(--ink) / <alpha-value>)',

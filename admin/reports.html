@@ -277,14 +277,14 @@
     document.getElementById('rt-chart').innerHTML = `
       <svg viewBox="0 0 ${W} ${H}" class="w-full" style="height:auto" font-family="Inter, sans-serif">
         <defs><linearGradient id="rtfill" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stop-color="#1ba770" stop-opacity="0.28"/><stop offset="100%" stop-color="#1ba770" stop-opacity="0"/>
+          <stop offset="0%" stop-color="#00c066" stop-opacity="0.28"/><stop offset="100%" stop-color="#00c066" stop-opacity="0"/>
         </linearGradient></defs>
         ${grid}
         <path d="${area}" fill="url(#rtfill)"/>
-        <path d="${line}" fill="none" stroke="#1ba770" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+        <path d="${line}" fill="none" stroke="#00c066" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
         ${xl}
-        <line x1="${last[0]}" y1="${PT}" x2="${last[0]}" y2="${PT + plotH}" stroke="#1ba770" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
-        <circle cx="${last[0]}" cy="${last[1]}" r="6" fill="#1ba770" stroke="${cRing}" stroke-width="2.5"/>
+        <line x1="${last[0]}" y1="${PT}" x2="${last[0]}" y2="${PT + plotH}" stroke="#00c066" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+        <circle cx="${last[0]}" cy="${last[1]}" r="6" fill="#00c066" stroke="${cRing}" stroke-width="2.5"/>
         <rect x="${tx}" y="${ty}" width="${tw}" height="${th}" rx="7" fill="${cTipBg}"/>
         <text x="${tx + tw / 2}" y="${ty + th / 2 + 4}" text-anchor="middle" font-size="13" font-weight="700" fill="${cTipFg}">${tip}</text>
       </svg>`;
@@ -305,9 +305,9 @@
 
   /* ---------- Registrations by ticket type (donut, mirrors dashboard.html) ---------- */
   const tickets = [
-    { name: 'General Admission', pct: 42, regs: 563, c: '#1ba770' },
-    { name: 'VIP',               pct: 24, regs: 322, c: '#4cbd96' },
-    { name: 'Early Bird',        pct: 18, regs: 241, c: '#9fe0cd' },
+    { name: 'General Admission', pct: 42, regs: 563, c: '#00c066' },
+    { name: 'VIP',               pct: 24, regs: 322, c: '#3ecf8b' },
+    { name: 'Early Bird',        pct: 18, regs: 241, c: '#a0e7c6' },
     { name: 'Student',           pct: 16, regs: 214, c: '#d1d5db' },
   ];
   const R = 15.915, GAP = 2.2, SW = 4.5;

@@ -2,7 +2,7 @@
 
 A complete, responsive **admin + attendee** interface for an event‑registration system, built as a **multi‑page HTML/Tailwind UI kit**. No build system, no `package.json`, no dependencies to install — every page is static HTML, and all styling/behaviour loads from CDNs at runtime.
 
-> Light & dark ready · fully responsive · flat/bordered design · compact scale · Thai Baht (฿) · brand green `#1ba770`.
+> Light & dark ready · fully responsive · flat/bordered design · compact scale · Thai Baht (฿) · brand green `#00c066`.
 
 ---
 
