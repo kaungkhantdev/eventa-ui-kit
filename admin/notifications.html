@@ -54,7 +54,7 @@
     <div data-when-data id="feed" class="mt-4 space-y-4 rounded-2xl bg-surface p-2 sm:p-3"></div>
     <p data-when-data id="feed-empty" class="hidden py-10 text-center text-[13px] text-muted">You're all caught up — no unread notifications.</p>
     <!-- JIT safelist for JS-inserted feed-row classes -->
-    <div class="hidden hover:bg-line bg-brand-soft/50 space-y-0.5"></div>
+    <div class="hidden hover:bg-line space-y-0.5"></div>
 
     <p class="mt-6 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
     </div>
@@ -105,7 +105,7 @@
 
   function itemHTML(n) {
     var tint = TINT[n.kind] || TINT.task;
-    return '<div class="flex items-start gap-3 rounded-xl px-3 py-3 transition hover:bg-line' + (n.unread ? ' bg-brand-soft/50' : '') + '" data-unread="' + (n.unread ? '1' : '0') + '">' +
+    return '<div class="flex items-start gap-3 rounded-xl px-3 py-3 transition hover:bg-line" data-unread="' + (n.unread ? '1' : '0') + '">' +
       '<span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl ' + tint + '"><i class="hgi-stroke ' + n.icon + ' text-[18px]"></i></span>' +
       '<div class="min-w-0 flex-1">' +
         '<div class="flex items-center gap-2"><p class="text-[13px] font-semibold text-ink">' + esc(n.title) + '</p>' + (n.unread ? '<span class="h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>' : '') + '</div>' +
