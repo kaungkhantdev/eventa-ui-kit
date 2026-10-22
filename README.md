@@ -2,7 +2,7 @@
 
 A complete, responsive **admin + attendee** interface for an event‑registration system, built as a **multi‑page HTML/Tailwind UI kit**. No build system, no `package.json`, no dependencies to install — every page is static HTML, and all styling/behaviour loads from CDNs at runtime.
 
-> Light & dark ready · fully responsive · flat/bordered design · compact scale · Thai Baht (฿) · brand green `#1ba770`.
+> Light & dark ready · fully responsive · flat/bordered design · compact scale · Thai Baht (฿) · brand green `#00c066`.
 
 ---
 
@@ -86,3 +86,9 @@ See [`CLAUDE.md`](CLAUDE.md) for the full shell contract, sidebar internals, and
 ---
 
 *Static UI kit — HTML, Tailwind CSS, Hugeicons / reicon & Motion. No build step.*
+
+## License
+
+Proprietary — all rights reserved. This repository is public so that it can be
+read; it is not open-source software, and no right to use, copy, modify or run
+it is granted. See [LICENSE](LICENSE).

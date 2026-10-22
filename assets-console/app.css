@@ -10,7 +10,7 @@
   --line: 238 240 243;
   --ink: 19 42 34;
   --muted: 139 147 164;
-  --brand-soft: 230 246 239;
+  --brand-soft: 230 249 240;
 }
 html.dark {
   --canvas: 13 17 15;
@@ -20,7 +20,7 @@ html.dark {
   --line: 34 42 38;
   --ink: 232 237 234;
   --muted: 143 154 162;
-  --brand-soft: 22 46 36;
+  --brand-soft: 10 52 32;
   color-scheme: dark;
 }
 html {
@@ -108,11 +108,11 @@ re-icon {
   font-size: 12px;
 }
 .btn-primary {
-  background: #1ba770;
+  background: #00c066;
   color: #fff;
 }
 .btn-primary:hover {
-  background: #157e56;
+  background: #00924e;
 }
 .btn-ghost {
   color: rgb(var(--ink));
@@ -124,18 +124,18 @@ re-icon {
 }
 /* soft/tonal primary — light brand fill; use on white surface cards */
 .btn-soft {
-  color: #157e56;
+  color: #00924e;
   background: rgb(var(--brand-soft));
 }
 .btn-soft:hover {
-  color: #157e56;
-  background: color-mix(in srgb, rgb(var(--brand-soft)), #1ba770 12%);
+  color: #00924e;
+  background: color-mix(in srgb, rgb(var(--brand-soft)), #00c066 12%);
 }
 html.dark .btn-soft {
-  color: #45c98f;
+  color: #43d18e;
 }
 html.dark .btn-soft:hover {
-  color: #45c98f;
+  color: #43d18e;
 }
 .btn-danger {
   background: #ef4444;
@@ -209,8 +209,8 @@ html.dark .btn-soft:hover {
 .select:focus,
 .textarea:focus {
   outline: none;
-  border-color: #1ba770;
-  box-shadow: 0 0 0 3px rgba(27, 167, 112, 0.15);
+  border-color: #00c066;
+  box-shadow: 0 0 0 3px rgba(0, 192, 102, 0.15);
 }
 .textarea {
   resize: vertical;
@@ -237,10 +237,10 @@ html.dark .btn-soft:hover {
 }
 .badge-green {
   background: rgb(var(--brand-soft));
-  color: #157e56;
+  color: #00924e;
 }
 html.dark .badge-green {
-  color: #45c98f;
+  color: #43d18e;
 }
 .badge-amber {
   background: #fffbeb;
@@ -332,11 +332,11 @@ html.dark .badge-purple {
   place-items: center;
   border-radius: 9999px;
   background: rgb(var(--brand-soft));
-  color: #157e56;
+  color: #00924e;
   font-weight: 600;
 }
 html.dark .avatar {
-  color: #45c98f;
+  color: #43d18e;
 }
 
 /* ---------- Slide-over panels & modals (declarative, wired in shell.js) ---------- */
@@ -408,8 +408,8 @@ html.dark .avatar {
   color: rgb(var(--ink));
 }
 .tab.tab-active {
-  color: #1ba770;
-  border-bottom-color: #1ba770;
+  color: #00c066;
+  border-bottom-color: #00c066;
 }
 
 /* pill tabs with count badge (declarative: reuses [data-tab]/tab-active toggling) */
@@ -433,10 +433,10 @@ html.dark .avatar {
 }
 .pilltab.tab-active {
   background: rgb(var(--brand-soft));
-  color: #157e56;
+  color: #00924e;
 }
 html.dark .pilltab.tab-active {
-  color: #45c98f;
+  color: #43d18e;
 }
 .pilltab-count {
   display: inline-grid;
@@ -453,11 +453,11 @@ html.dark .pilltab.tab-active {
 }
 .pilltab.tab-active .pilltab-count {
   background: #fff;
-  color: #157e56;
+  color: #00924e;
 }
 html.dark .pilltab.tab-active .pilltab-count {
   background: rgb(255 255 255 / 0.14);
-  color: #45c98f;
+  color: #43d18e;
 }
 
 /* pill segmented control (chart ranges etc.) */
@@ -515,7 +515,7 @@ html.dark .segmented button.active {
   width: 3.5rem;
   border-radius: 1rem;
   background: rgb(var(--brand-soft));
-  color: #1ba770;
+  color: #00c066;
   font-size: 26px;
 }
 .empty-title {

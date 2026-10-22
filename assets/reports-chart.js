@@ -41,7 +41,7 @@
       tipFg: dark ? '#0e1311' : '#ffffff',
       tipSub: dark ? 'rgba(14,19,17,.6)' : 'rgba(255,255,255,.6)',
       guide: dark ? 'rgba(255,255,255,0.25)' : 'rgba(17,24,39,0.2)',
-      barIdle: dark ? 'rgba(27,167,112,.35)' : 'rgba(27,167,112,.25)',
+      barIdle: dark ? 'rgba(0,192,102,.35)' : 'rgba(0,192,102,.25)',
     };
   }
 
@@ -171,7 +171,7 @@
           '" rx="' +
           rx +
           '" fill="' +
-          (i === n - 1 ? '#1ba770' : p.barIdle) +
+          (i === n - 1 ? '#00c066' : p.barIdle) +
           '"/>';
       });
     } else {
@@ -198,7 +198,7 @@
       body +=
         '<path d="' +
         line +
-        '" fill="none" stroke="#1ba770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>';
+        '" fill="none" stroke="#00c066" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>';
     }
 
     /* hover furniture — hidden until the pointer is over the plot */
@@ -210,7 +210,7 @@
       '" stroke="' +
       p.guide +
       '" stroke-width="1" opacity="0"/>' +
-      '<circle data-rc-dot cx="0" cy="0" r="5" fill="#1ba770" stroke="' +
+      '<circle data-rc-dot cx="0" cy="0" r="5" fill="#00c066" stroke="' +
       p.ring +
       '" stroke-width="3" opacity="0"/>' +
       '<rect data-rc-hit x="' +
@@ -237,7 +237,7 @@
       '<defs><linearGradient id="' +
       cfg._gid +
       '" x1="0" x2="0" y1="0" y2="1">' +
-      '<stop offset="0%" stop-color="#1ba770" stop-opacity="0.22"/><stop offset="100%" stop-color="#1ba770" stop-opacity="0"/>' +
+      '<stop offset="0%" stop-color="#00c066" stop-opacity="0.22"/><stop offset="100%" stop-color="#00c066" stop-opacity="0"/>' +
       '</linearGradient></defs>' +
       grid +
       body +

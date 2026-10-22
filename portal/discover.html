@@ -92,14 +92,14 @@
 (function () {
   var EVENTS = window.EVENTA_EVENTS ? Object.values(window.EVENTA_EVENTS) : [];
   var ALL = 'All events';
-  var GRAD = [['#1ba770', '#059669'], ['#7c3aed', '#c026d3'], ['#f59e0b', '#f97316'], ['#0ea5e9', '#6366f1'], ['#f43f5e', '#ec4899'], ['#14b8a6', '#06b6d4'], ['#8b5cf6', '#6d28d9'], ['#10b981', '#0d9488'], ['#eab308', '#f59e0b']];
+  var GRAD = [['#00c066', '#059669'], ['#7c3aed', '#c026d3'], ['#f59e0b', '#f97316'], ['#0ea5e9', '#6366f1'], ['#f43f5e', '#ec4899'], ['#14b8a6', '#06b6d4'], ['#8b5cf6', '#6d28d9'], ['#10b981', '#0d9488'], ['#eab308', '#f59e0b']];
   var CAT_ICON = {
     'All events': 'hgi-sparkles', 'Concert': 'hgi-music-note-01', 'Conference': 'hgi-presentation-01',
     'Exhibition': 'hgi-image-01', 'Food & Drink': 'hgi-restaurant-02', 'Meetup': 'hgi-user-group',
     'Networking': 'hgi-connect', 'Sports & Wellness': 'hgi-workout-run', 'Wedding': 'hgi-favourite'
   };
   var CAT_COLOR = {
-    'All events': '#1ba770', 'Concert': '#7c3aed', 'Conference': '#0ea5e9', 'Exhibition': '#ec4899',
+    'All events': '#00c066', 'Concert': '#7c3aed', 'Conference': '#0ea5e9', 'Exhibition': '#ec4899',
     'Food & Drink': '#f97316', 'Meetup': '#6366f1', 'Networking': '#14b8a6',
     'Sports & Wellness': '#f59e0b', 'Wedding': '#f43f5e'
   };
@@ -140,7 +140,7 @@
   function renderCats() {
     catsEl.innerHTML = cats.map(function (c) {
       var on = c === state.cat;
-      var col = CAT_COLOR[c] || '#1ba770';
+      var col = CAT_COLOR[c] || '#00c066';
       return '<button type="button" data-cat="' + esc(c) + '" class="group flex shrink-0 flex-col items-center gap-1.5 pt-0.5 outline-none">' +
         '<i class="hgi-stroke ' + catIcon(c) + ' text-[27px] leading-none transition group-hover:scale-110" style="color:' + col + '"></i>' +
         '<span class="whitespace-nowrap border-b-2 pb-2.5 text-[12.5px] transition ' +
@@ -185,7 +185,7 @@
           '<button type="button" data-save aria-label="Save event" class="' + SAVE_OFF + '"><i class="hgi-stroke hgi-favourite text-[16px]"></i></button>' +
         '</div>' +
         '<div class="pt-3">' +
-          '<p class="text-[11px] font-semibold uppercase tracking-wide" style="color:' + (ev.accent || '#1ba770') + '">' + esc(ev.category || 'Event') + '</p>' +
+          '<p class="text-[11px] font-semibold uppercase tracking-wide" style="color:' + (ev.accent || '#00c066') + '">' + esc(ev.category || 'Event') + '</p>' +
           '<h3 class="mt-1 line-clamp-2 text-[15.5px] font-bold leading-snug tracking-tight text-ink transition group-hover:text-brand">' + esc(ev.title) + '</h3>' +
           '<p class="mt-1.5 flex items-center gap-1.5 text-[12.5px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i><span class="truncate">' + esc(ev.dateText || '') + '</span></p>' +
           '<p class="mt-1 flex items-center gap-1.5 text-[12.5px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i><span class="truncate">' + esc([ev.venue, ev.city].filter(Boolean).join(', ')) + '</span></p>' +

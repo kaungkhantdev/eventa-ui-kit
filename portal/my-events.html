@@ -19,7 +19,7 @@
   .switch input{position:absolute;inset:0;opacity:0;cursor:pointer}
   .switch .track{height:1.25rem;width:2.25rem;border-radius:9999px;background:rgb(var(--line));transition:background .18s}
   .switch .dot{position:absolute;left:.125rem;height:1rem;width:1rem;border-radius:9999px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:transform .18s}
-  .switch input:checked + .track{background:#1ba770}
+  .switch input:checked + .track{background:#00c066}
   .switch input:checked ~ .dot{transform:translateX(1rem)}
 </style>
 </head>
@@ -652,7 +652,7 @@
   function tierOf(type) {
     return /vip/i.test(type || '')
       ? { bg: '#b4780a', fg: '#fff6e6', seam: '#8f5e00', tint: '#faf3e4' }
-      : { bg: '#1ba770', fg: '#ffffff', seam: '#148a5c', tint: '#e6f6ef' };
+      : { bg: '#00c066', fg: '#ffffff', seam: '#009951', tint: '#e6f9f0' };
   }
 
   /* parse "Sun, Jul 12, 2026 · 19:30" → date parts + doors (start − 30 min) + kicker */
@@ -805,12 +805,12 @@
   }
 
   /* Eventa logo mark (from assets/img/logo.svg, viewBox 1332×729) drawn via path so we can recolour it */
-  var LOGO_PATH = 'M275.605 49.9045C311.006 13.3051 359.936 -3.16751 407.512 0.501198H851.159C978.946 0.501307 1058.81 138.835 994.919 249.501L773.252 633.438C762.811 655.169 747.748 674.624 729.019 690.142C694.393 719.195 650.05 731.743 607.03 727.789L166.412 728.226C38.6249 728.352 -41.3783 590.097 22.4058 479.367L245.593 91.9104C253.367 76.4996 263.488 62.2943 275.605 49.9045Z';
+  var LOGO_PATH = 'M852.159 0C979.945 4.22562e-06 1059.81 138.333 995.919 249L770.303 639.776C743.208 691 689.894 728.202 623.673 728.268L166.411 728.719C38.625 728.845 -41.3782 590.591 22.4056 479.861L250.645 83.6357C259.165 68.8451 269.397 56.0271 280.884 45.1826C309.913 17.5643 349.363 -1.50572e-06 394.898 0H852.159Z';
   function drawLogo(ctx, x, y, w, color) {
     var s = w / 1332;
     ctx.save(); ctx.translate(x, y); ctx.scale(s, s); ctx.fillStyle = color;
     ctx.fill(new Path2D(LOGO_PATH));
-    ctx.beginPath(); ctx.arc(1159.38, 556.359, 172, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(1159.38, 556.859, 172, 0, Math.PI * 2); ctx.fill();
     ctx.restore();
   }
   /* brand lockup: logo mark + "Eventa" wordmark, laid out horizontally and centred on cx */
@@ -826,7 +826,7 @@
   function buildFlyer(t) {
     var S = 2, W = 1180, H = 480, M = 13, R = 22;
     var d = derive(t), w = d.when;
-    var PUR = '#1ba770', NAVY = '#0a3325', WHITE = '#ffffff';   /* Eventa brand green base + deep-green ink */
+    var PUR = '#00c066', NAVY = '#0a3325', WHITE = '#ffffff';   /* Eventa brand green base + deep-green ink */
     var AMBER = '#f6b93b', MINT = '#8bead0', DEEPG = '#0e8a5b', PALE = '#cdf5e4';
     var cv = document.createElement('canvas'); cv.width = W * S; cv.height = H * S;
     var ctx = cv.getContext('2d'); ctx.scale(S, S); ctx.textBaseline = 'alphabetic';

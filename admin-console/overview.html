@@ -198,13 +198,13 @@
     const ty = last[1] - th - 14;
     document.getElementById('rev-chart').innerHTML = `
       <svg viewBox="0 0 ${W} ${H}" class="w-full" style="height:auto" font-family="Inter, sans-serif">
-        <defs><linearGradient id="revfill" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#1ba770" stop-opacity="0.28"/><stop offset="100%" stop-color="#1ba770" stop-opacity="0"/></linearGradient></defs>
+        <defs><linearGradient id="revfill" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#00c066" stop-opacity="0.28"/><stop offset="100%" stop-color="#00c066" stop-opacity="0"/></linearGradient></defs>
         ${grid}
         <path d="${area}" fill="url(#revfill)"/>
-        <path d="${line}" fill="none" stroke="#1ba770" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+        <path d="${line}" fill="none" stroke="#00c066" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
         ${xl}
-        <line x1="${last[0]}" y1="${PT}" x2="${last[0]}" y2="${PT + plotH}" stroke="#1ba770" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
-        <circle cx="${last[0]}" cy="${last[1]}" r="6" fill="#1ba770" stroke="${cRing}" stroke-width="2.5"/>
+        <line x1="${last[0]}" y1="${PT}" x2="${last[0]}" y2="${PT + plotH}" stroke="#00c066" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+        <circle cx="${last[0]}" cy="${last[1]}" r="6" fill="#00c066" stroke="${cRing}" stroke-width="2.5"/>
         <rect x="${tx}" y="${ty}" width="${tw}" height="${th}" rx="7" fill="${cTipBg}"/>
         <text x="${tx + tw / 2}" y="${ty + th / 2 + 4}" text-anchor="middle" font-size="13" font-weight="700" fill="${cTipFg}">${tip}</text>
       </svg>`;
@@ -225,9 +225,9 @@
 
   /* ---------- Workspaces by plan (donut) ---------- */
   const plans = [
-    { name: 'Growth',     pct: 34, n: 106, c: '#1ba770' },
-    { name: 'Starter',    pct: 29, n: 90,  c: '#4cbd96' },
-    { name: 'Free',       pct: 26, n: 81,  c: '#9fe0cd' },
+    { name: 'Growth',     pct: 34, n: 106, c: '#00c066' },
+    { name: 'Starter',    pct: 29, n: 90,  c: '#3ecf8b' },
+    { name: 'Free',       pct: 26, n: 81,  c: '#a0e7c6' },
     { name: 'Enterprise', pct: 11, n: 35,  c: '#d1d5db' },
   ];
   const R = 15.915, GAP = 2.2, SW = 4.5;

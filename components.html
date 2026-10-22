@@ -16,8 +16,8 @@
   /* ---- Reference-site chrome (page-local; components themselves come from app.css) ---- */
   .ds-link { display:flex; align-items:center; gap:.5rem; padding:.3rem .6rem; border-radius:.5rem; font-size:12.5px; font-weight:500; color:rgb(var(--muted)); transition:.12s; }
   .ds-link:hover { color:rgb(var(--ink)); background:rgb(var(--line)); }
-  .ds-link.active { color:#1ba770; background:rgb(var(--brand-soft)); font-weight:600; }
-  html.dark .ds-link.active { color:#45c98f; }
+  .ds-link.active { color:#00c066; background:rgb(var(--brand-soft)); font-weight:600; }
+  html.dark .ds-link.active { color:#43d18e; }
   .ds-group { margin:1.1rem .6rem .35rem; font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgb(var(--muted)); }
   .ds-group:first-child { margin-top:0; }
 
@@ -1237,7 +1237,7 @@
                 </div>
               </div>
               <div class="space-y-3">
-                <div class="flex items-center justify-between gap-8"><div class="flex items-center gap-2.5"><span class="h-3.5 w-3.5 rounded" style="background:#1ba770"></span><p class="text-[13px] font-semibold text-ink">General</p></div><span class="text-[14px] font-bold tnum">42%</span></div>
+                <div class="flex items-center justify-between gap-8"><div class="flex items-center gap-2.5"><span class="h-3.5 w-3.5 rounded" style="background:#00c066"></span><p class="text-[13px] font-semibold text-ink">General</p></div><span class="text-[14px] font-bold tnum">42%</span></div>
                 <div class="flex items-center justify-between gap-8"><div class="flex items-center gap-2.5"><span class="h-3.5 w-3.5 rounded" style="background:#34d399"></span><p class="text-[13px] font-semibold text-ink">VIP</p></div><span class="text-[14px] font-bold tnum">28%</span></div>
                 <div class="flex items-center justify-between gap-8"><div class="flex items-center gap-2.5"><span class="h-3.5 w-3.5 rounded" style="background:#6ee7b7"></span><p class="text-[13px] font-semibold text-ink">Student</p></div><span class="text-[14px] font-bold tnum">18%</span></div>
                 <div class="flex items-center justify-between gap-8"><div class="flex items-center gap-2.5"><span class="h-3.5 w-3.5 rounded" style="background:#a7f3d0"></span><p class="text-[13px] font-semibold text-ink">Press</p></div><span class="text-[14px] font-bold tnum">12%</span></div>
@@ -1311,8 +1311,8 @@ const TOKENS = [
   { name: 'brand-soft', util: 'bg-brand-soft',  css: '--brand-soft',  note: 'Tonal brand fill' },
 ];
 const ACCENTS = [
-  { name: 'brand',      util: 'bg-brand',       css: '#1ba770', fixed: true, note: 'Primary actions' },
-  { name: 'brand-dark', util: 'text-brand-dark',css: '#157e56', fixed: true, note: 'Hover / emphasis' },
+  { name: 'brand',      util: 'bg-brand',       css: '#00c066', fixed: true, note: 'Primary actions' },
+  { name: 'brand-dark', util: 'text-brand-dark',css: '#00924e', fixed: true, note: 'Hover / emphasis' },
   { name: 'green',      util: 'badge-green',    css: 'accent',  note: 'Success' },
   { name: 'amber',      util: 'badge-amber',    css: 'accent',  note: 'Warning' },
   { name: 'red',        util: 'badge-red',      css: 'accent',  note: 'Danger' },
@@ -1322,8 +1322,8 @@ const ACCENTS = [
 ];
 function swatchCard(t) {
   let box;
-  if (t.name === 'brand') box = `<div class="swatch" style="background:#1ba770"></div>`;
-  else if (t.name === 'brand-dark') box = `<div class="swatch" style="background:#157e56"></div>`;
+  if (t.name === 'brand') box = `<div class="swatch" style="background:#00c066"></div>`;
+  else if (t.name === 'brand-dark') box = `<div class="swatch" style="background:#00924e"></div>`;
   else if (t.css === 'accent') box = `<div class="swatch grid place-items-center"><span class="badge badge-${t.name}">${t.name}</span></div>`;
   else box = `<div class="swatch" style="background:rgb(var(${t.css}))"></div>`;
   return `
@@ -1804,16 +1804,16 @@ function renderLine() {
   for (let g = 0; g <= 3; g++) { const y = pt + ih * g / 3; grids += `<line x1="${pl}" y1="${y}" x2="${W - pr}" y2="${y}" stroke="${grid}" stroke-width="1"/>`; }
   const last = pts[pts.length - 1];
   el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" class="w-full" style="height:auto">
-    <defs><linearGradient id="lc-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1ba770" stop-opacity="0.28"/><stop offset="100%" stop-color="#1ba770" stop-opacity="0"/></linearGradient></defs>
+    <defs><linearGradient id="lc-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00c066" stop-opacity="0.28"/><stop offset="100%" stop-color="#00c066" stop-opacity="0"/></linearGradient></defs>
     ${grids}
     <path d="${area}" fill="url(#lc-fill)"/>
-    <path d="${line}" fill="none" stroke="#1ba770" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="4.5" fill="#1ba770" stroke="${ringC}" stroke-width="2.5"/>
+    <path d="${line}" fill="none" stroke="#00c066" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="4.5" fill="#00c066" stroke="${ringC}" stroke-width="2.5"/>
   </svg>`;
 }
 function renderDonut() {
   const el = document.getElementById('demo-donut'); if (!el) return;
-  const segs = [{ v: 42, c: '#1ba770' }, { v: 28, c: '#34d399' }, { v: 18, c: '#6ee7b7' }, { v: 12, c: '#a7f3d0' }];
+  const segs = [{ v: 42, c: '#00c066' }, { v: 28, c: '#34d399' }, { v: 18, c: '#6ee7b7' }, { v: 12, c: '#a7f3d0' }];
   const GAP = 1.4; let start = 0;
   el.innerHTML = segs.map(s => {
     const dash = Math.max(0, s.v - GAP);
