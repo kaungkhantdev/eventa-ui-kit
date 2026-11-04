@@ -57,7 +57,8 @@ Pages are **grouped by area** — this matters because relative links depend on 
 │   ├── home.html           #   home landing (icon rail only, no sub-nav)
 │   └── dashboard.html      #   double-sidebar dashboard (rail = modules, panel = sub-nav)
 ├── .claude/launch.json     # Preview server config (python http.server on :4599)
-└── CLAUDE.md               # Detailed architecture notes / contributor guide
+├── AGENTS.md               # Instructions for AI coding agents
+└── CLAUDE.md               # Imports AGENTS.md for Claude Code
 ```
 
 ### Pages
@@ -81,7 +82,7 @@ Pages are **grouped by area** — this matters because relative links depend on 
 - **Compact scale** — ~13px base, 22px page titles & stat values, tabular numerals (`tnum`) on all figures.
 - **Charts are hand‑built inline SVG** (no chart library) — smooth area line + donut, redrawn on theme change.
 
-See [`CLAUDE.md`](CLAUDE.md) for the full shell contract, sidebar internals, and chart details.
+See [`AGENTS.md`](AGENTS.md) for the rules for editing pages: the shell contract, empty states and charts.
 
 ---
 
