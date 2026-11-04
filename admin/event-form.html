@@ -49,12 +49,12 @@
 
     <!-- top bar -->
     <div class="mb-5 flex items-center gap-3">
-      <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
       <a href="events.html" class="btn-icon shrink-0" title="Back to events"><i class="hgi-stroke hgi-arrow-left-01 text-[18px]"></i></a>
       <div class="ml-auto flex shrink-0 items-center gap-2.5">
         <a href="events.html" class="btn btn-soft"><i class="hgi-stroke hgi-note-03 text-[16px]"></i><span class="hidden sm:inline">Save as draft</span><span class="sm:hidden">Draft</span></a>
-        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
-        <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
+        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
+        <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px]">Event Manager</p></div></div>
       </div>
     </div>
 
@@ -63,7 +63,7 @@
 
       <!-- ============ STEP SIDEBAR ============ -->
       <aside class="lg:sticky lg:top-4 lg:self-start">
-        <nav class="flex items-center gap-1.5 text-[12px] font-medium text-muted">
+        <nav class="flex items-center gap-1.5 text-[12px] font-medium">
           <a href="events.html" class="transition hover:text-ink">Events</a>
           <i class="hgi-stroke hgi-arrow-right-01 text-[13px]"></i>
           <span class="text-ink">Create event</span>
@@ -81,7 +81,7 @@
         <section data-step-panel="0" class="space-y-3">
           <div>
             <h2 class="text-[20px] font-bold tracking-tight">Basics</h2>
-            <p class="mt-1 text-[13px] text-muted">Tell attendees what your event is about.</p>
+            <p class="mt-1 text-[13px]">Tell attendees what your event is about.</p>
           </div>
 
           <!-- Basic info -->
@@ -95,7 +95,7 @@
               <div>
                 <div class="mb-1.5 flex items-center justify-between">
                   <label class="label mb-0">Description</label>
-                  <span id="desc-count" class="text-[11px] font-medium text-muted tnum">0/250</span>
+                  <span id="desc-count" class="text-[11px] font-medium tnum">0/250</span>
                 </div>
                 <div id="desc-editor-wrap">
                   <div id="desc-editor"><p>Join 1,500+ founders, engineers and investors for two days of talks, workshops and networking at BITEC.</p></div>
@@ -128,7 +128,7 @@
             <label class="mt-3 flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-hair p-8 text-center transition-colors hover:border-brand">
               <span class="grid h-11 w-11 place-items-center rounded-full bg-brand-soft text-brand"><i class="hgi-stroke hgi-image-upload-01 text-[20px]"></i></span>
               <p class="text-[13px] font-semibold text-ink">Drag &amp; drop or <span class="text-brand">browse</span></p>
-              <p class="text-[11px] text-muted">Recommended 1600×900px · PNG or JPG · up to 5MB</p>
+              <p class="text-[11px]">Recommended 1600×900px · PNG or JPG · up to 5MB</p>
               <input type="file" class="hidden" accept="image/*" />
             </label>
           </section>
@@ -137,9 +137,9 @@
           <section class="card p-4">
             <div class="flex items-center justify-between">
               <h3 class="text-[14px] font-bold tracking-tight">Highlights</h3>
-              <span class="text-[11px] text-muted">Shown on the landing page</span>
+              <span class="text-[11px]">Shown on the landing page</span>
             </div>
-            <p class="mt-1 text-[12px] text-muted">Short selling points for your event — pick an icon and write a label for each.</p>
+            <p class="mt-1 text-[12px]">Short selling points for your event — pick an icon and write a label for each.</p>
             <div id="highlight-rows" class="mt-3 space-y-2"></div>
             <button type="button" id="add-highlight-row" class="btn btn-soft btn-sm mt-3"><i class="hgi-stroke hgi-add-01 text-[14px]"></i>Add highlight</button>
           </section>
@@ -149,7 +149,7 @@
         <section data-step-panel="1" class="hidden space-y-3">
           <div>
             <h2 class="text-[20px] font-bold tracking-tight">Date &amp; location</h2>
-            <p class="mt-1 text-[13px] text-muted">When and where your event happens.</p>
+            <p class="mt-1 text-[13px]">When and where your event happens.</p>
           </div>
 
           <!-- Date & time -->
@@ -181,14 +181,14 @@
               <button type="button" class="flex items-center gap-1" data-loc="online"><i class="hgi-stroke hgi-global text-[13px]"></i>Online</button>
             </div>
             <div class="mt-3 space-y-3" data-loc-panel="inperson">
-              <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">In-person details</p>
+              <p class="text-[11px] font-semibold uppercase tracking-wider">In-person details</p>
               <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div><label class="label">Venue name</label><input id="ef-venue" class="input" type="text" placeholder="e.g. BITEC" value="BITEC" /></div>
                 <div><label class="label">Address</label><input class="input" type="text" placeholder="Street, district, city" value="88 Bangna-Trad Rd, Bang Na, Bangkok" /></div>
               </div>
             </div>
             <div class="mt-3 hidden space-y-3" data-loc-panel="online">
-              <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Online details</p>
+              <p class="text-[11px] font-semibold uppercase tracking-wider">Online details</p>
               <div>
                 <label class="label">Meeting link</label>
                 <input class="input" type="url" placeholder="https://meet.eventa.io/tech-summit-2026" />
@@ -209,41 +209,41 @@
           </style>
           <div>
             <h2 class="text-[20px] font-bold tracking-tight">Seating</h2>
-            <p class="mt-1 text-[13px] text-muted">Choose how attendees get a spot — and preview the seat map they'll see.</p>
+            <p class="mt-1 text-[13px]">Choose how attendees get a spot — and preview the seat map they'll see.</p>
           </div>
 
           <!-- Seating -->
           <section class="card p-4">
             <h3 class="text-[14px] font-bold tracking-tight">Admission</h3>
-            <p class="mt-1 text-[12px] text-muted">How attendees get a spot at your event.</p>
+            <p class="mt-1 text-[12px]">How attendees get a spot at your event.</p>
             <div data-seating-inperson>
               <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2" data-seating-toggle>
                 <button type="button" data-seating="ga" class="flex items-start gap-3 rounded-xl border border-hair bg-surface p-3.5 text-left transition hover:border-brand/40">
                   <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-user-group text-[18px]"></i></span>
                   <span class="min-w-0 flex-1">
                     <span class="flex items-center justify-between gap-2"><span class="text-[13.5px] font-bold text-ink">General admission</span><span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border border-hair text-transparent" data-seating-check><i class="hgi-stroke hgi-tick-02 text-[12px]"></i></span></span>
-                    <span class="mt-0.5 block text-[12px] text-muted">No assigned seats — open or standing. Free or paid.</span>
+                    <span class="mt-0.5 block text-[12px]">No assigned seats — open or standing. Free or paid.</span>
                   </span>
                 </button>
                 <button type="button" data-seating="reserved" class="flex items-start gap-3 rounded-xl border border-hair bg-surface p-3.5 text-left transition hover:border-brand/40">
                   <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-seat-selector text-[18px]"></i></span>
                   <span class="min-w-0 flex-1">
                     <span class="flex items-center justify-between gap-2"><span class="text-[13.5px] font-bold text-ink">Reserved seating</span><span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border border-hair text-transparent" data-seating-check><i class="hgi-stroke hgi-tick-02 text-[12px]"></i></span></span>
-                    <span class="mt-0.5 block text-[12px] text-muted">Attendees pick their seat from a seat map at checkout.</span>
+                    <span class="mt-0.5 block text-[12px]">Attendees pick their seat from a seat map at checkout.</span>
                   </span>
                 </button>
               </div>
               <div class="mt-3 hidden rounded-xl border border-hair bg-canvas p-3.5" data-seating-config>
-                <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Seat map</p>
+                <p class="text-[11px] font-semibold uppercase tracking-wider">Seat map</p>
                 <div class="mt-2 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:items-end">
                   <div><label class="label">Rows</label><input id="ef-rows" class="input tnum" type="number" min="1" max="26" value="7" /></div>
                   <div><label class="label">Seats / row</label><input id="ef-cols" class="input tnum" type="number" min="1" max="40" value="16" /></div>
-                  <div class="rounded-lg bg-brand-soft px-3 py-2 text-center"><span class="block text-[11px] text-muted">Total seats</span><span id="ef-seat-total" class="text-[16px] font-bold text-brand tnum">112</span></div>
+                  <div class="rounded-lg bg-brand-soft px-3 py-2 text-center"><span class="block text-[11px]">Total seats</span><span id="ef-seat-total" class="text-[16px] font-bold text-brand tnum">112</span></div>
                 </div>
               </div>
               <!-- live seat-map preview -->
               <div class="mt-3 hidden" data-seating-preview>
-                <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Preview — what attendees see</p>
+                <p class="text-[11px] font-semibold uppercase tracking-wider">Preview — what attendees see</p>
                 <div class="efhouse mt-2 overflow-hidden rounded-2xl p-5">
                   <div class="mb-4 flex flex-col items-center">
                     <svg viewBox="0 0 400 28" class="w-full max-w-sm" preserveAspectRatio="none" aria-hidden="true"><path d="M8 24 Q200 2 392 24" fill="none" stroke="rgba(0,192,102,.7)" stroke-width="2.5" stroke-linecap="round"/></svg>
@@ -259,7 +259,7 @@
                 <p class="hint mt-2">The same green seat picker runs on the attendee ticket page.</p>
               </div>
             </div>
-            <p class="mt-3 hidden inline-flex items-center gap-1.5 text-[12px] text-muted" data-seating-online><i class="hgi-stroke hgi-video-01 text-[14px]"></i>Online event — no seating. A join link is emailed after registration.</p>
+            <p class="mt-3 hidden inline-flex items-center gap-1.5 text-[12px]" data-seating-online><i class="hgi-stroke hgi-video-01 text-[14px]"></i>Online event — no seating. A join link is emailed after registration.</p>
           </section>
         </section>
 
@@ -267,16 +267,16 @@
         <section data-step-panel="3" class="hidden space-y-3">
           <div>
             <h2 class="text-[20px] font-bold tracking-tight">Tickets &amp; registration</h2>
-            <p class="mt-1 text-[13px] text-muted">Add your ticket types, then set capacity and when registration is open.</p>
+            <p class="mt-1 text-[13px]">Add your ticket types, then set capacity and when registration is open.</p>
           </div>
 
           <!-- Tickets -->
           <section class="card p-4">
             <div class="flex items-center justify-between">
               <h3 class="text-[14px] font-bold tracking-tight">Ticket types</h3>
-              <span class="text-[11px] text-muted">Add one or more</span>
+              <span class="text-[11px]">Add one or more</span>
             </div>
-            <div class="mt-3 hidden gap-2 text-[11px] font-semibold uppercase tracking-wider text-muted sm:grid sm:grid-cols-12">
+            <div class="mt-3 hidden gap-2 text-[11px] font-semibold uppercase tracking-wider sm:grid sm:grid-cols-12">
               <div class="sm:col-span-5">Ticket name</div>
               <div class="sm:col-span-3">Price (฿)</div>
               <div class="sm:col-span-3">Quantity</div>
@@ -311,7 +311,7 @@
               <div class="flex items-center justify-between gap-3">
                 <div class="min-w-0">
                   <p class="text-[13px] font-semibold text-ink">Require approval</p>
-                  <p class="text-[11px] text-muted">Manually review each registration before it's confirmed.</p>
+                  <p class="text-[11px]">Manually review each registration before it's confirmed.</p>
                 </div>
                 <button type="button" class="flex h-5 w-9 shrink-0 items-center rounded-full bg-line p-0.5" data-toggle>
                   <span class="h-4 w-4 rounded-full bg-white shadow transition-transform"></span>
@@ -320,7 +320,7 @@
               <div class="flex items-center justify-between gap-3 border-t border-line pt-3">
                 <div class="min-w-0">
                   <p class="text-[13px] font-semibold text-ink">Enable waitlist</p>
-                  <p class="text-[11px] text-muted">Let attendees join a waitlist once capacity is reached.</p>
+                  <p class="text-[11px]">Let attendees join a waitlist once capacity is reached.</p>
                 </div>
                 <button type="button" class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5" data-toggle>
                   <span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition-transform"></span>
@@ -334,7 +334,7 @@
         <section data-step-panel="4" class="hidden space-y-3">
           <div>
             <h2 class="text-[20px] font-bold tracking-tight">Review &amp; publish</h2>
-            <p class="mt-1 text-[13px] text-muted">Choose a landing-page template and set how your event appears.</p>
+            <p class="mt-1 text-[13px]">Choose a landing-page template and set how your event appears.</p>
           </div>
 
           <!-- Landing page -->
@@ -343,7 +343,7 @@
               <h3 class="text-[14px] font-bold tracking-tight">Landing page</h3>
               <a href="landing-pages.html" class="text-[12px] font-semibold text-brand hover:underline">Browse templates</a>
             </div>
-            <p class="mt-1 text-[12px] text-muted">Choose a website template — its title, date, venue, agenda and tickets fill in automatically.</p>
+            <p class="mt-1 text-[12px]">Choose a website template — its title, date, venue, agenda and tickets fill in automatically.</p>
             <div class="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
               <label class="relative block cursor-pointer">
                 <input type="radio" name="landing-tpl" value="aurora" class="peer sr-only" checked />
@@ -351,7 +351,7 @@
                 <div class="rounded-xl bg-canvas p-2 transition hover:bg-line peer-checked:bg-brand-soft peer-checked:ring-2 peer-checked:ring-brand/40">
                   <div class="h-14 overflow-hidden rounded-lg bg-white"><div class="h-5 bg-gradient-to-r from-brand to-emerald-400"></div><div class="space-y-1 p-1.5"><div class="h-1.5 w-10 rounded bg-neutral-800"></div><div class="h-1 w-8 rounded bg-neutral-300"></div></div></div>
                   <p class="mt-2 text-[12.5px] font-semibold text-ink">Classic</p>
-                  <p class="text-[10.5px] text-muted">All-purpose</p>
+                  <p class="text-[10.5px]">All-purpose</p>
                 </div>
               </label>
               <label class="relative block cursor-pointer">
@@ -360,7 +360,7 @@
                 <div class="rounded-xl bg-canvas p-2 transition hover:bg-line peer-checked:bg-brand-soft peer-checked:ring-2 peer-checked:ring-brand/40">
                   <div class="grid h-14 grid-cols-5 gap-1 rounded-lg bg-white p-1.5"><div class="col-span-3 space-y-1"><div class="h-1.5 w-full rounded bg-neutral-800"></div><div class="h-1 w-3/4 rounded bg-neutral-300"></div><div class="mt-0.5 h-2 w-6 rounded bg-brand"></div></div><div class="col-span-2 rounded bg-brand-soft"></div></div>
                   <p class="mt-2 text-[12.5px] font-semibold text-ink">Spotlight</p>
-                  <p class="text-[10.5px] text-muted">Ticket-focused</p>
+                  <p class="text-[10.5px]">Ticket-focused</p>
                 </div>
               </label>
               <label class="relative block cursor-pointer">
@@ -369,13 +369,13 @@
                 <div class="rounded-xl bg-canvas p-2 transition hover:bg-line peer-checked:bg-brand-soft peer-checked:ring-2 peer-checked:ring-brand/40">
                   <div class="flex h-14 flex-col items-center justify-center gap-1 rounded-lg bg-white"><div class="h-1 w-4 rounded-full bg-brand"></div><div class="h-1.5 w-14 rounded bg-neutral-800"></div><div class="h-px w-16 bg-neutral-200"></div><div class="h-2 w-8 rounded bg-brand"></div></div>
                   <p class="mt-2 text-[12.5px] font-semibold text-ink">Minimal</p>
-                  <p class="text-[10.5px] text-muted">Understated</p>
+                  <p class="text-[10.5px]">Understated</p>
                 </div>
               </label>
             </div>
             <div class="mt-3 flex flex-wrap items-center gap-2 border-t border-line pt-3">
               <button type="button" id="preview-landing" class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-play text-[14px]"></i>Preview landing page</button>
-              <span class="text-[11px] text-muted">Opens in a new tab with the details you've entered.</span>
+              <span class="text-[11px]">Opens in a new tab with the details you've entered.</span>
             </div>
           </section>
 
@@ -402,13 +402,13 @@
             </div>
             <p class="hint mt-2">Public events are listed on the Eventa discovery page. You can edit details anytime before it goes live.</p>
             <div class="mt-4 border-t border-line pt-3">
-              <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Publish checklist</p>
+              <p class="text-[11px] font-semibold uppercase tracking-wider">Publish checklist</p>
               <ul class="mt-2.5 space-y-2">
                 <li class="flex items-center gap-2 text-[13px] text-ink"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px] text-brand"></i>Title &amp; description added</li>
                 <li class="flex items-center gap-2 text-[13px] text-ink"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px] text-brand"></i>Date &amp; time set</li>
                 <li class="flex items-center gap-2 text-[13px] text-ink"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px] text-brand"></i>Location added</li>
                 <li class="flex items-center gap-2 text-[13px] text-ink"><i class="hgi-stroke hgi-checkmark-circle-02 text-[15px] text-brand"></i>At least one ticket type</li>
-                <li class="flex items-center gap-2 text-[13px] text-muted"><i class="hgi-stroke hgi-alert-circle text-[15px] text-amber-500 dark:text-amber-300"></i>Cover image not uploaded</li>
+                <li class="flex items-center gap-2 text-[13px]"><i class="hgi-stroke hgi-alert-circle text-[15px] text-amber-500 dark:text-amber-300"></i>Cover image not uploaded</li>
               </ul>
             </div>
           </section>
@@ -429,12 +429,12 @@
             <p id="wz-tip" class="mt-2 text-[12.5px] leading-relaxed text-white/75"></p>
           </div>
           <div class="card p-4">
-            <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Summary</p>
+            <p class="text-[11px] font-semibold uppercase tracking-wider">Summary</p>
             <div class="mt-2.5 space-y-2 text-[12.5px]">
-              <div class="flex items-center justify-between gap-2"><span class="text-muted">Event</span><span id="sum-title" class="max-w-[150px] truncate font-semibold text-ink">Tech Summit 2026</span></div>
-              <div class="flex items-center justify-between gap-2"><span class="text-muted">Ticket types</span><span id="sum-tickets" class="font-semibold text-ink tnum">2</span></div>
-              <div class="flex items-center justify-between gap-2"><span class="text-muted">Capacity</span><span id="sum-cap" class="font-semibold text-ink tnum">1,500</span></div>
-              <div class="flex items-center justify-between gap-2"><span class="text-muted">Seating</span><span id="sum-seating" class="font-semibold text-ink">General admission</span></div>
+              <div class="flex items-center justify-between gap-2"><span>Event</span><span id="sum-title" class="max-w-[150px] truncate font-semibold text-ink">Tech Summit 2026</span></div>
+              <div class="flex items-center justify-between gap-2"><span>Ticket types</span><span id="sum-tickets" class="font-semibold text-ink tnum">2</span></div>
+              <div class="flex items-center justify-between gap-2"><span>Capacity</span><span id="sum-cap" class="font-semibold text-ink tnum">1,500</span></div>
+              <div class="flex items-center justify-between gap-2"><span>Seating</span><span id="sum-seating" class="font-semibold text-ink">General admission</span></div>
             </div>
           </div>
         </div>
@@ -442,7 +442,7 @@
 
     </div>
 
-    <p class="mt-6 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+    <p class="mt-6 text-center text-[11px]">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
     </div>
   </main>
 </div>
@@ -635,9 +635,9 @@
       const done = i < cur, active = i === cur;
       const dot = done
         ? '<span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand text-white"><i class="hgi-stroke hgi-tick-02 text-[13px]"></i></span>'
-        : '<span class="grid h-6 w-6 shrink-0 place-items-center rounded-full text-[11px] font-bold ' + (active ? 'border-2 border-brand text-brand' : 'border border-hair text-muted') + '">' + (i + 1) + '</span>';
+        : '<span class="grid h-6 w-6 shrink-0 place-items-center rounded-full text-[11px] font-bold ' + (active ? 'border-2 border-brand text-brand' : 'border border-hair') + '">' + (i + 1) + '</span>';
       return '<button type="button" data-step-to="' + i + '" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition ' + (active ? 'bg-brand-soft' : 'hover:bg-line') + '">' +
-        dot + '<span class="text-[13px] font-semibold ' + ((active || done) ? 'text-ink' : 'text-muted') + '">' + s.label + '</span></button>';
+        dot + '<span class="text-[13px] font-semibold ' + ((active || done) ? 'text-ink' : '') + '">' + s.label + '</span></button>';
     }).join('');
   }
   function render() {
@@ -710,7 +710,6 @@
       const len = Math.max(0, quill.getLength() - 1);
       descCount.textContent = len + '/' + DESC_MAX;
       descCount.classList.toggle('text-red-500', len >= DESC_MAX);
-      descCount.classList.toggle('text-muted', len < DESC_MAX);
     }
     quill.on('text-change', () => {
       if (quill.getLength() - 1 > DESC_MAX) quill.deleteText(DESC_MAX, quill.getLength(), 'silent');

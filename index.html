@@ -25,14 +25,14 @@
       <span class="text-[26px] font-extrabold tracking-tight text-brand-dark">Eventa</span>
     </div>
     <h1 class="mx-auto mt-5 max-w-2xl text-[30px] font-extrabold leading-tight tracking-tight sm:text-[38px]">Event Registration <span class="text-brand">UI Kit</span></h1>
-    <p class="mx-auto mt-3 max-w-xl text-[14px] text-muted">A complete, responsive admin &amp; attendee interface — events, registrations, tickets, check-in, payments, analytics and more. Built with HTML, Tailwind CSS, Hugeicons &amp; Motion. Light &amp; dark ready.</p>
+    <p class="mx-auto mt-3 max-w-xl text-[14px]">A complete, responsive admin &amp; attendee interface — events, registrations, tickets, check-in, payments, analytics and more. Built with HTML, Tailwind CSS, Hugeicons &amp; Motion. Light &amp; dark ready.</p>
     <div class="mt-6 flex flex-wrap items-center justify-center gap-2.5">
       <a href="components.html" class="btn btn-primary"><i class="hgi-stroke hgi-grid-view text-[16px]"></i>Components</a>
       <a href="admin/dashboard.html" class="btn btn-ghost"><i class="hgi-stroke hgi-dashboard-speed-02 text-[16px]"></i>Open dashboard</a>
       <a href="auth/login.html" class="btn btn-ghost"><i class="hgi-stroke hgi-square-lock-01 text-[16px]"></i>Sign in</a>
       <a href="portal/my-events.html" class="btn btn-ghost"><i class="hgi-stroke hgi-ticket-02 text-[16px]"></i>Attendee portal</a>
     </div>
-    <div class="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-[12px] text-muted">
+    <div class="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-[12px]">
       <span class="inline-flex items-center gap-1.5"><i class="hgi-stroke hgi-tick-02 text-[14px] text-brand"></i>23 screens</span>
       <span class="inline-flex items-center gap-1.5"><i class="hgi-stroke hgi-tick-02 text-[14px] text-brand"></i>Dark mode</span>
       <span class="inline-flex items-center gap-1.5"><i class="hgi-stroke hgi-tick-02 text-[14px] text-brand"></i>Responsive</span>
@@ -43,7 +43,7 @@
   <!-- screen groups -->
   <div id="groups" class="mt-12 space-y-9"></div>
 
-  <p class="mt-12 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS, Hugeicons &amp; Motion</p>
+  <p class="mt-12 text-center text-[11px]">Eventa · Event registration system · HTML, Tailwind CSS, Hugeicons &amp; Motion</p>
 </div>
 
 <script>
@@ -110,15 +110,15 @@
 
   document.getElementById('groups').innerHTML = GROUPS.map(g => `
     <section>
-      <h2 class="mb-3 text-[12px] font-semibold uppercase tracking-wider text-muted">${g.title}</h2>
+      <h2 class="mb-3 text-[12px] font-semibold uppercase tracking-wider">${g.title}</h2>
       <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
         ${g.items.map(it => `
           <a href="${it.href}" class="card group p-4 transition hover:ring-2 hover:ring-brand/25">
             <div class="flex items-start gap-3">
               <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke ${it.icon} text-[20px]"></i></span>
               <div class="min-w-0">
-                <p class="flex items-center gap-1 text-[14px] font-semibold text-ink">${it.name}<i class="hgi-stroke hgi-arrow-right-01 text-[14px] text-muted opacity-0 transition group-hover:translate-x-0.5 group-hover:opacity-100"></i></p>
-                <p class="mt-0.5 text-[12px] leading-snug text-muted">${it.desc}</p>
+                <p class="flex items-center gap-1 text-[14px] font-semibold text-ink">${it.name}<i class="hgi-stroke hgi-arrow-right-01 text-[14px] opacity-0 transition group-hover:translate-x-0.5 group-hover:opacity-100"></i></p>
+                <p class="mt-0.5 text-[12px] leading-snug">${it.desc}</p>
               </div>
             </div>
           </a>`).join('')}

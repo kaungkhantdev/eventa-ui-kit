@@ -25,13 +25,13 @@
     <!-- header -->
     <div class="mb-4 flex items-center justify-between gap-3">
       <div class="flex min-w-0 items-center gap-3">
-        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
         <div class="min-w-0">
           <h1 class="text-[22px] font-bold tracking-tight">Tickets</h1>
-          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Manage ticket types across your events.</p>
+          <p class="mt-0.5 hidden truncate text-[12px] sm:block">Manage ticket types across your events.</p>
         </div>
       </div>
-      <div class="flex shrink-0 items-center gap-2.5"><button type="button" class="btn btn-primary shrink-0" data-open="ticket-panel"><i class="hgi-stroke hgi-add-01 text-[16px]"></i><span class="hidden sm:inline">New ticket type</span><span class="sm:hidden">New</span></button><button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button><div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div></div>
+      <div class="flex shrink-0 items-center gap-2.5"><button type="button" class="btn btn-primary shrink-0" data-open="ticket-panel"><i class="hgi-stroke hgi-add-01 text-[16px]"></i><span class="hidden sm:inline">New ticket type</span><span class="sm:hidden">New</span></button><button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button><div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px]">Event Manager</p></div></div></div>
     </div>
 
     <!-- first run: no event exists, so nothing can be sold yet -->
@@ -57,7 +57,7 @@
     <!-- search + filter (out of cards) -->
     <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
-        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
         <input type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search ticket types…" />
       </div>
       <div class="relative w-full sm:w-56">
@@ -83,7 +83,7 @@
             <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-amber-50 text-amber-500 dark:bg-amber-400/15 dark:text-amber-300"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
             <div class="min-w-0">
               <p class="truncate text-[14px] font-semibold text-ink">VIP Access</p>
-              <p class="truncate text-[11px] text-muted">Tech Summit 2026</p>
+              <p class="truncate text-[11px]">Tech Summit 2026</p>
             </div>
           </div>
           <button class="btn-icon shrink-0" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
@@ -93,7 +93,7 @@
           <span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>On sale</span>
         </div>
         <div>
-          <div class="mb-1 flex items-center justify-between text-[11px] text-muted"><span class="tnum">210 / 250 sold</span><span class="tnum">84%</span></div>
+          <div class="mb-1 flex items-center justify-between text-[11px]"><span class="tnum">210 / 250 sold</span><span class="tnum">84%</span></div>
           <div class="h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:84%"></div></div>
         </div>
         <div class="mt-1 flex items-center gap-2 border-t border-hair pt-3">
@@ -110,7 +110,7 @@
             <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
             <div class="min-w-0">
               <p class="truncate text-[14px] font-semibold text-ink">General Admission</p>
-              <p class="truncate text-[11px] text-muted">Tech Summit 2026</p>
+              <p class="truncate text-[11px]">Tech Summit 2026</p>
             </div>
           </div>
           <button class="btn-icon shrink-0" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
@@ -120,7 +120,7 @@
           <span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>On sale</span>
         </div>
         <div>
-          <div class="mb-1 flex items-center justify-between text-[11px] text-muted"><span class="tnum">640 / 800 sold</span><span class="tnum">80%</span></div>
+          <div class="mb-1 flex items-center justify-between text-[11px]"><span class="tnum">640 / 800 sold</span><span class="tnum">80%</span></div>
           <div class="h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:80%"></div></div>
         </div>
         <div class="mt-1 flex items-center gap-2 border-t border-hair pt-3">
@@ -137,7 +137,7 @@
             <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
             <div class="min-w-0">
               <p class="truncate text-[14px] font-semibold text-ink">Early Bird</p>
-              <p class="truncate text-[11px] text-muted">Bangkok Jazz Night</p>
+              <p class="truncate text-[11px]">Bangkok Jazz Night</p>
             </div>
           </div>
           <button class="btn-icon shrink-0" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
@@ -147,7 +147,7 @@
           <span class="badge badge-amber"><i class="hgi-stroke hgi-alert-circle text-[12px]"></i>Sold out</span>
         </div>
         <div>
-          <div class="mb-1 flex items-center justify-between text-[11px] text-muted"><span class="tnum">300 / 300 sold</span><span class="tnum">100%</span></div>
+          <div class="mb-1 flex items-center justify-between text-[11px]"><span class="tnum">300 / 300 sold</span><span class="tnum">100%</span></div>
           <div class="h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:100%"></div></div>
         </div>
         <div class="mt-1 flex items-center gap-2 border-t border-hair pt-3">
@@ -164,7 +164,7 @@
             <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-500 dark:bg-blue-500/15 dark:text-blue-300"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
             <div class="min-w-0">
               <p class="truncate text-[14px] font-semibold text-ink">Student</p>
-              <p class="truncate text-[11px] text-muted">UX Bangkok Meetup</p>
+              <p class="truncate text-[11px]">UX Bangkok Meetup</p>
             </div>
           </div>
           <button class="btn-icon shrink-0" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
@@ -174,7 +174,7 @@
           <span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>On sale</span>
         </div>
         <div>
-          <div class="mb-1 flex items-center justify-between text-[11px] text-muted"><span class="tnum">120 / 150 sold</span><span class="tnum">80%</span></div>
+          <div class="mb-1 flex items-center justify-between text-[11px]"><span class="tnum">120 / 150 sold</span><span class="tnum">80%</span></div>
           <div class="h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:80%"></div></div>
         </div>
         <div class="mt-1 flex items-center gap-2 border-t border-hair pt-3">
@@ -191,7 +191,7 @@
             <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-purple-50 text-purple-500 dark:bg-purple-500/15 dark:text-purple-300"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
             <div class="min-w-0">
               <p class="truncate text-[14px] font-semibold text-ink">Premium Front Row</p>
-              <p class="truncate text-[11px] text-muted">Bangkok Jazz Night</p>
+              <p class="truncate text-[11px]">Bangkok Jazz Night</p>
             </div>
           </div>
           <button class="btn-icon shrink-0" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
@@ -201,7 +201,7 @@
           <span class="badge badge-blue"><i class="hgi-stroke hgi-time-schedule text-[12px]"></i>Scheduled</span>
         </div>
         <div>
-          <div class="mb-1 flex items-center justify-between text-[11px] text-muted"><span class="tnum">45 / 60 sold</span><span class="tnum">75%</span></div>
+          <div class="mb-1 flex items-center justify-between text-[11px]"><span class="tnum">45 / 60 sold</span><span class="tnum">75%</span></div>
           <div class="h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:75%"></div></div>
         </div>
         <div class="mt-1 flex items-center gap-2 border-t border-hair pt-3">
@@ -218,7 +218,7 @@
             <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
             <div class="min-w-0">
               <p class="truncate text-[14px] font-semibold text-ink">General Admission</p>
-              <p class="truncate text-[11px] text-muted">Thai Street Food Festival</p>
+              <p class="truncate text-[11px]">Thai Street Food Festival</p>
             </div>
           </div>
           <button class="btn-icon shrink-0" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
@@ -228,7 +228,7 @@
           <span class="badge badge-green"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i>On sale</span>
         </div>
         <div>
-          <div class="mb-1 flex items-center justify-between text-[11px] text-muted"><span class="tnum">890 / 1,000 sold</span><span class="tnum">89%</span></div>
+          <div class="mb-1 flex items-center justify-between text-[11px]"><span class="tnum">890 / 1,000 sold</span><span class="tnum">89%</span></div>
           <div class="h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:89%"></div></div>
         </div>
         <div class="mt-1 flex items-center gap-2 border-t border-hair pt-3">
@@ -245,7 +245,7 @@
             <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-amber-50 text-amber-500 dark:bg-amber-400/15 dark:text-amber-300"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
             <div class="min-w-0">
               <p class="truncate text-[14px] font-semibold text-ink">Retreat Package</p>
-              <p class="truncate text-[11px] text-muted">Sunrise Yoga Retreat</p>
+              <p class="truncate text-[11px]">Sunrise Yoga Retreat</p>
             </div>
           </div>
           <button class="btn-icon shrink-0" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
@@ -255,7 +255,7 @@
           <span class="badge badge-amber"><i class="hgi-stroke hgi-alert-circle text-[12px]"></i>Sold out</span>
         </div>
         <div>
-          <div class="mb-1 flex items-center justify-between text-[11px] text-muted"><span class="tnum">40 / 40 sold</span><span class="tnum">100%</span></div>
+          <div class="mb-1 flex items-center justify-between text-[11px]"><span class="tnum">40 / 40 sold</span><span class="tnum">100%</span></div>
           <div class="h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:100%"></div></div>
         </div>
         <div class="mt-1 flex items-center gap-2 border-t border-hair pt-3">
@@ -272,7 +272,7 @@
             <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gray-100 text-gray-500 dark:bg-white/10 dark:text-gray-300"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
             <div class="min-w-0">
               <p class="truncate text-[14px] font-semibold text-ink">Speaker Pass</p>
-              <p class="truncate text-[11px] text-muted">Tech Summit 2026</p>
+              <p class="truncate text-[11px]">Tech Summit 2026</p>
             </div>
           </div>
           <button class="btn-icon shrink-0" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
@@ -282,7 +282,7 @@
           <span class="badge badge-amber"><i class="hgi-stroke hgi-alert-circle text-[12px]"></i>Sold out</span>
         </div>
         <div>
-          <div class="mb-1 flex items-center justify-between text-[11px] text-muted"><span class="tnum">30 / 30 sold</span><span class="tnum">100%</span></div>
+          <div class="mb-1 flex items-center justify-between text-[11px]"><span class="tnum">30 / 30 sold</span><span class="tnum">100%</span></div>
           <div class="h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:100%"></div></div>
         </div>
         <div class="mt-1 flex items-center gap-2 border-t border-hair pt-3">
@@ -299,7 +299,7 @@
             <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gray-100 text-gray-500 dark:bg-white/10 dark:text-gray-300"><i class="hgi-stroke hgi-ticket-01 text-[18px]"></i></span>
             <div class="min-w-0">
               <p class="truncate text-[14px] font-semibold text-ink">Group Pass (5)</p>
-              <p class="truncate text-[11px] text-muted">UX Bangkok Meetup</p>
+              <p class="truncate text-[11px]">UX Bangkok Meetup</p>
             </div>
           </div>
           <button class="btn-icon shrink-0" title="More"><i class="hgi-stroke hgi-more-vertical text-[16px]"></i></button>
@@ -309,7 +309,7 @@
           <span class="badge badge-gray"><i class="hgi-stroke hgi-time-quarter-pass text-[12px]"></i>Paused</span>
         </div>
         <div>
-          <div class="mb-1 flex items-center justify-between text-[11px] text-muted"><span class="tnum">0 / 50 sold</span><span class="tnum">0%</span></div>
+          <div class="mb-1 flex items-center justify-between text-[11px]"><span class="tnum">0 / 50 sold</span><span class="tnum">0%</span></div>
           <div class="h-1.5 w-full rounded-full bg-line"><div class="h-1.5 rounded-full bg-brand" style="width:0%"></div></div>
         </div>
         <div class="mt-1 flex items-center gap-2 border-t border-hair pt-3">
@@ -321,7 +321,7 @@
 
     </div>
 
-    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+    <p class="mt-4 text-center text-[11px]">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
     </div>
   </main>
 </div>
@@ -402,15 +402,15 @@
   <div class="p-5 text-center">
     <div class="mx-auto grid h-11 w-11 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-qr-code-01 text-[20px]"></i></div>
     <h3 class="mt-3 text-[15px] font-bold tracking-tight" id="qr-title">Share ticket type</h3>
-    <p class="mt-1 text-[13px] text-muted" id="qr-sub">—</p>
+    <p class="mt-1 text-[13px]" id="qr-sub">—</p>
     <div class="mx-auto mt-4 w-full max-w-[210px] rounded-2xl border border-hair bg-white p-3">
       <div id="qr-canvas" class="aspect-square w-full overflow-hidden rounded-lg"></div>
     </div>
     <div class="mx-auto mt-4 flex max-w-full items-center gap-2 rounded-lg bg-canvas px-3 py-2">
-      <i class="hgi-stroke hgi-link-01 text-[14px] shrink-0 text-muted"></i>
+      <i class="hgi-stroke hgi-link-01 text-[14px] shrink-0"></i>
       <code id="qr-code" class="min-w-0 truncate text-[12.5px] font-semibold text-ink">—</code>
     </div>
-    <p class="mt-3 text-[12px] text-muted">Share this link or print the QR (poster, social, email) so attendees can register. Each buyer then gets their own unique entry QR in Check-in.</p>
+    <p class="mt-3 text-[12px]">Share this link or print the QR (poster, social, email) so attendees can register. Each buyer then gets their own unique entry QR in Check-in.</p>
     <div class="mt-4 space-y-2">
       <div class="flex gap-2">
         <button id="qr-copy" type="button" class="btn btn-soft flex-1"><i class="hgi-stroke hgi-copy-01 text-[15px]"></i>Copy link</button>
@@ -426,7 +426,7 @@
   <div class="p-5">
     <div class="grid h-10 w-10 place-items-center rounded-xl bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300"><i class="hgi-stroke hgi-alert-01 text-[18px]"></i></div>
     <h3 class="mt-3 text-[15px] font-bold tracking-tight">Delete ticket type?</h3>
-    <p class="mt-1 text-[13px] text-muted">This will permanently remove the ticket type. Attendees who already hold this ticket won't be affected.</p>
+    <p class="mt-1 text-[13px]">This will permanently remove the ticket type. Attendees who already hold this ticket won't be affected.</p>
     <div class="mt-4 flex gap-2">
       <button class="btn btn-soft flex-1" data-close>Cancel</button>
       <button class="btn btn-danger flex-1" data-close>Delete</button>

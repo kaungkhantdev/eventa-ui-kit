@@ -24,12 +24,12 @@
 
     <!-- header -->
     <header class="mb-5 flex items-center gap-3">
-      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
       <div class="min-w-0">
         <h1 class="text-[22px] font-bold tracking-tight">Issues</h1>
-        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Things wrong right now.</p>
+        <p class="mt-0.5 hidden truncate text-[12px] sm:block">Things wrong right now.</p>
       </div>
-      <button class="relative ml-auto grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+      <button class="relative ml-auto grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface transition hover:text-ink" title="Notifications">
         <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
         <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
       </button>
@@ -37,7 +37,7 @@
         <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
         <div class="hidden leading-tight sm:block">
           <p class="text-[13px] font-semibold text-ink">Rio S.</p>
-          <p class="text-[11px] text-muted">Platform admin</p>
+          <p class="text-[11px]">Platform admin</p>
         </div>
       </div>
     </header>
@@ -56,19 +56,19 @@
     <!-- summary -->
     <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-alert-02 text-[16px]"></i>Open</div>
-        <div class="mt-2 flex items-end justify-between"><p id="k-open" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="text-[12px] text-muted">of <span id="k-total" class="tnum">0</span> tracked</span></div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-alert-02 text-[16px]"></i>Open</div>
+        <div class="mt-2 flex items-end justify-between"><p id="k-open" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="text-[12px]">of <span id="k-total" class="tnum">0</span> tracked</span></div>
       </div>
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-alert-diamond text-[16px]"></i>Critical or high, open</div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-alert-diamond text-[16px]"></i>Critical or high, open</div>
         <div class="mt-2 flex items-end justify-between"><p id="k-severe" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>2 today</span></div>
       </div>
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-building-03 text-[16px]"></i>Workspaces impacted</div>
-        <div class="mt-2 flex items-end justify-between"><p id="k-ws" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="text-[12px] text-muted">of 312</span></div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-building-03 text-[16px]"></i>Workspaces impacted</div>
+        <div class="mt-2 flex items-end justify-between"><p id="k-ws" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="text-[12px]">of 312</span></div>
       </div>
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i>Resolved (30 days)</div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i>Resolved (30 days)</div>
         <div class="mt-2 flex items-end justify-between"><p id="k-resolved" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>1,6 h median</span></div>
       </div>
     </div>
@@ -85,11 +85,11 @@
     <!-- search + status filter -->
     <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
-        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
         <input id="iss-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search issues or workspaces…" />
       </div>
       <div class="relative w-full sm:w-52">
-        <i class="hgi-stroke hgi-filter text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <i class="hgi-stroke hgi-filter text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
         <select id="iss-status" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
           <option>All statuses</option>
           <option>Open</option>
@@ -103,7 +103,7 @@
     <section data-when-data class="mt-3 rounded-2xl bg-surface p-4 lg:p-5">
       <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
         <h2 class="text-[16px] font-bold tracking-tight">Detected issues</h2>
-        <span class="text-[12px] text-muted">Worst first · times are Asia/Bangkok</span>
+        <span class="text-[12px]">Worst first · times are Asia/Bangkok</span>
       </div>
       <div id="issue-table" class="overflow-x-auto">
         <table class="data-table min-w-[940px]">
@@ -114,7 +114,7 @@
         </table>
       </div>
 
-      <div id="iss-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+      <div id="iss-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px]">
         <p id="iss-showing"></p>
         <div class="flex items-center gap-3">
           <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
@@ -143,27 +143,27 @@
       <div class="rounded-xl border border-hair p-3.5">
         <div class="flex items-center justify-between gap-2">
           <span id="iv-sev"></span>
-          <p id="iv-id" class="font-mono text-[12px] text-muted"></p>
+          <p id="iv-id" class="font-mono text-[12px]"></p>
         </div>
         <h4 id="iv-title" class="mt-2 text-[16px] font-bold tracking-tight"></h4>
-        <p id="iv-detail" class="mt-1 text-[12.5px] leading-relaxed text-muted"></p>
+        <p id="iv-detail" class="mt-1 text-[12.5px] leading-relaxed"></p>
       </div>
 
       <dl class="overflow-hidden rounded-lg border border-hair">
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Detected by</dt><dd id="iv-source" class="text-[13px] font-medium text-ink"></dd></div>
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">First seen</dt><dd id="iv-first" class="text-[13px] text-ink tnum"></dd></div>
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Last seen</dt><dd id="iv-last" class="text-[13px] text-ink tnum"></dd></div>
-        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px] text-muted">Status</dt><dd id="iv-status" class="text-[13px] font-medium text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Detected by</dt><dd id="iv-source" class="text-[13px] font-medium text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">First seen</dt><dd id="iv-first" class="text-[13px] text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Last seen</dt><dd id="iv-last" class="text-[13px] text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px]">Status</dt><dd id="iv-status" class="text-[13px] font-medium text-ink"></dd></div>
       </dl>
 
       <div>
-        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted">Affected workspaces (<span id="iv-wscount" class="tnum">0</span>)</p>
+        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider">Affected workspaces (<span id="iv-wscount" class="tnum">0</span>)</p>
         <div id="iv-ws" class="flex flex-wrap gap-1.5"></div>
       </div>
 
       <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
-        <i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px] text-muted"></i>
-        <p id="iv-next" class="text-[12px] text-muted"></p>
+        <i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px]"></i>
+        <p id="iv-next" class="text-[12px]"></p>
       </div>
 
       <a id="iv-link" href="#" class="btn btn-soft w-full"><i class="hgi-stroke hgi-arrow-right-01 text-[16px]"></i><span id="iv-link-label">Open</span></a>
@@ -330,16 +330,16 @@
       '<span class="h-1.5 w-1.5 shrink-0 rounded-full ' + ST_DOT[s] + '"></span>' + esc(s) + '</span>';
   }
   function wsCell(ws) {
-    if (!ws.length) return '<span class="text-muted">Platform-wide</span>';
+    if (!ws.length) return '<span>Platform-wide</span>';
     if (ws.length === 1) return '<span class="text-ink">' + esc(ws[0]) + '</span>';
-    return '<span class="text-ink">' + esc(ws[0]) + '</span> <span class="text-muted tnum">+' + (ws.length - 1) + '</span>';
+    return '<span class="text-ink">' + esc(ws[0]) + '</span> <span class="tnum">+' + (ws.length - 1) + '</span>';
   }
   function rowHTML(i) {
     return '<tr>' +
       '<td>' + sevBadge(i.sev) + '</td>' +
-      '<td><p class="font-medium text-ink">' + esc(i.title) + '</p><p class="mt-0.5 text-[11.5px] text-muted">' + esc(i.detail) + '</p></td>' +
+      '<td><p class="font-medium text-ink">' + esc(i.title) + '</p><p class="mt-0.5 text-[11.5px]">' + esc(i.detail) + '</p></td>' +
       '<td>' + wsCell(i.ws) + '</td>' +
-      '<td class="whitespace-nowrap text-muted tnum">' + esc(i.first) + '</td>' +
+      '<td class="whitespace-nowrap tnum">' + esc(i.first) + '</td>' +
       '<td>' + statusCell(i.status) + '</td>' +
       '<td class="text-right"><button class="btn-icon" title="View issue" data-open="issue-view" data-view="' + esc(i.id) + '"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>' +
     '</tr>';
@@ -427,7 +427,7 @@
     iv.wscount.textContent = nf(i.ws.length);
     iv.ws.innerHTML = i.ws.length
       ? i.ws.map(w => '<span class="rounded-lg border border-hair px-2 py-1 text-[12px] font-medium text-ink">' + esc(w) + '</span>').join('')
-      : '<span class="text-[12.5px] text-muted">Platform-wide — no single workspace is the cause.</span>';
+      : '<span class="text-[12.5px]">Platform-wide — no single workspace is the cause.</span>';
     iv.next.textContent = i.next;
     iv.link.href = i.link.href;
     iv.linkLabel.textContent = i.link.label;

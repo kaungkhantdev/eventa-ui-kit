@@ -64,7 +64,7 @@
             <span id="hero-kicker">Kicker</span>
           </p>
           <h1 id="hero-title" class="reveal d1 mt-4 text-[32px] font-extrabold leading-[1.05] tracking-tight text-ink sm:text-[40px] lg:text-[44px]">Event title</h1>
-          <p id="hero-tagline" class="reveal d2 mt-4 max-w-[52ch] text-[15px] leading-relaxed text-muted sm:text-[16px]">Tagline</p>
+          <p id="hero-tagline" class="reveal d2 mt-4 max-w-[52ch] text-[15px] leading-relaxed sm:text-[16px]">Tagline</p>
           <div id="hero-facts" class="reveal d3 mt-8 flex flex-col gap-x-8 gap-y-3.5 sm:flex-row sm:flex-wrap" role="list"></div>
         </div>
 
@@ -73,10 +73,10 @@
           <div class="rounded-2xl bg-surface p-5 sm:p-6">
             <div class="flex items-center justify-between gap-3">
               <span id="rc-category" class="badge badge-green">Event</span>
-              <span id="rc-attendees" class="text-[12px] font-medium text-muted"></span>
+              <span id="rc-attendees" class="text-[12px] font-medium"></span>
             </div>
             <div class="mt-5">
-              <div id="rc-price-label" class="text-[11px] font-semibold uppercase tracking-wide text-muted">Starting from</div>
+              <div id="rc-price-label" class="text-[11px] font-semibold uppercase tracking-wide">Starting from</div>
               <div id="rc-price" class="mt-1 text-[34px] font-extrabold leading-none tracking-tight text-ink tnum">—</div>
             </div>
             <a id="rc-register" href="#" class="mt-5 inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand px-4 py-3 text-[14px] font-semibold text-white transition hover:bg-brand-dark">
@@ -103,10 +103,10 @@
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-[1.4fr_1fr] lg:gap-10">
         <div>
           <h2 id="lbl-about" class="text-[18px] font-bold text-ink">About this event</h2>
-          <p id="about-text" class="mt-4 text-[14.5px] leading-relaxed text-muted"></p>
+          <p id="about-text" class="mt-4 text-[14.5px] leading-relaxed"></p>
         </div>
         <div class="rounded-2xl bg-surface p-5 sm:p-6">
-          <div class="mb-1 text-[12px] font-semibold uppercase tracking-wide text-muted">Event details</div>
+          <div class="mb-1 text-[12px] font-semibold uppercase tracking-wide">Event details</div>
           <dl id="about-facts" class="divide-y divide-line"></dl>
         </div>
       </div>
@@ -149,14 +149,14 @@
       <h2 class="mx-auto mt-3 max-w-[20ch] text-[24px] font-extrabold tracking-tight text-ink sm:text-[30px]">
         Save your place at <span id="foot-title">the event</span>
       </h2>
-      <p id="foot-when" class="mt-3 text-[14px] text-muted"></p>
+      <p id="foot-when" class="mt-3 text-[14px]"></p>
       <a id="footer-register" href="#" class="mt-6 inline-flex items-center gap-1.5 rounded-lg bg-brand px-5 py-3 text-[14px] font-semibold text-white transition hover:bg-brand-dark">
         Register now<i class="hgi-stroke hgi-arrow-right-01 text-[16px]"></i>
       </a>
     </div>
 
     <div class="mt-6 flex flex-col items-center justify-between gap-4 sm:flex-row">
-      <div class="text-[13px] text-muted">Organised by <strong id="footer-organizer" class="font-semibold text-ink">Organizer</strong></div>
+      <div class="text-[13px]">Organised by <strong id="footer-organizer" class="font-semibold text-ink">Organizer</strong></div>
       <div class="flex items-center gap-2">
         <a id="footer-email" href="#" class="inline-flex items-center gap-2 rounded-lg bg-surface px-3 py-2 text-[13px] font-medium text-ink transition hover:text-brand">
           <i class="hgi-stroke hgi-mail-01 text-[16px]"></i><span id="footer-email-text">email</span>
@@ -170,7 +170,7 @@
       </div>
     </div>
 
-    <div class="mt-6 text-center text-[12px] text-muted">© <span id="foot-year">2026</span> <span id="foot-org2">Organizer</span> · Built with Eventa.</div>
+    <div class="mt-6 text-center text-[12px]">© <span id="foot-year">2026</span> <span id="foot-org2">Organizer</span> · Built with Eventa.</div>
   </footer>
 
   <script src="../assets/landing-data.js"></script>
@@ -239,7 +239,7 @@
         return '<div class="flex items-start gap-3">' +
           '<i class="hgi-stroke ' + esc(f.icon) + ' text-[17px] mt-0.5 flex-none text-brand"></i>' +
           '<div class="min-w-0">' +
-          '<dt class="text-[11px] uppercase tracking-wide text-muted">' + esc(f.k) + '</dt>' +
+          '<dt class="text-[11px] uppercase tracking-wide">' + esc(f.k) + '</dt>' +
           '<dd class="text-[13px] font-medium text-ink">' + esc(f.v) + '</dd>' +
           '</div></div>';
       }).join(''));
@@ -265,7 +265,7 @@
       ].filter(function (r) { return r[1]; });
       html('about-facts', aboutRows.map(function (r) {
         return '<div class="flex items-baseline justify-between gap-4 py-3">' +
-          '<dt class="flex-none text-[12px] uppercase tracking-wide text-muted">' + esc(r[0]) + '</dt>' +
+          '<dt class="flex-none text-[12px] uppercase tracking-wide">' + esc(r[0]) + '</dt>' +
           '<dd class="text-right text-[13px] font-medium text-ink">' + esc(r[1]) + '</dd></div>';
       }).join(''));
 
@@ -275,7 +275,7 @@
         return '<li class="grid grid-cols-[64px_1fr] gap-4 py-4 first:pt-0 last:pb-0 sm:grid-cols-[92px_1fr]">' +
           '<div class="pt-0.5 text-[13px] font-semibold text-brand tnum">' + esc(a.time) + '</div>' +
           '<div><div class="text-[14.5px] font-semibold text-ink">' + esc(a.title) + '</div>' +
-          '<div class="mt-0.5 text-[13px] text-muted">' + esc(a.desc) + '</div></div></li>';
+          '<div class="mt-0.5 text-[13px]">' + esc(a.desc) + '</div></div></li>';
       }).join(''));
 
       // ---- speakers ----
@@ -284,7 +284,7 @@
         return '<div class="rounded-2xl bg-surface p-5">' +
           '<div class="avatar h-12 w-12 text-[15px]" aria-hidden="true">' + esc(s.initials) + '</div>' +
           '<div class="mt-4 text-[14.5px] font-semibold text-ink">' + esc(s.name) + '</div>' +
-          '<div class="mt-0.5 text-[12.5px] text-muted">' + esc(s.role) + '</div></div>';
+          '<div class="mt-0.5 text-[12.5px]">' + esc(s.role) + '</div></div>';
       }).join(''));
 
       // ---- tickets ----
@@ -322,8 +322,8 @@
         return '<details class="group px-3 sm:px-4"' + (i === 0 ? ' open' : '') + '>' +
           '<summary class="flex cursor-pointer items-center justify-between gap-4 py-4 text-[14.5px] font-semibold text-ink">' +
           '<span>' + esc(f.q) + '</span>' +
-          '<i class="hgi-stroke hgi-arrow-down-01 text-[18px] flex-none text-muted transition-transform group-open:rotate-180"></i></summary>' +
-          '<div class="pb-4 pr-8 text-[13.5px] leading-relaxed text-muted">' + esc(f.a) + '</div></details>';
+          '<i class="hgi-stroke hgi-arrow-down-01 text-[18px] flex-none transition-transform group-open:rotate-180"></i></summary>' +
+          '<div class="pb-4 pr-8 text-[13.5px] leading-relaxed">' + esc(f.a) + '</div></details>';
       }).join(''));
 
       // ---- footer ----

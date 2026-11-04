@@ -22,17 +22,17 @@
     <!-- header -->
     <div class="mb-4 flex items-center justify-between gap-3">
       <div class="flex min-w-0 items-center gap-3">
-        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
         <div class="min-w-0">
           <h1 class="text-[22px] font-bold tracking-tight">Invoices</h1>
-          <p class="mt-0.5 hidden text-[12px] text-muted sm:block">Bills issued to buyers — who still owes you. Looking for a charge or refund? <a href="payments.html" class="font-medium text-brand hover:underline">See Payments</a></p>
+          <p class="mt-0.5 hidden text-[12px] sm:block">Bills issued to buyers — who still owes you. Looking for a charge or refund? <a href="payments.html" class="font-medium text-brand hover:underline">See Payments</a></p>
         </div>
       </div>
       <div class="flex items-center gap-2">
         <button class="btn btn-ghost"><i class="hgi-stroke hgi-download-01 text-[16px]"></i><span class="hidden sm:inline">Export</span></button>
         <button class="btn btn-ghost"><i class="hgi-stroke hgi-refresh text-[16px]"></i><span class="hidden sm:inline">Refresh</span></button>
-        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
-        <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
+        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
+        <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px]">Event Manager</p></div></div>
       </div>
     </div>
 
@@ -59,7 +59,7 @@
     <!-- search + filter (out of table) -->
     <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
-        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
         <input id="inv-search" type="text" placeholder="Search invoice no. or buyer…" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" />
       </div>
       <div class="relative w-full sm:w-52">
@@ -107,7 +107,7 @@
         </div>
       </div>
 
-      <div id="inv-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+      <div id="inv-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px]">
         <p id="inv-showing"></p>
         <div class="flex items-center gap-3">
           <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
@@ -123,7 +123,7 @@
       </div>
     </section>
 
-    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+    <p class="mt-4 text-center text-[11px]">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
     </div>
   </main>
 
@@ -136,34 +136,34 @@
           <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-soft text-brand"><i class="hgi-stroke hgi-invoice-01 text-[20px]"></i></span>
           <div class="min-w-0">
             <h3 class="text-[15px] font-bold tracking-tight">Invoice <span id="ivd-no" class="font-mono">—</span></h3>
-            <p class="truncate text-[12px] text-muted">Order <span id="ivd-ref" class="font-mono text-ink">—</span></p>
+            <p class="truncate text-[12px]">Order <span id="ivd-ref" class="font-mono text-ink">—</span></p>
           </div>
         </div>
         <span id="ivd-status" class="badge badge-gray shrink-0">—</span>
       </div>
 
       <div class="mt-4 rounded-xl border border-hair p-3">
-        <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Billed to</p>
+        <p class="text-[11px] font-semibold uppercase tracking-wider">Billed to</p>
         <p id="ivd-buyer" class="mt-1 text-[14px] font-semibold text-ink">—</p>
-        <p id="ivd-email" class="truncate text-[12px] text-muted">—</p>
+        <p id="ivd-email" class="truncate text-[12px]">—</p>
       </div>
 
       <div class="mt-3 rounded-xl border border-hair">
         <div class="flex items-center justify-between gap-3 border-b border-line p-3">
           <div class="min-w-0">
             <p class="text-[13px] font-medium text-ink">Event ticket</p>
-            <p id="ivd-ev" class="truncate text-[11px] text-muted">—</p>
+            <p id="ivd-ev" class="truncate text-[11px]">—</p>
           </div>
           <span id="ivd-line" class="shrink-0 text-[13px] font-semibold text-ink tnum">—</span>
         </div>
         <div class="space-y-1.5 p-3 text-[12px]">
-          <div class="flex justify-between"><span class="text-muted">Subtotal (excl. VAT)</span><span id="ivd-sub" class="text-ink tnum">—</span></div>
-          <div class="flex justify-between"><span class="text-muted">VAT 7%</span><span id="ivd-vat" class="text-ink tnum">—</span></div>
+          <div class="flex justify-between"><span>Subtotal (excl. VAT)</span><span id="ivd-sub" class="text-ink tnum">—</span></div>
+          <div class="flex justify-between"><span>VAT 7%</span><span id="ivd-vat" class="text-ink tnum">—</span></div>
           <div class="mt-1 flex justify-between border-t border-line pt-2"><span class="font-semibold text-ink">Total</span><span id="ivd-total" class="text-[14px] font-bold text-ink tnum">—</span></div>
         </div>
       </div>
 
-      <div class="mt-3 space-y-1 text-[11px] text-muted">
+      <div class="mt-3 space-y-1 text-[11px]">
         <div class="flex justify-between gap-3"><span>Issued</span><span id="ivd-issued" class="text-ink">—</span></div>
         <div class="flex justify-between gap-3"><span>Due</span><span id="ivd-due" class="text-ink">—</span></div>
         <div class="flex justify-between gap-3"><span>Payment</span><span id="ivd-pay" class="text-ink">—</span></div>
@@ -258,15 +258,15 @@
     const st = statusOf(iv);
     const s = badgeStatus[st];
     const age = ageText(iv);
-    const ageCls = st === 'Overdue' ? 'text-red-500' : 'text-muted';
+    const ageCls = st === 'Overdue' ? 'text-red-500' : '';
     return `
     <tr>
       <td class="whitespace-nowrap font-mono text-[12.5px] font-semibold text-ink">${esc(iv.no)}</td>
       <td class="font-medium text-ink">${esc(iv.buyer)}</td>
-      <td class="text-muted">${esc(iv.ev)}</td>
+      <td>${esc(iv.ev)}</td>
       <td class="text-right font-semibold text-ink tnum">${fmtBaht(iv.amt)}</td>
       <td class="whitespace-nowrap"><span class="text-ink tnum">${esc(shortD(iv.due))}</span>${age ? `<span class="ml-1.5 text-[11px] font-medium ${ageCls}">${esc(age)}</span>` : ''}</td>
-      <td class="whitespace-nowrap"><span class="inline-flex items-center gap-2"><span class="${s.cls}"><i class="hgi-stroke ${s.icon} text-[12px]"></i>${esc(st)}</span>${st === 'Paid' ? `<span class="text-[11px] text-muted">${esc(payText(iv))}</span>` : ''}</span></td>
+      <td class="whitespace-nowrap"><span class="inline-flex items-center gap-2"><span class="${s.cls}"><i class="hgi-stroke ${s.icon} text-[12px]"></i>${esc(st)}</span>${st === 'Paid' ? `<span class="text-[11px]">${esc(payText(iv))}</span>` : ''}</span></td>
       <td class="text-right">
         <div class="flex items-center justify-end gap-1">
           <button class="btn-icon" data-open="invoice-modal" data-view data-no="${esc(iv.no)}" title="View invoice"><i class="hgi-stroke hgi-view text-[16px]"></i></button>

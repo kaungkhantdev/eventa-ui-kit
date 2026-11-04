@@ -38,7 +38,7 @@
       <span class="text-[15px] font-extrabold tracking-tight">Eventa</span>
     </a>
     <div class="flex items-center gap-1.5">
-      <a id="back-link" href="../index.html" class="hidden rounded-lg px-3 py-1.5 text-[13px] font-medium text-muted transition hover:bg-line hover:text-ink sm:inline-flex sm:items-center sm:gap-1.5"><i class="hgi-stroke hgi-arrow-left-01 text-[15px]"></i>Back to event</a>
+      <a id="back-link" href="../index.html" class="hidden rounded-lg px-3 py-1.5 text-[13px] font-medium transition hover:bg-line hover:text-ink sm:inline-flex sm:items-center sm:gap-1.5"><i class="hgi-stroke hgi-arrow-left-01 text-[15px]"></i>Back to event</a>
       <button id="theme-btn" class="btn-icon bg-surface" title="Toggle theme"><i class="hgi-stroke hgi-moon-02 text-[18px]"></i></button>
     </div>
   </div>
@@ -50,18 +50,18 @@
   <div class="mb-5">
     <p class="text-[12px] font-semibold uppercase tracking-wider text-brand">Register</p>
     <h1 id="ev-title" class="mt-1 text-[24px] font-extrabold tracking-tight sm:text-[28px]">Event</h1>
-    <p id="ev-meta" class="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px] text-muted"></p>
+    <p id="ev-meta" class="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px]"></p>
   </div>
 
   <!-- ticket type -->
   <section class="mb-6">
-    <h2 class="mb-2 text-[13px] font-bold uppercase tracking-wide text-muted">1 · Ticket type</h2>
+    <h2 class="mb-2 text-[13px] font-bold uppercase tracking-wide">1 · Ticket type</h2>
     <div id="tiers" class="grid grid-cols-1 gap-3 sm:grid-cols-2"></div>
   </section>
 
   <!-- step 2: seats (reserved) OR quantity (GA / online) -->
   <section>
-    <h2 id="step2-title" class="mb-2 text-[13px] font-bold uppercase tracking-wide text-muted">2 · Choose your seats</h2>
+    <h2 id="step2-title" class="mb-2 text-[13px] font-bold uppercase tracking-wide">2 · Choose your seats</h2>
 
     <!-- reserved: seat map -->
     <div id="seat-block">
@@ -85,39 +85,39 @@
           <span class="inline-flex items-center gap-2"><span class="seat seat-booked !h-4 !w-4 !rounded-[4px]"></span>Booked</span>
         </div>
       </div>
-      <p class="mt-2 text-center text-[12px] text-muted">Tap a seat to select. Up to 8 seats per booking.</p>
+      <p class="mt-2 text-center text-[12px]">Tap a seat to select. Up to 8 seats per booking.</p>
     </div>
 
     <!-- GA / online: quantity stepper -->
     <div id="qty-block" class="hidden">
       <div class="rounded-2xl border border-hair bg-surface p-6 text-center">
         <span class="mx-auto grid h-12 w-12 place-items-center rounded-xl bg-brand-soft text-brand"><i id="qty-icon" class="hgi-stroke hgi-user-group text-[22px]"></i></span>
-        <p id="qty-note" class="mx-auto mt-3 max-w-sm text-[13px] text-muted">General admission — no assigned seats.</p>
+        <p id="qty-note" class="mx-auto mt-3 max-w-sm text-[13px]">General admission — no assigned seats.</p>
         <div class="mt-4 inline-flex items-center gap-5">
           <button type="button" id="qty-minus" class="btn-icon bg-line" aria-label="Fewer tickets"><i class="hgi-stroke hgi-minus-sign text-[18px]"></i></button>
           <span id="qty-val" class="w-12 text-center text-[26px] font-extrabold tnum">1</span>
           <button type="button" id="qty-plus" class="btn-icon bg-line" aria-label="More tickets"><i class="hgi-stroke hgi-add-01 text-[18px]"></i></button>
         </div>
-        <p class="mt-1 text-[12px] text-muted">tickets · up to 8</p>
+        <p class="mt-1 text-[12px]">tickets · up to 8</p>
       </div>
     </div>
   </section>
 
   <!-- step 3: payment (paid events only) -->
   <section id="pay-block" class="mt-6 hidden">
-    <h2 class="mb-2 text-[13px] font-bold uppercase tracking-wide text-muted">3 · Payment</h2>
+    <h2 class="mb-2 text-[13px] font-bold uppercase tracking-wide">3 · Payment</h2>
     <div class="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_300px]">
       <!-- method + card -->
       <div class="card p-4 sm:p-5">
         <div class="grid grid-cols-2 gap-3" id="pay-method">
           <button type="button" data-method="card" class="flex items-center gap-2.5 rounded-xl border border-hair bg-surface p-3 text-left transition hover:border-brand/40">
             <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-credit-card text-[18px]"></i></span>
-            <span class="min-w-0 flex-1"><span class="block text-[13.5px] font-bold text-ink">Card</span><span class="block text-[11.5px] text-muted">Visa · Mastercard</span></span>
+            <span class="min-w-0 flex-1"><span class="block text-[13.5px] font-bold text-ink">Card</span><span class="block text-[11.5px]">Visa · Mastercard</span></span>
             <span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border border-hair text-transparent" data-method-check><i class="hgi-stroke hgi-tick-02 text-[12px]"></i></span>
           </button>
           <button type="button" data-method="promptpay" class="flex items-center gap-2.5 rounded-xl border border-hair bg-surface p-3 text-left transition hover:border-brand/40">
             <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-qr-code-01 text-[18px]"></i></span>
-            <span class="min-w-0 flex-1"><span class="block text-[13.5px] font-bold text-ink">PromptPay</span><span class="block text-[11.5px] text-muted">Thai QR · banking app</span></span>
+            <span class="min-w-0 flex-1"><span class="block text-[13.5px] font-bold text-ink">PromptPay</span><span class="block text-[11.5px]">Thai QR · banking app</span></span>
             <span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border border-hair text-transparent" data-method-check><i class="hgi-stroke hgi-tick-02 text-[12px]"></i></span>
           </button>
         </div>
@@ -127,7 +127,7 @@
           <div>
             <label class="label">Card number</label>
             <div class="relative">
-              <i class="hgi-stroke hgi-credit-card pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[16px] text-muted"></i>
+              <i class="hgi-stroke hgi-credit-card pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[16px]"></i>
               <input id="pay-num" class="input pl-9 tnum" inputmode="numeric" autocomplete="cc-number" maxlength="19" placeholder="1234 5678 9012 3456" />
             </div>
           </div>
@@ -143,19 +143,19 @@
           <div class="rounded-xl border border-hair bg-canvas p-4 text-center">
             <span class="mx-auto grid h-11 w-11 place-items-center rounded-xl bg-brand-soft text-brand"><i class="hgi-stroke hgi-qr-code-01 text-[22px]"></i></span>
             <p class="mt-2 text-[13px] font-semibold text-ink">Pay with PromptPay</p>
-            <p class="mt-0.5 text-[12px] text-muted">A QR code to scan with your banking app is shown after you continue.</p>
+            <p class="mt-0.5 text-[12px]">A QR code to scan with your banking app is shown after you continue.</p>
           </div>
         </div>
 
-        <p class="mt-3 flex items-center gap-1.5 text-[11.5px] text-muted"><i class="hgi-stroke hgi-square-lock-02 text-[14px] text-brand"></i>Encrypted checkout · demo — no real payment is taken.</p>
+        <p class="mt-3 flex items-center gap-1.5 text-[11.5px]"><i class="hgi-stroke hgi-square-lock-02 text-[14px] text-brand"></i>Encrypted checkout · demo — no real payment is taken.</p>
       </div>
 
       <!-- order summary -->
       <div class="card h-fit p-4 sm:p-5">
-        <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Order summary</p>
+        <p class="text-[11px] font-semibold uppercase tracking-wider">Order summary</p>
         <div class="mt-3 space-y-2 text-[13px]">
-          <div class="flex items-center justify-between gap-2"><span id="os-tickets" class="text-muted">Tickets</span><span id="os-subtotal" class="font-semibold text-ink tnum">฿0</span></div>
-          <div class="flex items-center justify-between gap-2"><span class="text-muted">Service fee</span><span id="os-fee" class="font-semibold text-ink tnum">฿0</span></div>
+          <div class="flex items-center justify-between gap-2"><span id="os-tickets">Tickets</span><span id="os-subtotal" class="font-semibold text-ink tnum">฿0</span></div>
+          <div class="flex items-center justify-between gap-2"><span>Service fee</span><span id="os-fee" class="font-semibold text-ink tnum">฿0</span></div>
           <div class="flex items-center justify-between gap-2 border-t border-hair pt-2"><span class="font-semibold text-ink">Total</span><span id="os-total" class="text-[16px] font-extrabold text-brand tnum">฿0</span></div>
         </div>
       </div>
@@ -168,7 +168,7 @@
   <div class="mx-auto flex max-w-4xl items-center justify-between gap-3 px-4 py-3 lg:px-6">
     <div class="min-w-0">
       <p id="sum-seats" class="truncate text-[13px] font-semibold text-ink">No seats selected</p>
-      <p id="sum-total" class="text-[12px] text-muted">Select seats to continue</p>
+      <p id="sum-total" class="text-[12px]">Select seats to continue</p>
     </div>
     <button id="confirm" type="button" class="btn btn-primary shrink-0" disabled><i class="hgi-stroke hgi-ticket-02 text-[16px]"></i>Confirm registration</button>
   </div>
@@ -179,7 +179,7 @@
   <div class="w-full max-w-sm rounded-2xl bg-surface p-6 text-center shadow-xl">
     <span class="mx-auto grid h-14 w-14 place-items-center rounded-full bg-brand-soft text-brand"><i class="hgi-stroke hgi-checkmark-circle-02 text-[30px]"></i></span>
     <h3 class="mt-4 text-[18px] font-bold tracking-tight">You're registered!</h3>
-    <p id="done-msg" class="mt-1 text-[13px] text-muted"></p>
+    <p id="done-msg" class="mt-1 text-[13px]"></p>
     <div class="mt-5 flex flex-col gap-2">
       <a href="my-events.html" class="btn btn-primary w-full"><i class="hgi-stroke hgi-ticket-02 text-[16px]"></i>View my tickets</a>
       <a href="../index.html" class="btn btn-soft w-full">Back to Eventa</a>
@@ -247,7 +247,7 @@
       var on = tr.key === tier.key;
       return '<button type="button" data-tier="' + tr.key + '" class="flex items-center justify-between rounded-xl border p-3.5 text-left transition ' +
         (on ? 'border-brand bg-brand-soft ring-1 ring-brand' : 'border-hair bg-surface hover:border-brand/40') + '">' +
-        '<span><span class="block text-[14px] font-bold text-ink">' + tr.name + '</span><span class="block text-[12px] text-muted">' + tr.desc + '</span></span>' +
+        '<span><span class="block text-[14px] font-bold text-ink">' + tr.name + '</span><span class="block text-[12px]">' + tr.desc + '</span></span>' +
         '<span class="flex items-center gap-2"><span class="text-[15px] font-bold ' + (on ? 'text-brand' : 'text-ink') + '">' + baht(tr.price) + '</span>' +
         '<span class="grid h-5 w-5 place-items-center rounded-full border ' + (on ? 'border-brand bg-brand text-white' : 'border-hair text-transparent') + '"><i class="hgi-stroke hgi-tick-02 text-[12px]"></i></span></span>' +
         '</button>';

@@ -24,13 +24,13 @@
 
     <!-- header -->
     <header class="mb-5 flex items-center gap-3">
-      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
       <div class="min-w-0">
         <h1 class="text-[22px] font-bold tracking-tight">Integration logs</h1>
-        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Every call in and out.</p>
+        <p class="mt-0.5 hidden truncate text-[12px] sm:block">Every call in and out.</p>
       </div>
       <button type="button" class="btn btn-soft ml-auto shrink-0"><i class="hgi-stroke hgi-file-export text-[16px]"></i><span class="hidden sm:inline">Export window</span><span class="sm:hidden">Export</span></button>
-      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface transition hover:text-ink" title="Notifications">
         <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
         <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
       </button>
@@ -38,7 +38,7 @@
         <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
         <div class="hidden leading-tight sm:block">
           <p class="text-[13px] font-semibold text-ink">Rio S.</p>
-          <p class="text-[11px] text-muted">Platform admin</p>
+          <p class="text-[11px]">Platform admin</p>
         </div>
       </div>
     </header>
@@ -57,19 +57,19 @@
     <!-- summary tiles: the 24-hour window the log is drawn from -->
     <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-arrow-data-transfer-horizontal text-[16px]"></i>Calls (24 h)</div>
-        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">201,000</p><span class="text-[12px] text-muted tnum">vs 193k</span></div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-arrow-data-transfer-horizontal text-[16px]"></i>Calls (24 h)</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">201,000</p><span class="text-[12px] tnum">vs 193k</span></div>
       </div>
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-alert-02 text-[16px]"></i>Errors (24 h)</div>
-        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight text-red-500 tnum">7,637</p><span class="text-[12px] text-muted tnum">3,8 % of calls</span></div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-alert-02 text-[16px]"></i>Errors (24 h)</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight text-red-500 tnum">7,637</p><span class="text-[12px] tnum">3,8 % of calls</span></div>
       </div>
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-stop-watch text-[16px]"></i>Slow (over 2 s)</div>
-        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight text-amber-500 tnum">1,284</p><span class="text-[12px] text-muted tnum">0,6 % of calls</span></div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-stop-watch text-[16px]"></i>Slow (over 2 s)</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight text-amber-500 tnum">1,284</p><span class="text-[12px] tnum">0,6 % of calls</span></div>
       </div>
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-timer-01 text-[16px]"></i>p95 latency</div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-timer-01 text-[16px]"></i>p95 latency</div>
         <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">1,420 ms</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>62 %</span></div>
       </div>
     </div>
@@ -84,11 +84,11 @@
     <!-- search + provider filter -->
     <div data-when-data class="mt-2 flex w-full flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
-        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
         <input id="logs-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search endpoint, workspace or status…" />
       </div>
       <div class="relative w-full sm:w-56">
-        <i class="hgi-stroke hgi-connect text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <i class="hgi-stroke hgi-connect text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
         <select id="logs-provider" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
           <option>All providers</option>
           <option>Stripe</option>
@@ -103,7 +103,7 @@
         </select>
       </div>
       <div class="relative w-full sm:w-44">
-        <i class="hgi-stroke hgi-arrow-data-transfer-horizontal text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <i class="hgi-stroke hgi-arrow-data-transfer-horizontal text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
         <select id="logs-dir" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
           <option>All directions</option>
           <option>Outbound</option>
@@ -114,7 +114,7 @@
 
     <div data-when-data class="mt-4 flex flex-wrap items-center justify-between gap-2">
       <h2 class="text-[15px] font-bold tracking-tight">Live tail</h2>
-      <span class="text-[12px] text-muted">24 Aug 2026 · times in Asia/Bangkok (UTC+7)</span>
+      <span class="text-[12px]">24 Aug 2026 · times in Asia/Bangkok (UTC+7)</span>
     </div>
 
     <!-- table -->
@@ -137,7 +137,7 @@
         </table>
       </div>
 
-      <div id="log-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+      <div id="log-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px]">
         <p id="log-showing"></p>
         <div class="flex items-center gap-3">
           <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
@@ -165,29 +165,29 @@
     <div class="flex-1 space-y-4 overflow-y-auto p-4">
       <div class="card p-3.5">
         <div class="flex items-center justify-between gap-2">
-          <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-connect text-[16px]"></i><span id="lv-provider"></span></div>
+          <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-connect text-[16px]"></i><span id="lv-provider"></span></div>
           <span id="lv-badge"></span>
         </div>
         <p id="lv-endpoint" class="mt-1.5 break-all font-mono text-[13px] font-semibold text-ink"></p>
-        <p id="lv-id" class="mt-0.5 font-mono text-[11.5px] text-muted"></p>
+        <p id="lv-id" class="mt-0.5 font-mono text-[11.5px]"></p>
       </div>
 
       <dl class="overflow-hidden rounded-lg border border-hair">
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Time</dt><dd id="lv-time" class="text-[13px] text-ink tnum"></dd></div>
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Direction</dt><dd id="lv-dir" class="text-[13px] text-ink"></dd></div>
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Workspace</dt><dd id="lv-ws" class="text-[13px] text-ink"></dd></div>
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Duration</dt><dd id="lv-dur" class="text-[13px] text-ink tnum"></dd></div>
-        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px] text-muted">Retries</dt><dd id="lv-retry" class="text-[13px] text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Time</dt><dd id="lv-time" class="text-[13px] text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Direction</dt><dd id="lv-dir" class="text-[13px] text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Workspace</dt><dd id="lv-ws" class="text-[13px] text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Duration</dt><dd id="lv-dur" class="text-[13px] text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px]">Retries</dt><dd id="lv-retry" class="text-[13px] text-ink"></dd></div>
       </dl>
 
       <div>
-        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted">Response body</p>
-        <pre id="lv-body" class="overflow-x-auto rounded-lg border border-hair bg-canvas p-3 font-mono text-[11.5px] leading-relaxed text-muted"></pre>
+        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider">Response body</p>
+        <pre id="lv-body" class="overflow-x-auto rounded-lg border border-hair bg-canvas p-3 font-mono text-[11.5px] leading-relaxed"></pre>
       </div>
 
       <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
-        <i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px] text-muted"></i>
-        <p id="lv-note" class="text-[12px] text-muted"></p>
+        <i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px]"></i>
+        <p id="lv-note" class="text-[12px]"></p>
       </div>
     </div>
     <footer class="flex gap-2 border-t border-hair p-4">
@@ -268,7 +268,7 @@
   function isErr(r) { return r.s >= 400; }
   function isSlow(r) { return r.ms >= SLOW_MS; }
   function statusBadge(s) { return s >= 500 ? 'badge-red' : s >= 400 ? 'badge-amber' : 'badge-green'; }
-  function durTone(ms) { return ms >= 5000 ? 'text-red-500 font-semibold' : ms >= SLOW_MS ? 'text-amber-500 font-semibold' : 'text-muted'; }
+  function durTone(ms) { return ms >= 5000 ? 'text-red-500 font-semibold' : ms >= SLOW_MS ? 'text-amber-500 font-semibold' : ''; }
   function dur(ms) { return ms >= 1000 ? (ms / 1000).toFixed(2).replace('.', ',') + ' s' : ms + ' ms'; }
   function reqId(i) { return 'req_' + ('0000' + (98421 - i * 7)).slice(-5) + 'kx'; }
 
@@ -324,11 +324,11 @@
     var arrow = r.d === 'out' ? 'hgi-arrow-up-right-01' : 'hgi-arrow-down-left-01';
     var dirLabel = r.d === 'out' ? 'Outbound' : 'Inbound';
     return '<tr>' +
-      '<td class="whitespace-nowrap font-mono text-[12px] text-muted tnum">' + r.t + '</td>' +
+      '<td class="whitespace-nowrap font-mono text-[12px] tnum">' + r.t + '</td>' +
       '<td><div class="flex items-center gap-2"><span class="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-canvas text-ink"><i class="hgi-stroke ' + p.icon + ' text-[13px]"></i></span><span class="whitespace-nowrap font-medium text-ink">' + esc(p.name) + '</span></div></td>' +
-      '<td><span class="inline-flex items-center gap-1 whitespace-nowrap text-[12px] text-muted"><i class="hgi-stroke ' + arrow + ' text-[13px]"></i>' + dirLabel + '</span></td>' +
+      '<td><span class="inline-flex items-center gap-1 whitespace-nowrap text-[12px]"><i class="hgi-stroke ' + arrow + ' text-[13px]"></i>' + dirLabel + '</span></td>' +
       '<td><span class="font-mono text-[12px] text-ink">' + esc(r.ep) + '</span></td>' +
-      '<td class="text-muted">' + esc(r.ws) + '</td>' +
+      '<td>' + esc(r.ws) + '</td>' +
       '<td><span class="badge ' + statusBadge(r.s) + ' font-mono">' + r.s + '</span></td>' +
       '<td class="whitespace-nowrap text-right tnum ' + durTone(r.ms) + '">' + dur(r.ms) + '</td>' +
       '<td class="text-right"><button class="btn-icon" title="View call" data-open="log-view" data-log="' + i + '"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>' +

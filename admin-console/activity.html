@@ -24,15 +24,15 @@
 
     <!-- header -->
     <header class="mb-5 flex items-center gap-3">
-      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
       <div class="min-w-0">
         <h1 class="text-[22px] font-bold tracking-tight">Activity</h1>
-        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">What happened, most recent first.</p>
+        <p class="mt-0.5 hidden truncate text-[12px] sm:block">What happened, most recent first.</p>
       </div>
       <div class="ml-auto hidden shrink-0 sm:block">
         <a href="audit-logs.html" class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-legal-document-01 text-[15px]"></i>Audit logs</a>
       </div>
-      <button class="relative ml-auto grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink sm:ml-0" title="Notifications">
+      <button class="relative ml-auto grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface transition hover:text-ink sm:ml-0" title="Notifications">
         <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
         <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
       </button>
@@ -40,7 +40,7 @@
         <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
         <div class="hidden leading-tight sm:block">
           <p class="text-[13px] font-semibold text-ink">Rio S.</p>
-          <p class="text-[11px] text-muted">Platform admin</p>
+          <p class="text-[11px]">Platform admin</p>
         </div>
       </div>
     </header>
@@ -70,7 +70,7 @@
       <!-- the feed -->
       <div>
         <div class="relative">
-          <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+          <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
           <input id="ac-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search by person, action or workspace…" />
         </div>
 
@@ -78,7 +78,7 @@
           <div id="ac-feed"></div>
           <div id="ac-more-wrap" class="mt-4 flex flex-col items-center gap-2 border-t border-line pt-4">
             <button id="ac-more" type="button" class="btn btn-soft btn-sm"><i class="hgi-stroke hgi-arrow-down-01 text-[15px]"></i>Show older activity</button>
-            <p id="ac-count" class="text-[11px] text-muted"></p>
+            <p id="ac-count" class="text-[11px]"></p>
           </div>
         </section>
       </div>
@@ -87,7 +87,7 @@
       <div class="space-y-3">
         <section class="rounded-2xl bg-surface p-4 lg:p-5">
           <h2 class="text-[16px] font-bold tracking-tight">Today at a glance</h2>
-          <p class="mt-0.5 text-[12px] text-muted">Mon 24 Aug 2026 · Asia/Bangkok</p>
+          <p class="mt-0.5 text-[12px]">Mon 24 Aug 2026 · Asia/Bangkok</p>
           <div id="ac-today" class="mt-4 space-y-2.5"></div>
         </section>
 
@@ -97,19 +97,19 @@
             <a href="workspaces.html" class="text-[12px] font-semibold text-brand hover:underline">All workspaces</a>
           </div>
           <div id="ac-busy" class="space-y-2.5"></div>
-          <p class="mt-3 text-[11px] text-muted">Counted across the events on this page.</p>
+          <p class="mt-3 text-[11px]">Counted across the events on this page.</p>
         </section>
 
         <section class="rounded-2xl bg-surface p-4 lg:p-5">
           <div class="flex items-start gap-2">
-            <i class="hgi-stroke hgi-information-circle mt-0.5 shrink-0 text-[16px] text-muted"></i>
-            <p class="text-[12px] leading-relaxed text-muted">This feed keeps four weeks. Anything older, and anything you need with the full before-and-after record, is in <a href="audit-logs.html" class="font-semibold text-brand hover:underline">Audit logs</a>.</p>
+            <i class="hgi-stroke hgi-information-circle mt-0.5 shrink-0 text-[16px]"></i>
+            <p class="text-[12px] leading-relaxed">This feed keeps four weeks. Anything older, and anything you need with the full before-and-after record, is in <a href="audit-logs.html" class="font-semibold text-brand hover:underline">Audit logs</a>.</p>
           </div>
         </section>
       </div>
     </div>
 
-    <p data-when-data class="mt-4 text-center text-[11px] text-muted/70">Eventa · Internal console · HTML, Tailwind CSS &amp; Hugeicons</p>
+    <p data-when-data class="mt-4 text-center text-[11px]">Eventa · Internal console · HTML, Tailwind CSS &amp; Hugeicons</p>
     </div>
   </main>
 </div>
@@ -148,15 +148,15 @@
   var DATA = [
     e('d0','16:42','workspaces','hgi-rocket-01',        'text-brand',     'Somchai Tanakit',      'published *Bangkok Jazz Nights 2026*',                       'Bangkok Jazz Co.'),
     e('d0','16:05','billing',   'hgi-credit-card',      'text-brand',     'Eventa Billing',       'charged *฿12,900* for the Growth plan',                      'Chiang Mai Arts'),
-    e('d0','15:20','support',   'hgi-customer-support', 'text-muted',     'Napat Chai',           'replied to ticket *#4821* — payout not received',            'Phuket Marine Summit'),
+    e('d0','15:20','support',   'hgi-customer-support', '',     'Napat Chai',           'replied to ticket *#4821* — payout not received',            'Phuket Marine Summit'),
     e('d0','14:58','system',    'hgi-connect',          'text-red-500',   'Eventa',               'disabled a webhook endpoint after *20* consecutive failures','Thai Expo Group'),
     e('d0','13:31','workspaces','hgi-user-add-01',      'text-brand',     'Preeda Wong',          'invited *4 teammates*',                                      'PTT Events'),
     e('d0','11:47','billing',   'hgi-money-receive-01', 'text-brand',     'Rio S.',               'moved the workspace to *Enterprise*',                        'Siam Conferences'),
-    e('d0','10:12','system',    'hgi-mail-send-01',     'text-muted',     'Eventa',               'email relay caught up — outbox lag back under *30 s*',       'Platform'),
+    e('d0','10:12','system',    'hgi-mail-send-01',     '',     'Eventa',               'email relay caught up — outbox lag back under *30 s*',       'Platform'),
     e('d0','09:38','workspaces','hgi-link-square-02',   'text-brand',     'Kanya Srisuk',         'connected a *Stripe* account',                               'Isaan Food Festival'),
     e('d0','08:55','support',   'hgi-inbox',            'text-amber-500', 'Malee Pong',           'opened ticket *#4826* — duplicate attendee emails',          'Bangkok Runners Club'),
 
-    e('d1','22:14','system',    'hgi-time-schedule',    'text-muted',     'Eventa',               'nightly report job finished in *4 min 12 s*',                'Platform'),
+    e('d1','22:14','system',    'hgi-time-schedule',    '',     'Eventa',               'nightly report job finished in *4 min 12 s*',                'Platform'),
     e('d1','19:03','workspaces','hgi-calendar-add-01',  'text-brand',     'Anucha Meesri',        'created *Nimman Tech Meetup #24*',                           'Nimman Tech Meetup'),
     e('d1','17:40','billing',   'hgi-invoice-01',       'text-amber-500', 'Eventa Billing',       'invoice *INV-2026-0418* went overdue · ฿24,600',             'Royal Orchid Weddings'),
     e('d1','16:22','support',   'hgi-checkmark-circle-02','text-brand',   'Napat Chai',           'closed ticket *#4809* — refund processed',                   'Hua Hin Beach Fest'),
@@ -166,11 +166,11 @@
     e('d1','09:11','workspaces','hgi-building-03',      'text-brand',     'Thida Bunnag',         'signed up',                                                  'Silom Startup Nights'),
 
     e('d2','21:26','system',    'hgi-pulse-01',         'text-amber-500', 'Eventa',               'API p95 latency crossed *800 ms* for 6 minutes',             'Platform'),
-    e('d2','18:44','workspaces','hgi-file-export',      'text-muted',     'Somchai Tanakit',      'exported *3,140 attendees*',                                 'Bangkok Jazz Co.'),
+    e('d2','18:44','workspaces','hgi-file-export',      '',     'Somchai Tanakit',      'exported *3,140 attendees*',                                 'Bangkok Jazz Co.'),
     e('d2','15:09','support',   'hgi-inbox',            'text-amber-500', 'Ploy Rattana',         'opened ticket *#4801* — check-in app stuck offline',         'Chiang Mai Arts'),
     e('d2','13:52','billing',   'hgi-money-send-01',    'text-brand',     'Rio S.',               'issued a *฿8,200* credit note',                              'Northern Wellness'),
     e('d2','11:30','workspaces','hgi-rocket-01',        'text-brand',     'Kittipong Sae',        'published *Phuket Marine Summit 2026*',                      'Phuket Marine Summit'),
-    e('d2','08:20','system',    'hgi-wrench-01',        'text-muted',     'Eventa',               'scheduled maintenance window closed',                        'Platform'),
+    e('d2','08:20','system',    'hgi-wrench-01',        '',     'Eventa',               'scheduled maintenance window closed',                        'Platform'),
 
     e('d3','20:15','billing',   'hgi-credit-card',      'text-brand',     'Eventa Billing',       'Growth plan renewed · *฿12,900*',                            'Nimman Tech Meetup'),
     e('d3','17:33','workspaces','hgi-ticket-01',        'text-brand',     'Preeda Wong',          'sold the first ticket for *PTT Innovation Day*',             'PTT Events'),
@@ -182,7 +182,7 @@
     e('d4','16:18','system',    'hgi-database-01',      'text-amber-500', 'Eventa',               'storage crossed *3.5 TB* — 92 % of the current tier',        'Platform'),
     e('d4','14:02','billing',   'hgi-credit-card',      'text-red-500',   'Eventa Billing',       'card declined · *฿4,900* · retry in 3 days',                 'Pattaya Music Week'),
     e('d4','11:25','support',   'hgi-checkmark-circle-02','text-brand',   'Napat Chai',           'closed ticket *#4788* — CSV import fixed',                   'Sukhothai Lantern Fest'),
-    e('d4','09:07','workspaces','hgi-building-03',      'text-muted',     'Rio S.',               'merged two duplicate organizations',                         'Thai Expo Group'),
+    e('d4','09:07','workspaces','hgi-building-03',      '',     'Rio S.',               'merged two duplicate organizations',                         'Thai Expo Group'),
 
     e('d5','21:12','system',    'hgi-connect',          'text-brand',     'Eventa',               'webhook retry queue drained · *41k* deliveries',             'Platform'),
     e('d5','18:36','workspaces','hgi-building-03',      'text-brand',     'Sunisa Kaew',          'signed up',                                                  'Chiang Rai Coffee Summit'),
@@ -267,7 +267,7 @@
       '<span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-canvas ' + r.tone + '"><i class="hgi-stroke ' + r.icon + ' text-[16px]"></i></span>' +
       '<div class="min-w-0 flex-1">' +
         '<p class="text-[13px] leading-snug text-ink"><span class="font-semibold">' + esc(r.actor) + '</span> ' + rich(r.text) + '</p>' +
-        '<div class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px] text-muted">' +
+        '<div class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px]">' +
           '<a href="' + wsHref + '" class="inline-flex items-center gap-1 font-medium transition hover:text-ink"><i class="hgi-stroke ' + wsIcon + ' text-[12px]"></i>' + esc(r.ws) + '</a>' +
           '<span class="h-1 w-1 rounded-full bg-hair"></span>' +
           '<span class="tnum">' + esc(r.time) + '</span>' +
@@ -297,10 +297,10 @@
       if (!group.length) return;
       html +=
         '<div class="flex items-center gap-3 pb-1 pt-4 first:pt-0">' +
-          '<h3 class="text-[11px] font-semibold uppercase tracking-wider text-muted">' + d.label + '</h3>' +
-          '<span class="text-[11px] text-muted tnum">' + d.date + '</span>' +
+          '<h3 class="text-[11px] font-semibold uppercase tracking-wider">' + d.label + '</h3>' +
+          '<span class="text-[11px] tnum">' + d.date + '</span>' +
           '<span class="h-px flex-1 bg-hair"></span>' +
-          '<span class="text-[11px] text-muted tnum">' + nf(group.length) + (group.length === 1 ? ' event' : ' events') + '</span>' +
+          '<span class="text-[11px] tnum">' + nf(group.length) + (group.length === 1 ? ' event' : ' events') + '</span>' +
         '</div>' +
         '<ul class="divide-y divide-line">' + group.map(entryHTML).join('') + '</ul>';
     });

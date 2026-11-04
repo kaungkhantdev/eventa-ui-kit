@@ -24,13 +24,13 @@
 
     <!-- header -->
     <header class="mb-5 flex items-center gap-3">
-      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
       <div class="min-w-0">
         <h1 class="text-[22px] font-bold tracking-tight">Subscriptions</h1>
-        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">What every workspace pays.</p>
+        <p class="mt-0.5 hidden truncate text-[12px] sm:block">What every workspace pays.</p>
       </div>
       <button class="btn btn-ghost ml-auto shrink-0" data-open="plan-panel"><i class="hgi-stroke hgi-license text-[16px]"></i><span class="hidden sm:inline">Plans &amp; pricing</span><span class="sm:hidden">Plans</span></button>
-      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface transition hover:text-ink" title="Notifications">
         <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
         <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
       </button>
@@ -38,7 +38,7 @@
         <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
         <div class="hidden leading-tight sm:block">
           <p class="text-[13px] font-semibold text-ink">Rio S.</p>
-          <p class="text-[11px] text-muted">Platform admin</p>
+          <p class="text-[11px]">Platform admin</p>
         </div>
       </div>
     </header>
@@ -57,23 +57,23 @@
     <!-- KPI row — every figure below is summed from the table, not typed in -->
     <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-money-bag-02 text-[16px]"></i>MRR</div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-money-bag-02 text-[16px]"></i>MRR</div>
         <div class="mt-2 flex items-end justify-between"><p id="kpi-mrr" class="text-[22px] font-bold tracking-tight tnum">฿0</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>7,4 %</span></div>
       </div>
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-chart-line-data-01 text-[16px]"></i>Annual run rate</div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-chart-line-data-01 text-[16px]"></i>Annual run rate</div>
         <div class="mt-2 flex items-end justify-between"><p id="kpi-arr" class="text-[22px] font-bold tracking-tight tnum">฿0</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>8,1 %</span></div>
       </div>
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-building-03 text-[16px]"></i>Paying workspaces</div>
-        <div class="mt-2 flex items-end justify-between"><p id="kpi-paying" class="text-[22px] font-bold tracking-tight tnum">0</p><span id="kpi-arpa" class="text-[12px] text-muted tnum">฿0 avg</span></div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-building-03 text-[16px]"></i>Paying workspaces</div>
+        <div class="mt-2 flex items-end justify-between"><p id="kpi-paying" class="text-[22px] font-bold tracking-tight tnum">0</p><span id="kpi-arpa" class="text-[12px] tnum">฿0 avg</span></div>
       </div>
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-time-quarter-pass text-[16px]"></i>Trialling</div>
-        <div class="mt-2 flex items-end justify-between"><p id="kpi-trial" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="text-[12px] text-muted">no charge yet</span></div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-time-quarter-pass text-[16px]"></i>Trialling</div>
+        <div class="mt-2 flex items-end justify-between"><p id="kpi-trial" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="text-[12px]">no charge yet</span></div>
       </div>
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-alert-02 text-[16px]"></i>Past due</div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-alert-02 text-[16px]"></i>Past due</div>
         <div class="mt-2 flex items-end justify-between"><p id="kpi-pastdue" class="text-[22px] font-bold tracking-tight tnum">฿0</p><span id="kpi-pastdue-n" class="flex items-center gap-1 text-[12px] font-semibold text-red-500 tnum">0</span></div>
       </div>
     </div>
@@ -90,11 +90,11 @@
     <!-- search + plan filter -->
     <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
-        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
         <input id="subs-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search workspaces…" />
       </div>
       <div class="relative w-full sm:w-52">
-        <i class="hgi-stroke hgi-license text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <i class="hgi-stroke hgi-license text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
         <select id="subs-plan-filter" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
           <option>All plans</option>
           <option>Enterprise</option>
@@ -104,7 +104,7 @@
         </select>
       </div>
       <div class="relative w-full sm:w-44">
-        <i class="hgi-stroke hgi-repeat text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <i class="hgi-stroke hgi-repeat text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
         <select id="subs-cycle-filter" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
           <option>Any cycle</option>
           <option>Monthly</option>
@@ -134,7 +134,7 @@
         </table>
       </div>
 
-      <div id="subs-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+      <div id="subs-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px]">
         <p id="subs-showing"></p>
         <div class="flex items-center gap-3">
           <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
@@ -169,20 +169,20 @@
           <span id="sv-status"></span>
         </div>
         <p id="sv-mrr" class="mt-3 text-[24px] font-bold tracking-tight tnum">฿0</p>
-        <p id="sv-mrr-note" class="text-[12px] text-muted">per month</p>
+        <p id="sv-mrr-note" class="text-[12px]">per month</p>
       </div>
 
       <dl class="overflow-hidden rounded-lg border border-hair">
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Plan</dt><dd id="sv-plan" class="text-[13px]"></dd></div>
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Seats in use</dt><dd id="sv-seats" class="text-[13px] font-medium text-ink tnum"></dd></div>
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Billing cycle</dt><dd id="sv-cycle" class="text-[13px] text-ink"></dd></div>
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Started</dt><dd id="sv-started" class="text-[13px] text-ink tnum"></dd></div>
-        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px] text-muted">Renews</dt><dd id="sv-renews" class="text-[13px] text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Plan</dt><dd id="sv-plan" class="text-[13px]"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Seats in use</dt><dd id="sv-seats" class="text-[13px] font-medium text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Billing cycle</dt><dd id="sv-cycle" class="text-[13px] text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Started</dt><dd id="sv-started" class="text-[13px] text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px]">Renews</dt><dd id="sv-renews" class="text-[13px] text-ink tnum"></dd></div>
       </dl>
 
       <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
-        <i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px] text-muted"></i>
-        <p id="sv-note" class="text-[12px] text-muted"></p>
+        <i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px]"></i>
+        <p id="sv-note" class="text-[12px]"></p>
       </div>
     </div>
     <footer class="flex gap-2 border-t border-hair p-4">
@@ -198,7 +198,7 @@
       <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
     </header>
     <div class="flex-1 space-y-3 overflow-y-auto p-4">
-      <p class="text-[12.5px] leading-relaxed text-muted">List price per workspace, per month. Annual subscriptions are billed twelve months up front at the same rate. Enterprise is negotiated per contract — the figures in the table are the agreed ones.</p>
+      <p class="text-[12.5px] leading-relaxed">List price per workspace, per month. Annual subscriptions are billed twelve months up front at the same rate. Enterprise is negotiated per contract — the figures in the table are the agreed ones.</p>
       <div id="plan-cards" class="space-y-2.5"></div>
     </div>
     <footer class="flex gap-2 border-t border-hair p-4">
@@ -292,9 +292,9 @@
     return '<div class="card p-3.5">' +
       '<div class="flex items-center justify-between gap-2">' +
         '<span class="badge ' + PLAN_BADGE[p.name] + '">' + esc(p.name) + '</span>' +
-        '<p class="text-[15px] font-bold tracking-tight tnum">' + price + '<span class="text-[11px] font-medium text-muted"> / mo</span></p>' +
+        '<p class="text-[15px] font-bold tracking-tight tnum">' + price + '<span class="text-[11px] font-medium"> / mo</span></p>' +
       '</div>' +
-      '<p class="mt-2 text-[12px] leading-relaxed text-muted">' + esc(p.blurb) + '</p>' +
+      '<p class="mt-2 text-[12px] leading-relaxed">' + esc(p.blurb) + '</p>' +
     '</div>';
   }).join('');
 
@@ -304,11 +304,11 @@
     return '<tr>' +
       '<td><div class="flex items-center gap-2"><span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-soft text-[10px] font-semibold text-brand-dark dark:text-brand">' + esc(s.inl) + '</span><span class="font-medium text-ink">' + esc(s.name) + '</span></div></td>' +
       '<td><span class="badge ' + PLAN_BADGE[s.plan] + '">' + esc(s.plan) + '</span></td>' +
-      '<td class="text-right text-muted tnum">' + nf(s.seats) + '</td>' +
-      '<td class="text-right font-semibold tnum ' + (s.mrr ? 'text-ink' : 'text-muted') + '">' + (s.mrr ? baht(s.mrr) : '—') + '</td>' +
-      '<td class="text-muted">' + esc(s.cycle) + '</td>' +
-      '<td class="text-muted tnum">' + esc(s.started) + '</td>' +
-      '<td class="' + (isTrial ? 'text-amber-600 dark:text-amber-400' : 'text-muted') + ' tnum">' + esc(s.renews) + '</td>' +
+      '<td class="text-right tnum">' + nf(s.seats) + '</td>' +
+      '<td class="text-right font-semibold tnum ' + (s.mrr ? 'text-ink' : '') + '">' + (s.mrr ? baht(s.mrr) : '—') + '</td>' +
+      '<td>' + esc(s.cycle) + '</td>' +
+      '<td class="tnum">' + esc(s.started) + '</td>' +
+      '<td class="' + (isTrial ? 'text-amber-600 dark:text-amber-400' : '') + ' tnum">' + esc(s.renews) + '</td>' +
       '<td><span class="badge ' + STATUS_BADGE[s.status] + '">' + esc(s.status) + '</span></td>' +
       '<td class="text-right"><button class="btn-icon" title="View subscription" data-open="sub-view" data-view="' + esc(s.name) + '"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>' +
     '</tr>';

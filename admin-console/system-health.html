@@ -24,17 +24,17 @@
 
     <!-- header -->
     <header class="mb-5 flex items-center gap-3">
-      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
       <div class="min-w-0">
         <h1 class="text-[22px] font-bold tracking-tight">System health</h1>
-        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Is Eventa up?</p>
+        <p class="mt-0.5 hidden truncate text-[12px] sm:block">Is Eventa up?</p>
       </div>
       <div id="sh-range" class="ml-auto hidden items-center gap-1 rounded-lg bg-surface p-1 text-[12px] font-semibold sm:flex">
         <button data-range="hour" class="rounded-md bg-white px-3 py-1.5 text-ink shadow-sm transition dark:bg-white/10">1 h</button>
-        <button data-range="day" class="rounded-md px-3 py-1.5 text-muted transition">24 h</button>
-        <button data-range="week" class="rounded-md px-3 py-1.5 text-muted transition">7 d</button>
+        <button data-range="day" class="rounded-md px-3 py-1.5 transition">24 h</button>
+        <button data-range="week" class="rounded-md px-3 py-1.5 transition">7 d</button>
       </div>
-      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface transition hover:text-ink" title="Notifications">
         <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
         <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
       </button>
@@ -42,7 +42,7 @@
         <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
         <div class="hidden leading-tight sm:block">
           <p class="text-[13px] font-semibold text-ink">Rio S.</p>
-          <p class="text-[11px] text-muted">Platform admin</p>
+          <p class="text-[11px]">Platform admin</p>
         </div>
       </div>
     </header>
@@ -63,7 +63,7 @@
       <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-amber-100 text-amber-600 dark:bg-amber-400/15 dark:text-amber-300"><i class="hgi-stroke hgi-alert-02 text-[19px]"></i></span>
       <div class="min-w-0 flex-1">
         <p class="text-[14px] font-bold tracking-tight text-ink">Partial degradation — 1 of 5 services</p>
-        <p class="mt-0.5 text-[12px] text-muted"><span class="font-mono">eventa-relay</span> is behind on the outbox by 4 min 12 s. Webhooks and check-in pushes are delayed; nothing is being dropped. Everything else is operational.</p>
+        <p class="mt-0.5 text-[12px]"><span class="font-mono">eventa-relay</span> is behind on the outbox by 4 min 12 s. Webhooks and check-in pushes are delayed; nothing is being dropped. Everything else is operational.</p>
       </div>
       <div class="flex shrink-0 items-center gap-2">
         <button type="button" class="btn btn-soft btn-sm" data-open="inc-view" data-view="INC-118"><i class="hgi-stroke hgi-eye text-[15px]"></i>View incident</button>
@@ -83,17 +83,17 @@
             <div class="mt-1 flex items-center gap-2">
               <p id="lat-value" class="text-[22px] font-bold tracking-tight tnum">142 ms</p>
               <span id="lat-delta" class="flex items-center gap-0.5 text-[13px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>3,1 %</span>
-              <span class="text-[12px] text-muted">p95 · <span class="font-mono">eventa-api</span></span>
+              <span class="text-[12px]">p95 · <span class="font-mono">eventa-api</span></span>
             </div>
           </div>
-          <span class="inline-flex items-center gap-1.5 rounded-full bg-canvas px-2.5 py-1 text-[11px] font-semibold text-muted"><i class="hgi-stroke hgi-clock-01 text-[13px]"></i>Target 150 ms</span>
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-canvas px-2.5 py-1 text-[11px] font-semibold"><i class="hgi-stroke hgi-clock-01 text-[13px]"></i>Target 150 ms</span>
         </div>
         <div id="lat-chart"></div>
       </section>
 
       <section class="rounded-2xl bg-surface p-4 lg:p-5">
         <h2 class="text-[16px] font-bold tracking-tight">Right now</h2>
-        <p class="mt-0.5 text-[12px] text-muted">Sampled every 30 seconds · Asia/Bangkok</p>
+        <p class="mt-0.5 text-[12px]">Sampled every 30 seconds · Asia/Bangkok</p>
         <dl id="now-rows" class="mt-4 divide-y divide-line text-[13px]"></dl>
       </section>
     </div>
@@ -101,7 +101,7 @@
     <!-- incidents -->
     <div data-when-data class="mt-5 flex flex-wrap items-center justify-between gap-2">
       <h2 class="text-[15px] font-bold tracking-tight">Incidents</h2>
-      <span class="text-[12px] text-muted">Last 30 days</span>
+      <span class="text-[12px]">Last 30 days</span>
     </div>
     <div data-when-data data-tabs="#inc-table" class="mt-2 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
       <button class="pilltab tab-active" data-tab="all" data-filter="all">All <span class="pilltab-count tnum">6</span></button>
@@ -110,11 +110,11 @@
     </div>
     <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
-        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
         <input id="inc-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search incidents…" />
       </div>
       <div class="relative w-full sm:w-56">
-        <i class="hgi-stroke hgi-cloud-server text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <i class="hgi-stroke hgi-cloud-server text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
         <select id="inc-service" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
           <option>All services</option>
           <option>eventa-api</option>
@@ -135,10 +135,10 @@
           <tbody id="inc-rows" class="text-[13px]"></tbody>
         </table>
       </div>
-      <p id="inc-showing" class="mt-3 text-[12px] text-muted"></p>
+      <p id="inc-showing" class="mt-3 text-[12px]"></p>
     </section>
 
-    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa Console · Internal · HTML, Tailwind CSS &amp; Hugeicons</p>
+    <p class="mt-4 text-center text-[11px]">Eventa Console · Internal · HTML, Tailwind CSS &amp; Hugeicons</p>
     </div>
   </main>
 
@@ -151,25 +151,25 @@
     <div class="flex-1 space-y-4 overflow-y-auto p-4">
       <div class="card p-3.5">
         <div class="flex items-center justify-between gap-2">
-          <p id="iv-id" class="font-mono text-[12px] text-muted"></p>
+          <p id="iv-id" class="font-mono text-[12px]"></p>
           <span id="iv-badge"></span>
         </div>
         <p id="iv-title" class="mt-1.5 text-[16px] font-bold tracking-tight"></p>
-        <p id="iv-service" class="mt-0.5 font-mono text-[12px] text-muted"></p>
+        <p id="iv-service" class="mt-0.5 font-mono text-[12px]"></p>
       </div>
       <dl class="overflow-hidden rounded-lg border border-hair">
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Severity</dt><dd id="iv-sev" class="text-[13px] font-medium text-ink"></dd></div>
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Started</dt><dd id="iv-started" class="text-[13px] text-ink tnum"></dd></div>
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Duration</dt><dd id="iv-duration" class="text-[13px] text-ink tnum"></dd></div>
-        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px] text-muted">Workspaces affected</dt><dd id="iv-impact" class="text-[13px] text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Severity</dt><dd id="iv-sev" class="text-[13px] font-medium text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Started</dt><dd id="iv-started" class="text-[13px] text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Duration</dt><dd id="iv-duration" class="text-[13px] text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px]">Workspaces affected</dt><dd id="iv-impact" class="text-[13px] text-ink tnum"></dd></div>
       </dl>
       <div>
-        <p class="mb-2.5 text-[11px] font-semibold uppercase tracking-wider text-muted">Timeline</p>
+        <p class="mb-2.5 text-[11px] font-semibold uppercase tracking-wider">Timeline</p>
         <div id="iv-timeline" class="space-y-3"></div>
       </div>
       <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
-        <i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px] text-muted"></i>
-        <p id="iv-note" class="text-[12px] text-muted"></p>
+        <i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px]"></i>
+        <p id="iv-note" class="text-[12px]"></p>
       </div>
     </div>
     <footer class="flex gap-2 border-t border-hair p-4">
@@ -206,11 +206,11 @@
         '<span class="badge ' + (bad ? 'badge-amber' : 'badge-green') + '">' + esc(s.state) + '</span>' +
       '</div>' +
       '<p class="mt-2.5 truncate font-mono text-[12.5px] font-semibold text-ink">' + esc(s.name) + '</p>' +
-      '<p class="truncate text-[11px] text-muted">' + esc(s.role) + '</p>' +
+      '<p class="truncate text-[11px]">' + esc(s.role) + '</p>' +
       '<dl class="mt-3 grid grid-cols-3 gap-1 border-t border-line pt-3 text-center">' +
-        '<div><dt class="text-[10px] font-semibold uppercase tracking-wider text-muted">Uptime</dt><dd class="mt-0.5 whitespace-nowrap text-[13px] font-bold text-ink tnum">' + esc(s.uptime) + '</dd></div>' +
-        '<div><dt class="text-[10px] font-semibold uppercase tracking-wider text-muted">p95</dt><dd class="mt-0.5 whitespace-nowrap text-[13px] font-bold ' + tone + ' tnum">' + esc(s.p95) + '</dd></div>' +
-        '<div><dt class="text-[10px] font-semibold uppercase tracking-wider text-muted">Errors</dt><dd class="mt-0.5 whitespace-nowrap text-[13px] font-bold ' + tone + ' tnum">' + esc(s.err) + '</dd></div>' +
+        '<div><dt class="text-[10px] font-semibold uppercase tracking-wider">Uptime</dt><dd class="mt-0.5 whitespace-nowrap text-[13px] font-bold text-ink tnum">' + esc(s.uptime) + '</dd></div>' +
+        '<div><dt class="text-[10px] font-semibold uppercase tracking-wider">p95</dt><dd class="mt-0.5 whitespace-nowrap text-[13px] font-bold ' + tone + ' tnum">' + esc(s.p95) + '</dd></div>' +
+        '<div><dt class="text-[10px] font-semibold uppercase tracking-wider">Errors</dt><dd class="mt-0.5 whitespace-nowrap text-[13px] font-bold ' + tone + ' tnum">' + esc(s.err) + '</dd></div>' +
       '</dl>' +
     '</div>';
   }).join('');
@@ -227,7 +227,7 @@
   ];
   document.getElementById('now-rows').innerHTML = NOW.map(function (r) {
     return '<div class="flex items-center justify-between py-2.5">' +
-      '<dt class="text-muted">' + esc(r.label) + '</dt>' +
+      '<dt>' + esc(r.label) + '</dt>' +
       '<dd class="font-semibold ' + (r.tone || 'text-ink') + ' tnum">' + esc(r.value) + '</dd></div>';
   }).join('');
 
@@ -300,7 +300,7 @@
   var shRange = document.getElementById('sh-range');
   shRange.addEventListener('click', function (e) {
     var btn = e.target.closest('button'); if (!btn) return;
-    [].slice.call(shRange.children).forEach(function (b) { b.className = 'rounded-md px-3 py-1.5 text-muted transition'; });
+    [].slice.call(shRange.children).forEach(function (b) { b.className = 'rounded-md px-3 py-1.5 transition'; });
     btn.className = 'rounded-md bg-white px-3 py-1.5 text-ink shadow-sm transition dark:bg-white/10';
     renderChart(btn.dataset.range);
   });
@@ -334,11 +334,11 @@
   var showing = document.getElementById('inc-showing');
   function rowHTML(i) {
     return '<tr>' +
-      '<td><div class="leading-tight"><p class="font-semibold text-ink">' + esc(i.title) + '</p><p class="font-mono text-[11px] text-muted">' + esc(i.id) + '</p></div></td>' +
-      '<td class="font-mono text-[12px] text-muted">' + esc(i.svc) + '</td>' +
+      '<td><div class="leading-tight"><p class="font-semibold text-ink">' + esc(i.title) + '</p><p class="font-mono text-[11px]">' + esc(i.id) + '</p></div></td>' +
+      '<td class="font-mono text-[12px]">' + esc(i.svc) + '</td>' +
       '<td><span class="badge ' + sevBadge[i.sev] + '">' + esc(i.sev) + '</span></td>' +
-      '<td class="text-muted tnum">' + esc(i.started) + '</td>' +
-      '<td class="text-muted tnum">' + esc(i.dur) + '</td>' +
+      '<td class="tnum">' + esc(i.started) + '</td>' +
+      '<td class="tnum">' + esc(i.dur) + '</td>' +
       '<td><span class="badge ' + statusBadge[i.status] + '">' + esc(i.status) + '</span></td>' +
       '<td class="text-right"><button class="btn-icon" title="View incident" data-open="inc-view" data-view="' + esc(i.id) + '"><i class="hgi-stroke hgi-eye text-[16px]"></i></button></td>' +
     '</tr>';
@@ -366,10 +366,10 @@
     return '<div class="flex items-center gap-2.5">' +
       '<i class="hgi-stroke ' + icon + ' ' + color + ' text-[16px]"></i>' +
       '<p class="min-w-0 flex-1 text-[13px] font-medium text-ink">' + label + '</p>' +
-      '<span class="text-[11px] text-muted tnum">' + esc(when) + '</span></div>';
+      '<span class="text-[11px] tnum">' + esc(when) + '</span></div>';
   }
   function timelineHTML(i) {
-    var done = 'text-brand', cur = 'text-amber-500', pend = 'text-muted/40';
+    var done = 'text-brand', cur = 'text-amber-500', pend = '';
     if (i.status === 'Resolved') {
       return step('hgi-checkmark-circle-02', done, 'Detected', i.started) +
              step('hgi-checkmark-circle-02', done, 'Mitigated', 'During window') +

@@ -46,8 +46,9 @@ No tests, linter or CI: open the page in light and dark, and below 1024px.
    `<section data-empty hidden class="card empty">` follows the top bar holding `#btn-menu`. A
    filtered table's no-results row uses `.empty empty-sm` and a `data-clear-filters` button. Empty
    copy says what will fill the page and offers one primary next step (a ghost secondary is fine).
-4. **Semantic** colour tokens only (`bg-surface`, `border-hair`, `text-muted`), not `bg-white`, so
-   dark mode works. A literal accent goes in `.badge-*` or gets a `dark:` variant.
+4. **Semantic** tokens only (`bg-surface`, `border-hair`, `text-ink`), not `bg-white`, so
+   dark mode works. `text-muted`: placeholders only. A literal accent needs `.badge-*` or a `dark:`
+   variant.
 5. **Flat.** Surfaces differ by colour (`bg-canvas` page, `bg-surface` cards); `.card` has no
    border or shadow. Shadows belong to menus, popovers and small controls (toggle knobs, the
    active segment).

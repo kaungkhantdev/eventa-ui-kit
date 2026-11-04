@@ -24,13 +24,13 @@
 
     <!-- header -->
     <header class="mb-5 flex items-center gap-3">
-      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
       <div class="min-w-0">
         <h1 class="text-[22px] font-bold tracking-tight">Features</h1>
-        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">What each plan includes.</p>
+        <p class="mt-0.5 hidden truncate text-[12px] sm:block">What each plan includes.</p>
       </div>
       <a href="subscriptions.html" class="btn btn-soft ml-auto shrink-0"><i class="hgi-stroke hgi-credit-card text-[16px]"></i><span class="hidden sm:inline">Subscriptions</span></a>
-      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface transition hover:text-ink" title="Notifications">
         <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
         <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
       </button>
@@ -38,7 +38,7 @@
         <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
         <div class="hidden leading-tight sm:block">
           <p class="text-[13px] font-semibold text-ink">Rio S.</p>
-          <p class="text-[11px] text-muted">Platform admin</p>
+          <p class="text-[11px]">Platform admin</p>
         </div>
       </div>
     </header>
@@ -60,16 +60,16 @@
     <!-- matrix -->
     <div data-when-data class="mt-5 flex flex-wrap items-center justify-between gap-2">
       <h2 class="text-[15px] font-bold tracking-tight">Plan matrix</h2>
-      <span class="text-[12px] text-muted tnum">25 features across 5 areas</span>
+      <span class="text-[12px] tnum">25 features across 5 areas</span>
     </div>
 
     <div data-when-data class="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
-        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
         <input id="fx-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search features…" />
       </div>
       <div class="relative w-full sm:w-52">
-        <i class="hgi-stroke hgi-filter text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <i class="hgi-stroke hgi-filter text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
         <select id="fx-area" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
           <option>All areas</option>
           <option>Events</option>
@@ -97,7 +97,7 @@
         </table>
       </div>
 
-      <div class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line pt-3 text-[11.5px] text-muted">
+      <div class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line pt-3 text-[11.5px]">
         <span class="flex items-center gap-1.5"><i class="hgi-stroke hgi-tick-02 text-[14px] text-brand"></i>Included</span>
         <span class="flex items-center gap-1.5"><span class="w-3 text-center">—</span>Not on this plan</span>
         <span class="flex items-center gap-1.5"><i class="hgi-stroke hgi-percent text-[13px]"></i>A value shows the limit or rate that applies</span>
@@ -171,15 +171,15 @@
     var share = Math.round((p.ws / TOTAL_WS) * 100);
     return '<div class="rounded-2xl bg-surface p-4">' +
       '<div class="flex items-center gap-2">' +
-        '<i class="hgi-stroke ' + p.icon + ' text-[16px] text-muted"></i>' +
+        '<i class="hgi-stroke ' + p.icon + ' text-[16px]"></i>' +
         '<h2 class="text-[15px] font-bold tracking-tight text-ink">' + p.name + '</h2>' +
         (p.key === 'grow' ? '<span class="badge badge-green ml-auto">Most workspaces</span>' : '') +
       '</div>' +
-      '<div class="mt-2 flex items-end gap-1.5"><p class="text-[22px] font-bold tracking-tight tnum">' + p.price + '</p><span class="pb-1 text-[11.5px] text-muted">' + p.per + '</span></div>' +
-      '<p class="mt-1 text-[11.5px] leading-snug text-muted">' + p.note + '</p>' +
+      '<div class="mt-2 flex items-end gap-1.5"><p class="text-[22px] font-bold tracking-tight tnum">' + p.price + '</p><span class="pb-1 text-[11.5px]">' + p.per + '</span></div>' +
+      '<p class="mt-1 text-[11.5px] leading-snug">' + p.note + '</p>' +
       '<dl class="mt-3 grid grid-cols-2 gap-3 border-t border-line pt-3">' +
-        '<div><dt class="text-[11px] text-muted">Workspaces</dt><dd class="mt-0.5 text-[15px] font-semibold text-ink tnum">' + p.ws + ' <span class="text-[11.5px] font-normal text-muted">· ' + share + ' %</span></dd></div>' +
-        '<div><dt class="text-[11px] text-muted">Features</dt><dd class="mt-0.5 text-[15px] font-semibold text-ink tnum">' + has + ' <span class="text-[11.5px] font-normal text-muted">of ' + TOTAL_FEATURES + '</span></dd></div>' +
+        '<div><dt class="text-[11px]">Workspaces</dt><dd class="mt-0.5 text-[15px] font-semibold text-ink tnum">' + p.ws + ' <span class="text-[11.5px] font-normal">· ' + share + ' %</span></dd></div>' +
+        '<div><dt class="text-[11px]">Features</dt><dd class="mt-0.5 text-[15px] font-semibold text-ink tnum">' + has + ' <span class="text-[11.5px] font-normal">of ' + TOTAL_FEATURES + '</span></dd></div>' +
       '</dl>' +
     '</div>';
   }).join('');
@@ -191,21 +191,21 @@
 
   function cell(v) {
     if (v === true)  return '<td class="text-center"><i class="hgi-stroke hgi-tick-02 text-[16px] text-brand" title="Included"></i><span class="sr-only">Included</span></td>';
-    if (v === false) return '<td class="text-center text-muted" title="Not on this plan">—</td>';
+    if (v === false) return '<td class="text-center" title="Not on this plan">—</td>';
     return '<td class="text-center text-[12.5px] font-medium text-ink tnum">' + v + '</td>';
   }
 
   function groupRow(a, n) {
     return '<tr><td colspan="5" class="bg-canvas">' +
-      '<span class="flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-wider text-muted">' +
+      '<span class="flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-wider">' +
       '<i class="hgi-stroke ' + a.icon + ' text-[14px]"></i>' + a.name +
-      '<span class="text-muted/70 tnum">· ' + n + '</span></span></td></tr>';
+      '<span class="tnum">· ' + n + '</span></span></td></tr>';
   }
 
   function featureRow(r) {
     return '<tr>' +
       '<td><p class="font-medium text-ink">' + r.f + '</p>' +
-      (r.hint ? '<p class="mt-0.5 text-[11.5px] text-muted">' + r.hint + '</p>' : '') + '</td>' +
+      (r.hint ? '<p class="mt-0.5 text-[11.5px]">' + r.hint + '</p>' : '') + '</td>' +
       cell(r.free) + cell(r.start) + cell(r.grow) + cell(r.ent) +
     '</tr>';
   }

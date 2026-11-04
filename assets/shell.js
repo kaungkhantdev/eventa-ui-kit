@@ -273,7 +273,7 @@
         <nav id="panel-nav" class="no-scrollbar mt-2 flex-1 space-y-1.5 overflow-y-auto px-2.5 pb-4"></nav>
         <div class="border-t border-hair px-4 py-3">
           <p class="text-[12px] font-semibold text-ink">Eventa for Business</p>
-          <p class="text-[11px] text-muted tnum">Version 1.0.0.0</p>
+          <p class="text-[11px] tnum">Version 1.0.0.0</p>
         </div>
       </aside>
     </div>`;
@@ -327,7 +327,7 @@
     const on = it.page === activePage;
     const cls = on
       ? 'relative block rounded-lg py-1.5 pl-9 pr-2.5 text-[13px] font-semibold bg-brand-soft text-brand'
-      : 'relative block rounded-lg py-1.5 pl-9 pr-2.5 text-[13px] font-medium text-muted transition hover:bg-brand-soft/60 hover:text-brand';
+      : 'relative block rounded-lg py-1.5 pl-9 pr-2.5 text-[13px] font-medium transition hover:bg-brand-soft/60 hover:text-brand';
     return `<li><a href="${it.href}" class="${cls}">${on ? LEAF_MARKER : ''}${it.label}</a></li>`;
   }
   function wireAccordion() {
@@ -356,7 +356,7 @@
       <div data-acc>
         <button type="button" data-acc-toggle class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-semibold text-ink transition hover:bg-line">
           <i class="hgi-stroke ${g.icon} text-[17px]"></i>${g.label}
-          <i data-acc-chevron class="hgi-stroke hgi-arrow-down-01 text-[15px] ml-auto rotate-180 text-muted transition-transform duration-200"></i>
+          <i data-acc-chevron class="hgi-stroke hgi-arrow-down-01 text-[15px] ml-auto rotate-180 transition-transform duration-200"></i>
         </button>
         <ul data-acc-body class="mt-0.5 space-y-0.5">${g.items.map(panelLeaf).join('')}</ul>
       </div>`,
@@ -487,11 +487,11 @@
   const notifItem = (icon, tint, title, body, time, unread) => `
     <a href="notifications.html" class="flex gap-3 px-4 py-2.5 transition hover:bg-line">
       <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg ${tint}"><i class="hgi-stroke ${icon} text-[17px]"></i></span>
-      <div class="min-w-0 flex-1"><p class="text-[13px] leading-snug text-ink"><span class="font-semibold">${title}</span> · ${body}</p><p class="mt-0.5 text-[11px] text-muted">${time}</p></div>
+      <div class="min-w-0 flex-1"><p class="text-[13px] leading-snug text-ink"><span class="font-semibold">${title}</span> · ${body}</p><p class="mt-0.5 text-[11px]">${time}</p></div>
       ${unread ? '<span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-brand"></span>' : ''}
     </a>`;
   const menuLink = (href, icon, label, extra = '') => `
-    <a href="${href}" class="flex items-center gap-3 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><i class="hgi-stroke ${icon} text-[17px] text-muted"></i>${label}${extra}</a>`;
+    <a href="${href}" class="flex items-center gap-3 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink transition hover:bg-line"><i class="hgi-stroke ${icon} text-[17px]"></i>${label}${extra}</a>`;
   const popHTML = `
     <div id="eventa-notif-pop" class="${popCls} w-[340px]">
       <div class="flex items-center justify-between border-b border-hair px-4 py-3">
@@ -509,7 +509,7 @@
     <div id="eventa-profile-pop" class="${popCls} w-[300px]">
       <div class="flex items-center gap-3 p-4">
         <div class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[14px] font-semibold text-white">HN</div>
-        <div class="min-w-0"><p class="truncate text-[14px] font-bold text-ink">Harper Nelson</p><p class="truncate text-[12px] text-muted">Event Manager at Eventa</p></div>
+        <div class="min-w-0"><p class="truncate text-[14px] font-bold text-ink">Harper Nelson</p><p class="truncate text-[12px]">Event Manager at Eventa</p></div>
       </div>
       <div class="px-2 pb-1">
         ${menuLink('settings-profile.html', 'hgi-user-circle', 'My Account')}
@@ -518,7 +518,7 @@
       </div>
       <div class="mx-3 my-1 border-t border-hair"></div>
       <div class="px-2 py-1">
-        <div class="flex items-center gap-3 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink"><i class="hgi-stroke hgi-test-tube-01 text-[17px] text-muted"></i>Beta Features<span class="rounded-full bg-brand-soft px-2 py-0.5 text-[10px] font-semibold text-brand">New</span><button type="button" data-toggle class="relative ml-auto h-5 w-9 shrink-0 rounded-full bg-line transition-colors"><span class="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform"></span></button></div>
+        <div class="flex items-center gap-3 rounded-lg px-2.5 py-2 text-[13px] font-medium text-ink"><i class="hgi-stroke hgi-test-tube-01 text-[17px]"></i>Beta Features<span class="rounded-full bg-brand-soft px-2 py-0.5 text-[10px] font-semibold text-brand">New</span><button type="button" data-toggle class="relative ml-auto h-5 w-9 shrink-0 rounded-full bg-line transition-colors"><span class="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform"></span></button></div>
         ${menuLink('#', 'hgi-megaphone-01', "What's New")}
       </div>
       <div class="mx-3 my-1 border-t border-hair"></div>
@@ -732,7 +732,7 @@
           'fixed z-[70] w-[300px] max-w-[calc(100vw-24px)] overflow-hidden rounded-xl border border-hair bg-surface shadow-xl';
         pop.innerHTML =
           '<div class="border-b border-hair p-2">' +
-          '<div class="relative"><i class="hgi-stroke hgi-search-01 text-[15px] pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-muted"></i>' +
+          '<div class="relative"><i class="hgi-stroke hgi-search-01 text-[15px] pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2"></i>' +
           '<input data-ep-search type="text" placeholder="Search events…" class="h-9 w-full rounded-lg bg-canvas pl-8 pr-2.5 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15"></div>' +
           '</div>' +
           '<div data-ep-list class="max-h-[280px] overflow-y-auto p-1.5"></div>';
@@ -768,7 +768,7 @@
                     r.value === sel.value &&
                     r.label === (sel.options[sel.selectedIndex] || {}).textContent;
                   const meta = r.meta
-                    ? '<span class="ml-auto flex shrink-0 items-center gap-1.5 whitespace-nowrap pl-2 text-[11px] text-muted"><span class="tnum">' +
+                    ? '<span class="ml-auto flex shrink-0 items-center gap-1.5 whitespace-nowrap pl-2 text-[11px] text-ink"><span class="tnum">' +
                       epEsc(r.meta.date) +
                       '</span><span class="h-1.5 w-1.5 rounded-full ' +
                       (STATUS_DOT[r.meta.status] || 'bg-gray-400') +
@@ -793,7 +793,7 @@
                   );
                 })
                 .join('')
-            : '<div class="px-2.5 py-6 text-center text-[13px] text-muted">No events match.</div>';
+            : '<div class="px-2.5 py-6 text-center text-[13px]">No events match.</div>';
           highlight();
         }
         function highlight() {
@@ -922,7 +922,7 @@
     var pill = document.createElement('a');
     pill.href = location.pathname;
     pill.className =
-      'fixed bottom-4 right-4 z-[60] inline-flex items-center gap-1.5 rounded-full border border-hair bg-surface px-3 py-1.5 text-[11px] font-semibold text-muted shadow-pop transition hover:text-ink';
+      'fixed bottom-4 right-4 z-[60] inline-flex items-center gap-1.5 rounded-full border border-hair bg-surface px-3 py-1.5 text-[11px] font-semibold shadow-pop transition hover:text-ink';
     pill.innerHTML =
       '<i class="hgi-stroke hgi-database-01 text-[13px]"></i>Empty state — show data';
     document.body.appendChild(pill);

@@ -48,9 +48,9 @@
     <!-- header — the EVENT is the headline; this is just a station bound to it -->
     <div class="mb-4 flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
       <div class="flex min-w-0 items-start gap-3">
-        <button id="btn-menu" class="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <button id="btn-menu" class="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
         <div class="min-w-0">
-          <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Check-in station</p>
+          <p class="text-[11px] font-semibold uppercase tracking-wider">Check-in station</p>
           <!-- event name = hero; the chevron opens the searchable picker to switch events -->
           <div class="relative mt-0.5 max-w-[240px] sm:max-w-[360px] lg:max-w-[480px]" title="This station is bound to one event — click to switch">
             <select data-event-picker="catalog" id="event-select" class="select h-auto w-auto max-w-full cursor-pointer border-0 bg-transparent p-0 pr-8 text-[22px] font-bold leading-tight tracking-tight text-ink focus:outline-none focus:ring-0">
@@ -62,7 +62,7 @@
             </select>
           </div>
           <!-- event facts: date · venue · live status -->
-          <div class="mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[12.5px] text-muted">
+          <div class="mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[12.5px]">
             <span class="inline-flex items-center gap-1.5"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i><span id="hdr-date" class="tnum">Jul 18, 2026</span></span>
             <span class="h-1 w-1 shrink-0 rounded-full bg-muted/40"></span>
             <span class="inline-flex items-center gap-1.5"><i class="hgi-stroke hgi-location-01 text-[14px]"></i>Main Hall · Station 1</span>
@@ -73,8 +73,8 @@
       </div>
       <div class="flex shrink-0 items-center gap-2">
         <a href="check-in.html" class="btn btn-ghost shrink-0"><i class="hgi-stroke hgi-menu-square text-[16px]"></i><span class="hidden sm:inline">Check-in list</span></a>
-        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
-        <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div>
+        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
+        <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px]">Event Manager</p></div></div>
       </div>
     </div>
 
@@ -96,9 +96,9 @@
         <div class="flex items-center justify-between px-5 pt-4 pb-2">
           <div>
             <h2 class="text-[15px] font-bold tracking-tight">Scan tickets</h2>
-            <p class="mt-0.5 text-[12px] text-muted">Every valid scan checks the attendee in instantly.</p>
+            <p class="mt-0.5 text-[12px]">Every valid scan checks the attendee in instantly.</p>
           </div>
-          <span id="cam-status" class="flex shrink-0 items-center gap-1.5 text-[11px] font-semibold text-muted"><span class="h-2 w-2 rounded-full bg-muted/50"></span>Camera off</span>
+          <span id="cam-status" class="flex shrink-0 items-center gap-1.5 text-[11px] font-semibold"><span class="h-2 w-2 rounded-full bg-muted/50"></span>Camera off</span>
         </div>
 
         <!-- viewport -->
@@ -141,17 +141,17 @@
         <!-- manual fallback -->
         <div class="border-t border-hair px-5 py-4">
           <button id="manual-toggle" type="button" class="flex w-full items-center justify-between text-left">
-            <span class="flex items-center gap-2 text-[13px] font-semibold text-ink"><i class="hgi-stroke hgi-search-01 text-[15px] text-muted"></i>Can't scan? Find attendee manually</span>
-            <i id="manual-chev" class="hgi-stroke hgi-arrow-down-01 text-[16px] text-muted transition-transform"></i>
+            <span class="flex items-center gap-2 text-[13px] font-semibold text-ink"><i class="hgi-stroke hgi-search-01 text-[15px]"></i>Can't scan? Find attendee manually</span>
+            <i id="manual-chev" class="hgi-stroke hgi-arrow-down-01 text-[16px] transition-transform"></i>
           </button>
           <div id="manual-body" class="mt-3 hidden">
             <div class="relative">
-              <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[16px] text-muted"></i>
+              <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[16px]"></i>
               <input id="checkin-search" type="text" class="input pl-9" placeholder="Search name, email, or ticket ID" />
             </div>
             <div class="mb-1 mt-3 flex items-center justify-between">
-              <p class="text-[11px] font-semibold uppercase tracking-wide text-muted">Matching attendees</p>
-              <p id="results-count" class="text-[11px] text-muted"></p>
+              <p class="text-[11px] font-semibold uppercase tracking-wide">Matching attendees</p>
+              <p id="results-count" class="text-[11px]"></p>
             </div>
             <div id="search-results"></div>
             <!-- no results: the roster is loaded, this search just matched none of it -->
@@ -166,7 +166,7 @@
               </div>
             </div>
 
-            <div id="cit-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+            <div id="cit-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px]">
               <p id="cit-showing"></p>
               <div class="flex items-center gap-3">
                 <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
@@ -189,12 +189,12 @@
 
         <section class="card p-4">
           <div class="flex items-center justify-between">
-            <p class="text-[11px] font-semibold uppercase tracking-wide text-muted">Checked in</p>
+            <p class="text-[11px] font-semibold uppercase tracking-wide">Checked in</p>
             <span id="s-rate" class="text-[13px] font-bold text-brand tnum">86%</span>
           </div>
-          <p class="mt-1 flex items-baseline gap-1.5"><span id="s-checked" class="text-[26px] font-bold leading-none text-ink tnum">268</span><span class="text-[14px] text-muted">/ <span id="s-total" class="tnum">312</span></span></p>
+          <p class="mt-1 flex items-baseline gap-1.5"><span id="s-checked" class="text-[26px] font-bold leading-none text-ink tnum">268</span><span class="text-[14px]">/ <span id="s-total" class="tnum">312</span></span></p>
           <div class="mt-2.5 h-2 w-full rounded-full bg-line"><div id="s-bar" class="h-2 rounded-full bg-brand transition-all" style="width:86%"></div></div>
-          <div class="mt-3 flex items-center gap-4 text-[11px] text-muted">
+          <div class="mt-3 flex items-center gap-4 text-[11px]">
             <span>On-site <b id="s-onsite" class="text-ink tnum">245</b></span>
             <span>Late <b id="s-late" class="text-red-500 tnum">9</b></span>
             <span class="ml-auto">Remaining <b id="s-remain" class="text-ink tnum">44</b></span>
@@ -210,34 +210,34 @@
             <div class="flex items-center gap-2.5 border-t border-line py-2.5 first:border-t-0 first:pt-0">
               <span class="avatar h-8 w-8 shrink-0 text-[10px]">PS</span>
               <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">Ploy S.</p><span class="badge badge-purple mt-0.5">VIP</span></div>
-              <span class="shrink-0 text-[11px] tnum text-muted">just now</span>
+              <span class="shrink-0 text-[11px] tnum">just now</span>
             </div>
             <div class="flex items-center gap-2.5 border-t border-line py-2.5 first:border-t-0 first:pt-0">
               <span class="avatar h-8 w-8 shrink-0 text-[10px]">JW</span>
               <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">James W.</p><span class="badge badge-green mt-0.5">General Admission</span></div>
-              <span class="shrink-0 text-[11px] tnum text-muted">1 min ago</span>
+              <span class="shrink-0 text-[11px] tnum">1 min ago</span>
             </div>
             <div class="flex items-center gap-2.5 border-t border-line py-2.5 first:border-t-0 first:pt-0">
               <span class="avatar h-8 w-8 shrink-0 text-[10px]">ML</span>
               <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">Mei L.</p><span class="badge badge-blue mt-0.5">Early Bird</span></div>
-              <span class="shrink-0 text-[11px] tnum text-muted">3 min ago</span>
+              <span class="shrink-0 text-[11px] tnum">3 min ago</span>
             </div>
             <div class="flex items-center gap-2.5 border-t border-line py-2.5 first:border-t-0 first:pt-0">
               <span class="avatar h-8 w-8 shrink-0 text-[10px]">NK</span>
               <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">Nattapong K.</p><span class="badge badge-green mt-0.5">General Admission</span></div>
-              <span class="shrink-0 text-[11px] tnum text-muted">4 min ago</span>
+              <span class="shrink-0 text-[11px] tnum">4 min ago</span>
             </div>
             <div class="flex items-center gap-2.5 border-t border-line py-2.5 first:border-t-0 first:pt-0">
               <span class="avatar h-8 w-8 shrink-0 text-[10px]">DS</span>
               <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">David S.</p><span class="badge badge-purple mt-0.5">VIP</span></div>
-              <span class="shrink-0 text-[11px] tnum text-muted">8 min ago</span>
+              <span class="shrink-0 text-[11px] tnum">8 min ago</span>
             </div>
           </div>
         </section>
       </div>
     </div>
 
-    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+    <p class="mt-4 text-center text-[11px]">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
     </div>
   </main>
 </div>
@@ -308,7 +308,7 @@
       entry.innerHTML =
         '<span class="avatar h-8 w-8 shrink-0 text-[10px]">' + ini + '</span>' +
         '<div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">' + name + '</p><span class="badge ' + badge + ' mt-0.5">' + ticket + '</span></div>' +
-        '<span class="shrink-0 text-[11px] tnum text-muted">just now</span>';
+        '<span class="shrink-0 text-[11px] tnum">just now</span>';
       feed.insertBefore(entry, feed.firstChild);
     }
     function bump() {
@@ -411,7 +411,7 @@
         : '<button class="btn btn-primary btn-sm shrink-0" data-checkin-btn><i class="hgi-stroke hgi-tick-02 text-[14px]"></i>Check in</button>';
       return '<div class="flex items-center gap-3 border-t border-line py-3 first:border-t-0" data-checkin-row data-idx="' + idx + '" data-name="' + esc(a.name) + '" data-initials="' + esc(a.ini) + '" data-ticket="' + esc(a.ticket) + '" data-badge="' + esc(a.badge) + '">' +
           '<span class="avatar h-9 w-9 shrink-0 text-[11px]">' + esc(a.ini) + '</span>' +
-          '<div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">' + esc(a.name) + '</p><p class="truncate text-[11px] text-muted">' + esc(a.ticket) + ' · ' + esc(a.email) + '</p></div>' +
+          '<div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">' + esc(a.name) + '</p><p class="truncate text-[11px]">' + esc(a.ticket) + ' · ' + esc(a.email) + '</p></div>' +
           right +
         '</div>';
     }
@@ -488,7 +488,7 @@
     var stream = null, streaming = false, rafId = null, cooldown = false;
 
     function setStatus(live) {
-      statusEl.className = 'flex shrink-0 items-center gap-1.5 text-[11px] font-semibold ' + (live ? 'text-brand' : 'text-muted');
+      statusEl.className = 'flex shrink-0 items-center gap-1.5 text-[11px] font-semibold ' + (live ? 'text-brand' : '');
       statusEl.innerHTML = live
         ? '<span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-60"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-brand"></span></span>Camera live'
         : '<span class="h-2 w-2 rounded-full bg-muted/50"></span>Camera off';
