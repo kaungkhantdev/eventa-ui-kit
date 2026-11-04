@@ -24,13 +24,13 @@
 
     <!-- header -->
     <header class="mb-5 flex items-center gap-3">
-      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
       <div class="min-w-0">
         <h1 class="text-[22px] font-bold tracking-tight">Integration health</h1>
-        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Error rates and latency per provider.</p>
+        <p class="mt-0.5 hidden truncate text-[12px] sm:block">Error rates and latency per provider.</p>
       </div>
       <a href="integration-logs.html" class="btn btn-soft ml-auto shrink-0"><i class="hgi-stroke hgi-list-view text-[16px]"></i><span class="hidden sm:inline">Integration logs</span><span class="sm:hidden">Logs</span></a>
-      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface transition hover:text-ink" title="Notifications">
         <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
         <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
       </button>
@@ -38,7 +38,7 @@
         <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
         <div class="hidden leading-tight sm:block">
           <p class="text-[13px] font-semibold text-ink">Rio S.</p>
-          <p class="text-[11px] text-muted">Platform admin</p>
+          <p class="text-[11px]">Platform admin</p>
         </div>
       </div>
     </header>
@@ -57,31 +57,31 @@
     <!-- summary tiles -->
     <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-connect text-[16px]"></i>Providers monitored</div>
-        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">9</p><span class="text-[12px] text-muted tnum">294 workspaces</span></div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-connect text-[16px]"></i>Providers monitored</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">9</p><span class="text-[12px] tnum">294 workspaces</span></div>
       </div>
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-arrow-data-transfer-horizontal text-[16px]"></i>Calls (24 h)</div>
-        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">201,000</p><span class="text-[12px] text-muted tnum">vs 193k</span></div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-arrow-data-transfer-horizontal text-[16px]"></i>Calls (24 h)</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">201,000</p><span class="text-[12px] tnum">vs 193k</span></div>
       </div>
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-checkmark-badge-01 text-[16px]"></i>Success rate</div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-checkmark-badge-01 text-[16px]"></i>Success rate</div>
         <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">96,2 %</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>3,4 pt</span></div>
       </div>
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-alert-02 text-[16px]"></i>Errors (24 h)</div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-alert-02 text-[16px]"></i>Errors (24 h)</div>
         <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">7,637</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-red-500"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>9,4 ×</span></div>
       </div>
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-wifi-error-01 text-[16px]"></i>Degraded or down</div>
-        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight text-red-500 tnum">3</p><span class="text-[12px] text-muted">of 9 providers</span></div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-wifi-error-01 text-[16px]"></i>Degraded or down</div>
+        <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight text-red-500 tnum">3</p><span class="text-[12px]">of 9 providers</span></div>
       </div>
     </div>
 
     <!-- per-provider health -->
     <div data-when-data class="mt-4 flex flex-wrap items-center justify-between gap-2">
       <h2 class="text-[15px] font-bold tracking-tight">By provider</h2>
-      <span class="text-[12px] text-muted">Last 24 hours · worst first · Asia/Bangkok</span>
+      <span class="text-[12px]">Last 24 hours · worst first · Asia/Bangkok</span>
     </div>
     <section data-when-data class="card mt-2 p-4">
       <div class="overflow-x-auto">
@@ -120,9 +120,9 @@
       <section class="rounded-2xl bg-surface p-4 lg:p-5">
         <div class="mb-1 flex items-center justify-between">
           <h2 class="text-[16px] font-bold tracking-tight">Errors by cause</h2>
-          <span class="text-[12px] text-muted tnum">7,637 total</span>
+          <span class="text-[12px] tnum">7,637 total</span>
         </div>
-        <p class="text-[12px] text-muted">Every failed call in the last 24 hours, by HTTP status</p>
+        <p class="text-[12px]">Every failed call in the last 24 hours, by HTTP status</p>
         <div id="ih-causes" class="mt-4 space-y-3"></div>
       </section>
 
@@ -228,14 +228,14 @@
     return '<tr>' +
       '<td><div class="flex items-center gap-2.5">' +
         '<span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-canvas text-ink"><i class="hgi-stroke ' + esc(p.icon) + ' text-[16px]"></i></span>' +
-        '<span class="leading-tight"><span class="block font-semibold text-ink">' + esc(p.name) + '</span><span class="block text-[11px] text-muted">' + esc(p.cat) + '</span></span>' +
+        '<span class="leading-tight"><span class="block font-semibold text-ink">' + esc(p.name) + '</span><span class="block text-[11px]">' + esc(p.cat) + '</span></span>' +
       '</div></td>' +
       '<td><span class="badge ' + BADGE[p.status] + '">' + esc(p.status) + '</span></td>' +
       '<td class="text-right font-semibold tnum ' + succTone(p) + '">' + dec(p.succ, 1) + ' %</td>' +
       '<td class="text-right tnum ' + latTone(p) + '">' + ms(p.p95) + '</td>' +
-      '<td class="text-right text-muted tnum">' + nf(p.calls) + '</td>' +
-      '<td class="text-right tnum ' + (p.err > 200 ? 'font-semibold text-red-500' : 'text-muted') + '">' + nf(p.err) + '</td>' +
-      '<td><span class="font-mono text-[11.5px] text-muted">' + esc(p.top) + '</span></td>' +
+      '<td class="text-right tnum">' + nf(p.calls) + '</td>' +
+      '<td class="text-right tnum ' + (p.err > 200 ? 'font-semibold text-red-500' : '') + '">' + nf(p.err) + '</td>' +
+      '<td><span class="font-mono text-[11.5px]">' + esc(p.top) + '</span></td>' +
       '<td class="text-right">' + spark(SERIES[p.name], TONE[p.status]) + '</td>' +
       '</tr>';
   }).join('');
@@ -255,7 +255,7 @@
     return '<div>' +
       '<div class="flex items-center justify-between text-[12.5px]">' +
         '<span class="flex items-center gap-2"><span class="badge ' + (c.bad ? 'badge-red' : 'badge-amber') + ' font-mono">' + c.code + '</span><span class="text-ink">' + esc(c.label) + '</span></span>' +
-        '<span class="flex items-center gap-2.5"><span class="text-muted tnum">' + nf(c.n) + '</span><span class="w-11 text-right font-semibold tnum">' + c.pct + ' %</span></span>' +
+        '<span class="flex items-center gap-2.5"><span class="tnum">' + nf(c.n) + '</span><span class="w-11 text-right font-semibold tnum">' + c.pct + ' %</span></span>' +
       '</div>' +
       '<div class="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-line"><div class="h-full rounded-full" style="width:' + w.toFixed(1) + '%;background:' + (c.bad ? '#ef4444' : '#f59e0b') + '"></div></div>' +
       '</div>';
@@ -266,14 +266,14 @@
     { icon:'hgi-alert-02',     tone:'text-red-500',   title:'Twilio outbound SMS rejected', detail:'503 from the gateway · 64 workspaces · started 09:12', state:'Open',       badge:'badge-red' },
     { icon:'hgi-key-01',       tone:'text-amber-500', title:'Google Calendar token refresh failing', detail:'403 invalid_grant · 38 of 142 workspaces · started 22:40 yesterday', state:'Open', badge:'badge-amber' },
     { icon:'hgi-stop-watch',   tone:'text-amber-500', title:'Zoom API slower than 3 s at p95', detail:'meeting create · 58 workspaces · started 11:05', state:'Monitoring', badge:'badge-amber' },
-    { icon:'hgi-mail-01',      tone:'text-muted',     title:'Mailgun bounce spike',          detail:'one sending domain · resolved 22 Aug, 16:20',       state:'Resolved',   badge:'badge-gray' }
+    { icon:'hgi-mail-01',      tone:'',     title:'Mailgun bounce spike',          detail:'one sending domain · resolved 22 Aug, 16:20',       state:'Resolved',   badge:'badge-gray' }
   ];
   document.getElementById('ih-incidents').innerHTML = INCIDENTS.map(function (a) {
     return '<div class="flex items-start gap-3 rounded-xl border border-hair p-3">' +
       '<span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-canvas ' + a.tone + '"><i class="hgi-stroke ' + a.icon + ' text-[16px]"></i></span>' +
       '<span class="min-w-0 flex-1 leading-tight">' +
         '<span class="block text-[13px] font-semibold text-ink">' + esc(a.title) + '</span>' +
-        '<span class="mt-0.5 block truncate text-[11.5px] text-muted">' + esc(a.detail) + '</span>' +
+        '<span class="mt-0.5 block truncate text-[11.5px]">' + esc(a.detail) + '</span>' +
       '</span>' +
       '<span class="badge ' + a.badge + ' shrink-0">' + a.state + '</span>' +
       '</div>';

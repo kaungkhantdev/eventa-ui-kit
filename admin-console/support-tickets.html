@@ -24,18 +24,18 @@
 
     <!-- header -->
     <header class="mb-5 flex items-center gap-3">
-      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
       <div class="min-w-0">
         <h1 class="text-[22px] font-bold tracking-tight">Tickets</h1>
-        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Help requests from customers.</p>
+        <p class="mt-0.5 hidden truncate text-[12px] sm:block">Help requests from customers.</p>
       </div>
       <!-- stays visible in the empty state: it carries the header's ml-auto, same as
            the range control in overview.html -->
       <div id="tk-scope" class="ml-auto hidden items-center gap-1 rounded-lg bg-surface p-1 text-[12px] font-semibold sm:flex">
         <button data-scope="all" class="rounded-md bg-white px-3 py-1.5 text-ink shadow-sm transition dark:bg-white/10">Everyone</button>
-        <button data-scope="mine" class="rounded-md px-3 py-1.5 text-muted transition">Assigned to me</button>
+        <button data-scope="mine" class="rounded-md px-3 py-1.5 transition">Assigned to me</button>
       </div>
-      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface transition hover:text-ink" title="Notifications">
         <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
         <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
       </button>
@@ -43,7 +43,7 @@
         <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
         <div class="hidden leading-tight sm:block">
           <p class="text-[13px] font-semibold text-ink">Rio S.</p>
-          <p class="text-[11px] text-muted">Platform admin</p>
+          <p class="text-[11px]">Platform admin</p>
         </div>
       </div>
     </header>
@@ -62,19 +62,19 @@
     <!-- summary -->
     <div data-when-data class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-inbox text-[16px]"></i>Open</div>
-        <div class="mt-2 flex items-end justify-between"><p id="k-open" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="text-[12px] text-muted"><span id="k-unassigned" class="tnum">0</span> unassigned</span></div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-inbox text-[16px]"></i>Open</div>
+        <div class="mt-2 flex items-end justify-between"><p id="k-open" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="text-[12px]"><span id="k-unassigned" class="tnum">0</span> unassigned</span></div>
       </div>
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-hourglass text-[16px]"></i>Waiting on customer</div>
-        <div class="mt-2 flex items-end justify-between"><p id="k-waiting" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="text-[12px] text-muted"><span class="tnum">2</span> waiting 3 days</span></div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-hourglass text-[16px]"></i>Waiting on customer</div>
+        <div class="mt-2 flex items-end justify-between"><p id="k-waiting" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="text-[12px]"><span class="tnum">2</span> waiting 3 days</span></div>
       </div>
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i>Resolved (7 days)</div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-checkmark-circle-02 text-[16px]"></i>Resolved (7 days)</div>
         <div class="mt-2 flex items-end justify-between"><p id="k-resolved" class="text-[22px] font-bold tracking-tight tnum">0</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-up-right-01 text-[13px]"></i>16,7 %</span></div>
       </div>
       <div class="rounded-2xl bg-surface p-3.5">
-        <div class="flex items-center gap-1.5 text-[12px] text-muted"><i class="hgi-stroke hgi-clock-01 text-[16px]"></i>Median first reply</div>
+        <div class="flex items-center gap-1.5 text-[12px]"><i class="hgi-stroke hgi-clock-01 text-[16px]"></i>Median first reply</div>
         <div class="mt-2 flex items-end justify-between"><p class="text-[22px] font-bold tracking-tight tnum">42 min</p><span class="flex items-center gap-0.5 text-[12px] font-semibold text-brand"><i class="hgi-stroke hgi-arrow-down-right-01 text-[13px]"></i>9 min</span></div>
       </div>
     </div>
@@ -90,11 +90,11 @@
     <!-- search + priority filter -->
     <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
-        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
         <input id="tk-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search by reference, subject, workspace or requester…" />
       </div>
       <div class="relative w-full sm:w-52">
-        <i class="hgi-stroke hgi-flag-02 text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <i class="hgi-stroke hgi-flag-02 text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
         <select id="tk-priority" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
           <option>All priorities</option>
           <option>Urgent</option>
@@ -109,7 +109,7 @@
     <section data-when-data class="mt-3 rounded-2xl bg-surface p-4 lg:p-5">
       <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
         <h2 class="text-[16px] font-bold tracking-tight">Help requests</h2>
-        <span class="text-[12px] text-muted">Newest activity first · times are Asia/Bangkok</span>
+        <span class="text-[12px]">Newest activity first · times are Asia/Bangkok</span>
       </div>
       <div id="ticket-table" class="overflow-x-auto">
         <table class="data-table min-w-[1080px]">
@@ -120,7 +120,7 @@
         </table>
       </div>
 
-      <div id="tk-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+      <div id="tk-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px]">
         <p id="tk-showing"></p>
         <div class="flex items-center gap-3">
           <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
@@ -148,19 +148,19 @@
     <div class="flex-1 space-y-4 overflow-y-auto p-4">
       <div class="rounded-xl border border-hair p-3.5">
         <div class="flex items-center justify-between gap-2">
-          <p id="tv-ref" class="font-mono text-[12px] text-muted"></p>
+          <p id="tv-ref" class="font-mono text-[12px]"></p>
           <span id="tv-priority"></span>
         </div>
         <h4 id="tv-subject" class="mt-2 text-[16px] font-bold leading-snug tracking-tight"></h4>
-        <p id="tv-body" class="mt-1.5 text-[12.5px] leading-relaxed text-muted"></p>
+        <p id="tv-body" class="mt-1.5 text-[12.5px] leading-relaxed"></p>
       </div>
 
       <dl class="overflow-hidden rounded-lg border border-hair">
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Workspace</dt><dd id="tv-ws" class="text-[13px] font-medium text-ink"></dd></div>
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Requester</dt><dd id="tv-requester" class="text-[13px] text-ink"></dd></div>
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Status</dt><dd id="tv-status" class="text-[13px] font-medium text-ink"></dd></div>
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Assignee</dt><dd id="tv-assignee" class="text-[13px] text-ink"></dd></div>
-        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px] text-muted">Last update</dt><dd id="tv-updated" class="text-[13px] text-ink tnum"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Workspace</dt><dd id="tv-ws" class="text-[13px] font-medium text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Requester</dt><dd id="tv-requester" class="text-[13px] text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Status</dt><dd id="tv-status" class="text-[13px] font-medium text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Assignee</dt><dd id="tv-assignee" class="text-[13px] text-ink"></dd></div>
+        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px]">Last update</dt><dd id="tv-updated" class="text-[13px] text-ink tnum"></dd></div>
       </dl>
 
       <div>
@@ -260,7 +260,7 @@
       '<span class="h-1.5 w-1.5 shrink-0 rounded-full ' + ST_DOT[s] + '"></span>' + esc(s) + '</span>';
   }
   function assigneeCell(a) {
-    if (a === 'Unassigned') return '<span class="text-muted">Unassigned</span>';
+    if (a === 'Unassigned') return '<span>Unassigned</span>';
     return '<div class="flex items-center gap-2 whitespace-nowrap"><span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand-soft text-[9.5px] font-semibold text-brand-dark dark:text-brand">' + esc(initials(a)) + '</span><span class="text-ink">' + esc(a) + '</span></div>';
   }
   function rowHTML(k) {
@@ -268,11 +268,11 @@
       '<td class="font-mono text-[12px] text-ink">' + esc(k.ref) + '</td>' +
       '<td><button type="button" class="text-left font-medium text-ink hover:text-brand" data-open="ticket-view" data-view="' + esc(k.ref) + '">' + esc(k.subject) + '</button></td>' +
       '<td class="whitespace-nowrap text-ink">' + esc(k.ws) + '</td>' +
-      '<td><p class="whitespace-nowrap text-ink">' + esc(k.who) + '</p><p class="text-[11.5px] text-muted">' + esc(k.email) + '</p></td>' +
+      '<td><p class="whitespace-nowrap text-ink">' + esc(k.who) + '</p><p class="text-[11.5px]">' + esc(k.email) + '</p></td>' +
       '<td>' + priBadge(k.priority) + '</td>' +
       '<td>' + statusCell(k.status) + '</td>' +
       '<td>' + assigneeCell(k.assignee) + '</td>' +
-      '<td class="whitespace-nowrap text-right text-muted">' + esc(k.updated) + '</td>' +
+      '<td class="whitespace-nowrap text-right">' + esc(k.updated) + '</td>' +
     '</tr>';
   }
 
@@ -336,7 +336,7 @@
   const scope = document.getElementById('tk-scope');
   scope.addEventListener('click', e => {
     const btn = e.target.closest('button'); if (!btn) return;
-    [...scope.children].forEach(b => b.className = 'rounded-md px-3 py-1.5 text-muted transition');
+    [...scope.children].forEach(b => b.className = 'rounded-md px-3 py-1.5 transition');
     btn.className = 'rounded-md bg-white px-3 py-1.5 text-ink shadow-sm transition dark:bg-white/10';
     state.scope = btn.dataset.scope; state.page = 0; render();
   });

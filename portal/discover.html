@@ -24,12 +24,12 @@
     </a>
     <!-- search (in top nav) -->
     <div class="relative min-w-0 flex-1">
-      <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[16px] text-muted"></i>
+      <i class="hgi-stroke hgi-search-01 pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[16px]"></i>
       <input id="q" type="search" class="h-9 w-full rounded-full border border-transparent bg-canvas pl-10 pr-4 text-[13px] text-ink transition placeholder:text-muted hover:bg-line focus:border-brand/40 focus:bg-surface focus:outline-none focus:ring-2 focus:ring-brand/20" placeholder="Search events, cities, categories…" autocomplete="off" />
     </div>
     <div class="flex shrink-0 items-center gap-1.5">
       <a href="discover.html" class="hidden rounded-lg px-3 py-1.5 text-[13px] font-semibold text-brand md:inline-flex md:items-center md:gap-1.5"><i class="hgi-stroke hgi-compass-01 text-[15px]"></i>Explore</a>
-      <a href="my-events.html" class="hidden rounded-lg px-3 py-1.5 text-[13px] font-medium text-muted transition hover:bg-line hover:text-ink md:inline-flex md:items-center md:gap-1.5"><i class="hgi-stroke hgi-ticket-02 text-[15px]"></i>My tickets</a>
+      <a href="my-events.html" class="hidden rounded-lg px-3 py-1.5 text-[13px] font-medium transition hover:bg-line hover:text-ink md:inline-flex md:items-center md:gap-1.5"><i class="hgi-stroke hgi-ticket-02 text-[15px]"></i>My tickets</a>
       <button id="theme-btn" class="btn-icon bg-surface" title="Toggle theme"><i class="hgi-stroke hgi-moon-02 text-[18px]"></i></button>
       <a href="../auth/login.html" class="btn btn-primary btn-sm">Sign in</a>
     </div>
@@ -41,7 +41,7 @@
   <!-- hero -->
   <div class="mb-6">
     <h1 class="text-[26px] font-extrabold tracking-tight sm:text-[34px]">What's on in <span class="text-brand">Bangkok</span></h1>
-    <p class="mt-1 text-[14px] text-muted">Find your next conference, concert, workshop or festival — all in one place.</p>
+    <p class="mt-1 text-[14px]">Find your next conference, concert, workshop or festival — all in one place.</p>
   </div>
 
   <!-- category filter (Meetup-style: icon over label, active = underline) -->
@@ -58,21 +58,21 @@
   </div>
 
   <!-- results -->
-  <p id="count" class="mb-3 text-[12px] font-medium text-muted"></p>
+  <p id="count" class="mb-3 text-[12px] font-medium"></p>
   <div id="grid" class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3"></div>
 
   <!-- empty state -->
   <div id="empty" class="hidden py-16 text-center">
-    <span class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-line text-muted"><i class="hgi-stroke hgi-search-remove text-[26px]"></i></span>
+    <span class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-line"><i class="hgi-stroke hgi-search-remove text-[26px]"></i></span>
     <p class="mt-3 text-[15px] font-semibold">No events found</p>
-    <p class="mt-1 text-[13px] text-muted">Try a different search or category.</p>
+    <p class="mt-1 text-[13px]">Try a different search or category.</p>
   </div>
 
-  <p class="mt-10 text-center text-[11px] text-muted/70">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
+  <p class="mt-10 text-center text-[11px]">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
 </main>
 
 <!-- JIT safelist for classes only ever inserted by JS -->
-<div class="hidden text-white text-ink text-muted text-red-500 text-amber-400 line-clamp-2 aspect-[3/2] scale-105 group-hover:scale-105 group-hover:text-brand group-hover:text-ink group-hover:scale-110 -space-x-2 ring-2 ring-canvas bg-white bg-ink text-canvas bg-brand bg-amber-500 bg-black/40 bg-black/55 bg-black/60 backdrop-blur-sm shadow-sm rounded-2xl rounded-full object-cover border-b-2 border-ink border-transparent font-semibold"></div>
+<div class="hidden text-white text-ink text-red-500 text-amber-400 line-clamp-2 aspect-[3/2] scale-105 group-hover:scale-105 group-hover:text-brand group-hover:text-ink group-hover:scale-110 -space-x-2 ring-2 ring-canvas bg-white bg-ink text-canvas bg-brand bg-amber-500 bg-black/40 bg-black/55 bg-black/60 backdrop-blur-sm shadow-sm rounded-2xl rounded-full object-cover border-b-2 border-ink border-transparent font-semibold"></div>
 
 <script src="../assets/landing-data.js"></script>
 <script>
@@ -144,7 +144,7 @@
       return '<button type="button" data-cat="' + esc(c) + '" class="group flex shrink-0 flex-col items-center gap-1.5 pt-0.5 outline-none">' +
         '<i class="hgi-stroke ' + catIcon(c) + ' text-[27px] leading-none transition group-hover:scale-110" style="color:' + col + '"></i>' +
         '<span class="whitespace-nowrap border-b-2 pb-2.5 text-[12.5px] transition ' +
-          (on ? 'border-ink font-semibold text-ink' : 'border-transparent text-muted group-hover:text-ink') + '">' + esc(c) + '</span>' +
+          (on ? 'border-ink font-semibold text-ink' : 'border-transparent group-hover:text-ink') + '">' + esc(c) + '</span>' +
         '</button>';
     }).join('');
   }
@@ -175,7 +175,7 @@
     var priceTxt = free ? '<span class="font-semibold text-brand">Free</span>' : 'From <span class="font-bold text-ink">' + esc(ev.priceFrom) + '</span>';
     var g0 = going(ev);
     var attendees = g0 != null
-      ? '<span class="flex items-center gap-2 text-[12px] text-muted">' + avatars(ev) + '<span>' + num(g0) + ' going</span></span>'
+      ? '<span class="flex items-center gap-2 text-[12px]">' + avatars(ev) + '<span>' + num(g0) + ' going</span></span>'
       : '<span></span>';
     return '' +
       '<a href="../landing/' + tpl(ev.category) + '.html?event=' + encodeURIComponent(ev.slug) + '" class="group block">' +
@@ -187,11 +187,11 @@
         '<div class="pt-3">' +
           '<p class="text-[11px] font-semibold uppercase tracking-wide" style="color:' + (ev.accent || '#00c066') + '">' + esc(ev.category || 'Event') + '</p>' +
           '<h3 class="mt-1 line-clamp-2 text-[15.5px] font-bold leading-snug tracking-tight text-ink transition group-hover:text-brand">' + esc(ev.title) + '</h3>' +
-          '<p class="mt-1.5 flex items-center gap-1.5 text-[12.5px] text-muted"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i><span class="truncate">' + esc(ev.dateText || '') + '</span></p>' +
-          '<p class="mt-1 flex items-center gap-1.5 text-[12.5px] text-muted"><i class="hgi-stroke hgi-location-01 text-[14px]"></i><span class="truncate">' + esc([ev.venue, ev.city].filter(Boolean).join(', ')) + '</span></p>' +
-          '<p class="mt-1 flex items-center gap-1 text-[12.5px] text-muted"><span class="truncate">by ' + esc(ev.organizer || 'Eventa') + '</span><span>·</span><i class="hgi-stroke hgi-star text-[13px] text-amber-400"></i><span class="font-semibold text-ink">' + rating(ev.slug) + '</span></p>' +
+          '<p class="mt-1.5 flex items-center gap-1.5 text-[12.5px]"><i class="hgi-stroke hgi-calendar-03 text-[14px]"></i><span class="truncate">' + esc(ev.dateText || '') + '</span></p>' +
+          '<p class="mt-1 flex items-center gap-1.5 text-[12.5px]"><i class="hgi-stroke hgi-location-01 text-[14px]"></i><span class="truncate">' + esc([ev.venue, ev.city].filter(Boolean).join(', ')) + '</span></p>' +
+          '<p class="mt-1 flex items-center gap-1 text-[12.5px]"><span class="truncate">by ' + esc(ev.organizer || 'Eventa') + '</span><span>·</span><i class="hgi-stroke hgi-star text-[13px] text-amber-400"></i><span class="font-semibold text-ink">' + rating(ev.slug) + '</span></p>' +
           '<div class="mt-2.5 flex items-center justify-between">' + attendees +
-            '<span class="text-[13px] text-muted">' + priceTxt + '</span>' +
+            '<span class="text-[13px]">' + priceTxt + '</span>' +
           '</div>' +
         '</div>' +
       '</a>';

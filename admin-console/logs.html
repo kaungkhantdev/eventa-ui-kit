@@ -24,13 +24,13 @@
 
     <!-- header -->
     <header class="mb-5 flex items-center gap-3">
-      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+      <button id="btn-menu" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
       <div class="min-w-0 flex-1">
         <h1 class="text-[22px] font-bold tracking-tight">Logs</h1>
-        <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Application logs across services.</p>
+        <p class="mt-0.5 hidden truncate text-[12px] sm:block">Application logs across services.</p>
       </div>
       <button type="button" data-when-data class="btn btn-soft shrink-0"><i class="hgi-stroke hgi-download-04 text-[16px]"></i><span class="hidden sm:inline">Export window</span><span class="sm:hidden">Export</span></button>
-      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications">
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface transition hover:text-ink" title="Notifications">
         <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
         <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
       </button>
@@ -38,7 +38,7 @@
         <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">RS</div>
         <div class="hidden leading-tight sm:block">
           <p class="text-[13px] font-semibold text-ink">Rio S.</p>
-          <p class="text-[11px] text-muted">Platform admin</p>
+          <p class="text-[11px]">Platform admin</p>
         </div>
       </div>
     </header>
@@ -66,11 +66,11 @@
     <!-- search + service + tail -->
     <div data-when-data class="mt-3 flex flex-col gap-2 lg:flex-row lg:items-center">
       <div class="relative w-full flex-1">
-        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
         <input id="lg-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 font-mono text-[12.5px] text-ink placeholder:font-sans placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search message or trace id…" />
       </div>
       <div class="relative w-full lg:w-56">
-        <i class="hgi-stroke hgi-cloud-server text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <i class="hgi-stroke hgi-cloud-server text-[15px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
         <select id="lg-service" class="select h-10 w-full border-0 bg-surface pl-9 font-medium">
           <option>All services</option>
           <option>eventa-api</option>
@@ -87,7 +87,7 @@
     <section data-when-data class="card mt-3 p-4">
       <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
         <h2 class="text-[15px] font-bold tracking-tight">Aug 24, 2026 · 14:30–14:33</h2>
-        <span class="text-[12px] text-muted">Timestamps are Asia/Bangkok (UTC+7)</span>
+        <span class="text-[12px]">Timestamps are Asia/Bangkok (UTC+7)</span>
       </div>
       <div id="logs-table" class="overflow-x-auto">
         <table class="data-table min-w-[1000px]">
@@ -98,7 +98,7 @@
         </table>
       </div>
 
-      <div id="lg-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px] text-muted">
+      <div id="lg-pager" class="mt-3 flex flex-wrap items-center justify-between gap-3 text-[12px]">
         <p id="lg-showing"></p>
         <div class="flex items-center gap-3">
           <label class="flex items-center gap-2 whitespace-nowrap">Rows per page
@@ -114,7 +114,7 @@
       </div>
     </section>
 
-    <p class="mt-4 text-center text-[11px] text-muted/70">Eventa Console · Internal · HTML, Tailwind CSS &amp; Hugeicons</p>
+    <p class="mt-4 text-center text-[11px]">Eventa Console · Internal · HTML, Tailwind CSS &amp; Hugeicons</p>
     </div>
   </main>
 
@@ -128,23 +128,23 @@
       <div class="card p-3.5">
         <div class="flex items-center justify-between gap-2">
           <span id="ev-level"></span>
-          <p id="ev-time" class="font-mono text-[12px] text-muted tnum"></p>
+          <p id="ev-time" class="font-mono text-[12px] tnum"></p>
         </div>
         <p id="ev-message" class="mt-2 break-words font-mono text-[12.5px] leading-relaxed text-ink"></p>
       </div>
       <dl class="overflow-hidden rounded-lg border border-hair">
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Service</dt><dd id="ev-service" class="font-mono text-[12.5px] text-ink"></dd></div>
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Trace id</dt><dd id="ev-trace" class="font-mono text-[12.5px] text-ink"></dd></div>
-        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px] text-muted">Workspace</dt><dd id="ev-org" class="text-[13px] text-ink"></dd></div>
-        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px] text-muted">Host</dt><dd id="ev-host" class="font-mono text-[12.5px] text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Service</dt><dd id="ev-service" class="font-mono text-[12.5px] text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Trace id</dt><dd id="ev-trace" class="font-mono text-[12.5px] text-ink"></dd></div>
+        <div class="flex items-center justify-between border-b border-line px-3.5 py-2.5"><dt class="text-[12px]">Workspace</dt><dd id="ev-org" class="text-[13px] text-ink"></dd></div>
+        <div class="flex items-center justify-between px-3.5 py-2.5"><dt class="text-[12px]">Host</dt><dd id="ev-host" class="font-mono text-[12.5px] text-ink"></dd></div>
       </dl>
       <div>
-        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted">Structured context</p>
+        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider">Structured context</p>
         <pre id="ev-json" class="overflow-x-auto rounded-lg border border-hair bg-canvas p-3 font-mono text-[11.5px] leading-relaxed text-ink"></pre>
       </div>
       <div class="flex items-start gap-2 rounded-lg border border-hair bg-canvas p-3">
-        <i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px] text-muted"></i>
-        <p class="text-[12px] text-muted">Every service stamps the same trace id on a request, so filtering by it reassembles the whole path through eventa-api, eventa-worker and eventa-relay.</p>
+        <i class="hgi-stroke hgi-information-circle mt-0.5 text-[16px]"></i>
+        <p class="text-[12px]">Every service stamps the same trace id on a request, so filtering by it reassembles the whole path through eventa-api, eventa-worker and eventa-relay.</p>
       </div>
     </div>
     <footer class="flex gap-2 border-t border-hair p-4">
@@ -205,7 +205,7 @@
     ERROR: 'bg-red-50 text-red-600 dark:bg-red-500/15 dark:text-red-300',
     WARN:  'bg-amber-50 text-amber-600 dark:bg-amber-400/15 dark:text-amber-300',
     INFO:  'bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300',
-    DEBUG: 'bg-line text-muted'
+    DEBUG: 'bg-line'
   };
   function chip(lvl) {
     return '<span class="inline-flex w-[54px] justify-center rounded px-1.5 py-0.5 font-mono text-[10.5px] font-bold tracking-wide ' + LEVEL_CHIP[lvl] + '">' + lvl + '</span>';
@@ -214,11 +214,11 @@
   function rowHTML(e, i) {
     var loud = e.lvl === 'ERROR';
     return '<tr class="cursor-pointer" data-open="log-view" data-view="' + i + '">' +
-      '<td class="font-mono text-[12px] text-muted tnum">' + esc(e.t) + '</td>' +
+      '<td class="font-mono text-[12px] tnum">' + esc(e.t) + '</td>' +
       '<td>' + chip(e.lvl) + '</td>' +
-      '<td class="font-mono text-[12px] text-muted">' + esc(e.svc) + '</td>' +
+      '<td class="font-mono text-[12px]">' + esc(e.svc) + '</td>' +
       '<td class="font-mono text-[12px] ' + (loud ? 'font-semibold text-red-600 dark:text-red-300' : 'text-ink') + '">' + esc(e.msg) + '</td>' +
-      '<td class="text-right font-mono text-[11.5px] text-muted">' + esc(e.trace) + '</td>' +
+      '<td class="text-right font-mono text-[11.5px]">' + esc(e.trace) + '</td>' +
     '</tr>';
   }
 

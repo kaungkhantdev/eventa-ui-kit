@@ -97,10 +97,10 @@
         <div>
           <p class="text-[12px] font-bold uppercase tracking-[0.2em] text-brand">The show</p>
           <h2 class="mt-1 text-[26px] font-extrabold tracking-tight text-ink sm:text-[32px]">About the night</h2>
-          <p id="about-text" class="mt-4 max-w-[58ch] text-[15px] leading-relaxed text-muted"></p>
+          <p id="about-text" class="mt-4 max-w-[58ch] text-[15px] leading-relaxed"></p>
         </div>
         <div>
-          <h3 class="mb-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-muted">Details</h3>
+          <h3 class="mb-2 text-[12px] font-semibold uppercase tracking-[0.12em]">Details</h3>
           <dl id="about-facts" class="rounded-2xl bg-surface px-4"></dl>
         </div>
       </div>
@@ -158,14 +158,14 @@
   <footer class="border-t border-line">
     <div class="mx-auto max-w-6xl space-y-4 px-4 py-8 sm:px-6">
       <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p class="text-[13px] text-muted">Presented by <strong id="footer-organizer" class="font-semibold text-ink">Organizer</strong></p>
+        <p class="text-[13px]">Presented by <strong id="footer-organizer" class="font-semibold text-ink">Organizer</strong></p>
         <div class="flex flex-wrap items-center gap-2">
           <a id="footer-email" href="#" class="inline-flex items-center gap-1.5 rounded-lg bg-surface px-3 py-2 text-[13px] font-medium text-ink transition hover:text-brand"><i class="hgi-stroke hgi-mail-01 text-[16px] text-brand"></i><span id="footer-email-text">email</span></a>
-          <a id="footer-instagram" href="#" aria-label="Instagram" class="grid h-9 w-9 place-items-center rounded-lg bg-surface text-muted transition hover:text-brand"><i class="hgi-stroke hgi-instagram text-[18px]"></i></a>
-          <a id="footer-website" href="#" aria-label="Website" class="grid h-9 w-9 place-items-center rounded-lg bg-surface text-muted transition hover:text-brand"><i class="hgi-stroke hgi-global text-[18px]"></i></a>
+          <a id="footer-instagram" href="#" aria-label="Instagram" class="grid h-9 w-9 place-items-center rounded-lg bg-surface transition hover:text-brand"><i class="hgi-stroke hgi-instagram text-[18px]"></i></a>
+          <a id="footer-website" href="#" aria-label="Website" class="grid h-9 w-9 place-items-center rounded-lg bg-surface transition hover:text-brand"><i class="hgi-stroke hgi-global text-[18px]"></i></a>
         </div>
       </div>
-      <p class="text-[12px] text-muted">© <span id="foot-year">2026</span> <span id="foot-org2">Organizer</span> · Built with Eventa.</p>
+      <p class="text-[12px]">© <span id="foot-year">2026</span> <span id="foot-org2">Organizer</span> · Built with Eventa.</p>
     </div>
   </footer>
 
@@ -238,7 +238,7 @@
       html('about-facts', aboutRows.map(function (r) {
         return '<div class="flex items-center gap-3 border-t border-line py-3 first:border-t-0">' +
           '<i class="hgi-stroke ' + esc(r[0]) + ' text-[16px] text-brand"></i>' +
-          '<dt class="text-[12px] font-medium uppercase tracking-[0.08em] text-muted">' + esc(r[1]) + '</dt>' +
+          '<dt class="text-[12px] font-medium uppercase tracking-[0.08em]">' + esc(r[1]) + '</dt>' +
           '<dd class="ml-auto text-right text-[13px] font-semibold text-ink">' + esc(r[2]) + '</dd></div>';
       }).join(''));
 
@@ -250,7 +250,7 @@
           '<span class="grid shrink-0 place-items-center rounded-xl bg-brand px-3 py-2 text-center text-[13px] font-extrabold leading-tight tnum text-white">' + esc(a.time) + '</span>' +
           '<div class="min-w-0 flex-1">' +
           '<div class="text-[15px] font-bold tracking-tight text-ink">' + esc(a.title) + '</div>' +
-          '<div class="mt-0.5 text-[13px] font-medium text-muted">' + esc(a.desc) + '</div>' +
+          '<div class="mt-0.5 text-[13px] font-medium">' + esc(a.desc) + '</div>' +
           '</div>' +
           '<i class="hgi-stroke hgi-music-note-01 text-[18px] shrink-0 text-brand/30"></i>' +
           '</li>';
@@ -275,7 +275,7 @@
       html('tickets-list', (ev.tickets || []).map(function (t) {
         var feat = !!t.featured;
         var feats = (t.features || []).map(function (f) {
-          return '<li class="flex items-start gap-2 text-[13px] ' + (feat ? 'text-white/90' : 'text-muted') + '">' +
+          return '<li class="flex items-start gap-2 text-[13px] ' + (feat ? 'text-white/90' : '') + '">' +
             '<i class="hgi-stroke hgi-tick-02 text-[15px] mt-0.5 ' + (feat ? 'text-white' : 'text-brand') + '"></i>' +
             '<span>' + esc(f) + '</span></li>';
         }).join('');
@@ -299,8 +299,8 @@
         return '<details class="faq border-t border-line py-1 first:border-t-0"' + (i === 0 ? ' open' : '') + '>' +
           '<summary class="flex cursor-pointer items-center justify-between gap-4 py-3 text-[15px] font-semibold text-ink">' +
           '<span>' + esc(f.q) + '</span>' +
-          '<i class="hgi-stroke hgi-arrow-down-01 text-[17px] faq-chev shrink-0 text-muted transition-transform duration-200"></i></summary>' +
-          '<div class="pb-3 pr-8 text-[13px] leading-relaxed text-muted">' + esc(f.a) + '</div></details>';
+          '<i class="hgi-stroke hgi-arrow-down-01 text-[17px] faq-chev shrink-0 transition-transform duration-200"></i></summary>' +
+          '<div class="pb-3 pr-8 text-[13px] leading-relaxed">' + esc(f.a) + '</div></details>';
       }).join(''));
 
       // ---- footer ----

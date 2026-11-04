@@ -25,32 +25,32 @@
     <!-- header -->
     <div class="mb-4 flex items-center justify-between gap-3">
       <div class="flex min-w-0 items-center gap-3">
-        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
+        <button id="btn-menu" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface hover:text-ink lg:hidden" title="Open menu"><i class="hgi-stroke hgi-menu-01 text-[18px]"></i></button>
         <div class="min-w-0">
-          <p class="text-[11px] font-semibold uppercase tracking-wider text-muted">Settings</p>
+          <p class="text-[11px] font-semibold uppercase tracking-wider">Settings</p>
           <h1 class="text-[22px] font-bold tracking-tight">Security</h1>
-          <p class="mt-0.5 hidden truncate text-[12px] text-muted sm:block">Password, two-factor authentication and sessions.</p>
+          <p class="mt-0.5 hidden truncate text-[12px] sm:block">Password, two-factor authentication and sessions.</p>
         </div>
       </div>
-      <div class="ml-auto flex shrink-0 items-center gap-2.5"><button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface text-muted transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button><div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px] text-muted">Event Manager</p></div></div></div>
+      <div class="ml-auto flex shrink-0 items-center gap-2.5"><button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button><div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px]">Event Manager</p></div></div></div>
     </div>
 
     <div class="grid grid-cols-1 gap-3 lg:grid-cols-2">
 
       <!-- security actions -->
       <section class="card p-5">
-        <h2 class="flex items-center gap-2 text-[15px] font-bold tracking-tight"><i class="hgi-stroke hgi-shield-key text-[17px] text-muted"></i>Security</h2>
+        <h2 class="flex items-center gap-2 text-[15px] font-bold tracking-tight"><i class="hgi-stroke hgi-shield-key text-[17px]"></i>Security</h2>
         <div class="mt-4 space-y-3">
           <div class="flex items-center justify-between gap-3 rounded-lg border border-hair bg-canvas px-3.5 py-3">
-            <span><span class="block text-[13px] font-medium text-ink">Password</span><span class="block text-[11px] text-muted">Last changed 3 months ago</span></span>
+            <span><span class="block text-[13px] font-medium text-ink">Password</span><span class="block text-[11px]">Last changed 3 months ago</span></span>
             <button type="button" class="btn btn-soft btn-sm shrink-0" data-open="password-panel">Change</button>
           </div>
           <div class="flex items-center justify-between gap-3 rounded-lg border border-hair bg-canvas px-3.5 py-3">
-            <span><span class="block text-[13px] font-medium text-ink">Two-factor authentication</span><span class="block text-[11px] text-muted">Require a one-time code at sign-in</span></span>
+            <span><span class="block text-[13px] font-medium text-ink">Two-factor authentication</span><span class="block text-[11px]">Require a one-time code at sign-in</span></span>
             <button id="twofa-toggle" type="button" class="flex h-5 w-9 shrink-0 items-center rounded-full bg-brand p-0.5 transition-colors" aria-label="Toggle two-factor authentication"><span class="h-4 w-4 translate-x-4 rounded-full bg-white shadow transition-transform"></span></button>
           </div>
           <div class="flex items-center justify-between gap-3 rounded-lg border border-hair bg-canvas px-3.5 py-3">
-            <span><span class="block text-[13px] font-medium text-ink">Audit log</span><span class="block text-[11px] text-muted">Sign-ins, permission changes &amp; exports</span></span>
+            <span><span class="block text-[13px] font-medium text-ink">Audit log</span><span class="block text-[11px]">Sign-ins, permission changes &amp; exports</span></span>
             <button type="button" class="btn btn-soft btn-sm shrink-0" data-open="audit-panel">View log</button>
           </div>
         </div>
@@ -61,18 +61,18 @@
         <h2 class="text-[15px] font-bold tracking-tight">Active sessions</h2>
         <div class="mt-1 divide-y divide-line">
           <div class="flex flex-wrap items-center gap-3 py-3 first:pt-0">
-            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line text-muted"><i class="hgi-stroke hgi-smart-phone-01 text-[16px]"></i></span>
-            <div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">Chrome on macOS · Bangkok</p><p class="text-[11px] text-muted">Current session · active now</p></div>
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line"><i class="hgi-stroke hgi-smart-phone-01 text-[16px]"></i></span>
+            <div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">Chrome on macOS · Bangkok</p><p class="text-[11px]">Current session · active now</p></div>
             <span class="badge badge-green shrink-0">This device</span>
           </div>
           <div class="flex flex-wrap items-center gap-3 py-3">
-            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line text-muted"><i class="hgi-stroke hgi-smart-phone-01 text-[16px]"></i></span>
-            <div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">Safari on iPhone 15 · Bangkok</p><p class="text-[11px] text-muted">Last active 2 hours ago</p></div>
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line"><i class="hgi-stroke hgi-smart-phone-01 text-[16px]"></i></span>
+            <div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">Safari on iPhone 15 · Bangkok</p><p class="text-[11px]">Last active 2 hours ago</p></div>
             <button class="btn btn-soft btn-sm shrink-0">Revoke</button>
           </div>
           <div class="flex flex-wrap items-center gap-3 py-3 last:pb-0">
-            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line text-muted"><i class="hgi-stroke hgi-smart-phone-01 text-[16px]"></i></span>
-            <div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">Edge on Windows · Chiang Mai</p><p class="text-[11px] text-muted">Last active 3 days ago</p></div>
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-line"><i class="hgi-stroke hgi-smart-phone-01 text-[16px]"></i></span>
+            <div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">Edge on Windows · Chiang Mai</p><p class="text-[11px]">Last active 3 days ago</p></div>
             <button class="btn btn-soft btn-sm shrink-0">Revoke</button>
           </div>
         </div>
@@ -126,7 +126,7 @@
       <button class="btn-icon" data-close><i class="hgi-stroke hgi-cancel-01 text-[18px]"></i></button>
     </header>
     <div class="flex-1 space-y-4 overflow-y-auto p-4">
-      <p class="text-[12.5px] leading-relaxed text-muted">Scan the QR code with an authenticator app — <span class="font-medium text-ink">Google Authenticator, 1Password or Authy</span> — then enter the 6-digit code to finish.</p>
+      <p class="text-[12.5px] leading-relaxed">Scan the QR code with an authenticator app — <span class="font-medium text-ink">Google Authenticator, 1Password or Authy</span> — then enter the 6-digit code to finish.</p>
       <div class="flex justify-center">
         <div class="rounded-xl border border-hair bg-white p-3"><div id="twofa-qr" class="h-40 w-40"></div></div>
       </div>
@@ -143,7 +143,7 @@
       </div>
       <div class="rounded-lg border border-hair bg-canvas p-3">
         <p class="text-[12px] font-semibold text-ink">Recovery codes</p>
-        <p class="mt-0.5 text-[11px] text-muted">Save these somewhere safe. Each can be used once if you lose your device.</p>
+        <p class="mt-0.5 text-[11px]">Save these somewhere safe. Each can be used once if you lose your device.</p>
         <div class="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 font-mono text-[12px] text-ink tnum">
           <span>3f9a-2b71</span><span>a4c0-91de</span>
           <span>77bd-e2f4</span><span>1e6a-c8b3</span>
@@ -228,8 +228,8 @@
     perm: { i: 'hgi-user-settings-01', c: 'bg-violet-50 text-violet-600 dark:bg-violet-500/15 dark:text-violet-300' },
     xport: { i: 'hgi-download-01', c: 'bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300' },
     fail: { i: 'hgi-alert-02', c: 'bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300' },
-    apikey: { i: 'hgi-source-code', c: 'bg-line text-muted' },
-    revoke: { i: 'hgi-logout-03', c: 'bg-line text-muted' }
+    apikey: { i: 'hgi-source-code', c: 'bg-line' },
+    revoke: { i: 'hgi-logout-03', c: 'bg-line' }
   };
   var AUDIT = [
     { t: 'signin', title: 'Signed in', meta: 'Chrome on macOS · Bangkok · 203.0.113.24', time: 'Just now' },
@@ -248,8 +248,8 @@
     var ic = AU_ICON[e.t] || AU_ICON.signin;
     return '<div class="flex items-start gap-3 py-3 first:pt-0">' +
       '<span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg ' + ic.c + '"><i class="hgi-stroke ' + ic.i + ' text-[16px]"></i></span>' +
-      '<div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">' + esc(e.title) + '</p><p class="mt-0.5 text-[12px] text-muted">' + esc(e.meta) + '</p></div>' +
-      '<span class="shrink-0 whitespace-nowrap text-[11px] text-muted">' + esc(e.time) + '</span>' +
+      '<div class="min-w-0 flex-1"><p class="text-[13px] font-semibold text-ink">' + esc(e.title) + '</p><p class="mt-0.5 text-[12px]">' + esc(e.meta) + '</p></div>' +
+      '<span class="shrink-0 whitespace-nowrap text-[11px]">' + esc(e.time) + '</span>' +
     '</div>';
   }).join('');
 })();
