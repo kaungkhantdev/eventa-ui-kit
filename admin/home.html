@@ -44,8 +44,9 @@
       </div>
     </header>
 
-    <!-- Row 1: Registrations · Meetings · Active events -->
-    <div class="grid gap-4 lg:grid-cols-3">
+    <!-- Rows 1–2, one grid so cards in a row share a height. xl: Registrations · Ticket revenue · Active events,
+         then the check-in insight · Upcoming Events (two columns). md: two columns, Upcoming Events full width. -->
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
 
       <!-- Today's Registrations -->
       <section class="rounded-2xl bg-surface p-4">
@@ -72,43 +73,24 @@
             <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">Ploy Srisai</p><p class="truncate text-[12px]">Sunrise Yoga Retreat · General</p></div>
             <span class="shrink-0 text-[11px] tnum">09:47</span>
           </div>
-          <div class="flex items-center gap-2.5">
-            <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-amber-100 text-[11px] font-semibold text-amber-700 dark:bg-amber-400/15 dark:text-amber-300">JW</span>
-            <div class="min-w-0 flex-1"><p class="truncate text-[13px] font-semibold text-ink">James Wong</p><p class="truncate text-[12px]">Tech Summit 2026 · Early Bird</p></div>
-            <span class="shrink-0 text-[11px] tnum">09:31</span>
-          </div>
         </div>
-        <a href="registrations.html" class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-brand hover:text-brand-dark"><i class="hgi-stroke hgi-user-add-01 text-[15px]"></i>View all registrations</a>
+        <a href="registrations.html" class="mt-3 inline-flex items-center gap-1.5 pl-[42px] text-[12px] font-semibold text-brand hover:text-brand-dark"><i class="hgi-stroke hgi-add-01 text-[13px]"></i>Add registration</a>
       </section>
 
-      <!-- Today's Meetings -->
-      <section class="rounded-2xl bg-surface p-4">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <h2 class="text-[15px] font-bold tracking-tight">Today's Meetings</h2>
-            <span class="grid h-5 min-w-[20px] place-items-center rounded-full bg-line px-1.5 text-[11px] font-semibold">5</span>
-          </div>
-          <a href="meetings.html" class="text-[12px] font-semibold text-brand hover:underline">See all</a>
+      <!-- Ticket revenue (last 30 days vs the 30 before; figures match dashboard.html's KPI) -->
+      <section class="flex flex-col rounded-2xl bg-surface p-4">
+        <div class="flex items-start justify-between gap-3">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-canvas text-ink"><i class="hgi-stroke hgi-money-bag-02 text-[18px]"></i></span>
+          <p class="text-[24px] font-normal leading-none tracking-tight text-ink tnum"><span class="text-brand">฿</span>48,290</p>
         </div>
-        <div class="mt-3.5 space-y-4">
-          <div class="flex gap-3">
-            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand"><i class="hgi-stroke hgi-video-01 text-[18px]"></i></span>
-            <div class="min-w-0">
-              <p class="text-[13px] font-semibold text-ink">Seating plan approval</p>
-              <p class="mt-0.5 text-[12px] tnum">10:00 AM – 10:30 AM</p>
-              <p class="text-[12px]">Venue Coordinator · Sophia Reynolds</p>
-            </div>
+        <div id="rev-spark" class="relative my-2 min-h-[96px] flex-1" role="img" aria-label="Ticket revenue over the last 30 days, compared with the 30 days before"></div>
+        <div class="flex items-end justify-between gap-3">
+          <div class="min-w-0">
+            <h2 class="text-[15px] font-bold tracking-tight">Ticket revenue</h2>
+            <p class="text-[12px]">Last 30 days · all events</p>
           </div>
-          <div class="flex gap-3">
-            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300"><i class="hgi-stroke hgi-video-01 text-[18px]"></i></span>
-            <div class="min-w-0">
-              <p class="text-[13px] font-semibold text-ink">Sponsor onboarding call</p>
-              <p class="mt-0.5 text-[12px] tnum">10:45 AM – 11:15 AM</p>
-              <p class="text-[12px]">Client · Brann Callahan</p>
-            </div>
-          </div>
+          <span class="shrink-0 rounded-full border border-brand/30 px-2.5 py-1 text-[12px] font-semibold text-brand-dark tnum dark:text-brand">+12.5%</span>
         </div>
-        <a href="meetings.html" class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-brand hover:text-brand-dark"><i class="hgi-stroke hgi-add-01 text-[15px]"></i>Schedule meeting</a>
       </section>
 
       <!-- Active events -->
@@ -117,23 +99,32 @@
           <h2 class="text-[15px] font-bold tracking-tight">Active events</h2>
           <a href="events.html" class="text-[12px] font-semibold text-brand hover:underline">See all</a>
         </div>
-        <div class="mt-4 flex flex-1 items-center gap-5">
-          <div class="relative grid h-36 w-36 shrink-0 place-items-center sm:h-40 sm:w-40">
-            <svg id="donut" viewBox="0 0 42 42" class="h-full w-full"></svg>
+        <div class="mt-3 grid flex-1 grid-cols-1 items-center gap-4 min-[360px]:grid-cols-2">
+          <div class="relative mx-auto grid aspect-square w-full max-w-[118px] place-items-center">
+            <svg id="donut" viewBox="0 0 42 42" class="h-full w-full" role="img" aria-label="Seats across the 6 active events: 78% sold, 22% left"></svg>
             <div class="pointer-events-none absolute inset-0 grid place-items-center text-center">
-              <div><p class="text-[30px] font-bold leading-none text-ink tnum">4</p><p class="mt-1 text-[11px]">events</p></div>
+              <div><p class="text-[24px] font-normal leading-none text-ink tnum">6</p></div>
             </div>
           </div>
-          <div id="donut-legend" class="min-w-0 flex-1 space-y-4"></div>
+          <div id="donut-legend" class="min-w-0 space-y-2"></div>
         </div>
       </section>
-    </div>
 
-    <!-- Row 2: Upcoming Events · Alerts -->
-    <div class="mt-4 grid gap-4 xl:grid-cols-3">
+      <!-- Check-in insight: one metric at a time, the dots switch it (figures as in dashboard.html) -->
+      <section class="flex flex-col rounded-2xl bg-surface p-4">
+        <h2 class="sr-only">Insights</h2>
+        <p class="text-[22px] font-normal leading-none tracking-tight text-ink tnum"><span id="ins-value">87</span><span id="ins-unit" class="ml-0.5 text-[13px] text-brand">%</span></p>
+        <p id="ins-label" class="mt-1 text-[12px]">Check-in rate · last 12 days</p>
+        <div id="ins-chart" class="relative mt-2 min-h-[70px] flex-1" role="img" aria-label="Check-in rate, daily, last 12 days"></div>
+        <div id="ins-dots" class="mt-2 flex items-center justify-center gap-1.5">
+          <button type="button" data-i="0" aria-label="Show check-in rate" class="h-1.5 w-5 rounded-full bg-brand"></button>
+          <button type="button" data-i="1" aria-label="Show capacity filled" class="h-1.5 w-1.5 rounded-full bg-hair"></button>
+          <button type="button" data-i="2" aria-label="Show registrations" class="h-1.5 w-1.5 rounded-full bg-hair"></button>
+        </div>
+      </section>
 
       <!-- Upcoming Events -->
-      <section class="rounded-2xl bg-surface p-4 xl:col-span-2">
+      <section class="rounded-2xl bg-surface p-4 md:col-span-2">
         <div class="flex items-center justify-between">
           <h2 class="text-[15px] font-bold tracking-tight">Upcoming Events</h2>
           <a href="events.html" class="text-[12px] font-semibold text-brand hover:underline">See all</a>
@@ -170,97 +161,98 @@
             </div>
           </div>
 
-          <div class="rounded-xl bg-pink-50 p-4 dark:bg-pink-500/10">
+          <div class="rounded-xl bg-violet-50 dark:bg-violet-500/10 p-4">
             <div class="flex items-center justify-between">
               <div class="flex -space-x-2">
-                <span class="grid h-8 w-8 place-items-center rounded-full bg-white text-[10px] font-semibold text-pink-700 ring-2 ring-pink-50 dark:ring-pink-500/10">PS</span>
-                <span class="grid h-8 w-8 place-items-center rounded-full bg-pink-500 text-[10px] font-semibold text-white ring-2 ring-pink-50 dark:ring-pink-500/10">+88</span>
+                <span class="grid h-8 w-8 place-items-center rounded-full bg-white text-[10px] font-semibold text-violet-700 ring-2 ring-violet-50 dark:ring-violet-500/10">ML</span>
+                <span class="grid h-8 w-8 place-items-center rounded-full bg-violet-600 text-[10px] font-semibold text-white ring-2 ring-violet-50 dark:ring-violet-500/10">+889</span>
               </div>
-              <span class="rounded-full bg-white/80 px-2.5 py-1 text-[11px] font-semibold text-ink dark:bg-white/10">18 days left</span>
+              <span class="rounded-full bg-white/80 px-2.5 py-1 text-[11px] font-semibold text-ink dark:bg-white/10">15 days left</span>
             </div>
-            <p class="mt-3 text-[14px] font-bold tracking-tight text-ink">Sunrise Yoga Retreat</p>
+            <p class="mt-3 text-[14px] font-bold tracking-tight text-ink">Thai Street Food Festival</p>
             <div class="mt-3">
-              <div class="flex items-center justify-between text-[12px]"><span>Progress</span><span class="font-semibold text-ink tnum">48%</span></div>
-              <div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/70 dark:bg-white/10"><div class="h-full rounded-full bg-pink-500" style="width:48%"></div></div>
+              <div class="flex items-center justify-between text-[12px]"><span>Progress</span><span class="font-semibold text-ink tnum">89%</span></div>
+              <div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/70 dark:bg-white/10"><div class="h-full rounded-full bg-violet-600" style="width:89%"></div></div>
             </div>
           </div>
 
-        </div>
-      </section>
-
-      <!-- Alerts -->
-      <section class="rounded-2xl bg-surface p-4 xl:col-span-1">
-        <div class="flex items-center justify-between">
-          <h2 class="text-[15px] font-bold tracking-tight">Alerts</h2>
-          <a href="notifications.html" class="text-[12px] font-semibold text-brand hover:underline">See all</a>
-        </div>
-        <div class="mt-3.5 space-y-3.5">
-          <div class="flex items-start gap-2.5">
-            <i class="hgi-stroke hgi-checkmark-circle-02 text-[18px] mt-0.5 shrink-0 text-brand"></i>
-            <p class="text-[13px] leading-snug text-ink">Registration form needs approval for <a href="events.html" class="font-semibold text-brand hover:underline">Tech Summit 2026</a></p>
-          </div>
-          <div class="flex items-start gap-2.5">
-            <i class="hgi-stroke hgi-alert-circle text-[18px] mt-0.5 shrink-0 text-red-500"></i>
-            <p class="text-[13px] leading-snug text-ink">Mia Thompson's payment was declined for <a href="payments.html" class="font-semibold text-brand hover:underline">Bangkok Jazz Night</a></p>
-          </div>
-          <div class="flex items-start gap-2.5">
-            <i class="hgi-stroke hgi-alert-circle text-[18px] mt-0.5 shrink-0 text-red-500"></i>
-            <p class="text-[13px] leading-snug text-ink">Speaker not confirmed · <a href="speakers.html" class="font-semibold text-brand hover:underline">Sunrise Yoga Retreat</a></p>
-          </div>
-          <div class="flex items-start gap-2.5">
-            <i class="hgi-stroke hgi-alert-circle text-[18px] mt-0.5 shrink-0 text-red-500"></i>
-            <p class="text-[13px] leading-snug text-ink">Vendor reply pending · <a href="feedback.html" class="font-semibold text-brand hover:underline">Tech Summit 2026</a></p>
-          </div>
         </div>
       </section>
     </div>
 
-    <!-- Row 3: Website Templates -->
-    <section class="mt-4 rounded-2xl bg-surface p-4">
-      <div class="flex items-center justify-between">
-        <h2 class="text-[15px] font-bold tracking-tight">Website Templates</h2>
-        <a href="landing-pages.html" class="text-[12px] font-semibold text-brand hover:underline">See all</a>
-      </div>
-      <div class="mt-3.5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <!-- Row 3: recent orders (two columns) · to-do list -->
+    <div class="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-3">
 
-        <a href="landing-pages.html" class="group rounded-xl bg-canvas p-4 transition hover:bg-line">
-          <div class="flex items-start justify-between">
-            <span class="rounded-md bg-line px-2 py-1 text-[11px] font-medium">All-purpose</span>
-            <span class="grid h-7 w-7 place-items-center rounded-lg bg-brand-soft text-brand transition group-hover:bg-brand group-hover:text-white"><i class="hgi-stroke hgi-arrow-up-right-01 text-[14px]"></i></span>
-          </div>
-          <p class="mt-3 text-[14px] font-bold tracking-tight text-ink">Classic</p>
-          <p class="mt-1 text-[12px] leading-snug">All-purpose event page — details fill in automatically.</p>
-        </a>
+      <!-- Recent orders (sample rows from payments.html; Date and Amount sort) -->
+      <section class="flex flex-col rounded-2xl bg-surface p-4 xl:col-span-2">
+        <div class="flex items-center justify-between gap-3">
+          <h2 class="text-[15px] font-bold tracking-tight">Recent orders</h2>
+          <a href="payments.html" class="btn btn-ghost btn-sm border border-hair">View all<i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></a>
+        </div>
+        <div class="mt-3 overflow-x-auto">
+          <table id="orders-table" class="data-table min-w-[560px] [&_tbody_td]:!py-1.5">
+            <thead><tr><th>Buyer</th><th>Event</th><th><button type="button" data-sort="date" class="inline-flex items-center gap-1 uppercase hover:text-ink" aria-label="Sort by date">Date<i class="hgi-stroke hgi-arrow-up-down text-[12px]"></i></button></th><th><button type="button" data-sort="amount" class="inline-flex items-center gap-1 uppercase hover:text-ink" aria-label="Sort by amount">Amount<i class="hgi-stroke hgi-arrow-up-down text-[12px]"></i></button></th><th class="!pr-0">Status</th></tr></thead>
+            <tbody>
+              <tr data-date="2026-07-18" data-amount="1250">
+                <td><div class="flex items-center gap-2.5"><span class="grid h-7 w-7 shrink-0 place-items-center rounded-full text-[10px] font-semibold bg-brand-soft text-brand-dark dark:text-brand">AP</span><div class="min-w-0"><p class="truncate text-[13px] font-semibold text-ink">Anong Pattana</p><p class="truncate text-[11.5px]">anong.p@example.com</p></div></div></td>
+                <td class="text-ink">Tech Summit 2026</td>
+                <td class="text-ink tnum">Jul 18</td>
+                <td class="font-semibold text-ink tnum">฿1,250</td>
+                <td class="!pr-0"><span class="badge badge-green">Paid</span></td>
+              </tr>
+              <tr data-date="2026-07-17" data-amount="480">
+                <td><div class="flex items-center gap-2.5"><span class="grid h-7 w-7 shrink-0 place-items-center rounded-full text-[10px] font-semibold bg-amber-100 text-amber-700 dark:bg-amber-400/15 dark:text-amber-300">JW</span><div class="min-w-0"><p class="truncate text-[13px] font-semibold text-ink">James Wong</p><p class="truncate text-[11.5px]">james.w@example.com</p></div></div></td>
+                <td class="text-ink">Bangkok Jazz Night</td>
+                <td class="text-ink tnum">Jul 17</td>
+                <td class="font-semibold text-ink tnum">฿480</td>
+                <td class="!pr-0"><span class="badge badge-gray">Refunded</span></td>
+              </tr>
+              <tr data-date="2026-07-15" data-amount="480">
+                <td><div class="flex items-center gap-2.5"><span class="grid h-7 w-7 shrink-0 place-items-center rounded-full text-[10px] font-semibold bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300">NW</span><div class="min-w-0"><p class="truncate text-[13px] font-semibold text-ink">Nutcha Wongsa</p><p class="truncate text-[11.5px]">nutcha.w@example.com</p></div></div></td>
+                <td class="text-ink">Bangkok Jazz Night</td>
+                <td class="text-ink tnum">Jul 15</td>
+                <td class="font-semibold text-ink tnum">฿480</td>
+                <td class="!pr-0"><span class="badge badge-amber">Pending</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-        <a href="landing-pages.html" class="group rounded-xl bg-canvas p-4 transition hover:bg-line">
-          <div class="flex items-start justify-between">
-            <span class="rounded-md bg-line px-2 py-1 text-[11px] font-medium">Bold</span>
-            <span class="grid h-7 w-7 place-items-center rounded-lg bg-brand-soft text-brand transition group-hover:bg-brand group-hover:text-white"><i class="hgi-stroke hgi-arrow-up-right-01 text-[14px]"></i></span>
-          </div>
-          <p class="mt-3 text-[14px] font-bold tracking-tight text-ink">Spotlight</p>
-          <p class="mt-1 text-[12px] leading-snug">Split hero with a sticky register card.</p>
-        </a>
-
-        <a href="landing-pages.html" class="group rounded-xl bg-canvas p-4 transition hover:bg-line">
-          <div class="flex items-start justify-between">
-            <span class="rounded-md bg-line px-2 py-1 text-[11px] font-medium">Minimal</span>
-            <span class="grid h-7 w-7 place-items-center rounded-lg bg-brand-soft text-brand transition group-hover:bg-brand group-hover:text-white"><i class="hgi-stroke hgi-arrow-up-right-01 text-[14px]"></i></span>
-          </div>
-          <p class="mt-3 text-[14px] font-bold tracking-tight text-ink">Minimal</p>
-          <p class="mt-1 text-[12px] leading-snug">Centered, understated event page.</p>
-        </a>
-
-        <a href="landing-pages.html" class="group rounded-xl bg-canvas p-4 transition hover:bg-line">
-          <div class="flex items-start justify-between">
-            <span class="rounded-md bg-line px-2 py-1 text-[11px] font-medium">Festival</span>
-            <span class="grid h-7 w-7 place-items-center rounded-lg bg-brand-soft text-brand transition group-hover:bg-brand group-hover:text-white"><i class="hgi-stroke hgi-arrow-up-right-01 text-[14px]"></i></span>
-          </div>
-          <p class="mt-3 text-[14px] font-bold tracking-tight text-ink">Vibrant</p>
-          <p class="mt-1 text-[12px] leading-snug">Full-bleed poster hero for festivals &amp; concerts.</p>
-        </a>
-
-      </div>
-    </section>
+      <!-- To do (the open items behind today's notifications) -->
+      <section class="flex flex-col rounded-2xl bg-surface p-4">
+        <div class="flex items-center justify-between gap-3">
+          <h2 class="text-[15px] font-bold tracking-tight">To do</h2>
+          <a href="notifications.html" class="btn btn-ghost btn-sm border border-hair">View all<i class="hgi-stroke hgi-arrow-right-01 text-[14px]"></i></a>
+        </div>
+        <ul class="mt-1.5 divide-y divide-line">
+          <li class="flex items-center gap-3 py-2">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand-soft text-brand"><i class="hgi-stroke hgi-user-check-01 text-[17px]"></i></span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[13.5px] font-semibold text-ink">Approve the registration form</p>
+              <p class="mt-0.5 flex items-center gap-1.5 truncate text-[12px]"><i class="hgi-stroke hgi-calendar-03 text-[13px]"></i><span class="tnum">Jul 20, 2026</span> · Tech Summit 2026</p>
+            </div>
+            <span class="badge badge-red shrink-0">High</span>
+          </li>
+          <li class="flex items-center gap-3 py-2">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-pink-50 text-pink-600 dark:bg-pink-500/15 dark:text-pink-300"><i class="hgi-stroke hgi-mic-01 text-[17px]"></i></span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[13.5px] font-semibold text-ink">Confirm the last speaker</p>
+              <p class="mt-0.5 flex items-center gap-1.5 truncate text-[12px]"><i class="hgi-stroke hgi-calendar-03 text-[13px]"></i><span class="tnum">Jul 22, 2026</span> · Sunrise Yoga Retreat</p>
+            </div>
+            <span class="badge badge-amber shrink-0">Medium</span>
+          </li>
+          <li class="flex items-center gap-3 py-2">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-amber-50 text-amber-600 dark:bg-amber-500/15 dark:text-amber-300"><i class="hgi-stroke hgi-restaurant-02 text-[17px]"></i></span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[13.5px] font-semibold text-ink">Reply to the catering quote</p>
+              <p class="mt-0.5 flex items-center gap-1.5 truncate text-[12px]"><i class="hgi-stroke hgi-calendar-03 text-[13px]"></i><span class="tnum">Jul 24, 2026</span> · Tech Summit 2026</p>
+            </div>
+            <span class="badge badge-green shrink-0">Low</span>
+          </li>
+        </ul>
+      </section>
+    </div>
 
     <p class="mt-6 text-center text-[11px]">Eventa · Event registration system · HTML, Tailwind CSS &amp; Hugeicons</p>
     </div>
@@ -270,22 +262,141 @@
 <script src="../assets/shell.js?v=70"></script>
 <script>
   /* ---------- Active-events donut ---------- */
+  /* Seats across the active events: each event's sold share, 78% in all (dashboard.html's
+     "Capacity filled"); the 22% still free shows as the grey ticks. */
   const projects = [
-    { name: 'Tech Summit 2026',     pct: 34, c: '#00c066' },
-    { name: 'Bangkok Jazz Night',   pct: 27, c: '#3b82f6' },
-    { name: 'Sunrise Yoga Retreat', pct: 22, c: '#ec4899' },
-    { name: 'UX Bangkok Meetup',    pct: 17, c: '#f59e0b' },
+    { name: 'Tech Summit 2026',          pct: 20, c: '#00c066' },
+    { name: 'Bangkok Jazz Night',        pct: 16, c: '#3b82f6' },
+    { name: 'Thai Street Food Festival', pct: 13, c: '#8b5cf6' },
+    { name: 'Sunrise Yoga Retreat',      pct: 11, c: '#ec4899' },
+    { name: 'UX Bangkok Meetup',         pct: 10, c: '#f59e0b' },
+    { name: 'DevOps World Bangkok',      pct: 8,  c: '#14b8a6' },
   ];
-  (function () {
-    const R = 15.915, GAP = 2.4, SW = 4.5; let start = 0;
-    document.getElementById('donut').innerHTML = projects.map(p => {
-      const len = Math.max(p.pct - GAP, 0.5);
-      const arc = `<circle cx="21" cy="21" r="${R}" fill="none" stroke="${p.c}" stroke-width="${SW}" stroke-linecap="round" stroke-dasharray="${len} ${100 - len}" stroke-dashoffset="${25 - start}" />`;
-      start += p.pct; return arc;
-    }).join('');
+  /* Donut: a thick ring of segments with softly rounded corners, an even gap and a light
+     gradient (tint to colour). When the items add up to less than 100, the rest of the ring
+     is a track of small grey ticks. Fits viewBox 0 0 42 42 and starts at 12 o'clock,
+     clockwise. Give each donut on a page its own id (it prefixes the gradient ids). */
+  function donutSegments(items, { sw = 7, gap = 1.2, corner = 1.3, id = 'donut' } = {}) {
+    const C = 21, RO = 20.4, RI = RO - sw, TAU = Math.PI * 2;
+    const dark = document.documentElement.classList.contains('dark');
+    const pt = (r, a) => `${(C + r * Math.cos(a)).toFixed(3)} ${(C + r * Math.sin(a)).toFixed(3)}`;
+    // A segment is drawn inset by its corner radius, then stroked round in its own paint.
+    const piece = (a0, a1, g, k, paint) => {
+      const ro = RO - k, ri = RI + k, d = g / 2 + k;
+      const o0 = a0 + Math.asin(d / ro), o1 = a1 - Math.asin(d / ro);
+      const i0 = a0 + Math.asin(d / ri), i1 = a1 - Math.asin(d / ri);
+      if (o1 <= o0 || i1 <= i0) return '';
+      return `<path d="M ${pt(ro, o0)} A ${ro} ${ro} 0 ${o1 - o0 > Math.PI ? 1 : 0} 1 ${pt(ro, o1)} L ${pt(ri, i1)} A ${ri} ${ri} 0 ${i1 - i0 > Math.PI ? 1 : 0} 0 ${pt(ri, i0)} Z" fill="${paint}" stroke="${paint}" stroke-width="${k * 2}" stroke-linejoin="round"/>`;
+    };
+    const tint = hex => { const n = parseInt(hex.slice(1), 16), m = v => Math.round(v + (255 - v) * 0.4); return `rgb(${m(n >> 16)} ${m((n >> 8) & 255)} ${m(n & 255)})`; };
+    let a = -TAU / 4, defs = '', out = '';
+    items.forEach((it, i) => {
+      const a1 = a + it.pct / 100 * TAU;
+      defs += `<linearGradient id="${id}-g${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${tint(it.c)}"/><stop offset="1" stop-color="${it.c}"/></linearGradient>`;
+      out += piece(a, a1, gap, corner, `url(#${id}-g${i})`);
+      a = a1;
+    });
+    const left = 100 - items.reduce((t, it) => t + it.pct, 0);
+    if (left > 1) {
+      const n = Math.max(1, Math.round(left / 3.2)), step = (left / 100) * TAU / n;
+      const track = dark ? '#343a37' : '#e6e8ec'; // solid: a see-through fill doubles up under its own stroke
+      for (let j = 0; j < n; j++) out += piece(a + step * j, a + step * (j + 1), 0.5, 0.4, track);
+    }
+    return `<defs>${defs}</defs>${out}`;
+  }
+  function renderDonut() {
+    document.getElementById('donut').innerHTML = donutSegments(projects);
     document.getElementById('donut-legend').innerHTML = projects.map(p => `
-      <div class="flex items-center gap-2.5"><span class="h-3 w-3 shrink-0 rounded-full" style="background:${p.c}"></span><span class="truncate text-[13.5px] text-ink">${p.name}</span></div>`).join('');
+      <div class="flex items-start gap-2"><span class="mt-[5px] h-2 w-2 shrink-0 rounded-full" style="background:${p.c}"></span><span class="text-[12px] leading-snug text-ink">${p.name}</span></div>`).join('') + `
+      <div class="flex items-start gap-2"><span class="mt-[5px] h-2 w-2 shrink-0 rounded-full bg-gray-300 dark:bg-white/20"></span><span class="text-[12px] leading-snug text-ink">Seats left</span></div>`;
+  }
+
+  /* ---------- Charts: shared colours and helpers ---------- */
+  function chartColors() {
+    const dark = document.documentElement.classList.contains('dark');
+    return { last: dark ? 'rgba(255,255,255,0.16)' : '#dfe3e8', soft: dark ? 'rgba(0,192,102,0.35)' : '#a7e9c8' };
+  }
+  function smoothPath(pts) {
+    let d = `M ${pts[0][0]} ${pts[0][1]}`;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+      const c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
+      const c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
+      d += ` C ${c1x} ${c1y} ${c2x} ${c2y} ${p2[0]} ${p2[1]}`;
+    }
+    return d;
+  }
+
+  /* ---------- Ticket revenue: daily ฿k, last 30 days (brand) over the 30 before (soft) ---------- */
+  const revSpark = {
+    now:  [1.8, 1.89, 1.82, 1.86, 1.67, 1.32, 1.31, 1.47, 1.5, 1.7, 2.0, 1.9, 1.67, 1.61, 1.43, 1.22, 1.42, 1.7, 1.74, 1.87, 1.97, 1.69, 1.41, 1.42, 1.37, 1.36, 1.69, 1.94, 1.84, 1.8],
+    prev: [1.36, 1.39, 1.5, 1.71, 1.73, 1.51, 1.34, 1.32, 1.31, 1.27, 1.41, 1.66, 1.74, 1.59, 1.46, 1.42, 1.31, 1.19, 1.31, 1.58, 1.68, 1.61, 1.58, 1.54, 1.36, 1.17, 1.24, 1.47, 1.58, 1.58],
+  };
+  function renderRevSpark() {
+    const el = document.getElementById('rev-spark'), c = chartColors();
+    const W = el.clientWidth || 300, H = Math.max(el.clientHeight, 80), PX = 2, PY = Math.round(H * 0.14);
+    const all = revSpark.now.concat(revSpark.prev), lo = Math.min(...all), hi = Math.max(...all);
+    const pts = vals => vals.map((v, i) => [PX + i / (vals.length - 1) * (W - PX * 2), PY + (1 - (v - lo) / (hi - lo)) * (H - PY * 2)]);
+    el.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" class="absolute inset-0">
+        <path d="${smoothPath(pts(revSpark.prev))}" fill="none" stroke="${c.soft}" stroke-width="2" stroke-linecap="round"/>
+        <path d="${smoothPath(pts(revSpark.now))}" fill="none" stroke="#00c066" stroke-width="2" stroke-linecap="round"/>
+      </svg>`;
+  }
+
+  /* ---------- Check-in insight: daily ranges, sample data; the dots switch the metric ---------- */
+  function dailyRanges(seed, n) {  // [low, open, close, high] per day
+    const out = []; let v = 50;
+    for (let i = 0; i < n; i++) {
+      const c = v + Math.sin(i * 1.3 + seed) * 12 + Math.cos(i * 0.7 + seed * 2) * 6;
+      out.push([Math.min(v, c) - 4 - (i % 3) * 2, v, c, Math.max(v, c) + 3 + ((i + 1) % 3) * 2]); v = c;
+    }
+    return out;
+  }
+  const insights = [
+    { value: '87',    unit: '%', label: 'Check-in rate · last 12 days',   days: dailyRanges(0.4, 12) },
+    { value: '78',    unit: '%', label: 'Capacity filled · last 12 days', days: dailyRanges(1.7, 12) },
+    { value: '1,340', unit: '',  label: 'Registrations · last 12 days',   days: dailyRanges(2.9, 12) },
+  ];
+  let insIdx = 0;
+  function renderInsight() {
+    const d = insights[insIdx], el = document.getElementById('ins-chart'), c = chartColors();
+    const W = el.clientWidth || 200, H = Math.max(el.clientHeight, 70), n = d.days.length;
+    const lo = Math.min(...d.days.map(x => x[0])), hi = Math.max(...d.days.map(x => x[3]));
+    const y = v => 3 + (1 - (v - lo) / (hi - lo)) * (H - 6), slot = W / n, bw = Math.min(6, slot * 0.45);
+    el.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" class="absolute inset-0">${d.days.map(([l, o, cl, h], i) => {
+      const x = slot * i + slot / 2, col = cl >= o ? '#00c066' : c.last, top = y(Math.max(o, cl)), bot = y(Math.min(o, cl));
+      return `<line x1="${x}" y1="${y(h)}" x2="${x}" y2="${y(l)}" stroke="${col}" stroke-width="1.5" stroke-linecap="round"/><rect x="${x - bw / 2}" y="${top}" width="${bw}" height="${Math.max(bot - top, 3)}" rx="${bw / 2}" fill="${col}"/>`;
+    }).join('')}</svg>`;
+    document.getElementById('ins-value').textContent = d.value;
+    document.getElementById('ins-unit').textContent = d.unit;
+    document.getElementById('ins-label').textContent = d.label;
+    el.setAttribute('aria-label', d.label.replace(' · ', ', daily, '));
+    document.querySelectorAll('#ins-dots button').forEach((b, i) => b.className = 'h-1.5 rounded-full ' + (i === insIdx ? 'w-5 bg-brand' : 'w-1.5 bg-hair'));
+  }
+  document.getElementById('ins-dots').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    insIdx = +b.dataset.i; renderInsight();
+  });
+
+  /* ---------- Recent orders: sort by date or amount (click again to reverse) ---------- */
+  (function () {
+    const table = document.getElementById('orders-table'), body = table.tBodies[0];
+    let key = 'date', dir = -1;  // newest first, as shipped
+    table.tHead.addEventListener('click', e => {
+      const b = e.target.closest('[data-sort]'); if (!b) return;
+      dir = b.dataset.sort === key ? -dir : -1; key = b.dataset.sort;
+      const val = tr => key === 'amount' ? +tr.dataset.amount : tr.dataset.date;
+      [...body.rows].sort((x, y) => (val(x) > val(y) ? 1 : val(x) < val(y) ? -1 : 0) * dir).forEach(tr => body.appendChild(tr));
+      table.querySelectorAll('[data-sort]').forEach(t => t.closest('th').removeAttribute('aria-sort'));
+      b.closest('th').setAttribute('aria-sort', dir > 0 ? 'ascending' : 'descending');
+    });
   })();
+
+  function renderCharts() { renderDonut(); renderRevSpark(); renderInsight(); }
+  renderCharts();
+  let chartFrame = 0;
+  window.addEventListener('resize', () => { cancelAnimationFrame(chartFrame); chartFrame = requestAnimationFrame(renderCharts); });
+  window.EventaOnThemeChange = renderCharts;
 
   /* ---------- Time-based greeting ---------- */
   (function () {
