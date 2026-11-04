@@ -99,7 +99,7 @@ No tests, linter or CI: open the page in light and dark, and below 1024px.
   `src/index.css`. Today this prints only dark `--surface` (ask which wins):
   `diff <(grep -E '^ +--' assets/app.css) <(grep -E '^ +--' ../eventa-web/src/styles/tokens.css)`
 - **eventa-website** screenshots are kit captures: the comment before each in
-  `../eventa-website/index.html` names the page (hero: `admin/dashboard.html`). Changing one means
+  `../eventa-website/index.html` names the page (hero: `admin/home.html`). Changing one means
   new shots ([how](../eventa-website/AGENTS.md)).
 
 ## Editing this file
