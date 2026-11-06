@@ -265,7 +265,7 @@
       .map(
         (g) => `
       <div data-acc>
-        <button type="button" data-acc-toggle class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-semibold text-ink transition hover:bg-line">
+        <button type="button" data-acc-toggle class="flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-[13px] font-semibold text-ink transition hover:bg-line">
           <i class="hgi-stroke ${g.icon} text-[17px]"></i>${g.label}
           <i data-acc-chevron class="hgi-stroke hgi-arrow-down-01 text-[15px] ml-auto rotate-180 transition-transform duration-200"></i>
         </button>
