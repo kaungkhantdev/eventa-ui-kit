@@ -1560,8 +1560,8 @@ document.querySelectorAll('script.ex').forEach((src) => {
   function panelLeaf(it, page) {
     const on = it.page === page;
     const cls = on
-      ? 'relative block w-full rounded-lg py-2 pl-9 pr-2.5 text-left text-[13px] font-semibold bg-line text-brand dark:bg-white/15'
-      : 'relative block w-full rounded-lg py-2 pl-9 pr-2.5 text-left text-[13px] font-medium transition hover:bg-line/60 hover:text-brand dark:hover:bg-white/10';
+      ? 'relative block w-full rounded-xl py-2 pl-9 pr-2.5 text-left text-[13px] font-semibold bg-line text-brand dark:bg-white/15'
+      : 'relative block w-full rounded-xl py-2 pl-9 pr-2.5 text-left text-[13px] font-medium transition hover:bg-line/60 hover:text-brand dark:hover:bg-white/10';
     return `<li><button type="button" data-leaf="${it.page}" class="${cls}">${on ? LEAF_MARKER : ''}${it.label}</button></li>`;
   }
   function instance(root, opts) {

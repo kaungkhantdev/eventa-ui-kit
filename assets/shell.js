@@ -326,8 +326,8 @@
   function panelLeaf(it) {
     const on = it.page === activePage;
     const cls = on
-      ? 'relative block rounded-lg py-2 pl-9 pr-2.5 text-[13px] font-semibold bg-line text-brand dark:bg-white/15'
-      : 'relative block rounded-lg py-2 pl-9 pr-2.5 text-[13px] font-medium transition hover:bg-line/60 hover:text-brand dark:hover:bg-white/10';
+      ? 'relative block rounded-xl py-2 pl-9 pr-2.5 text-[13px] font-semibold bg-line text-brand dark:bg-white/15'
+      : 'relative block rounded-xl py-2 pl-9 pr-2.5 text-[13px] font-medium transition hover:bg-line/60 hover:text-brand dark:hover:bg-white/10';
     return `<li><a href="${it.href}" class="${cls}">${on ? LEAF_MARKER : ''}${it.label}</a></li>`;
   }
   function wireAccordion() {
