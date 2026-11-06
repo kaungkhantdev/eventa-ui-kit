@@ -30,7 +30,7 @@
         <p class="mt-0.5 hidden truncate text-[12px] sm:block">Create and manage your events.</p>
       </div>
       <a href="event-form.html" class="btn btn-primary shrink-0 ml-auto"><i class="hgi-stroke hgi-calendar-add-01 text-[16px]"></i><span class="hidden sm:inline">New event</span><span class="sm:hidden">New</span></a>
-      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface transition hover:text-ink" title="Notifications">
+      <button class="relative grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-surface transition hover:text-ink" title="Notifications">
         <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
         <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
       </button>
@@ -56,12 +56,12 @@
 
     <!-- view tabs + status filter -->
     <div data-when-data class="mb-4 flex flex-wrap items-center justify-between gap-3">
-      <div data-pill-group="view" class="inline-flex items-center gap-1 rounded-xl bg-surface p-1">
-        <button data-pill="overview" class="rounded-lg bg-brand-soft px-4 py-2 text-[13px] font-semibold text-brand transition">Overview</button>
-        <button data-pill="calendar" class="rounded-lg px-4 py-2 text-[13px] font-semibold transition hover:text-ink">Calendar</button>
+      <div data-pill-group="view" class="inline-flex items-center gap-1 rounded-2xl bg-surface p-1">
+        <button data-pill="overview" class="rounded-xl bg-brand-soft px-4 py-2 text-[13px] font-semibold text-brand transition">Overview</button>
+        <button data-pill="calendar" class="rounded-xl px-4 py-2 text-[13px] font-semibold transition hover:text-ink">Calendar</button>
       </div>
       <!-- status filter (overview only) -->
-      <div data-pill-panel="view:overview" data-pill-group="manage" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+      <div data-pill-panel="view:overview" data-pill-group="manage" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-2xl bg-surface p-1">
         <button data-pill="active" class="pilltab tab-active">Active <span data-manage-count="active" class="pilltab-count tnum">0</span></button>
         <button data-pill="completed" class="pilltab">Completed <span data-manage-count="completed" class="pilltab-count tnum">0</span></button>
       </div>
@@ -74,14 +74,14 @@
       <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
         <div class="relative w-full flex-1">
           <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
-          <input id="evt-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search events…" />
+          <input id="evt-search" type="text" class="h-10 w-full rounded-xl bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search events…" />
         </div>
-        <select id="evt-sort" class="select h-10 w-full border-0 bg-surface font-medium sm:w-52" aria-label="Sort by">
+        <select id="evt-sort" class="select rounded-xl h-10 w-full border-0 bg-surface font-medium sm:w-52" aria-label="Sort by">
           <option value="reg">Registrations high→low</option>
           <option value="name">Name A–Z</option>
           <option value="date">Date</option>
         </select>
-        <select id="evt-type" class="select h-10 w-full border-0 bg-surface font-medium sm:w-44" aria-label="Event type"></select>
+        <select id="evt-type" class="select rounded-xl h-10 w-full border-0 bg-surface font-medium sm:w-44" aria-label="Event type"></select>
       </div>
 
       <!-- events table -->

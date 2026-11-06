@@ -406,7 +406,7 @@
         <script type="text/html" class="ex">
           <div class="relative w-full sm:w-56">
             <i class="hgi-stroke hgi-calendar-03 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[16px] text-brand"></i>
-            <select class="select h-10 w-full border-0 bg-surface pl-9 text-[14px] font-semibold">
+            <select class="select rounded-xl h-10 w-full border-0 bg-surface pl-9 text-[14px] font-semibold">
               <option>All events</option>
               <option>Tech Summit 2026</option>
               <option>Bangkok Jazz Night</option>
@@ -414,7 +414,7 @@
           </div>
           <div class="relative w-full sm:w-44">
             <i class="hgi-stroke hgi-user-circle pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[16px]"></i>
-            <select class="select h-10 w-full border-0 bg-surface pl-9 text-[14px] font-medium">
+            <select class="select rounded-xl h-10 w-full border-0 bg-surface pl-9 text-[14px] font-medium">
               <option>All roles</option>
               <option>Admin</option>
               <option>Organizer</option>
@@ -1049,16 +1049,16 @@
         <p class="mt-1.5 max-w-2xl text-[13px] leading-relaxed">Header affordances: a notification bell with an unread dot, a back button, brand text links, a grid/list view switcher, and a sticky action bar.</p>
         <p class="ex-label">Bell · back · links · view switch</p>
         <script type="text/html" class="ex">
-          <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface transition hover:text-ink ring-1 ring-hair" title="Notifications">
+          <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-surface transition hover:text-ink ring-1 ring-hair" title="Notifications">
             <i class="hgi-stroke hgi-notification-03 text-[18px]"></i>
             <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span>
           </button>
           <a href="#" class="grid h-9 w-9 shrink-0 place-items-center rounded-lg transition hover:bg-line hover:text-ink ring-1 ring-hair" title="Back"><i class="hgi-stroke hgi-arrow-left-01 text-[20px]"></i></a>
           <a href="#" class="text-[12px] font-semibold text-brand hover:underline">Manage</a>
           <a href="#" class="inline-flex items-center gap-1 text-[12px] font-semibold text-brand hover:underline">View all<i class="hgi-stroke hgi-arrow-right-01 text-[13px]"></i></a>
-          <div class="inline-flex items-center gap-1 rounded-lg bg-surface p-1 ring-1 ring-hair" data-view-group>
-            <button type="button" data-view-btn class="grid h-8 w-8 place-items-center rounded-md bg-brand-soft text-brand" title="Grid view"><i class="hgi-stroke hgi-grid-view text-[16px]"></i></button>
-            <button type="button" data-view-btn class="grid h-8 w-8 place-items-center rounded-md transition hover:text-ink" title="List view"><i class="hgi-stroke hgi-list-view text-[16px]"></i></button>
+          <div class="inline-flex items-center gap-1 rounded-2xl bg-surface p-1 ring-1 ring-hair" data-view-group>
+            <button type="button" data-view-btn class="grid h-8 w-8 place-items-center rounded-xl bg-brand-soft text-brand" title="Grid view"><i class="hgi-stroke hgi-grid-view text-[16px]"></i></button>
+            <button type="button" data-view-btn class="grid h-8 w-8 place-items-center rounded-xl transition hover:text-ink" title="List view"><i class="hgi-stroke hgi-list-view text-[16px]"></i></button>
           </div>
         </script>
         <p class="ex-label">Sticky action bar</p>
@@ -1540,15 +1540,15 @@ document.querySelectorAll('script.ex').forEach((src) => {
   function railBtn(m, sel) {
     const on = m.id === sel;
     const cls = on
-      ? 'grid h-9 w-9 place-items-center rounded-lg bg-brand text-white shadow-sm transition'
-      : 'grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand';
+      ? 'grid h-9 w-9 place-items-center rounded-xl bg-white/15 text-brand transition'
+      : 'grid h-9 w-9 place-items-center rounded-xl text-white/55 transition hover:bg-white/10 hover:text-brand';
     return `<div class="group relative flex justify-center"><button type="button" data-mod="${m.id}" class="${cls}"><i class="hgi-stroke ${m.icon} text-[18px]"></i></button><span class="rail-tip">${m.label}</span></div>`;
   }
   function panelLeaf(it, page) {
     const on = it.page === page;
     const cls = on
-      ? 'block w-full rounded-lg py-1.5 pl-9 pr-2.5 text-left text-[13px] font-semibold bg-brand-soft text-brand'
-      : 'block w-full rounded-lg py-1.5 pl-9 pr-2.5 text-left text-[13px] font-medium transition hover:bg-brand-soft/60 hover:text-brand';
+      ? 'block w-full rounded-lg py-2 pl-9 pr-2.5 text-left text-[13px] font-semibold bg-line text-brand dark:bg-white/15'
+      : 'block w-full rounded-lg py-2 pl-9 pr-2.5 text-left text-[13px] font-medium transition hover:bg-line/60 hover:text-brand dark:hover:bg-white/10';
     return `<li><button type="button" data-leaf="${it.page}" class="${cls}">${it.label}</button></li>`;
   }
   function instance(root, opts) {
