@@ -3,7 +3,7 @@
    Injected into [data-layout] on every admin page and driven by
    <body data-page="…">. Icons are Hugeicons (hgi-stroke).
      • Rail  = main nav (modules). The active module (the one containing the
-       current page) is highlighted (bg-brand-soft text-brand); clicking a module
+       current page) is highlighted (bg-white/15 text-brand); clicking a module
        navigates to its landing page (whose panel then opens). A module without
        an href instead swaps the panel client-side (fallback).
      • Panel = the selected module's sub-nav; the leaf matching data-page is
@@ -150,7 +150,7 @@
         <div class="mt-auto flex flex-col items-center gap-2 pt-4">
           <div id="rail-bottom" class="flex flex-col items-center gap-1.5"></div>
           <div class="group relative flex justify-center">
-            <button id="rail-theme" type="button" class="grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand"><i class="hgi-stroke hgi-moon-02 text-[20px]"></i></button>
+            <button id="rail-theme" type="button" class="grid h-9 w-9 place-items-center rounded-xl text-white/55 transition hover:bg-white/10 hover:text-brand"><i class="hgi-stroke hgi-moon-02 text-[20px]"></i></button>
             <span class="rail-tip">Change mode</span>
           </div>
           <div class="group relative mt-1 flex justify-center">
@@ -190,8 +190,8 @@
   function railBtn(m) {
     const on = m.id === selectedModule;
     const cls = on
-      ? 'grid h-9 w-9 place-items-center rounded-lg bg-brand text-white shadow-sm transition'
-      : 'grid h-9 w-9 place-items-center rounded-lg text-white/55 transition hover:bg-white/10 hover:text-brand';
+      ? 'grid h-9 w-9 place-items-center rounded-xl bg-white/15 text-brand transition'
+      : 'grid h-9 w-9 place-items-center rounded-xl text-white/55 transition hover:bg-white/10 hover:text-brand';
     const inner = `<i class="hgi-stroke ${m.icon} text-[18px]"></i>`;
     const control = m.href
       ? `<a href="${m.href}" class="${cls}">${inner}</a>`
@@ -212,7 +212,7 @@
      header to sit under, so its leaves start at the panel's own gutter —
      otherwise the whole list looks indented from nothing. */
   /* The active leaf carries a green marker at its own left edge, inside the
-     rounded pill, as well as the soft-green fill.
+     rounded pill, as well as the grey fill.
 
      Absolutely positioned on purpose: a border or an inline element would
      widen the active leaf and shift its label sideways, so every row would
@@ -227,8 +227,8 @@
     const on = it.page === activePage;
     const pad = flat ? 'pl-3.5' : 'pl-9';
     const cls = on
-      ? `relative block rounded-lg py-1.5 ${pad} pr-2.5 text-[13px] font-semibold bg-brand-soft text-brand`
-      : `relative block rounded-lg py-1.5 ${pad} pr-2.5 text-[13px] font-medium transition hover:bg-brand-soft/60 hover:text-brand`;
+      ? `relative block rounded-xl py-2 ${pad} pr-2.5 text-[13px] font-semibold bg-line text-brand dark:bg-white/15`
+      : `relative block rounded-xl py-2 ${pad} pr-2.5 text-[13px] font-medium transition hover:bg-line/60 hover:text-brand dark:hover:bg-white/10`;
     return `<li><a href="${it.href}" class="${cls}">${on ? LEAF_MARKER : ''}${it.label}</a></li>`;
   }
   function wireAccordion() {
@@ -265,7 +265,7 @@
       .map(
         (g) => `
       <div data-acc>
-        <button type="button" data-acc-toggle class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-semibold text-ink transition hover:bg-line">
+        <button type="button" data-acc-toggle class="flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-[13px] font-semibold text-ink transition hover:bg-line">
           <i class="hgi-stroke ${g.icon} text-[17px]"></i>${g.label}
           <i data-acc-chevron class="hgi-stroke hgi-arrow-down-01 text-[15px] ml-auto rotate-180 transition-transform duration-200"></i>
         </button>

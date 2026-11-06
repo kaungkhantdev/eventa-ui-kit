@@ -31,7 +31,7 @@
           <p class="mt-0.5 hidden truncate text-[12px] sm:block">Registrations, payments, feedback and things that need your attention.</p>
         </div>
       </div>
-      <div class="flex shrink-0 items-center gap-2.5"><button id="mark-all" type="button" class="btn btn-ghost shrink-0"><i class="hgi-stroke hgi-tick-double-01 text-[16px]"></i><span class="hidden sm:inline">Mark all read</span><span class="sm:hidden">Read</span></button><button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button><div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px]">Event Manager</p></div></div></div>
+      <div class="flex shrink-0 items-center gap-2.5"><button id="mark-all" type="button" class="btn btn-ghost shrink-0"><i class="hgi-stroke hgi-tick-double-01 text-[16px]"></i><span class="hidden sm:inline">Mark all read</span><span class="sm:hidden">Read</span></button><button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-surface transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button><div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px]">Event Manager</p></div></div></div>
     </div>
 
     <!-- first run: nothing has happened in this workspace yet -->
@@ -45,8 +45,16 @@
       </div>
     </section>
 
+    <!-- Needs action: every unresolved alert I can act on (US-MSG-03), i.e. home's To do alerts
+         (US-DASH-06) uncapped, in the same rows. Not activity: outside the All/Unread counts, not
+         grouped by recency, not hidden by Unread. Hidden when there are none. -->
+    <section data-when-data id="needs-action" class="mb-4 hidden rounded-2xl bg-surface p-4" aria-labelledby="needs-action-title">
+      <h2 id="needs-action-title" class="text-[15px] font-bold tracking-tight">Needs action</h2>
+      <ul id="alert-list" class="mt-1.5 divide-y divide-line"></ul>
+    </section>
+
     <!-- filter -->
-    <div data-when-data class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+    <div data-when-data class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-2xl bg-surface p-1">
       <button class="pilltab tab-active" data-filter="all">All<span class="pilltab-count" id="count-all">0</span></button>
       <button class="pilltab" data-filter="unread">Unread<span class="pilltab-count" id="count-unread">0</span></button>
     </div>
@@ -73,7 +81,6 @@
     sales:        'bg-amber-50 text-amber-500 dark:bg-amber-400/15 dark:text-amber-300',
     feedback:     'bg-violet-50 text-violet-500 dark:bg-violet-500/15 dark:text-violet-300',
     payout:       'bg-brand-soft text-brand',
-    alert:        'bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300',
     task:         'bg-gray-100 text-gray-500 dark:bg-white/10 dark:text-gray-300'
   };
 
@@ -83,13 +90,11 @@
       { kind: 'registration', icon: 'hgi-user-add-01',      title: 'New registration',        body: 'Anong Pattana joined <b class="font-semibold text-ink">Tech Summit 2026</b>',            time: '2 min ago',  unread: true },
       { kind: 'payment',      icon: 'hgi-wallet-01',         title: 'Payment received',        body: '฿1,250 from Ploy Srisai',                                                                time: '18 min ago', unread: true },
       { kind: 'sales',        icon: 'hgi-ticket-01',         title: 'Almost sold out',         body: 'VIP Access is <b class="font-semibold text-ink">92% sold</b> for Tech Summit 2026',      time: '1 hr ago',   unread: true },
-      { kind: 'task',         icon: 'hgi-note-edit',         title: 'Registration form needs approval', body: '3 pending registrations for Tech Summit 2026',                                 time: '2 hr ago',   unread: false },
-      { kind: 'alert',        icon: 'hgi-alert-circle',      title: 'Payment declined',        body: "Mia Thompson's payment was declined for Bangkok Jazz Night",                             time: '3 hr ago',   unread: false }
+      { kind: 'task',         icon: 'hgi-note-edit',         title: 'Registration form needs approval', body: '3 pending registrations for Tech Summit 2026',                                 time: '2 hr ago',   unread: false }
     ]},
     { label: 'Yesterday', recent: true, items: [
       { kind: 'feedback',     icon: 'hgi-star',              title: 'New feedback',            body: 'Bangkok Jazz Night rated <b class="font-semibold text-ink">4.8★</b>',                     time: 'Yesterday',  unread: false },
-      { kind: 'alert',        icon: 'hgi-alert-02',          title: 'Speaker not confirmed',   body: 'Sunrise Yoga Retreat still has 1 unconfirmed speaker',                                   time: 'Yesterday',  unread: false },
-      { kind: 'task',         icon: 'hgi-message-question',  title: 'Vendor reply pending',    body: 'Awaiting catering quote for Tech Summit 2026',                                           time: 'Yesterday',  unread: false }
+      { kind: 'task',        icon: 'hgi-message-question',  title: 'Vendor reply pending',    body: 'Awaiting catering quote for Tech Summit 2026',                                           time: 'Yesterday',  unread: false }
     ]},
     { label: 'Earlier this week', recent: true, items: [
       { kind: 'payout',       icon: 'hgi-dollar-circle',     title: 'Payout completed',        body: '฿48,290 was sent to your bank account',                                                  time: 'Jul 15',     unread: false },
@@ -98,10 +103,44 @@
     { label: 'Last week', recent: false, items: [
       { kind: 'payout',       icon: 'hgi-dollar-circle',     title: 'Payout completed',        body: '฿32,100 was sent to your bank account',                                                  time: 'Jul 11',     unread: false },
       { kind: 'registration', icon: 'hgi-user-add-01',       title: '18 new registrations',    body: 'For <b class="font-semibold text-ink">Bangkok Jazz Night</b>',                           time: 'Jul 10',     unread: false },
-      { kind: 'feedback',     icon: 'hgi-star',              title: 'New feedback',            body: 'UX Bangkok Meetup rated <b class="font-semibold text-ink">4.7★</b>',                      time: 'Jul 9',      unread: false },
-      { kind: 'alert',        icon: 'hgi-alert-circle',      title: 'Low ticket inventory',    body: 'Only 8 VIP tickets left for Thai Street Food Festival',                                   time: 'Jul 8',      unread: false }
+      { kind: 'feedback',     icon: 'hgi-star',              title: 'New feedback',            body: 'UX Bangkok Meetup rated <b class="font-semibold text-ink">4.7★</b>',                      time: 'Jul 9',      unread: false }
     ]}
   ];
+
+  /* Needs action: every unresolved alert I can act on (US-MSG-03): home's To do alerts
+     (US-DASH-06), uncapped, in the same rows. High, then Medium, then Low; within a priority the one
+     raised earliest first. Each row links to where it is resolved; the feed never resolves anything
+     itself. Kept apart from GROUPS: not counted, not grouped, not filtered. Sample data, the same
+     ALERTS as home.html (whose card shows only the first 3); the kit's "today" is Jul 19, 2026. */
+  var ALERTS = [
+    { priority: 'High',   icon: 'hgi-credit-card',   tone: 'bg-red-50 text-red-500 dark:bg-red-500/15 dark:text-red-300',         text: '2 payments declined',           event: 'Bangkok Jazz Night',        raised: '2026-07-18', href: 'payments.html' },
+    { priority: 'Medium', icon: 'hgi-user-check-01', tone: 'bg-amber-50 text-amber-600 dark:bg-amber-500/15 dark:text-amber-300', text: '5 registrations to approve',    event: 'Tech Summit 2026',          raised: '2026-07-17', href: 'registrations.html' },
+    { priority: 'Medium', icon: 'hgi-ticket-01',     tone: 'bg-amber-50 text-amber-600 dark:bg-amber-500/15 dark:text-amber-300', text: '1 ticket type nearly sold out', event: 'Thai Street Food Festival', raised: '2026-07-19', href: 'tickets.html' },
+    { priority: 'Medium', icon: 'hgi-user-check-01', tone: 'bg-amber-50 text-amber-600 dark:bg-amber-500/15 dark:text-amber-300', text: '1 registration to approve',     event: 'Sunrise Yoga Retreat',      raised: '2026-07-19', href: 'registrations.html' }
+  ];
+  var PRIORITY = { High: ['badge-red', 0], Medium: ['badge-amber', 1], Low: ['badge-green', 2] };
+  function raisedLabel(iso) { return new Date(iso + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); }
+
+  /* Row: the same markup and classes as home.html's To do rows */
+  function alertHTML(a) {
+    return '<li><a href="' + esc(a.href) + '" class="flex items-center gap-3 py-2 hover:opacity-80">' +
+      '<span class="grid h-9 w-9 shrink-0 place-items-center rounded-full ' + a.tone + '"><i class="hgi-stroke ' + a.icon + ' text-[17px]"></i></span>' +
+      '<span class="min-w-0 flex-1">' +
+        '<span class="block truncate text-[13.5px] font-semibold text-ink">' + esc(a.text) + '</span>' +
+        '<span class="mt-0.5 flex items-center gap-1.5 truncate text-[12px]"><i class="hgi-stroke hgi-calendar-03 text-[13px]"></i><span class="tnum">' + esc(raisedLabel(a.raised)) + '</span>' + (a.event ? ' · ' + esc(a.event) : '') + '</span>' +
+      '</span>' +
+      '<span class="badge ' + PRIORITY[a.priority][0] + ' shrink-0">' + esc(a.priority) + '</span>' +
+    '</a></li>';
+  }
+
+  function renderAlerts() {
+    var alerts = ALERTS.slice().sort(function (a, b) {
+      return PRIORITY[a.priority][1] - PRIORITY[b.priority][1] || a.raised.localeCompare(b.raised);
+    });
+    document.getElementById('alert-list').innerHTML = alerts.map(alertHTML).join('');
+    // the `hidden` class, not the attribute: shell.js owns the attribute for ?empty=1
+    document.getElementById('needs-action').classList.toggle('hidden', !alerts.length);
+  }
 
   function itemHTML(n) {
     var tint = TINT[n.kind] || TINT.task;
@@ -169,6 +208,7 @@
     render();
   });
 
+  renderAlerts();
   render();
 })();
 </script>

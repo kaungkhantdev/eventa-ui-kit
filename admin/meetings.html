@@ -34,7 +34,7 @@
       <div class="flex shrink-0 items-center gap-2.5">
         <span class="hidden items-center gap-1.5 rounded-lg border border-hair bg-surface px-2.5 py-1.5 text-[12px] font-medium lg:inline-flex" title="Meetings sync with your Google Calendar"><i class="hgi-stroke hgi-checkmark-badge-01 text-[14px] text-brand"></i>Google Calendar</span>
         <button class="btn btn-primary shrink-0" data-open="meeting-panel"><i class="hgi-stroke hgi-calendar-add-01 text-[16px]"></i><span class="hidden sm:inline">Schedule meeting</span><span class="sm:hidden">Schedule</span></button>
-        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
+        <button type="button" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-surface transition hover:text-ink" title="Notifications"><i class="hgi-stroke hgi-notification-03 text-[18px]"></i><span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-surface"></span></button>
         <div class="flex shrink-0 items-center gap-2.5"><div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-brand to-emerald-400 text-[12px] font-semibold text-white">HN</div><div class="hidden leading-tight sm:block"><p class="text-[13px] font-semibold text-ink">Harper Nelson</p><p class="text-[11px]">Event Manager</p></div></div>
       </div>
     </div>
@@ -51,7 +51,7 @@
     </section>
 
     <!-- status tabs (out of list) -->
-    <div data-when-data data-tabs="#mtg-card" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-surface p-1">
+    <div data-when-data data-tabs="#mtg-card" class="flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-2xl bg-surface p-1">
       <button class="pilltab tab-active" data-tab="all">All <span class="pilltab-count tnum" data-mtg-count="all">0</span></button>
       <button class="pilltab" data-tab="today">Today <span class="pilltab-count tnum" data-mtg-count="today">0</span></button>
       <button class="pilltab" data-tab="upcoming">Upcoming <span class="pilltab-count tnum" data-mtg-count="upcoming">0</span></button>
@@ -62,11 +62,11 @@
     <div data-when-data class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
       <div class="relative w-full flex-1">
         <i class="hgi-stroke hgi-search-01 text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
-        <input id="mtg-search" type="text" class="h-10 w-full rounded-lg bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search meetings, people or events…" />
+        <input id="mtg-search" type="text" class="h-10 w-full rounded-xl bg-surface pl-9 pr-3 text-[13px] text-ink placeholder:text-muted focus:outline-none focus:ring-4 focus:ring-brand/15" placeholder="Search meetings, people or events…" />
       </div>
       <div class="relative w-full sm:w-52">
         <i class="hgi-stroke hgi-user-group text-[16px] pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"></i>
-        <select id="mtg-type" class="select h-10 w-full border-0 bg-surface pl-9 font-medium" aria-label="Meeting type">
+        <select id="mtg-type" class="select rounded-xl h-10 w-full border-0 bg-surface pl-9 font-medium" aria-label="Meeting type">
           <option value="">All types</option>
           <option>Venue</option>
           <option>Sponsor</option>

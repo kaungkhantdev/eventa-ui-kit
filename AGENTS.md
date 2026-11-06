@@ -70,7 +70,6 @@ No tests, linter or CI: open the page in light and dark, and below 1024px.
   to change it, grep the repo for every form of the old value.
 - Keep the `[hidden]` rule in `app.css`: without it Tailwind's `.flex` beats the `hidden`
   attribute and the empty-state swap silently breaks.
-- Serve over http. Over `file://`, Chrome blocks the CSS mask that paints the logo.
 - `auth/`, `portal/` and `landing/` don't load `shell.js`, so rule 8's hooks and `?empty=1` do
   nothing there unless the page wires them itself.
 

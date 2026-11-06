@@ -29,7 +29,7 @@ This kit contains two parallel takes on the same product:
 | Layout | Single collapsible sidebar | Double sidebar (icon rail + labelled panel) |
 | Shared shell | `assets/` (`config.js`, `app.css`, `shell.js`) | **Self‑contained** — each file inlines its own config/styles/scripts |
 | Icons | [Hugeicons](https://hugeicons.com) font (`hgi-*`) | [reicon](https://reicon.dev) web component (`<re-icon>`) |
-| Pages | 22 screens + gallery (see below) | `home.html`, `dashboard.html` |
+| Pages | 22 screens + gallery (see below) | `home.html`, `dashboard.html`; `home-v2.html`, `dashboard-v2.html` are standalone copies of the main app's Home and Dashboard (Hugeicons) |
 
 Both share the same visual language: semantic color tokens, Inter, brand green, compact scale, Thai Baht.
 
