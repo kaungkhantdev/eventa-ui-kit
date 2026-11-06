@@ -852,8 +852,12 @@
               <div class="mt-auto flex flex-col items-center gap-2 pt-4">
                 <div data-rail-bottom class="flex flex-col items-center gap-1.5"></div>
                 <div class="group relative flex justify-center">
+                  <button type="button" data-rail-theme class="grid h-9 w-9 place-items-center rounded-xl text-white/55 transition hover:bg-white/10 hover:text-brand"><i class="hgi-stroke hgi-moon-02 text-[20px]"></i></button>
+                  <span class="rail-tip">Change mode</span>
+                </div>
+                <div class="group relative mt-1 flex justify-center">
                   <span class="grid h-9 w-9 place-items-center text-brand"><span class="brand-logo h-[13px] w-[24px]"></span></span>
-                  <span class="rail-tip">Eventa for Business · v1.0</span>
+                  <span class="rail-tip">Eventa for Business · v1.0.0.0</span>
                 </div>
               </div>
             </aside>
@@ -904,6 +908,14 @@
                 <div data-rail-top class="mt-5 flex flex-col items-center gap-1.5"></div>
                 <div class="mt-auto flex flex-col items-center gap-2 pt-4">
                   <div data-rail-bottom class="flex flex-col items-center gap-1.5"></div>
+                  <div class="group relative flex justify-center">
+                    <button type="button" data-rail-theme class="grid h-9 w-9 place-items-center rounded-xl text-white/55 transition hover:bg-white/10 hover:text-brand"><i class="hgi-stroke hgi-moon-02 text-[20px]"></i></button>
+                    <span class="rail-tip">Change mode</span>
+                  </div>
+                  <div class="group relative mt-1 flex justify-center">
+                    <span class="grid h-9 w-9 place-items-center text-brand"><span class="brand-logo h-[13px] w-[24px]"></span></span>
+                    <span class="rail-tip">Eventa for Business · v1.0.0.0</span>
+                  </div>
                 </div>
               </aside>
               <aside data-panel class="flex w-56 shrink-0 flex-col border-r border-hair bg-surface">
@@ -1544,12 +1556,13 @@ document.querySelectorAll('script.ex').forEach((src) => {
       : 'grid h-9 w-9 place-items-center rounded-xl text-white/55 transition hover:bg-white/10 hover:text-brand';
     return `<div class="group relative flex justify-center"><button type="button" data-mod="${m.id}" class="${cls}"><i class="hgi-stroke ${m.icon} text-[18px]"></i></button><span class="rail-tip">${m.label}</span></div>`;
   }
+  const LEAF_MARKER = '<span class="absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full bg-brand"></span>';
   function panelLeaf(it, page) {
     const on = it.page === page;
     const cls = on
-      ? 'block w-full rounded-lg py-2 pl-9 pr-2.5 text-left text-[13px] font-semibold bg-line text-brand dark:bg-white/15'
-      : 'block w-full rounded-lg py-2 pl-9 pr-2.5 text-left text-[13px] font-medium transition hover:bg-line/60 hover:text-brand dark:hover:bg-white/10';
-    return `<li><button type="button" data-leaf="${it.page}" class="${cls}">${it.label}</button></li>`;
+      ? 'relative block w-full rounded-lg py-2 pl-9 pr-2.5 text-left text-[13px] font-semibold bg-line text-brand dark:bg-white/15'
+      : 'relative block w-full rounded-lg py-2 pl-9 pr-2.5 text-left text-[13px] font-medium transition hover:bg-line/60 hover:text-brand dark:hover:bg-white/10';
+    return `<li><button type="button" data-leaf="${it.page}" class="${cls}">${on ? LEAF_MARKER : ''}${it.label}</button></li>`;
   }
   function instance(root, opts) {
     opts = opts || {};
@@ -1606,6 +1619,18 @@ document.querySelectorAll('script.ex').forEach((src) => {
     bd.addEventListener('click', closeM);
     instance(mWrap, { onLeaf: closeM });
   }
+  // "Change mode" in the demo rails flips the theme like the real rail: it presses the
+  // page's own toggle, and every toggle keeps the rail icons (moon in light, sun in dark) in step.
+  const themeBtn = document.getElementById('theme-btn');
+  function syncRailTheme() {
+    const dark = document.documentElement.classList.contains('dark');
+    document.querySelectorAll('[data-rail-theme] i').forEach((i) => {
+      i.className = 'hgi-stroke ' + (dark ? 'hgi-sun-03' : 'hgi-moon-02') + ' text-[20px]';
+    });
+  }
+  document.querySelectorAll('[data-rail-theme]').forEach((b) => b.addEventListener('click', () => themeBtn.click()));
+  themeBtn.addEventListener('click', syncRailTheme);
+  syncRailTheme();
 })();
 
 /* ───────────── delegated interactions ───────────── */
