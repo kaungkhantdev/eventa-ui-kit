@@ -283,12 +283,12 @@ html.dark .badge-purple {
   color: #c4b5fd;
 }
 
-/* ---------- Brand logo (assets/img/logo.svg painted in currentColor via mask) ---------- */
+/* ---------- Brand logo (assets/img/logo.svg, already brand green) ----------
+   A background image, not a CSS mask: Chrome blocks masks on pages opened from
+   disk (file://), which left the logo invisible. */
 .brand-logo {
   display: block;
-  background-color: currentColor;
-  -webkit-mask: url(img/logo.svg) no-repeat center / contain;
-  mask: url(img/logo.svg) no-repeat center / contain;
+  background: url(img/logo.svg) no-repeat center / contain;
 }
 
 /* ---------- Tables ---------- */
